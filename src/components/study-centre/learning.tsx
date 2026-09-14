@@ -122,7 +122,11 @@ export function ConceptBlock({
       {/* The column is wider on a desktop, so the type scales with it. At
           14.5px a 64rem column runs ~131 characters per line; at 16px it is
           closer to 95, which is where prose actually reads comfortably. */}
-      <div className="space-y-3 text-[14.5px] leading-relaxed text-white lg:text-[16px]">
+      {/* max-w-[80ch] is the backstop for pages that set a wider measure:
+            the Functional Skills pages run 74rem so a line of worked
+            calculation fits on one line, which pushed running prose to 119
+            characters. Cards keep the full width; only paragraphs cap. */}
+      <div className="max-w-[80ch] space-y-3 text-[14.5px] leading-relaxed text-white lg:text-[16px]">
         {children}
       </div>
 
@@ -1393,5 +1397,194 @@ export function AppendixTable({
         </div>
       )}
     </figure>
+  );
+}
+
+/* ── WorkedExample / TryIt — maths, shown rather than described ────────
+ *
+ * The reading kit was built for regulations: ConceptBlock explains, RegsCallout
+ * quotes, CommonMistake warns. None of that teaches a calculation, and the
+ * Functional Skills pages showed it — the maths was *described* in prose:
+ *
+ *   "Multiplication: Calculating total cost — 12 lengths of conduit at £4.60."
+ *
+ * That is a sentence about multiplication. Nobody learns arithmetic from a
+ * sentence about arithmetic, and it is not what the exam rewards: Functional
+ * Skills carries method marks, so a learner has to see the steps set out and
+ * then produce them. These two components are for exactly that.
+ *
+ * <WorkedExample> shows every line of the working. <TryIt> is the same shape
+ * with the answer withheld until asked for — the retrieval attempt is the part
+ * that does the learning, so the reveal has to cost a deliberate tap.
+ */
+
+interface WorkedStep {
+  /** The line of working, e.g. "I = P ÷ V". Rendered in a mono face. */
+  calc: ReactNode;
+  /** Why this line follows from the last. Optional — obvious steps need none. */
+  note?: ReactNode;
+}
+
+interface WorkedExampleProps {
+  /** The question as a learner would meet it, in trade context. */
+  question: ReactNode;
+  /** The working, one line per step. */
+  steps: WorkedStep[];
+  /** The result, with its unit. */
+  answer: ReactNode;
+  /** The error most people make here. Worth more than another example. */
+  watchOut?: ReactNode;
+  /** Set when the technique must work without a calculator in the exam. */
+  nonCalculator?: boolean;
+  className?: string;
+}
+
+export function WorkedExample({
+  question,
+  steps,
+  answer,
+  watchOut,
+  nonCalculator,
+  className,
+}: WorkedExampleProps) {
+  return (
+    <div
+      className={cn(
+        'relative overflow-hidden rounded-2xl border border-white/[0.14] p-5',
+        CARD_SURFACE,
+        className
+      )}
+    >
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+        <span className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+          Worked example
+        </span>
+        {nonCalculator && (
+          <span className="rounded-full border border-white/[0.18] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-white">
+            No calculator
+          </span>
+        )}
+      </div>
+
+      <div className="mt-2 text-[14.5px] font-semibold leading-snug text-white">{question}</div>
+
+      {/* The working. Tabular figures so digits line up down the column, which
+          is half of what makes a calculation readable. */}
+      <ol className="mt-4 space-y-2.5">
+        {steps.map((step, i) => (
+          <li key={i} className="flex gap-3">
+            <span className="mt-0.5 w-4 shrink-0 text-right text-[12px] font-semibold tabular-nums text-white">
+              {i + 1}
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block font-mono text-[13.5px] leading-relaxed tabular-nums text-white">
+                {step.calc}
+              </span>
+              {step.note && (
+                <span className="mt-0.5 block text-[12.5px] leading-relaxed text-white">
+                  {step.note}
+                </span>
+              )}
+            </span>
+          </li>
+        ))}
+      </ol>
+
+      <div className="mt-4 flex items-baseline gap-2 border-t border-white/[0.10] pt-3">
+        <span className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-white">
+          Answer
+        </span>
+        <span className="font-mono text-[15px] font-semibold tabular-nums text-elec-yellow">
+          {answer}
+        </span>
+      </div>
+
+      {watchOut && (
+        <div className="mt-3 flex items-start gap-2 text-[12.5px] leading-relaxed text-white">
+          <AlertTriangle aria-hidden className="mt-0.5 h-3.5 w-3.5 shrink-0 text-orange-300" />
+          <span>{watchOut}</span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+interface TryItProps {
+  /** The question. Same shape as a worked example, without the working. */
+  question: ReactNode;
+  /** Shown after the reveal — the working, so a wrong answer is diagnosable. */
+  steps: WorkedStep[];
+  answer: ReactNode;
+  nonCalculator?: boolean;
+  className?: string;
+}
+
+export function TryIt({ question, steps, answer, nonCalculator, className }: TryItProps) {
+  const [revealed, setRevealed] = useState(false);
+
+  return (
+    <div
+      // CARD_SURFACE with a volt BORDER, exactly as TLDR and InlineCheck do it.
+      // The first version used `bg-elec-yellow/[0.04]` as the fill, and a volt
+      // wash over this ground goes muddy brown — the card recipe bans it and
+      // InlineCheck's own header says why. Gold edge, never gold face.
+      className={cn(
+        'relative overflow-hidden rounded-2xl border border-elec-yellow/35 p-5 sm:p-6',
+        CARD_SURFACE,
+        className
+      )}
+    >
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+        <span className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+          Your turn
+        </span>
+        {nonCalculator && (
+          <span className="rounded-full border border-white/[0.18] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-white">
+            No calculator
+          </span>
+        )}
+      </div>
+
+      <div className="mt-2 text-[14.5px] font-semibold leading-snug text-white">{question}</div>
+
+      {!revealed ? (
+        <button
+          onClick={() => setRevealed(true)}
+          className="mt-4 h-11 w-full touch-manipulation rounded-xl border border-white/[0.18] bg-white/[0.08] text-[13.5px] font-semibold text-white transition-colors hover:bg-white/[0.13] active:scale-[0.99]"
+        >
+          Work it out, then check
+        </button>
+      ) : (
+        <>
+          <ol className="mt-4 space-y-2.5">
+            {steps.map((step, i) => (
+              <li key={i} className="flex gap-3">
+                <span className="mt-0.5 w-4 shrink-0 text-right text-[12px] font-semibold tabular-nums text-white">
+                  {i + 1}
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block font-mono text-[13.5px] leading-relaxed tabular-nums text-white">
+                    {step.calc}
+                  </span>
+                  {step.note && (
+                    <span className="mt-0.5 block text-[12.5px] leading-relaxed text-white">
+                      {step.note}
+                    </span>
+                  )}
+                </span>
+              </li>
+            ))}
+          </ol>
+          <div className="mt-4 flex items-baseline gap-2 border-t border-white/[0.10] pt-3">
+            <span className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-white">
+              Answer
+            </span>
+            <span className="font-mono text-[15px] font-semibold tabular-nums text-elec-yellow">
+              {answer}
+            </span>
+          </div>
+        </>
+      )}
+    </div>
   );
 }

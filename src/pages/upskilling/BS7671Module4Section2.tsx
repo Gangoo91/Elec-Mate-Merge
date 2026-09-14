@@ -515,8 +515,8 @@ const BS7671Module4Section2 = () => {
 
         <ConceptBlock
           title="When voltage drop, not CCC, is the binding constraint"
-          plainEnglish="Reg 525.1 sets BS 7671's voltage drop limits: 3% on a final circuit, 5% on lighting (origin to final), 8% on other circuits (origin to far point). Long runs hit these limits before CCC becomes a problem — voltage drop is often the design constraint that forces a larger cable than the load alone would suggest."
-          onSite="Quick estimate: mV/A·m from App 4 × Ib × length (m) / 1000 = volts dropped. For 2.5 mm² T&E (mV/A·m ≈ 18) at 25 A over 30 m: 18 × 25 × 30 / 1000 = 13.5 V — about 5.9% of 230 V, well over the 3% final-circuit limit. Either upgrade to 4 mm² (mV/A·m ≈ 11), shorten the run, or accept the voltage drop as a documented departure under Reg 120.3."
+          plainEnglish="Reg 525.1 requires equipment to receive a voltage it can work on safely and correctly; Reg 525.202 then deems that satisfied if the drop stays inside the Appendix 4 Section 6.4 figures. Table 4Ab has two rows: an installation supplied directly from a PUBLIC low voltage network gets 3% for lighting and 5% for other uses; one on a PRIVATE supply gets 6% and 8%. Within each final circuit, the public-supply figures apply either way. Long runs hit these before CCC becomes a problem — voltage drop is often the design constraint that forces a larger cable than the load alone would suggest."
+          onSite="Quick estimate: mV/A·m from App 4 × Ib × length (m) / 1000 = volts dropped. For 2.5 mm² T&E (mV/A·m ≈ 18) at 25 A over 30 m: 18 × 25 × 30 / 1000 = 13.5 V — about 5.9% of 230 V, well outside the 5% recommended for a non-lighting circuit on a public supply. Either upgrade to 4 mm² (mV/A·m ≈ 11), shorten the run, or justify the departure. Worth being precise about what exceeding it means: you lose the deeming provision of Reg 525.202 and have to show 525.1 is still met by another route — it is not automatically a breach, but almost nobody wants that conversation."
         >
           <p>
             The exact calculation in App 4 also accounts for power factor and conductor temperature,

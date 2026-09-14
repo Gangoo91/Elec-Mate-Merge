@@ -157,7 +157,7 @@ const quizQuestions = [
     id: 6,
     question: 'What does Reg 411.4.5 require?',
     options: [
-      'It sets the maximum permitted voltage drop between the origin of the installation and any point of utilisation under normal load.',
+      'It sets the recommended maximum voltage drop between the origin of the installation and any point of utilisation under normal load.',
       'It defines the current-carrying capacity correction factors for cables grouped together or installed in thermal insulation.',
       'It carries the ADS acceptance criterion for TN systems — demonstrated by calculation at design and confirmed by measurement at verification.',
       'It requires that an arc fault detection device be installed on every AC final circuit supplying socket-outlets in a dwelling.',

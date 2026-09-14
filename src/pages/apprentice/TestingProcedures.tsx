@@ -1,17 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { toast } from 'sonner';
 import { storageGetSync, storageSetSync } from '@/utils/storage';
 import TestingResources from '@/components/apprentice/testing-procedures/TestingResources';
 import TestSequenceCard from '@/components/apprentice/testing-procedures/TestSequenceCard';
+import TestPickerCards from '@/components/apprentice/testing-procedures/TestPickerCards';
+import { TEST_OPTIONS } from '@/components/apprentice/testing-procedures/data/testOptions';
 import { CALLOUT_INSET } from '@/components/ui/panel-recipe';
 import { cn } from '@/lib/utils';
 import R1R2TestingTab from '@/components/apprentice/testing-procedures/testing-tabs/R1R2Testing/R1R2TestingTab';
@@ -19,7 +13,7 @@ import IRTestingTab from '@/components/apprentice/testing-procedures/testing-tab
 import ZsTestingTab from '@/components/apprentice/testing-procedures/testing-tabs/EarthFaultLoop/ZsTestingTab';
 import PolarityTestingTab from '@/components/apprentice/testing-procedures/testing-tabs/Polarity/PolarityTestingTab';
 import { Button } from '@/components/ui/button';
-import { BookmarkCheck, HelpCircle, Zap, Activity, GitBranch, Check } from 'lucide-react';
+import { BookmarkCheck } from 'lucide-react';
 import { itemVariants } from '@/components/college/primitives';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 
@@ -29,13 +23,6 @@ const TestingProcedures = () => {
   const activeTab = searchParams.get('tab') || 'r1r2';
   const setActiveTab = (tab: string) => setSearchParams({ tab }, { replace: false });
   const [lastVisited, setLastVisited] = useState<string | null>(null);
-
-  const testingOptions = [
-    { value: 'r1r2', label: 'R₁+R₂ continuity', icon: Zap },
-    { value: 'ir', label: 'Insulation resistance', icon: Activity },
-    { value: 'zs', label: 'Earth fault loop (Zs)', icon: GitBranch },
-    { value: 'polarity', label: 'Polarity', icon: Check },
-  ];
 
   // Track active tab for persistence
   useEffect(() => {
@@ -71,10 +58,10 @@ const TestingProcedures = () => {
     }
   };
 
-  /* Derived from testingOptions rather than a second switch — the two lists
-     had already drifted apart ("Zs Testing" against "Earth Fault Loop"). */
-  const getTabName = (tabId: string) =>
-    testingOptions.find((tab) => tab.value === tabId)?.label ?? tabId;
+  /* Derived from TEST_OPTIONS rather than a second switch — the two lists had
+     already drifted apart once ("Zs Testing" against "Earth Fault Loop"), and
+     that list now lives with the cards that render it. */
+  const getTabName = (tabId: string) => TEST_OPTIONS.find((t) => t.value === tabId)?.label ?? tabId;
 
   return (
     <HubPage>
@@ -118,53 +105,14 @@ const TestingProcedures = () => {
 
         <TestSequenceCard />
 
-        <div className="w-full space-y-6">
-          <div className="flex justify-center relative">
-            <Select value={activeTab} onValueChange={handleTabChange}>
-              <SelectTrigger className="w-[280px] md:w-[320px]">
-                <SelectValue placeholder="Select testing procedure">
-                  <div className="flex items-center gap-2">
-                    {(() => {
-                      const currentTab = testingOptions.find((tab) => tab.value === activeTab);
-                      const IconComponent = currentTab?.icon;
-                      return (
-                        <>
-                          {IconComponent && <IconComponent className="h-4 w-4" />}
-                          {currentTab?.label}
-                        </>
-                      );
-                    })()}
-                  </div>
-                </SelectValue>
-              </SelectTrigger>
-              <SelectContent>
-                {testingOptions.map((tab) => {
-                  const IconComponent = tab.icon;
-                  return (
-                    <SelectItem key={tab.value} value={tab.value}>
-                      <div className="flex items-center gap-2">
-                        <IconComponent className="h-4 w-4" />
-                        {tab.label}
-                      </div>
-                    </SelectItem>
-                  );
-                })}
-              </SelectContent>
-            </Select>
-
-            <div className="absolute top-0 right-0">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="rounded-full h-8 w-8 p-0"
-                onClick={() =>
-                  toast.info('Need help? Contact your supervisor or send us feedback.')
-                }
-              >
-                <HelpCircle className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
+        <div className="w-full space-y-5">
+          {/* 🔴 Four cards, not a dropdown.
+              The tests used to sit inside a 280px centred Select, so you could
+              not see that there were four — or which are done dead — without
+              opening it. Beside it was a "?" whose only action was a toast
+              reading "Contact your supervisor or send us feedback", which
+              answers nothing. Both are gone. */}
+          <TestPickerCards active={activeTab} onSelect={handleTabChange} />
 
           <div className="w-full animate-fade-in">{renderTabContent()}</div>
         </div>

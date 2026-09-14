@@ -176,7 +176,7 @@ export const formulaeBasic: FlashcardData[] = [
     question:
       'How do you calculate conductor resistance for a voltage drop assessment? What values do you need?',
     answer:
-      'Voltage drop = (mV/A/m × Ib × L) / 1000, where mV/A/m is the voltage drop per ampere per metre from the cable tables in BS 7671 Appendix 4, Ib is the design current in amperes, and L is the cable route length in metres. The result is in volts. This must be checked against the maximum permitted voltage drop for the circuit type.',
+      'Voltage drop = (mV/A/m × Ib × L) / 1000, where mV/A/m is the voltage drop per ampere per metre from the cable tables in BS 7671 Appendix 4, Ib is the design current in amperes, and L is the cable route length in metres. The result is in volts. This must be checked against the recommended maximum voltage drop for the circuit type.',
     category: 'Practical Calculations',
     difficulty: 'medium',
   },

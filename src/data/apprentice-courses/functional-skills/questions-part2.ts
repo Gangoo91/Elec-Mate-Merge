@@ -15,12 +15,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 101,
     question:
       'Which file format is most commonly used for issuing electrical certificates digitally to clients?',
-    options: [
-      'DOCX',
-      'PDF',
-      'JPEG',
-      'XLSX',
-    ],
+    options: ['DOCX', 'PDF', 'JPEG', 'XLSX'],
     correctAnswer: 1,
     explanation:
       'PDF (Portable Document Format) is the industry standard for issuing electrical certificates digitally. It preserves formatting across devices, cannot be easily altered, and is universally viewable without specialist software.',
@@ -124,8 +119,8 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'When taking photo evidence of wiring within an enclosure, what metadata is automatically embedded in the image file?',
     options: [
-      'The electrician\'s registration number, and their scheme ID (as enrolled)',
-      'The client\'s full name, and the property address (with postcode)',
+      "The electrician's registration number, and their scheme ID (as enrolled)",
+      "The client's full name, and the property address (with postcode)",
       'The circuit reference number, as recorded on the schedule (e.g. C1)',
       'Date, time, and GPS location data (if enabled)',
     ],
@@ -233,12 +228,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 113,
     question:
       'Which of the following is the strongest password for a certification software account?',
-    options: [
-      'password123',
-      'T3st&M@te!Sparky#9kL',
-      'Electrician2024',
-      'qwerty',
-    ],
+    options: ['password123', 'T3st&M@te!Sparky#9kL', 'Electrician2024', 'qwerty'],
     correctAnswer: 1,
     explanation:
       "A strong password contains a mix of uppercase and lowercase letters, numbers, and special characters, and is at least 12 characters long. 'T3st&M@te!Sparky#9kL' meets all of these criteria. Simple words and common patterns like 'password123' are easily cracked.",
@@ -341,7 +331,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       "An electrician receives a phone call from someone claiming to be from their certification body, requesting their login details to 'verify their account'. The caller knows the electrician's name and registration number. What type of attack is this?",
     options: [
-      'Smishing (SMS phishing) — an attack delivered by text message to the recipient\'s mobile',
+      "Smishing (SMS phishing) — an attack delivered by text message to the recipient's mobile",
       'A brute-force attack (automated password guessing) — software tries passwords in turn until one of them works',
       'A denial-of-service attack (DoS) — the account is flooded with traffic until it stops responding',
       'Vishing (voice phishing) — a social engineering attack conducted over the phone',
@@ -383,12 +373,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 121,
     question:
       "Using Ohm's Law, what is the current flowing through a 230V circuit with a resistance of 46 ohms?",
-    options: [
-      '10A',
-      '5A',
-      '2.5A',
-      '23A',
-    ],
+    options: ['10A', '5A', '2.5A', '23A'],
     correctAnswer: 1,
     explanation:
       "Using Ohm's Law (I = V/R): I = 230 / 46 = 5A. Ohm's Law is fundamental to all electrical calculations and states that current equals voltage divided by resistance.",
@@ -400,12 +385,7 @@ export const questionsPart2: StandardMockQuestion[] = [
   {
     id: 122,
     question: 'What is the power consumed by an immersion heater rated at 13A on a 230V supply?',
-    options: [
-      '3000W',
-      '1500W',
-      '2990W',
-      '2500W',
-    ],
+    options: ['3000W', '1500W', '2990W', '2500W'],
     correctAnswer: 2,
     explanation:
       'Using the power formula P = V x I: P = 230 x 13 = 2990W (approximately 3kW). This is a typical rating for a domestic immersion heater in the UK.',
@@ -418,12 +398,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 123,
     question:
       'A domestic ring final circuit is 45m long using 2.5mm² T&E cable with a mV/A/m value of 18. What is the voltage drop at 13A?',
-    options: [
-      '10.53V',
-      '7.89V',
-      '5.27V',
-      '2.63V',
-    ],
+    options: ['10.53V', '7.89V', '5.27V', '2.63V'],
     correctAnswer: 3,
     explanation:
       'A ring final circuit is fed from both ends, so the standard method divides the single-run voltage drop by four: VD = (mV/A/m x Ib x L) / (4 x 1000) = (18 x 13 x 45) / 4000 = 10,530 / 4000 = 2.63V. Dividing by four accounts for the two parallel legs and the load being distributed around the ring.',
@@ -436,12 +411,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 124,
     question:
       'What is the maximum demand of a 10.5kW electric shower on a 230V single-phase supply?',
-    options: [
-      '45.65A',
-      '40A',
-      '32A',
-      '50A',
-    ],
+    options: ['45.65A', '40A', '32A', '50A'],
     correctAnswer: 0,
     explanation:
       'Maximum demand = Power / Voltage = 10,500W / 230V = 45.65A. This calculation determines the minimum rating of the protective device and cable required for the shower circuit.',
@@ -467,12 +437,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 126,
     question:
       'A resistor has a current of 3A flowing through it and dissipates 108W of power. What is its resistance?',
-    options: [
-      '36 ohms',
-      '324 ohms',
-      '12 ohms',
-      '9 ohms',
-    ],
+    options: ['36 ohms', '324 ohms', '12 ohms', '9 ohms'],
     correctAnswer: 2,
     explanation:
       'Using P = I²R, rearranged to R = P/I² = 108 / (3²) = 108 / 9 = 12 ohms. Alternatively, V = P/I = 108/3 = 36V, then R = V/I = 36/3 = 12 ohms.',
@@ -485,12 +450,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 127,
     question:
       'Three 1kW heaters and two 500W lighting circuits are connected to a single-phase supply. What is the total power demand?',
-    options: [
-      '5kW',
-      '3.5kW',
-      '4.5kW',
-      '4kW',
-    ],
+    options: ['5kW', '3.5kW', '4.5kW', '4kW'],
     correctAnswer: 3,
     explanation:
       'Total power = (3 x 1000W) + (2 x 500W) = 3000W + 1000W = 4000W = 4kW. When calculating maximum demand, diversity factors may be applied to reduce the total, but the actual connected load is 4kW.',
@@ -539,12 +499,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 130,
     question:
       'A commercial installation has the following loads: lighting 8kW, small power 15kW, cooking 12kW, and a 30kW three-phase motor (power factor 0.85). Using standard diversity factors, the estimated maximum demand for the lighting (66%) and small power (100% of first 10kW + 50% remainder) is closest to:',
-    options: [
-      '15.78kW',
-      '23.00kW',
-      '17.78kW',
-      '12.50kW',
-    ],
+    options: ['15.78kW', '23.00kW', '17.78kW', '12.50kW'],
     correctAnswer: 2,
     explanation:
       'Lighting: 8kW x 0.66 = 5.28kW. Small power: first 10kW at 100% = 10kW, remaining 5kW at 50% = 2.5kW, total = 12.5kW. Combined lighting and small power after diversity = 5.28 + 12.5 = 17.78kW.',
@@ -595,12 +550,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 133,
     question:
       'A 6mm² T&E cable clipped direct (Reference Method C) has a current-carrying capacity of 47A. If the ambient temperature correction factor (Ca) is 0.94 and the grouping factor (Cg) is 0.80, what is the effective current-carrying capacity?',
-    options: [
-      '47A',
-      '35.34A',
-      '39.48A',
-      '44.18A',
-    ],
+    options: ['47A', '35.34A', '39.48A', '44.18A'],
     correctAnswer: 1,
     explanation:
       "Effective Iz = tabulated Iz x Ca x Cg = 47 x 0.94 x 0.80 = 35.34A. Both correction factors reduce the cable's ability to dissipate heat, so the effective capacity is significantly lower than the tabulated value.",
@@ -612,13 +562,8 @@ export const questionsPart2: StandardMockQuestion[] = [
   {
     id: 134,
     question:
-      'For a power circuit in a domestic installation, what is the maximum permitted voltage drop as a percentage of the nominal supply voltage according to BS 7671?',
-    options: [
-      '3%',
-      '10%',
-      '5%',
-      '1%',
-    ],
+      'For a power circuit in a domestic installation, what is the recommended maximum voltage drop as a percentage of the nominal supply voltage according to BS 7671?',
+    options: ['3%', '10%', '5%', '1%'],
     correctAnswer: 2,
     explanation:
       'BS 7671 permits a maximum voltage drop of 5% of the nominal voltage (230V) for power circuits, which is 11.5V. For lighting circuits, the limit is 3% (6.9V). These limits ensure equipment operates correctly and efficiently.',
@@ -649,12 +594,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 136,
     question:
       'A 4mm² T&E cable (mV/A/m = 11) supplies a 32A load over 18 metres. What is the voltage drop?',
-    options: [
-      '6.34V',
-      '6.05V',
-      '5.28V',
-      '7.04V',
-    ],
+    options: ['6.34V', '6.05V', '5.28V', '7.04V'],
     correctAnswer: 0,
     explanation:
       'Voltage drop = (mV/A/m x I x L) / 1000 = (11 x 32 x 18) / 1000 = 6336 / 1000 = 6.34V. This is within the 5% limit (11.5V) for a power circuit but would exceed the 3% limit (6.9V) if it were a lighting circuit.',
@@ -667,12 +607,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 137,
     question:
       'A cable is to be installed in thermal insulation for its entire length. What correction factor (Ci) should typically be applied?',
-    options: [
-      '1.0',
-      '0.5',
-      '0.75',
-      '0.25',
-    ],
+    options: ['1.0', '0.5', '0.75', '0.25'],
     correctAnswer: 1,
     explanation:
       "When a cable is totally surrounded by thermal insulation for more than 0.5m, a correction factor (Ci) of 0.5 is typically applied. This halves the cable's effective current-carrying capacity because the insulation prevents heat dissipation. This is a significant derating that often requires a much larger cable.",
@@ -742,12 +677,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 141,
     question:
       'An electrician charges £45/hour and estimates a job will take 6 hours. Materials cost £320. What is the total cost excluding VAT?',
-    options: [
-      '£365',
-      '£590',
-      '£270',
-      '£640',
-    ],
+    options: ['£365', '£590', '£270', '£640'],
     correctAnswer: 1,
     explanation:
       'Total = Labour + Materials. Labour = £45 x 6 = £270. Materials = £320. Total = £270 + £320 = £590 excluding VAT. This is the net cost before any profit markup or VAT is applied.',
@@ -759,12 +689,7 @@ export const questionsPart2: StandardMockQuestion[] = [
   {
     id: 142,
     question: 'What is the current standard rate of VAT in the UK?',
-    options: [
-      '15%',
-      '17.5%',
-      '20%',
-      '25%',
-    ],
+    options: ['15%', '17.5%', '20%', '25%'],
     correctAnswer: 2,
     explanation:
       'The standard rate of VAT in the UK is 20%. VAT-registered electricians (those with a taxable turnover exceeding the threshold) must charge VAT on their services and submit VAT returns to HMRC.',
@@ -777,12 +702,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 143,
     question:
       'A material takeoff for a kitchen rewire lists: 30m of 2.5mm² T&E (£0.85/m), 15m of 1.5mm² T&E (£0.55/m), 6 double sockets (£3.20 each), and a consumer unit (£85). What is the total material cost?',
-    options: [
-      '£150.75',
-      '£138.95',
-      '£128.45',
-      '£137.95',
-    ],
+    options: ['£150.75', '£138.95', '£128.45', '£137.95'],
     correctAnswer: 3,
     explanation:
       'Cable: (30 x £0.85) + (15 x £0.55) = £25.50 + £8.25 = £33.75. Accessories: 6 x £3.20 = £19.20. Consumer unit: £85.00. Total: £33.75 + £19.20 + £85.00 = £137.95.',
@@ -795,12 +715,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 144,
     question:
       'An electrician applies a 25% markup to cover overheads and profit. If the net cost of a job (materials plus labour) is £800, what is the selling price before VAT?',
-    options: [
-      '£1000',
-      '£960',
-      '£825',
-      '£1200',
-    ],
+    options: ['£1000', '£960', '£825', '£1200'],
     correctAnswer: 0,
     explanation:
       "Selling price = Net cost x (1 + markup percentage). £800 x 1.25 = £1,000. The 25% markup covers overheads (van, tools, insurance, admin) and provides the electrician's profit margin.",
@@ -830,12 +745,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 146,
     question:
       'A job is quoted at £1,200 plus VAT. The client is VAT-registered. How much VAT will the client be able to reclaim?',
-    options: [
-      'Nothing — VAT cannot be reclaimed',
-      '£200',
-      '£240',
-      '£120',
-    ],
+    options: ['Nothing — VAT cannot be reclaimed', '£200', '£240', '£120'],
     correctAnswer: 2,
     explanation:
       'VAT at 20% on £1,200 = £240. A VAT-registered business can reclaim the input VAT they are charged on goods and services purchased for business purposes, so the client can reclaim the full £240 on their VAT return.',
@@ -866,12 +776,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 148,
     question:
       "An electrician's quotation includes: materials £1,450, labour (40 hours at £50/hour) £2,000, plant hire £200, and a 20% markup. What is the total quotation price including VAT at 20%?",
-    options: [
-      '£5,256',
-      '£4,380',
-      '£4,800',
-      '£5,760',
-    ],
+    options: ['£5,256', '£4,380', '£4,800', '£5,760'],
     correctAnswer: 0,
     explanation:
       'Net cost = £1,450 + £2,000 + £200 = £3,650. With 20% markup: £3,650 x 1.20 = £4,380. With 20% VAT: £4,380 x 1.20 = £5,256. The quotation price including VAT is £5,256.',
@@ -902,12 +807,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 150,
     question:
       'A sole trader electrician has annual turnover of £90,000, material costs of £25,000, subcontractor costs of £10,000, vehicle costs of £6,000, tool replacement of £2,000, insurance of £3,000, and other overheads of £4,000. What is the approximate net profit before tax?',
-    options: [
-      '£50,000',
-      '£35,000',
-      '£40,000',
-      '£55,000',
-    ],
+    options: ['£50,000', '£35,000', '£40,000', '£55,000'],
     correctAnswer: 2,
     explanation:
       'Total costs = £25,000 + £10,000 + £6,000 + £2,000 + £3,000 + £4,000 = £50,000. Net profit = £90,000 - £50,000 = £40,000 before tax. Understanding profitability is essential for setting sustainable labour rates and ensuring the business remains viable.',
@@ -922,12 +822,7 @@ export const questionsPart2: StandardMockQuestion[] = [
   {
     id: 151,
     question: 'A conduit run has two 90-degree bends. What is the total angle of bends in the run?',
-    options: [
-      '90°',
-      '360°',
-      '270°',
-      '180°',
-    ],
+    options: ['90°', '360°', '270°', '180°'],
     correctAnswer: 3,
     explanation:
       'The total angle of bends is simply the sum of all individual bends: 90° + 90° = 180°. Best practice is to limit the total angle of bends between draw-in points to 180° to ensure cables can be pulled through without excessive force or damage.',
@@ -958,12 +853,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 153,
     question:
       'A trunking has an internal cross-sectional area of 3,459mm². Twelve cables are to be installed with a total cable factor of 540mm². What is the trunking fill percentage?',
-    options: [
-      '6.4%',
-      '15.6%',
-      '45%',
-      '12.6%',
-    ],
+    options: ['6.4%', '15.6%', '45%', '12.6%'],
     correctAnswer: 1,
     explanation:
       "Trunking fill percentage = (total cable factor / trunking space factor) x 100 = (540 / 3,459) x 100 = 15.6%. BS 7671 recommends that cable capacity should not exceed 45% of the trunking's internal area to allow for heat dissipation and future additions.",
@@ -976,12 +866,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 154,
     question:
       "An electrician needs to calculate the length of cable required to run diagonally across a ceiling void. The void is 3m wide and 4m long. Using Pythagoras' theorem, what is the diagonal length?",
-    options: [
-      '7m',
-      '6m',
-      '5m',
-      '3.5m',
-    ],
+    options: ['7m', '6m', '5m', '3.5m'],
     correctAnswer: 2,
     explanation:
       "Using Pythagoras' theorem: diagonal = √(3² + 4²) = √(9 + 16) = √25 = 5m. This is the classic 3-4-5 right triangle. Electricians use this regularly to calculate cable lengths for diagonal runs.",
@@ -994,12 +879,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 155,
     question:
       'What angle does a conduit need to be bent at to create a standard offset (set) that rises 100mm over a horizontal distance of 173mm?',
-    options: [
-      '45°',
-      '15°',
-      '60°',
-      '30°',
-    ],
+    options: ['45°', '15°', '60°', '30°'],
     correctAnswer: 3,
     explanation:
       'Using trigonometry: tan(angle) = opposite/adjacent = 100/173 = 0.578. The inverse tan of 0.578 is approximately 30°. A 30° offset is a common conduit bend angle used when a smaller offset is needed than a standard 45° set would provide.',
@@ -1012,12 +892,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 156,
     question:
       'The maximum recommended trunking fill capacity is 45% of the internal cross-sectional area. A 100mm x 50mm trunking has an internal area of 4,356mm². How many 2.5mm² T&E cables (cable factor 11.4mm² each) can be installed?',
-    options: [
-      '171 cables',
-      '382 cables',
-      '100 cables',
-      '45 cables',
-    ],
+    options: ['171 cables', '382 cables', '100 cables', '45 cables'],
     correctAnswer: 0,
     explanation:
       'Maximum cable area = 4,356 x 0.45 = 1,960.2mm². Number of cables = 1,960.2 / 11.4 = 171.9, so 171 cables maximum. Always round down to ensure the fill does not exceed the 45% limit.',
@@ -1048,12 +923,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 158,
     question:
       'A cable tray runs at an angle of 45° to navigate between two levels. The vertical height difference is 2m. What length of cable tray is needed for the angled section?',
-    options: [
-      '4m',
-      '1.41m',
-      '2.83m',
-      '2m',
-    ],
+    options: ['4m', '1.41m', '2.83m', '2m'],
     correctAnswer: 2,
     explanation:
       'Using trigonometry: for a 45° angle, sin(45°) = opposite/hypotenuse. So hypotenuse = opposite/sin(45°) = 2/0.707 = 2.83m. Alternatively, since sin(45°) = cos(45°), the horizontal distance also equals 2m, and by Pythagoras: √(2² + 2²) = √8 = 2.83m.',
@@ -1066,12 +936,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 159,
     question:
       'A conduit installation requires a passover bend to allow one conduit to pass over another. If the crossing conduit is 25mm in diameter and a 10mm clearance is required above and below, what is the minimum height of the passover?',
-    options: [
-      '25mm',
-      '35mm',
-      '55mm',
-      '45mm',
-    ],
+    options: ['25mm', '35mm', '55mm', '45mm'],
     correctAnswer: 3,
     explanation:
       'The passover height = conduit diameter + clearance above + clearance below = 25mm + 10mm + 10mm = 45mm. Adequate clearance is essential to prevent the conduits from touching (which could cause chafing) and to allow for thermal movement.',
@@ -1145,12 +1010,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 163,
     question:
       "A Level 1 sample question states: 'A cable drum contains 100 metres of cable. An electrician uses 37 metres on Monday and 28 metres on Tuesday. How much cable remains?' What is the answer?",
-    options: [
-      '72 metres',
-      '65 metres',
-      '45 metres',
-      '35 metres',
-    ],
+    options: ['72 metres', '65 metres', '45 metres', '35 metres'],
     correctAnswer: 3,
     explanation:
       'Cable used = 37 + 28 = 65 metres. Cable remaining = 100 - 65 = 35 metres. This is a typical Level 1 subtraction question set in a practical workplace context.',
@@ -1199,12 +1059,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 166,
     question:
       "A Level 1 sample question asks: 'An electrician needs 15 spotlight fittings for each of 4 rooms. Fittings come in boxes of 6. How many boxes must be ordered?' What is the answer?",
-    options: [
-      '12 boxes',
-      '9 boxes',
-      '10 boxes',
-      '8 boxes',
-    ],
+    options: ['12 boxes', '9 boxes', '10 boxes', '8 boxes'],
     correctAnswer: 2,
     explanation:
       'Total fittings = 15 x 4 = 60. Boxes needed = 60 ÷ 6 = 10 boxes exactly. In questions about ordering, always round UP to the nearest whole box, as you cannot order a fraction of a box. In this case it divides exactly.',
@@ -1271,12 +1126,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 170,
     question:
       'A Level 1 sample question presents a scaled floor plan where 1cm represents 2m. A room measures 3.5cm by 4cm on the plan. What are the actual dimensions and area of the room?',
-    options: [
-      '5.5m x 6m = 33m²',
-      '3.5m x 4m = 14m²',
-      '7m x 8m = 56m²',
-      '14m x 16m = 224m²',
-    ],
+    options: ['5.5m x 6m = 33m²', '3.5m x 4m = 14m²', '7m x 8m = 56m²', '14m x 16m = 224m²'],
     correctAnswer: 2,
     explanation:
       'Scale: 1cm = 2m. Actual length = 3.5 x 2 = 7m. Actual width = 4 x 2 = 8m. Area = 7 x 8 = 56m². Scale drawings are commonly used in the electrical trade for planning installations, and being able to read them accurately is an essential skill.',
@@ -1382,12 +1232,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 176,
     question:
       'A Level 2 problem involves interpreting a bar chart showing monthly energy consumption and calculating the mean (average) consumption over 6 months. The values are: 450, 380, 320, 290, 310, 350 kWh. What is the mean?',
-    options: [
-      '350 kWh',
-      '290 kWh',
-      '320 kWh',
-      '383.3 kWh',
-    ],
+    options: ['350 kWh', '290 kWh', '320 kWh', '383.3 kWh'],
     correctAnswer: 0,
     explanation:
       'Mean = sum of all values ÷ number of values = (450 + 380 + 320 + 290 + 310 + 350) ÷ 6 = 2,100 ÷ 6 = 350 kWh. Reading data from charts and calculating averages are key Level 2 data handling skills.',
@@ -1694,7 +1539,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     options: [
       'A list of the tools and materials that were used to complete the task, and nothing else at all',
       'A description of the task, what was done well, what could be improved, and what was learned from the experience',
-      'A copy of the manufacturer\'s instructions, for each item of equipment installed on the job',
+      "A copy of the manufacturer's instructions, for each item of equipment installed on the job",
       'A short statement simply confirming that the task was completed on time, with no further detail of any kind given',
     ],
     correctAnswer: 1,
@@ -1800,7 +1645,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'An apprentice has strong practical skills but struggles to write reflective accounts. Which strategy would best help them improve?',
     options: [
-      'Ask a more confident colleague (or the supervisor) to write the reflective accounts on the apprentice\'s behalf, so the wording reads better for the assessor',
+      "Ask a more confident colleague (or the supervisor) to write the reflective accounts on the apprentice's behalf, so the wording reads better for the assessor",
       'Avoid reflective accounts altogether and rely only on other evidence (photographs, certificates, witness testimonies) in the portfolio',
       'Write one very long reflective account at the end of the year (a single summary) covering every task of the apprenticeship',
       'Use a structured template with prompts (What did I do? Why? What went well? What would I change? What did I learn?) and practise writing short accounts after each significant task',

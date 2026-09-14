@@ -48,12 +48,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 3,
     question: 'What is the unit for measuring current?',
-    options: [
-      'Volts (V)',
-      'Ohms (Ω)',
-      'Watts (W)',
-      'Amperes (A)',
-    ],
+    options: ['Volts (V)', 'Ohms (Ω)', 'Watts (W)', 'Amperes (A)'],
     correctAnswer: 3,
     explanation: 'Current is measured in Amperes or Amps, with the symbol A.',
     section: '2.1.2',
@@ -63,12 +58,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 4,
     question: 'What is the unit for measuring voltage?',
-    options: [
-      'Volts (V)',
-      'Ohms (Ω)',
-      'Amperes (A)',
-      'Watts (W)',
-    ],
+    options: ['Volts (V)', 'Ohms (Ω)', 'Amperes (A)', 'Watts (W)'],
     correctAnswer: 0,
     explanation: 'Voltage is measured in Volts, with the symbol V.',
     section: '2.1.2',
@@ -78,12 +68,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 5,
     question: 'What is the unit for measuring resistance?',
-    options: [
-      'Volts (V)',
-      'Ohms (Ω)',
-      'Amperes (A)',
-      'Watts (W)',
-    ],
+    options: ['Volts (V)', 'Ohms (Ω)', 'Amperes (A)', 'Watts (W)'],
     correctAnswer: 1,
     explanation: 'Resistance is measured in Ohms, with the symbol Ω (Greek letter omega).',
     section: '2.1.2',
@@ -124,12 +109,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 8,
     question: 'What is the symbol for voltage in electrical formulas?',
-    options: [
-      'V',
-      'I',
-      'R',
-      'P',
-    ],
+    options: ['V', 'I', 'R', 'P'],
     correctAnswer: 0,
     explanation: 'Voltage is represented by the symbol V in electrical formulas.',
     section: '2.1.2',
@@ -139,12 +119,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 9,
     question: 'What is the symbol for current in electrical formulas?',
-    options: [
-      'V',
-      'I',
-      'R',
-      'P',
-    ],
+    options: ['V', 'I', 'R', 'P'],
     correctAnswer: 1,
     explanation: 'Current is represented by the symbol I in electrical formulas.',
     section: '2.1.2',
@@ -154,12 +129,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 10,
     question: 'What is the symbol for resistance in electrical formulas?',
-    options: [
-      'I',
-      'V',
-      'R',
-      'P',
-    ],
+    options: ['I', 'V', 'R', 'P'],
     correctAnswer: 2,
     explanation: 'Resistance is represented by the symbol R in electrical formulas.',
     section: '2.1.2',
@@ -169,12 +139,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 11,
     question: 'What instrument is used to measure voltage?',
-    options: [
-      'Ammeter',
-      'Wattmeter',
-      'Ohmmeter',
-      'Voltmeter',
-    ],
+    options: ['Ammeter', 'Wattmeter', 'Ohmmeter', 'Voltmeter'],
     correctAnswer: 3,
     explanation: 'A voltmeter is used to measure voltage in electrical circuits.',
     section: '2.1.3',
@@ -184,12 +149,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 12,
     question: 'What instrument is used to measure current?',
-    options: [
-      'Ammeter',
-      'Voltmeter',
-      'Ohmmeter',
-      'Wattmeter',
-    ],
+    options: ['Ammeter', 'Voltmeter', 'Ohmmeter', 'Wattmeter'],
     correctAnswer: 0,
     explanation: 'An ammeter is used to measure current in electrical circuits.',
     section: '2.1.3',
@@ -199,12 +159,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 13,
     question: 'What instrument is used to measure resistance?',
-    options: [
-      'Ammeter',
-      'Ohmmeter',
-      'Voltmeter',
-      'Wattmeter',
-    ],
+    options: ['Ammeter', 'Ohmmeter', 'Voltmeter', 'Wattmeter'],
     correctAnswer: 1,
     explanation: 'An ohmmeter is used to measure resistance in electrical circuits.',
     section: '2.1.3',
@@ -214,12 +169,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 14,
     question: 'How should an ammeter be connected in a circuit?',
-    options: [
-      'In parallel',
-      'Across the supply',
-      'In series',
-      'To earth',
-    ],
+    options: ['In parallel', 'Across the supply', 'In series', 'To earth'],
     correctAnswer: 2,
     explanation:
       'An ammeter must be connected in series with the circuit to measure the current flowing through it.',
@@ -230,12 +180,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 15,
     question: 'How should a voltmeter be connected in a circuit?',
-    options: [
-      'In series',
-      'To earth only',
-      'Through a resistor',
-      'In parallel',
-    ],
+    options: ['In series', 'To earth only', 'Through a resistor', 'In parallel'],
     correctAnswer: 3,
     explanation:
       'A voltmeter must be connected in parallel across the component to measure the voltage across it.',
@@ -262,12 +207,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 17,
     question: "What does the prefix 'kilo' mean?",
-    options: [
-      'One tenth',
-      'One thousand',
-      'One hundred',
-      'One million',
-    ],
+    options: ['One tenth', 'One thousand', 'One hundred', 'One million'],
     correctAnswer: 1,
     explanation: "The prefix 'kilo' means one thousand (×1000).",
     section: '2.1.4',
@@ -277,12 +217,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 18,
     question: "What does the prefix 'milli' mean?",
-    options: [
-      'One thousand',
-      'One tenth',
-      'One thousandth',
-      'One hundredth',
-    ],
+    options: ['One thousand', 'One tenth', 'One thousandth', 'One hundredth'],
     correctAnswer: 2,
     explanation: "The prefix 'milli' means one thousandth (÷1000 or ×0.001).",
     section: '2.1.4',
@@ -292,12 +227,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 19,
     question: "What does the prefix 'mega' mean?",
-    options: [
-      'One thousand',
-      'One hundred',
-      'One billion',
-      'One million',
-    ],
+    options: ['One thousand', 'One hundred', 'One billion', 'One million'],
     correctAnswer: 3,
     explanation: "The prefix 'mega' means one million (×1,000,000).",
     section: '2.1.4',
@@ -307,12 +237,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 20,
     question: "What does the prefix 'micro' mean?",
-    options: [
-      'One millionth',
-      'One thousandth',
-      'One billionth',
-      'One hundredth',
-    ],
+    options: ['One millionth', 'One thousandth', 'One billionth', 'One hundredth'],
     correctAnswer: 0,
     explanation: "The prefix 'micro' means one millionth (÷1,000,000 or ×0.000001).",
     section: '2.1.4',
@@ -322,12 +247,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 21,
     question: 'What is 0.25 A expressed in milliamperes?',
-    options: [
-      '25 mA',
-      '250 mA',
-      '2500 mA',
-      '0.25 mA',
-    ],
+    options: ['25 mA', '250 mA', '2500 mA', '0.25 mA'],
     correctAnswer: 1,
     explanation: '0.25 A = 0.25 × 1000 = 250 mA',
     section: '2.1.4',
@@ -337,12 +257,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 22,
     question: 'What is 1500 mV expressed in volts?',
-    options: [
-      '15 V',
-      '150 V',
-      '1.5 V',
-      '0.15 V',
-    ],
+    options: ['15 V', '150 V', '1.5 V', '0.15 V'],
     correctAnswer: 2,
     explanation: '1500 mV = 1500 ÷ 1000 = 1.5 V',
     section: '2.1.4',
@@ -368,12 +283,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 24,
     question: 'How is 2300 written in scientific notation?',
-    options: [
-      '2.3 × 10³',
-      '23 × 10²',
-      '0.23 × 10⁴',
-      '230 × 10¹',
-    ],
+    options: ['2.3 × 10³', '23 × 10²', '0.23 × 10⁴', '230 × 10¹'],
     correctAnswer: 0,
     explanation: '2300 = 2.3 × 10³ (2.3 multiplied by 10 to the power of 3)',
     section: '2.1.4',
@@ -399,12 +309,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 26,
     question: 'What charge do electrons have?',
-    options: [
-      'Positive',
-      'Neutral',
-      'Negative',
-      'Variable',
-    ],
+    options: ['Positive', 'Neutral', 'Negative', 'Variable'],
     correctAnswer: 2,
     explanation: 'Electrons have a negative electrical charge.',
     section: '2.1.1',
@@ -414,12 +319,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 27,
     question: 'What charge do protons have?',
-    options: [
-      'Negative',
-      'Variable',
-      'Neutral',
-      'Positive',
-    ],
+    options: ['Negative', 'Variable', 'Neutral', 'Positive'],
     correctAnswer: 3,
     explanation: 'Protons have a positive electrical charge.',
     section: '2.1.1',
@@ -541,12 +441,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 35,
     question: 'What is the standard unit of charge?',
-    options: [
-      'Volt',
-      'Ampere',
-      'Ohm',
-      'Coulomb',
-    ],
+    options: ['Volt', 'Ampere', 'Ohm', 'Coulomb'],
     correctAnswer: 3,
     explanation: 'The coulomb (C) is the standard unit of electrical charge.',
     section: '2.1.2',
@@ -556,12 +451,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 36,
     question: 'How much charge passes through a circuit carrying 1 ampere for 1 second?',
-    options: [
-      '1 coulomb',
-      '1 ohm',
-      '1 volt',
-      '1 watt',
-    ],
+    options: ['1 coulomb', '1 ohm', '1 volt', '1 watt'],
     correctAnswer: 0,
     explanation: '1 ampere = 1 coulomb per second, so 1 ampere for 1 second = 1 coulomb.',
     section: '2.1.2',
@@ -619,12 +509,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 40,
     question: 'What is the earth potential considered to be?',
-    options: [
-      'Zero volts',
-      '230 volts',
-      '1 volt',
-      'Variable',
-    ],
+    options: ['Zero volts', '230 volts', '1 volt', 'Variable'],
     correctAnswer: 0,
     explanation: 'Earth potential is considered to be zero volts and is used as a reference point.',
     section: '2.1.5',
@@ -650,12 +535,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 42,
     question: 'What colour is the earth conductor in UK electrical installations?',
-    options: [
-      'Red',
-      'Brown',
-      'Green and yellow',
-      'Blue',
-    ],
+    options: ['Red', 'Brown', 'Green and yellow', 'Blue'],
     correctAnswer: 2,
     explanation: 'The earth conductor is green and yellow striped in UK electrical installations.',
     section: '2.1.5',
@@ -666,13 +546,8 @@ export const module2QuestionBank: QuestionBank[] = [
   // Section 2.2: Ohm's Law and Basic Calculations (42 questions)
   {
     id: 43,
-    question: 'Which statement expresses Ohm\'s law?',
-    options: [
-      'V = I + R',
-      'V = I - R',
-      'V = I ÷ R',
-      'V = I × R',
-    ],
+    question: "Which statement expresses Ohm's law?",
+    options: ['V = I + R', 'V = I - R', 'V = I ÷ R', 'V = I × R'],
     correctAnswer: 3,
     explanation: "Ohm's Law states that V = I × R (Voltage = Current × Resistance).",
     section: '2.2.1',
@@ -682,12 +557,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 44,
     question: 'A circuit carries 3 A when 12 V is applied. What is its resistance in ohms?',
-    options: [
-      '4Ω',
-      '15Ω',
-      '9Ω',
-      '36Ω',
-    ],
+    options: ['4Ω', '15Ω', '9Ω', '36Ω'],
     correctAnswer: 0,
     explanation: 'Using R = V/I: R = 12V ÷ 3A = 4Ω',
     section: '2.2.1',
@@ -696,13 +566,9 @@ export const module2QuestionBank: QuestionBank[] = [
   },
   {
     id: 45,
-    question: 'A current of 2 A flows through a 6 Ω resistor. What is the voltage across it in volts?',
-    options: [
-      '3V',
-      '12V',
-      '8V',
-      '4V',
-    ],
+    question:
+      'A current of 2 A flows through a 6 Ω resistor. What is the voltage across it in volts?',
+    options: ['3V', '12V', '8V', '4V'],
     correctAnswer: 1,
     explanation: 'Using V = I × R: V = 2A × 6Ω = 12V',
     section: '2.2.1',
@@ -712,12 +578,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 46,
     question: 'What current, in amperes, flows through a 10 Ω resistor connected to a 20 V supply?',
-    options: [
-      '10A',
-      '200A',
-      '2A',
-      '0.5A',
-    ],
+    options: ['10A', '200A', '2A', '0.5A'],
     correctAnswer: 2,
     explanation: 'Using I = V/R: I = 20V ÷ 10Ω = 2A',
     section: '2.2.1',
@@ -726,7 +587,7 @@ export const module2QuestionBank: QuestionBank[] = [
   },
   {
     id: 47,
-    question: 'Which set shows the three forms of Ohm\'s law?',
+    question: "Which set shows the three forms of Ohm's law?",
     options: [
       'V = R/I, I = R/V, R = VI',
       'V = I + R, I = V - R, R = V/I²',
@@ -742,12 +603,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 48,
     question: "Which triangle helps remember Ohm's Law relationships?",
-    options: [
-      'VIR triangle',
-      'Power triangle',
-      'Force triangle',
-      'Speed triangle',
-    ],
+    options: ['VIR triangle', 'Power triangle', 'Force triangle', 'Speed triangle'],
     correctAnswer: 0,
     explanation: 'The VIR triangle helps remember the relationships: V at top, I and R at bottom.',
     section: '2.2.1',
@@ -757,12 +613,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 49,
     question: 'A lamp takes 0.5 A from a 230 V supply. What is its resistance in ohms?',
-    options: [
-      '115Ω',
-      '460Ω',
-      '690Ω',
-      '230Ω',
-    ],
+    options: ['115Ω', '460Ω', '690Ω', '230Ω'],
     correctAnswer: 1,
     explanation: 'Using R = V/I: R = 230V ÷ 0.5A = 460Ω',
     section: '2.2.1',
@@ -771,13 +622,9 @@ export const module2QuestionBank: QuestionBank[] = [
   },
   {
     id: 50,
-    question: 'A 240 V supply is connected to a circuit of total resistance 60 Ω. What current, in amperes, flows?',
-    options: [
-      '8A',
-      '6A',
-      '4A',
-      '12A',
-    ],
+    question:
+      'A 240 V supply is connected to a circuit of total resistance 60 Ω. What current, in amperes, flows?',
+    options: ['8A', '6A', '4A', '12A'],
     correctAnswer: 2,
     explanation: 'Using I = V/R: I = 240V ÷ 60Ω = 4A',
     section: '2.2.1',
@@ -786,7 +633,7 @@ export const module2QuestionBank: QuestionBank[] = [
   },
   {
     id: 51,
-    question: 'Before applying Ohm\'s law, what must be done with the values used?',
+    question: "Before applying Ohm's law, what must be done with the values used?",
     options: [
       'Convert everything to kilo-units (kV, kA)',
       'Leave the values as given (mV, mA)',
@@ -801,13 +648,9 @@ export const module2QuestionBank: QuestionBank[] = [
   },
   {
     id: 52,
-    question: 'A heating element of resistance 50 Ω is connected to a 230 V supply. What current, in amperes, does it take?',
-    options: [
-      '4.6A',
-      '2.3A',
-      '11.5A',
-      '23A',
-    ],
+    question:
+      'A heating element of resistance 50 Ω is connected to a 230 V supply. What current, in amperes, does it take?',
+    options: ['4.6A', '2.3A', '11.5A', '23A'],
     correctAnswer: 0,
     explanation: 'Using I = V/R: I = 230V ÷ 50Ω = 4.6A',
     section: '2.2.1',
@@ -833,12 +676,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 54,
     question: 'To find I from V = IR, how do you transpose the formula?',
-    options: [
-      'I = V × R',
-      'I = V - R',
-      'I = V ÷ R',
-      'I = R ÷ V',
-    ],
+    options: ['I = V × R', 'I = V - R', 'I = V ÷ R', 'I = R ÷ V'],
     correctAnswer: 2,
     explanation: 'To isolate I, divide both sides by R: I = V ÷ R',
     section: '2.2.2',
@@ -848,12 +686,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 55,
     question: 'To find R from V = IR, how do you transpose the formula?',
-    options: [
-      'R = V × I',
-      'R = I ÷ V',
-      'R = V - I',
-      'R = V ÷ I',
-    ],
+    options: ['R = V × I', 'R = I ÷ V', 'R = V - I', 'R = V ÷ I'],
     correctAnswer: 3,
     explanation: 'To isolate R, divide both sides by I: R = V ÷ I',
     section: '2.2.2',
@@ -878,12 +711,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 57,
     question: 'What is the unit of conductance?',
-    options: [
-      'Ohms',
-      'Siemens',
-      'Volts',
-      'Amperes',
-    ],
+    options: ['Ohms', 'Siemens', 'Volts', 'Amperes'],
     correctAnswer: 1,
     explanation: 'Conductance is measured in Siemens (S), which is the reciprocal of ohms.',
     section: '2.2.3',
@@ -893,12 +721,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 58,
     question: 'If resistance is 5Ω, what is the conductance?',
-    options: [
-      '0.5S',
-      '25S',
-      '0.2S',
-      '5S',
-    ],
+    options: ['0.5S', '25S', '0.2S', '5S'],
     correctAnswer: 2,
     explanation: 'Conductance G = 1/R = 1/5Ω = 0.2S',
     section: '2.2.3',
@@ -956,7 +779,8 @@ export const module2QuestionBank: QuestionBank[] = [
   },
   {
     id: 62,
-    question: 'When starting a circuit calculation, what should be checked before values are substituted?',
+    question:
+      'When starting a circuit calculation, what should be checked before values are substituted?',
     options: [
       'That the supply has been switched on first',
       'That the test meter is reading correctly',
@@ -1004,12 +828,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 65,
     question: 'What is 2.5 kΩ expressed in ohms?',
-    options: [
-      '25Ω',
-      '2500Ω',
-      '250Ω',
-      '25000Ω',
-    ],
+    options: ['25Ω', '2500Ω', '250Ω', '25000Ω'],
     correctAnswer: 1,
     explanation: '2.5 kΩ = 2.5 × 1000 = 2500Ω',
     section: '2.2.4',
@@ -1019,12 +838,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 66,
     question: 'What is 750 mA expressed in amperes?',
-    options: [
-      '7.5A',
-      '75A',
-      '0.75A',
-      '0.075A',
-    ],
+    options: ['7.5A', '75A', '0.75A', '0.075A'],
     correctAnswer: 2,
     explanation: '750 mA = 750 ÷ 1000 = 0.75A',
     section: '2.2.4',
@@ -1034,12 +848,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 67,
     question: 'A 3.3 kΩ resistor carries 5 mA. What is the voltage across it in volts?',
-    options: [
-      '0.165V',
-      '1.65V',
-      '165V',
-      '16.5V',
-    ],
+    options: ['0.165V', '1.65V', '165V', '16.5V'],
     correctAnswer: 3,
     explanation: 'Convert units: 3.3kΩ = 3300Ω, 5mA = 0.005A. V = I×R = 0.005×3300 = 16.5V',
     section: '2.2.4',
@@ -1048,7 +857,7 @@ export const module2QuestionBank: QuestionBank[] = [
   },
   {
     id: 68,
-    question: 'What happens to the accuracy of Ohm\'s law calculations at very high frequencies?',
+    question: "What happens to the accuracy of Ohm's law calculations at very high frequencies?",
     options: [
       'Reactive effects may need to be considered',
       "Ohm's Law no longer applies to any component",
@@ -1097,12 +906,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 71,
     question: 'Which of these is a non-ohmic device?',
-    options: [
-      'Copper wire',
-      'Carbon resistor',
-      'Metal film resistor',
-      'LED',
-    ],
+    options: ['Copper wire', 'Carbon resistor', 'Metal film resistor', 'LED'],
     correctAnswer: 3,
     explanation:
       'LEDs are non-ohmic - their resistance changes significantly with applied voltage.',
@@ -1225,13 +1029,9 @@ export const module2QuestionBank: QuestionBank[] = [
   },
   {
     id: 79,
-    question: 'A resistor is marked 100 Ω plus or minus 5 %. Between which two values could its actual resistance lie?',
-    options: [
-      '99Ω and 101Ω',
-      '90Ω and 110Ω',
-      '50Ω and 150Ω',
-      '95Ω and 105Ω',
-    ],
+    question:
+      'A resistor is marked 100 Ω plus or minus 5 %. Between which two values could its actual resistance lie?',
+    options: ['99Ω and 101Ω', '90Ω and 110Ω', '50Ω and 150Ω', '95Ω and 105Ω'],
     correctAnswer: 3,
     explanation: '±5% of 100Ω = ±5Ω, so the range is 95Ω to 105Ω',
     section: '2.2.6',
@@ -1289,12 +1089,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 83,
     question: 'What percentage derating is commonly used for electronic components?',
-    options: [
-      '90%',
-      '50%',
-      '0%',
-      '10-20%',
-    ],
+    options: ['90%', '50%', '0%', '10-20%'],
     correctAnswer: 3,
     explanation: 'Common practice is to derate components by 10-20% below their maximum ratings.',
     section: '2.2.6',
@@ -1304,12 +1099,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 84,
     question: 'In electrical calculations, how many significant figures should typically be used?',
-    options: [
-      '2-3',
-      '10',
-      'As many as possible',
-      '1',
-    ],
+    options: ['2-3', '10', 'As many as possible', '1'],
     correctAnswer: 0,
     explanation:
       'Typically 2-3 significant figures are appropriate for electrical calculations, matching component accuracy.',
@@ -1371,12 +1161,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 88,
     question:
       'Three resistors of 2 Ω, 3 Ω and 5 Ω are connected in series. What is the total resistance in ohms?',
-    options: [
-      '10Ω',
-      '5Ω',
-      '1Ω',
-      '30Ω',
-    ],
+    options: ['10Ω', '5Ω', '1Ω', '30Ω'],
     correctAnswer: 0,
     explanation: 'R_total = 2Ω + 3Ω + 5Ω = 10Ω',
     section: '2.3.1',
@@ -1448,12 +1233,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 93,
     question: 'Two 6 Ω resistors are connected in parallel. What is the total resistance in ohms?',
-    options: [
-      '12Ω',
-      '3Ω',
-      '1Ω',
-      '6Ω',
-    ],
+    options: ['12Ω', '3Ω', '1Ω', '6Ω'],
     correctAnswer: 1,
     explanation: 'R_total = (6 × 6)/(6 + 6) = 36/12 = 3Ω',
     section: '2.3.2',
@@ -1510,12 +1290,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 97,
     question:
       'Three 12 Ω resistors are connected in parallel. What is the total resistance in ohms?',
-    options: [
-      '3Ω',
-      '4Ω',
-      '36Ω',
-      '12Ω',
-    ],
+    options: ['3Ω', '4Ω', '36Ω', '12Ω'],
     correctAnswer: 1,
     explanation: 'For n equal resistors in parallel: R_total = R/n = 12Ω/3 = 4Ω',
     section: '2.3.2',
@@ -1525,12 +1300,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 98,
     question: 'In which circuit configuration do components share voltage?',
-    options: [
-      'Both',
-      'Parallel',
-      'Series',
-      'Neither',
-    ],
+    options: ['Both', 'Parallel', 'Series', 'Neither'],
     correctAnswer: 2,
     explanation: 'In series circuits, components share (divide) the total voltage between them.',
     section: '2.3.3',
@@ -1540,12 +1310,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 99,
     question: 'In which circuit configuration do components share current?',
-    options: [
-      'Series',
-      'Neither',
-      'Both',
-      'Parallel',
-    ],
+    options: ['Series', 'Neither', 'Both', 'Parallel'],
     correctAnswer: 3,
     explanation: 'In parallel circuits, components share (divide) the total current between them.',
     section: '2.3.3',
@@ -1555,12 +1320,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 100,
     question: 'Which circuit type is commonly used for domestic lighting?',
-    options: [
-      'Parallel only',
-      'Both equally',
-      'Neither',
-      'Series only',
-    ],
+    options: ['Parallel only', 'Both equally', 'Neither', 'Series only'],
     correctAnswer: 0,
     explanation:
       'Domestic lighting uses parallel circuits so each light can be controlled independently.',
@@ -1604,12 +1364,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 103,
     question:
       'A 12 V supply feeds three equal resistors in series. What is the voltage across each resistor, in volts?',
-    options: [
-      '3V',
-      '12V',
-      '6V',
-      '4V',
-    ],
+    options: ['3V', '12V', '6V', '4V'],
     correctAnswer: 3,
     explanation: 'With equal resistors in series, voltage divides equally: 12V ÷ 3 = 4V each',
     section: '2.3.4',
@@ -1636,12 +1391,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 105,
     question:
       'A 9 V supply feeds R1 = 3 Ω in series with R2 = 6 Ω. What is the voltage across R2, in volts?',
-    options: [
-      '9V',
-      '6V',
-      '4.5V',
-      '3V',
-    ],
+    options: ['9V', '6V', '4.5V', '3V'],
     correctAnswer: 1,
     explanation: 'V_R2 = (R2/(R1+R2)) × V_supply = (6/(3+6)) × 9V = 6V',
     section: '2.3.4',
@@ -1684,12 +1434,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 108,
     question:
       'Two parallel branches of 4 Ω and 12 Ω carry a total current of 8 A. What current, in amperes, flows in the 4 Ω branch?',
-    options: [
-      '6A',
-      '2A',
-      '8A',
-      '4A',
-    ],
+    options: ['6A', '2A', '8A', '4A'],
     correctAnswer: 0,
     explanation: 'I_4Ω = I_total × (R_other/(R_4Ω + R_other)) = 8A × (12/(4+12)) = 6A',
     section: '2.3.4',
@@ -1779,12 +1524,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 114,
     question:
       'At a junction, 5 A enters and 2 A and 1 A leave by two branches. What current leaves by the third branch?',
-    options: [
-      '1A leaving',
-      '2A entering',
-      '2A leaving',
-      '5A leaving',
-    ],
+    options: ['1A leaving', '2A entering', '2A leaving', '5A leaving'],
     correctAnswer: 2,
     explanation:
       'By KCL: currents in = currents out, so 5A = 2A + 1A + I3, therefore I3 = 2A leaving',
@@ -1797,7 +1537,7 @@ export const module2QuestionBank: QuestionBank[] = [
     question: "Why are Kirchhoff's Laws important?",
     options: [
       'They are of no practical use at all',
-      'They replace Ohm\'s Law in circuit calculations',
+      "They replace Ohm's Law in circuit calculations",
       'They apply only to simple series circuits',
       'They allow analysis of complex circuits',
     ],
@@ -1873,12 +1613,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 120,
     question: 'When resistors are connected in parallel, what decreases?',
-    options: [
-      'Total resistance',
-      'Current capability',
-      'Voltage',
-      'Power handling',
-    ],
+    options: ['Total resistance', 'Current capability', 'Voltage', 'Power handling'],
     correctAnswer: 0,
     explanation: 'Connecting resistors in parallel always decreases the total resistance.',
     section: '2.3.7',
@@ -1888,12 +1623,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 121,
     question: 'Which connection method provides the lowest total resistance?',
-    options: [
-      'Series',
-      'Parallel',
-      'Mixed',
-      'All the same',
-    ],
+    options: ['Series', 'Parallel', 'Mixed', 'All the same'],
     correctAnswer: 1,
     explanation: 'Parallel connection always provides the lowest total resistance.',
     section: '2.3.7',
@@ -1903,12 +1633,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 122,
     question: 'Which connection method allows independent control of components?',
-    options: [
-      'Series',
-      'Neither',
-      'Parallel',
-      'Both',
-    ],
+    options: ['Series', 'Neither', 'Parallel', 'Both'],
     correctAnswer: 2,
     explanation:
       'Parallel connection allows independent control because each component has its own complete circuit.',
@@ -1996,12 +1721,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 128,
     question: 'What does AC stand for?',
-    options: [
-      'Alternating Current',
-      'Automatic Current',
-      'Advanced Current',
-      'Amplified Current',
-    ],
+    options: ['Alternating Current', 'Automatic Current', 'Advanced Current', 'Amplified Current'],
     correctAnswer: 0,
     explanation: 'AC stands for Alternating Current.',
     section: '2.4.1',
@@ -2011,12 +1731,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 129,
     question: 'What does DC stand for?',
-    options: [
-      'Distributed Current',
-      'Direct Current',
-      'Dual Current',
-      'Dynamic Current',
-    ],
+    options: ['Distributed Current', 'Direct Current', 'Dual Current', 'Dynamic Current'],
     correctAnswer: 1,
     explanation: 'DC stands for Direct Current.',
     section: '2.4.1',
@@ -2026,12 +1741,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 130,
     question: 'What is the mains supply frequency in the UK?',
-    options: [
-      '25 Hz',
-      '60 Hz',
-      '50 Hz',
-      '100 Hz',
-    ],
+    options: ['25 Hz', '60 Hz', '50 Hz', '100 Hz'],
     correctAnswer: 2,
     explanation: 'The UK mains supply frequency is 50 Hz (50 cycles per second).',
     section: '2.4.1',
@@ -2041,12 +1751,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 131,
     question: 'What is the standard domestic voltage in the UK?',
-    options: [
-      '110V',
-      '415V',
-      '240V',
-      '230V',
-    ],
+    options: ['110V', '415V', '240V', '230V'],
     correctAnswer: 3,
     explanation: 'The standard domestic voltage in the UK is 230V AC.',
     section: '2.4.1',
@@ -2088,12 +1793,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 134,
     question: 'What is the unit of frequency?',
-    options: [
-      'Volts',
-      'Amperes',
-      'Hertz',
-      'Watts',
-    ],
+    options: ['Volts', 'Amperes', 'Hertz', 'Watts'],
     correctAnswer: 2,
     explanation: 'Frequency is measured in Hertz (Hz), named after Heinrich Hertz.',
     section: '2.4.2',
@@ -2103,12 +1803,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 135,
     question: 'If the frequency is 50 Hz, how long, in milliseconds, does one cycle take?',
-    options: [
-      '50 seconds',
-      '0.05 seconds',
-      '2 seconds',
-      '0.02 seconds',
-    ],
+    options: ['50 seconds', '0.05 seconds', '2 seconds', '0.02 seconds'],
     correctAnswer: 3,
     explanation: 'Period = 1/frequency = 1/50 Hz = 0.02 seconds (20 milliseconds)',
     section: '2.4.2',
@@ -2196,12 +1891,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 141,
     question: 'For a sinusoidal AC voltage, what is the relationship between peak and RMS values?',
-    options: [
-      'Peak = RMS × 2',
-      'Peak = RMS × 1.414',
-      'Peak = RMS',
-      'Peak = RMS ÷ 2',
-    ],
+    options: ['Peak = RMS × 2', 'Peak = RMS × 1.414', 'Peak = RMS', 'Peak = RMS ÷ 2'],
     correctAnswer: 1,
     explanation: 'For sinusoidal AC: Peak voltage = RMS voltage × 1.414 (√2)',
     section: '2.4.3',
@@ -2211,12 +1901,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 142,
     question: 'If the RMS voltage of a sine wave is 230 V, what is the peak voltage in volts?',
-    options: [
-      '163V',
-      '230V',
-      '325V',
-      '460V',
-    ],
+    options: ['163V', '230V', '325V', '460V'],
     correctAnswer: 2,
     explanation: 'Peak voltage = RMS × 1.414 = 230V × 1.414 = 325V',
     section: '2.4.3',
@@ -2242,12 +1927,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 144,
     question: 'When AC voltage is stated (e.g., 230V mains), which value is usually meant?',
-    options: [
-      'RMS',
-      'Peak-to-peak',
-      'Peak',
-      'Average',
-    ],
+    options: ['RMS', 'Peak-to-peak', 'Peak', 'Average'],
     correctAnswer: 0,
     explanation: 'AC voltages are normally stated as RMS values unless otherwise specified.',
     section: '2.4.3',
@@ -2257,12 +1937,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 145,
     question: 'What is the average value of a sinusoidal voltage taken over one complete cycle?',
-    options: [
-      'Peak value',
-      'Zero',
-      'RMS value',
-      'Half the peak value',
-    ],
+    options: ['Peak value', 'Zero', 'RMS value', 'Half the peak value'],
     correctAnswer: 1,
     explanation: 'The average value of a sinusoidal AC waveform over a complete cycle is zero.',
     section: '2.4.3',
@@ -2272,12 +1947,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 146,
     question: 'What type of waveform does UK mains electricity have?',
-    options: [
-      'Square wave',
-      'Triangle wave',
-      'Sinusoidal wave',
-      'Sawtooth wave',
-    ],
+    options: ['Square wave', 'Triangle wave', 'Sinusoidal wave', 'Sawtooth wave'],
     correctAnswer: 2,
     explanation: 'UK mains electricity has a sinusoidal (sine wave) waveform.',
     section: '2.4.4',
@@ -2370,12 +2040,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 152,
     question: 'What voltage is typically used for long-distance power transmission?',
-    options: [
-      '132kV or higher',
-      '11kV',
-      '230V',
-      '12V',
-    ],
+    options: ['132kV or higher', '11kV', '230V', '12V'],
     correctAnswer: 0,
     explanation:
       'Long-distance transmission uses very high voltages (132kV, 275kV, 400kV) for efficiency.',
@@ -2433,12 +2098,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 156,
     question: 'What type of current do solar panels produce?',
-    options: [
-      'DC only',
-      'AC only',
-      'Both AC and DC',
-      'Neither',
-    ],
+    options: ['DC only', 'AC only', 'Both AC and DC', 'Neither'],
     correctAnswer: 0,
     explanation: 'Solar panels produce DC current directly from light energy.',
     section: '2.4.6',
@@ -2479,12 +2139,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 159,
     question: 'What does the + symbol indicate on a DC supply?',
-    options: [
-      'High voltage',
-      'Earth connection',
-      'AC connection',
-      'Positive terminal',
-    ],
+    options: ['High voltage', 'Earth connection', 'AC connection', 'Positive terminal'],
     correctAnswer: 3,
     explanation: 'The + symbol indicates the positive terminal of a DC supply.',
     section: '2.4.6',
@@ -2494,12 +2149,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 160,
     question: 'What does the - symbol indicate on a DC supply?',
-    options: [
-      'Negative terminal',
-      'Low voltage',
-      'AC connection',
-      'Dangerous connection',
-    ],
+    options: ['Negative terminal', 'Low voltage', 'AC connection', 'Dangerous connection'],
     correctAnswer: 0,
     explanation: 'The - symbol indicates the negative terminal of a DC supply.',
     section: '2.4.6',
@@ -2639,12 +2289,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 169,
     question: 'Which material is the best electrical conductor?',
-    options: [
-      'PVC',
-      'Copper',
-      'Rubber',
-      'Glass',
-    ],
+    options: ['PVC', 'Copper', 'Rubber', 'Glass'],
     correctAnswer: 1,
     explanation: 'Copper has very low resistivity, making it an excellent electrical conductor.',
     section: '2.5.1',
@@ -2670,12 +2315,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 171,
     question: 'What is an alternative to copper for electrical conductors?',
-    options: [
-      'Steel',
-      'Iron',
-      'Brass',
-      'Aluminium',
-    ],
+    options: ['Steel', 'Iron', 'Brass', 'Aluminium'],
     correctAnswer: 3,
     explanation:
       'Aluminium is commonly used as an alternative to copper, especially in overhead power lines.',
@@ -2734,12 +2374,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 175,
     question: 'What are the units of resistivity?',
-    options: [
-      'Ohms',
-      'Amperes',
-      'Volts',
-      'Ohm-metres',
-    ],
+    options: ['Ohms', 'Amperes', 'Volts', 'Ohm-metres'],
     correctAnswer: 3,
     explanation: 'Resistivity is measured in ohm-metres (Ω⋅m).',
     section: '2.5.2',
@@ -2781,12 +2416,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 178,
     question: 'What is the formula relating resistance to material properties?',
-    options: [
-      'R = V/I',
-      'R = P/I²',
-      'R = ρL/A',
-      'R = L×A/ρ',
-    ],
+    options: ['R = V/I', 'R = P/I²', 'R = ρL/A', 'R = L×A/ρ'],
     correctAnswer: 2,
     explanation: 'R = ρL/A where ρ is resistivity, L is length, and A is cross-sectional area.',
     section: '2.5.2',
@@ -2795,7 +2425,8 @@ export const module2QuestionBank: QuestionBank[] = [
   },
   {
     id: 179,
-    question: 'A wire\'s diameter is doubled while its length stays the same. What happens to its resistance?',
+    question:
+      "A wire's diameter is doubled while its length stays the same. What happens to its resistance?",
     options: [
       'Becomes twice as large',
       'Remains unchanged',
@@ -3308,12 +2939,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 211,
     question: 'Which formula defines electrical power?',
-    options: [
-      'P = V / I',
-      'P = V - I',
-      'P = V + I',
-      'P = V × I',
-    ],
+    options: ['P = V / I', 'P = V - I', 'P = V + I', 'P = V × I'],
     correctAnswer: 3,
     explanation: 'Power is defined as P = V × I (voltage × current).',
     section: '2.6.1',
@@ -3323,12 +2949,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 212,
     question: 'What is the unit of electrical power?',
-    options: [
-      'Watts',
-      'Volts',
-      'Joules',
-      'Amperes',
-    ],
+    options: ['Watts', 'Volts', 'Joules', 'Amperes'],
     correctAnswer: 0,
     explanation: 'Power is measured in Watts (W), named after James Watt.',
     section: '2.6.1',
@@ -3338,12 +2959,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 213,
     question: 'A heater operating at 230 V draws 10 A. What is its power in watts?',
-    options: [
-      '23W',
-      '2.3kW',
-      '2300W',
-      '230W',
-    ],
+    options: ['23W', '2.3kW', '2300W', '230W'],
     correctAnswer: 1,
     explanation: 'P = V × I = 230V × 10A = 2300W = 2.3kW',
     section: '2.6.1',
@@ -3369,12 +2985,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 215,
     question: 'A 100 Ω resistor has 5 V across it. What power, in watts, does it dissipate?',
-    options: [
-      '2W',
-      '500W',
-      '20W',
-      '0.25W',
-    ],
+    options: ['2W', '500W', '20W', '0.25W'],
     correctAnswer: 3,
     explanation: 'P = V²/R = (5V)²/100Ω = 25/100 = 0.25W',
     section: '2.6.1',
@@ -3429,13 +3040,9 @@ export const module2QuestionBank: QuestionBank[] = [
   },
   {
     id: 219,
-    question: 'A 2 kW heater runs for 3 hours. How much energy, in kilowatt-hours, does it consume?',
-    options: [
-      '5 kWh',
-      '3 kWh',
-      '2 kWh',
-      '6 kWh',
-    ],
+    question:
+      'A 2 kW heater runs for 3 hours. How much energy, in kilowatt-hours, does it consume?',
+    options: ['5 kWh', '3 kWh', '2 kWh', '6 kWh'],
     correctAnswer: 3,
     explanation: 'Energy = Power × Time = 2kW × 3h = 6kWh',
     section: '2.6.2',
@@ -3445,12 +3052,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 220,
     question: 'How many joules are in 1 kWh?',
-    options: [
-      '3,600,000 J',
-      '1,000,000 J',
-      '3,600 J',
-      '1,000 J',
-    ],
+    options: ['3,600,000 J', '1,000,000 J', '3,600 J', '1,000 J'],
     correctAnswer: 0,
     explanation: '1 kWh = 1000W × 3600s = 3,600,000 J = 3.6 MJ',
     section: '2.6.2',
@@ -3520,13 +3122,9 @@ export const module2QuestionBank: QuestionBank[] = [
   },
   {
     id: 225,
-    question: 'A motor has an input of 800 W and an output of 720 W. What is its efficiency as a percentage?',
-    options: [
-      '80%',
-      '90%',
-      '110%',
-      '72%',
-    ],
+    question:
+      'A motor has an input of 800 W and an output of 720 W. What is its efficiency as a percentage?',
+    options: ['80%', '90%', '110%', '72%'],
     correctAnswer: 1,
     explanation: 'Efficiency = (720/800) × 100% = 90%',
     section: '2.6.3',
@@ -3584,12 +3182,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 229,
     question: 'What is the typical efficiency range of electric motors?',
-    options: [
-      '10-20%',
-      '80-95%',
-      '50-60%',
-      'Over 100%',
-    ],
+    options: ['10-20%', '80-95%', '50-60%', 'Over 100%'],
     correctAnswer: 1,
     explanation:
       'Modern electric motors typically achieve 80-95% efficiency, depending on size and type.',
@@ -3616,12 +3209,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 231,
     question: 'What is the typical efficiency range of LED lamps?',
-    options: [
-      '5-10%',
-      '60-70%',
-      '30-40%',
-      '80-90%',
-    ],
+    options: ['5-10%', '60-70%', '30-40%', '80-90%'],
     correctAnswer: 3,
     explanation:
       'LED lights are highly efficient, typically achieving 80-90% efficiency in converting electricity to light.',
@@ -3696,12 +3284,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 236,
     question: 'What is the power factor of a purely resistive load?',
-    options: [
-      '1 (unity)',
-      '0 (reactive)',
-      '0.5 (lagging)',
-      '2 (leading)',
-    ],
+    options: ['1 (unity)', '0 (reactive)', '0.5 (lagging)', '2 (leading)'],
     correctAnswer: 0,
     explanation:
       'Purely resistive loads have a power factor of 1 (unity) because voltage and current are in phase.',
@@ -3791,12 +3374,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 242,
     question: 'What is the unit of apparent power?',
-    options: [
-      'Watts (real power)',
-      'VARs (reactive)',
-      'VA (Volt-Amperes)',
-      'Joules (energy)',
-    ],
+    options: ['Watts (real power)', 'VARs (reactive)', 'VA (Volt-Amperes)', 'Joules (energy)'],
     correctAnswer: 2,
     explanation: 'Apparent power is measured in VA (Volt-Amperes).',
     section: '2.6.5',
@@ -3968,12 +3546,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 253,
     question:
       'What DC test voltage is applied when testing insulation resistance on a 230/400 V circuit?',
-    options: [
-      '100V DC',
-      '500V DC',
-      '250V DC',
-      '1000V DC',
-    ],
+    options: ['100V DC', '500V DC', '250V DC', '1000V DC'],
     correctAnswer: 1,
     explanation:
       'BS 7671 Table 71A (referenced by Regulation 643.3) specifies 500V DC for insulation resistance testing of LV circuits up to 500V, with a minimum value of 1.0 MΩ. SELV/PELV uses 250V DC; circuits above 500V use 1000V DC.',
@@ -4017,13 +3590,9 @@ export const module2QuestionBank: QuestionBank[] = [
   // AC 4.1 — Electron theory (section 2.3.1)
   {
     id: 256,
-    question: 'Which subatomic particle is responsible for the flow of current in a metal conductor?',
-    options: [
-      'Electron',
-      'Neutron',
-      'Proton',
-      'Alpha particle',
-    ],
+    question:
+      'Which subatomic particle is responsible for the flow of current in a metal conductor?',
+    options: ['Electron', 'Neutron', 'Proton', 'Alpha particle'],
     correctAnswer: 0,
     explanation:
       'In metals, current flow is the movement of free (valence) electrons. Protons and neutrons stay locked in the nucleus.',
@@ -4034,12 +3603,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 257,
     question: 'What is the electrical charge of an electron?',
-    options: [
-      'Neutral',
-      'Negative',
-      'It varies',
-      'Positive',
-    ],
+    options: ['Neutral', 'Negative', 'It varies', 'Positive'],
     correctAnswer: 1,
     explanation:
       'An electron carries a single negative elementary charge of approximately -1.6 x 10^-19 coulombs. Protons carry an equal positive charge.',
@@ -4065,8 +3629,7 @@ export const module2QuestionBank: QuestionBank[] = [
   },
   {
     id: 259,
-    question:
-      'What is the difference between conventional current flow and electron flow?',
+    question: 'What is the difference between conventional current flow and electron flow?',
     options: [
       'They both flow from the positive terminal towards the negative terminal; the two run in exactly the same direction',
       'Conventional current flows from negative to positive; electron flow runs from positive to negative',
@@ -4083,12 +3646,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 260,
     question: 'Approximately how many electrons make up one coulomb of charge?',
-    options: [
-      '6.24 x 10^18',
-      '1.6 x 10^-19',
-      '3.0 x 10^8',
-      '9.11 x 10^-31',
-    ],
+    options: ['6.24 x 10^18', '1.6 x 10^-19', '3.0 x 10^8', '9.11 x 10^-31'],
     correctAnswer: 0,
     explanation:
       'One coulomb is the charge of about 6.24 x 10^18 electrons. The reciprocal value 1.6 x 10^-19 C is the charge carried by a single electron.',
@@ -4100,12 +3658,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 261,
     question: 'Which of these materials has the lowest resistivity?',
-    options: [
-      'Aluminium',
-      'Silver',
-      'Copper',
-      'Brass',
-    ],
+    options: ['Aluminium', 'Silver', 'Copper', 'Brass'],
     correctAnswer: 1,
     explanation:
       'Silver has the lowest resistivity (~1.59 x 10^-8 ohm-metres), making it the best conductor. Copper (~1.72 x 10^-8) is used in cables because it is far cheaper for almost the same conductivity.',
@@ -4134,29 +3687,17 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 263,
     question:
       'Three resistors of 10 Ω, 20 Ω and 30 Ω are connected in series. What is the total resistance in ohms?',
-    options: [
-      '5.45 ohm',
-      '600 ohm',
-      '20 ohm',
-      '60 ohm',
-    ],
+    options: ['5.45 ohm', '600 ohm', '20 ohm', '60 ohm'],
     correctAnswer: 3,
-    explanation:
-      'In series, total resistance = R1 + R2 + R3 = 10 + 20 + 30 = 60 ohm.',
+    explanation: 'In series, total resistance = R1 + R2 + R3 = 10 + 20 + 30 = 60 ohm.',
     section: '2.4.1',
     difficulty: 'basic',
     topic: 'Series Resistance Calculation',
   },
   {
     id: 264,
-    question:
-      'Two 10 Ω resistors are connected in parallel. What is the total resistance in ohms?',
-    options: [
-      '5 ohm',
-      '10 ohm',
-      '20 ohm',
-      '0.2 ohm',
-    ],
+    question: 'Two 10 Ω resistors are connected in parallel. What is the total resistance in ohms?',
+    options: ['5 ohm', '10 ohm', '20 ohm', '0.2 ohm'],
     correctAnswer: 0,
     explanation:
       'For two equal resistors in parallel, R_total = R / 2 = 10 / 2 = 5 ohm. Or by formula: 1/R = 1/10 + 1/10 = 0.2, so R = 5 ohm.',
@@ -4168,46 +3709,29 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 265,
     question:
       'A 230 V supply is connected to a 46 Ω heater element. What current, in amperes, flows through the heater?',
-    options: [
-      '2 A',
-      '5 A',
-      '10 A',
-      '23 A',
-    ],
+    options: ['2 A', '5 A', '10 A', '23 A'],
     correctAnswer: 1,
-    explanation:
-      'Using Ohm\'s Law: I = V / R = 230 / 46 = 5 A.',
+    explanation: "Using Ohm's Law: I = V / R = 230 / 46 = 5 A.",
     section: '2.3.7',
     difficulty: 'basic',
-    topic: 'Ohm\'s Law Worked',
+    topic: "Ohm's Law Worked",
   },
   {
     id: 266,
     question:
       'A circuit draws 8 A when 24 V is applied. What is the resistance of the load, in ohms?',
-    options: [
-      '0.33 ohm',
-      '32 ohm',
-      '3 ohm',
-      '192 ohm',
-    ],
+    options: ['0.33 ohm', '32 ohm', '3 ohm', '192 ohm'],
     correctAnswer: 2,
-    explanation:
-      'R = V / I = 24 / 8 = 3 ohm.',
+    explanation: 'R = V / I = 24 / 8 = 3 ohm.',
     section: '2.3.7',
     difficulty: 'basic',
-    topic: 'Ohm\'s Law Worked',
+    topic: "Ohm's Law Worked",
   },
   {
     id: 267,
     question:
       'Three 4 Ω resistors are connected in series across a 24 V supply. What current, in amperes, flows?',
-    options: [
-      '1 A',
-      '6 A',
-      '8 A',
-      '2 A',
-    ],
+    options: ['1 A', '6 A', '8 A', '2 A'],
     correctAnswer: 3,
     explanation:
       'Total R = 4 + 4 + 4 = 12 ohm. I = V / R = 24 / 12 = 2 A. The same 2 A flows through every resistor in series.',
@@ -4219,12 +3743,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 268,
     question:
       'A 6 Ω and a 12 Ω resistor are connected in parallel. What is the combined resistance in ohms?',
-    options: [
-      '4 ohm',
-      '9 ohm',
-      '18 ohm',
-      '2 ohm',
-    ],
+    options: ['4 ohm', '9 ohm', '18 ohm', '2 ohm'],
     correctAnswer: 0,
     explanation:
       'For two parallel resistors: R = (R1 x R2) / (R1 + R2) = (6 x 12) / (6 + 12) = 72 / 18 = 4 ohm.',
@@ -4237,15 +3756,9 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 269,
     question:
       'A 230 V immersion heater draws 13 A. What power, in watts, is dissipated by the element?',
-    options: [
-      '1.77 kW',
-      '2.99 kW',
-      '3.45 kW',
-      '17.7 W',
-    ],
+    options: ['1.77 kW', '2.99 kW', '3.45 kW', '17.7 W'],
     correctAnswer: 1,
-    explanation:
-      'P = V x I = 230 x 13 = 2990 W = 2.99 kW (often rounded to 3 kW).',
+    explanation: 'P = V x I = 230 x 13 = 2990 W = 2.99 kW (often rounded to 3 kW).',
     section: '2.4.5',
     difficulty: 'basic',
     topic: 'Power Calculation P=VI',
@@ -4254,12 +3767,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 270,
     question:
       'A current of 10 A flows through a 5 Ω resistor. What power, in watts, is dissipated?',
-    options: [
-      '50 W',
-      '250 W',
-      '500 W',
-      '2 W',
-    ],
+    options: ['50 W', '250 W', '500 W', '2 W'],
     correctAnswer: 2,
     explanation:
       'P = I^2 x R = 10^2 x 5 = 100 x 5 = 500 W. This formula highlights that heat in a cable rises with the SQUARE of the current.',
@@ -4271,12 +3779,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 271,
     question:
       'A 2 kW kettle is connected to a 230 V supply. What is the working current in amperes?',
-    options: [
-      '4.6 A',
-      '13 A',
-      '11.5 A',
-      '8.7 A',
-    ],
+    options: ['4.6 A', '13 A', '11.5 A', '8.7 A'],
     correctAnswer: 3,
     explanation:
       'I = P / V = 2000 / 230 = 8.696 A, approximately 8.7 A. A 13 A plug-top fuse is appropriate.',
@@ -4288,15 +3791,9 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 272,
     question:
       'A heating element of resistance 23 Ω is connected to 230 V. What power, in watts, does it dissipate?',
-    options: [
-      '2.3 kW',
-      '100 W',
-      '1.0 kW',
-      '10 W',
-    ],
+    options: ['2.3 kW', '100 W', '1.0 kW', '10 W'],
     correctAnswer: 0,
-    explanation:
-      'P = V^2 / R = 230^2 / 23 = 52900 / 23 = 2300 W = 2.3 kW.',
+    explanation: 'P = V^2 / R = 230^2 / 23 = 52900 / 23 = 2300 W = 2.3 kW.',
     section: '2.4.5',
     difficulty: 'intermediate',
     topic: 'Power Calculation P=V^2/R',
@@ -4305,12 +3802,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 273,
     question:
       'By what factor does the heat dissipated change when the current through a fixed resistor is doubled?',
-    options: [
-      'No change',
-      'x 4',
-      'x 0.5',
-      'x 2',
-    ],
+    options: ['No change', 'x 4', 'x 0.5', 'x 2'],
     correctAnswer: 1,
     explanation:
       'Because P = I^2 x R, doubling the current multiplies the dissipated power by 2^2 = 4. This is why undersized cables overheat so quickly when overloaded.',
@@ -4340,12 +3832,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 275,
     question:
       'A 30 m run of cable carries 20 A. The tabulated value for the cable is 18 mV/A/m. What is the voltage drop, in volts?',
-    options: [
-      '0.18 V',
-      '108 V',
-      '1.08 V',
-      '10.8 V',
-    ],
+    options: ['0.18 V', '108 V', '1.08 V', '10.8 V'],
     correctAnswer: 3,
     explanation:
       'Voltage drop = (mV/A/m x I x L) / 1000 = (18 x 20 x 30) / 1000 = 10800 / 1000 = 10.8 V.',
@@ -4357,12 +3844,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 276,
     question:
       'On a 230 V circuit fed from a public low voltage supply, what is the recommended maximum voltage drop, in volts, for a lighting circuit?',
-    options: [
-      '6.9 V',
-      '2.3 V',
-      '11.5 V',
-      '23 V',
-    ],
+    options: ['6.9 V', '2.3 V', '11.5 V', '23 V'],
     correctAnswer: 0,
     explanation:
       '3% of 230V = 0.03 x 230 = 6.9 V. Any voltage drop greater than this on a lighting circuit fails the BS 7671 Appendix 4 recommendation.',
@@ -4407,12 +3889,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 279,
     question: 'Which of the following materials is ferromagnetic?',
-    options: [
-      'Aluminium',
-      'Copper',
-      'Plastic',
-      'Iron',
-    ],
+    options: ['Aluminium', 'Copper', 'Plastic', 'Iron'],
     correctAnswer: 3,
     explanation:
       'Iron, nickel and cobalt (and their alloys, such as steel) are ferromagnetic — strongly attracted by magnets and capable of being magnetised. Aluminium and copper are non-magnetic.',
@@ -4423,12 +3900,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 280,
     question: 'What happens when two like magnetic poles are brought together?',
-    options: [
-      'They repel',
-      'They attract',
-      'Nothing happens',
-      'They cancel completely',
-    ],
+    options: ['They repel', 'They attract', 'Nothing happens', 'They cancel completely'],
     correctAnswer: 0,
     explanation:
       'Like poles repel; unlike poles attract. Two north poles (or two south poles) push each other apart.',
@@ -4488,12 +3960,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 284,
     question: 'What is the SI unit of magnetic flux?',
-    options: [
-      'Weber (Wb)',
-      'Tesla (T)',
-      'Henry (H)',
-      'Coulomb (C)',
-    ],
+    options: ['Weber (Wb)', 'Tesla (T)', 'Henry (H)', 'Coulomb (C)'],
     correctAnswer: 0,
     explanation:
       'Magnetic flux (symbol Φ, phi) is measured in webers (Wb). Flux density B is measured in teslas (T), which are webers per square metre.',
@@ -4504,12 +3971,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 285,
     question: 'What is the SI unit of magnetic flux density?',
-    options: [
-      'Newton (N)',
-      'Tesla (T)',
-      'Ampere (A)',
-      'Weber (Wb)',
-    ],
+    options: ['Newton (N)', 'Tesla (T)', 'Ampere (A)', 'Weber (Wb)'],
     correctAnswer: 1,
     explanation:
       'Magnetic flux density B is measured in teslas (T). 1 T = 1 Wb/m^2 — one weber of flux passing through one square metre.',
@@ -4521,15 +3983,9 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 286,
     question:
       'A magnetic flux of 0.5 Wb passes through a pole face of area 0.25 m2. What is the flux density, in tesla?',
-    options: [
-      '0.5 T',
-      '0.125 T',
-      '2 T',
-      '125 T',
-    ],
+    options: ['0.5 T', '0.125 T', '2 T', '125 T'],
     correctAnswer: 2,
-    explanation:
-      'Flux density B = Φ / A = 0.5 / 0.25 = 2 T.',
+    explanation: 'Flux density B = Φ / A = 0.5 / 0.25 = 2 T.',
     section: '2.5.2',
     difficulty: 'intermediate',
     topic: 'Flux Density Calculation',
@@ -4538,15 +3994,9 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 287,
     question:
       'A pole face has an area of 0.02 m2 and a flux density of 1.5 T. What is the total flux, in webers, through the pole face?',
-    options: [
-      '0.013 Wb',
-      '75 Wb',
-      '0.075 Wb',
-      '0.03 Wb',
-    ],
+    options: ['0.013 Wb', '75 Wb', '0.075 Wb', '0.03 Wb'],
     correctAnswer: 3,
-    explanation:
-      'Φ = B x A = 1.5 x 0.02 = 0.03 Wb.',
+    explanation: 'Φ = B x A = 1.5 x 0.02 = 0.03 Wb.',
     section: '2.5.2',
     difficulty: 'intermediate',
     topic: 'Flux Calculation',
@@ -4555,12 +4005,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 288,
     question: 'What is the standard frequency of the UK mains supply?',
-    options: [
-      '50 Hz',
-      '25 Hz',
-      '60 Hz',
-      '100 Hz',
-    ],
+    options: ['50 Hz', '25 Hz', '60 Hz', '100 Hz'],
     correctAnswer: 0,
     explanation:
       'The UK mains supply is generated and distributed at 50 Hz. North America uses 60 Hz.',
@@ -4572,12 +4017,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 289,
     question:
       'A 4-pole alternator rotates at 1500 rev/min. What is the frequency of its output, in hertz?',
-    options: [
-      '200 Hz',
-      '50 Hz',
-      '100 Hz',
-      '25 Hz',
-    ],
+    options: ['200 Hz', '50 Hz', '100 Hz', '25 Hz'],
     correctAnswer: 1,
     explanation:
       'Frequency f = (pole pairs x speed in rev/min) / 60. With 4 poles, that is 2 pole pairs. f = (2 x 1500) / 60 = 50 Hz.',
@@ -4604,8 +4044,7 @@ export const module2QuestionBank: QuestionBank[] = [
   },
   {
     id: 291,
-    question:
-      'What is the difference between slip rings and a commutator on a rotating machine?',
+    question: 'What is the difference between slip rings and a commutator on a rotating machine?',
     options: [
       'They are two names for the same component; either one may be fitted',
       'A commutator is fitted only to AC generators; never to DC ones',
@@ -4622,12 +4061,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 292,
     question: 'What is the period, in milliseconds, of a 50 Hz AC waveform?',
-    options: [
-      '20 ms',
-      '50 ms',
-      '0.02 s only',
-      '100 ms',
-    ],
+    options: ['20 ms', '50 ms', '0.02 s only', '100 ms'],
     correctAnswer: 0,
     explanation:
       'Period T = 1 / f = 1 / 50 = 0.02 s = 20 ms. (0.02 s and 20 ms are the same value, but the question asks for the standard millisecond figure.)',
@@ -4640,29 +4074,17 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 293,
     question:
       'What is the peak voltage, in volts, of a sinusoidal supply with an RMS value of 230 V?',
-    options: [
-      '163 V',
-      '325 V',
-      '230 V',
-      '400 V',
-    ],
+    options: ['163 V', '325 V', '230 V', '400 V'],
     correctAnswer: 1,
-    explanation:
-      'V_peak = V_rms x sqrt(2) = 230 x 1.414 = 325.27 V (commonly rounded to 325 V).',
+    explanation: 'V_peak = V_rms x sqrt(2) = 230 x 1.414 = 325.27 V (commonly rounded to 325 V).',
     section: '2.5.8',
     difficulty: 'intermediate',
     topic: 'Peak Voltage Calculation',
   },
   {
     id: 294,
-    question:
-      'A sinusoidal waveform has a peak voltage of 100 V. What is its RMS value in volts?',
-    options: [
-      '50 V',
-      '100 V',
-      '70.7 V',
-      '141 V',
-    ],
+    question: 'A sinusoidal waveform has a peak voltage of 100 V. What is its RMS value in volts?',
+    options: ['50 V', '100 V', '70.7 V', '141 V'],
     correctAnswer: 2,
     explanation:
       'V_rms = V_peak / sqrt(2) = 100 / 1.414 = 70.7 V. RMS is the equivalent DC value that would produce the same heating effect.',
@@ -4674,12 +4096,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 295,
     question:
       'A balanced three-phase load draws a line current of 32 A at a line voltage of 400 V with a power factor of 0.85. What is the total true power, in kilowatts?',
-    options: [
-      '10.9 kW',
-      '12.8 kW',
-      '22.2 kW',
-      '18.8 kW',
-    ],
+    options: ['10.9 kW', '12.8 kW', '22.2 kW', '18.8 kW'],
     correctAnswer: 3,
     explanation:
       'P = sqrt(3) x V_L x I_L x cos(phi) = 1.732 x 400 x 32 x 0.85 = 18,839 W = approximately 18.8 kW.',
@@ -4709,12 +4126,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 297,
     question:
       'What is the typical forward voltage drop across a silicon signal diode when conducting?',
-    options: [
-      '0.2 V',
-      '0.7 V',
-      '2.0 V',
-      '12 V',
-    ],
+    options: ['0.2 V', '0.7 V', '2.0 V', '12 V'],
     correctAnswer: 1,
     explanation:
       'A silicon diode has a forward voltage drop of approximately 0.7 V when conducting. Germanium diodes drop about 0.3 V; LEDs typically 1.8 V to 3.5 V depending on colour.',
@@ -4726,15 +4138,9 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 298,
     question:
       'A capacitor stores 10 mC of charge when 5 V is applied across its plates. What is its capacitance?',
-    options: [
-      '50 microfarads',
-      '500 microfarads',
-      '2000 microfarads',
-      '50 millifarads',
-    ],
+    options: ['50 microfarads', '500 microfarads', '2000 microfarads', '50 millifarads'],
     correctAnswer: 2,
-    explanation:
-      'C = Q / V = (10 x 10^-3) / 5 = 2 x 10^-3 F = 2 mF = 2000 microfarads (uF).',
+    explanation: 'C = Q / V = (10 x 10^-3) / 5 = 2 x 10^-3 F = 2 mF = 2000 microfarads (uF).',
     section: '2.6.3',
     difficulty: 'advanced',
     topic: 'Capacitor C=Q/V',
@@ -4743,12 +4149,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 299,
     question:
       'A 100 microfarad capacitor charges through a 10 kilohm resistor. What is the time constant, in seconds?',
-    options: [
-      '1 ms',
-      '10 ms',
-      '100 ms',
-      '1 s',
-    ],
+    options: ['1 ms', '10 ms', '100 ms', '1 s'],
     correctAnswer: 3,
     explanation:
       'tau = R x C = 10,000 ohm x 100 x 10^-6 F = 1 s. After one time constant the capacitor is charged to about 63% of supply voltage; after 5 tau (5 s here) it is essentially fully charged.',
@@ -4758,8 +4159,7 @@ export const module2QuestionBank: QuestionBank[] = [
   },
   {
     id: 300,
-    question:
-      'What is the main function of a transistor in an electronic circuit?',
+    question: 'What is the main function of a transistor in an electronic circuit?',
     options: [
       'To act as a switch or amplifier controlled by a small signal',
       'To store electrical charge between two insulated plates',
@@ -4799,12 +4199,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 302,
     question:
       'Three resistors of 6 Ω, 12 Ω and 4 Ω are connected in parallel. What is the total resistance in ohms?',
-    options: [
-      '2 ohms',
-      '22 ohms',
-      '7.33 ohms',
-      '0.5 ohms',
-    ],
+    options: ['2 ohms', '22 ohms', '7.33 ohms', '0.5 ohms'],
     correctAnswer: 0,
     explanation:
       '1/Rt = 1/6 + 1/12 + 1/4. Put them over 12: 2/12 + 1/12 + 3/12 = 6/12 = 0.5. Rt = 1/0.5 = 2 ohms. Sanity check: total parallel resistance is always LOWER than the smallest branch, so any answer above 4 ohms must be wrong.',
@@ -4833,12 +4228,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 304,
     question:
       'Two 100 Ω resistors are connected in series across 200 V. What is the voltage across each, in volts?',
-    options: [
-      '100 V across each',
-      '200 V across each',
-      '50 V across each',
-      '141 V across each',
-    ],
+    options: ['100 V across each', '200 V across each', '50 V across each', '141 V across each'],
     correctAnswer: 0,
     explanation:
       'Series resistors share the supply in proportion to their resistance. Equal values means an equal split, so 100 V each. Formally: Rt = 200 ohms, I = 200/200 = 1 A, and V = I x R = 1 x 100 = 100 V per resistor.',
@@ -4850,12 +4240,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 305,
     question:
       'A circuit draws 8 A from a 230 V supply at a power factor of 0.8 lagging. What is the true power, in watts?',
-    options: [
-      '1472 W',
-      '1840 W',
-      '2300 W',
-      '1178 W',
-    ],
+    options: ['1472 W', '1840 W', '2300 W', '1178 W'],
     correctAnswer: 0,
     explanation:
       'True power P = V x I x cos(phi) = 230 x 8 x 0.8 = 1472 W. The 1840 W answer is the apparent power in volt-amperes (230 x 8), which is what the cable and protective device must carry even though only 1472 W does useful work.',
@@ -4865,8 +4250,7 @@ export const module2QuestionBank: QuestionBank[] = [
   },
   {
     id: 306,
-    question:
-      'What is the peak value, in volts, of a 230 V RMS sinusoidal supply?',
+    question: 'What is the peak value, in volts, of a 230 V RMS sinusoidal supply?',
     options: [
       'Approximately 325 V',
       'Approximately 163 V',
@@ -4884,12 +4268,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 307,
     question:
       'A 2 kW appliance runs for 4.5 hours. At 28p per unit, what does it cost to run, in pounds?',
-    options: [
-      'GBP 2.52',
-      'GBP 0.28',
-      'GBP 25.20',
-      'GBP 1.26',
-    ],
+    options: ['GBP 2.52', 'GBP 0.28', 'GBP 25.20', 'GBP 1.26'],
     correctAnswer: 0,
     explanation:
       'Energy in kWh = power in kW x time in hours = 2 x 4.5 = 9 kWh. Cost = 9 x 0.28 = GBP 2.52. One unit is one kilowatt-hour, so the only trap is leaving the power in watts and getting an answer a thousand times too large.',
@@ -4901,12 +4280,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 308,
     question:
       'A motor takes 4 kW from the supply and delivers 3.4 kW of mechanical output. What is its efficiency?',
-    options: [
-      '85%',
-      '118%',
-      '15%',
-      '76%',
-    ],
+    options: ['85%', '118%', '15%', '76%'],
     correctAnswer: 0,
     explanation:
       'Efficiency = output / input x 100 = 3400 / 4000 x 100 = 85%. The 600 W difference is lost mostly as heat in the windings and bearings. Efficiency can never exceed 100%, so any answer above it signals the fraction was inverted.',
@@ -4918,12 +4292,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 309,
     question:
       'A 12 Ω and a 6 Ω resistor in parallel are connected in series with a 4 Ω resistor across 24 V. What is the supply current, in amperes?',
-    options: [
-      '3 A',
-      '1.09 A',
-      '6 A',
-      '2 A',
-    ],
+    options: ['3 A', '1.09 A', '6 A', '2 A'],
     correctAnswer: 0,
     explanation:
       'Do the parallel pair first: 1/Rp = 1/12 + 1/6 = 1/12 + 2/12 = 3/12, so Rp = 4 ohms. Add the series resistor: Rt = 4 + 4 = 8 ohms. I = V/Rt = 24/8 = 3 A. Combination circuits are marked wrong far more often for adding everything in series than for any arithmetic error.',
@@ -4933,8 +4302,7 @@ export const module2QuestionBank: QuestionBank[] = [
   },
   {
     id: 310,
-    question:
-      'Why does the resistance of a copper conductor increase as its temperature rises?',
+    question: 'Why does the resistance of a copper conductor increase as its temperature rises?',
     options: [
       'Increased lattice vibration impedes the drift of free electrons through the metal',
       'The number of free electrons in the conductor falls sharply as it gets hotter',
@@ -4967,8 +4335,7 @@ export const module2QuestionBank: QuestionBank[] = [
   },
   {
     id: 312,
-    question:
-      'What is the frequency of the UK public supply, and what does that value represent?',
+    question: 'What is the frequency of the UK public supply, and what does that value represent?',
     options: [
       '50 Hz, meaning the waveform completes 50 full cycles every second',
       '50 Hz, meaning the voltage reverses direction 50 times every second',
@@ -5018,14 +4385,8 @@ export const module2QuestionBank: QuestionBank[] = [
   },
   {
     id: 315,
-    question:
-      'A 230 V circuit supplies a 9.2 Ω load. What power, in watts, is dissipated?',
-    options: [
-      '5750 W',
-      '2116 W',
-      '25 W',
-      '1150 W',
-    ],
+    question: 'A 230 V circuit supplies a 9.2 Ω load. What power, in watts, is dissipated?',
+    options: ['5750 W', '2116 W', '25 W', '1150 W'],
     correctAnswer: 0,
     explanation:
       'Use P = V2 / R = (230 x 230) / 9.2 = 52900 / 9.2 = 5750 W. Or find current first: I = 230/9.2 = 25 A, then P = V x I = 230 x 25 = 5750 W. The 25 W option is there for anyone who writes down the current and stops.',
@@ -5054,12 +4415,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 317,
     question:
       'A cable carries 20 A and has a resistance of 0.15 Ω. What power, in watts, is lost as heat in the cable?',
-    options: [
-      '60 W',
-      '3 W',
-      '133 W',
-      '300 W',
-    ],
+    options: ['60 W', '3 W', '133 W', '300 W'],
     correctAnswer: 0,
     explanation:
       'Use P = I2 x R = 20 x 20 x 0.15 = 400 x 0.15 = 60 W. Note the current is squared, so doubling the current quadruples the heating. That squared relationship is the reason undersized cables fail so suddenly once load creeps up.',
@@ -5088,12 +4444,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 319,
     question:
       'A 24 V supply drives 2 A through a circuit. If the voltage is raised to 36 V and the resistance is unchanged, what is the new current?',
-    options: [
-      '3 A',
-      '2 A',
-      '4.5 A',
-      '1.33 A',
-    ],
+    options: ['3 A', '2 A', '4.5 A', '1.33 A'],
     correctAnswer: 0,
     explanation:
       'First find R = V/I = 24/2 = 12 ohms. Then I = V/R = 36/12 = 3 A. Alternatively current is proportional to voltage when resistance is fixed, so 36/24 = 1.5 and 2 x 1.5 = 3 A. Both routes take about the same time.',
@@ -5137,8 +4488,7 @@ export const module2QuestionBank: QuestionBank[] = [
   },
   {
     id: 322,
-    question:
-      'What does the term root mean square describe for an alternating voltage?',
+    question: 'What does the term root mean square describe for an alternating voltage?',
     options: [
       'The equivalent DC value that would produce the same heating effect',
       'The average of all the instantaneous values taken over one full cycle',
@@ -5188,14 +4538,8 @@ export const module2QuestionBank: QuestionBank[] = [
   },
   {
     id: 325,
-    question:
-      'A capacitor of 100 microfarads is charged to 24 V. How much energy is stored?',
-    options: [
-      '0.0288 J',
-      '2.4 J',
-      '0.0012 J',
-      '1.2 J',
-    ],
+    question: 'A capacitor of 100 microfarads is charged to 24 V. How much energy is stored?',
+    options: ['0.0288 J', '2.4 J', '0.0012 J', '1.2 J'],
     correctAnswer: 0,
     explanation:
       'W = 0.5 x C x V2 = 0.5 x 100 x 10^-6 x 24 x 24 = 0.5 x 100 x 10^-6 x 576 = 0.0288 J. The micro prefix is 10^-6, and forgetting it is the usual reason answers come out a million times too large.',
@@ -5224,12 +4568,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 327,
     question:
       'A transformer has 800 primary turns and 200 secondary turns. If the primary is fed at 230 V, what is the secondary voltage in volts?',
-    options: [
-      '57.5 V',
-      '920 V',
-      '230 V',
-      '115 V',
-    ],
+    options: ['57.5 V', '920 V', '230 V', '115 V'],
     correctAnswer: 0,
     explanation:
       'Vs / Vp = Ns / Np, so Vs = 230 x (200/800) = 230 x 0.25 = 57.5 V. Fewer secondary turns means a step-down, and the current does the opposite: it steps up by the same ratio, ignoring losses.',
@@ -5241,12 +4580,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 328,
     question:
       'A transformer has 800 primary turns and 200 secondary turns and is fed at 230 V. If the secondary supplies 8 A, what is the approximate primary current, assuming no losses?',
-    options: [
-      '2 A',
-      '32 A',
-      '8 A',
-      '4 A',
-    ],
+    options: ['2 A', '32 A', '8 A', '4 A'],
     correctAnswer: 0,
     explanation:
       'Power in equals power out for an ideal transformer, so Vp x Ip = Vs x Is. Ip = (57.5 x 8) / 230 = 460 / 230 = 2 A. Current transforms inversely to voltage: step the voltage down by four and the current steps up by four.',
@@ -5256,8 +4590,7 @@ export const module2QuestionBank: QuestionBank[] = [
   },
   {
     id: 329,
-    question:
-      'Why does a purely inductive load cause the current to lag the voltage?',
+    question: 'Why does a purely inductive load cause the current to lag the voltage?',
     options: [
       'The induced back EMF opposes the change in current, delaying its rise',
       'The inductor stores charge on its plates, until reversal',
@@ -5292,12 +4625,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 331,
     question:
       'A 1.5 mm2 conductor has a resistance of 12.1 milliohms per metre. What is the resistance, in ohms, of a 20 m length?',
-    options: [
-      '0.242 ohms',
-      '2.42 ohms',
-      '0.0242 ohms',
-      '24.2 ohms',
-    ],
+    options: ['0.242 ohms', '2.42 ohms', '0.0242 ohms', '24.2 ohms'],
     correctAnswer: 0,
     explanation:
       '12.1 milliohms is 0.0121 ohms. Multiply by the length: 0.0121 x 20 = 0.242 ohms. Working in milliohms throughout and converting once at the end avoids the decimal-point slips that make up most of the lost marks here.',
@@ -5307,8 +4635,7 @@ export const module2QuestionBank: QuestionBank[] = [
   },
   {
     id: 332,
-    question:
-      'What is the difference between EMF and potential difference?',
+    question: 'What is the difference between EMF and potential difference?',
     options: [
       'EMF is the energy a source gives each coulomb; PD is energy used in part of a circuit',
       'EMF is measured in volts; potential difference is measured in amperes instead',
@@ -5326,12 +4653,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 333,
     question:
       'A battery of EMF 12 V has an internal resistance of 0.5 Ω and supplies 4 A. What is its terminal voltage, in volts?',
-    options: [
-      '10 V',
-      '14 V',
-      '12 V',
-      '8 V',
-    ],
+    options: ['10 V', '14 V', '12 V', '8 V'],
     correctAnswer: 0,
     explanation:
       'Volt drop inside the battery is I x r = 4 x 0.5 = 2 V. Terminal voltage = EMF minus that internal drop = 12 - 2 = 10 V. This is why a failing battery reads fine off-load but collapses the moment a real load is applied.',
@@ -5341,14 +4663,8 @@ export const module2QuestionBank: QuestionBank[] = [
   },
   {
     id: 334,
-    question:
-      'What charge, in coulombs, passes a point in a circuit carrying 5 A for 3 minutes?',
-    options: [
-      '900 coulombs',
-      '15 coulombs',
-      '0.28 coulombs',
-      '180 coulombs',
-    ],
+    question: 'What charge, in coulombs, passes a point in a circuit carrying 5 A for 3 minutes?',
+    options: ['900 coulombs', '15 coulombs', '0.28 coulombs', '180 coulombs'],
     correctAnswer: 0,
     explanation:
       'Q = I x t with time in SECONDS: 3 minutes is 180 s, so Q = 5 x 180 = 900 C. Using minutes directly gives 15 and is the most common error on this type of question.',
@@ -5358,8 +4674,7 @@ export const module2QuestionBank: QuestionBank[] = [
   },
   {
     id: 335,
-    question:
-      'Why is a voltmeter connected in parallel and an ammeter in series?',
+    question: 'Why is a voltmeter connected in parallel and an ammeter in series?',
     options: [
       'A voltmeter has very high resistance to avoid drawing current; an ammeter has very low resistance',
       'A voltmeter has very low resistance; that is how it measures the full supply voltage',
@@ -5393,7 +4708,7 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 337,
     question:
-      'What is the permitted voltage drop for a lighting circuit supplied from a public low voltage distribution system?',
+      'What is the recommended maximum voltage drop for a lighting circuit supplied from a public low voltage distribution system?',
     options: [
       '3% of the nominal supply voltage',
       '5% of the nominal supply voltage',
@@ -5411,12 +4726,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 338,
     question:
       'Two identical resistors in series across a supply dissipate 100 W in total. What total power do they dissipate when reconnected in parallel across the same supply?',
-    options: [
-      '400 W',
-      '100 W',
-      '50 W',
-      '200 W',
-    ],
+    options: ['400 W', '100 W', '50 W', '200 W'],
     correctAnswer: 0,
     explanation:
       'Series total is 2R, parallel total is R/2 — a factor of four lower. With voltage fixed, P = V2/R means power rises by the same factor of four, so 100 W becomes 400 W. This is why a parallel mistake on a heater circuit is dangerous rather than merely wrong.',
@@ -5426,8 +4736,7 @@ export const module2QuestionBank: QuestionBank[] = [
   },
   {
     id: 339,
-    question:
-      'What is meant by the term impedance in an AC circuit?',
+    question: 'What is meant by the term impedance in an AC circuit?',
     options: [
       'The total opposition to current from resistance and reactance combined',
       'The opposition to current from resistance alone, measured in ohms',
@@ -5445,12 +4754,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 340,
     question:
       'A circuit has a resistance of 8 Ω and an inductive reactance of 6 Ω. What is its impedance in ohms?',
-    options: [
-      '10 ohms',
-      '14 ohms',
-      '2 ohms',
-      '48 ohms',
-    ],
+    options: ['10 ohms', '14 ohms', '2 ohms', '48 ohms'],
     correctAnswer: 0,
     explanation:
       'Z = square root of (R2 + X2) = square root of (64 + 36) = square root of 100 = 10 ohms. It is the familiar 3-4-5 triangle scaled up. Adding 8 and 6 to get 14 ignores the 90 degree phase difference between them.',
@@ -5460,8 +4764,7 @@ export const module2QuestionBank: QuestionBank[] = [
   },
   {
     id: 341,
-    question:
-      'Why does a DC supply have no reactance while an AC supply does?',
+    question: 'Why does a DC supply have no reactance while an AC supply does?',
     options: [
       'Reactance depends on a changing current, and steady DC does not change',
       'DC runs at a much lower voltage than AC, in most installations',
@@ -5511,8 +4814,7 @@ export const module2QuestionBank: QuestionBank[] = [
   },
   {
     id: 344,
-    question:
-      'What is the unit of magnetic flux density, and what does it measure?',
+    question: 'What is the unit of magnetic flux density, and what does it measure?',
     options: [
       'The tesla, measuring flux per unit area of the magnetic circuit',
       'The weber, measuring the total flux produced by the magnet',
@@ -5545,8 +4847,7 @@ export const module2QuestionBank: QuestionBank[] = [
   },
   {
     id: 346,
-    question:
-      'Why is a laminated core used in a transformer rather than a solid one?',
+    question: 'Why is a laminated core used in a transformer rather than a solid one?',
     options: [
       'Laminations break up eddy current paths and cut the associated heat loss',
       'Laminations increase the magnetic flux density in the core material',
@@ -5564,12 +4865,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 347,
     question:
       'What is the resistance, in ohms, of a 100 W 230 V lamp operating at its rated voltage?',
-    options: [
-      '529 ohms',
-      '2.3 ohms',
-      '23000 ohms',
-      '0.43 ohms',
-    ],
+    options: ['529 ohms', '2.3 ohms', '23000 ohms', '0.43 ohms'],
     correctAnswer: 0,
     explanation:
       'R = V2 / P = (230 x 230) / 100 = 52900 / 100 = 529 ohms. Worth remembering that a filament lamp measures far lower than this when cold, which is why they so often fail at the moment of switch-on.',
@@ -5596,8 +4892,7 @@ export const module2QuestionBank: QuestionBank[] = [
   },
   {
     id: 349,
-    question:
-      'What happens to the current in a series circuit if one component goes open circuit?',
+    question: 'What happens to the current in a series circuit if one component goes open circuit?',
     options: [
       'Current stops everywhere, because there is only one path for it to take',
       'Current continues through the remaining components, at a reduced value',
@@ -5638,22 +4933,20 @@ export const module2QuestionBank: QuestionBank[] = [
       'Mass in kilograms, weight in joules',
     ],
     correctAnswer: 0,
-    explanation: 'Mass is a quantity of matter and is measured in kilograms. Weight is the force gravity exerts on that mass, so it is a force and is measured in newtons. The tempting answer swaps them, because everyday speech calls a kilogram reading a \'weight\'.',
+    explanation:
+      "Mass is a quantity of matter and is measured in kilograms. Weight is the force gravity exerts on that mass, so it is a force and is measured in newtons. The tempting answer swaps them, because everyday speech calls a kilogram reading a 'weight'.",
     section: '2.1.2',
     difficulty: 'basic',
     topic: 'Units of Measurement',
   },
   {
     id: 352,
-    question: 'A cable drum has a mass of 25 kg. Taking g as 9.81 m/s2, what is its weight in newtons?',
-    options: [
-      '2450 N',
-      '245 N',
-      '25 N',
-      '2.55 N',
-    ],
+    question:
+      'A cable drum has a mass of 25 kg. Taking g as 9.81 m/s2, what is its weight in newtons?',
+    options: ['2450 N', '245 N', '25 N', '2.55 N'],
     correctAnswer: 1,
-    explanation: 'Weight = mass x g = 25 x 9.81 = 245.25 N, so 245 N. Picking 25 N treats the mass figure as if it were already a force. 2.55 N comes from dividing by g instead of multiplying, and 2450 N is a factor-of-ten slip.',
+    explanation:
+      'Weight = mass x g = 25 x 9.81 = 245.25 N, so 245 N. Picking 25 N treats the mass figure as if it were already a force. 2.55 N comes from dividing by g instead of multiplying, and 2450 N is a factor-of-ten slip.',
     section: '2.1.2',
     difficulty: 'basic',
     topic: 'Units of Measurement',
@@ -5668,14 +4961,16 @@ export const module2QuestionBank: QuestionBank[] = [
       'Weight is the amount of matter contained in the object',
     ],
     correctAnswer: 2,
-    explanation: 'Mass is how much matter an object contains and does not change with location. Weight is the force gravity exerts on that mass, found from W = mg. The tempting answer defines weight as the amount of matter, which is the definition of mass, not weight.',
+    explanation:
+      'Mass is how much matter an object contains and does not change with location. Weight is the force gravity exerts on that mass, found from W = mg. The tempting answer defines weight as the amount of matter, which is the definition of mass, not weight.',
     section: '2.1.2',
     difficulty: 'basic',
     topic: 'Units of Measurement',
   },
   {
     id: 354,
-    question: 'Work is done when a force causes movement. Which quantity does the product of force and distance give?',
+    question:
+      'Work is done when a force causes movement. Which quantity does the product of force and distance give?',
     options: [
       'Power, measured in watts',
       'Speed, measured in m/s',
@@ -5683,7 +4978,8 @@ export const module2QuestionBank: QuestionBank[] = [
       'Energy, measured in joules',
     ],
     correctAnswer: 3,
-    explanation: 'Force x distance = work done, and work done is a transfer of energy, measured in joules. Power is the rate of doing that work, so watts only appear once time is brought in - that is the usual trap here.',
+    explanation:
+      'Force x distance = work done, and work done is a transfer of energy, measured in joules. Power is the rate of doing that work, so watts only appear once time is brought in - that is the usual trap here.',
     section: '2.6.2',
     difficulty: 'basic',
     topic: 'Electrical Energy',
@@ -5691,89 +4987,70 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 355,
     question: 'In which unit is work done measured?',
-    options: [
-      'Joules',
-      'Watts',
-      'Newtons',
-      'Kilograms',
-    ],
+    options: ['Joules', 'Watts', 'Newtons', 'Kilograms'],
     correctAnswer: 0,
-    explanation: 'Work done is a transfer of energy, so it is measured in joules. Watts measure the rate of transfer, newtons measure force alone, and kilograms measure mass.',
+    explanation:
+      'Work done is a transfer of energy, so it is measured in joules. Watts measure the rate of transfer, newtons measure force alone, and kilograms measure mass.',
     section: '2.6.2',
     difficulty: 'basic',
     topic: 'Energy Units',
   },
   {
     id: 356,
-    question: 'A hoist motor produces a mechanical output. In which unit is that output power measured?',
-    options: [
-      'Newton metres',
-      'Watts',
-      'Joules',
-      'Newtons',
-    ],
+    question:
+      'A hoist motor produces a mechanical output. In which unit is that output power measured?',
+    options: ['Newton metres', 'Watts', 'Joules', 'Newtons'],
     correctAnswer: 1,
-    explanation: 'Power is the rate of doing work, measured in watts (one joule per second). Joules measure the energy itself, newtons measure force, and newton metres measure torque - the quantity most often confused with mechanical power.',
+    explanation:
+      'Power is the rate of doing work, measured in watts (one joule per second). Joules measure the energy itself, newtons measure force, and newton metres measure torque - the quantity most often confused with mechanical power.',
     section: '2.6.1',
     difficulty: 'basic',
     topic: 'Power Units',
   },
   {
     id: 357,
-    question: 'A 25 kg cable drum is lifted vertically through 3 m. Taking g as 9.81 m/s2, how much work is done against gravity?',
-    options: [
-      '245 J',
-      '7358 J',
-      '736 J',
-      '75 J',
-    ],
+    question:
+      'A 25 kg cable drum is lifted vertically through 3 m. Taking g as 9.81 m/s2, how much work is done against gravity?',
+    options: ['245 J', '7358 J', '736 J', '75 J'],
     correctAnswer: 2,
-    explanation: 'Work = force x distance = (25 x 9.81) x 3 = 245.25 x 3 = 735.75 J, so 736 J. 75 J comes from multiplying mass by height and forgetting g altogether, and 245 J is the weight in newtons quoted without the 3 m lift.',
+    explanation:
+      'Work = force x distance = (25 x 9.81) x 3 = 245.25 x 3 = 735.75 J, so 736 J. 75 J comes from multiplying mass by height and forgetting g altogether, and 245 J is the weight in newtons quoted without the 3 m lift.',
     section: '2.6.2',
     difficulty: 'intermediate',
     topic: 'Energy Calculation',
   },
   {
     id: 358,
-    question: 'A hoist raises a 250 kg load through 12 m in 40 s. Taking g as 9.81 m/s2, what is the useful output power of the hoist?',
-    options: [
-      '75 W',
-      '2453 W',
-      '29430 W',
-      '736 W',
-    ],
+    question:
+      'A hoist raises a 250 kg load through 12 m in 40 s. Taking g as 9.81 m/s2, what is the useful output power of the hoist?',
+    options: ['75 W', '2453 W', '29430 W', '736 W'],
     correctAnswer: 3,
-    explanation: 'Work = 250 x 9.81 x 12 = 29 430 J. Power = work / time = 29 430 / 40 = 735.75 W, so 736 W. 29 430 W is the work done quoted as if it were power, which is the classic slip of forgetting to divide by time. 75 W omits g, and 2453 W is the weight alone.',
+    explanation:
+      'Work = 250 x 9.81 x 12 = 29 430 J. Power = work / time = 29 430 / 40 = 735.75 W, so 736 W. 29 430 W is the work done quoted as if it were power, which is the classic slip of forgetting to divide by time. 75 W omits g, and 2453 W is the weight alone.',
     section: '2.6.1',
     difficulty: 'advanced',
     topic: 'Power Calculation',
   },
   {
     id: 359,
-    question: 'A hoist raises a 250 kg load 12 m in 40 s while its motor takes 3.5 kW from the supply. Taking g as 9.81 m/s2, what is the efficiency of the hoist?',
-    options: [
-      '21.0 %',
-      '2.1 %',
-      '78.9 %',
-      '476 %',
-    ],
+    question:
+      'A hoist raises a 250 kg load 12 m in 40 s while its motor takes 3.5 kW from the supply. Taking g as 9.81 m/s2, what is the efficiency of the hoist?',
+    options: ['21.0 %', '2.1 %', '78.9 %', '476 %'],
     correctAnswer: 0,
-    explanation: 'Output = 250 x 9.81 x 12 / 40 = 735.75 W. Efficiency = output / input = 735.75 / 3500 = 0.210, so 21.0 %. 476 % comes from dividing input by output, and no machine can exceed 100 %. 78.9 % is the losses rather than the efficiency.',
+    explanation:
+      'Output = 250 x 9.81 x 12 / 40 = 735.75 W. Efficiency = output / input = 735.75 / 3500 = 0.210, so 21.0 %. 476 % comes from dividing input by output, and no machine can exceed 100 %. 78.9 % is the losses rather than the efficiency.',
     section: '2.6.3',
     difficulty: 'advanced',
     topic: 'Efficiency Calculation',
   },
   {
     id: 360,
-    question: 'A lift car and its contents have a total mass of 800 kg and rise 24 m. Taking g as 9.81 m/s2, how much potential energy is gained?',
-    options: [
-      '1883 kJ',
-      '188.4 kJ',
-      '19.2 kJ',
-      '7.85 kJ',
-    ],
+    question:
+      'A lift car and its contents have a total mass of 800 kg and rise 24 m. Taking g as 9.81 m/s2, how much potential energy is gained?',
+    options: ['1883 kJ', '188.4 kJ', '19.2 kJ', '7.85 kJ'],
     correctAnswer: 1,
-    explanation: 'Potential energy = mgh = 800 x 9.81 x 24 = 188 352 J = 188.4 kJ. 19.2 kJ is mass x height with g left out, and 7.85 kJ is the weight in newtons with the 24 m rise left out.',
+    explanation:
+      'Potential energy = mgh = 800 x 9.81 x 24 = 188 352 J = 188.4 kJ. 19.2 kJ is mass x height with g left out, and 7.85 kJ is the weight in newtons with the 24 m rise left out.',
     section: '2.6.2',
     difficulty: 'advanced',
     topic: 'Energy Calculation',
@@ -5781,14 +5058,10 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 361,
     question: 'A 1200 kg lift car is travelling at 2.5 m/s. What is its kinetic energy?',
-    options: [
-      '1500 J',
-      '3000 J',
-      '3750 J',
-      '7500 J',
-    ],
+    options: ['1500 J', '3000 J', '3750 J', '7500 J'],
     correctAnswer: 2,
-    explanation: 'Kinetic energy = 1/2 m v2 = 0.5 x 1200 x 2.5 x 2.5 = 0.5 x 1200 x 6.25 = 3750 J. 7500 J forgets the half, 1500 J squares nothing and uses 0.5 x 1200 x 2.5, and 3000 J is simply mass x speed.',
+    explanation:
+      'Kinetic energy = 1/2 m v2 = 0.5 x 1200 x 2.5 x 2.5 = 0.5 x 1200 x 6.25 = 3750 J. 7500 J forgets the half, 1500 J squares nothing and uses 0.5 x 1200 x 2.5, and 3000 J is simply mass x speed.',
     section: '2.6.2',
     difficulty: 'advanced',
     topic: 'Energy Calculation',
@@ -5796,96 +5069,78 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 362,
     question: 'A trolley of mass 60 kg has 480 J of kinetic energy. What is its speed?',
-    options: [
-      '16 m/s',
-      '2.83 m/s',
-      '5.66 m/s',
-      '4 m/s',
-    ],
+    options: ['16 m/s', '2.83 m/s', '5.66 m/s', '4 m/s'],
     correctAnswer: 3,
-    explanation: 'Transpose E = 1/2 m v2 to v = square root of (2E/m) = root of (2 x 480 / 60) = root of 16 = 4 m/s. 16 m/s is the value before taking the square root, 2.83 m/s drops the factor of 2, and 5.66 m/s takes the root of E/m and then doubles it.',
+    explanation:
+      'Transpose E = 1/2 m v2 to v = square root of (2E/m) = root of (2 x 480 / 60) = root of 16 = 4 m/s. 16 m/s is the value before taking the square root, 2.83 m/s drops the factor of 2, and 5.66 m/s takes the root of E/m and then doubles it.',
     section: '2.6.2',
     difficulty: 'advanced',
     topic: 'Energy Calculation',
   },
   {
     id: 363,
-    question: 'A winch pulls a skip along the ground at steady speed against a frictional force of 1.2 kN, covering 15 m in 30 s. What is the winch output power?',
-    options: [
-      '600 W',
-      '40 W',
-      '1962 W',
-      '18000 W',
-    ],
+    question:
+      'A winch pulls a skip along the ground at steady speed against a frictional force of 1.2 kN, covering 15 m in 30 s. What is the winch output power?',
+    options: ['600 W', '40 W', '1962 W', '18000 W'],
     correctAnswer: 0,
-    explanation: 'Work = 1200 N x 15 m = 18 000 J. Power = 18 000 / 30 = 600 W. 18 000 W is the work quoted as power with the time forgotten, and 40 W divides the force by the time and omits the distance.',
+    explanation:
+      'Work = 1200 N x 15 m = 18 000 J. Power = 18 000 / 30 = 600 W. 18 000 W is the work quoted as power with the time forgotten, and 40 W divides the force by the time and omits the distance.',
     section: '2.6.1',
     difficulty: 'advanced',
     topic: 'Practical Calculation',
   },
   {
     id: 364,
-    question: 'A conveyor moves at 0.8 m/s against a total resisting force of 750 N. What power is needed to drive it?',
-    options: [
-      '6000 W',
-      '600 W',
-      '938 W',
-      '60 W',
-    ],
+    question:
+      'A conveyor moves at 0.8 m/s against a total resisting force of 750 N. What power is needed to drive it?',
+    options: ['6000 W', '600 W', '938 W', '60 W'],
     correctAnswer: 1,
-    explanation: 'Power = force x velocity = 750 x 0.8 = 600 W. 938 W comes from dividing 750 by 0.8 instead of multiplying, which is the usual transposition error when the speed is less than one.',
+    explanation:
+      'Power = force x velocity = 750 x 0.8 = 600 W. 938 W comes from dividing 750 by 0.8 instead of multiplying, which is the usual transposition error when the speed is less than one.',
     section: '2.6.1',
     difficulty: 'intermediate',
     topic: 'Power Calculation',
   },
   {
     id: 365,
-    question: 'A motor develops a torque of 25 N m at 1440 rev/min. What is its mechanical output power?',
-    options: [
-      '36 kW',
-      '226 kW',
-      '3.77 kW',
-      '0.60 kW',
-    ],
+    question:
+      'A motor develops a torque of 25 N m at 1440 rev/min. What is its mechanical output power?',
+    options: ['36 kW', '226 kW', '3.77 kW', '0.60 kW'],
     correctAnswer: 2,
-    explanation: 'Convert speed: 1440 rev/min = 24 rev/s, so angular speed = 2 x pi x 24 = 150.8 rad/s. Power = torque x angular speed = 25 x 150.8 = 3770 W = 3.77 kW. 226 kW forgets to convert rev/min to rev/s, and 0.60 kW leaves out the 2 x pi.',
+    explanation:
+      'Convert speed: 1440 rev/min = 24 rev/s, so angular speed = 2 x pi x 24 = 150.8 rad/s. Power = torque x angular speed = 25 x 150.8 = 3770 W = 3.77 kW. 226 kW forgets to convert rev/min to rev/s, and 0.60 kW leaves out the 2 x pi.',
     section: '2.6.1',
     difficulty: 'advanced',
     topic: 'Power Calculation',
   },
   {
     id: 366,
-    question: 'A motor delivering 18 N m at 960 rev/min draws 9 A from a 230 V supply at unity power factor. What is its efficiency?',
-    options: [
-      '8.7 %',
-      '12.6 %',
-      '114 %',
-      '87.4 %',
-    ],
+    question:
+      'A motor delivering 18 N m at 960 rev/min draws 9 A from a 230 V supply at unity power factor. What is its efficiency?',
+    options: ['8.7 %', '12.6 %', '114 %', '87.4 %'],
     correctAnswer: 3,
-    explanation: 'Output = 18 x 2 x pi x (960/60) = 18 x 100.5 = 1810 W. Input = 230 x 9 = 2070 W. Efficiency = 1810 / 2070 = 0.874, so 87.4 %. 114 % inverts the fraction, and 12.6 % is the loss, not the efficiency.',
+    explanation:
+      'Output = 18 x 2 x pi x (960/60) = 18 x 100.5 = 1810 W. Input = 230 x 9 = 2070 W. Efficiency = 1810 / 2070 = 0.874, so 87.4 %. 114 % inverts the fraction, and 12.6 % is the loss, not the efficiency.',
     section: '2.6.3',
     difficulty: 'advanced',
     topic: 'Motor Efficiency',
   },
   {
     id: 367,
-    question: 'A pump has an output of 4.5 kW and an efficiency of 75 %. What input power does it require?',
-    options: [
-      '6.0 kW',
-      '3.38 kW',
-      '5.63 kW',
-      '1.5 kW',
-    ],
+    question:
+      'A pump has an output of 4.5 kW and an efficiency of 75 %. What input power does it require?',
+    options: ['6.0 kW', '3.38 kW', '5.63 kW', '1.5 kW'],
     correctAnswer: 0,
-    explanation: 'Transpose efficiency = output / input to input = output / efficiency = 4.5 / 0.75 = 6.0 kW. 3.38 kW multiplies by 0.75 instead of dividing, 5.63 kW adds 25 %, and 1.5 kW is the loss rather than the input.',
+    explanation:
+      'Transpose efficiency = output / input to input = output / efficiency = 4.5 / 0.75 = 6.0 kW. 3.38 kW multiplies by 0.75 instead of dividing, 5.63 kW adds 25 %, and 1.5 kW is the loss rather than the input.',
     section: '2.6.3',
     difficulty: 'intermediate',
     topic: 'Efficiency Calculation',
   },
   {
     id: 368,
-    question: 'Two hoists lift identical loads through the same height, but one takes half the time. How do the work done and the power compare?',
+    question:
+      'Two hoists lift identical loads through the same height, but one takes half the time. How do the work done and the power compare?',
     options: [
       'Twice the work done, twice the power',
       'Same work done, twice the power',
@@ -5893,14 +5148,16 @@ export const module2QuestionBank: QuestionBank[] = [
       'Half the work, twice the power',
     ],
     correctAnswer: 1,
-    explanation: 'Work = force x distance, and both force and distance are identical, so the work done is the same. Power is work divided by time, so halving the time doubles the power. The trap is assuming that more power must mean more energy was used.',
+    explanation:
+      'Work = force x distance, and both force and distance are identical, so the work done is the same. Power is work divided by time, so halving the time doubles the power. The trap is assuming that more power must mean more energy was used.',
     section: '2.6.1',
     difficulty: 'intermediate',
     topic: 'Power Calculation',
   },
   {
     id: 369,
-    question: 'In an inefficient machine, what becomes of the energy that does not appear as useful output?',
+    question:
+      'In an inefficient machine, what becomes of the energy that does not appear as useful output?',
     options: [
       'It is stored, until the machine needs it',
       'It is returned, as reactive power',
@@ -5908,119 +5165,100 @@ export const module2QuestionBank: QuestionBank[] = [
       'It is destroyed, inside the machine windings',
     ],
     correctAnswer: 2,
-    explanation: 'Energy cannot be destroyed, only converted. The lost portion leaves the machine as heat, noise and vibration. Saying it is destroyed breaks the principle of conservation of energy, which is why that option fails however tempting the word \'lost\' makes it.',
+    explanation:
+      "Energy cannot be destroyed, only converted. The lost portion leaves the machine as heat, noise and vibration. Saying it is destroyed breaks the principle of conservation of energy, which is why that option fails however tempting the word 'lost' makes it.",
     section: '2.6.3',
     difficulty: 'intermediate',
     topic: 'Energy Losses',
   },
   {
     id: 370,
-    question: 'A lever has its effort applied 1.2 m from the fulcrum and the load sits 0.3 m from the fulcrum on the other side. What effort balances a 600 N load?',
-    options: [
-      '2400 N',
-      '600 N',
-      '400 N',
-      '150 N',
-    ],
+    question:
+      'A lever has its effort applied 1.2 m from the fulcrum and the load sits 0.3 m from the fulcrum on the other side. What effort balances a 600 N load?',
+    options: ['2400 N', '600 N', '400 N', '150 N'],
     correctAnswer: 3,
-    explanation: 'Taking moments about the fulcrum: effort x 1.2 = 600 x 0.3, so effort = 180 / 1.2 = 150 N. 2400 N inverts the arm ratio, which is the most common lever mistake, and 400 N divides by the overall 1.5 m length instead of the effort arm.',
+    explanation:
+      'Taking moments about the fulcrum: effort x 1.2 = 600 x 0.3, so effort = 180 / 1.2 = 150 N. 2400 N inverts the arm ratio, which is the most common lever mistake, and 400 N divides by the overall 1.5 m length instead of the effort arm.',
     section: '2.2.4',
     difficulty: 'intermediate',
     topic: 'Practical Calculation',
   },
   {
     id: 371,
-    question: 'A lever is used to lift a 90 kg motor. The load arm is 0.25 m and the effort arm is 1.5 m. Taking g as 9.81 m/s2, what effort force just balances the motor?',
-    options: [
-      '147 N',
-      '15 N',
-      '883 N',
-      '5297 N',
-    ],
+    question:
+      'A lever is used to lift a 90 kg motor. The load arm is 0.25 m and the effort arm is 1.5 m. Taking g as 9.81 m/s2, what effort force just balances the motor?',
+    options: ['147 N', '15 N', '883 N', '5297 N'],
     correctAnswer: 0,
-    explanation: 'Load force = 90 x 9.81 = 882.9 N. Moments: effort = 882.9 x 0.25 / 1.5 = 147.15 N, so 147 N. 15 N uses the 90 kg mass as though it were a force in newtons, 883 N ignores the lever ratio, and 5297 N inverts the arms.',
+    explanation:
+      'Load force = 90 x 9.81 = 882.9 N. Moments: effort = 882.9 x 0.25 / 1.5 = 147.15 N, so 147 N. 15 N uses the 90 kg mass as though it were a force in newtons, 883 N ignores the lever ratio, and 5297 N inverts the arms.',
     section: '2.2.4',
     difficulty: 'advanced',
     topic: 'Practical Calculation',
   },
   {
     id: 372,
-    question: 'In a pulley block where four ropes support the moving block, how far must the effort be pulled to raise the load by 0.5 m?',
-    options: [
-      '4 m',
-      '2 m',
-      '0.5 m',
-      '0.125 m',
-    ],
+    question:
+      'In a pulley block where four ropes support the moving block, how far must the effort be pulled to raise the load by 0.5 m?',
+    options: ['4 m', '2 m', '0.5 m', '0.125 m'],
     correctAnswer: 1,
-    explanation: 'With four supporting ropes the velocity ratio is 4, so the effort must travel four times the load distance: 4 x 0.5 = 2 m. 0.125 m divides by the velocity ratio instead of multiplying, and 0.5 m assumes the block gives no advantage at all.',
+    explanation:
+      'With four supporting ropes the velocity ratio is 4, so the effort must travel four times the load distance: 4 x 0.5 = 2 m. 0.125 m divides by the velocity ratio instead of multiplying, and 0.5 m assumes the block gives no advantage at all.',
     section: '2.2.4',
     difficulty: 'intermediate',
     topic: 'Practical Calculation',
   },
   {
     id: 373,
-    question: 'A pulley block with four supporting ropes lifts a 200 kg load using an effort of 600 N. Taking g as 9.81 m/s2, what is the efficiency of the pulley system?',
-    options: [
-      '122 %',
-      '327 %',
-      '81.8 %',
-      '8.3 %',
-    ],
+    question:
+      'A pulley block with four supporting ropes lifts a 200 kg load using an effort of 600 N. Taking g as 9.81 m/s2, what is the efficiency of the pulley system?',
+    options: ['122 %', '327 %', '81.8 %', '8.3 %'],
     correctAnswer: 2,
-    explanation: 'Load force = 200 x 9.81 = 1962 N. Mechanical advantage = 1962 / 600 = 3.27. Velocity ratio = 4. Efficiency = MA / VR = 3.27 / 4 = 0.818, so 81.8 %. 8.3 % uses the 200 kg mass instead of its weight, 327 % omits the velocity ratio, and 122 % inverts the fraction.',
+    explanation:
+      'Load force = 200 x 9.81 = 1962 N. Mechanical advantage = 1962 / 600 = 3.27. Velocity ratio = 4. Efficiency = MA / VR = 3.27 / 4 = 0.818, so 81.8 %. 8.3 % uses the 200 kg mass instead of its weight, 327 % omits the velocity ratio, and 122 % inverts the fraction.',
     section: '2.6.3',
     difficulty: 'advanced',
     topic: 'Efficiency Calculation',
   },
   {
     id: 374,
-    question: 'A pulley system lifts a load using 2.4 kJ of input energy and gives 1.8 kJ of useful output. What is its efficiency?',
-    options: [
-      '25 %',
-      '43 %',
-      '133 %',
-      '75 %',
-    ],
+    question:
+      'A pulley system lifts a load using 2.4 kJ of input energy and gives 1.8 kJ of useful output. What is its efficiency?',
+    options: ['25 %', '43 %', '133 %', '75 %'],
     correctAnswer: 3,
-    explanation: 'Efficiency = useful output / total input = 1.8 / 2.4 = 0.75, so 75 %. 25 % is the loss, 133 % inverts the fraction, and 43 % divides the output by the sum of input and output.',
+    explanation:
+      'Efficiency = useful output / total input = 1.8 / 2.4 = 0.75, so 75 %. 25 % is the loss, 133 % inverts the fraction, and 43 % divides the output by the sum of input and output.',
     section: '2.6.3',
     difficulty: 'intermediate',
     topic: 'Efficiency Calculation',
   },
   {
     id: 375,
-    question: 'A motor pinion with 15 teeth drives a gear wheel with 60 teeth. The motor runs at 1440 rev/min. At what speed does the gear wheel turn?',
-    options: [
-      '360 rev/min',
-      '5760 rev/min',
-      '96 rev/min',
-      '1440 rev/min',
-    ],
+    question:
+      'A motor pinion with 15 teeth drives a gear wheel with 60 teeth. The motor runs at 1440 rev/min. At what speed does the gear wheel turn?',
+    options: ['360 rev/min', '5760 rev/min', '96 rev/min', '1440 rev/min'],
     correctAnswer: 0,
-    explanation: 'Gear ratio = 60 / 15 = 4:1 reduction, so output speed = 1440 / 4 = 360 rev/min. 5760 rev/min multiplies by the ratio instead of dividing, and 96 rev/min divides by the pinion tooth count rather than by the ratio.',
+    explanation:
+      'Gear ratio = 60 / 15 = 4:1 reduction, so output speed = 1440 / 4 = 360 rev/min. 5760 rev/min multiplies by the ratio instead of dividing, and 96 rev/min divides by the pinion tooth count rather than by the ratio.',
     section: '2.2.4',
     difficulty: 'advanced',
     topic: 'Practical Calculation',
   },
   {
     id: 376,
-    question: 'A gearbox with a 4:1 reduction is driven by a motor developing 12 N m of torque. Ignoring losses, what torque is available at the output shaft?',
-    options: [
-      '16 N m',
-      '48 N m',
-      '3 N m',
-      '12 N m',
-    ],
+    question:
+      'A gearbox with a 4:1 reduction is driven by a motor developing 12 N m of torque. Ignoring losses, what torque is available at the output shaft?',
+    options: ['16 N m', '48 N m', '3 N m', '12 N m'],
     correctAnswer: 1,
-    explanation: 'A reduction gearbox trades speed for torque, so with no losses the output torque is 12 x 4 = 48 N m. 3 N m divides instead of multiplying, which is the error made by assuming a reduction reduces everything.',
+    explanation:
+      'A reduction gearbox trades speed for torque, so with no losses the output torque is 12 x 4 = 48 N m. 3 N m divides instead of multiplying, which is the error made by assuming a reduction reduces everything.',
     section: '2.2.4',
     difficulty: 'advanced',
     topic: 'Practical Calculation',
   },
   {
     id: 377,
-    question: 'A gearbox reduces speed by 5:1. Ignoring losses, what happens to the torque and the power at the output?',
+    question:
+      'A gearbox reduces speed by 5:1. Ignoring losses, what happens to the torque and the power at the output?',
     options: [
       'Torque rises five times, power with it',
       'Torque unchanged, power rises fivefold',
@@ -6028,22 +5266,20 @@ export const module2QuestionBank: QuestionBank[] = [
       'Torque falls five times, power same',
     ],
     correctAnswer: 2,
-    explanation: 'Power is torque multiplied by angular speed. With no losses the power out equals the power in, so if the speed falls to a fifth the torque must rise five times. Assuming the power rises as well would mean the gearbox creates energy.',
+    explanation:
+      'Power is torque multiplied by angular speed. With no losses the power out equals the power in, so if the speed falls to a fifth the torque must rise five times. Assuming the power rises as well would mean the gearbox creates energy.',
     section: '2.2.4',
     difficulty: 'intermediate',
     topic: 'Practical Calculation',
   },
   {
     id: 378,
-    question: 'What is the recommended maximum voltage drop, in volts, for a 230 V circuit other than lighting supplied from a public low voltage distribution system?',
-    options: [
-      '6.9 V',
-      '13.8 V',
-      '18.4 V',
-      '11.5 V',
-    ],
+    question:
+      'What is the recommended maximum voltage drop, in volts, for a 230 V circuit other than lighting supplied from a public low voltage distribution system?',
+    options: ['6.9 V', '13.8 V', '18.4 V', '11.5 V'],
     correctAnswer: 3,
-    explanation: 'BS 7671 Appendix 4 recommends a maximum of 5 % for uses other than lighting on a public LV supply: 5 % of 230 V = 11.5 V. 6.9 V is the 3 % lighting figure, while 13.8 V and 18.4 V are the 6 % and 8 % figures that apply only to a private supply.',
+    explanation:
+      'BS 7671 Appendix 4 recommends a maximum of 5 % for uses other than lighting on a public LV supply: 5 % of 230 V = 11.5 V. 6.9 V is the 3 % lighting figure, while 13.8 V and 18.4 V are the 6 % and 8 % figures that apply only to a private supply.',
     section: '2.4.6',
     difficulty: 'basic',
     topic: 'Voltage Drop Limits Worked',
@@ -6058,29 +5294,28 @@ export const module2QuestionBank: QuestionBank[] = [
       'Voltage lost when a circuit is switched off at the board',
     ],
     correctAnswer: 0,
-    explanation: 'Current flowing through the resistance of the line and neutral conductors produces a fall in voltage along their length, so the load sees less than the origin voltage. The supply-network answer describes a distributor problem, not the volt drop within an installation.',
+    explanation:
+      'Current flowing through the resistance of the line and neutral conductors produces a fall in voltage along their length, so the load sees less than the origin voltage. The supply-network answer describes a distributor problem, not the volt drop within an installation.',
     section: '2.4.6',
     difficulty: 'intermediate',
     topic: 'Voltage Drop Limits',
   },
   {
     id: 380,
-    question: 'A 45 m radial circuit in 4 mm2 cable carries 24 A. The tabulated value for the cable is 11 mV/A/m. What is the voltage drop, in volts?',
-    options: [
-      '11880 V',
-      '11.9 V',
-      '0.26 V',
-      '1.19 V',
-    ],
+    question:
+      'A 45 m radial circuit in 4 mm2 cable carries 24 A. The tabulated value for the cable is 11 mV/A/m. What is the voltage drop, in volts?',
+    options: ['11880 V', '11.9 V', '0.26 V', '1.19 V'],
     correctAnswer: 1,
-    explanation: 'Volt drop = mV/A/m x current x length / 1000 = 11 x 24 x 45 / 1000 = 11 880 / 1000 = 11.88 V, so 11.9 V. 11 880 V forgets to divide by 1000 to convert millivolts to volts, and 0.26 V leaves the length out altogether.',
+    explanation:
+      'Volt drop = mV/A/m x current x length / 1000 = 11 x 24 x 45 / 1000 = 11 880 / 1000 = 11.88 V, so 11.9 V. 11 880 V forgets to divide by 1000 to convert millivolts to volts, and 0.26 V leaves the length out altogether.',
     section: '2.6.5',
     difficulty: 'advanced',
     topic: 'Voltage Drop Calculation',
   },
   {
     id: 381,
-    question: 'A socket-outlet circuit in a 230 V installation fed from a public LV supply has a calculated voltage drop of 11.9 V. Is this acceptable?',
+    question:
+      'A socket-outlet circuit in a 230 V installation fed from a public LV supply has a calculated voltage drop of 11.9 V. Is this acceptable?',
     options: [
       'Yes, it is within the 13.8 V limit for this circuit',
       'No, it exceeds the 6.9 V limit for socket-outlets',
@@ -6088,29 +5323,28 @@ export const module2QuestionBank: QuestionBank[] = [
       'Yes, it is within the 11.5 V limit for this circuit',
     ],
     correctAnswer: 2,
-    explanation: 'A socket-outlet circuit falls under \'other uses\', so the recommended maximum is 5 % of 230 V = 11.5 V. At 11.9 V the circuit is over the figure and the cable must be increased or the run shortened. The 6.9 V option reaches the right verdict from the lighting figure, which does not apply here.',
+    explanation:
+      "A socket-outlet circuit falls under 'other uses', so the recommended maximum is 5 % of 230 V = 11.5 V. At 11.9 V the circuit is over the figure and the cable must be increased or the run shortened. The 6.9 V option reaches the right verdict from the lighting figure, which does not apply here.",
     section: '2.6.5',
     difficulty: 'advanced',
     topic: 'Voltage Drop',
   },
   {
     id: 382,
-    question: 'A 230 V lighting circuit carries 6 A in a cable with a tabulated value of 29 mV/A/m. What is the greatest length permitted if the drop must not exceed 3 % of 230 V?',
-    options: [
-      '6.61 m',
-      '66.1 m',
-      '238 m',
-      '39.6 m',
-    ],
+    question:
+      'A 230 V lighting circuit carries 6 A in a cable with a tabulated value of 29 mV/A/m. What is the greatest length permitted if the drop must not exceed 3 % of 230 V?',
+    options: ['6.61 m', '66.1 m', '238 m', '39.6 m'],
     correctAnswer: 3,
-    explanation: 'Permitted drop = 3 % of 230 = 6.9 V. Transposing, length = 6.9 x 1000 / (29 x 6) = 6900 / 174 = 39.6 m. 66.1 m is the answer you get by using the 5 % figure, which does not apply to a lighting circuit, and 238 m omits the current.',
+    explanation:
+      'Permitted drop = 3 % of 230 = 6.9 V. Transposing, length = 6.9 x 1000 / (29 x 6) = 6900 / 174 = 39.6 m. 66.1 m is the answer you get by using the 5 % figure, which does not apply to a lighting circuit, and 238 m omits the current.',
     section: '2.4.6',
     difficulty: 'advanced',
     topic: 'Voltage Drop Calculation',
   },
   {
     id: 383,
-    question: 'An installation is supplied from a private low voltage supply rather than the public distribution network. What are the recommended maximum voltage drops for lighting and for other uses?',
+    question:
+      'An installation is supplied from a private low voltage supply rather than the public distribution network. What are the recommended maximum voltage drops for lighting and for other uses?',
     options: [
       '6 % for lighting and 8 % for other uses',
       '3 % for lighting and 5 % for all other uses',
@@ -6118,37 +5352,32 @@ export const module2QuestionBank: QuestionBank[] = [
       '5 % lighting and 3 % other uses',
     ],
     correctAnswer: 0,
-    explanation: 'BS 7671 Appendix 4 gives 6 % and 8 % where the installation is fed from a private LV supply, because the distributor\'s own share of the drop is not present. The 3 % and 5 % pair is the figure for a public supply and is the answer most candidates give from habit.',
+    explanation:
+      "BS 7671 Appendix 4 gives 6 % and 8 % where the installation is fed from a private LV supply, because the distributor's own share of the drop is not present. The 3 % and 5 % pair is the figure for a public supply and is the answer most candidates give from habit.",
     section: '2.6.5',
     difficulty: 'advanced',
     topic: 'Voltage Drop',
   },
   {
     id: 384,
-    question: 'A 230 V circuit supplies 20 A through conductors whose combined line and neutral resistance is 0.28 ohms. What is the voltage at the load?',
-    options: [
-      '235.6 V',
-      '224.4 V',
-      '5.6 V',
-      '218.8 V',
-    ],
+    question:
+      'A 230 V circuit supplies 20 A through conductors whose combined line and neutral resistance is 0.28 ohms. What is the voltage at the load?',
+    options: ['235.6 V', '224.4 V', '5.6 V', '218.8 V'],
     correctAnswer: 1,
-    explanation: 'Volt drop = I x R = 20 x 0.28 = 5.6 V, so the load sees 230 - 5.6 = 224.4 V. Choosing 5.6 V answers with the drop rather than the load voltage, and 218.8 V doubles the resistance by counting line and neutral twice when the figure already combines them.',
+    explanation:
+      'Volt drop = I x R = 20 x 0.28 = 5.6 V, so the load sees 230 - 5.6 = 224.4 V. Choosing 5.6 V answers with the drop rather than the load voltage, and 218.8 V doubles the resistance by counting line and neutral twice when the figure already combines them.',
     section: '2.6.5',
     difficulty: 'advanced',
     topic: 'Voltage Drop Calculation',
   },
   {
     id: 385,
-    question: 'A motor circuit shows 216 V at the terminals when the supply is 230 V and the motor draws 28 A. What is the total resistance of the circuit conductors?',
-    options: [
-      '7.71 ohms',
-      '8.21 ohms',
-      '0.5 ohms',
-      '2 ohms',
-    ],
+    question:
+      'A motor circuit shows 216 V at the terminals when the supply is 230 V and the motor draws 28 A. What is the total resistance of the circuit conductors?',
+    options: ['7.71 ohms', '8.21 ohms', '0.5 ohms', '2 ohms'],
     correctAnswer: 2,
-    explanation: 'Volt drop = 230 - 216 = 14 V. R = V / I = 14 / 28 = 0.5 ohms. 2 ohms comes from dividing current by voltage, and 7.71 ohms uses the 216 V terminal voltage as though it were the drop.',
+    explanation:
+      'Volt drop = 230 - 216 = 14 V. R = V / I = 14 / 28 = 0.5 ohms. 2 ohms comes from dividing current by voltage, and 7.71 ohms uses the 216 V terminal voltage as though it were the drop.',
     section: '2.6.5',
     difficulty: 'advanced',
     topic: 'Voltage Drop Calculation',
@@ -6163,7 +5392,8 @@ export const module2QuestionBank: QuestionBank[] = [
       'The chemical effect',
     ],
     correctAnswer: 3,
-    explanation: 'Electroplating relies on the chemical effect: current passing through an electrolyte carries metal ions from one electrode to the other. The thermal effect produces heat and the magnetic effect produces a field, but neither moves metal through a solution.',
+    explanation:
+      'Electroplating relies on the chemical effect: current passing through an electrolyte carries metal ions from one electrode to the other. The thermal effect produces heat and the magnetic effect produces a field, but neither moves metal through a solution.',
     section: '2.4.7',
     difficulty: 'basic',
     topic: 'Electrolysis',
@@ -6178,14 +5408,16 @@ export const module2QuestionBank: QuestionBank[] = [
       'On the electrolyte, not on an electrode',
     ],
     correctAnswer: 0,
-    explanation: 'Metal ions in the electrolyte carry a positive charge, so they are attracted to the negative electrode, the cathode, where they are deposited. The anode is where metal dissolves away, which is why the anode answer is the common reversal.',
+    explanation:
+      'Metal ions in the electrolyte carry a positive charge, so they are attracted to the negative electrode, the cathode, where they are deposited. The anode is where metal dissolves away, which is why the anode answer is the common reversal.',
     section: '2.4.7',
     difficulty: 'intermediate',
     topic: 'Electrolysis',
   },
   {
     id: 388,
-    question: 'Why should bare copper and bare aluminium conductors not be joined together in a damp position?',
+    question:
+      'Why should bare copper and bare aluminium conductors not be joined together in a damp position?',
     options: [
       'Moisture makes the copper melt at a lower temperature',
       'Moisture acts as an electrolyte and corrodes the joint',
@@ -6193,14 +5425,16 @@ export const module2QuestionBank: QuestionBank[] = [
       'Moisture converts the aluminium into a good insulator',
     ],
     correctAnswer: 1,
-    explanation: 'Two dissimilar metals with moisture between them form a simple cell, and the chemical effect of the small current corrodes the more reactive metal, here the aluminium. The joint resistance then climbs and the connection overheats. Moisture does not alter the melting point of copper.',
+    explanation:
+      'Two dissimilar metals with moisture between them form a simple cell, and the chemical effect of the small current corrodes the more reactive metal, here the aluminium. The joint resistance then climbs and the connection overheats. Moisture does not alter the melting point of copper.',
     section: '2.4.7',
     difficulty: 'intermediate',
     topic: 'Electrolysis',
   },
   {
     id: 389,
-    question: 'A lead-acid battery is being charged. Which effect of the electric current is taking place inside the cell?',
+    question:
+      'A lead-acid battery is being charged. Which effect of the electric current is taking place inside the cell?',
     options: [
       'A thermal effect that stores heat',
       'An electrostatic plate effect',
@@ -6208,7 +5442,8 @@ export const module2QuestionBank: QuestionBank[] = [
       'A magnetic effect that stores it',
     ],
     correctAnswer: 2,
-    explanation: 'Charging drives a reversible chemical reaction at the plates, storing energy chemically rather than electrically. Heat is produced as a by-product but it stores nothing, and a capacitor, not a battery, stores energy electrostatically.',
+    explanation:
+      'Charging drives a reversible chemical reaction at the plates, storing energy chemically rather than electrically. Heat is produced as a by-product but it stores nothing, and a capacitor, not a battery, stores energy electrostatically.',
     section: '2.4.7',
     difficulty: 'intermediate',
     topic: 'Electrolysis',
@@ -6223,52 +5458,44 @@ export const module2QuestionBank: QuestionBank[] = [
       'The thermal effect',
     ],
     correctAnswer: 3,
-    explanation: 'The current heats the element according to I squared R until it reaches melting point. The magnetic effect is what operates the instantaneous trip of a circuit-breaker, which is why it is the tempting alternative here.',
+    explanation:
+      'The current heats the element according to I squared R until it reaches melting point. The magnetic effect is what operates the instantaneous trip of a circuit-breaker, which is why it is the tempting alternative here.',
     section: '2.4.8',
     difficulty: 'intermediate',
     topic: 'Fuse Operation',
   },
   {
     id: 391,
-    question: 'A 2.5 mm2 cable of resistance 0.30 ohms carries 24 A. How much heat power is produced in the cable?',
-    options: [
-      '172.8 W',
-      '7.2 W',
-      '17.3 W',
-      '1920 W',
-    ],
+    question:
+      'A 2.5 mm2 cable of resistance 0.30 ohms carries 24 A. How much heat power is produced in the cable?',
+    options: ['172.8 W', '7.2 W', '17.3 W', '1920 W'],
     correctAnswer: 0,
-    explanation: 'Power = I squared x R = 24 x 24 x 0.30 = 576 x 0.30 = 172.8 W. 7.2 W forgets to square the current, which is the single most common error with this formula. 1920 W treats the 24 as a voltage and uses V squared over R.',
+    explanation:
+      'Power = I squared x R = 24 x 24 x 0.30 = 576 x 0.30 = 172.8 W. 7.2 W forgets to square the current, which is the single most common error with this formula. 1920 W treats the 24 as a voltage and uses V squared over R.',
     section: '2.2.6',
     difficulty: 'advanced',
     topic: 'Temperature Effects',
   },
   {
     id: 392,
-    question: 'A copper winding measures 0.80 ohms at 20 degrees C and 0.96 ohms after running. Taking the temperature coefficient of copper as 0.004 per degree C referred to 20 degrees C, what is the winding temperature?',
-    options: [
-      '90 degrees C',
-      '70 degrees C',
-      '50 degrees C',
-      '60 degrees C',
-    ],
+    question:
+      'A copper winding measures 0.80 ohms at 20 degrees C and 0.96 ohms after running. Taking the temperature coefficient of copper as 0.004 per degree C referred to 20 degrees C, what is the winding temperature?',
+    options: ['90 degrees C', '70 degrees C', '50 degrees C', '60 degrees C'],
     correctAnswer: 1,
-    explanation: 'R at t = R20 x (1 + alpha x rise). 0.96 / 0.80 = 1.2, so alpha x rise = 0.2 and rise = 0.2 / 0.004 = 50 degrees. Temperature = 20 + 50 = 70 degrees C. Answering 50 degrees C gives the rise rather than the final temperature, and 60 degrees C divides the 0.16 ohm change by alpha without first dividing by R20.',
+    explanation:
+      'R at t = R20 x (1 + alpha x rise). 0.96 / 0.80 = 1.2, so alpha x rise = 0.2 and rise = 0.2 / 0.004 = 50 degrees. Temperature = 20 + 50 = 70 degrees C. Answering 50 degrees C gives the rise rather than the final temperature, and 60 degrees C divides the 0.16 ohm change by alpha without first dividing by R20.',
     section: '2.5.6',
     difficulty: 'advanced',
     topic: 'Temperature Effects',
   },
   {
     id: 393,
-    question: 'A cable has a resistance of 0.45 ohms at 20 degrees C. Taking the temperature coefficient of copper as 0.004 per degree C, what is its resistance at 80 degrees C?',
-    options: [
-      '0.342 ohms',
-      '0.594 ohms',
-      '0.558 ohms',
-      '0.108 ohms',
-    ],
+    question:
+      'A cable has a resistance of 0.45 ohms at 20 degrees C. Taking the temperature coefficient of copper as 0.004 per degree C, what is its resistance at 80 degrees C?',
+    options: ['0.342 ohms', '0.594 ohms', '0.558 ohms', '0.108 ohms'],
     correctAnswer: 2,
-    explanation: 'Rise = 80 - 20 = 60 degrees. R = 0.45 x (1 + 0.004 x 60) = 0.45 x 1.24 = 0.558 ohms. 0.594 ohms uses 80 in place of the 60 degree rise, 0.108 ohms is the increase alone, and 0.342 ohms subtracts instead of adds.',
+    explanation:
+      'Rise = 80 - 20 = 60 degrees. R = 0.45 x (1 + 0.004 x 60) = 0.45 x 1.24 = 0.558 ohms. 0.594 ohms uses 80 in place of the 60 degree rise, 0.108 ohms is the increase alone, and 0.342 ohms subtracts instead of adds.',
     section: '2.5.6',
     difficulty: 'advanced',
     topic: 'Temperature Effects',
@@ -6283,29 +5510,28 @@ export const module2QuestionBank: QuestionBank[] = [
       'They attract each other',
     ],
     correctAnswer: 3,
-    explanation: 'Unlike poles attract and like poles repel. A north brought to a south is a pair of unlike poles, so the magnets pull together. Repulsion would only occur with north to north or south to south.',
+    explanation:
+      'Unlike poles attract and like poles repel. A north brought to a south is a pair of unlike poles, so the magnets pull together. Repulsion would only occur with north to north or south to south.',
     section: '2.5.1',
     difficulty: 'basic',
     topic: 'Magnetic Poles',
   },
   {
     id: 395,
-    question: 'A contactor coil pulls in an armature when energised. Which material is the armature most likely made from?',
-    options: [
-      'Soft iron',
-      'Brass',
-      'Copper',
-      'Aluminium alloy',
-    ],
+    question:
+      'A contactor coil pulls in an armature when energised. Which material is the armature most likely made from?',
+    options: ['Soft iron', 'Brass', 'Copper', 'Aluminium alloy'],
     correctAnswer: 0,
-    explanation: 'Soft iron is ferromagnetic, so it is strongly attracted by the coil field, and it loses its magnetism quickly when the coil is de-energised so the contactor drops out cleanly. Copper, brass and aluminium are all non-magnetic and would not be attracted at all.',
+    explanation:
+      'Soft iron is ferromagnetic, so it is strongly attracted by the coil field, and it loses its magnetism quickly when the coil is de-energised so the contactor drops out cleanly. Copper, brass and aluminium are all non-magnetic and would not be attracted at all.',
     section: '2.5.1',
     difficulty: 'basic',
     topic: 'Ferromagnetic Materials',
   },
   {
     id: 396,
-    question: 'Magnetic field lines around a bar magnet never cross one another. What does this tell you about the field?',
+    question:
+      'Magnetic field lines around a bar magnet never cross one another. What does this tell you about the field?',
     options: [
       'The field is strongest at the centre',
       'Each point has one field direction',
@@ -6313,14 +5539,16 @@ export const module2QuestionBank: QuestionBank[] = [
       'The field has no direction at all',
     ],
     correctAnswer: 1,
-    explanation: 'If two lines crossed, a compass placed at the crossing point would have to point two ways at once, which is impossible. A single direction at every point is exactly what the no-crossing rule expresses.',
+    explanation:
+      'If two lines crossed, a compass placed at the crossing point would have to point two ways at once, which is impossible. A single direction at every point is exactly what the no-crossing rule expresses.',
     section: '2.5.1',
     difficulty: 'intermediate',
     topic: 'Magnetic Field Lines',
   },
   {
     id: 397,
-    question: 'A sensitive instrument is enclosed in a soft iron case to protect it from a nearby magnetic field. Why does this work?',
+    question:
+      'A sensitive instrument is enclosed in a soft iron case to protect it from a nearby magnetic field. Why does this work?',
     options: [
       'The iron destroys the flux as it enters the material',
       'The flux is reflected off the iron surface back to the magnet',
@@ -6328,29 +5556,28 @@ export const module2QuestionBank: QuestionBank[] = [
       'The iron reverses the flux and cancels it completely',
     ],
     correctAnswer: 2,
-    explanation: 'Soft iron has a far lower reluctance than air, so the flux takes the easier path around the case and very little passes through the enclosed space. Flux cannot be destroyed or reflected in the way the other options suggest; it is simply diverted.',
+    explanation:
+      'Soft iron has a far lower reluctance than air, so the flux takes the easier path around the case and very little passes through the enclosed space. Flux cannot be destroyed or reflected in the way the other options suggest; it is simply diverted.',
     section: '2.5.5',
     difficulty: 'intermediate',
     topic: 'Magnetism',
   },
   {
     id: 398,
-    question: 'A coil of 400 turns carrying 1.5 A produces a certain magnetomotive force. What current is needed in a 250-turn coil to produce the same magnetomotive force?',
-    options: [
-      '0.24 A',
-      '0.94 A',
-      '1.5 A',
-      '2.4 A',
-    ],
+    question:
+      'A coil of 400 turns carrying 1.5 A produces a certain magnetomotive force. What current is needed in a 250-turn coil to produce the same magnetomotive force?',
+    options: ['0.24 A', '0.94 A', '1.5 A', '2.4 A'],
     correctAnswer: 3,
-    explanation: 'Magnetomotive force = turns x current = 400 x 1.5 = 600 ampere-turns. For 250 turns, current = 600 / 250 = 2.4 A. 0.94 A inverts the turns ratio, and 1.5 A assumes the current is unaffected by the change in turns.',
+    explanation:
+      'Magnetomotive force = turns x current = 400 x 1.5 = 600 ampere-turns. For 250 turns, current = 600 / 250 = 2.4 A. 0.94 A inverts the turns ratio, and 1.5 A assumes the current is unaffected by the change in turns.',
     section: '2.5.1',
     difficulty: 'advanced',
     topic: 'Electromagnet Strength',
   },
   {
     id: 399,
-    question: 'A relay coil is rewound with twice as many turns of the same wire and the same voltage is applied. What happens to the magnetomotive force?',
+    question:
+      'A relay coil is rewound with twice as many turns of the same wire and the same voltage is applied. What happens to the magnetomotive force?',
     options: [
       'It stays about the same',
       'It roughly doubles',
@@ -6358,7 +5585,8 @@ export const module2QuestionBank: QuestionBank[] = [
       'It quadruples',
     ],
     correctAnswer: 0,
-    explanation: 'Twice the turns of the same wire means twice the wire length, so roughly twice the resistance and, at unchanged voltage, half the current. Magnetomotive force = turns x current = 2N x I/2, which is unchanged. Answering \'doubles\' looks at the turns and forgets what happened to the current.',
+    explanation:
+      "Twice the turns of the same wire means twice the wire length, so roughly twice the resistance and, at unchanged voltage, half the current. Magnetomotive force = turns x current = 2N x I/2, which is unchanged. Answering 'doubles' looks at the turns and forgets what happened to the current.",
     section: '2.5.1',
     difficulty: 'advanced',
     topic: 'Electromagnets',
@@ -6373,112 +5601,97 @@ export const module2QuestionBank: QuestionBank[] = [
       'Flux is total, flux density is per unit length',
     ],
     correctAnswer: 1,
-    explanation: 'Flux is the total amount of magnetic field passing through a surface, measured in webers. Flux density is that flux spread over the area it passes through, measured in tesla, so B = flux divided by area. The reversal of the two definitions is the usual mix-up.',
+    explanation:
+      'Flux is the total amount of magnetic field passing through a surface, measured in webers. Flux density is that flux spread over the area it passes through, measured in tesla, so B = flux divided by area. The reversal of the two definitions is the usual mix-up.',
     section: '2.5.2',
     difficulty: 'intermediate',
     topic: 'Magnetic Flux Unit',
   },
   {
     id: 401,
-    question: 'A pole face measures 80 mm by 50 mm and carries a total flux of 3.2 mWb. What is the flux density?',
-    options: [
-      '0.08 T',
-      '800 T',
-      '0.8 T',
-      '0.025 T',
-    ],
+    question:
+      'A pole face measures 80 mm by 50 mm and carries a total flux of 3.2 mWb. What is the flux density?',
+    options: ['0.08 T', '800 T', '0.8 T', '0.025 T'],
     correctAnswer: 2,
-    explanation: 'Area = 0.080 x 0.050 = 0.004 m2. B = flux / area = 0.0032 / 0.004 = 0.8 T. 800 T treats 3.2 mWb as 3.2 Wb, a factor-of-1000 prefix slip. 0.08 T comes from a factor-of-ten error in converting the millimetre dimensions, and 0.025 T adds the two sides instead of multiplying them.',
+    explanation:
+      'Area = 0.080 x 0.050 = 0.004 m2. B = flux / area = 0.0032 / 0.004 = 0.8 T. 800 T treats 3.2 mWb as 3.2 Wb, a factor-of-1000 prefix slip. 0.08 T comes from a factor-of-ten error in converting the millimetre dimensions, and 0.025 T adds the two sides instead of multiplying them.',
     section: '2.5.2',
     difficulty: 'advanced',
     topic: 'Flux Density Calculation',
   },
   {
     id: 402,
-    question: 'An air gap of 25 cm2 carries a flux density of 1.2 T. What is the total flux in the gap?',
-    options: [
-      '0.3 mWb',
-      '2.08 mWb',
-      '30 mWb',
-      '3 mWb',
-    ],
+    question:
+      'An air gap of 25 cm2 carries a flux density of 1.2 T. What is the total flux in the gap?',
+    options: ['0.3 mWb', '2.08 mWb', '30 mWb', '3 mWb'],
     correctAnswer: 3,
-    explanation: 'Convert the area: 25 cm2 = 0.0025 m2. Flux = B x area = 1.2 x 0.0025 = 0.003 Wb = 3 mWb. 30 mWb comes from a factor-of-ten slip in converting square centimetres, and 2.08 mWb divides by 1.2 instead of multiplying.',
+    explanation:
+      'Convert the area: 25 cm2 = 0.0025 m2. Flux = B x area = 1.2 x 0.0025 = 0.003 Wb = 3 mWb. 30 mWb comes from a factor-of-ten slip in converting square centimetres, and 2.08 mWb divides by 1.2 instead of multiplying.',
     section: '2.5.2',
     difficulty: 'advanced',
     topic: 'Flux Calculation',
   },
   {
     id: 403,
-    question: 'The flux through a pole face is unchanged but the pole face area is halved. What happens to the flux density?',
-    options: [
-      'It doubles',
-      'It halves',
-      'It stays the same',
-      'It falls to a quarter',
-    ],
+    question:
+      'The flux through a pole face is unchanged but the pole face area is halved. What happens to the flux density?',
+    options: ['It doubles', 'It halves', 'It stays the same', 'It falls to a quarter'],
     correctAnswer: 0,
-    explanation: 'Flux density is flux divided by area, so with the flux fixed and the area halved the density doubles. Answering \'halves\' follows the area rather than the ratio, which is the usual mistake with any \'per unit\' quantity.',
+    explanation:
+      "Flux density is flux divided by area, so with the flux fixed and the area halved the density doubles. Answering 'halves' follows the area rather than the ratio, which is the usual mistake with any 'per unit' quantity.",
     section: '2.5.2',
     difficulty: 'intermediate',
     topic: 'Flux Density Calculation',
   },
   {
     id: 404,
-    question: 'A conductor 250 mm long carrying 15 A lies at right angles to a field of flux density 0.6 T. What force acts on the conductor?',
-    options: [
-      '2250 N',
-      '2.25 N',
-      '0.0225 N',
-      '9 N',
-    ],
+    question:
+      'A conductor 250 mm long carrying 15 A lies at right angles to a field of flux density 0.6 T. What force acts on the conductor?',
+    options: ['2250 N', '2.25 N', '0.0225 N', '9 N'],
     correctAnswer: 1,
-    explanation: 'Force = B x I x length = 0.6 x 15 x 0.25 = 2.25 N. 2250 N leaves the length in millimetres, which is a factor-of-1000 slip, and 9 N drops the length from the calculation altogether.',
+    explanation:
+      'Force = B x I x length = 0.6 x 15 x 0.25 = 2.25 N. 2250 N leaves the length in millimetres, which is a factor-of-1000 slip, and 9 N drops the length from the calculation altogether.',
     section: '2.5.5',
     difficulty: 'advanced',
     topic: 'Electromagnetism',
   },
   {
     id: 405,
-    question: 'A force of 4.5 N acts on a 300 mm conductor carrying 20 A at right angles to a magnetic field. What is the flux density?',
-    options: [
-      '1.33 T',
-      '0.0075 T',
-      '0.75 T',
-      '0.225 T',
-    ],
+    question:
+      'A force of 4.5 N acts on a 300 mm conductor carrying 20 A at right angles to a magnetic field. What is the flux density?',
+    options: ['1.33 T', '0.0075 T', '0.75 T', '0.225 T'],
     correctAnswer: 2,
-    explanation: 'Transpose F = BIl to B = F / (I x l) = 4.5 / (20 x 0.3) = 4.5 / 6 = 0.75 T. 1.33 T inverts the transposition, 0.225 T forgets the length, and 0.0075 T leaves the length in millimetres.',
+    explanation:
+      'Transpose F = BIl to B = F / (I x l) = 4.5 / (20 x 0.3) = 4.5 / 6 = 0.75 T. 1.33 T inverts the transposition, 0.225 T forgets the length, and 0.0075 T leaves the length in millimetres.',
     section: '2.5.5',
     difficulty: 'advanced',
     topic: 'Electromagnetism',
   },
   {
     id: 406,
-    question: 'A conductor 0.4 m long moves at 12 m/s at right angles through a field of 0.5 T. What EMF is induced in it?',
-    options: [
-      '0.2 V',
-      '6 V',
-      '24 V',
-      '2.4 V',
-    ],
+    question:
+      'A conductor 0.4 m long moves at 12 m/s at right angles through a field of 0.5 T. What EMF is induced in it?',
+    options: ['0.2 V', '6 V', '24 V', '2.4 V'],
     correctAnswer: 3,
-    explanation: 'Induced EMF = B x l x v = 0.5 x 0.4 x 12 = 2.4 V. 6 V omits the conductor length, 0.2 V omits the velocity, and 24 V is a factor-of-ten slip.',
+    explanation:
+      'Induced EMF = B x l x v = 0.5 x 0.4 x 12 = 2.4 V. 6 V omits the conductor length, 0.2 V omits the velocity, and 24 V is a factor-of-ten slip.',
     section: '2.5.5',
     difficulty: 'advanced',
     topic: 'Electromagnetic Induction',
   },
   {
     id: 407,
-    question: 'Which rule gives the direction of the force on a current-carrying conductor lying in a magnetic field?',
+    question:
+      'Which rule gives the direction of the force on a current-carrying conductor lying in a magnetic field?',
     options: [
-      'Fleming\'s left-hand rule',
-      'Fleming\'s right-hand rule',
-      'Lenz\'s rule of induced EMF',
+      "Fleming's left-hand rule",
+      "Fleming's right-hand rule",
+      "Lenz's rule of induced EMF",
       'The corkscrew rule for coils',
     ],
     correctAnswer: 0,
-    explanation: 'The left hand is used for the motor effect, where a current in a field produces a force. The right hand is used for the generator effect, where movement in a field produces an EMF, so the right-hand rule answers the opposite question.',
+    explanation:
+      'The left hand is used for the motor effect, where a current in a field produces a force. The right hand is used for the generator effect, where movement in a field produces an EMF, so the right-hand rule answers the opposite question.',
     section: '2.5.5',
     difficulty: 'intermediate',
     topic: 'Electromagnetism',
@@ -6493,37 +5706,37 @@ export const module2QuestionBank: QuestionBank[] = [
       'The size of the current in the winding',
     ],
     correctAnswer: 1,
-    explanation: 'Reversing the current reverses the field, as the right-hand grip rule shows. The size of the current changes how strong the field is but not which way it points, which is the distinction being tested here.',
+    explanation:
+      'Reversing the current reverses the field, as the right-hand grip rule shows. The size of the current changes how strong the field is but not which way it points, which is the distinction being tested here.',
     section: '2.5.5',
     difficulty: 'intermediate',
     topic: 'Electromagnetism',
   },
   {
     id: 409,
-    question: 'A magnet is pushed quickly into a coil that forms part of a closed circuit. Why does it become harder to push as it enters?',
+    question:
+      'A magnet is pushed quickly into a coil that forms part of a closed circuit. Why does it become harder to push as it enters?',
     options: [
-      'The coil\'s resistance rises as the flux increases',
+      "The coil's resistance rises as the flux increases",
       'The coil stores the flux and holds on to the magnet',
-      'The induced current opposes the magnet\'s motion',
-      'The induced current adds to the magnet\'s own motion',
+      "The induced current opposes the magnet's motion",
+      "The induced current adds to the magnet's own motion",
     ],
     correctAnswer: 2,
-    explanation: 'The induced current always flows in the direction that opposes the change producing it, so the coil pushes back against the incoming magnet and mechanical work must be done. If the induced current assisted the motion the magnet would accelerate on its own and energy would be created from nothing.',
+    explanation:
+      'The induced current always flows in the direction that opposes the change producing it, so the coil pushes back against the incoming magnet and mechanical work must be done. If the induced current assisted the motion the magnet would accelerate on its own and energy would be created from nothing.',
     section: '2.5.5',
     difficulty: 'intermediate',
     topic: 'Electromagnetic Induction',
   },
   {
     id: 410,
-    question: 'An alternator must produce 50 Hz. If it has 6 poles, at what speed must it be driven?',
-    options: [
-      '500 rev/min',
-      '1500 rev/min',
-      '3000 rev/min',
-      '1000 rev/min',
-    ],
+    question:
+      'An alternator must produce 50 Hz. If it has 6 poles, at what speed must it be driven?',
+    options: ['500 rev/min', '1500 rev/min', '3000 rev/min', '1000 rev/min'],
     correctAnswer: 3,
-    explanation: 'Frequency = pole pairs x revolutions per second. Six poles is three pole pairs, so revolutions per second = 50 / 3 = 16.67, and speed = 16.67 x 60 = 1000 rev/min. 500 rev/min is what you get by dividing by 6 poles instead of 3 pole pairs, which is the classic error.',
+    explanation:
+      'Frequency = pole pairs x revolutions per second. Six poles is three pole pairs, so revolutions per second = 50 / 3 = 16.67, and speed = 16.67 x 60 = 1000 rev/min. 500 rev/min is what you get by dividing by 6 poles instead of 3 pole pairs, which is the classic error.',
     section: '2.5.6',
     difficulty: 'advanced',
     topic: 'Generator Frequency Calculation',
@@ -6531,51 +5744,42 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 411,
     question: 'A 4-pole alternator is driven at 1800 rev/min. What is the frequency of its output?',
-    options: [
-      '60 Hz',
-      '30 Hz',
-      '50 Hz',
-      '120 Hz',
-    ],
+    options: ['60 Hz', '30 Hz', '50 Hz', '120 Hz'],
     correctAnswer: 0,
-    explanation: 'Four poles is two pole pairs, and 1800 rev/min is 30 rev/s, so frequency = 2 x 30 = 60 Hz. 120 Hz uses 4 poles rather than 2 pole pairs, and 50 Hz is the answer given from habit because it is the UK mains value.',
+    explanation:
+      'Four poles is two pole pairs, and 1800 rev/min is 30 rev/s, so frequency = 2 x 30 = 60 Hz. 120 Hz uses 4 poles rather than 2 pole pairs, and 50 Hz is the answer given from habit because it is the UK mains value.',
     section: '2.5.6',
     difficulty: 'advanced',
     topic: 'Generator Frequency Calculation',
   },
   {
     id: 412,
-    question: 'A step-down transformer supplies 24 V from a 230 V primary and has 1150 primary turns. How many secondary turns does it have?',
-    options: [
-      '11021',
-      '120',
-      '48',
-      '1150',
-    ],
+    question:
+      'A step-down transformer supplies 24 V from a 230 V primary and has 1150 primary turns. How many secondary turns does it have?',
+    options: ['11021', '120', '48', '1150'],
     correctAnswer: 1,
-    explanation: 'Turns are in the same ratio as voltages, so secondary turns = 1150 x 24 / 230 = 120. 11 021 inverts the ratio and would step the voltage up rather than down, and 48 divides the primary turns by the secondary voltage alone.',
+    explanation:
+      'Turns are in the same ratio as voltages, so secondary turns = 1150 x 24 / 230 = 120. 11 021 inverts the ratio and would step the voltage up rather than down, and 48 divides the primary turns by the secondary voltage alone.',
     section: '2.5.6',
     difficulty: 'advanced',
     topic: 'Transformers',
   },
   {
     id: 413,
-    question: 'A 230 V to 12 V transformer supplies a 60 W lamp on its secondary. Ignoring losses, what current flows in the primary?',
-    options: [
-      '5 A',
-      '95.8 A',
-      '0.26 A',
-      '2.6 A',
-    ],
+    question:
+      'A 230 V to 12 V transformer supplies a 60 W lamp on its secondary. Ignoring losses, what current flows in the primary?',
+    options: ['5 A', '95.8 A', '0.26 A', '2.6 A'],
     correctAnswer: 2,
-    explanation: 'With no losses the primary and secondary volt-amperes are equal, so primary current = 60 / 230 = 0.26 A. 5 A is the secondary current, 60 / 12, which is the value most often quoted by mistake, and 95.8 A applies the turns ratio the wrong way round.',
+    explanation:
+      'With no losses the primary and secondary volt-amperes are equal, so primary current = 60 / 230 = 0.26 A. 5 A is the secondary current, 60 / 12, which is the value most often quoted by mistake, and 95.8 A applies the turns ratio the wrong way round.',
     section: '2.5.6',
     difficulty: 'advanced',
     topic: 'Transformers',
   },
   {
     id: 414,
-    question: 'A 230 V to 24 V transformer is rated at 150 VA. A 24 V load drawing 7 A is connected to it. Is the transformer suitable?',
+    question:
+      'A 230 V to 24 V transformer is rated at 150 VA. A 24 V load drawing 7 A is connected to it. Is the transformer suitable?',
     options: [
       'Yes, the load needs 168 VA',
       'Yes, the load needs 0.73 VA',
@@ -6583,119 +5787,100 @@ export const module2QuestionBank: QuestionBank[] = [
       'No, the load needs 168 VA',
     ],
     correctAnswer: 3,
-    explanation: 'Load volt-amperes = 24 x 7 = 168 VA, which is above the 150 VA rating, so the transformer would be overloaded. Using the 230 V primary figure gives 1610 VA, but the 7 A is a secondary current and must be paired with the secondary voltage.',
+    explanation:
+      'Load volt-amperes = 24 x 7 = 168 VA, which is above the 150 VA rating, so the transformer would be overloaded. Using the 230 V primary figure gives 1610 VA, but the 7 A is a secondary current and must be paired with the secondary voltage.',
     section: '2.5.6',
     difficulty: 'advanced',
     topic: 'Transformers',
   },
   {
     id: 415,
-    question: 'A 10 ohm resistor is in series with a parallel pair of 12 ohms and 24 ohms, all across a 48 V supply. What is the supply current?',
-    options: [
-      '2.67 A',
-      '1.04 A',
-      '4.8 A',
-      '6 A',
-    ],
+    question:
+      'A 10 ohm resistor is in series with a parallel pair of 12 ohms and 24 ohms, all across a 48 V supply. What is the supply current?',
+    options: ['2.67 A', '1.04 A', '4.8 A', '6 A'],
     correctAnswer: 0,
-    explanation: 'Parallel pair = (12 x 24) / (12 + 24) = 288 / 36 = 8 ohms. Total = 10 + 8 = 18 ohms. Current = 48 / 18 = 2.67 A. 1.04 A adds all three values as if they were in series, and 4.8 A ignores the parallel pair entirely.',
+    explanation:
+      'Parallel pair = (12 x 24) / (12 + 24) = 288 / 36 = 8 ohms. Total = 10 + 8 = 18 ohms. Current = 48 / 18 = 2.67 A. 1.04 A adds all three values as if they were in series, and 4.8 A ignores the parallel pair entirely.',
     section: '2.3.5',
     difficulty: 'advanced',
     topic: 'Mixed Circuit Analysis',
   },
   {
     id: 416,
-    question: 'A 10 ohm resistor is in series with a parallel pair of 12 ohms and 24 ohms across 48 V. What is the voltage across the parallel section?',
-    options: [
-      '48 V',
-      '21.3 V',
-      '16 V',
-      '26.7 V',
-    ],
+    question:
+      'A 10 ohm resistor is in series with a parallel pair of 12 ohms and 24 ohms across 48 V. What is the voltage across the parallel section?',
+    options: ['48 V', '21.3 V', '16 V', '26.7 V'],
     correctAnswer: 1,
-    explanation: 'Parallel pair = 8 ohms, total = 18 ohms, current = 48 / 18 = 2.67 A. Voltage across the pair = 2.67 x 8 = 21.3 V. 26.7 V is the voltage across the 10 ohm resistor instead, and 16 V treats the 12 and 24 ohm resistors as a series divider.',
+    explanation:
+      'Parallel pair = 8 ohms, total = 18 ohms, current = 48 / 18 = 2.67 A. Voltage across the pair = 2.67 x 8 = 21.3 V. 26.7 V is the voltage across the 10 ohm resistor instead, and 16 V treats the 12 and 24 ohm resistors as a series divider.',
     section: '2.3.5',
     difficulty: 'advanced',
     topic: 'Mixed Circuit Analysis',
   },
   {
     id: 417,
-    question: 'Resistors of 20 ohms, 30 ohms and 60 ohms are connected in parallel. What is the total resistance?',
-    options: [
-      '36.7 ohms',
-      '110 ohms',
-      '10 ohms',
-      '0.1 ohms',
-    ],
+    question:
+      'Resistors of 20 ohms, 30 ohms and 60 ohms are connected in parallel. What is the total resistance?',
+    options: ['36.7 ohms', '110 ohms', '10 ohms', '0.1 ohms'],
     correctAnswer: 2,
-    explanation: '1/R = 1/20 + 1/30 + 1/60 = 3/60 + 2/60 + 1/60 = 6/60. R = 60/6 = 10 ohms. 0.1 ohms is the reciprocal left uninverted, and 110 ohms adds them as though they were in series.',
+    explanation:
+      '1/R = 1/20 + 1/30 + 1/60 = 3/60 + 2/60 + 1/60 = 6/60. R = 60/6 = 10 ohms. 0.1 ohms is the reciprocal left uninverted, and 110 ohms adds them as though they were in series.',
     section: '2.3.2',
     difficulty: 'advanced',
     topic: 'Parallel Resistance Calculation',
   },
   {
     id: 418,
-    question: 'Three parallel branches of 20 ohms, 30 ohms and 60 ohms are supplied at 24 V. What current flows in the 30 ohm branch?',
-    options: [
-      '0.4 A',
-      '1.2 A',
-      '2.4 A',
-      '0.8 A',
-    ],
+    question:
+      'Three parallel branches of 20 ohms, 30 ohms and 60 ohms are supplied at 24 V. What current flows in the 30 ohm branch?',
+    options: ['0.4 A', '1.2 A', '2.4 A', '0.8 A'],
     correctAnswer: 3,
-    explanation: 'Every branch of a parallel group sees the full 24 V, so the 30 ohm branch carries 24 / 30 = 0.8 A. 2.4 A is the total supply current found from the combined 10 ohms, and the other two values belong to the 20 ohm and 60 ohm branches.',
+    explanation:
+      'Every branch of a parallel group sees the full 24 V, so the 30 ohm branch carries 24 / 30 = 0.8 A. 2.4 A is the total supply current found from the combined 10 ohms, and the other two values belong to the 20 ohm and 60 ohm branches.',
     section: '2.3.4',
     difficulty: 'advanced',
     topic: 'Current Division Calculation',
   },
   {
     id: 419,
-    question: 'Three resistors in series across 60 V draw 2 A. Two of them are 8 ohms and 12 ohms. What is the value of the third?',
-    options: [
-      '10 ohms',
-      '20 ohms',
-      '30 ohms',
-      '50 ohms',
-    ],
+    question:
+      'Three resistors in series across 60 V draw 2 A. Two of them are 8 ohms and 12 ohms. What is the value of the third?',
+    options: ['10 ohms', '20 ohms', '30 ohms', '50 ohms'],
     correctAnswer: 0,
-    explanation: 'Total resistance = 60 / 2 = 30 ohms. The third resistor = 30 - (8 + 12) = 10 ohms. Answering 30 ohms gives the circuit total rather than the missing resistor, and 20 ohms is the sum of the two already known.',
+    explanation:
+      'Total resistance = 60 / 2 = 30 ohms. The third resistor = 30 - (8 + 12) = 10 ohms. Answering 30 ohms gives the circuit total rather than the missing resistor, and 20 ohms is the sum of the two already known.',
     section: '2.3.1',
     difficulty: 'advanced',
     topic: 'Series Circuits',
   },
   {
     id: 420,
-    question: 'Two 24 ohm heating elements are connected in parallel across 240 V. What total power is dissipated?',
-    options: [
-      '9.6 kW',
-      '4.8 kW',
-      '1.2 kW',
-      '2.4 kW',
-    ],
+    question:
+      'Two 24 ohm heating elements are connected in parallel across 240 V. What total power is dissipated?',
+    options: ['9.6 kW', '4.8 kW', '1.2 kW', '2.4 kW'],
     correctAnswer: 1,
-    explanation: 'Two 24 ohm elements in parallel give 12 ohms. Power = V squared / R = 57 600 / 12 = 4800 W = 4.8 kW. 1.2 kW comes from adding the resistances as if in series, and 2.4 kW is the power of one element on its own.',
+    explanation:
+      'Two 24 ohm elements in parallel give 12 ohms. Power = V squared / R = 57 600 / 12 = 4800 W = 4.8 kW. 1.2 kW comes from adding the resistances as if in series, and 2.4 kW is the power of one element on its own.',
     section: '2.3.3',
     difficulty: 'advanced',
     topic: 'Combination Circuits',
   },
   {
     id: 421,
-    question: 'A 40 ohm lamp and a 60 ohm lamp are connected in series across 230 V. What is the voltage across the 40 ohm lamp?',
-    options: [
-      '138 V',
-      '153 V',
-      '92 V',
-      '115 V',
-    ],
+    question:
+      'A 40 ohm lamp and a 60 ohm lamp are connected in series across 230 V. What is the voltage across the 40 ohm lamp?',
+    options: ['138 V', '153 V', '92 V', '115 V'],
     correctAnswer: 2,
-    explanation: 'Total = 100 ohms, current = 230 / 100 = 2.3 A, so the 40 ohm lamp has 2.3 x 40 = 92 V across it. 138 V is the voltage across the 60 ohm lamp, 115 V assumes the lamps share equally, and 153 V inverts the divider ratio.',
+    explanation:
+      'Total = 100 ohms, current = 230 / 100 = 2.3 A, so the 40 ohm lamp has 2.3 x 40 = 92 V across it. 138 V is the voltage across the 60 ohm lamp, 115 V assumes the lamps share equally, and 153 V inverts the divider ratio.',
     section: '2.3.1',
     difficulty: 'advanced',
     topic: 'Series Circuits',
   },
   {
     id: 422,
-    question: 'A single 100 ohm element across 230 V dissipates a certain power. What happens if a second identical element is added in parallel across the same supply?',
+    question:
+      'A single 100 ohm element across 230 V dissipates a certain power. What happens if a second identical element is added in parallel across the same supply?',
     options: [
       'The total power halves',
       'The total power is unchanged',
@@ -6703,52 +5888,44 @@ export const module2QuestionBank: QuestionBank[] = [
       'The total power doubles',
     ],
     correctAnswer: 3,
-    explanation: 'Each element still has the full 230 V across it, so each dissipates the same power as before and the total doubles. The trap is remembering that parallel connection halves the resistance and then assuming that must reduce the power.',
+    explanation:
+      'Each element still has the full 230 V across it, so each dissipates the same power as before and the total doubles. The trap is remembering that parallel connection halves the resistance and then assuming that must reduce the power.',
     section: '2.3.7',
     difficulty: 'advanced',
     topic: 'Parallel Power Effects',
   },
   {
     id: 423,
-    question: 'Two resistors in parallel give a combined resistance of 8 ohms. One of them is 24 ohms. What is the value of the other?',
-    options: [
-      '12 ohms',
-      '6 ohms',
-      '16 ohms',
-      '32 ohms',
-    ],
+    question:
+      'Two resistors in parallel give a combined resistance of 8 ohms. One of them is 24 ohms. What is the value of the other?',
+    options: ['12 ohms', '6 ohms', '16 ohms', '32 ohms'],
     correctAnswer: 0,
-    explanation: '1/R2 = 1/8 - 1/24 = 3/24 - 1/24 = 2/24, so R2 = 24/2 = 12 ohms. 6 ohms adds the reciprocals instead of subtracting them, and 16 ohms simply subtracts 8 from 24 as if the resistors were in series.',
+    explanation:
+      '1/R2 = 1/8 - 1/24 = 3/24 - 1/24 = 2/24, so R2 = 24/2 = 12 ohms. 6 ohms adds the reciprocals instead of subtracting them, and 16 ohms simply subtracts 8 from 24 as if the resistors were in series.',
     section: '2.3.2',
     difficulty: 'advanced',
     topic: 'Parallel Circuits',
   },
   {
     id: 424,
-    question: 'Two resistors of 15 ohms and 30 ohms in parallel draw a total current of 3 A. What is the supply voltage?',
-    options: [
-      '135 V',
-      '30 V',
-      '45 V',
-      '90 V',
-    ],
+    question:
+      'Two resistors of 15 ohms and 30 ohms in parallel draw a total current of 3 A. What is the supply voltage?',
+    options: ['135 V', '30 V', '45 V', '90 V'],
     correctAnswer: 1,
-    explanation: 'Combined resistance = (15 x 30) / 45 = 10 ohms. Supply voltage = 3 x 10 = 30 V. 135 V comes from adding the resistors as if in series, and 45 V and 90 V use one branch resistance with the total current, which no single branch carries.',
+    explanation:
+      'Combined resistance = (15 x 30) / 45 = 10 ohms. Supply voltage = 3 x 10 = 30 V. 135 V comes from adding the resistors as if in series, and 45 V and 90 V use one branch resistance with the total current, which no single branch carries.',
     section: '2.3.2',
     difficulty: 'advanced',
     topic: 'Parallel Circuits',
   },
   {
     id: 425,
-    question: 'A sine wave has a peak value of 100 V. What is its average value over one half cycle?',
-    options: [
-      '70.7 V',
-      '90 V',
-      '63.7 V',
-      '50 V',
-    ],
+    question:
+      'A sine wave has a peak value of 100 V. What is its average value over one half cycle?',
+    options: ['70.7 V', '90 V', '63.7 V', '50 V'],
     correctAnswer: 2,
-    explanation: 'For a sine wave the half-cycle average is 0.637 x peak = 63.7 V. 70.7 V is the RMS value, which is the value most often given by mistake, and 90 V confuses the form factor of 1.11 with the average.',
+    explanation:
+      'For a sine wave the half-cycle average is 0.637 x peak = 63.7 V. 70.7 V is the RMS value, which is the value most often given by mistake, and 90 V confuses the form factor of 1.11 with the average.',
     section: '2.4.3',
     difficulty: 'intermediate',
     topic: 'AC Average Value',
@@ -6756,51 +5933,42 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 426,
     question: 'A sinusoidal supply has an RMS value of 110 V. What is its peak-to-peak value?',
-    options: [
-      '78 V',
-      '156 V',
-      '220 V',
-      '311 V',
-    ],
+    options: ['78 V', '156 V', '220 V', '311 V'],
     correctAnswer: 3,
-    explanation: 'Peak = 110 x 1.414 = 155.6 V, and peak-to-peak is twice the peak, so 311 V. 156 V stops at the peak and forgets to double it, 220 V simply doubles the RMS, and 78 V divides by 1.414 instead of multiplying.',
+    explanation:
+      'Peak = 110 x 1.414 = 155.6 V, and peak-to-peak is twice the peak, so 311 V. 156 V stops at the peak and forgets to double it, 220 V simply doubles the RMS, and 78 V divides by 1.414 instead of multiplying.',
     section: '2.4.3',
     difficulty: 'advanced',
     topic: 'Peak-RMS Calculation',
   },
   {
     id: 427,
-    question: 'A 50 Hz sinusoidal voltage has a peak value of 340 V. What is its instantaneous value 5 ms after a zero crossing?',
-    options: [
-      '340 V',
-      '0 V',
-      '170 V',
-      '240 V',
-    ],
+    question:
+      'A 50 Hz sinusoidal voltage has a peak value of 340 V. What is its instantaneous value 5 ms after a zero crossing?',
+    options: ['340 V', '0 V', '170 V', '240 V'],
     correctAnswer: 0,
-    explanation: 'One cycle at 50 Hz lasts 20 ms, so 5 ms is a quarter of a cycle, which is 90 degrees. Instantaneous value = 340 x sin 90 = 340 V, the peak. 240 V comes from taking a quarter of 180 degrees and using 45 degrees instead.',
+    explanation:
+      'One cycle at 50 Hz lasts 20 ms, so 5 ms is a quarter of a cycle, which is 90 degrees. Instantaneous value = 340 x sin 90 = 340 V, the peak. 240 V comes from taking a quarter of 180 degrees and using 45 degrees instead.',
     section: '2.5.8',
     difficulty: 'advanced',
     topic: 'RMS from Peak',
   },
   {
     id: 428,
-    question: 'An oscilloscope shows one complete cycle occupying 4 ms. What is the frequency of the waveform?',
-    options: [
-      '2500 Hz',
-      '250 Hz',
-      '0.25 Hz',
-      '25 Hz',
-    ],
+    question:
+      'An oscilloscope shows one complete cycle occupying 4 ms. What is the frequency of the waveform?',
+    options: ['2500 Hz', '250 Hz', '0.25 Hz', '25 Hz'],
     correctAnswer: 1,
-    explanation: 'Frequency = 1 / period = 1 / 0.004 = 250 Hz. 0.25 Hz comes from using 4 seconds rather than 4 milliseconds, and 25 Hz and 2500 Hz are factor-of-ten slips in the same conversion.',
+    explanation:
+      'Frequency = 1 / period = 1 / 0.004 = 250 Hz. 0.25 Hz comes from using 4 seconds rather than 4 milliseconds, and 25 Hz and 2500 Hz are factor-of-ten slips in the same conversion.',
     section: '2.4.2',
     difficulty: 'advanced',
     topic: 'Period Calculation',
   },
   {
     id: 429,
-    question: 'How many diodes does a full-wave bridge rectifier contain, and how many conduct at any instant?',
+    question:
+      'How many diodes does a full-wave bridge rectifier contain, and how many conduct at any instant?',
     options: [
       'Four diodes, only one conducting at a time',
       'Two diodes, one conducting at a time',
@@ -6808,52 +5976,44 @@ export const module2QuestionBank: QuestionBank[] = [
       'Four diodes, four conducting at a time',
     ],
     correctAnswer: 2,
-    explanation: 'A bridge uses four diodes arranged so that a diagonally opposite pair conducts on each half cycle, giving two in conduction at any instant. If all four conducted together the supply would be short-circuited.',
+    explanation:
+      'A bridge uses four diodes arranged so that a diagonally opposite pair conducts on each half cycle, giving two in conduction at any instant. If all four conducted together the supply would be short-circuited.',
     section: '2.4.8',
     difficulty: 'intermediate',
     topic: 'Rectification',
   },
   {
     id: 430,
-    question: 'Two capacitors of 47 microfarads and 33 microfarads are connected in parallel. What is the total capacitance?',
-    options: [
-      '14 microfarads',
-      '19.4 microfarads',
-      '1551 microfarads',
-      '80 microfarads',
-    ],
+    question:
+      'Two capacitors of 47 microfarads and 33 microfarads are connected in parallel. What is the total capacitance?',
+    options: ['14 microfarads', '19.4 microfarads', '1551 microfarads', '80 microfarads'],
     correctAnswer: 3,
-    explanation: 'Capacitors in parallel add directly: 47 + 33 = 80 microfarads. 19.4 microfarads comes from applying the product-over-sum formula used for resistors in parallel, which is the reverse of the rule for capacitors.',
+    explanation:
+      'Capacitors in parallel add directly: 47 + 33 = 80 microfarads. 19.4 microfarads comes from applying the product-over-sum formula used for resistors in parallel, which is the reverse of the rule for capacitors.',
     section: '2.6.3',
     difficulty: 'advanced',
     topic: 'Capacitance',
   },
   {
     id: 431,
-    question: 'A 220 microfarad capacitor charges through a 4.7 kilohm resistor. Roughly how long until it is fully charged, taking five time constants?',
-    options: [
-      '5.17 s',
-      '0.207 s',
-      '1.03 s',
-      '5170 s',
-    ],
+    question:
+      'A 220 microfarad capacitor charges through a 4.7 kilohm resistor. Roughly how long until it is fully charged, taking five time constants?',
+    options: ['5.17 s', '0.207 s', '1.03 s', '5170 s'],
     correctAnswer: 0,
-    explanation: 'Time constant = C x R = 0.000220 x 4700 = 1.03 s. Five time constants = 5 x 1.03 = 5.17 s. 1.03 s stops at one time constant, and 5170 s is a factor-of-1000 prefix slip on the microfarads.',
+    explanation:
+      'Time constant = C x R = 0.000220 x 4700 = 1.03 s. Five time constants = 5 x 1.03 = 5.17 s. 1.03 s stops at one time constant, and 5170 s is a factor-of-1000 prefix slip on the microfarads.',
     section: '2.6.3',
     difficulty: 'advanced',
     topic: 'RC Time Constant',
   },
   {
     id: 432,
-    question: 'An LED needs 20 mA at a forward voltage of 2.0 V and is fed from a 12 V supply. What series resistor is required?',
-    options: [
-      '600 ohms',
-      '500 ohms',
-      '0.5 ohms',
-      '100 ohms',
-    ],
+    question:
+      'An LED needs 20 mA at a forward voltage of 2.0 V and is fed from a 12 V supply. What series resistor is required?',
+    options: ['600 ohms', '500 ohms', '0.5 ohms', '100 ohms'],
     correctAnswer: 1,
-    explanation: 'The resistor must drop 12 - 2.0 = 10 V at 0.020 A, so R = 10 / 0.020 = 500 ohms. 600 ohms forgets the LED\'s own forward drop and uses the full 12 V, and 0.5 ohms leaves the current in milliamperes.',
+    explanation:
+      "The resistor must drop 12 - 2.0 = 10 V at 0.020 A, so R = 10 / 0.020 = 500 ohms. 600 ohms forgets the LED's own forward drop and uses the full 12 V, and 0.5 ohms leaves the current in milliamperes.",
     section: '2.6.2',
     difficulty: 'advanced',
     topic: 'Diode Forward Voltage',
@@ -6861,14 +6021,10 @@ export const module2QuestionBank: QuestionBank[] = [
   {
     id: 433,
     question: 'What is 4.7 megohms expressed in kilohms?',
-    options: [
-      '0.0047 kilohms',
-      '4700000 kilohms',
-      '4700 kilohms',
-      '4.7 kilohms',
-    ],
+    options: ['0.0047 kilohms', '4700000 kilohms', '4700 kilohms', '4.7 kilohms'],
     correctAnswer: 2,
-    explanation: 'One megohm is 1000 kilohms, so 4.7 megohms = 4.7 x 1000 = 4700 kilohms. 4 700 000 kilohms applies the factor twice, and 0.0047 kilohms divides where it should multiply.',
+    explanation:
+      'One megohm is 1000 kilohms, so 4.7 megohms = 4.7 x 1000 = 4700 kilohms. 4 700 000 kilohms applies the factor twice, and 0.0047 kilohms divides where it should multiply.',
     section: '2.1.4',
     difficulty: 'intermediate',
     topic: 'Unit Conversions',
@@ -6883,14 +6039,16 @@ export const module2QuestionBank: QuestionBank[] = [
       'Divide P by R, then take the square root',
     ],
     correctAnswer: 3,
-    explanation: 'Dividing both sides by R gives I squared = P / R, then taking the square root gives I. Squaring the result instead of taking the root reverses the final step, which is the error that produces answers far too large.',
+    explanation:
+      'Dividing both sides by R gives I squared = P / R, then taking the square root gives I. Squaring the result instead of taking the root reverses the final step, which is the error that produces answers far too large.',
     section: '2.2.2',
     difficulty: 'intermediate',
     topic: 'Formula Transposition',
   },
   {
     id: 435,
-    question: 'The formula R = resistivity x length divided by area is to be rearranged to find the area. Which statement is correct?',
+    question:
+      'The formula R = resistivity x length divided by area is to be rearranged to find the area. Which statement is correct?',
     options: [
       'Area equals resistivity times length divided by R',
       'Area equals R times length over resistivity',
@@ -6898,82 +6056,68 @@ export const module2QuestionBank: QuestionBank[] = [
       'Area equals resistivity divided by R',
     ],
     correctAnswer: 0,
-    explanation: 'Multiplying both sides by area and then dividing by R moves the area to the subject: area = resistivity x length / R. The tempting version swaps R and resistivity, which would give an area that grows as the resistance grows.',
+    explanation:
+      'Multiplying both sides by area and then dividing by R moves the area to the subject: area = resistivity x length / R. The tempting version swaps R and resistivity, which would give an area that grows as the resistance grows.',
     section: '2.2.2',
     difficulty: 'intermediate',
     topic: 'Formula Transposition',
   },
   {
     id: 436,
-    question: 'A factory has a maximum demand of 250 kW and uses 1200 kWh over a 24-hour day. What is its load factor?',
-    options: [
-      '500 %',
-      '20 %',
-      '200 %',
-      '480 %',
-    ],
+    question:
+      'A factory has a maximum demand of 250 kW and uses 1200 kWh over a 24-hour day. What is its load factor?',
+    options: ['500 %', '20 %', '200 %', '480 %'],
     correctAnswer: 1,
-    explanation: 'Average load = 1200 / 24 = 50 kW. Load factor = average / maximum = 50 / 250 = 0.20, so 20 %. 480 % forgets to divide the energy by the 24 hours, and 500 % inverts the fraction.',
+    explanation:
+      'Average load = 1200 / 24 = 50 kW. Load factor = average / maximum = 50 / 250 = 0.20, so 20 %. 480 % forgets to divide the energy by the 24 hours, and 500 % inverts the fraction.',
     section: '2.6.6',
     difficulty: 'intermediate',
     topic: 'Load Factor',
   },
   {
     id: 437,
-    question: 'A distribution board supplies loads totalling 90 A of connected demand. After applying a diversity factor of 0.6, what is the assessed maximum demand?',
-    options: [
-      '90 A',
-      '150 A',
-      '54 A',
-      '36 A',
-    ],
+    question:
+      'A distribution board supplies loads totalling 90 A of connected demand. After applying a diversity factor of 0.6, what is the assessed maximum demand?',
+    options: ['90 A', '150 A', '54 A', '36 A'],
     correctAnswer: 2,
-    explanation: 'Assessed demand = 90 x 0.6 = 54 A. 36 A is the amount removed by diversity rather than what remains, and 150 A divides by 0.6 instead of multiplying, which would make diversity increase the demand.',
+    explanation:
+      'Assessed demand = 90 x 0.6 = 54 A. 36 A is the amount removed by diversity rather than what remains, and 150 A divides by 0.6 instead of multiplying, which would make diversity increase the demand.',
     section: '2.6.6',
     difficulty: 'intermediate',
     topic: 'Load Diversity',
   },
   {
     id: 438,
-    question: 'A distribution cable carries 60 A and has a resistance of 0.08 ohms. If the same power were delivered at twice the voltage, what would the heating loss become?',
-    options: [
-      '144 W',
-      '288 W',
-      '576 W',
-      '72 W',
-    ],
+    question:
+      'A distribution cable carries 60 A and has a resistance of 0.08 ohms. If the same power were delivered at twice the voltage, what would the heating loss become?',
+    options: ['144 W', '288 W', '576 W', '72 W'],
     correctAnswer: 3,
-    explanation: 'Original loss = 60 x 60 x 0.08 = 288 W. Doubling the voltage for the same power halves the current to 30 A, so the loss becomes 30 x 30 x 0.08 = 72 W, a quarter of the original. 144 W halves the loss instead, forgetting that the current is squared.',
+    explanation:
+      'Original loss = 60 x 60 x 0.08 = 288 W. Doubling the voltage for the same power halves the current to 30 A, so the loss becomes 30 x 30 x 0.08 = 72 W, a quarter of the original. 144 W halves the loss instead, forgetting that the current is squared.',
     section: '2.6.4',
     difficulty: 'advanced',
     topic: 'Reducing I²R Losses',
   },
   {
     id: 439,
-    question: 'A cable delivers 12 kW to a load and loses 288 W as heat. What is the efficiency of the cable run?',
-    options: [
-      '97.7 %',
-      '2.3 %',
-      '95.4 %',
-      '102 %',
-    ],
+    question:
+      'A cable delivers 12 kW to a load and loses 288 W as heat. What is the efficiency of the cable run?',
+    options: ['97.7 %', '2.3 %', '95.4 %', '102 %'],
     correctAnswer: 0,
-    explanation: 'Input = 12 000 + 288 = 12 288 W. Efficiency = 12 000 / 12 288 = 0.977, so 97.7 %. 2.3 % is the loss expressed as a percentage, and 102 % divides input by output, which no passive cable could achieve.',
+    explanation:
+      'Input = 12 000 + 288 = 12 288 W. Efficiency = 12 000 / 12 288 = 0.977, so 97.7 %. 2.3 % is the loss expressed as a percentage, and 102 % divides input by output, which no passive cable could achieve.',
     section: '2.6.4',
     difficulty: 'advanced',
     topic: 'I²R Losses',
   },
   {
     id: 440,
-    question: 'Three heating elements rated 2 kW, 1.5 kW and 500 W at 230 V are connected in parallel across 230 V. What is the total resistance of the combination?',
-    options: [
-      '167.5 ohms',
-      '13.2 ohms',
-      '26.5 ohms',
-      '55.8 ohms',
-    ],
+    question:
+      'Three heating elements rated 2 kW, 1.5 kW and 500 W at 230 V are connected in parallel across 230 V. What is the total resistance of the combination?',
+    options: ['167.5 ohms', '13.2 ohms', '26.5 ohms', '55.8 ohms'],
     correctAnswer: 1,
-    explanation: 'Total power = 4000 W. R = V squared / P = 52 900 / 4000 = 13.2 ohms. 167.5 ohms works out each element\'s resistance and adds them as if in series, and 26.5 ohms is the 2 kW element alone.',
+    explanation:
+      "Total power = 4000 W. R = V squared / P = 52 900 / 4000 = 13.2 ohms. 167.5 ohms works out each element's resistance and adds them as if in series, and 26.5 ohms is the 2 kW element alone.",
     section: '2.6.1',
     difficulty: 'advanced',
     topic: 'Power Calculations',

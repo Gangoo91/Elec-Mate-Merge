@@ -82,7 +82,7 @@ const ITEMS: Array<{ t: string; d: string }> = [
   },
   {
     t: 'AI tools & calculators',
-    d: 'Specialist agents, the board scanner and 70+ BS 7671 calculators',
+    d: 'Specialist agents, the board scanner and 65 BS 7671 calculators',
   },
   {
     t: 'Business suite',
@@ -153,7 +153,7 @@ export function buildStaffAccessEmail(input: StaffAccessEmailInput): StaffAccess
   const learnersLine =
     input.employer && code && ecode
       ? p(
-          `Two codes for ${esc(org)}, both for as long as they keep it. Your electricians: ${codeLink(ecode)}, 40% off, £11.99 a month instead of £19.99. Your apprentices: ${codeLink(code)}, 30% off, £4.89 a month instead of £6.99. Each person signs up themselves and the code takes the money off; nothing for the company to set up or pay.`
+          `Two codes for ${esc(org)}, both for as long as they keep it. Your electricians: ${codeLink(ecode)}, 40% off, £11.99 a month instead of £19.99 — £2.77 a week. Your apprentices: ${codeLink(code)}, 30% off, £4.89 a month instead of £6.99 — £1.13 a week. Each person signs up themselves and the code takes the money off; nothing for the company to set up or pay.`
         ) +
         p(appLine) +
         p(guide)
@@ -263,7 +263,7 @@ export function buildStaffAccessEmail(input: StaffAccessEmailInput): StaffAccess
     '',
     "If you think anything could be better, email me at founder@elec-mate.com. I'm very receptive to feedback.",
     input.employer && code && ecode
-      ? `\nYour electricians: ${ecode} (40% off, £11.99/mo): ${SIGNUP_URL}?offer=${encodeURIComponent(ecode)}\nYour apprentices: ${code} (30% off, £4.89/mo): ${SIGNUP_URL}?offer=${encodeURIComponent(code)}\nEach person signs up themselves; nothing for the company to set up or pay.`
+      ? `\nYour electricians: ${ecode} (40% off, £11.99/mo — £2.77 a week): ${SIGNUP_URL}?offer=${encodeURIComponent(ecode)}\nYour apprentices: ${code} (30% off, £4.89/mo — £1.13 a week): ${SIGNUP_URL}?offer=${encodeURIComponent(code)}\nEach person signs up themselves; nothing for the company to set up or pay.`
       : code
         ? `\nLearners get 50% off for as long as they keep their subscription with code ${code}: ${SIGNUP_URL}?offer=${encodeURIComponent(code)}${ecode ? `\nQualified electricians on your courses get 50% off the electrician tier with code ${ecode}: ${SIGNUP_URL}?offer=${encodeURIComponent(ecode)}` : ''}\nOnce you've had a look yourself, anyone signing up with a code can download the Elec-Mate app from the App Store or Google Play and use the same login on their phone.`
         : '',

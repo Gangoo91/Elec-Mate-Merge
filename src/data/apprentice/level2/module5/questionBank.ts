@@ -95,12 +95,7 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 6,
     question:
       'Which drawing type shows the physical layout of components in their actual positions?',
-    options: [
-      'Block diagram',
-      'Schematic diagram',
-      'Layout drawing',
-      'Circuit diagram',
-    ],
+    options: ['Block diagram', 'Schematic diagram', 'Layout drawing', 'Circuit diagram'],
     correctAnswer: 2,
     explanation:
       'Layout drawings show the physical arrangement and actual positions of electrical components within the building or installation area.',
@@ -161,13 +156,8 @@ export const module5QuestionBank: QuestionBank[] = [
   {
     id: 10,
     question:
-      'What is the maximum permissible voltage drop for lighting circuits under normal conditions?',
-    options: [
-      '1%',
-      '5%',
-      '3%',
-      '8%',
-    ],
+      'What is the recommended maximum voltage drop for lighting circuits under normal conditions?',
+    options: ['1%', '5%', '3%', '8%'],
     correctAnswer: 2,
     explanation:
       'BS 7671 Appendix 4 gives a maximum voltage drop of 3% for lighting circuits and 5% for other uses, measured from the origin of the installation to the point of use.',
@@ -378,7 +368,7 @@ export const module5QuestionBank: QuestionBank[] = [
     question: "What should be done when electrical work conflicts with other trades' work?",
     options: [
       'Continue working and let the other trade resolve it later',
-      'Remove the other trade\'s work to make space',
+      "Remove the other trade's work to make space",
       'Ignore the conflict if the electrical work is on programme',
       'Stop work and discuss solutions with relevant parties',
     ],
@@ -607,12 +597,7 @@ export const module5QuestionBank: QuestionBank[] = [
   {
     id: 37,
     question: 'What scale is typically used for electrical installation layout drawings?',
-    options: [
-      '1:5',
-      '1:50 or 1:100',
-      '1:1000',
-      '1:2500',
-    ],
+    options: ['1:5', '1:50 or 1:100', '1:1000', '1:2500'],
     correctAnswer: 1,
     explanation:
       'Layout drawings typically use scales of 1:50 or 1:100 to provide sufficient detail while showing the complete installation area.',
@@ -770,12 +755,7 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 47,
     question:
       'What is the minimum cross-sectional area for a separate protective conductor that is mechanically protected?',
-    options: [
-      '1.0mm²',
-      '4.0mm²',
-      '6.0mm²',
-      '2.5mm²',
-    ],
+    options: ['1.0mm²', '4.0mm²', '6.0mm²', '2.5mm²'],
     correctAnswer: 3,
     explanation:
       'Where a protective conductor is separate (not part of a cable) and mechanically protected, BS 7671 requires a minimum cross-sectional area of 2.5mm²; if not mechanically protected the minimum is 4mm².',
@@ -952,7 +932,7 @@ export const module5QuestionBank: QuestionBank[] = [
       'By whichever trade is furthest behind taking priority',
       'Through site supervision and formal procedures',
       'By the trade that arrived on site first deciding',
-      'By each trade altering the other\'s installed work',
+      "By each trade altering the other's installed work",
     ],
     correctAnswer: 1,
     explanation:
@@ -1004,7 +984,7 @@ export const module5QuestionBank: QuestionBank[] = [
     options: [
       'For identification during maintenance, emergency response, and future modifications',
       'To improve the visual appearance of the installation',
-      'To satisfy the wholesaler\'s supply conditions',
+      "To satisfy the wholesaler's supply conditions",
       'To reduce the cost of the distribution equipment',
     ],
     correctAnswer: 0,
@@ -1020,12 +1000,7 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 61,
     question:
       'What type of drawing shows the interconnection between different electrical systems?',
-    options: [
-      'Layout drawing',
-      'Single-line diagram',
-      'Detail drawing',
-      'Cable schedule',
-    ],
+    options: ['Layout drawing', 'Single-line diagram', 'Detail drawing', 'Cable schedule'],
     correctAnswer: 1,
     explanation:
       'Single-line diagrams show the interconnection between different electrical systems using simplified symbols and single lines to represent multiple conductors.',
@@ -1118,12 +1093,7 @@ export const module5QuestionBank: QuestionBank[] = [
   {
     id: 67,
     question: 'What is the relationship between power, voltage, and current in DC circuits?',
-    options: [
-      'P = V - I',
-      'P = V ÷ I',
-      'P = I ÷ V',
-      'P = V × I',
-    ],
+    options: ['P = V - I', 'P = V ÷ I', 'P = I ÷ V', 'P = V × I'],
     correctAnswer: 3,
     explanation:
       'In DC circuits, power equals voltage multiplied by current (P = V × I), which is fundamental for load calculations and circuit design.',
@@ -1300,10 +1270,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 78,
     question: 'How should electrical tools be maintained for safe operation?',
     options: [
-      "Only by replacing tools when they visibly fail",
-      "Only by storing them in a dry container",
+      'Only by replacing tools when they visibly fail',
+      'Only by storing them in a dry container',
       "Regular PAT testing, visual inspections, and manufacturer's maintenance schedules",
-      "Only by calibrating them once on purchase",
+      'Only by calibrating them once on purchase',
     ],
     correctAnswer: 2,
     explanation:
@@ -1400,9 +1370,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'How should electrical installations be coordinated with fire protection systems?',
     options: [
       "Ensure cables don't compromise fire barriers and coordinate emergency supplies",
-      "Run all fire alarm cabling within the same containment as power",
-      "Leave fire-stopping to be completed only at handover",
-      "Disconnect fire protection systems while electrical work proceeds",
+      'Run all fire alarm cabling within the same containment as power',
+      'Leave fire-stopping to be completed only at handover',
+      'Disconnect fire protection systems while electrical work proceeds',
     ],
     correctAnswer: 0,
     explanation:
@@ -1579,7 +1549,7 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 95,
     question: 'How should digital documentation be managed for electrical installations?',
     options: [
-      'Stored as a single copy on one person\'s device',
+      "Stored as a single copy on one person's device",
       'Printed out and the digital files deleted',
       'Shared freely with no access restrictions',
       'Version control, backup procedures, access control, and format standards',

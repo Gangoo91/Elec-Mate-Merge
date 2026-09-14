@@ -48,12 +48,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 2,
     question:
       'Which British Standard covers requirements for initial verification and periodic inspection?',
-    options: [
-      'BS 7430',
-      'BS 5839',
-      'BS 7671',
-      'BS 6004',
-    ],
+    options: ['BS 7430', 'BS 5839', 'BS 7671', 'BS 6004'],
     correctAnswer: 2,
     explanation:
       'BS 7671 (IET Wiring Regulations) covers requirements for initial verification and periodic inspection and testing of electrical installations.',
@@ -100,12 +95,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 5,
     question:
       'What is the recommended maximum interval for periodic inspection of a domestic installation?',
-    options: [
-      '1 year',
-      '10 years',
-      '5 years',
-      '15 years',
-    ],
+    options: ['1 year', '10 years', '5 years', '15 years'],
     correctAnswer: 1,
     explanation:
       'The recommended maximum interval for periodic inspection of domestic installations is 10 years, or at change of occupancy.',
@@ -118,12 +108,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 6,
     question:
       'What classification code indicates a potentially dangerous condition requiring immediate action?',
-    options: [
-      'FI',
-      'C2',
-      'C1',
-      'C3',
-    ],
+    options: ['FI', 'C2', 'C1', 'C3'],
     correctAnswer: 2,
     explanation:
       "C1 indicates 'Danger present' - a dangerous condition requiring immediate remedial action.",
@@ -168,12 +153,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 9,
     question: 'What does FI stand for in inspection reporting?',
-    options: [
-      'Full Installation',
-      'Further Investigation',
-      'Fault Identified',
-      'Final Inspection',
-    ],
+    options: ['Full Installation', 'Further Investigation', 'Fault Identified', 'Final Inspection'],
     correctAnswer: 1,
     explanation:
       "FI stands for 'Further Investigation' required to determine the nature and extent of a defect.",
@@ -185,12 +165,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 10,
     question: 'What is the recommended inspection interval for industrial installations?',
-    options: [
-      '1 year',
-      '5 years',
-      '3 years',
-      '10 years',
-    ],
+    options: ['1 year', '5 years', '3 years', '10 years'],
     correctAnswer: 2,
     explanation:
       'Industrial installations typically require inspection every 3 years due to the more demanding environment.',
@@ -237,12 +212,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 13,
     question:
       'What percentage of an installation should typically be inspected during periodic inspection?',
-    options: [
-      '10%',
-      '100%',
-      '40%',
-      '25%',
-    ],
+    options: ['10%', '100%', '40%', '25%'],
     correctAnswer: 1,
     explanation:
       'Periodic inspection should cover 100% of the installation where reasonably practicable.',
@@ -271,12 +241,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 15,
     question: 'What is the recommended inspection interval for swimming pools?',
-    options: [
-      '6 months',
-      '5 years',
-      '3 years',
-      '1 year',
-    ],
+    options: ['6 months', '5 years', '3 years', '1 year'],
     correctAnswer: 3,
     explanation:
       'Swimming pools and other special locations typically require annual inspection due to increased risks.',
@@ -340,12 +305,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 19,
     question: 'Which part of BS 7671 specifically covers inspection and testing?',
-    options: [
-      'Part 4',
-      'Part 5',
-      'Part 7',
-      'Part 6',
-    ],
+    options: ['Part 4', 'Part 5', 'Part 7', 'Part 6'],
     correctAnswer: 3,
     explanation: 'Part 6 of BS 7671 covers inspection and testing requirements.',
     section: 'Introduction',
@@ -392,12 +352,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 22,
     question:
       'Who is responsible for ensuring electrical installations in rented properties are safe?',
-    options: [
-      'The tenant',
-      'The local council',
-      'The landlord',
-      'The electricity supplier',
-    ],
+    options: ['The tenant', 'The local council', 'The landlord', 'The electricity supplier'],
     correctAnswer: 2,
     explanation:
       'The landlord is legally responsible for ensuring electrical installations in rented properties are safe.',
@@ -411,7 +366,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What minimum information must be recorded during inspection?',
     options: [
       'The date of the inspection and the name of the inspector',
-      'The cost of the work and the client\'s payment card details',
+      "The cost of the work and the client's payment card details",
       'The make and model of every accessory and wiring system installed',
       'Method of protection, earthing arrangements, and test results',
     ],
@@ -443,12 +398,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 25,
     question: 'What is the recommended inspection interval for hotels?',
-    options: [
-      '1 year',
-      '5 years',
-      '3 years',
-      '10 years',
-    ],
+    options: ['1 year', '5 years', '3 years', '10 years'],
     correctAnswer: 1,
     explanation: 'Hotels typically require inspection every 5 years.',
     section: 'Introduction',
@@ -545,12 +495,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 31,
     question: 'What is the maximum exposed probe tip length permitted by GS38?',
-    options: [
-      '2mm',
-      '10mm',
-      '6mm',
-      '4mm',
-    ],
+    options: ['2mm', '10mm', '6mm', '4mm'],
     correctAnswer: 3,
     explanation:
       'GS38 recommends probe tips are shrouded with a maximum of 4mm exposed or retractable.',
@@ -768,12 +713,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 44,
     question:
       'What is the recommended minimum CAT rating for test equipment used on LV installations?',
-    options: [
-      'CAT III',
-      'CAT II',
-      'CAT I',
-      'CAT IV',
-    ],
+    options: ['CAT III', 'CAT II', 'CAT I', 'CAT IV'],
     correctAnswer: 0,
     explanation:
       'CAT III rated equipment should be used for LV distribution installations; CAT IV for origin of supply.',
@@ -924,12 +864,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 53,
     question: 'What test current is typically used for continuity testing?',
-    options: [
-      'Less than 10mA',
-      'At least 200mA',
-      'Exactly 1A',
-      'Any current',
-    ],
+    options: ['Less than 10mA', 'At least 200mA', 'Exactly 1A', 'Any current'],
     correctAnswer: 1,
     explanation:
       'Continuity testing should use a test current of at least 200mA to ensure good contact and accurate readings.',
@@ -1028,12 +963,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 59,
     question: 'What is the typical maximum acceptable resistance for main bonding conductors?',
-    options: [
-      '10 ohms',
-      '1 ohm',
-      '5 ohms',
-      '0.05 ohms or less',
-    ],
+    options: ['10 ohms', '1 ohm', '5 ohms', '0.05 ohms or less'],
     correctAnswer: 3,
     explanation:
       'Main bonding conductors should have very low resistance, typically 0.05 ohms or less.',
@@ -1182,12 +1112,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 68,
     question: 'What is the standard test voltage for continuity testing?',
-    options: [
-      '4-24V DC typically',
-      '500V DC',
-      '230V AC',
-      '1000V DC',
-    ],
+    options: ['4-24V DC typically', '500V DC', '230V AC', '1000V DC'],
     correctAnswer: 0,
     explanation: 'Continuity testing typically uses a low DC voltage between 4-24V.',
     section: 'Continuity Testing',
@@ -1268,12 +1193,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 73,
     question:
       'What is the standard test voltage for insulation resistance testing on a 230V circuit?',
-    options: [
-      '250V DC',
-      '500V DC',
-      '1000V DC',
-      '230V AC',
-    ],
+    options: ['250V DC', '500V DC', '1000V DC', '230V AC'],
     correctAnswer: 1,
     explanation:
       '500V DC is the standard test voltage for insulation resistance testing on circuits up to and including 500V.',
@@ -1285,12 +1205,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 74,
     question: 'What is the minimum acceptable insulation resistance for a 230V installation?',
-    options: [
-      '0.5 MΩ',
-      '2.0 MΩ',
-      '1.0 MΩ',
-      '0.1 MΩ',
-    ],
+    options: ['0.5 MΩ', '2.0 MΩ', '1.0 MΩ', '0.1 MΩ'],
     correctAnswer: 2,
     explanation:
       'The minimum acceptable insulation resistance for a 230V installation is 1.0 MΩ (1 megohm).',
@@ -1337,12 +1252,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 77,
     question: 'What should the minimum insulation resistance be for SELV and PELV circuits?',
-    options: [
-      '0.5 MΩ',
-      '0.25 MΩ',
-      '1.0 MΩ',
-      '2.0 MΩ',
-    ],
+    options: ['0.5 MΩ', '0.25 MΩ', '1.0 MΩ', '2.0 MΩ'],
     correctAnswer: 0,
     explanation:
       'BS 7671 Table 64 requires SELV and PELV circuits to achieve a minimum insulation resistance of 0.5 MΩ when tested at 250V DC.',
@@ -1405,12 +1315,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 81,
     question: 'What is the test voltage for circuits rated above 500V up to 1000V?',
-    options: [
-      '250V DC',
-      '1000V DC',
-      '500V DC',
-      '2500V DC',
-    ],
+    options: ['250V DC', '1000V DC', '500V DC', '2500V DC'],
     correctAnswer: 1,
     explanation:
       'Circuits rated above 500V up to and including 1000V should be tested at 1000V DC.',
@@ -1491,12 +1396,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 86,
     question:
       'What is the minimum insulation resistance for circuits rated above 50V but not exceeding 500V?',
-    options: [
-      '0.5 MΩ',
-      '2.0 MΩ',
-      '1.0 MΩ',
-      '0.25 MΩ',
-    ],
+    options: ['0.5 MΩ', '2.0 MΩ', '1.0 MΩ', '0.25 MΩ'],
     correctAnswer: 2,
     explanation:
       'Circuits rated above 50V but not exceeding 500V require minimum insulation resistance of 1.0 MΩ.',
@@ -1647,9 +1547,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question:
       'If insulation resistance of a circuit is found to be 0.9 MΩ, what action is required?',
     options: [
-      "Record it as a pass as it exceeds 0.5 megohm",
-      "Accept it as satisfactory for an existing installation",
-      "Re-test at 250V DC to obtain a higher reading",
+      'Record it as a pass as it exceeds 0.5 megohm',
+      'Accept it as satisfactory for an existing installation',
+      'Re-test at 250V DC to obtain a higher reading',
       "Investigate the cause as it's below minimum",
     ],
     correctAnswer: 3,
@@ -1697,12 +1597,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 98,
     question: 'What is the relationship between Zs, Ze, and R1+R2?',
-    options: [
-      'Zs = Ze - R1+R2',
-      'Zs = Ze x R1+R2',
-      'Zs = Ze + R1+R2',
-      'Zs = Ze / R1+R2',
-    ],
+    options: ['Zs = Ze - R1+R2', 'Zs = Ze x R1+R2', 'Zs = Ze + R1+R2', 'Zs = Ze / R1+R2'],
     correctAnswer: 2,
     explanation:
       'Zs = Ze + (R1+R2), where R1+R2 is the resistance of the circuit phase and CPC conductors.',
@@ -1731,12 +1626,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 100,
     question: 'What is the maximum permitted Zs for a 32A Type B MCB on a TN system?',
-    options: [
-      '1.37Ω',
-      '2.30Ω',
-      '4.60Ω',
-      '0.72Ω',
-    ],
+    options: ['1.37Ω', '2.30Ω', '4.60Ω', '0.72Ω'],
     correctAnswer: 0,
     explanation:
       'For a 32A Type B MCB, maximum Zs is 1.37Ω per BS 7671 Table 41.3 (incorporating Cmin = 0.95) to ensure disconnection within the required time.',
@@ -1749,12 +1639,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 101,
     question: 'What is the maximum disconnection time for a 230V TN system final circuit?',
-    options: [
-      '0.2 seconds',
-      '0.4 seconds',
-      '1 second',
-      '5 seconds',
-    ],
+    options: ['0.2 seconds', '0.4 seconds', '1 second', '5 seconds'],
     correctAnswer: 1,
     explanation: 'Final circuits on TN systems up to 32A require disconnection within 0.4 seconds.',
     section: 'Earth Fault Loop Impedance',
@@ -1765,12 +1650,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 102,
     question: 'What is the maximum disconnection time for distribution circuits on a TN system?',
-    options: [
-      '0.4 seconds',
-      '10 seconds',
-      '5 seconds',
-      '1 second',
-    ],
+    options: ['0.4 seconds', '10 seconds', '5 seconds', '1 second'],
     correctAnswer: 2,
     explanation:
       'Distribution circuits on TN systems may have a disconnection time of up to 5 seconds.',
@@ -1818,12 +1698,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 105,
     question: 'What type of instrument is used to measure earth fault loop impedance?',
-    options: [
-      'Insulation resistance tester',
-      'Loop impedance tester',
-      'Clamp meter',
-      'Multimeter',
-    ],
+    options: ['Insulation resistance tester', 'Loop impedance tester', 'Clamp meter', 'Multimeter'],
     correctAnswer: 1,
     explanation:
       'A loop impedance tester is specifically designed to measure earth fault loop impedance.',
@@ -1852,12 +1727,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 107,
     question: 'What is the typical maximum Ze for a TN-C-S system?',
-    options: [
-      '0.8Ω',
-      '1.0Ω',
-      '21Ω',
-      '0.35Ω',
-    ],
+    options: ['0.8Ω', '1.0Ω', '21Ω', '0.35Ω'],
     correctAnswer: 3,
     explanation: 'The typical maximum Ze for a TN-C-S (PME) system is 0.35Ω.',
     section: 'Earth Fault Loop Impedance',
@@ -1868,12 +1738,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 108,
     question: 'What is the typical maximum Ze for a TN-S system?',
-    options: [
-      '0.8Ω',
-      '21Ω',
-      '1.44Ω',
-      '0.35Ω',
-    ],
+    options: ['0.8Ω', '21Ω', '1.44Ω', '0.35Ω'],
     correctAnswer: 0,
     explanation: 'The typical maximum Ze for a TN-S system is 0.8Ω.',
     section: 'Earth Fault Loop Impedance',
@@ -2036,12 +1901,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 118,
     question: 'What is the maximum disconnection time for a 30mA RCD at rated residual current?',
-    options: [
-      '40ms',
-      '200ms',
-      '300ms',
-      '1 second',
-    ],
+    options: ['40ms', '200ms', '300ms', '1 second'],
     correctAnswer: 2,
     explanation:
       'A general type RCD must disconnect within 300ms at its rated residual current (IΔn).',
@@ -2053,7 +1913,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 119,
     question:
-      'Under BS 7671:2018+A4:2026, within what range must a delay \'S\' type RCD disconnect when tested at IΔn?',
+      "Under BS 7671:2018+A4:2026, within what range must a delay 'S' type RCD disconnect when tested at IΔn?",
     options: [
       'Within 300 ms, the same as a general non-delay device',
       'Between 130 ms minimum and 500 ms maximum',
@@ -2071,12 +1931,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 120,
     question: 'What current rating provides additional protection against electric shock?',
-    options: [
-      '30mA or less',
-      '300mA',
-      '100mA',
-      '500mA',
-    ],
+    options: ['30mA or less', '300mA', '100mA', '500mA'],
     correctAnswer: 0,
     explanation: 'RCDs rated 30mA or less provide additional protection against electric shock.',
     section: 'RCD Testing',
@@ -2104,12 +1959,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 122,
     question: 'At what percentage of rated residual current must an RCD NOT trip?',
-    options: [
-      '25%',
-      '100%',
-      '50%',
-      '75%',
-    ],
+    options: ['25%', '100%', '50%', '75%'],
     correctAnswer: 2,
     explanation: 'An RCD must not trip at 50% of its rated residual current (non-trip test).',
     section: 'RCD Testing',
@@ -2246,12 +2096,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 131,
     question:
       'What is the minimum non-actuating time for an S-type (selective) RCD at its rated residual current?',
-    options: [
-      '40ms',
-      '300ms',
-      '10ms',
-      '130ms',
-    ],
+    options: ['40ms', '300ms', '10ms', '130ms'],
     correctAnswer: 3,
     explanation: 'S-type RCDs have a minimum delay of 130ms at rated residual current.',
     section: 'RCD Testing',
@@ -2876,7 +2721,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     options: [
       'Previous certificates, circuit schedules, and instructions for operation',
       'Manufacturer data sheets for every accessory and protective device fitted',
-      'The designer\'s calculations and a full bill of quantities for the works',
+      "The designer's calculations and a full bill of quantities for the works",
       'A risk assessment and method statement retained in the site file',
     ],
     correctAnswer: 0,
@@ -2893,7 +2738,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     options: [
       'A schedule of rates and a fixed quotation for any remedial work found',
       'Observations, classification codes, recommendations, and test results',
-      'The designer\'s original calculations alongside the measured test values',
+      "The designer's original calculations alongside the measured test values",
       'A statement of compliance with the edition in force when installed',
     ],
     correctAnswer: 1,
@@ -3027,12 +2872,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 177,
     question: 'What is the recommended inspection interval for agricultural installations?',
-    options: [
-      '10 years',
-      '3 years',
-      '1 year',
-      '5 years',
-    ],
+    options: ['10 years', '3 years', '1 year', '5 years'],
     correctAnswer: 1,
     explanation:
       'Agricultural installations typically require inspection every 3 years due to harsh environmental conditions.',
@@ -3147,12 +2987,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 184,
     question:
       'IET Guidance Note 3 specifies the source for a low-resistance continuity test. What short-circuit current must the instrument be able to supply?',
-    options: [
-      '200mA',
-      '100mA',
-      '500mA',
-      '1A',
-    ],
+    options: ['200mA', '100mA', '500mA', '1A'],
     correctAnswer: 0,
     explanation:
       'GN3 requires a source with a no-load voltage between 4 V and 24 V and a short-circuit current of not less than 200 mA. Note what the figure actually is: the current the instrument must be CAPABLE of supplying, not the current delivered into a given conductor — and it is GN3 guidance on instrument selection rather than a BS 7671 regulation.',
@@ -3198,12 +3033,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 187,
     question: 'What test voltage should be used for SELV circuits not exceeding 25V AC?',
-    options: [
-      '500V DC',
-      '100V DC',
-      '1000V DC',
-      '250V DC',
-    ],
+    options: ['500V DC', '100V DC', '1000V DC', '250V DC'],
     correctAnswer: 3,
     explanation: 'SELV circuits not exceeding 25V AC should be tested at 250V DC.',
     section: 'Insulation Resistance',
@@ -3248,12 +3078,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 190,
     question: 'What is the formula for calculating prospective earth fault current?',
-    options: [
-      'PEFC = Uo × Zs',
-      'PEFC = Uo + Zs',
-      'PEFC = Uo / Zs',
-      'PEFC = Zs / Uo',
-    ],
+    options: ['PEFC = Uo × Zs', 'PEFC = Uo + Zs', 'PEFC = Uo / Zs', 'PEFC = Zs / Uo'],
     correctAnswer: 2,
     explanation:
       'Prospective Earth Fault Current = Uo (nominal voltage) divided by Zs (earth fault loop impedance).',
@@ -3282,12 +3107,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 192,
     question: 'What is the maximum Zs for a 6A Type B MCB?',
-    options: [
-      '7.67Ω',
-      '7.28Ω',
-      '1.92Ω',
-      '0.96Ω',
-    ],
+    options: ['7.67Ω', '7.28Ω', '1.92Ω', '0.96Ω'],
     correctAnswer: 1,
     explanation:
       'For a 6A Type B MCB, maximum Zs is 7.28Ω per Table 41.3 (includes the Cmin factor of 0.95). 7.67Ω is the old pre-Cmin figure.',
@@ -3316,12 +3136,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 194,
     question: 'What test current is used for the non-trip test of a 30mA RCD?',
-    options: [
-      '30mA',
-      '45mA',
-      '15mA (50% of rating)',
-      '150mA',
-    ],
+    options: ['30mA', '45mA', '15mA (50% of rating)', '150mA'],
     correctAnswer: 2,
     explanation: 'The non-trip test uses 50% of rated current (15mA for a 30mA RCD).',
     section: 'RCD Testing',
@@ -3366,12 +3181,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 197,
     question: 'What is the minimum IP rating for a bathroom Zone 1?',
-    options: [
-      'IPX7',
-      'IPX4',
-      'IP68',
-      'IP20',
-    ],
+    options: ['IPX7', 'IPX4', 'IP68', 'IP20'],
     correctAnswer: 1,
     explanation: 'Bathroom Zone 1 requires minimum IPX4 (protected against water splashes).',
     section: 'Visual Inspection & Documentation',
@@ -3518,12 +3328,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 206,
     question: 'What is the maximum Zs for a 40A Type B MCB?',
-    options: [
-      '2.30Ω',
-      '1.09Ω',
-      '1.15Ω',
-      '0.57Ω',
-    ],
+    options: ['2.30Ω', '1.09Ω', '1.15Ω', '0.57Ω'],
     correctAnswer: 1,
     explanation:
       'For a 40A Type B MCB, maximum Zs is 1.09Ω per Table 41.3 (includes the Cmin factor of 0.95). 1.15Ω is the old pre-Cmin figure.',
@@ -3535,12 +3340,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 207,
     question: 'How often should RCDs be tested by the user using the test button?',
-    options: [
-      'Annually',
-      'Monthly',
-      'Weekly',
-      'Quarterly',
-    ],
+    options: ['Annually', 'Monthly', 'Weekly', 'Quarterly'],
     correctAnswer: 3,
     explanation:
       'Users should test RCDs using the test button at least quarterly (every 3 months).',
@@ -3589,7 +3389,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What should be verified about protective device ratings during inspection?',
     options: [
       'That the rating is appropriate for the circuit and the cable it protects',
-      'That the device and the cable both come from the same manufacturer\'s range',
+      "That the device and the cable both come from the same manufacturer's range",
       'That the breaking capacity exceeds the design current by at least 25 per cent',
       'That the device type is the latest model listed in the current price list',
     ],
@@ -3604,12 +3404,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 211,
     question: 'What is the typical resistance per metre of 2.5mm² copper conductor?',
-    options: [
-      '18.1mΩ/m',
-      '1.83mΩ/m',
-      '4.61mΩ/m',
-      '7.41mΩ/m',
-    ],
+    options: ['18.1mΩ/m', '1.83mΩ/m', '4.61mΩ/m', '7.41mΩ/m'],
     correctAnswer: 3,
     explanation:
       '2.5mm² copper conductor has a resistance of approximately 7.41mΩ per metre at 20°C.',
@@ -3639,12 +3434,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 213,
     question:
       'What is the maximum earth electrode resistance typically acceptable for a TT system with 30mA RCD?',
-    options: [
-      '0.8Ω',
-      '1667Ω',
-      '21Ω',
-      '200Ω',
-    ],
+    options: ['0.8Ω', '1667Ω', '21Ω', '200Ω'],
     correctAnswer: 1,
     explanation:
       'BS 7671 Table 41.5 gives a maximum earth fault loop impedance of 1667Ω for a 30mA RCD (50V ÷ 0.03A, per Reg 411.5.3). NOTE 2 to the table adds that an electrode value exceeding 200Ω may not be stable (Reg 542.2.4).',
@@ -3692,7 +3482,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     options: [
       'To identify circuits for safe isolation and future work',
       'To record the test results for each circuit in the board',
-      'To display the manufacturer\'s warranty details for the board',
+      "To display the manufacturer's warranty details for the board",
       'To indicate the cable colour used on each circuit in the board',
     ],
     correctAnswer: 0,
@@ -3826,12 +3616,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 224,
     question: 'What is the recommended inspection interval for construction sites?',
-    options: [
-      '3 months',
-      '1 year',
-      '6 months',
-      '2 years',
-    ],
+    options: ['3 months', '1 year', '6 months', '2 years'],
     correctAnswer: 0,
     explanation:
       'Construction sites typically require inspection every 3 months due to the harsh and changing environment.',
@@ -3878,12 +3663,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 227,
     question: 'What is the maximum permissible touch voltage in normal dry conditions?',
-    options: [
-      '12V',
-      '25V',
-      '120V',
-      '50V AC',
-    ],
+    options: ['12V', '25V', '120V', '50V AC'],
     correctAnswer: 3,
     explanation:
       'The maximum permissible touch voltage in normal conditions is 50V AC or 120V ripple-free DC.',
@@ -3912,12 +3692,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 229,
     question: 'What symbol indicates Class II equipment?',
-    options: [
-      'Earth symbol',
-      'Double square symbol',
-      'Triangle',
-      'Circle',
-    ],
+    options: ['Earth symbol', 'Double square symbol', 'Triangle', 'Circle'],
     correctAnswer: 1,
     explanation:
       'Class II equipment is marked with a double square symbol (square within a square).',
@@ -4032,12 +3807,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 236,
     question:
       'What is the minimum CSA for main bonding conductors in domestic installations with 25mm² tails?',
-    options: [
-      '10mm²',
-      '6mm²',
-      '4mm²',
-      '16mm²',
-    ],
+    options: ['10mm²', '6mm²', '4mm²', '16mm²'],
     correctAnswer: 0,
     explanation:
       'Under PME conditions, main protective bonding is sized from the PEN conductor using BS 7671 Table 54.8 (Reg 544.1.1). A typical domestic PME supply has a PEN of 35mm² or less, giving a minimum main bonding conductor of 10mm² copper.',
@@ -4391,7 +4161,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 257,
     question: 'Where are IT earthing systems commonly used?',
     options: [
-      'Standard domestic dwellings supplied directly from the DNO\'s network',
+      "Standard domestic dwellings supplied directly from the DNO's network",
       'Critical systems like operating theatres where first fault must not cause shutdown',
       'Construction sites and other temporary installations fed from a generator',
       'Outdoor lighting and garden socket circuits requiring RCD protection',
@@ -4578,16 +4348,11 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 268,
-    question: 'What is the maximum voltage drop permitted for lighting circuits?',
-    options: [
-      '3%',
-      '1%',
-      '5%',
-      '10%',
-    ],
+    question: 'What is the maximum voltage drop recommended for lighting circuits?',
+    options: ['3%', '1%', '5%', '10%'],
     correctAnswer: 0,
     explanation:
-      'The maximum permitted voltage drop for lighting circuits is typically 3% of nominal voltage.',
+      'The recommended maximum voltage drop for lighting circuits is typically 3% of nominal voltage.',
     section: 'Earth Fault Loop Impedance',
     difficulty: 'intermediate',
     topic: 'Voltage Drop',
@@ -4595,16 +4360,11 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 269,
-    question: 'What is the maximum voltage drop permitted for other circuits?',
-    options: [
-      '3%',
-      '5%',
-      '10%',
-      '15%',
-    ],
+    question: 'What is the maximum voltage drop recommended for other circuits?',
+    options: ['3%', '5%', '10%', '15%'],
     correctAnswer: 1,
     explanation:
-      'The maximum permitted voltage drop for other circuits is typically 5% of nominal voltage.',
+      'The recommended maximum voltage drop for other circuits is typically 5% of nominal voltage.',
     section: 'Earth Fault Loop Impedance',
     difficulty: 'intermediate',
     topic: 'Voltage Drop',
@@ -4613,12 +4373,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 270,
     question: 'What is the recommended inspection interval for cinemas?',
-    options: [
-      '5 years',
-      '3 years',
-      '1 year',
-      '10 years',
-    ],
+    options: ['5 years', '3 years', '1 year', '10 years'],
     correctAnswer: 2,
     explanation: 'Cinemas and other entertainment venues typically require annual inspection.',
     section: 'Introduction',
@@ -4817,12 +4572,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 282,
     question:
       'In a medical location of group 1 or 2 where automatic disconnection of supply cannot be achieved, what is the maximum conventional touch voltage Uc?',
-    options: [
-      '50V AC',
-      '12V AC',
-      '25V AC',
-      '5V AC',
-    ],
+    options: ['50V AC', '12V AC', '25V AC', '5V AC'],
     correctAnswer: 2,
     explanation:
       'Section 710: where automatic disconnection cannot be achieved in a medical location of group 1 or 2, the conventional touch voltage Uc shall not exceed 25V AC (or 60V DC) for TN, TT and IT systems. A supplementary protective equipotential bonding system to 710.415.2 and 710.419.3 is deemed to meet this. Note this 25V limit is NOT a general bathroom or swimming-pool rule — those locations rely on supplementary bonding and RCD protection instead.',
@@ -5038,12 +4788,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 295,
     question: 'What is the typical resistance per metre of 1.5mm² copper conductor?',
-    options: [
-      '18.1mΩ/m',
-      '4.61mΩ/m',
-      '7.41mΩ/m',
-      '12.1mΩ/m',
-    ],
+    options: ['18.1mΩ/m', '4.61mΩ/m', '7.41mΩ/m', '12.1mΩ/m'],
     correctAnswer: 3,
     explanation:
       '1.5mm² copper conductor has a resistance of approximately 12.1mΩ per metre at 20°C.',
@@ -5056,12 +4801,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 296,
     question:
       'A supplementary bonding conductor connecting two extraneous-conductive-parts has no mechanical protection. What is the minimum cross-sectional area?',
-    options: [
-      '4mm²',
-      '2.5mm²',
-      '1.5mm²',
-      '6mm²',
-    ],
+    options: ['4mm²', '2.5mm²', '1.5mm²', '6mm²'],
     correctAnswer: 0,
     explanation:
       'Regulation 544.2.3: a supplementary bonding conductor connecting two extraneous-conductive-parts shall be not less than 4mm² where mechanical protection is not provided, or 2.5mm² where it is sheathed or otherwise mechanically protected. Note the neighbouring rules use a different basis entirely — 544.2.2 (exposed to extraneous) requires conductance of at least half the protective conductor connected to the exposed-conductive-part, not a fixed CSA.',
@@ -5124,12 +4864,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 300,
     question: 'What is the recommended inspection interval for swimming pools?',
-    options: [
-      '1 year',
-      '6 months',
-      '3 years',
-      '5 years',
-    ],
+    options: ['1 year', '6 months', '3 years', '5 years'],
     correctAnswer: 0,
     explanation:
       'Swimming pools and other special locations typically require annual inspection due to increased risks.',
@@ -5157,7 +4892,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 302,
-    question: 'A candidate quotes 40 ms at 5x IΔn as the BS 7671 pass criterion. What is wrong with that?',
+    question:
+      'A candidate quotes 40 ms at 5x IΔn as the BS 7671 pass criterion. What is wrong with that?',
     options: [
       'Nothing — it remains the criterion for a general non-delay device',
       'The figure should be 50 ms, and it applies only to Type S devices',
@@ -5174,7 +4910,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 303,
-    question: 'On a ring final circuit, which cross-connection produces the R1+R2 recorded on the Schedule of Test Results?',
+    question:
+      'On a ring final circuit, which cross-connection produces the R1+R2 recorded on the Schedule of Test Results?',
     options: [
       'Line to neutral — L1 to N2 and L2 to N1, measured at each socket',
       'None — each leg is measured end to end and the three values added',
@@ -5183,7 +4920,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     ],
     correctAnswer: 3,
     explanation:
-      'GN3\'s step 2 cross-connects line to neutral and proves those two legs, reading about (r1 + rn) / 4. Step 3 cross-connects line to CPC, and that reading at each socket is the R1+R2 for the outlet — the value recorded and added to Ze for Zs. Note the notation: R2 is the circuit protective conductor, never the neutral. The neutral loop is rn.',
+      "GN3's step 2 cross-connects line to neutral and proves those two legs, reading about (r1 + rn) / 4. Step 3 cross-connects line to CPC, and that reading at each socket is the R1+R2 for the outlet — the value recorded and added to Ze for Zs. Note the notation: R2 is the circuit protective conductor, never the neutral. The neutral loop is rn.",
     section: 'A4:2026',
     difficulty: 'advanced',
     topic: 'Ring Final Circuits',
@@ -5191,7 +4928,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 304,
-    question: 'Which regulation gives the maximum disconnection times that Table 41.1 applies to final circuits?',
+    question:
+      'Which regulation gives the maximum disconnection times that Table 41.1 applies to final circuits?',
     options: [
       'Regulation 411.3.2.2',
       'Regulation 411.3.1.2',
@@ -5208,7 +4946,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 305,
-    question: 'A 20 A radial circuit supplies only fixed current-using equipment on a TN system at 230 V. What is its maximum disconnection time?',
+    question:
+      'A 20 A radial circuit supplies only fixed current-using equipment on a TN system at 230 V. What is its maximum disconnection time?',
     options: [
       '5 s, because it supplies fixed equipment rather than any socket-outlets',
       '0.4 s, because Table 41.1 covers fixed-load final circuits up to 32 A',
@@ -5225,13 +4964,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 306,
-    question: 'Which BS 7671 table gives maximum Zs values for fuses at a 5-second disconnection time?',
-    options: [
-      'Table 41.2',
-      'Table 41.3',
-      'Table 41.4',
-      'Table 54.7',
-    ],
+    question:
+      'Which BS 7671 table gives maximum Zs values for fuses at a 5-second disconnection time?',
+    options: ['Table 41.2', 'Table 41.3', 'Table 41.4', 'Table 54.7'],
     correctAnswer: 2,
     explanation:
       'Table 41.2 covers fuses at 0.4 s, Table 41.4 covers fuses at 5 s, and Table 41.3 covers circuit-breakers — Types B, C and D all sit in that one table. Table 54.7 is nothing to do with Zs; it is the simplified method for sizing circuit protective conductors.',
@@ -5242,7 +4977,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 307,
-    question: 'Why do Table 41.3 rows for Type B and Type C circuit-breakers show a single Zs value rather than separate 0.4 s and 5 s figures?',
+    question:
+      'Why do Table 41.3 rows for Type B and Type C circuit-breakers show a single Zs value rather than separate 0.4 s and 5 s figures?',
     options: [
       'Because the 5 s column was deleted by Amendment 4 for every type of protective device listed in Chapter 41',
       'Because the difference between the two disconnection times lies within the tolerance of the instrument used',
@@ -5259,13 +4995,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 308,
-    question: 'Insulation resistance is being verified on a 230 V final circuit. Which table gives the test voltage and minimum value?',
-    options: [
-      'Table 64',
-      'Table 61',
-      'Table 41.1',
-      'Table 3A',
-    ],
+    question:
+      'Insulation resistance is being verified on a 230 V final circuit. Which table gives the test voltage and minimum value?',
+    options: ['Table 64', 'Table 61', 'Table 41.1', 'Table 3A'],
     correctAnswer: 0,
     explanation:
       'Table 64 gives 500 V DC and a 1.0 MΩ minimum for circuits up to and including 500 V, 250 V DC and 0.5 MΩ for SELV and PELV, and 1000 V DC above 500 V. Older material calls this Table 61 — that numbering is superseded. Table 3A was the RCD time/current table and has been deleted altogether.',
@@ -5293,7 +5025,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 310,
-    question: 'An EV charging point is fitted outdoors on a PME supply. What does Regulation 722.411.4.1 require?',
+    question:
+      'An EV charging point is fitted outdoors on a PME supply. What does Regulation 722.411.4.1 require?',
     options: [
       'PME may be used outdoors provided that the charging equipment carries an IP44 rating or better and is RCD protected',
       'An earth electrode must always be installed at the charging point, since a TT arrangement is the only permitted alternative',
@@ -5310,7 +5043,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 311,
-    question: 'A device fitted to satisfy Regulation 722.411.4.1 monitors voltage to detect a PEN failure. Between which points must it measure?',
+    question:
+      'A device fitted to satisfy Regulation 722.411.4.1 monitors voltage to detect a PEN failure. Between which points must it measure?',
     options: [
       'Between the charge point CPC and the main earthing terminal',
       'Between the charge point CPC and the supply neutral',
@@ -5327,7 +5061,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 312,
-    question: 'A domestic swimming pool is supplied from a PME earthing facility. What does Section 702 require?',
+    question:
+      'A domestic swimming pool is supplied from a PME earthing facility. What does Section 702 require?',
     options: [
       'PME may be used, with an earth mat or electrode of suitably low resistance connected to the supplementary bonding',
       'PME must not be used at all; the whole installation has to be converted to a TT system with its own earth electrode',
@@ -5344,7 +5079,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 313,
-    question: 'Which regulation requires that selection of protective equipment takes account of unidirectional or bidirectional devices?',
+    question:
+      'Which regulation requires that selection of protective equipment takes account of unidirectional or bidirectional devices?',
     options: [
       'Regulation 551.7.1(c)',
       'Regulation 530.3.201',
@@ -5361,7 +5097,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 314,
-    question: 'Voltage drop is being assessed for a lighting circuit in an installation supplied directly from the public low voltage network. What is the recommended maximum?',
+    question:
+      'Voltage drop is being assessed for a lighting circuit in an installation supplied directly from the public low voltage network. What is the recommended maximum?',
     options: [
       '4% of the nominal voltage',
       '5% of the nominal voltage',
@@ -5378,7 +5115,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 315,
-    question: 'Circuits supplying electric floor heating units require additional protection. What does Regulation 753.415.1 require?',
+    question:
+      'Circuits supplying electric floor heating units require additional protection. What does Regulation 753.415.1 require?',
     options: [
       'RCD protection at 100 mA, with time-delayed devices permitted for discrimination',
       'Supplementary bonding of the heating element in place of RCD protection',
@@ -5395,7 +5133,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 316,
-    question: 'An inspector records the absence of main protective bonding to the incoming gas and water services. Which regulation is the correct reference?',
+    question:
+      'An inspector records the absence of main protective bonding to the incoming gas and water services. Which regulation is the correct reference?',
     options: [
       'Regulation 411.3.1.2',
       'Regulation 411.3.1.1',
@@ -5412,7 +5151,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 317,
-    question: 'An EICR records a lighting circuit in a dwelling with no RCD protection. Under A4:2026, how should this be coded?',
+    question:
+      'An EICR records a lighting circuit in a dwelling with no RCD protection. Under A4:2026, how should this be coded?',
     options: [
       'C2 — potentially dangerous, judged against the risk in that installation',
       'C1 — danger present, as the circuit is unsafe to remain in service',
@@ -5421,7 +5161,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     ],
     correctAnswer: 0,
     explanation:
-      'Regulation 411.3.4, introduced by A4:2026, requires 30 mA RCD additional protection for AC final circuits supplying luminaires in domestic premises. On an existing installation this is coded on risk — commonly C2 where cables are concealed or the occupants are vulnerable, C3 where the risk is lower. It is a real requirement now, so \'no code\' is wrong.',
+      "Regulation 411.3.4, introduced by A4:2026, requires 30 mA RCD additional protection for AC final circuits supplying luminaires in domestic premises. On an existing installation this is coded on risk — commonly C2 where cables are concealed or the occupants are vulnerable, C3 where the risk is lower. It is a real requirement now, so 'no code' is wrong.",
     section: 'A4:2026',
     difficulty: 'advanced',
     topic: 'EICR Coding',
@@ -5429,7 +5169,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 318,
-    question: 'You measure R1+R2 at four sockets on a ring: 0.21, 0.22, 0.21 and 0.34 Ω. What does the pattern suggest?',
+    question:
+      'You measure R1+R2 at four sockets on a ring: 0.21, 0.22, 0.21 and 0.34 Ω. What does the pattern suggest?',
     options: [
       'A healthy ring — the variation lies well within normal tolerance',
       'A high-resistance joint or a spur at the socket reading 0.34 Ω',
@@ -5463,7 +5204,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 320,
-    question: 'An installation has a 100 mA time-delayed RCD upstream of 30 mA RCBOs. What is being achieved?',
+    question:
+      'An installation has a 100 mA time-delayed RCD upstream of 30 mA RCBOs. What is being achieved?',
     options: [
       'Additional protection provided at both levels throughout the whole installation',
       'Compliance with the requirement for double-pole isolation of every final circuit',
@@ -5480,7 +5222,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 321,
-    question: 'During initial verification, when should the earth electrode resistance be measured on a TT system?',
+    question:
+      'During initial verification, when should the earth electrode resistance be measured on a TT system?',
     options: [
       'As a dead test, before the installation is energised',
       'After energising, using the loop impedance function at a socket',
@@ -5497,7 +5240,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 322,
-    question: 'What is the correct interpretation of a \'satisfactory\' EICR outcome?',
+    question: "What is the correct interpretation of a 'satisfactory' EICR outcome?",
     options: [
       'No observations of any kind were recorded on the report at all',
       'No C1 or C2 observations were recorded; C3 items may still be present',
@@ -5531,7 +5274,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 324,
-    question: 'A surge protective device is being considered. Under Regulation 443.4.1, when must protection be provided?',
+    question:
+      'A surge protective device is being considered. Under Regulation 443.4.1, when must protection be provided?',
     options: [
       'On every installation without any exception at all since Amendment 2 was first published',
       'In every commercial and industrial installation that has a supply rated above 100 A',
@@ -5548,7 +5292,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 325,
-    question: 'What is verified by the test for continuity of protective conductors using the long lead method?',
+    question:
+      'What is verified by the test for continuity of protective conductors using the long lead method?',
     options: [
       'That the CPC is continuous from the board to each accessory',
       'That the CPC csa satisfies the adiabatic equation for the circuit',
@@ -5565,7 +5310,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 326,
-    question: 'Which statement about testing a circuit that includes surge protective devices is correct?',
+    question:
+      'Which statement about testing a circuit that includes surge protective devices is correct?',
     options: [
       'SPDs may remain connected if the test voltage is reduced to 250 V DC',
       'SPDs must be disconnected before insulation resistance testing',
@@ -5589,7 +5335,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   // 132.13 and the Appendix 6 changes — not recalled.
   {
     id: 327,
-    question: 'A consumer unit is replaced in an existing dwelling with no other alteration to the circuits. Which certificate is required?',
+    question:
+      'A consumer unit is replaced in an existing dwelling with no other alteration to the circuits. Which certificate is required?',
     options: [
       'A Minor Electrical Installation Works Certificate, since no new circuit has been added and the existing circuits are unchanged',
       'An Electrical Installation Certificate, because replacing a distribution board or consumer unit requires initial verification',
@@ -5640,7 +5387,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 330,
-    question: 'A defect is found while inspecting and testing a new installation. When may the Electrical Installation Certificate be issued?',
+    question:
+      'A defect is found while inspecting and testing a new installation. When may the Electrical Installation Certificate be issued?',
     options: [
       'Once the defect has been corrected and any necessary re-testing carried out to demonstrate compliance',
       'Immediately, provided the defect is recorded in the comments box and reported to the client in writing',
@@ -5674,7 +5422,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 332,
-    question: 'What is the status of the example checklist of inspection items added to Appendix 6 at Amendment 4?',
+    question:
+      'What is the status of the example checklist of inspection items added to Appendix 6 at Amendment 4?',
     options: [
       'It is guidance only and is not required to be provided with the certificate',
       'It is mandatory and must be completed and issued alongside every certificate',
@@ -5691,7 +5440,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 333,
-    question: 'The Electrical Installation Certificate issued on completion of verification must be based on which model?',
+    question:
+      'The Electrical Installation Certificate issued on completion of verification must be based on which model?',
     options: [
       'The model given in Appendix 6 of BS 7671, which is the normative template for the certificate',
       'The model published by the scheme provider that the contractor is registered with at that time',
@@ -5708,10 +5458,11 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 334,
-    question: 'In what format may an Electrical Installation Certificate or Minor Works Certificate be produced?',
+    question:
+      'In what format may an Electrical Installation Certificate or Minor Works Certificate be produced?',
     options: [
       'In written or electronic form, both being permitted for the original certificate or a copy',
-      'In written form only, with electronic copies acceptable purely for the contractor\'s records',
+      "In written form only, with electronic copies acceptable purely for the contractor's records",
       'In electronic form only, since paper certificates are no longer recognised for notification',
       'In written form, unless the client has agreed in advance to accept an electronic version',
     ],
@@ -5725,7 +5476,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 335,
-    question: 'A 250 V DC insulation resistance test is used because connected equipment could be damaged. What must be recorded?',
+    question:
+      'A 250 V DC insulation resistance test is used because connected equipment could be damaged. What must be recorded?',
     options: [
       'That a 250 V DC test was performed, and the reason for adapting the test method',
       'Only the resulting value, since the test voltage used is a matter for the tester',
@@ -5742,7 +5494,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 336,
-    question: 'When the initial verification is made, what must happen to the documentation on device selection for coordination?',
+    question:
+      'When the initial verification is made, what must happen to the documentation on device selection for coordination?',
     options: [
       'It is added to the design documentation, making the coordination evidence part of the formal design record',
       'It is retained by the installer only, as coordination is a construction rather than a design matter',
@@ -5765,7 +5518,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   // BS EN 60079-17 for explosive atmospheres.
   {
     id: 337,
-    question: 'Which tests must be carried out before the installation is energised, and in what order?',
+    question:
+      'Which tests must be carried out before the installation is energised, and in what order?',
     options: [
       'The tests of 643.2 to 643.6 in that order — continuity, insulation resistance, SELV/PELV or separation, floors and walls, polarity',
       'Any of the dead tests in whatever order best suits site access, provided that all of them are completed before the installation is energised',
@@ -5782,7 +5536,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 338,
-    question: 'An installation incorporates an earth electrode. Which further test must be completed before energisation?',
+    question:
+      'An installation incorporates an earth electrode. Which further test must be completed before energisation?',
     options: [
       'The prospective fault current measurement, taken at the origin of the installation',
       'The earth electrode resistance test, which must also precede energisation',
@@ -5799,7 +5554,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 339,
-    question: 'A test during initial verification indicates a failure to comply. After the fault is rectified, what must be repeated?',
+    question:
+      'A test during initial verification indicates a failure to comply. After the fault is rectified, what must be repeated?',
     options: [
       'Only the test that failed, since the earlier results were recorded before the fault arose',
       'Every test in the sequence, because a single failure invalidates the whole verification',
@@ -5816,7 +5572,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 340,
-    question: 'Which standard governs the choice of measuring instruments for the tests of Chapter 64?',
+    question:
+      'Which standard governs the choice of measuring instruments for the tests of Chapter 64?',
     options: [
       'BS EN 61557, with other equipment permitted if performance and safety are no lesser',
       'BS EN 60898, which sets out the accuracy classes required of installation test instruments',
@@ -5833,7 +5590,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 341,
-    question: 'Testing is to be undertaken in a potentially explosive atmosphere. Which standard sets the safety precautions?',
+    question:
+      'Testing is to be undertaken in a potentially explosive atmosphere. Which standard sets the safety precautions?',
     options: [
       'BS EN 60079-17, covering inspection and maintenance in explosive atmospheres',
       'BS EN 61557-6, which covers the effectiveness of residual current devices only',
@@ -5850,7 +5608,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 342,
-    question: 'Under Regulation 643.2.1, continuity of conductors is verified by measuring the resistance of which conductors?',
+    question:
+      'Under Regulation 643.2.1, continuity of conductors is verified by measuring the resistance of which conductors?',
     options: [
       'Line conductors only, the protective conductor being proved by loop impedance',
       'Protective conductors, including protective bonding conductors',
@@ -5867,7 +5626,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 343,
-    question: 'On a TN system, how is compliance with the requirements for automatic disconnection verified?',
+    question:
+      'On a TN system, how is compliance with the requirements for automatic disconnection verified?',
     options: [
       'By measuring the earth electrode resistance and comparing it with the RCD rated current',
       'By confirming that the protective device rating matches the cable current-carrying capacity',
@@ -5884,7 +5644,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 344,
-    question: 'On a TT system, a measurement of the earth electrode resistance RA is not practicable. What is permitted?',
+    question:
+      'On a TT system, a measurement of the earth electrode resistance RA is not practicable. What is permitted?',
     options: [
       'The measured value of external earth fault loop impedance may be used instead',
       'The declared value from the distributor may be entered without any measurement',
@@ -5901,7 +5662,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 345,
-    question: 'Effectiveness of the protective measure has been confirmed at a point downstream of an RCD. How may the installation beyond that point be proved?',
+    question:
+      'Effectiveness of the protective measure has been confirmed at a point downstream of an RCD. How may the installation beyond that point be proved?',
     options: [
       'By repeating the full loop impedance measurement at every accessory downstream',
       'By confirmation of the continuity of the protective conductors downstream',
@@ -5918,7 +5680,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 346,
-    question: 'Which test is the first of the sequence carried out before the installation is energised?',
+    question:
+      'Which test is the first of the sequence carried out before the installation is energised?',
     options: [
       'Polarity',
       'Insulation resistance',
@@ -5935,7 +5698,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 347,
-    question: 'Which minimum voltage factor was used to derive the maximum Zs values tabulated in Chapter 41?',
+    question:
+      'Which minimum voltage factor was used to derive the maximum Zs values tabulated in Chapter 41?',
     options: [
       'A value of 0.95 applied to the nominal line-to-earth voltage',
       'A value of 0.80 applied to the nominal line-to-earth voltage',
@@ -5952,7 +5716,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 348,
-    question: 'Which comparison of a measured earth fault loop impedance is stated as satisfying the requirements for automatic disconnection?',
+    question:
+      'Which comparison of a measured earth fault loop impedance is stated as satisfying the requirements for automatic disconnection?',
     options: [
       'Measured Zs below 1.2 times the calculated maximum value',
       'Measured Zs below 0.8 times the calculated maximum value',
@@ -6003,7 +5768,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 351,
-    question: 'Which instrument characteristics are recommended for low-resistance continuity testing?',
+    question:
+      'Which instrument characteristics are recommended for low-resistance continuity testing?',
     options: [
       'No-load voltage of 50 V to 100 V and a current of at least 1 A',
       'No-load voltage of 4 V to 24 V and a current of at least 10 mA',
@@ -6054,7 +5820,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 354,
-    question: 'A circuit operating above 500 V is to be tested for insulation resistance. What applies?',
+    question:
+      'A circuit operating above 500 V is to be tested for insulation resistance. What applies?',
     options: [
       '500 V DC test voltage with a minimum value of 1.0 MΩ',
       '500 V DC test voltage with a minimum value of 2.0 MΩ',
@@ -6071,7 +5838,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 355,
-    question: 'Removal of lamps and disconnection of equipment is impracticable. Which insulation test is then permitted?',
+    question:
+      'Removal of lamps and disconnection of equipment is impracticable. Which insulation test is then permitted?',
     options: [
       'Lines and neutral tested separately to earth at 500 V DC',
       'Line to neutral only at 500 V DC with the main switch off',
@@ -6088,7 +5856,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 356,
-    question: 'A new circuit gives an insulation resistance of 12 MΩ. What does Guidance Note 3 advise?',
+    question:
+      'A new circuit gives an insulation resistance of 12 MΩ. What does Guidance Note 3 advise?',
     options: [
       'The reading is acceptable because it exceeds the stated minimum',
       'The reading is below 20 MΩ and the cause should be investigated',
@@ -6105,7 +5874,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 357,
-    question: 'Why can a stakeless clamp-type tester not measure a single isolated earth electrode?',
+    question:
+      'Why can a stakeless clamp-type tester not measure a single isolated earth electrode?',
     options: [
       'The clamp injects direct current which the soil will not conduct',
       'The clamp measures only the resistance of the earthing conductor',
@@ -6122,7 +5892,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 358,
-    question: 'Which earth electrode test method is indicated where the most accurate result is required?',
+    question:
+      'Which earth electrode test method is indicated where the most accurate result is required?',
     options: [
       'A dedicated tester using the fall-of-potential technique',
       'A stakeless clamp-type tester on the earthing conductor',
@@ -6139,7 +5910,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 359,
-    question: 'Which quantity must be established at the origin before initial verification is complete?',
+    question:
+      'Which quantity must be established at the origin before initial verification is complete?',
     options: [
       'The rated short-circuit capacity of every final circuit device',
       'The total connected load and the maximum demand of the premises',
@@ -6292,7 +6064,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 368,
-    question: 'Which tests must be carried out in a prescribed order before the installation is energised?',
+    question:
+      'Which tests must be carried out in a prescribed order before the installation is energised?',
     options: [
       'Those of Regulations 643.2 to 643.6, in the order given',
       'Those of Regulations 643.7 to 643.10, in the order given',
@@ -6343,7 +6116,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 371,
-    question: 'A cover is missing from a consumer unit and live parts are accessible. Which classification applies?',
+    question:
+      'A cover is missing from a consumer unit and live parts are accessible. Which classification applies?',
     options: [
       'C3, improvement recommended, with no further action',
       'C1, danger present, with immediate action required',
@@ -6360,7 +6134,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 372,
-    question: 'A lighting circuit supplying Class I fittings has no circuit protective conductor. Which code applies?',
+    question:
+      'A lighting circuit supplying Class I fittings has no circuit protective conductor. Which code applies?',
     options: [
       'C2, because the defect is potentially dangerous',
       'C1, because danger is present at the time of test',
@@ -6411,7 +6186,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 375,
-    question: 'Which schedules must accompany an Electrical Installation Certificate for it to be complete?',
+    question:
+      'Which schedules must accompany an Electrical Installation Certificate for it to be complete?',
     options: [
       'A schedule of inspections and a schedule of departures',
       'Schedules of inspections, circuit details and test results',
@@ -6445,7 +6221,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 377,
-    question: 'In the ring final circuit continuity test, which conductor ends are cross-connected at step 3?',
+    question:
+      'In the ring final circuit continuity test, which conductor ends are cross-connected at step 3?',
     options: [
       'The open ends of the neutral conductor and the line conductor',
       'The open ends of the neutral conductor and the protective one',
@@ -6462,7 +6239,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 378,
-    question: 'What should the readings taken at each socket-outlet on a correctly wired ring show?',
+    question:
+      'What should the readings taken at each socket-outlet on a correctly wired ring show?',
     options: [
       'Values that are substantially the same at every socket-outlet',
       'Values that rise steadily towards the midpoint of the ring',
@@ -6479,7 +6257,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 379,
-    question: 'For a correctly wired ring, the line to neutral reading at a socket is expected to be about what?',
+    question:
+      'For a correctly wired ring, the line to neutral reading at a socket is expected to be about what?',
     options: [
       'One half of the line plus neutral loop resistances',
       'One quarter of the line plus neutral loop resistances',
@@ -6496,7 +6275,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 380,
-    question: 'A long wander lead is used for a continuity test on metallic enclosures. What must be done first?',
+    question:
+      'A long wander lead is used for a continuity test on metallic enclosures. What must be done first?',
     options: [
       'The lead must be replaced with one no longer than two metres',
       'The lead must be tested for insulation resistance at 500 V',
@@ -6513,7 +6293,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 381,
-    question: 'An instrument declaring plus or minus 5% and 3 digits reads a loop impedance of 0.03 ohm. What follows?',
+    question:
+      'An instrument declaring plus or minus 5% and 3 digits reads a loop impedance of 0.03 ohm. What follows?',
     options: [
       'The reading is accurate to within one hundredth of an ohm',
       'The reading must be doubled to allow for the stated error',
@@ -6530,7 +6311,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 382,
-    question: 'When is an earth electrode resistance test best carried out to give a conservative result?',
+    question:
+      'When is an earth electrode resistance test best carried out to give a conservative result?',
     options: [
       'In the least favourable conditions, such as frozen or dry soil',
       'Immediately after heavy rainfall has soaked the surrounding soil',
@@ -6717,7 +6499,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 393,
-    question: 'A distribution board has no circuit chart, though the installation is otherwise sound. Which code applies?',
+    question:
+      'A distribution board has no circuit chart, though the installation is otherwise sound. Which code applies?',
     options: [
       'C1, because information is missing at the point of danger',
       'C2, because a person could switch off the wrong circuit',
@@ -6768,7 +6551,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 396,
-    question: 'An insulating arrangement for an extraneous-conductive-part is validated. Which criteria apply?',
+    question:
+      'An insulating arrangement for an extraneous-conductive-part is validated. Which criteria apply?',
     options: [
       '1 MΩ at 250 V DC, a 1 kV withstand test, leakage under 3 mA',
       '2 MΩ at 500 V DC, a 2 kV withstand test, leakage under 1 mA',

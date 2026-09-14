@@ -174,7 +174,7 @@ const quizQuestions = [
   {
     id: 9,
     question:
-      'What is the maximum voltage drop permitted for safety service circuits under normal conditions?',
+      'What is the maximum voltage drop recommended for safety service circuits under normal conditions?',
     options: ['2%', '3%', '4%', '5%'],
     correctAnswer: 1,
     explanation:

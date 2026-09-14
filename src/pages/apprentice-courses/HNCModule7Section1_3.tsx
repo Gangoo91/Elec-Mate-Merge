@@ -52,7 +52,7 @@ const quickCheckQuestions = [
   {
     id: 'voltage-drop',
     question:
-      'What is the maximum permitted voltage drop for a final circuit according to BS 7671?',
+      'What is the recommended maximum voltage drop for a final circuit according to BS 7671?',
     options: [
       '2.5% of nominal voltage',
       '5% of nominal voltage',

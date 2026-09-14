@@ -36,6 +36,8 @@ async function sendBrevo(opts: { subject: string; html: string }) {
 interface AgentRow {
   agent: string;
   hits: number;
+  /** Same agent's hits in the preceding 7 days, for the week-on-week delta. */
+  prev?: number;
 }
 
 function table(rows: Array<[string, string, string]>, headers: [string, string, string]) {
@@ -58,69 +60,50 @@ function table(rows: Array<[string, string, string]>, headers: [string, string, 
 // omitted here: this endpoint is service-role-gated and pg_cron-only, and
 // browsers must never be able to call it. No CORS = browser calls fail at
 // preflight, which is the correct behaviour for this function.
-Deno.serve(withSentry('ai-visibility-digest', async (req) => {
-  try {
-    if (req.method !== 'POST') return new Response('method not allowed', { status: 405 });
+Deno.serve(
+  withSentry('ai-visibility-digest', async (req) => {
+    try {
+      if (req.method !== 'POST') return new Response('method not allowed', { status: 405 });
 
-    // verify_jwt accepts ANY valid JWT including the public anon key — without
-    // this check anyone could trigger digest emails. Only the pg_cron caller
-    // (vault service_role_key) may invoke.
-    const auth = req.headers.get('authorization') ?? '';
-    if (auth !== `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`) {
-      return new Response('forbidden', { status: 403 });
-    }
+      // verify_jwt accepts ANY valid JWT including the public anon key — without
+      // this check anyone could trigger digest emails. Only the pg_cron caller
+      // (vault service_role_key) may invoke.
+      const auth = req.headers.get('authorization') ?? '';
+      if (auth !== `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`) {
+        return new Response('forbidden', { status: 403 });
+      }
 
-  const sb = createClient(
-    Deno.env.get('SUPABASE_URL')!,
-    Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
-  );
+      const sb = createClient(
+        Deno.env.get('SUPABASE_URL')!,
+        Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+      );
 
-  const day = (offset: number) =>
-    new Date(Date.now() - offset * 86_400_000).toISOString().slice(0, 10);
-  const weekAgo = day(7);
-  const twoWeeksAgo = day(14);
+      const day = (offset: number) =>
+        new Date(Date.now() - offset * 86_400_000).toISOString().slice(0, 10);
 
-  // This week + last week by agent (counters table is tiny — fetch and fold).
-  const { data: rows, error } = await sb
-    .from('ai_crawler_hits')
-    .select('day, agent, path, hits')
-    .gte('day', twoWeeksAgo);
-  if (error) return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+      // Folded in SQL, not here. `ai_crawler_hits` is no longer the tiny counters
+      // table this once assumed — 45,811 rows, 31,764 of them inside the 14-day
+      // window. An unbounded PostgREST select caps at 1,000 rows, so folding in TS
+      // silently reported 5 fetches against a real figure of ~32,000.
+      const { data: summary, error } = await sb.rpc('ai_visibility_week');
+      if (error) return new Response(JSON.stringify({ error: error.message }), { status: 500 });
 
-  const thisWeek = new Map<string, number>();
-  const lastWeek = new Map<string, number>();
-  const pageHits = new Map<string, number>();
-  let referralsThisWeek = 0;
+      const agents: AgentRow[] = (summary?.agents ?? []) as AgentRow[];
+      const totalThisWeek = Number(summary?.total_this_week ?? 0);
+      const referralsThisWeek = Number(summary?.referrals_this_week ?? 0);
 
-  for (const r of rows ?? []) {
-    const isThisWeek = r.day >= weekAgo;
-    const bucket = isThisWeek ? thisWeek : lastWeek;
-    bucket.set(r.agent, (bucket.get(r.agent) ?? 0) + r.hits);
-    if (isThisWeek) {
-      if (r.agent.startsWith('referral:')) referralsThisWeek += r.hits;
-      else pageHits.set(r.path, (pageHits.get(r.path) ?? 0) + r.hits);
-    }
-  }
+      const agentRows: Array<[string, string, string]> = agents.slice(0, 15).map((a) => {
+        const prev = Number(a.prev ?? 0);
+        const delta =
+          prev === 0 ? 'new' : `${a.hits >= prev ? '+' : ''}${a.hits - prev} vs last wk`;
+        return [a.agent, String(a.hits), delta];
+      });
 
-  const agents: AgentRow[] = [...thisWeek.entries()]
-    .map(([agent, hits]) => ({ agent, hits }))
-    .sort((a, b) => b.hits - a.hits);
-  const totalThisWeek = agents
-    .filter((a) => !a.agent.startsWith('referral:'))
-    .reduce((s, a) => s + a.hits, 0);
+      const topPages: Array<[string, string, string]> = (
+        (summary?.pages ?? []) as Array<{ path: string; hits: number }>
+      ).map((p) => [p.path, String(p.hits), '']);
 
-  const agentRows: Array<[string, string, string]> = agents.slice(0, 15).map((a) => {
-    const prev = lastWeek.get(a.agent) ?? 0;
-    const delta = prev === 0 ? 'new' : `${a.hits >= prev ? '+' : ''}${a.hits - prev} vs last wk`;
-    return [a.agent, String(a.hits), delta];
-  });
-
-  const topPages: Array<[string, string, string]> = [...pageHits.entries()]
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 10)
-    .map(([path, hits]) => [path, String(hits), '']);
-
-  const html = `
+      const html = `
     <div style="font-family:-apple-system,system-ui,sans-serif;max-width:560px">
       <h2 style="margin:0 0 4px">AI visibility — week to ${day(0)}</h2>
       <p style="margin:0 0 16px;color:#666;font-size:13px">
@@ -138,18 +121,19 @@ Deno.serve(withSentry('ai-visibility-digest', async (req) => {
       </p>
     </div>`;
 
-  const send = await sendBrevo({
-    subject: `AI visibility: ${totalThisWeek} bot fetches, ${referralsThisWeek} AI referrals this week`,
-    html,
-  });
-  return new Response(JSON.stringify(send), {
-      status: send.ok ? 200 : 500,
-      headers: { 'content-type': 'application/json' },
-    });
-  } catch (e) {
-    return new Response(JSON.stringify({ ok: false, error: String(e) }), {
-      status: 500,
-      headers: { 'content-type': 'application/json' },
-    });
-  }
-}));
+      const send = await sendBrevo({
+        subject: `AI visibility: ${totalThisWeek} bot fetches, ${referralsThisWeek} AI referrals this week`,
+        html,
+      });
+      return new Response(JSON.stringify(send), {
+        status: send.ok ? 200 : 500,
+        headers: { 'content-type': 'application/json' },
+      });
+    } catch (e) {
+      return new Response(JSON.stringify({ ok: false, error: String(e) }), {
+        status: 500,
+        headers: { 'content-type': 'application/json' },
+      });
+    }
+  })
+);

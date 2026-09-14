@@ -31,7 +31,7 @@ const DESCRIPTION =
 const quickCheckQuestions = [
   {
     id: 'voltage-drop-limit-power',
-    question: 'What is the maximum permitted voltage drop for power circuits under BS 7671?',
+    question: 'What is the recommended maximum voltage drop for power circuits under BS 7671?',
     options: [
       '4% of supply voltage',
       '6% of supply voltage',

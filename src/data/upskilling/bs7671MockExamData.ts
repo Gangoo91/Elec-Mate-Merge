@@ -7,12 +7,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 1,
     question: 'What is the current edition of BS 7671?',
-    options: [
-      '20th Edition',
-      '18th Edition',
-      '17th Edition',
-      '19th Edition',
-    ],
+    options: ['20th Edition', '18th Edition', '17th Edition', '19th Edition'],
     correctAnswer: 1,
     explanation: 'BS 7671 is currently in its 18th Edition, published in 2018 with amendments.',
     section: 'Introduction',
@@ -40,12 +35,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 3,
     question: 'Which Part of BS 7671 covers fundamental principles?',
-    options: [
-      'Part 4',
-      'Part 2',
-      'Part 3',
-      'Part 1',
-    ],
+    options: ['Part 4', 'Part 2', 'Part 3', 'Part 1'],
     correctAnswer: 3,
     explanation: 'Part 1 covers scope, object, and fundamental principles of electrical safety.',
     section: 'Introduction',
@@ -73,12 +63,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 5,
     question: 'What is the maximum voltage considered as extra-low voltage?',
-    options: [
-      '12V',
-      '50V',
-      '24V',
-      '120V',
-    ],
+    options: ['12V', '50V', '24V', '120V'],
     correctAnswer: 1,
     explanation: 'Extra-low voltage (ELV) does not exceed 50V AC or 120V ripple-free DC.',
     section: 'Introduction',
@@ -89,12 +74,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 6,
     question: 'Which regulation covers protection against electric shock?',
-    options: [
-      'Chapter 44',
-      'Chapter 42',
-      'Chapter 41',
-      'Chapter 43',
-    ],
+    options: ['Chapter 44', 'Chapter 42', 'Chapter 41', 'Chapter 43'],
     correctAnswer: 2,
     explanation: 'Chapter 41 of BS 7671 specifically covers protection against electric shock.',
     section: 'Introduction',
@@ -138,12 +118,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 9,
     question: 'Which Part of BS 7671 contains definitions?',
-    options: [
-      'Part 4',
-      'Part 2',
-      'Part 3',
-      'Part 1',
-    ],
+    options: ['Part 4', 'Part 2', 'Part 3', 'Part 1'],
     correctAnswer: 1,
     explanation: 'Part 2 contains definitions of terms used throughout BS 7671.',
     section: 'Introduction',
@@ -171,12 +146,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 11,
     question: 'What is the standard AC frequency in the UK?',
-    options: [
-      '25Hz',
-      '100Hz',
-      '60Hz',
-      '50Hz',
-    ],
+    options: ['25Hz', '100Hz', '60Hz', '50Hz'],
     correctAnswer: 3,
     explanation: 'The standard AC frequency in the UK is 50Hz as specified in BS 7671.',
     section: 'Introduction',
@@ -187,12 +157,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 12,
     question: 'Which voltage is considered low voltage in BS 7671?',
-    options: [
-      '51V to 1000V AC',
-      'Up to 50V AC only',
-      '1001V AC up to 35kV',
-      'Above 35kV AC only',
-    ],
+    options: ['51V to 1000V AC', 'Up to 50V AC only', '1001V AC up to 35kV', 'Above 35kV AC only'],
     correctAnswer: 0,
     explanation: 'Low voltage is normally between 50V and 1000V AC or 120V and 1500V DC.',
     section: 'Introduction',
@@ -220,12 +185,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 14,
     question: 'Which appendix covers current-carrying capacity of cables?',
-    options: [
-      'Appendix 3',
-      'Appendix 5',
-      'Appendix 4',
-      'Appendix 6',
-    ],
+    options: ['Appendix 3', 'Appendix 5', 'Appendix 4', 'Appendix 6'],
     correctAnswer: 2,
     explanation:
       'Appendix 4 provides tables for current-carrying capacity of cables and correction factors.',
@@ -254,12 +214,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 16,
     question: 'Which regulation requires RCD protection for socket outlets?',
-    options: [
-      '411.3.3',
-      '415.1.1',
-      '701.411.3.3',
-      '531.2.4',
-    ],
+    options: ['411.3.3', '415.1.1', '701.411.3.3', '531.2.4'],
     correctAnswer: 0,
     explanation: 'Regulation 411.3.3 requires RCD protection for socket outlets not exceeding 20A.',
     section: 'Introduction',
@@ -270,12 +225,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 17,
     question: 'What is the maximum earth fault loop impedance for a B6 MCB?',
-    options: [
-      '0.91Ω',
-      '7.28Ω',
-      '3.64Ω',
-      '1.82Ω',
-    ],
+    options: ['0.91Ω', '7.28Ω', '3.64Ω', '1.82Ω'],
     correctAnswer: 1,
     explanation: 'For a B6 MCB, the maximum earth fault loop impedance (Zs) is 7.28Ω.',
     section: 'Introduction',
@@ -286,12 +236,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 18,
     question: 'Which Part of BS 7671 covers selection and erection of equipment?',
-    options: [
-      'Part 3',
-      'Part 6',
-      'Part 5',
-      'Part 4',
-    ],
+    options: ['Part 3', 'Part 6', 'Part 5', 'Part 4'],
     correctAnswer: 2,
     explanation: 'Part 5 covers selection and erection of electrical equipment.',
     section: 'Introduction',
@@ -318,12 +263,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 20,
     question: 'Which regulation covers isolation and switching?',
-    options: [
-      'Chapter 53',
-      'Chapter 46',
-      'Chapter 54',
-      'Chapter 55',
-    ],
+    options: ['Chapter 53', 'Chapter 46', 'Chapter 54', 'Chapter 55'],
     correctAnswer: 0,
     explanation: 'Chapter 53 covers protection, isolation, switching, control and monitoring.',
     section: 'Introduction',
@@ -354,12 +294,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
     id: 22,
     question:
       'What is the minimum cross-sectional area for main protective bonding conductor where the earthing conductor is 16mm²?',
-    options: [
-      '6mm²',
-      '16mm²',
-      '10mm²',
-      '25mm²',
-    ],
+    options: ['6mm²', '16mm²', '10mm²', '25mm²'],
     correctAnswer: 2,
     explanation:
       'Main protective bonding conductor should be at least half the earthing conductor size, minimum 6mm², so 10mm² for 16mm² earthing conductor.',
@@ -404,13 +339,9 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 25,
-    question: 'Above what earth electrode resistance does BS 7671 advise the value may be unstable?',
-    options: [
-      '20Ω',
-      '200Ω',
-      '50Ω',
-      '1000Ω',
-    ],
+    question:
+      'Above what earth electrode resistance does BS 7671 advise the value may be unstable?',
+    options: ['20Ω', '200Ω', '50Ω', '1000Ω'],
     correctAnswer: 1,
     explanation:
       'BS 7671 advises that an earth electrode resistance exceeding 200Ω may be unstable due to changing soil conditions.',
@@ -437,7 +368,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 27,
-    question: 'In a location containing a bath or shower, when can supplementary bonding be omitted?',
+    question:
+      'In a location containing a bath or shower, when can supplementary bonding be omitted?',
     options: [
       'When the installation is supplied from a TN-C-S system and the main earthing terminal is properly bonded',
       'When every final circuit is protected by a Type B circuit-breaker rated at 32 A or less than that',
@@ -456,12 +388,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
     id: 28,
     question:
       'What is the minimum size for supplementary bonding conductor connecting two extraneous conductive parts?',
-    options: [
-      '4mm²',
-      '2.5mm²',
-      '6mm²',
-      '10mm²',
-    ],
+    options: ['4mm²', '2.5mm²', '6mm²', '10mm²'],
     correctAnswer: 0,
     explanation: 'Minimum 4mm² for supplementary bonding between extraneous conductive parts.',
     section: 'Earthing & Bonding',
@@ -489,12 +416,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 30,
     question: 'What is the maximum earth fault loop impedance for RCD protection in TT system?',
-    options: [
-      'No limit with RCD',
-      '50/Ia',
-      '50/IΔn',
-      '200Ω',
-    ],
+    options: ['No limit with RCD', '50/Ia', '50/IΔn', '200Ω'],
     correctAnswer: 2,
     explanation: 'For TT systems with RCD, Zs should not exceed 50/IΔn where IΔn is RCD rating.',
     section: 'Earthing & Bonding',
@@ -505,12 +427,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 31,
     question: 'Which regulation covers earthing arrangements?',
-    options: [
-      'Chapter 52',
-      'Chapter 41',
-      'Chapter 53',
-      'Chapter 54',
-    ],
+    options: ['Chapter 52', 'Chapter 41', 'Chapter 53', 'Chapter 54'],
     correctAnswer: 3,
     explanation: 'Chapter 54 specifically covers earthing arrangements and protective conductors.',
     section: 'Earthing & Bonding',
@@ -522,12 +439,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
     id: 32,
     question:
       'What is the minimum cross-sectional area for circuit protective conductor in a 2.5mm² cable?',
-    options: [
-      '1.5mm²',
-      '6mm²',
-      '4mm²',
-      '2.5mm²',
-    ],
+    options: ['1.5mm²', '6mm²', '4mm²', '2.5mm²'],
     correctAnswer: 0,
     explanation:
       'For cables up to 16mm², the cpc should be at least the same size as the live conductors, so 1.5mm² is acceptable for a 2.5mm² cable with 1.5mm² cpc.',
@@ -539,12 +451,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 33,
     question: 'What colour is the protective conductor?',
-    options: [
-      'Green',
-      'Green and yellow',
-      'Yellow',
-      'Blue',
-    ],
+    options: ['Green', 'Green and yellow', 'Yellow', 'Blue'],
     correctAnswer: 1,
     explanation: 'Protective conductors must be identified by green-and-yellow striped insulation.',
     section: 'Earthing & Bonding',
@@ -589,12 +496,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 36,
     question: 'What is the minimum size for earthing conductor where supply neutral is 35mm²?',
-    options: [
-      '16mm²',
-      '25mm²',
-      '35mm²',
-      '50mm²',
-    ],
+    options: ['16mm²', '25mm²', '35mm²', '50mm²'],
     correctAnswer: 0,
     explanation:
       'Earthing conductor should be at least half the neutral conductor size, minimum 16mm².',
@@ -606,12 +508,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 37,
     question: 'Where should the main earthing terminal be located?',
-    options: [
-      'At the meter',
-      'Near the origin',
-      'In the consumer unit',
-      'Outside the building',
-    ],
+    options: ['At the meter', 'Near the origin', 'In the consumer unit', 'Outside the building'],
     correctAnswer: 1,
     explanation:
       'The main earthing terminal should be located as near as practicable to the origin of the installation.',
@@ -622,15 +519,12 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 38,
-    question: 'What is the minimum copper earthing conductor size where it is buried in the ground and protected against corrosion but not mechanical damage?',
-    options: [
-      '16mm²',
-      '25mm²',
-      '4mm²',
-      '6mm²',
-    ],
+    question:
+      'What is the minimum copper earthing conductor size where it is buried in the ground and protected against corrosion but not mechanical damage?',
+    options: ['16mm²', '25mm²', '4mm²', '6mm²'],
     correctAnswer: 0,
-    explanation: 'Per Table 54.1, a buried earthing conductor protected against corrosion but not against mechanical damage must be at least 16mm² copper.',
+    explanation:
+      'Per Table 54.1, a buried earthing conductor protected against corrosion but not against mechanical damage must be at least 16mm² copper.',
     section: 'Earthing & Bonding',
     difficulty: 'advanced',
     topic: 'Conductor Sizing',
@@ -639,12 +533,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 39,
     question: 'What type of earthing electrode is most common for domestic TT systems?',
-    options: [
-      'Water pipe',
-      'Earth tape',
-      'Foundation earth',
-      'Earth rod',
-    ],
+    options: ['Water pipe', 'Earth tape', 'Foundation earth', 'Earth rod'],
     correctAnswer: 3,
     explanation: 'Earth rods are the most common earthing electrode for domestic TT installations.',
     section: 'Earthing & Bonding',
@@ -707,12 +596,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 43,
     question: 'What is the maximum disconnection time for a 230V socket outlet circuit?',
-    options: [
-      '0.1s',
-      'No limit',
-      '5s',
-      '0.4s',
-    ],
+    options: ['0.1s', 'No limit', '5s', '0.4s'],
     correctAnswer: 3,
     explanation:
       'Maximum disconnection time for socket outlets and mobile equipment is 0.4s at 230V.',
@@ -724,12 +608,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 44,
     question: 'What type of MCB has the lowest magnetic tripping current?',
-    options: [
-      'Type B',
-      'Type D',
-      'Type C',
-      'Type K',
-    ],
+    options: ['Type B', 'Type D', 'Type C', 'Type K'],
     correctAnswer: 0,
     explanation: 'Type B MCBs have the lowest magnetic tripping current (3-5 x In).',
     section: 'Protection & Control',
@@ -740,12 +619,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 45,
     question: 'What is the magnetic tripping range for a Type C MCB?',
-    options: [
-      '3-5 x In',
-      '5-10 x In',
-      '10-20 x In',
-      '20-30 x In',
-    ],
+    options: ['3-5 x In', '5-10 x In', '10-20 x In', '20-30 x In'],
     correctAnswer: 1,
     explanation: 'Type C MCBs have magnetic tripping between 5-10 times the rated current.',
     section: 'Protection & Control',
@@ -772,12 +646,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 47,
     question: 'What is the standard sensitivity for RCD protecting socket outlets?',
-    options: [
-      '10mA',
-      '300mA',
-      '100mA',
-      '30mA',
-    ],
+    options: ['10mA', '300mA', '100mA', '30mA'],
     correctAnswer: 3,
     explanation:
       '30mA RCDs are standard for additional protection of socket outlets and personal protection.',
@@ -789,12 +658,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 48,
     question: 'What is the maximum tripping time for a 30mA RCD at rated current?',
-    options: [
-      '300ms',
-      '40ms',
-      '150ms',
-      '500ms',
-    ],
+    options: ['300ms', '40ms', '150ms', '500ms'],
     correctAnswer: 0,
     explanation: 'A 30mA RCD must trip within 300ms at its rated sensitivity current.',
     section: 'Protection & Control',
@@ -839,12 +703,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 51,
     question: 'What is the maximum earth fault loop impedance for a B32 MCB?',
-    options: [
-      '1.44Ω',
-      '0.68Ω',
-      '0.72Ω',
-      '1.37Ω',
-    ],
+    options: ['1.44Ω', '0.68Ω', '0.72Ω', '1.37Ω'],
     correctAnswer: 3,
     explanation: 'For a B32 MCB, the maximum earth fault loop impedance (Zs) is 1.37Ω.',
     section: 'Protection & Control',
@@ -855,12 +714,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 52,
     question: 'Which protective device is suitable for motor circuits?',
-    options: [
-      'Type D MCB',
-      'Type C MCB only',
-      'Type B MCB or RCBO',
-      'Rewireable fuse',
-    ],
+    options: ['Type D MCB', 'Type C MCB only', 'Type B MCB or RCBO', 'Rewireable fuse'],
     correctAnswer: 0,
     explanation:
       'Type D MCBs are suitable for motor circuits due to their high magnetic tripping threshold.',
@@ -872,12 +726,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 53,
     question: 'What is the formula for calculating earth fault loop impedance?',
-    options: [
-      'Ze + R1',
-      'Ze + R1 + R2',
-      'Ze + R2',
-      'R1 + R2',
-    ],
+    options: ['Ze + R1', 'Ze + R1 + R2', 'Ze + R2', 'R1 + R2'],
     correctAnswer: 1,
     explanation:
       'Earth fault loop impedance Zs = Ze + R1 + R2 (external impedance + live conductor + protective conductor resistances).',
@@ -904,7 +753,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 55,
-    question: 'Which type of RCD incorporates a time delay to achieve discrimination with downstream devices?',
+    question:
+      'Which type of RCD incorporates a time delay to achieve discrimination with downstream devices?',
     options: [
       'Type AC RCD',
       'Type A RCD',
@@ -912,7 +762,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
       'S-type (selective) RCD',
     ],
     correctAnswer: 3,
-    explanation: 'S-type (selective) RCDs have a built-in time delay so an upstream device discriminates with a non-delayed downstream RCD.',
+    explanation:
+      'S-type (selective) RCDs have a built-in time delay so an upstream device discriminates with a non-delayed downstream RCD.',
     section: 'Protection & Control',
     difficulty: 'intermediate',
     topic: 'RCD Characteristics',
@@ -954,12 +805,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 58,
     question: 'Which regulation covers overcurrent protection?',
-    options: [
-      'Chapter 45',
-      'Chapter 44',
-      'Chapter 43',
-      'Chapter 42',
-    ],
+    options: ['Chapter 45', 'Chapter 44', 'Chapter 43', 'Chapter 42'],
     correctAnswer: 2,
     explanation: 'Chapter 43 covers protection against overcurrent.',
     section: 'Protection & Control',
@@ -987,12 +833,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 60,
     question: 'What is the operating principle of an RCD?',
-    options: [
-      'Current balance',
-      'Voltage detection',
-      'Temperature rise',
-      'Frequency change',
-    ],
+    options: ['Current balance', 'Voltage detection', 'Temperature rise', 'Frequency change'],
     correctAnswer: 0,
     explanation:
       'RCDs operate on the principle of current balance - detecting difference between live and neutral currents.',
@@ -1023,12 +864,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 62,
     question: 'What is the standard ambient temperature for cable ratings?',
-    options: [
-      '20°C',
-      '25°C',
-      '30°C',
-      '35°C',
-    ],
+    options: ['20°C', '25°C', '30°C', '35°C'],
     correctAnswer: 2,
     explanation: 'Standard ambient temperature for cable current-carrying capacity tables is 30°C.',
     section: 'Cable Selection',
@@ -1060,7 +896,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
       'To reduce the tabulated current-carrying capacity for adverse installation conditions',
       'To increase the tabulated current-carrying capacity where the conditions are favourable',
       'To calculate the prospective fault current present at the far end of the cable run',
-      'To determine the maximum voltage drop permitted for any final circuit design',
+      'To determine the maximum voltage drop recommended for any final circuit design',
     ],
     correctAnswer: 0,
     explanation:
@@ -1073,12 +909,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 65,
     question: 'What is the maximum voltage drop for lighting circuits?',
-    options: [
-      '5%',
-      '3%',
-      '7%',
-      '10%',
-    ],
+    options: ['5%', '3%', '7%', '10%'],
     correctAnswer: 1,
     explanation: 'Maximum voltage drop for lighting circuits is 3% of nominal voltage.',
     section: 'Cable Selection',
@@ -1089,12 +920,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 66,
     question: 'What is the maximum voltage drop for power circuits?',
-    options: [
-      '3%',
-      '7%',
-      '5%',
-      '10%',
-    ],
+    options: ['3%', '7%', '5%', '10%'],
     correctAnswer: 2,
     explanation: 'Maximum voltage drop for power circuits is 5% of nominal voltage.',
     section: 'Cable Selection',
@@ -1104,13 +930,9 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 67,
-    question: 'At what minimum depth can a cable be concealed in a wall without additional protection or 30mA RCD protection?',
-    options: [
-      '25mm',
-      '75mm',
-      '100mm',
-      '50mm',
-    ],
+    question:
+      'At what minimum depth can a cable be concealed in a wall without additional protection or 30mA RCD protection?',
+    options: ['25mm', '75mm', '100mm', '50mm'],
     correctAnswer: 3,
     explanation:
       'A cable concealed in a wall at a depth of at least 50mm from any surface need not have additional mechanical protection or 30mA RCD protection on that basis.',
@@ -1122,12 +944,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 68,
     question: 'What is the minimum bending radius for PVC cables?',
-    options: [
-      '4 x diameter',
-      '3 x diameter',
-      '6 x diameter',
-      '8 x diameter',
-    ],
+    options: ['4 x diameter', '3 x diameter', '6 x diameter', '8 x diameter'],
     correctAnswer: 0,
     explanation: 'Minimum bending radius for PVC cables is 4 times the overall diameter.',
     section: 'Cable Selection',
@@ -1187,12 +1004,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 72,
     question: 'What size cable is required for a 32A ring final circuit?',
-    options: [
-      '2.5mm²',
-      '1.5mm²',
-      '4mm²',
-      '6mm²',
-    ],
+    options: ['2.5mm²', '1.5mm²', '4mm²', '6mm²'],
     correctAnswer: 0,
     explanation: 'A 32A ring final circuit typically uses 2.5mm² cable with 1.5mm² cpc.',
     section: 'Cable Selection',
@@ -1203,12 +1015,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 73,
     question: 'What is the standard colour for single-phase neutral conductor?',
-    options: [
-      'Black',
-      'Blue',
-      'Grey',
-      'White',
-    ],
+    options: ['Black', 'Blue', 'Grey', 'White'],
     correctAnswer: 1,
     explanation: 'Single-phase neutral conductor is identified by blue colour.',
     section: 'Cable Selection',
@@ -1236,12 +1043,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 75,
     question: 'What is the minimum cross-sectional area for fixed wiring?',
-    options: [
-      '0.5mm²',
-      '1.0mm²',
-      '2.5mm²',
-      '1.5mm²',
-    ],
+    options: ['0.5mm²', '1.0mm²', '2.5mm²', '1.5mm²'],
     correctAnswer: 3,
     explanation: 'Minimum cross-sectional area for fixed wiring is 1.5mm² for power circuits.',
     section: 'Cable Selection',
@@ -1252,12 +1054,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 76,
     question: 'When can aluminium conductors be used?',
-    options: [
-      '16mm² and above',
-      'Never',
-      '25mm² and above',
-      'Any size',
-    ],
+    options: ['16mm² and above', 'Never', '25mm² and above', 'Any size'],
     correctAnswer: 0,
     explanation: 'Aluminium conductors can be used for 16mm² and above in fixed installations.',
     section: 'Cable Selection',
@@ -1284,12 +1081,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 78,
     question: 'What depth should cables be buried underground?',
-    options: [
-      '300mm',
-      '450mm',
-      '600mm',
-      '750mm',
-    ],
+    options: ['300mm', '450mm', '600mm', '750mm'],
     correctAnswer: 2,
     explanation:
       'Cables should be buried at least 600mm deep or with additional mechanical protection.',
@@ -1592,12 +1384,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 96,
     question: 'What is the test voltage for insulation resistance on 230V circuits?',
-    options: [
-      '500V',
-      '250V',
-      '1000V',
-      '1500V',
-    ],
+    options: ['500V', '250V', '1000V', '1500V'],
     correctAnswer: 0,
     explanation: 'Insulation resistance test voltage for circuits up to 500V is 500V DC.',
     section: 'Testing',
@@ -1608,12 +1395,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 97,
     question: 'What is the minimum acceptable insulation resistance?',
-    options: [
-      '5MΩ',
-      '1MΩ',
-      '0.5MΩ',
-      '2MΩ',
-    ],
+    options: ['5MΩ', '1MΩ', '0.5MΩ', '2MΩ'],
     correctAnswer: 1,
     explanation: 'Minimum insulation resistance is 1MΩ for circuits up to 500V.',
     section: 'Testing',
@@ -1673,12 +1455,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 101,
     question: 'At which test current should a general-type RCD NOT trip during verification?',
-    options: [
-      '0.5 x IΔn',
-      '2 x IΔn',
-      '5 x IΔn',
-      '1 x IΔn',
-    ],
+    options: ['0.5 x IΔn', '2 x IΔn', '5 x IΔn', '1 x IΔn'],
     correctAnswer: 0,
     explanation:
       'At 0.5 x IΔn the RCD should not trip; it must trip at 1 x IΔn and 5 x IΔn within the specified times.',
@@ -1690,12 +1467,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 102,
     question: 'What is the maximum tripping time for an RCD at 5 x IΔn?',
-    options: [
-      '150ms',
-      '500ms',
-      '40ms',
-      '300ms',
-    ],
+    options: ['150ms', '500ms', '40ms', '300ms'],
     correctAnswer: 2,
     explanation:
       'At five times the rated residual current a general non-delay RCD operates within 40 ms. 40 ms at 5xIdn is the BS EN 61008/61009 PRODUCT-STANDARD figure — it describes the device, not the BS 7671 verification. Amendment 4 deleted Table 3A of Appendix 3, and effectiveness is now verified by an AC test at the rated residual operating current: 300 ms maximum for a general non-delay type, or between 130 ms and 500 ms for a delay Type S (Reg 643.7.3).',
@@ -1723,7 +1495,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 104,
-    question: 'What is measured at a final circuit point during earth fault loop impedance testing?',
+    question:
+      'What is measured at a final circuit point during earth fault loop impedance testing?',
     options: [
       'Zs, the total loop impedance including the supply',
       'R1+R2, the circuit conductor resistances on their own',
@@ -1774,7 +1547,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 107,
-    question: 'A measured Zs value should be compared against which reference to confirm compliance?',
+    question:
+      'A measured Zs value should be compared against which reference to confirm compliance?',
     options: [
       'The nominal supply voltage measured at the origin',
       'The warranty period offered by the cable manufacturer',
@@ -1809,7 +1583,12 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 109,
     question: 'When should functional testing be carried out?',
-    options: ['Before other tests', 'After all other tests', 'During installation', 'Only on three-phase circuits'],
+    options: [
+      'Before other tests',
+      'After all other tests',
+      'During installation',
+      'Only on three-phase circuits',
+    ],
     correctAnswer: 1,
     explanation:
       'Functional testing should be carried out after all other tests to verify proper operation.',
@@ -1820,7 +1599,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 110,
-    question: 'What documentation must be provided after initial verification of a new installation?',
+    question:
+      'What documentation must be provided after initial verification of a new installation?',
     options: [
       'A condition report together with a schedule of observations and codes',
       'A minor works certificate covering the whole of the new installation',
@@ -1838,12 +1618,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 111,
     question: 'How often should test instruments be calibrated?',
-    options: [
-      'Monthly',
-      'When accuracy is questioned',
-      'Every 2 years',
-      'Annually',
-    ],
+    options: ['Monthly', 'When accuracy is questioned', 'Every 2 years', 'Annually'],
     correctAnswer: 3,
     explanation: 'Test instruments should be calibrated annually to ensure accuracy.',
     section: 'Testing',
@@ -1873,12 +1648,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 113,
     question: 'How many zones are there in a bathroom?',
-    options: [
-      '2',
-      '3',
-      '4',
-      '1',
-    ],
+    options: ['2', '3', '4', '1'],
     correctAnswer: 1,
     explanation:
       'Bathrooms are divided into zones 0, 1, and 2 based on likelihood of water contact.',
@@ -1890,12 +1660,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 114,
     question: 'What is the minimum IP rating required for equipment in bathroom zone 1?',
-    options: [
-      'IPX1',
-      'IPX5',
-      'IPX7',
-      'IPX4',
-    ],
+    options: ['IPX1', 'IPX5', 'IPX7', 'IPX4'],
     correctAnswer: 3,
     explanation:
       'Equipment in bathroom zones 1 and 2 requires at least IPX4 (IPX5 where water jets are used for cleaning).',
@@ -1907,12 +1672,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 115,
     question: 'Can socket outlets be installed in bathroom zone 2?',
-    options: [
-      'Yes, any type',
-      'Yes, if IPX4 rated',
-      'Yes, with RCD protection',
-      'No, never',
-    ],
+    options: ['Yes, any type', 'Yes, if IPX4 rated', 'Yes, with RCD protection', 'No, never'],
     correctAnswer: 3,
     explanation:
       'Socket outlets are not permitted in zones 0, 1, or 2 of bathrooms (except shaver sockets in zone 2).',
@@ -1924,12 +1684,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 116,
     question: 'How far does bathroom zone 2 extend horizontally beyond the boundary of zone 1?',
-    options: [
-      '0.6m',
-      '1.2m',
-      '2.25m',
-      '3.0m',
-    ],
+    options: ['0.6m', '1.2m', '2.25m', '3.0m'],
     correctAnswer: 0,
     explanation: 'Zone 2 extends 0.6m horizontally beyond the boundary of zone 1.',
     section: 'Special Locations',
@@ -1956,12 +1711,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 118,
     question: 'What additional protection is required for all circuits in bathrooms?',
-    options: [
-      'MCB protection',
-      'RCBO protection',
-      'RCD ≤30mA',
-      'Isolation switch',
-    ],
+    options: ['MCB protection', 'RCBO protection', 'RCD ≤30mA', 'Isolation switch'],
     correctAnswer: 2,
     explanation:
       'All circuits in bathrooms require additional protection by RCD not exceeding 30mA.',
@@ -2023,12 +1773,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 122,
     question: 'What voltage is permitted for equipment in bathroom zone 0?',
-    options: [
-      '230V',
-      'No electrical equipment',
-      'SELV ≤12V',
-      '12V',
-    ],
+    options: ['230V', 'No electrical equipment', 'SELV ≤12V', '12V'],
     correctAnswer: 2,
     explanation: 'Only SELV equipment not exceeding 12V is permitted in zone 0.',
     section: 'Special Locations',
@@ -2056,12 +1801,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 124,
     question: 'What is the height of bathroom zones 1 and 2?',
-    options: [
-      '2.25m',
-      '2.5m',
-      '2.0m',
-      'To ceiling',
-    ],
+    options: ['2.25m', '2.5m', '2.0m', 'To ceiling'],
     correctAnswer: 0,
     explanation: 'Zones 1 and 2 extend to a height of 2.25m above floor level.',
     section: 'Special Locations',
@@ -2089,12 +1829,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 126,
     question: 'What special requirements apply to swimming pools?',
-    options: [
-      'Same as bathrooms',
-      'No special requirements',
-      'More stringent zones',
-      'SELV only',
-    ],
+    options: ['Same as bathrooms', 'No special requirements', 'More stringent zones', 'SELV only'],
     correctAnswer: 2,
     explanation: 'Swimming pools have more stringent zonal requirements with zones 0, 1, and 2.',
     section: 'Special Locations',
@@ -2105,12 +1840,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 127,
     question: 'Can ceiling-mounted equipment be installed above a bath?',
-    options: [
-      'Never',
-      'Yes, with IPX1',
-      'Yes, if outside zones',
-      'Yes, with IPX4',
-    ],
+    options: ['Never', 'Yes, with IPX1', 'Yes, if outside zones', 'Yes, with IPX4'],
     correctAnswer: 3,
     explanation:
       'Equipment above baths requires minimum IPX4 protection if it could be affected by water.',
@@ -2154,7 +1884,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 130,
-    question: 'What bonding arrangement may be required for extraneous-conductive-parts in a bathroom?',
+    question:
+      'What bonding arrangement may be required for extraneous-conductive-parts in a bathroom?',
     options: [
       'A separate earth electrode installed for the room and connected to the pipework',
       'Bonding of the neutral conductor to earth at the consumer unit in the dwelling',
@@ -2174,12 +1905,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 131,
     question: 'What is the recommended interval for domestic periodic inspection?',
-    options: [
-      '5 years',
-      '20 years',
-      '15 years',
-      '10 years',
-    ],
+    options: ['5 years', '20 years', '15 years', '10 years'],
     correctAnswer: 3,
     explanation:
       'Domestic installations should be inspected every 10 years or at change of occupancy.',
@@ -2191,12 +1917,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 132,
     question: 'What document is issued after periodic inspection?',
-    options: [
-      'EICR',
-      'MEIWC',
-      'Test certificate',
-      'EIC',
-    ],
+    options: ['EICR', 'MEIWC', 'Test certificate', 'EIC'],
     correctAnswer: 0,
     explanation:
       'An Electrical Installation Condition Report (EICR) is issued after periodic inspection.',
@@ -2208,12 +1929,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 133,
     question: 'What are the condition codes used in EICR?',
-    options: [
-      '1, 2, 3',
-      'C1, C2, C3',
-      'A, B, C',
-      'Pass, Fail',
-    ],
+    options: ['1, 2, 3', 'C1, C2, C3', 'A, B, C', 'Pass, Fail'],
     correctAnswer: 1,
     explanation:
       'EICR uses condition codes C1 (danger), C2 (potentially dangerous), C3 (improvement recommended).',
@@ -2225,12 +1941,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 134,
     question: 'What does condition code C1 indicate?',
-    options: [
-      'Satisfactory',
-      'Improvement recommended',
-      'Danger present',
-      'Potentially dangerous',
-    ],
+    options: ['Satisfactory', 'Improvement recommended', 'Danger present', 'Potentially dangerous'],
     correctAnswer: 2,
     explanation: 'C1 indicates danger present requiring immediate attention.',
     section: 'Periodic Inspection',
@@ -2241,12 +1952,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 135,
     question: 'What does condition code C2 indicate?',
-    options: [
-      'Satisfactory',
-      'Improvement recommended',
-      'Danger present',
-      'Potentially dangerous',
-    ],
+    options: ['Satisfactory', 'Improvement recommended', 'Danger present', 'Potentially dangerous'],
     correctAnswer: 3,
     explanation: 'C2 indicates potentially dangerous conditions requiring urgent attention.',
     section: 'Periodic Inspection',
@@ -2257,12 +1963,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 136,
     question: "When can an EICR be classified as 'Satisfactory'?",
-    options: [
-      'No C1 or C2 codes',
-      'Only C3 codes present',
-      'No defects found',
-      'All tests pass',
-    ],
+    options: ['No C1 or C2 codes', 'Only C3 codes present', 'No defects found', 'All tests pass'],
     correctAnswer: 0,
     explanation: 'EICR is satisfactory when no C1 or C2 condition codes are present.',
     section: 'Periodic Inspection',
@@ -2390,12 +2091,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 144,
     question: 'Who can carry out periodic inspection?',
-    options: [
-      'Competent person',
-      'Qualified electrician',
-      'Anyone',
-      'Building inspector',
-    ],
+    options: ['Competent person', 'Qualified electrician', 'Anyone', 'Building inspector'],
     correctAnswer: 0,
     explanation:
       'Periodic inspection must be carried out by a competent person with appropriate qualifications and experience.',
@@ -2407,12 +2103,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 145,
     question: 'What should be done with obsolete protective devices?',
-    options: [
-      'Leave unchanged',
-      'Note as C2',
-      'Note as C3',
-      'Replace immediately',
-    ],
+    options: ['Leave unchanged', 'Note as C2', 'Note as C3', 'Replace immediately'],
     correctAnswer: 1,
     explanation:
       'Obsolete protective devices should typically be noted as C2 (potentially dangerous).',
@@ -2440,12 +2131,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 147,
     question: 'What is the recommended interval for commercial periodic inspection?',
-    options: [
-      '1 year',
-      '3 years',
-      '10 years',
-      '5 years',
-    ],
+    options: ['1 year', '3 years', '10 years', '5 years'],
     correctAnswer: 3,
     explanation: 'Commercial installations should typically be inspected every 5 years.',
     section: 'Periodic Inspection',
@@ -2473,12 +2159,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 149,
     question: 'What must be provided to the client after periodic inspection?',
-    options: [
-      'The EICR only',
-      'EICR and schedules',
-      'A verbal report',
-      'The test results only',
-    ],
+    options: ['The EICR only', 'EICR and schedules', 'A verbal report', 'The test results only'],
     correctAnswer: 1,
     explanation: 'The client must receive the EICR and appropriate test result schedules.',
     section: 'Periodic Inspection',
@@ -2505,7 +2186,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 151,
-    question: 'Which Part of BS 7671 contains the defined terminology used throughout the Regulations?',
+    question:
+      'Which Part of BS 7671 contains the defined terminology used throughout the Regulations?',
     options: [
       'Part 1, Scope, Object and the Fundamental Principles',
       'Part 2, Definitions used throughout the standard',
@@ -2556,7 +2238,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 154,
-    question: 'Chapter 82 of BS 7671:2018+A4:2026 applies to Prosumer Electrical Installations. Which description matches that designation?',
+    question:
+      'Chapter 82 of BS 7671:2018+A4:2026 applies to Prosumer Electrical Installations. Which description matches that designation?',
     options: [
       'Any installation that is fed from a TN-C-S supply with a PME earth terminal',
       'Any installation having a metered export tariff with a supplier',
@@ -2573,7 +2256,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 155,
-    question: 'A new Chapter 46 was introduced by BS 7671:2018+A4:2026. What does that chapter deal with?',
+    question:
+      'A new Chapter 46 was introduced by BS 7671:2018+A4:2026. What does that chapter deal with?',
     options: [
       'Automatic disconnection of supply under earth fault conditions',
       'Non-automatic local and remote isolation and switching measures',
@@ -2590,7 +2274,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 156,
-    question: 'Regulation 651.3 governs how periodic inspection and testing is carried out. What does it demand of the measuring instruments used?',
+    question:
+      'Regulation 651.3 governs how periodic inspection and testing is carried out. What does it demand of the measuring instruments used?',
     options: [
       'They shall each be calibrated by a UKAS accredited laboratory once in a year',
       'They shall each be checked against a proving unit before every single test',
@@ -2607,7 +2292,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 157,
-    question: 'Regulation 643.3 was redrafted in A4:2026. What does it require where connected equipment is likely to influence the insulation resistance verification or be damaged by the test?',
+    question:
+      'Regulation 643.3 was redrafted in A4:2026. What does it require where connected equipment is likely to influence the insulation resistance verification or be damaged by the test?',
     options: [
       'A 250 V DC insulation resistance test following connection of the equipment',
       'A 500 V DC insulation resistance test with the equipment left connected',
@@ -2624,7 +2310,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 158,
-    question: 'Appendix 3 Table 3A was deleted by A4:2026. How is the effectiveness of an RCD now verified, whatever its type?',
+    question:
+      'Appendix 3 Table 3A was deleted by A4:2026. How is the effectiveness of an RCD now verified, whatever its type?',
     options: [
       'By a direct current test at five times the rated residual current value',
       'By an alternating current test at half the rated residual value',
@@ -2641,7 +2328,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 159,
-    question: 'What is the status of Regulation 421.1.7 in BS 7671:2018+A4:2026 in respect of arc fault detection devices?',
+    question:
+      'What is the status of Regulation 421.1.7 in BS 7671:2018+A4:2026 in respect of arc fault detection devices?',
     options: [
       'It requires AFDDs on every final circuit of any fixed installation',
       'It recommends AFDDs in AC final circuits of a fixed installation',
@@ -2658,7 +2346,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 160,
-    question: 'Regulation 411.3.1.2 states which final circuits the maximum disconnection times of Table 41.1 apply to. Which pairing of ratings is correct?',
+    question:
+      'Regulation 411.3.1.2 states which final circuits the maximum disconnection times of Table 41.1 apply to. Which pairing of ratings is correct?',
     options: [
       'Socket-outlet circuits up to 32 A and fixed-load circuits up to 20 A',
       'Socket-outlet circuits up to 100 A and fixed-load circuits up to 63 A',
@@ -2675,7 +2364,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 161,
-    question: 'The Foreword to BS 7671:2018 sets out when the edition took effect. Which statement reflects it correctly?',
+    question:
+      'The Foreword to BS 7671:2018 sets out when the edition took effect. Which statement reflects it correctly?',
     options: [
       'The edition was issued in 2018 and took effect on 1 July in that same year',
       'The edition applies to new installations but never to any alterations of them',
@@ -2692,7 +2382,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 162,
-    question: 'How does BS 7671:2018+A4:2026 flag where a technical change has been made by Amendment 4?',
+    question:
+      'How does BS 7671:2018+A4:2026 flag where a technical change has been made by Amendment 4?',
     options: [
       'By printing the amended regulation number in bold within the text',
       'By listing every changed regulation in a table at the front of Part 1',
@@ -2726,7 +2417,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 164,
-    question: 'Regulation 443.4 lists consequences that oblige protection against transient overvoltages. Which of the following is one of the listed consequences?',
+    question:
+      'Regulation 443.4 lists consequences that oblige protection against transient overvoltages. Which of the following is one of the listed consequences?',
     options: [
       'Any premises where a lightning protection system has been installed',
       'Interruption of public services or damage to cultural heritage',
@@ -2743,7 +2435,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 165,
-    question: 'Where an RCD provides fault protection, Regulation 411.5.3 imposes a condition involving the earth electrode resistance Ra. What is that condition?',
+    question:
+      'Where an RCD provides fault protection, Regulation 411.5.3 imposes a condition involving the earth electrode resistance Ra. What is that condition?',
     options: [
       'Ra multiplied by the rated residual current shall not exceed 25 V',
       'Ra multiplied by the circuit design current shall not exceed 50 V',
@@ -2760,7 +2453,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 166,
-    question: 'Table 41.5 gives maximum Zs values for non-delayed and time delayed S type RCDs at a nominal 230 V. Which pairing of values is taken from that table?',
+    question:
+      'Table 41.5 gives maximum Zs values for non-delayed and time delayed S type RCDs at a nominal 230 V. Which pairing of values is taken from that table?',
     options: [
       '1667 ohms for a 30 mA device and 500 ohms for a 100 mA device',
       '1000 ohms for a 30 mA device and 300 ohms for a 100 mA device',
@@ -2777,7 +2471,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 167,
-    question: 'A note in BS 7671 comments on the resistance of an installation earth electrode. What does it say about a value above 200 ohms?',
+    question:
+      'A note in BS 7671 comments on the resistance of an installation earth electrode. What does it say about a value above 200 ohms?',
     options: [
       'It is prohibited and the whole installation shall be converted to TN-C-S',
       'It may not be stable, and resistance should be as low as practicable',
@@ -2794,7 +2489,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 168,
-    question: 'Which expression does BS 7671 give for coordinating a protective device with the earth fault loop for automatic disconnection of supply?',
+    question:
+      'Which expression does BS 7671 give for coordinating a protective device with the earth fault loop for automatic disconnection of supply?',
     options: [
       'Zs multiplied by Ia shall be not less than U0 divided by Cmin',
       'Zs divided by Ia shall be not more than U0 multiplied by Cmin',
@@ -2811,7 +2507,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 169,
-    question: 'Regulation 531.3.1.202 limits the accumulation of protective conductor and earth leakage currents downstream of an RCD. For a 30 mA device, what is that limit?',
+    question:
+      'Regulation 531.3.1.202 limits the accumulation of protective conductor and earth leakage currents downstream of an RCD. For a 30 mA device, what is that limit?',
     options: [
       'Not more than 15 mA, being 50 percent of the rated residual current',
       'Not more than 3 mA, being 10 percent of the rated residual current',
@@ -2828,7 +2525,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 170,
-    question: 'Regulation 531.3.3 restricts where a Type AC RCD may be used. What is that restriction?',
+    question:
+      'Regulation 531.3.3 restricts where a Type AC RCD may be used. What is that restriction?',
     options: [
       'It may serve fixed equipment only, where no DC component is present',
       'It may serve any circuit provided the rating does not exceed 32 A',
@@ -2845,7 +2543,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 171,
-    question: 'Regulation 514.16.1 requires a label where surge protective devices are installed. What exception applies to that requirement?',
+    question:
+      'Regulation 514.16.1 requires a label where surge protective devices are installed. What exception applies to that requirement?',
     options: [
       'No label is needed where the SPD is fitted inside the consumer unit',
       'No label is needed in domestic household premises or similar',
@@ -2862,7 +2561,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 172,
-    question: 'Regulation 537.4.2 deals with firefighter switches. What determines where one has to be provided?',
+    question:
+      'Regulation 537.4.2 deals with firefighter switches. What determines where one has to be provided?',
     options: [
       'Every building over four storeys requires one at the main intake',
       'Any installation with an SPD fitted requires one beside the board',
@@ -2879,11 +2579,12 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 173,
-    question: 'Regulation 521.10.202 sits within Chapter 52 of BS 7671. What does it give requirements for?',
+    question:
+      'Regulation 521.10.202 sits within Chapter 52 of BS 7671. What does it give requirements for?',
     options: [
       'The methods used to support wiring systems in an installation',
       'The minimum bending radius allowed for thermoplastic cables',
-      'The maximum permitted volt drop in a final circuit run',
+      'The recommended maximum volt drop in a final circuit run',
       'The colour identification of conductors within a wiring system',
     ],
     correctAnswer: 0,
@@ -2896,7 +2597,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 174,
-    question: 'Regulation 826.1.1.4 applies where an installation is supplied from more than one source. What does it require?',
+    question:
+      'Regulation 826.1.1.4 applies where an installation is supplied from more than one source. What does it require?',
     options: [
       'A single main switch that disconnects every source simultaneously',
       'A lockable main switch on the network supply source only',
@@ -2913,7 +2615,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 175,
-    question: 'Regulation 826.7 addresses testing in a prosumer installation where power converting equipment such as an inverter may distort the readings. What does it allow?',
+    question:
+      'Regulation 826.7 addresses testing in a prosumer installation where power converting equipment such as an inverter may distort the readings. What does it allow?',
     options: [
       'Omitting the loop impedance test and recording a design value only',
       'An alternative method of determining the fault current and loop value',
@@ -2947,7 +2650,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 177,
-    question: 'The new Chapter 57 covers stationary secondary battery installations. Which of the following falls outside its scope?',
+    question:
+      'The new Chapter 57 covers stationary secondary battery installations. Which of the following falls outside its scope?',
     options: [
       'Batteries within a pluggable uninterruptible power supply product',
       'Batteries in a domestic energy storage system fed by a PV array',
@@ -2964,7 +2668,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 178,
-    question: 'Regulation 653.1 concerns the Electrical Installation Condition Report. What does it require of the person producing the report?',
+    question:
+      'Regulation 653.1 concerns the Electrical Installation Condition Report. What does it require of the person producing the report?',
     options: [
       'To include a full schedule of test results for every circuit present',
       'To assign a classification code to each item recorded as inspected',
@@ -2981,7 +2686,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 179,
-    question: 'Appendix 6 model forms were amended by A4:2026. Which of the following is one of those amendments?',
+    question:
+      'Appendix 6 model forms were amended by A4:2026. Which of the following is one of those amendments?',
     options: [
       'The schedule of test results was removed from the model forms entirely',
       'Fields were added for recording the details of SPDs and AFDDs',
@@ -3015,7 +2721,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 181,
-    question: 'Regulation 643.1 sets out how the tests for initial verification are to be conducted. What does it say about their order?',
+    question:
+      'Regulation 643.1 sets out how the tests for initial verification are to be conducted. What does it say about their order?',
     options: [
       'All tests of Chapter 64 shall be repeated after the supply is connected',
       'Tests may be carried out in any order provided results are recorded',
@@ -3032,7 +2739,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 182,
-    question: 'Regulation 533.1.3 applies where a circuit-breaker may be operated by an ordinary person. What does it require?',
+    question:
+      'Regulation 533.1.3 applies where a circuit-breaker may be operated by an ordinary person. What does it require?',
     options: [
       'Setting changes need a deliberate act with a key or tool, plus indication',
       'The device must be housed behind a lockable door at all access times',
@@ -3049,7 +2757,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 183,
-    question: 'Regulation 132.4 identifies a category of supply that needs particular attention in design. Which category is it?',
+    question:
+      'Regulation 132.4 identifies a category of supply that needs particular attention in design. Which category is it?',
     options: [
       'Supplies to any circuit that includes a socket-outlet rated over 32 A',
       'Supplies to equipment fitted with a functional earth connection only',
@@ -3066,7 +2775,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 184,
-    question: 'Regulation 411.3.4 imposes a specific additional protection requirement. What is that requirement?',
+    question:
+      'Regulation 411.3.4 imposes a specific additional protection requirement. What is that requirement?',
     options: [
       'A 30 mA RCD on all socket-outlet circuits in commercial premises',
       'A 30 mA RCD on AC final circuits supplying luminaires in dwellings',
@@ -3083,7 +2793,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 185,
-    question: 'Before an earth fault loop impedance measurement is carried out, what does Regulation 643.7.3.1 require to have been done first?',
+    question:
+      'Before an earth fault loop impedance measurement is carried out, what does Regulation 643.7.3.1 require to have been done first?',
     options: [
       'A functional test of every protective device supplying the circuit',
       'A polarity check taken at each accessory on the circuit concerned',
@@ -3117,7 +2828,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 187,
-    question: 'A4:2026 modified the treatment of cables in protected escape routes. Which statement reflects that change?',
+    question:
+      'A4:2026 modified the treatment of cables in protected escape routes. Which statement reflects that change?',
     options: [
       'All cables in a protected corridor must now be mineral insulated types',
       'Cables in a protected corridor must be run in steel conduit only',
@@ -3134,7 +2846,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 188,
-    question: 'Regulation 314.3 governs the number of final circuits and the number of points each supplies. What must that number facilitate?',
+    question:
+      'Regulation 314.3 governs the number of final circuits and the number of points each supplies. What must that number facilitate?',
     options: [
       'Compliance with the maximum demand assessment given in Chapter 31',
       'Compliance with Chapter 46 and Section 537 for isolation and switching',
@@ -3151,7 +2864,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 189,
-    question: 'What does Regulation 543.7 require of a protective conductor where equipment gives rise to high protective conductor currents?',
+    question:
+      'What does Regulation 543.7 require of a protective conductor where equipment gives rise to high protective conductor currents?',
     options: [
       'That the protective conductor be run separately from the live cores',
       'That the protective conductor be sized at twice the line conductor',
@@ -3168,7 +2882,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 190,
-    question: 'Regulation 722.411.4.1 concerns the means of earthing at an electric vehicle charging point. What does it establish?',
+    question:
+      'Regulation 722.411.4.1 concerns the means of earthing at an electric vehicle charging point. What does it establish?',
     options: [
       'A PME facility shall not be used for outdoor charge point earth contacts',
       'A PME facility may be used for any charge point rated below 32 A',
@@ -3185,7 +2900,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 191,
-    question: 'What distinguishes a PELV system from a SELV system as those terms are used in BS 7671?',
+    question:
+      'What distinguishes a PELV system from a SELV system as those terms are used in BS 7671?',
     options: [
       'A PELV system operates at a higher nominal voltage than any SELV one',
       'A PELV system may have a protective connection to earth, SELV may not',
@@ -3219,7 +2935,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 193,
-    question: 'Regulation 651.3 places limits on how periodic inspection and testing is carried out. Which statement matches it?',
+    question:
+      'Regulation 651.3 places limits on how periodic inspection and testing is carried out. Which statement matches it?',
     options: [
       'It shall not cause danger to persons or livestock, or damage property',
       'It shall be carried out only with the installation fully de-energised',
@@ -3236,7 +2953,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 194,
-    question: 'Regulation 543.2.1 lists what a protective conductor may consist of. Which of the following appears in that list?',
+    question:
+      'Regulation 543.2.1 lists what a protective conductor may consist of. Which of the following appears in that list?',
     options: [
       'The sheath of a distributor supply cable outside the consumer control',
       'A metallic water pipe run through the building to the far boundary',
@@ -3253,7 +2971,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 195,
-    question: 'Regulation 740.411.4.1 addresses the means of earthing for the installations within its scope. What does it state?',
+    question:
+      'Regulation 740.411.4.1 addresses the means of earthing for the installations within its scope. What does it state?',
     options: [
       'A PME facility may be used if the electrode resistance is under 20 ohms',
       'A PME earthing facility shall not be used as the means of earthing',
@@ -3270,7 +2989,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 196,
-    question: 'What does Regulation 8(4) of the ESQCR prohibit, and why does that matter to a designer applying BS 7671?',
+    question:
+      'What does Regulation 8(4) of the ESQCR prohibit, and why does that matter to a designer applying BS 7671?',
     options: [
       'It bans TT earthing on new supplies, and it is enforceable in law',
       'It bans the use of RCDs above 100 mA, and it is enforceable in law',
@@ -3287,7 +3007,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 197,
-    question: 'BS 7671 carries a note pointing to a legal duty about the people who carry out electrical work. Which duty is it?',
+    question:
+      'BS 7671 carries a note pointing to a legal duty about the people who carry out electrical work. Which duty is it?',
     options: [
       'Regulation 16 of the Electricity at Work Regulations 1989 on competence',
       'Regulation 4 of the Provision and Use of Work Equipment Regulations',
@@ -3304,7 +3025,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 198,
-    question: 'Regulation 133.1.3 on the selection of equipment was modified by A4:2026. What does it now require?',
+    question:
+      'Regulation 133.1.3 on the selection of equipment was modified by A4:2026. What does it now require?',
     options: [
       'That all equipment carries a UKCA mark before it may be installed',
       'That equipment be selected from a single manufacturer per assembly',
@@ -3321,7 +3043,8 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 199,
-    question: 'BS 7671 requires an RCD in final circuits supplying socket-outlets rated up to 32 A. Which statement about that requirement is correct?',
+    question:
+      'BS 7671 requires an RCD in final circuits supplying socket-outlets rated up to 32 A. Which statement about that requirement is correct?',
     options: [
       'It applies to TT installations, other earthing systems being exempt',
       'It applies whatever the earthing system, to 415.1.1 characteristics',

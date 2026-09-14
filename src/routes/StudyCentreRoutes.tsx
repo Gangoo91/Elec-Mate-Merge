@@ -311,22 +311,25 @@ function StudyCentreTracker() {
     const parts = path.replace('/study-centre/', '').split('/');
     const { courseKey, sectionKey } = extractCourseAndSection(parts);
 
-    // Only track content pages (have a sectionKey), not course landing pages
-    // This prevents "Continue where you left off" from pointing to a course index
-    if (courseKey && sectionKey) {
+    // Only track content pages, not course or module landing pages.
+    //
+    // The courseKey/sectionKey test alone is not that filter: for
+    // /study-centre/apprentice/level2 it returns course 'apprentice', section
+    // 'level2' — a menu recorded as a section. That is why course_progress
+    // holds 197 rows keyed 'level2', 182 'level3' and 153 'am2', and why
+    // visiting a module index can mark the module as having progress.
+    //
+    // The same classifier that fixed the resume point now gates the progress
+    // write too. Existing rows are left alone; this only stops new ones.
+    if (courseKey && sectionKey && isStudyContentPath(path)) {
       const timer = setTimeout(() => {
         recordProgressRef.current(courseKey, sectionKey, 50).catch((err) => {
           console.warn('[StudyCentreTracker] record-progress failed:', err);
         });
       }, 1000); // 1s delay to avoid recording bounces
 
-      // Update last study location — only for actual content pages. The
-      // courseKey/sectionKey test above admits reference pages too (a glossary
-      // parses as a section), so the shared classifier has the final say.
       const title = studyTitleFromDocument('Study centre');
-      if (isStudyContentPath(path)) {
-        updateLastLocationRef.current(path, title);
-      }
+      updateLastLocationRef.current(path, title);
 
       prevContentPathRef.current = path; // Remember this content page
       prevTitleRef.current = title;

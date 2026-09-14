@@ -31,7 +31,7 @@ const quickCheckQuestions = [
   {
     id: 'vd-limit-power',
     question:
-      'What is the maximum permitted voltage drop for power circuits from the origin to the load?',
+      'What is the recommended maximum voltage drop for power circuits from the origin to the load?',
     options: ['4%', '5%', '6%', '3%'],
     correctIndex: 1,
     explanation:
@@ -39,7 +39,7 @@ const quickCheckQuestions = [
   },
   {
     id: 'vd-limit-lighting',
-    question: 'What is the maximum permitted voltage drop for lighting circuits?',
+    question: 'What is the recommended maximum voltage drop for lighting circuits?',
     options: ['3%', '4%', '5%', '6%'],
     correctIndex: 0,
     explanation:
@@ -287,7 +287,7 @@ const HNCModule4Section2_2 = () => {
             most distant point.
           </p>
           <p>
-            <strong>Permitted voltage drop limits (limit / at 230V / at 400V):</strong>
+            <strong>Recommended maximum voltage drop limits (limit / at 230V / at 400V):</strong>
           </p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>

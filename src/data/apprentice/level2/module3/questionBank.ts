@@ -14,12 +14,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 1,
     question: 'What is the most common type of cable used for fixed domestic wiring in the UK?',
-    options: [
-      'Flexible cord',
-      'Twin and earth cable',
-      'Single core cables',
-      'SWA cable',
-    ],
+    options: ['Flexible cord', 'Twin and earth cable', 'Single core cables', 'SWA cable'],
     correctAnswer: 1,
     explanation:
       'Twin and earth cable (flat PVC) is the most commonly used cable for fixed domestic installations in the UK due to its ease of installation and cost-effectiveness.',
@@ -46,12 +41,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 3,
     question: 'In a twin and earth cable, what is the bare conductor used for?',
-    options: [
-      'Neutral',
-      'Line',
-      'Switch wire',
-      'Earth (CPC)',
-    ],
+    options: ['Neutral', 'Line', 'Switch wire', 'Earth (CPC)'],
     correctAnswer: 3,
     explanation:
       'The bare conductor in twin and earth cable is the circuit protective conductor (CPC) or earth conductor, providing a path to earth for fault protection.',
@@ -126,12 +116,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 8,
     question: 'Which type of cable would be most suitable for a computer network installation?',
-    options: [
-      'Cat 6 data cable',
-      'SWA cable',
-      'Twin and earth',
-      'Flexible cord',
-    ],
+    options: ['Cat 6 data cable', 'SWA cable', 'Twin and earth', 'Flexible cord'],
     correctAnswer: 0,
     explanation:
       'Cat 6 data cable is specifically designed for computer networks and data transmission, providing the required performance for network communications.',
@@ -142,12 +127,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 9,
     question: 'What voltage category does ELV (Extra Low Voltage) refer to?',
-    options: [
-      'Up to 230V AC',
-      'Up to 50V AC or 120V DC',
-      'Up to 400V AC',
-      'Above 1000V AC',
-    ],
+    options: ['Up to 230V AC', 'Up to 50V AC or 120V DC', 'Up to 400V AC', 'Above 1000V AC'],
     correctAnswer: 1,
     explanation:
       'ELV (Extra Low Voltage) refers to voltages up to 50V AC or 120V DC, which are considered safer for general use and reduce shock risk.',
@@ -209,12 +189,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 13,
     question: 'Which type of conduit would be most suitable for a damp environment?',
-    options: [
-      'Galvanised steel conduit',
-      'PVC conduit',
-      'Aluminium conduit',
-      'Flexible conduit',
-    ],
+    options: ['Galvanised steel conduit', 'PVC conduit', 'Aluminium conduit', 'Flexible conduit'],
     correctAnswer: 1,
     explanation:
       'PVC conduit is most suitable for damp environments as it is corrosion-resistant, unlike metal conduits which can rust in damp conditions.',
@@ -307,12 +282,7 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 19,
     question:
       'What is the maximum spacing typically recommended for supporting horizontal cable tray?',
-    options: [
-      '1 metre',
-      '3 metres',
-      '2 metres',
-      '1.5 metres',
-    ],
+    options: ['1 metre', '3 metres', '2 metres', '1.5 metres'],
     correctAnswer: 3,
     explanation:
       'Horizontal cable tray supports are typically spaced at maximum 1.5-metre intervals to prevent excessive sagging and ensure adequate support.',
@@ -342,12 +312,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 21,
     question: 'Which hand tool is specifically designed for stripping cable insulation?',
-    options: [
-      'Side cutters',
-      'Wire strippers',
-      'Pliers',
-      'Knife',
-    ],
+    options: ['Side cutters', 'Wire strippers', 'Pliers', 'Knife'],
     correctAnswer: 1,
     explanation:
       'Wire strippers are specifically designed to remove insulation from cables without damaging the conductor, with adjustable settings for different cable sizes.',
@@ -391,12 +356,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 24,
     question: 'How often should hand tools be visually inspected?',
-    options: [
-      'Before each use',
-      'Weekly',
-      'Annually',
-      'Monthly',
-    ],
+    options: ['Before each use', 'Weekly', 'Annually', 'Monthly'],
     correctAnswer: 0,
     explanation:
       'Hand tools should be visually inspected before each use to check for damage, wear, or defects that could make them unsafe or ineffective.',
@@ -408,12 +368,7 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 25,
     question:
       'What is the recommended frequency for PAT testing portable power tools in a construction environment?',
-    options: [
-      'Weekly',
-      '3 months',
-      '6 months',
-      '12 months',
-    ],
+    options: ['Weekly', '3 months', '6 months', '12 months'],
     correctAnswer: 1,
     explanation:
       'In harsh environments like construction sites, portable power tools should be PAT tested every 3 months due to the increased risk of damage.',
@@ -619,12 +574,7 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 38,
     question:
       'Which termination method provides the most reliable connection for high current applications?',
-    options: [
-      'Twist and tape',
-      'Soldered joints',
-      'Crimped connections',
-      'Wire nuts',
-    ],
+    options: ['Twist and tape', 'Soldered joints', 'Crimped connections', 'Wire nuts'],
     correctAnswer: 2,
     explanation:
       'Crimped connections provide the most reliable terminations for high current applications as they create a gas-tight, mechanically strong connection.',
@@ -718,12 +668,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 44,
     question: 'At what temperature do standard PVC cables typically start to degrade?',
-    options: [
-      'Above 70°C',
-      'Above 90°C',
-      'Above 50°C',
-      'Above 120°C',
-    ],
+    options: ['Above 70°C', 'Above 90°C', 'Above 50°C', 'Above 120°C'],
     correctAnswer: 0,
     explanation:
       'Standard PVC cables are typically rated for continuous operation up to 70°C, above which the insulation begins to soften and degrade.',
@@ -767,12 +712,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 47,
     question: 'Which mechanical protection classification indicates resistance to heavy impacts?',
-    options: [
-      'IK01',
-      'IK05',
-      'IK08',
-      'IK10',
-    ],
+    options: ['IK01', 'IK05', 'IK08', 'IK10'],
     correctAnswer: 3,
     explanation:
       'IK10 provides the highest level of mechanical protection, indicating resistance to 20 joule impacts equivalent to heavy hammer blows.',
@@ -816,12 +756,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 50,
     question: 'What is the primary concern when installing electrical equipment in coastal areas?',
-    options: [
-      'Wind damage',
-      'Sand ingress',
-      'Salt corrosion',
-      'UV exposure',
-    ],
+    options: ['Wind damage', 'Sand ingress', 'Salt corrosion', 'UV exposure'],
     correctAnswer: 2,
     explanation:
       'Salt corrosion is the primary concern in coastal areas, requiring enhanced protection for metallic components and appropriate material selection.',
@@ -834,12 +769,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 51,
     question: 'What is the maximum spacing for supporting horizontal PVC conduit?',
-    options: [
-      '0.5 metres',
-      '2 metres',
-      '1.5 metres',
-      '1 metre',
-    ],
+    options: ['0.5 metres', '2 metres', '1.5 metres', '1 metre'],
     correctAnswer: 3,
     explanation:
       'Horizontal PVC conduit should be supported at maximum 1-metre intervals to prevent sagging and maintain proper alignment.',
@@ -866,12 +796,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 53,
     question: 'What is the minimum depth for cables buried directly in walls?',
-    options: [
-      '20mm',
-      '50mm',
-      '100mm',
-      '10mm',
-    ],
+    options: ['20mm', '50mm', '100mm', '10mm'],
     correctAnswer: 1,
     explanation:
       'Cables buried directly in walls must be at least 50mm deep to provide adequate protection from nails and screws during future work.',
@@ -898,12 +823,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 55,
     question: 'Which material is commonly used for fire stopping cable penetrations?',
-    options: [
-      'Standard foam',
-      'Concrete',
-      'Plastic filler',
-      'Intumescent material',
-    ],
+    options: ['Standard foam', 'Concrete', 'Plastic filler', 'Intumescent material'],
     correctAnswer: 3,
     explanation:
       'Intumescent materials expand when heated to seal openings and maintain fire resistance ratings in cable penetrations.',
@@ -930,12 +850,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 57,
     question: 'According to BS 7671, what colour should the earth conductor be?',
-    options: [
-      'Red',
-      'Green and Yellow',
-      'Black',
-      'Blue',
-    ],
+    options: ['Red', 'Green and Yellow', 'Black', 'Blue'],
     correctAnswer: 1,
     explanation:
       'The protective conductor (earth) must be identified by green and yellow stripes according to BS 7671 colour coding requirements.',
@@ -946,12 +861,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 58,
     question: 'What colour is used for the neutral conductor in single-phase installations?',
-    options: [
-      'Red',
-      'Brown',
-      'Blue',
-      'Green and Yellow',
-    ],
+    options: ['Red', 'Brown', 'Blue', 'Green and Yellow'],
     correctAnswer: 2,
     explanation:
       'The neutral conductor is identified by blue colour in single-phase installations according to harmonised European colour codes.',
@@ -997,12 +907,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 61,
     question: 'What type of cable sheath provides the best resistance to oils and chemicals?',
-    options: [
-      'PVC',
-      'Thermoplastic elastomer',
-      'XLPE',
-      'Paper',
-    ],
+    options: ['PVC', 'Thermoplastic elastomer', 'XLPE', 'Paper'],
     correctAnswer: 1,
     explanation:
       'Thermoplastic elastomer sheaths provide excellent resistance to oils, chemicals, and environmental stress compared to standard PVC.',
@@ -1029,12 +934,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 63,
     question: 'Which cable type would be most appropriate for a fire alarm system?',
-    options: [
-      'Standard PVC cable',
-      'Flexible cord',
-      'SWA cable',
-      'Fire resistant cable',
-    ],
+    options: ['Standard PVC cable', 'Flexible cord', 'SWA cable', 'Fire resistant cable'],
     correctAnswer: 3,
     explanation:
       'Fire resistant cables maintain circuit integrity during fire conditions, essential for fire alarm systems that must continue operating during emergencies.',
@@ -1046,12 +946,7 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 64,
     question:
       'What is the typical current rating for 2.5mm² twin and earth cable when clipped direct?',
-    options: [
-      '20A',
-      '16A',
-      '25A',
-      '32A',
-    ],
+    options: ['20A', '16A', '25A', '32A'],
     correctAnswer: 0,
     explanation:
       '2.5mm² twin and earth cable typically has a current rating of 20A when installed using method C (clipped direct) under standard conditions.',
@@ -1094,12 +989,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 67,
     question: 'Which type of cable basket provides the best cable support?',
-    options: [
-      'Ladder type',
-      'Perforated basket',
-      'Solid basket',
-      'Wire mesh basket',
-    ],
+    options: ['Ladder type', 'Perforated basket', 'Solid basket', 'Wire mesh basket'],
     correctAnswer: 3,
     explanation:
       'Wire mesh baskets provide the best cable support whilst maintaining good ventilation and allowing easy cable access for modifications.',
@@ -1110,12 +1000,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 68,
     question: 'What is the maximum recommended fill ratio for conduit?',
-    options: [
-      '45%',
-      '35%',
-      '25%',
-      '55%',
-    ],
+    options: ['45%', '35%', '25%', '55%'],
     correctAnswer: 0,
     explanation:
       'The maximum recommended fill ratio for conduit is 45% of the internal cross-sectional area to allow for cable installation and heat dissipation.',
@@ -1174,12 +1059,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 72,
     question: 'What class of PAT testing applies to hand-held power tools?',
-    options: [
-      'Class I',
-      'Class 0',
-      'Class II',
-      'Class III',
-    ],
+    options: ['Class I', 'Class 0', 'Class II', 'Class III'],
     correctAnswer: 0,
     explanation:
       'Hand-held power tools are typically Class I appliances requiring earthed connections and more frequent testing due to higher risk usage.',
@@ -1190,12 +1070,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 73,
     question: 'Which multimeter function would you use to check cable continuity?',
-    options: [
-      'AC voltage',
-      'Resistance/ohms',
-      'DC voltage',
-      'Current',
-    ],
+    options: ['AC voltage', 'Resistance/ohms', 'DC voltage', 'Current'],
     correctAnswer: 1,
     explanation:
       'The resistance/ohms function is used to check continuity - a continuous path will show very low resistance (near zero ohms).',
@@ -1318,12 +1193,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 81,
     question: 'Which external influence classification covers impact resistance?',
-    options: [
-      'AB (Humidity)',
-      'AG (Mechanical stress)',
-      'AD (Water)',
-      'AA (Ambient temperature)',
-    ],
+    options: ['AB (Humidity)', 'AG (Mechanical stress)', 'AD (Water)', 'AA (Ambient temperature)'],
     correctAnswer: 1,
     explanation:
       'AG classification in BS 7671 covers mechanical stress including impact, vibration, and other mechanical influences on electrical installations.',
@@ -1351,9 +1221,9 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 83,
     question: 'At what temperature might cable insulation become permanently damaged?',
     options: [
-      "Only at temperatures below 0°C",
-      "At any temperature above 20°C ambient",
-      "Only when the conductor reaches 230°C",
+      'Only at temperatures below 0°C',
+      'At any temperature above 20°C ambient',
+      'Only when the conductor reaches 230°C',
       "Above the insulation material's thermal limit",
     ],
     correctAnswer: 3,
@@ -1398,12 +1268,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 86,
     question: 'What is the maximum spacing for cable supports on vertical runs?',
-    options: [
-      '2 metres',
-      '1.5 metres',
-      '1 metre',
-      'No limit',
-    ],
+    options: ['2 metres', '1.5 metres', '1 metre', 'No limit'],
     correctAnswer: 2,
     explanation:
       'Vertical cable runs should be supported at maximum 1-metre intervals to prevent the cable weight from causing damage or stress on terminations.',
@@ -1429,7 +1294,8 @@ export const module3QuestionBank: QuestionBank[] = [
   },
   {
     id: 88,
-    question: 'What protection is required for cables installed at less than 50mm depth outside safe zones?',
+    question:
+      'What protection is required for cables installed at less than 50mm depth outside safe zones?',
     options: [
       'Additional protection by a 30mA RCD',
       'A 100mA time-delayed RCD only',
@@ -1481,12 +1347,7 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 91,
     question:
       'Which type of cable is most suitable for installation in areas with high electromagnetic interference?',
-    options: [
-      'Paper insulated cable',
-      'Rubber cable',
-      'Standard PVC cable',
-      'Screened cable',
-    ],
+    options: ['Paper insulated cable', 'Rubber cable', 'Standard PVC cable', 'Screened cable'],
     correctAnswer: 3,
     explanation:
       'Screened cables have metallic screens that provide protection against electromagnetic interference, essential in environments with sensitive equipment.',
@@ -1497,12 +1358,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 92,
     question: 'What is the typical voltage drop limit for final circuits in BS 7671?',
-    options: [
-      '5%',
-      '7%',
-      '10%',
-      '3%',
-    ],
+    options: ['5%', '7%', '10%', '3%'],
     correctAnswer: 0,
     explanation:
       'BS 7671 typically limits voltage drop to 5% of nominal voltage for final circuits to ensure proper equipment operation and efficiency.',
@@ -1661,12 +1517,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 102,
     question: 'When using a multimeter to measure AC voltage, which setting should be selected?',
-    options: [
-      'DC voltage',
-      'Current',
-      'AC voltage',
-      'Resistance',
-    ],
+    options: ['DC voltage', 'Current', 'AC voltage', 'Resistance'],
     correctAnswer: 2,
     explanation:
       'The AC voltage setting must be selected when measuring alternating current voltages to ensure accurate readings and prevent damage to the meter.',
@@ -1677,12 +1528,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 103,
     question: 'What is the recommended frequency for calibrating precision test equipment?',
-    options: [
-      'Every 2 years',
-      'Monthly',
-      'Every 6 months',
-      'Annually',
-    ],
+    options: ['Every 2 years', 'Monthly', 'Every 6 months', 'Annually'],
     correctAnswer: 3,
     explanation:
       'Precision test equipment should typically be calibrated annually to ensure accuracy and compliance with testing standards and regulations.',
@@ -1693,12 +1539,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 104,
     question: 'Which type of saw is most appropriate for cutting cable tray?',
-    options: [
-      'Hacksaw or metal cutting saw',
-      'A wood handsaw',
-      'A coping saw',
-      'A tenon saw',
-    ],
+    options: ['Hacksaw or metal cutting saw', 'A wood handsaw', 'A coping saw', 'A tenon saw'],
     correctAnswer: 0,
     explanation:
       'Hacksaws or metal cutting saws with appropriate blades are designed to cut through the steel or aluminium materials used in cable tray construction.',
@@ -1807,12 +1648,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 111,
     question: 'Which IP rating would be most appropriate for outdoor lighting installations?',
-    options: [
-      'IP20',
-      'IP44',
-      'IP68',
-      'IP65',
-    ],
+    options: ['IP20', 'IP44', 'IP68', 'IP65'],
     correctAnswer: 3,
     explanation:
       'IP65 provides complete dust protection and protection against water jets from any direction, suitable for most outdoor lighting applications.',
@@ -1839,12 +1675,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 113,
     question: 'Which material provides the best corrosion resistance in marine environments?',
-    options: [
-      'Mild steel',
-      'Stainless steel',
-      'Aluminium',
-      'Zinc plated steel',
-    ],
+    options: ['Mild steel', 'Stainless steel', 'Aluminium', 'Zinc plated steel'],
     correctAnswer: 1,
     explanation:
       'Stainless steel provides excellent corrosion resistance in marine environments with high salt content compared to other metal options.',
@@ -1871,12 +1702,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 115,
     question: 'Which external influence code represents ambient temperature in BS 7671?',
-    options: [
-      'AD',
-      'AB',
-      'AC',
-      'AA',
-    ],
+    options: ['AD', 'AB', 'AC', 'AA'],
     correctAnswer: 3,
     explanation:
       'AA represents ambient temperature classification in BS 7671 external influences, ranging from AA1 (-60°C to +5°C) to AA8 (+90°C to +125°C).',
@@ -1887,12 +1713,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 116,
     question: 'What is the maximum recommended distance between supports for 25mm PVC conduit?',
-    options: [
-      '1.0m',
-      '0.75m',
-      '1.25m',
-      '1.5m',
-    ],
+    options: ['1.0m', '0.75m', '1.25m', '1.5m'],
     correctAnswer: 0,
     explanation:
       '25mm PVC conduit should be supported at maximum 1.0-metre intervals to prevent sagging whilst maintaining proper alignment.',
@@ -1904,12 +1725,7 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 117,
     question:
       'According to BS 7671, what is the minimum distance cables should be from hot water pipes?',
-    options: [
-      '25mm',
-      '50mm',
-      '100mm',
-      '150mm',
-    ],
+    options: ['25mm', '50mm', '100mm', '150mm'],
     correctAnswer: 1,
     explanation:
       'Cables should be separated from hot water pipes by at least 50mm or thermal insulation to prevent heat damage to cable insulation.',
@@ -1920,12 +1736,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 118,
     question: 'Which colour coding applies to the line conductor in single-phase installations?',
-    options: [
-      'Red',
-      'Blue',
-      'Brown',
-      'Black',
-    ],
+    options: ['Red', 'Blue', 'Brown', 'Black'],
     correctAnswer: 2,
     explanation:
       'Brown identifies the line conductor in single-phase installations according to harmonised European colour codes adopted in BS 7671.',
@@ -1936,12 +1747,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 119,
     question: 'What should be used to seal cable entries in fire-rated walls?',
-    options: [
-      'Standard foam',
-      'Nothing required',
-      'Plastic putty',
-      'Intumescent sealant',
-    ],
+    options: ['Standard foam', 'Nothing required', 'Plastic putty', 'Intumescent sealant'],
     correctAnswer: 3,
     explanation:
       'Intumescent sealants maintain fire resistance ratings by expanding when heated to seal gaps and prevent fire spread through cable penetrations.',
@@ -2019,12 +1825,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 124,
     question: 'Which test would verify that protective bonding is effective?',
-    options: [
-      'Earth continuity test',
-      'Polarity test',
-      'Insulation resistance test',
-      'RCD test',
-    ],
+    options: ['Earth continuity test', 'Polarity test', 'Insulation resistance test', 'RCD test'],
     correctAnswer: 0,
     explanation:
       'Earth continuity testing verifies that protective bonding connections provide a continuous low-resistance path to earth for safety.',
@@ -2067,12 +1868,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 127,
     question: 'What is the recommended spacing for cable clips on vertical runs?',
-    options: [
-      '250mm',
-      '1000mm',
-      '600mm',
-      '400mm',
-    ],
+    options: ['250mm', '1000mm', '600mm', '400mm'],
     correctAnswer: 3,
     explanation:
       'Cable clips on vertical runs should be spaced at approximately 400mm intervals to provide adequate support without cable weight causing stress.',
@@ -2133,12 +1929,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 131,
     question: 'Which IP first digit indicates complete protection against dust ingress?',
-    options: [
-      'IP5X',
-      'IP7X',
-      'IP4X',
-      'IP6X',
-    ],
+    options: ['IP5X', 'IP7X', 'IP4X', 'IP6X'],
     correctAnswer: 3,
     explanation:
       'IP6X indicates complete protection against dust ingress - no dust can enter the enclosure under test conditions.',
@@ -2217,12 +2008,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 136,
     question: 'What is the maximum recommended length for unsupported cable spans?',
-    options: [
-      '300mm',
-      '200mm',
-      '400mm',
-      '500mm',
-    ],
+    options: ['300mm', '200mm', '400mm', '500mm'],
     correctAnswer: 0,
     explanation:
       'Unsupported cable spans should not exceed 300mm to prevent sagging and stress on cables between support points.',
@@ -2233,12 +2019,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 137,
     question: 'Which area around electrical panels must be kept clear for safety and access?',
-    options: [
-      '500mm',
-      '700mm',
-      '1000mm',
-      '1500mm',
-    ],
+    options: ['500mm', '700mm', '1000mm', '1500mm'],
     correctAnswer: 1,
     explanation:
       'A minimum of 700mm clear space should be maintained in front of electrical panels for safe operation and emergency access.',
@@ -2265,12 +2046,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 139,
     question: 'Which colour identifies L3 in a three-phase installation?',
-    options: [
-      'Brown',
-      'Black',
-      'Blue',
-      'Grey',
-    ],
+    options: ['Brown', 'Black', 'Blue', 'Grey'],
     correctAnswer: 3,
     explanation:
       'Grey identifies the L3 line conductor in three-phase installations according to harmonised European colour codes (Brown-L1, Black-L2, Grey-L3).',
@@ -2381,10 +2157,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 146,
     question: 'What is the correct procedure for making off SWA cable glands?',
     options: [
-      "Tighten by hand only to avoid over-stressing",
-      "Apply thread-locking compound and leave finger-tight",
+      'Tighten by hand only to avoid over-stressing',
+      'Apply thread-locking compound and leave finger-tight',
       "Tighten to manufacturer's torque specification",
-      "Tighten as far as possible using a long lever",
+      'Tighten as far as possible using a long lever',
     ],
     correctAnswer: 2,
     explanation:
@@ -2478,12 +2254,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 152,
     question: 'What is the recommended maximum pulling tension for copper conductors?',
-    options: [
-      '70N per mm²',
-      '50N per mm²',
-      '100N per mm²',
-      '150N per mm²',
-    ],
+    options: ['70N per mm²', '50N per mm²', '100N per mm²', '150N per mm²'],
     correctAnswer: 0,
     explanation:
       'The recommended maximum pulling tension for copper conductors is approximately 70N per mm² of conductor cross-sectional area to prevent damage.',
@@ -2499,12 +2270,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 200,
     question: 'What type of earthing system is most common in UK domestic installations?',
-    options: [
-      'TN-C-S system',
-      'TN-S system',
-      'TT system',
-      'IT system',
-    ],
+    options: ['TN-C-S system', 'TN-S system', 'TT system', 'IT system'],
     correctAnswer: 0,
     explanation:
       'TN-C-S (PME) earthing system is most common in UK domestic installations where the neutral and earth are combined in the supply network.',
@@ -2517,12 +2283,7 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 250,
     question:
       'Which standard specifically covers the selection and erection of electrical equipment?',
-    options: [
-      'BS 7430',
-      'BS 6351',
-      'BS 7671',
-      'BS 7909',
-    ],
+    options: ['BS 7430', 'BS 6351', 'BS 7671', 'BS 7909'],
     correctAnswer: 2,
     explanation:
       'BS 7671 (Requirements for Electrical Installations - IET Wiring Regulations) specifically covers the selection and erection of electrical equipment in the UK.',
@@ -2633,12 +2394,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 161,
     question: 'Which cable marking indicates compliance with harmonised European standards?',
-    options: [
-      'BS 6004',
-      'HAR designation',
-      'BASEC approval',
-      'IEC marking',
-    ],
+    options: ['BS 6004', 'HAR designation', 'BASEC approval', 'IEC marking'],
     correctAnswer: 1,
     explanation:
       'HAR (Harmonised Approval and Recognition) designation indicates the cable meets harmonised European standards for construction and performance.',
@@ -2666,12 +2422,7 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 163,
     question:
       'When installing overhead cables, what is the minimum height above a public footpath?',
-    options: [
-      '6.0 metres',
-      '2.5 metres',
-      '3.5 metres',
-      '5.2 metres',
-    ],
+    options: ['6.0 metres', '2.5 metres', '3.5 metres', '5.2 metres'],
     correctAnswer: 3,
     explanation:
       'Overhead cables must be at least 5.2 metres above public footpaths to ensure safe clearance for pedestrians and vehicles.',
@@ -2714,12 +2465,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 166,
     question: 'What is the typical temperature rating for standard PVC insulated cables?',
-    options: [
-      '60°C',
-      '90°C',
-      '70°C',
-      '110°C',
-    ],
+    options: ['60°C', '90°C', '70°C', '110°C'],
     correctAnswer: 2,
     explanation:
       'Standard PVC insulated cables are typically rated for continuous operation at 70°C conductor temperature.',
@@ -2761,7 +2507,7 @@ export const module3QuestionBank: QuestionBank[] = [
   },
   {
     id: 169,
-    question: 'What is the maximum permitted voltage drop for lighting circuits under BS 7671?',
+    question: 'What is the recommended maximum voltage drop for lighting circuits under BS 7671?',
     options: [
       '5% of nominal voltage',
       '3% of nominal voltage',
@@ -2810,12 +2556,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 172,
     question: 'At what depth should underground cables typically be buried?',
-    options: [
-      '600mm minimum',
-      '450mm minimum',
-      '900mm minimum',
-      '300mm minimum',
-    ],
+    options: ['600mm minimum', '450mm minimum', '900mm minimum', '300mm minimum'],
     correctAnswer: 0,
     explanation:
       'Underground cables should be buried at a minimum depth of 600mm to provide adequate protection from mechanical damage.',
@@ -2842,12 +2583,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 174,
     question: 'Which colour is used for the protective conductor in UK installations?',
-    options: [
-      'Red',
-      'Black',
-      'Green and yellow',
-      'Blue',
-    ],
+    options: ['Red', 'Black', 'Green and yellow', 'Blue'],
     correctAnswer: 2,
     explanation:
       'Green and yellow is the standard colour for protective conductors (earth) in UK electrical installations according to BS 7671.',
@@ -2858,12 +2594,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 175,
     question: 'What is the neutral conductor colour in single-phase UK installations?',
-    options: [
-      'Black',
-      'Grey',
-      'Brown',
-      'Blue',
-    ],
+    options: ['Black', 'Grey', 'Brown', 'Blue'],
     correctAnswer: 3,
     explanation:
       'Blue is the standard colour for neutral conductors in UK single-phase installations according to harmonised European standards.',
@@ -2906,12 +2637,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 178,
     question: 'What is the minimum insulation resistance value for most low voltage installations?',
-    options: [
-      '0.5 MΩ',
-      '2 MΩ',
-      '1 MΩ',
-      '5 MΩ',
-    ],
+    options: ['0.5 MΩ', '2 MΩ', '1 MΩ', '5 MΩ'],
     correctAnswer: 2,
     explanation:
       'The minimum insulation resistance for most low voltage installations is 1 MΩ, measured between conductors and between conductors and earth.',
@@ -2988,12 +2714,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 183,
     question: 'Which material is most commonly used for internal cable trunking?',
-    options: [
-      'Galvanised steel',
-      'Stainless steel',
-      'Aluminium',
-      'PVC',
-    ],
+    options: ['Galvanised steel', 'Stainless steel', 'Aluminium', 'PVC'],
     correctAnswer: 3,
     explanation:
       'PVC is most commonly used for internal cable trunking due to its cost-effectiveness, corrosion resistance, and ease of installation.',
@@ -3021,12 +2742,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 185,
     question: 'What is the maximum recommended fill factor for conduit containing cables?',
-    options: [
-      '30%',
-      '45%',
-      '40%',
-      '60%',
-    ],
+    options: ['30%', '45%', '40%', '60%'],
     correctAnswer: 1,
     explanation:
       'The maximum fill factor for conduit is typically 45% of the internal cross-sectional area to allow for heat dissipation and cable installation.',
@@ -3037,12 +2753,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 186,
     question: 'Which type of tray joint allows for thermal movement?',
-    options: [
-      'Bolted joint',
-      'Compression joint',
-      'Expansion joint',
-      'Welded joint',
-    ],
+    options: ['Bolted joint', 'Compression joint', 'Expansion joint', 'Welded joint'],
     correctAnswer: 2,
     explanation:
       'Expansion joints in cable tray systems accommodate thermal movement, preventing stress and damage to the installation.',
@@ -3070,12 +2781,7 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 188,
     question:
       'When installing containment in areas with high electromagnetic interference, which material should be avoided?',
-    options: [
-      'PVC',
-      'Aluminium',
-      'Stainless steel',
-      'Galvanised steel',
-    ],
+    options: ['PVC', 'Aluminium', 'Stainless steel', 'Galvanised steel'],
     correctAnswer: 0,
     explanation:
       'PVC should be avoided in high EMI areas as it provides no electromagnetic shielding, unlike metallic containment systems.',
@@ -3200,9 +2906,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question: 'Which document provides guidance on cable containment installation?',
     options: [
       "BS EN 61537 and manufacturer's instructions",
-      "BS 1363 socket-outlet standard",
-      "BS 88 fuse standard",
-      "BS EN 60898 circuit breaker standard",
+      'BS 1363 socket-outlet standard',
+      'BS 88 fuse standard',
+      'BS EN 60898 circuit breaker standard',
     ],
     correctAnswer: 0,
     explanation:
@@ -3214,12 +2920,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 197,
     question: 'What spacing is recommended between cable ties on vertical cable runs?',
-    options: [
-      'Every 500mm',
-      'Every 400mm',
-      'Every 1000mm',
-      'Every 300mm',
-    ],
+    options: ['Every 500mm', 'Every 400mm', 'Every 1000mm', 'Every 300mm'],
     correctAnswer: 1,
     explanation:
       'Cable ties on vertical runs should typically be spaced every 400mm to provide adequate support against gravitational forces.',
@@ -3296,12 +2997,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 202,
     question: 'Which tool would be most suitable for terminating SWA cable glands?',
-    options: [
-      'Adjustable wrench',
-      'Screwdriver',
-      'Cable gland spanners',
-      'Standard pliers',
-    ],
+    options: ['Adjustable wrench', 'Screwdriver', 'Cable gland spanners', 'Standard pliers'],
     correctAnswer: 2,
     explanation:
       'Cable gland spanners are specifically designed for terminating cable glands, providing the correct grip and torque without damage.',
@@ -3329,12 +3025,7 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 204,
     question:
       'Which measurement range is most appropriate for testing domestic installation insulation resistance?',
-    options: [
-      '0-1000 MΩ',
-      '0-100 MΩ',
-      '0-1 MΩ',
-      '0-10 GΩ',
-    ],
+    options: ['0-1000 MΩ', '0-100 MΩ', '0-1 MΩ', '0-10 GΩ'],
     correctAnswer: 0,
     explanation:
       'A range of 0-1000 MΩ is appropriate for domestic installations, providing adequate resolution for the 1 MΩ minimum requirement.',
@@ -3379,9 +3070,9 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 207,
     question: 'What is the maximum force that should typically be applied when pulling cables?',
     options: [
-      "As much force as the puller can physically apply",
-      "A fixed 500N regardless of cable size",
-      "Whatever is needed to free a stuck cable",
+      'As much force as the puller can physically apply',
+      'A fixed 500N regardless of cable size',
+      'Whatever is needed to free a stuck cable',
       "Based on cable manufacturer's specifications",
     ],
     correctAnswer: 3,
@@ -3410,12 +3101,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 209,
     question: 'What calibration frequency is typically required for electrical test equipment?',
-    options: [
-      'Monthly',
-      'Annually',
-      '6 months',
-      'Every 5 years',
-    ],
+    options: ['Monthly', 'Annually', '6 months', 'Every 5 years'],
     correctAnswer: 1,
     explanation:
       'Electrical test equipment typically requires annual calibration to ensure accuracy and compliance with testing standards.',
@@ -3458,12 +3144,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 212,
     question: 'Which test should be performed first when commissioning a new installation?',
-    options: [
-      'Visual inspection',
-      'Insulation resistance',
-      'RCD testing',
-      'Load testing',
-    ],
+    options: ['Visual inspection', 'Insulation resistance', 'RCD testing', 'Load testing'],
     correctAnswer: 0,
     explanation:
       'Visual inspection should always be performed first to identify obvious defects before applying test voltages or energising circuits.',
@@ -3525,12 +3206,7 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 216,
     question:
       'Which zones around a bath are designated as special locations requiring additional protection?',
-    options: [
-      'Zone 0, 1, and 2',
-      'Zone 1 only',
-      'Zone 0 and 1 only',
-      'No special zones',
-    ],
+    options: ['Zone 0, 1, and 2', 'Zone 1 only', 'Zone 0 and 1 only', 'No special zones'],
     correctAnswer: 0,
     explanation:
       'Bathroom installations have Zone 0 (inside bath), Zone 1 (above bath), and Zone 2 (surrounding area) requiring specific IP ratings and RCD protection.',
@@ -3607,12 +3283,7 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 221,
     question:
       'What is the maximum number of 90° bends allowed in a conduit run without an inspection box?',
-    options: [
-      '1',
-      '2',
-      '3',
-      '4',
-    ],
+    options: ['1', '2', '3', '4'],
     correctAnswer: 1,
     explanation:
       'A maximum of two 90° bends is allowed in a conduit run without an inspection box to ensure cables can be drawn in and withdrawn safely.',
@@ -3738,12 +3409,7 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 229,
     question:
       'What is the maximum length typically recommended for a radial circuit supplying 13A socket outlets?',
-    options: [
-      '20 metres',
-      '30 metres',
-      '25 metres',
-      '50 metres',
-    ],
+    options: ['20 metres', '30 metres', '25 metres', '50 metres'],
     correctAnswer: 1,
     explanation:
       'Around 30 metres is a common rule-of-thumb taught for a 13A socket radial to keep voltage drop and Zs within limits. BS 7671 / the On-Site Guide do not fix a single length figure — a radial is actually governed by floor area served, voltage drop (Appendix 4) and earth-fault loop impedance for the protective device, so any real circuit must be verified by calculation.',
@@ -3789,12 +3455,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 232,
     question: 'What is the relationship between power, voltage, and current?',
-    options: [
-      'P = V × I',
-      'P = V - I',
-      'P = V + I',
-      'P = V ÷ I',
-    ],
+    options: ['P = V × I', 'P = V - I', 'P = V + I', 'P = V ÷ I'],
     correctAnswer: 0,
     explanation:
       'Electrical power equals voltage multiplied by current (P = V × I), representing the rate of energy consumption or conversion.',
@@ -3805,12 +3466,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 233,
     question: 'What unit is used to measure electrical resistance?',
-    options: [
-      'Volts',
-      'Ohms',
-      'Amperes',
-      'Watts',
-    ],
+    options: ['Volts', 'Ohms', 'Amperes', 'Watts'],
     correctAnswer: 1,
     explanation:
       'Electrical resistance is measured in ohms (Ω), named after Georg Ohm who discovered the relationship between voltage, current, and resistance.',
@@ -3821,12 +3477,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 234,
     question: 'What is the frequency of the UK mains electricity supply?',
-    options: [
-      '25 Hz',
-      '60 Hz',
-      '50 Hz',
-      '100 Hz',
-    ],
+    options: ['25 Hz', '60 Hz', '50 Hz', '100 Hz'],
     correctAnswer: 2,
     explanation:
       'The UK mains electricity supply operates at 50 Hz (cycles per second), which is the standard frequency for European electrical systems.',
@@ -3837,12 +3488,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 235,
     question: 'What is the RMS value of a 230V AC supply approximately equal to in peak voltage?',
-    options: [
-      '230V',
-      '162V',
-      '460V',
-      '325V',
-    ],
+    options: ['230V', '162V', '460V', '325V'],
     correctAnswer: 3,
     explanation:
       'The peak voltage of an AC supply is approximately 1.414 times the RMS value, so 230V RMS equals approximately 325V peak.',
@@ -3853,12 +3499,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 236,
     question: 'Which material is the best conductor of electricity?',
-    options: [
-      'Silver',
-      'Copper',
-      'Aluminium',
-      'Gold',
-    ],
+    options: ['Silver', 'Copper', 'Aluminium', 'Gold'],
     correctAnswer: 0,
     explanation:
       'Silver is the best conductor of electricity, though copper is more commonly used due to cost considerations and good conductivity.',
@@ -3966,12 +3607,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 243,
     question: 'What is the typical voltage between line and neutral in UK single-phase supplies?',
-    options: [
-      '400V',
-      '110V',
-      '415V',
-      '230V',
-    ],
+    options: ['400V', '110V', '415V', '230V'],
     correctAnswer: 3,
     explanation:
       'UK single-phase supplies provide 230V between line and neutral, which is the standard domestic supply voltage.',
@@ -4018,12 +3654,7 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 246,
     question:
       'What voltage is typically used for insulation resistance testing on low voltage installations?',
-    options: [
-      '250V DC',
-      '1000V DC',
-      '500V DC',
-      '230V AC',
-    ],
+    options: ['250V DC', '1000V DC', '500V DC', '230V AC'],
     correctAnswer: 2,
     explanation:
       '500V DC is typically used for insulation resistance testing on low voltage installations to verify insulation integrity.',
@@ -4050,12 +3681,7 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 248,
     question: 'What is the maximum operating time for a 30mA RCD protecting socket outlets?',
-    options: [
-      '300ms',
-      '40ms',
-      '1 second',
-      '5 seconds',
-    ],
+    options: ['300ms', '40ms', '1 second', '5 seconds'],
     correctAnswer: 0,
     explanation:
       'A general-type 30mA RCD must trip within 300ms at its rated residual current (IΔn) — and that single AC test at IΔn is what BS 7671:2018+A4:2026 requires under Regulation 643.8, whatever the RCD type. The familiar 40ms at 5IΔn is a device characteristic from BS EN 61008/61009; Amendment 4 deleted Table 3A of Appendix 3, so it is no longer part of the required verification.',

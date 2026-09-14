@@ -520,7 +520,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Maximum permitted voltage drop</strong> — 3% for lighting circuits and 5%
+                <strong>Recommended maximum voltage drop</strong> — 3% for lighting circuits and 5%
                 for power/other circuits, measured from the origin of the installation (typically
                 the supply terminals at the consumer unit). On a 230V supply, this equates to a
                 maximum of 6.9V for lighting and 11.5V for power circuits.
@@ -673,8 +673,8 @@ const sections = [
                   applied. This information is essential for future EICR inspections to verify that
                   the cable is correctly sized for its protective device and installation
                   conditions. Use the{' '}
-                  <SEOInternalLink href="/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
-                  to complete all circuit details on site.
+                  <SEOInternalLink href="/eic-certificate">Elec-Mate EIC app</SEOInternalLink> to
+                  complete all circuit details on site.
                 </p>
               </div>
             </div>

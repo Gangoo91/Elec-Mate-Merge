@@ -9,7 +9,13 @@ export const powerToolSections: ToolSubSection[] = [
         name: '18V Combi Drill',
         description:
           'Your primary power tool — drill, hammer drill, and screwdriver in one. 18V lithium-ion platform is the industry standard. Choose a brushless motor for longer life and more power.',
-        price: '£90-200',
+        // Re-sourced 14 Sep 2026 against Screwfix retail for battery+charger
+        // kits: Erbauer £134.99–154.99, Makita from £149.99, DeWalt from
+        // £179.99, Bosch £269.99. The old £90-200 sat below every mainstream
+        // kit on sale. Range excludes the Titan budget single-battery kit
+        // (£49.99) and the Milwaukee M18 twin (£429.99) — neither is what an
+        // apprentice is deciding between.
+        price: '£135-300',
         priority: 'essential',
         brands: ['DeWalt', 'Milwaukee', 'Makita', 'Bosch Professional'],
         apprenticeTip:

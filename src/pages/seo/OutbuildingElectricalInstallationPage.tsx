@@ -153,10 +153,10 @@ const sections = [
               <span>
                 <strong>Cable sizing</strong> — the cross-section of the SWA cable is determined by
                 the total load of the outbuilding circuits, the length of the run, and the
-                permissible voltage drop. For a garden office or workshop sub-board, 6mm² three-core
-                SWA is typical for runs up to 25–30 metres. For runs over 30 metres or higher loads,
-                10mm² or 16mm² cable should be used to keep voltage drop within the 3% limit for
-                lighting circuits and 5% for power circuits under BS 7671 Section 525.
+                recommended maximum voltage drop. For a garden office or workshop sub-board, 6mm²
+                three-core SWA is typical for runs up to 25–30 metres. For runs over 30 metres or
+                higher loads, 10mm² or 16mm² cable should be used to keep voltage drop within the 3%
+                limit for lighting circuits and 5% for power circuits under BS 7671 Section 525.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -405,8 +405,7 @@ const sections = [
                 <strong>EIC on completion</strong> — an Electrical Installation Certificate (EIC)
                 covering the entire outbuilding installation (cable route, sub-board, all circuits,
                 and earthing) must be issued on completion. Keep this with your property records.
-                Use the{' '}
-                <SEOInternalLink href="/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
+                Use the <SEOInternalLink href="/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
                 to complete and issue the certificate on site.
               </span>
             </li>
@@ -450,10 +449,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote for the Full Installation</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to itemise SWA cable, glands, sub-board, earth rod, circuits, and testing. Clients
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  itemise SWA cable, glands, sub-board, earth rod, circuits, and testing. Clients
                   appreciate a detailed quote that explains what they are getting — it also protects
                   you from scope creep if additional work is requested later.
                 </p>

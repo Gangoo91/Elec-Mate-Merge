@@ -34,7 +34,7 @@ const quickCheckQuestions = [
     question: 'What does the adiabatic equation determine for cable protection?',
     options: [
       'The continuous current-carrying capacity of the cable',
-      'The maximum permitted voltage drop along the cable',
+      'The recommended maximum voltage drop along the cable',
       'Minimum cable size to withstand fault current for the disconnection time',
       'The earth fault loop impedance at the cable origin',
     ],

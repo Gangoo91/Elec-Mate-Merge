@@ -16,7 +16,8 @@ const quickCheckQuestions = [
   },
   {
     id: 'evcharging-m6s2-check2',
-    question: 'What is the maximum permitted voltage drop for an EV charging circuit (a power circuit) from the origin of the installation?',
+    question:
+      'What is the recommended maximum voltage drop for an EV charging circuit (a power circuit) from the origin of the installation?',
     options: ['5%', '3%', '4%', '6%'],
     correctIndex: 0,
     explanation:
@@ -108,9 +109,7 @@ const EVChargingModule6Section2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Cable Termination and Routing
           </h1>
-          <p className="text-white">
-            Professional cable practices for reliable EV installations
-          </p>
+          <p className="text-white">Professional cable practices for reliable EV installations</p>
         </header>
 
         {/* Quick Summary Boxes */}

@@ -195,7 +195,7 @@ const sections = [
           BS 7671 Regulation 133.2 addresses this directly. It requires that conductor
           cross-sectional area is selected to limit voltage drop to permissible levels, ensuring
           that connected equipment receives adequate voltage under normal load conditions. For
-          lighting circuits, the maximum permissible voltage drop is typically 3% of the nominal
+          lighting circuits, the recommended maximum voltage drop is typically 3% of the nominal
           supply voltage — approximately 6.9V on a 230V supply.
         </p>
       </>

@@ -79,10 +79,27 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
     return 2.0; // 2MB max per image - balance of quality and speed
   };
 
-  // Utility to calculate base64 image size in MB
+  // 🔴 One test for "is this actually an image", used by all three places that
+  // need it: the size cap, the camera guard and the upload filter. They must
+  // agree — a photo rejected in one and accepted in another is how a blank
+  // frame reached the scanner.
+  //
+  // `canvas.toDataURL` on iOS returns `''` or `'data:,'` rather than throwing
+  // when the canvas exceeds the device's memory limit, which is exactly the
+  // big-photo-on-an-iPad case this screen exists for.
+  const hasImagePayload = (dataUrl: string | null | undefined): boolean =>
+    Boolean(dataUrl && dataUrl.split(',')[1]);
+
+  // Utility to calculate base64 image size in MB.
+  //
+  // The guard is load-bearing: this runs over EVERY captured image in the
+  // reduce below, immediately before the photos are handed to the scanner, so
+  // an unguarded `.length` on a missing payload threw `undefined is not an
+  // object` and took out the submit — the user could photograph a board and
+  // then never send it (Sentry JAVASCRIPT-REACT-GF).
   const getDataUrlSizeMB = (dataUrl: string): number => {
-    const base64 = dataUrl.split(',')[1];
-    return (base64.length * 0.75) / (1024 * 1024);
+    if (!hasImagePayload(dataUrl)) return 0;
+    return (dataUrl.split(',')[1].length * 0.75) / (1024 * 1024);
   };
 
   // ── Quality gate ──────────────────────────────────────────────────────
@@ -352,6 +369,23 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
         ctx.drawImage(videoRef.current, 0, 0);
         const originalDataUrl = canvas.toDataURL('image/jpeg', 0.95);
 
+        // 🔴 Validate BEFORE telling the user it worked. This is the
+        // full-resolution capture (videoWidth × videoHeight at q0.95) — the
+        // most memory-hungry call on the screen. `compressImage` already
+        // guards its own output; this site did not, so a failed capture
+        // toasted "Photo captured", the compression step then rejected, and
+        // the .catch below KEPT the blank original and marked it ready. The
+        // user was told twice that it had worked and then got an unexplained
+        // scanner failure.
+        //
+        // Returning here deliberately skips `stopCamera()` below: the capture
+        // failed, so leaving the viewfinder running lets them shoot again
+        // straight away instead of reopening the camera at a live board.
+        if (!hasImagePayload(originalDataUrl)) {
+          toast.error("Couldn't capture that photo — please try again.");
+          return;
+        }
+
         // Show photo immediately and start compression
         setCapturedImages((prev) => [...prev, { url: originalDataUrl, status: 'compressing' }]);
         toast.success('Photo captured');
@@ -392,28 +426,59 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
     if (files && files.length > 0) {
       const targetMB = calculateTargetSizePerPhoto(capturedImages.length + files.length);
 
-      // Load all files in parallel
+      // Load all files in parallel.
+      //
+      // 🔴 `onerror` and `onabort` MUST resolve too. This promise previously
+      // settled only in `onload`, so a file the reader could not read — an
+      // iCloud photo that has not downloaded, or one removed mid-read, both
+      // ordinary on an iPad — left the promise pending forever. `Promise.all`
+      // below then never settled and the photo sat on "compressing…" with no
+      // error and no way forward. A resolved empty string is filtered out
+      // just below; a hang cannot be recovered from at all.
       const filePromises = Array.from(files).map(
         (file) =>
           new Promise<{ file: File; dataUrl: string }>((resolve) => {
             const reader = new FileReader();
-            reader.onload = (e) =>
-              resolve({
-                file,
-                dataUrl: e.target?.result as string,
-              });
-            reader.readAsDataURL(file);
+            const done = (dataUrl: string) => resolve({ file, dataUrl });
+            reader.onload = (e) => done((e.target?.result as string) || '');
+            reader.onerror = () => done('');
+            reader.onabort = () => done('');
+            try {
+              reader.readAsDataURL(file);
+            } catch {
+              done('');
+            }
           })
       );
 
-      const loadedFiles = await Promise.all(filePromises);
+      const allFiles = await Promise.all(filePromises);
+      // Only carry forward what actually decoded to a data URL WITH a payload —
+      // anything else would be added as a blank thumbnail and submitted to the
+      // scanner. Same test as `getDataUrlSizeMB` and the capture guard use, so
+      // a photo that is rejected in one place is rejected in all three.
+      const loadedFiles = allFiles.filter(({ dataUrl }) => hasImagePayload(dataUrl));
+      const unreadable = allFiles.length - loadedFiles.length;
+
+      if (unreadable > 0) {
+        toast.error(
+          `${unreadable} photo${unreadable > 1 ? 's' : ''} couldn't be read — please re-add ${unreadable > 1 ? 'them' : 'it'}.`
+        );
+      }
+      if (loadedFiles.length === 0) {
+        // Reset the input the same way the success path does, so re-picking
+        // the same file still fires a change event.
+        if (fileInputRef.current) fileInputRef.current.value = '';
+        return;
+      }
 
       // Add all images immediately
       loadedFiles.forEach(({ dataUrl }) => {
         setCapturedImages((prev) => [...prev, { url: dataUrl, status: 'compressing' }]);
       });
 
-      toast.success(`Added ${files.length} photo${files.length > 1 ? 's' : ''} - compressing...`);
+      toast.success(
+        `Added ${loadedFiles.length} photo${loadedFiles.length > 1 ? 's' : ''} - compressing...`
+      );
 
       // Compress all in parallel
       Promise.all(
@@ -526,7 +591,9 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
               {/* Board — enclosure with a recessed DIN rail, a proper main
                   switch, a 3P block, and breakers that flash volt in sequence
                   (board-read keyframe) — the scanner reading module by module. */}
-              <div className={cn('rounded-2xl border border-white/[0.2] p-2 sm:p-2.5', CARD_SURFACE)}>
+              <div
+                className={cn('rounded-2xl border border-white/[0.2] p-2 sm:p-2.5', CARD_SURFACE)}
+              >
                 {/* DIN recess */}
                 <div className="rounded-xl bg-black/40 p-2 shadow-[inset_0_2px_6px_rgba(0,0,0,0.5)] sm:p-2.5">
                   <div className="flex items-stretch gap-1.5">
@@ -575,9 +642,18 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
           <div>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
               {[
-                { t: 'Circuit labels', s: 'Reads handwritten and printed legends, expands UK abbreviations.' },
-                { t: 'Devices', s: 'MCB, RCBO, RCD, AFDD, MCCB, isolators — by I∆n marking and model code.' },
-                { t: 'Board structure', s: 'Brand, model, layout, main switch, surge protection, three-phase.' },
+                {
+                  t: 'Circuit labels',
+                  s: 'Reads handwritten and printed legends, expands UK abbreviations.',
+                },
+                {
+                  t: 'Devices',
+                  s: 'MCB, RCBO, RCD, AFDD, MCCB, isolators — by I∆n marking and model code.',
+                },
+                {
+                  t: 'Board structure',
+                  s: 'Brand, model, layout, main switch, surge protection, three-phase.',
+                },
               ].map(({ t, s }) => (
                 <div
                   key={t}
@@ -591,8 +667,8 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
 
             {/* Reading direction note */}
             <p className="mt-4 text-[12px] text-white/85 leading-relaxed max-w-[58ch]">
-              <span className="font-semibold text-white">Tip:</span> the scanner reads circuits
-              left to right. If your main switch is on the right, tap{' '}
+              <span className="font-semibold text-white">Tip:</span> the scanner reads circuits left
+              to right. If your main switch is on the right, tap{' '}
               <span className="font-medium text-white">Reverse</span> after the scan completes.
             </p>
           </div>

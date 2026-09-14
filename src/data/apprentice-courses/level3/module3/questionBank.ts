@@ -29,12 +29,7 @@ export const module3Questions: Question[] = [
     // 230.9^2/50 = 1,066.7 W per phase, x3 = 3,200 W exactly. 3,174 W is what
     // you get by rounding the phase voltage to 230 V before squaring, and the
     // explanation had the two the wrong way round.
-    options: [
-      'R = V × I',
-      'V = I × R',
-      'P = I × R',
-      'I = V × R',
-    ],
+    options: ['R = V × I', 'V = I × R', 'P = I × R', 'I = V × R'],
     correctAnswer: 1,
     explanation:
       "Ohm's Law states that V = I × R, where V is voltage in volts, I is current in amps, and R is resistance in ohms.",
@@ -44,12 +39,7 @@ export const module3Questions: Question[] = [
   {
     id: 2,
     question: 'A circuit has a resistance of 20Ω and draws 5A. What is the voltage?',
-    options: [
-      '4V',
-      '25V',
-      '100V',
-      '15V',
-    ],
+    options: ['4V', '25V', '100V', '15V'],
     correctAnswer: 2,
     explanation: 'Using V = I × R: V = 5A × 20Ω = 100V',
     section: '3.1',
@@ -58,12 +48,7 @@ export const module3Questions: Question[] = [
   {
     id: 3,
     question: 'What is the current through a 50Ω resistor connected to 230V?',
-    options: [
-      '280A',
-      '11,500A',
-      '0.22A',
-      '4.6A',
-    ],
+    options: ['280A', '11,500A', '0.22A', '4.6A'],
     correctAnswer: 3,
     explanation: 'Using I = V/R: I = 230V ÷ 50Ω = 4.6A',
     section: '3.1',
@@ -72,12 +57,7 @@ export const module3Questions: Question[] = [
   {
     id: 4,
     question: 'What is the formula for electrical power?',
-    options: [
-      'P = V × I',
-      'P = V ÷ I',
-      'P = V + I',
-      'P = V - I',
-    ],
+    options: ['P = V × I', 'P = V ÷ I', 'P = V + I', 'P = V - I'],
     correctAnswer: 0,
     explanation:
       'Electrical power P = V × I (watts = volts × amps). This can also be expressed as P = I²R or P = V²/R.',
@@ -87,12 +67,7 @@ export const module3Questions: Question[] = [
   {
     id: 5,
     question: 'A 230V appliance draws 10A. What is its power rating?',
-    options: [
-      '1,150W',
-      '2,300W',
-      '2,400W',
-      '23,000W',
-    ],
+    options: ['1,150W', '2,300W', '2,400W', '23,000W'],
     correctAnswer: 1,
     explanation: 'P = V × I = 230V × 10A = 2,300W (2.3kW)',
     section: '3.1',
@@ -101,12 +76,7 @@ export const module3Questions: Question[] = [
   {
     id: 6,
     question: 'What is the resistance of a 2kW heater operating at 230V?',
-    options: [
-      '8.7Ω',
-      '115Ω',
-      '26.45Ω',
-      '460,000Ω',
-    ],
+    options: ['8.7Ω', '115Ω', '26.45Ω', '460,000Ω'],
     correctAnswer: 2,
     explanation: 'Using R = V²/P: R = (230)² ÷ 2000 = 52,900 ÷ 2000 = 26.45Ω',
     section: '3.1',
@@ -130,12 +100,7 @@ export const module3Questions: Question[] = [
   {
     id: 8,
     question: 'What is the total resistance of three 10 Ω resistors connected in series?',
-    options: [
-      '30Ω',
-      '10Ω',
-      '3.33Ω',
-      '100Ω',
-    ],
+    options: ['30Ω', '10Ω', '3.33Ω', '100Ω'],
     correctAnswer: 0,
     explanation: 'In series: Rtotal = R1 + R2 + R3 = 10 + 10 + 10 = 30Ω',
     section: '3.1',
@@ -144,12 +109,7 @@ export const module3Questions: Question[] = [
   {
     id: 9,
     question: 'What is the total resistance of three 30 Ω resistors connected in parallel?',
-    options: [
-      '30Ω',
-      '10Ω',
-      '90Ω',
-      '0.1Ω',
-    ],
+    options: ['30Ω', '10Ω', '90Ω', '0.1Ω'],
     correctAnswer: 1,
     explanation: 'In parallel with equal resistors: Rtotal = R/n = 30Ω/3 = 10Ω',
     section: '3.1',
@@ -158,12 +118,7 @@ export const module3Questions: Question[] = [
   {
     id: 10,
     question: 'What is the total resistance of 20Ω and 30Ω in parallel?',
-    options: [
-      '50Ω',
-      '25Ω',
-      '12Ω',
-      '600Ω',
-    ],
+    options: ['50Ω', '25Ω', '12Ω', '600Ω'],
     correctAnswer: 2,
     explanation:
       'For two resistors in parallel: Rtotal = (R1 × R2)/(R1 + R2) = (20 × 30)/(20 + 30) = 600/50 = 12Ω',
@@ -173,12 +128,7 @@ export const module3Questions: Question[] = [
   {
     id: 11,
     question: 'How much energy does a 3kW heater use in 2 hours?',
-    options: [
-      '1.5kWh',
-      '1,500Wh',
-      '5kWh',
-      '6kWh',
-    ],
+    options: ['1.5kWh', '1,500Wh', '5kWh', '6kWh'],
     correctAnswer: 3,
     explanation: 'Energy = Power × Time = 3kW × 2h = 6kWh',
     section: '3.1',
@@ -187,12 +137,7 @@ export const module3Questions: Question[] = [
   {
     id: 12,
     question: 'What is 1 kilowatt-hour in joules?',
-    options: [
-      '3,600,000 joules',
-      '3,600 joules',
-      '1,000 joules',
-      '360,000 joules',
-    ],
+    options: ['3,600,000 joules', '3,600 joules', '1,000 joules', '360,000 joules'],
     correctAnswer: 0,
     explanation: '1 kWh = 1000W × 3600s = 3,600,000 joules (3.6MJ)',
     section: '3.1',
@@ -201,12 +146,7 @@ export const module3Questions: Question[] = [
   {
     id: 13,
     question: 'A cable has resistance of 0.5Ω and carries 20A. What is the voltage drop?',
-    options: [
-      '0.025V',
-      '10V',
-      '40V',
-      '400V',
-    ],
+    options: ['0.025V', '10V', '40V', '400V'],
     correctAnswer: 1,
     explanation: 'Voltage drop Vd = I × R = 20A × 0.5Ω = 10V',
     section: '3.1',
@@ -215,12 +155,7 @@ export const module3Questions: Question[] = [
   {
     id: 14,
     question: 'What power is dissipated in a cable with 0.5Ω resistance carrying 20A?',
-    options: [
-      '10W',
-      '400W',
-      '200W',
-      '40W',
-    ],
+    options: ['10W', '400W', '200W', '40W'],
     correctAnswer: 2,
     explanation: 'Power loss P = I²R = (20)² × 0.5 = 400 × 0.5 = 200W',
     section: '3.1',
@@ -229,12 +164,7 @@ export const module3Questions: Question[] = [
   {
     id: 15,
     question: 'What is the SI unit of electrical resistance?',
-    options: [
-      'Volt',
-      'Amp',
-      'Watt',
-      'Ohm',
-    ],
+    options: ['Volt', 'Amp', 'Watt', 'Ohm'],
     correctAnswer: 3,
     explanation: 'The ohm (Ω) is the SI unit of electrical resistance, named after Georg Ohm.',
     section: '3.1',
@@ -289,12 +219,7 @@ export const module3Questions: Question[] = [
     id: 19,
     question:
       'What is the resistance of a 100m cable with resistivity 0.0172 Ω·mm²/m and CSA of 2.5mm²?',
-    options: [
-      '0.172Ω',
-      '1.72Ω',
-      '6.88Ω',
-      '0.688Ω',
-    ],
+    options: ['0.172Ω', '1.72Ω', '6.88Ω', '0.688Ω'],
     correctAnswer: 3,
     explanation: 'R = ρL/A = (0.0172 × 100)/2.5 = 1.72/2.5 = 0.688Ω',
     section: '3.1',
@@ -303,12 +228,7 @@ export const module3Questions: Question[] = [
   {
     id: 20,
     question: 'What happens to cable resistance if you double its length?',
-    options: [
-      'Doubles',
-      'Stays the same',
-      'Halves',
-      'Quadruples',
-    ],
+    options: ['Doubles', 'Stays the same', 'Halves', 'Quadruples'],
     correctAnswer: 0,
     explanation:
       'Resistance is directly proportional to length (R = ρL/A). Doubling length doubles resistance.',
@@ -318,12 +238,7 @@ export const module3Questions: Question[] = [
   {
     id: 21,
     question: 'What happens to cable resistance if you double its cross-sectional area?',
-    options: [
-      'Doubles',
-      'Halves',
-      'Quadruples',
-      'Stays the same',
-    ],
+    options: ['Doubles', 'Halves', 'Quadruples', 'Stays the same'],
     correctAnswer: 1,
     explanation:
       'Resistance is inversely proportional to area (R = ρL/A). Doubling area halves resistance.',
@@ -393,12 +308,7 @@ export const module3Questions: Question[] = [
   {
     id: 26,
     question: 'What is the power dissipated in a 100Ω resistor with 5V across it?',
-    options: [
-      '500W',
-      '20W',
-      '0.25W',
-      '0.5W',
-    ],
+    options: ['500W', '20W', '0.25W', '0.5W'],
     correctAnswer: 2,
     explanation: 'P = V²/R = (5)²/100 = 25/100 = 0.25W',
     section: '3.1',
@@ -407,12 +317,7 @@ export const module3Questions: Question[] = [
   {
     id: 27,
     question: 'A 60W lamp operates for 8 hours. How many kWh of energy does it use?',
-    options: [
-      '480kWh',
-      '7.5kWh',
-      '4.8kWh',
-      '0.48kWh',
-    ],
+    options: ['480kWh', '7.5kWh', '4.8kWh', '0.48kWh'],
     correctAnswer: 3,
     explanation: 'Energy = Power × Time = 60W × 8h = 480Wh = 0.48kWh',
     section: '3.1',
@@ -421,12 +326,7 @@ export const module3Questions: Question[] = [
   {
     id: 28,
     question: 'What is the current drawn by a 9.2kW shower on a 230V supply?',
-    options: [
-      '40A',
-      '25A',
-      '0.025A',
-      '2,116A',
-    ],
+    options: ['40A', '25A', '0.025A', '2,116A'],
     correctAnswer: 0,
     explanation: 'I = P/V = 9,200W ÷ 230V = 40A',
     section: '3.1',
@@ -436,12 +336,7 @@ export const module3Questions: Question[] = [
     id: 29,
     question:
       'Two resistors of 6Ω and 12Ω are connected in parallel. What is their combined resistance?',
-    options: [
-      '18Ω',
-      '4Ω',
-      '2Ω',
-      '72Ω',
-    ],
+    options: ['18Ω', '4Ω', '2Ω', '72Ω'],
     correctAnswer: 1,
     explanation: 'Rtotal = (R1 × R2)/(R1 + R2) = (6 × 12)/(6 + 12) = 72/18 = 4Ω',
     section: '3.1',
@@ -451,12 +346,7 @@ export const module3Questions: Question[] = [
     id: 30,
     question:
       'A 5 Ω and a 20 Ω resistor are connected in series across a 100 V supply. What voltage appears across the 5 Ω resistor?',
-    options: [
-      '25V',
-      '80V',
-      '20V',
-      '5V',
-    ],
+    options: ['25V', '80V', '20V', '5V'],
     correctAnswer: 2,
     explanation:
       'Total R = 5 + 20 = 25Ω. Current I = 100/25 = 4A. Voltage across 5Ω = 4A × 5Ω = 20V',
@@ -481,12 +371,7 @@ export const module3Questions: Question[] = [
   {
     id: 32,
     question: 'What is the internal resistance of an ideal voltage source?',
-    options: [
-      'Zero',
-      'Infinite',
-      'Equal to load resistance',
-      'Very high',
-    ],
+    options: ['Zero', 'Infinite', 'Equal to load resistance', 'Very high'],
     correctAnswer: 0,
     explanation:
       'An ideal voltage source has zero internal resistance, maintaining constant voltage regardless of load current.',
@@ -497,12 +382,7 @@ export const module3Questions: Question[] = [
     id: 33,
     question:
       'A battery has EMF of 12V and internal resistance of 0.5Ω. What terminal voltage with 5A load?',
-    options: [
-      '12V',
-      '9.5V',
-      '14.5V',
-      '2.5V',
-    ],
+    options: ['12V', '9.5V', '14.5V', '2.5V'],
     correctAnswer: 1,
     explanation:
       'Terminal voltage = EMF - (I × internal resistance) = 12V - (5A × 0.5Ω) = 12V - 2.5V = 9.5V',
@@ -511,13 +391,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 34,
-    question: 'A device delivers 900 W of output while taking 1000 W from the supply. What is its efficiency as a percentage?',
-    options: [
-      '111%',
-      '100%',
-      '90%',
-      '9%',
-    ],
+    question:
+      'A device delivers 900 W of output while taking 1000 W from the supply. What is its efficiency as a percentage?',
+    options: ['111%', '100%', '90%', '9%'],
     correctAnswer: 2,
     explanation: 'Efficiency = (Output Power / Input Power) × 100 = (900/1000) × 100 = 90%',
     section: '3.1',
@@ -527,14 +403,10 @@ export const module3Questions: Question[] = [
     id: 35,
     question:
       'A motor is 85% efficient and produces 2kW of mechanical output. What electrical power does it consume?',
-    options: [
-      '1.7kW',
-      '1.85kW',
-      '2kW',
-      '2.35kW',
-    ],
+    options: ['1.7kW', '1.85kW', '2kW', '2.35kW'],
     correctAnswer: 3,
-    explanation: 'Input Power = Output Power / Efficiency = 2000W / 0.85 = 2,353W ≈ 2.35kW. A common error is multiplying (2000 × 0.85 = 1.7kW) instead of dividing.',
+    explanation:
+      'Input Power = Output Power / Efficiency = 2000W / 0.85 = 2,353W ≈ 2.35kW. A common error is multiplying (2000 × 0.85 = 1.7kW) instead of dividing.',
     section: '3.1',
     difficulty: 'intermediate',
   },
@@ -545,12 +417,7 @@ export const module3Questions: Question[] = [
   {
     id: 36,
     question: 'What is the frequency of UK mains supply?',
-    options: [
-      '50Hz',
-      '60Hz',
-      '100Hz',
-      '25Hz',
-    ],
+    options: ['50Hz', '60Hz', '100Hz', '25Hz'],
     correctAnswer: 0,
     explanation: 'UK mains electricity operates at 50Hz, meaning 50 complete cycles per second.',
     section: '3.2',
@@ -559,12 +426,7 @@ export const module3Questions: Question[] = [
   {
     id: 37,
     question: 'What is the relationship between frequency and period?',
-    options: [
-      'f = T/2',
-      'f = 1/T',
-      'f = 1/T²',
-      'f = 2/T',
-    ],
+    options: ['f = T/2', 'f = 1/T', 'f = 1/T²', 'f = 2/T'],
     correctAnswer: 1,
     explanation:
       'Frequency (f) is the reciprocal of period (T): f = 1/T. For 50Hz, T = 1/50 = 0.02 seconds = 20ms.',
@@ -574,12 +436,7 @@ export const module3Questions: Question[] = [
   {
     id: 38,
     question: 'What is the period of a 50Hz waveform?',
-    options: [
-      '50ms',
-      '10ms',
-      '20ms',
-      '100ms',
-    ],
+    options: ['50ms', '10ms', '20ms', '100ms'],
     correctAnswer: 2,
     explanation: 'Period T = 1/f = 1/50 = 0.02 seconds = 20ms',
     section: '3.2',
@@ -588,12 +445,7 @@ export const module3Questions: Question[] = [
   {
     id: 39,
     question: 'What is the peak value of a 230 V rms sinusoidal supply?',
-    options: [
-      '230V',
-      '163V',
-      '460V',
-      '325V',
-    ],
+    options: ['230V', '163V', '460V', '325V'],
     correctAnswer: 3,
     explanation: 'Peak voltage Vp = Vrms × √2 = 230 × 1.414 = 325V',
     section: '3.2',
@@ -662,12 +514,7 @@ export const module3Questions: Question[] = [
   {
     id: 44,
     question: 'What is the formula for inductive reactance?',
-    options: [
-      'XL = 2πfL',
-      'XL = f/2πL',
-      'XL = L/f',
-      'XL = L × f',
-    ],
+    options: ['XL = 2πfL', 'XL = f/2πL', 'XL = L/f', 'XL = L × f'],
     correctAnswer: 0,
     explanation:
       'Inductive reactance XL = 2πfL, where f is frequency in Hz and L is inductance in henrys.',
@@ -677,12 +524,7 @@ export const module3Questions: Question[] = [
   {
     id: 45,
     question: 'What is the inductive reactance of a 0.1H inductor at 50Hz?',
-    options: [
-      '5Ω',
-      '31.4Ω',
-      '0.5Ω',
-      '314Ω',
-    ],
+    options: ['5Ω', '31.4Ω', '0.5Ω', '314Ω'],
     correctAnswer: 1,
     explanation: 'XL = 2πfL = 2 × 3.14159 × 50 × 0.1 = 31.4Ω',
     section: '3.2',
@@ -706,12 +548,7 @@ export const module3Questions: Question[] = [
   {
     id: 47,
     question: 'What is the formula for capacitive reactance?',
-    options: [
-      'XC = (2πf)/C',
-      'XC = C/(2πf)',
-      'XC = (f × C)/2π',
-      'XC = 1/(2πfC)',
-    ],
+    options: ['XC = (2πf)/C', 'XC = C/(2πf)', 'XC = (f × C)/2π', 'XC = 1/(2πfC)'],
     correctAnswer: 3,
     explanation:
       'Capacitive reactance XC = 1/(2πfC), where f is frequency in Hz and C is capacitance in farads.',
@@ -721,12 +558,7 @@ export const module3Questions: Question[] = [
   {
     id: 48,
     question: 'What is the capacitive reactance of a 100μF capacitor at 50Hz?',
-    options: [
-      '31.8Ω',
-      '318Ω',
-      '0.031Ω',
-      '3.18Ω',
-    ],
+    options: ['31.8Ω', '318Ω', '0.031Ω', '3.18Ω'],
     correctAnswer: 0,
     explanation: 'XC = 1/(2πfC) = 1/(2 × 3.14159 × 50 × 100×10⁻⁶) = 1/0.0314 = 31.8Ω',
     section: '3.2',
@@ -735,12 +567,7 @@ export const module3Questions: Question[] = [
   {
     id: 49,
     question: 'By what angle does the current lag the voltage in a purely inductive circuit?',
-    options: [
-      '45°',
-      '90°',
-      '0°',
-      '180°',
-    ],
+    options: ['45°', '90°', '0°', '180°'],
     correctAnswer: 1,
     explanation:
       'In a purely inductive circuit, current lags voltage by 90° because the inductor opposes changes in current.',
@@ -750,12 +577,7 @@ export const module3Questions: Question[] = [
   {
     id: 50,
     question: 'By what angle does the current lead the voltage in a purely capacitive circuit?',
-    options: [
-      '45°',
-      '180°',
-      '90°',
-      '0°',
-    ],
+    options: ['45°', '180°', '90°', '0°'],
     correctAnswer: 2,
     explanation:
       'In a purely capacitive circuit, current leads voltage by 90° because capacitor current flows before voltage builds up.',
@@ -779,13 +601,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 52,
-    question: 'A series circuit has a resistance of 30 Ω and an inductive reactance of 40 Ω. What is the impedance?',
-    options: [
-      '50Ω',
-      '70Ω',
-      '10Ω',
-      '35Ω',
-    ],
+    question:
+      'A series circuit has a resistance of 30 Ω and an inductive reactance of 40 Ω. What is the impedance?',
+    options: ['50Ω', '70Ω', '10Ω', '35Ω'],
     correctAnswer: 0,
     explanation: 'Z = √(R² + XL²) = √(30² + 40²) = √(900 + 1600) = √2500 = 50Ω',
     section: '3.2',
@@ -793,13 +611,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 53,
-    question: 'What is the phase angle between the supply voltage and the current in a series circuit with a resistance of 30 Ω and an inductive reactance of 40 Ω?',
-    options: [
-      '90°',
-      '53.13°',
-      '45°',
-      '36.87°',
-    ],
+    question:
+      'What is the phase angle between the supply voltage and the current in a series circuit with a resistance of 30 Ω and an inductive reactance of 40 Ω?',
+    options: ['90°', '53.13°', '45°', '36.87°'],
     correctAnswer: 1,
     explanation: 'Phase angle θ = tan⁻¹(XL/R) = tan⁻¹(40/30) = tan⁻¹(1.333) = 53.13°',
     section: '3.2',
@@ -808,12 +622,7 @@ export const module3Questions: Question[] = [
   {
     id: 54,
     question: 'What is true power in an AC circuit?',
-    options: [
-      'V × I (in VA)',
-      'V × I × sin(φ)',
-      'V × I × cos(φ)',
-      'V²/(R × cos φ)',
-    ],
+    options: ['V × I (in VA)', 'V × I × sin(φ)', 'V × I × cos(φ)', 'V²/(R × cos φ)'],
     correctAnswer: 2,
     explanation:
       'True (real) power P = V × I × cos(φ), measured in watts, where φ is the phase angle. It represents actual work done.',
@@ -853,12 +662,7 @@ export const module3Questions: Question[] = [
   {
     id: 57,
     question: 'What is the power triangle relationship?',
-    options: [
-      'S = P + Q',
-      'S² = P² + Q²',
-      'S = P × Q',
-      'S = P / Q',
-    ],
+    options: ['S = P + Q', 'S² = P² + Q²', 'S = P × Q', 'S = P / Q'],
     correctAnswer: 1,
     explanation:
       'In the power triangle: S² = P² + Q², where S is apparent power (VA), P is true power (W), and Q is reactive power (VAr).',
@@ -882,13 +686,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 59,
-    question: 'A single-phase circuit draws 10 A at 230 V with a power factor of 0.8. What is the true power, in watts?',
-    options: [
-      '2,300W',
-      '1,380W',
-      '2,875W',
-      '1,840W',
-    ],
+    question:
+      'A single-phase circuit draws 10 A at 230 V with a power factor of 0.8. What is the true power, in watts?',
+    options: ['2,300W', '1,380W', '2,875W', '1,840W'],
     correctAnswer: 3,
     explanation: 'True Power P = V × I × PF = 230 × 10 × 0.8 = 1,840W',
     section: '3.2',
@@ -897,12 +697,7 @@ export const module3Questions: Question[] = [
   {
     id: 60,
     question: 'What causes a lagging power factor?',
-    options: [
-      'Inductive loads',
-      'Capacitive loads',
-      'Resistive loads',
-      'LED lighting',
-    ],
+    options: ['Inductive loads', 'Capacitive loads', 'Resistive loads', 'LED lighting'],
     correctAnswer: 0,
     explanation:
       'Inductive loads (motors, transformers) cause a lagging power factor because current lags behind voltage.',
@@ -927,12 +722,7 @@ export const module3Questions: Question[] = [
   {
     id: 62,
     question: 'What is the resonant frequency formula?',
-    options: [
-      'fr = 2π/√(LC)',
-      'fr = √(L/C)',
-      'fr = 1/(2π√(LC))',
-      'fr = 1/(LC)',
-    ],
+    options: ['fr = 2π/√(LC)', 'fr = √(L/C)', 'fr = 1/(2π√(LC))', 'fr = 1/(LC)'],
     correctAnswer: 2,
     explanation: 'Resonant frequency fr = 1/(2π√(LC)), where L is inductance and C is capacitance.',
     section: '3.2',
@@ -970,13 +760,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 65,
-    question: 'A single-phase load takes 5 A from a 230 V supply, with the current lagging the voltage by 60°. What is the true power, in watts?',
-    options: [
-      '1,150W',
-      '575W',
-      '997W',
-      '1,000W',
-    ],
+    question:
+      'A single-phase load takes 5 A from a 230 V supply, with the current lagging the voltage by 60°. What is the true power, in watts?',
+    options: ['1,150W', '575W', '997W', '1,000W'],
     correctAnswer: 1,
     explanation: 'P = V × I × cos(φ) = 230 × 5 × cos(60°) = 230 × 5 × 0.5 = 575W',
     section: '3.2',
@@ -985,12 +771,7 @@ export const module3Questions: Question[] = [
   {
     id: 66,
     question: 'What is the form factor of a sine wave?',
-    options: [
-      '1.0',
-      '1.414',
-      '1.11',
-      '0.707',
-    ],
+    options: ['1.0', '1.414', '1.11', '0.707'],
     correctAnswer: 2,
     explanation:
       'Form factor = RMS value / Average value = (Vp/√2) / (2Vp/π) = π/(2√2) ≈ 1.11 for a sine wave',
@@ -1000,12 +781,7 @@ export const module3Questions: Question[] = [
   {
     id: 67,
     question: 'What is the crest factor of a sine wave?',
-    options: [
-      '1.0',
-      '1.11',
-      '0.707',
-      '1.414',
-    ],
+    options: ['1.0', '1.11', '0.707', '1.414'],
     correctAnswer: 3,
     explanation:
       'Crest factor (peak factor) = Peak value / RMS value = Vp / (Vp/√2) = √2 ≈ 1.414 for a sine wave',
@@ -1015,12 +791,7 @@ export const module3Questions: Question[] = [
   {
     id: 68,
     question: 'What happens to capacitive reactance as frequency increases?',
-    options: [
-      'Decreases',
-      'Increases',
-      'Stays the same',
-      'Becomes infinite',
-    ],
+    options: ['Decreases', 'Increases', 'Stays the same', 'Becomes infinite'],
     correctAnswer: 0,
     explanation:
       'Capacitive reactance XC = 1/(2πfC) decreases as frequency increases - capacitors pass high frequencies more easily.',
@@ -1030,12 +801,7 @@ export const module3Questions: Question[] = [
   {
     id: 69,
     question: 'What happens to inductive reactance as frequency increases?',
-    options: [
-      'Decreases',
-      'Increases',
-      'Stays the same',
-      'Becomes zero',
-    ],
+    options: ['Decreases', 'Increases', 'Stays the same', 'Becomes zero'],
     correctAnswer: 1,
     explanation:
       'Inductive reactance XL = 2πfL increases with frequency - inductors oppose high-frequency changes more strongly.',
@@ -1064,12 +830,7 @@ export const module3Questions: Question[] = [
   {
     id: 71,
     question: 'What is the phase difference between phases in a three-phase supply?',
-    options: [
-      '90°',
-      '180°',
-      '60°',
-      '120°',
-    ],
+    options: ['90°', '180°', '60°', '120°'],
     correctAnswer: 3,
     explanation:
       'In a three-phase supply, the three phases are displaced by 120° (one-third of a cycle) from each other.',
@@ -1079,12 +840,7 @@ export const module3Questions: Question[] = [
   {
     id: 72,
     question: 'What is the nominal line voltage of a UK three-phase low voltage supply?',
-    options: [
-      '400V',
-      '230V',
-      '415V',
-      '440V',
-    ],
+    options: ['400V', '230V', '415V', '440V'],
     correctAnswer: 0,
     explanation:
       'UK three-phase line voltage (between phases) is 400V. Phase voltage (to neutral) is 230V. Ratio is √3 (1.732).',
@@ -1094,12 +850,7 @@ export const module3Questions: Question[] = [
   {
     id: 73,
     question: 'What is the relationship between line and phase voltage in a star connection?',
-    options: [
-      'VL = Vp',
-      'VL = Vp × √3',
-      'VL = Vp / √3',
-      'VL = Vp × 3',
-    ],
+    options: ['VL = Vp', 'VL = Vp × √3', 'VL = Vp / √3', 'VL = Vp × 3'],
     correctAnswer: 1,
     explanation: 'In a star (wye) connection: VL = Vp × √3. UK: 230V phase × 1.732 = 400V line.',
     section: '3.3',
@@ -1108,12 +859,7 @@ export const module3Questions: Question[] = [
   {
     id: 74,
     question: 'What is the relationship between line and phase current in a star connection?',
-    options: [
-      'IL = (Ip × √3)',
-      'IL = (Ip / √3)',
-      'IL = Ip (same)',
-      'IL = (Ip × 3)',
-    ],
+    options: ['IL = (Ip × √3)', 'IL = (Ip / √3)', 'IL = Ip (same)', 'IL = (Ip × 3)'],
     correctAnswer: 2,
     explanation:
       'In a star connection, line current equals phase current: IL = Ip, because the line current flows directly through each phase.',
@@ -1123,12 +869,7 @@ export const module3Questions: Question[] = [
   {
     id: 75,
     question: 'What is the relationship between line and phase voltage in a delta connection?',
-    options: [
-      'VL = (Vp × √3)',
-      'VL = (Vp / √3)',
-      'VL = (Vp × 3)',
-      'VL = Vp (same)',
-    ],
+    options: ['VL = (Vp × √3)', 'VL = (Vp / √3)', 'VL = (Vp × 3)', 'VL = Vp (same)'],
     correctAnswer: 3,
     explanation:
       'In a delta connection, line voltage equals phase voltage: VL = Vp, because each phase is connected across two lines.',
@@ -1138,12 +879,7 @@ export const module3Questions: Question[] = [
   {
     id: 76,
     question: 'What is the relationship between line and phase current in a delta connection?',
-    options: [
-      'IL = Ip × √3',
-      'IL = Ip (same)',
-      'IL = Ip / √3',
-      'IL = Ip × 3',
-    ],
+    options: ['IL = Ip × √3', 'IL = Ip (same)', 'IL = Ip / √3', 'IL = Ip × 3'],
     correctAnswer: 0,
     explanation:
       'In a delta connection: IL = Ip × √3. Line current is √3 times the phase current because two phase currents combine at each line.',
@@ -1169,12 +905,7 @@ export const module3Questions: Question[] = [
     id: 78,
     question:
       'A balanced three-phase load draws 20 A in each line from a 400 V line voltage supply at a power factor of 0.85. What is the total true power, in kW?',
-    options: [
-      '8kW',
-      '13.6kW',
-      '11.78kW',
-      '6.8kW',
-    ],
+    options: ['8kW', '13.6kW', '11.78kW', '6.8kW'],
     correctAnswer: 2,
     explanation: 'P = √3 × VL × IL × PF = 1.732 × 400 × 20 × 0.85 = 11,782W ≈ 11.78kW',
     section: '3.3',
@@ -1213,12 +944,7 @@ export const module3Questions: Question[] = [
   {
     id: 81,
     question: 'What current flows in the neutral of a balanced three-phase star load?',
-    options: [
-      'Line current × √3',
-      'Zero',
-      'Line current × 3',
-      'Line current',
-    ],
+    options: ['Line current × √3', 'Zero', 'Line current × 3', 'Line current'],
     correctAnswer: 1,
     explanation:
       'In a balanced three-phase system, the three phase currents sum to zero at any instant due to their 120° phase displacement, so neutral current is zero.',
@@ -1257,7 +983,8 @@ export const module3Questions: Question[] = [
   },
   {
     id: 84,
-    question: 'What happens if two of the line conductors feeding a three-phase motor are interchanged?',
+    question:
+      'What happens if two of the line conductors feeding a three-phase motor are interchanged?',
     options: [
       'Motor reverses direction',
       'Motor runs faster than normal',
@@ -1287,13 +1014,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 86,
-    question: 'By what factor does star-delta starting reduce the starting current compared with direct-on-line starting?',
-    options: [
-      'Half',
-      'One-quarter',
-      'One-third',
-      'Two-thirds',
-    ],
+    question:
+      'By what factor does star-delta starting reduce the starting current compared with direct-on-line starting?',
+    options: ['Half', 'One-quarter', 'One-third', 'Two-thirds'],
     correctAnswer: 2,
     explanation:
       'Star-delta starting reduces voltage per winding by √3, so starting current is reduced to approximately 1/3 of DOL starting current.',
@@ -1319,12 +1042,7 @@ export const module3Questions: Question[] = [
     id: 88,
     question:
       'A three-phase motor delivers 15 kW of mechanical output at 400 V, with an efficiency of 90 % and a power factor of 0.85. What is the full-load line current?',
-    options: [
-      '28.3A',
-      '25.4A',
-      '21.6A',
-      '32.4A',
-    ],
+    options: ['28.3A', '25.4A', '21.6A', '32.4A'],
     correctAnswer: 0,
     explanation:
       'Input power = 15000/0.9 = 16,667W. I = P/(√3 × VL × PF) = 16,667/(1.732 × 400 × 0.85) = 28.3A',
@@ -1335,12 +1053,7 @@ export const module3Questions: Question[] = [
     id: 89,
     question:
       'A three-phase four-wire supply carries 30 A in L1, 20 A in L2 and 25 A in L3, all loads being resistive. What is the neutral current?',
-    options: [
-      '75A',
-      'Approximately 8.66A',
-      '25A',
-      'Zero',
-    ],
+    options: ['75A', 'Approximately 8.66A', '25A', 'Zero'],
     correctAnswer: 1,
     explanation:
       'For unbalanced loads displaced by 120°, neutral current is the phasor sum: IN = √[(I1²+I2²+I3²) − (I1·I2+I2·I3+I3·I1)] = √[(900+400+625) − (600+500+750)] = √75 ≈ 8.66A.',
@@ -1380,12 +1093,7 @@ export const module3Questions: Question[] = [
   {
     id: 92,
     question: 'What is the total apparent power of a balanced three-phase load?',
-    options: [
-      'S = √3 × VL × IL',
-      'S = 3 × VL × IL',
-      'S = VL × IL × √3/2',
-      'S = VL × IL',
-    ],
+    options: ['S = √3 × VL × IL', 'S = 3 × VL × IL', 'S = VL × IL × √3/2', 'S = VL × IL'],
     correctAnswer: 0,
     explanation:
       'Three-phase apparent power S = √3 × VL × IL (in VA or kVA), regardless of power factor.',
@@ -1395,12 +1103,7 @@ export const module3Questions: Question[] = [
   {
     id: 93,
     question: 'What is phase voltage in a 400V three-phase system?',
-    options: [
-      '400V',
-      '231V',
-      '133V',
-      '693V',
-    ],
+    options: ['400V', '231V', '133V', '693V'],
     correctAnswer: 1,
     explanation: 'Phase voltage Vp = VL/√3 = 400/1.732 = 231V (≈230V)',
     section: '3.3',
@@ -1408,13 +1111,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 94,
-    question: 'A 400 V three-phase heater has three 50 Ω elements connected in star. What total power does it dissipate?',
-    options: [
-      '3,200W',
-      '9,600W',
-      '3,174W',
-      '5,529W',
-    ],
+    question:
+      'A 400 V three-phase heater has three 50 Ω elements connected in star. What total power does it dissipate?',
+    options: ['3,200W', '9,600W', '3,174W', '5,529W'],
     correctAnswer: 0,
     explanation:
       'Phase voltage = 400/√3 = 230.9 V. Power per phase = V²/R = 230.9²/50 = 1,066.7 W. Total = 3 × 1,066.7 = 3,200 W. Watch the 3,174 W distractor: that is what you get by rounding the phase voltage to 230 V before squaring it, and squaring magnifies the rounding error.',
@@ -1423,15 +1122,11 @@ export const module3Questions: Question[] = [
   },
   {
     id: 95,
-    question: 'Three 50 Ω heater elements are connected in delta across a 400 V three-phase supply. What total power do they dissipate?',
+    question:
+      'Three 50 Ω heater elements are connected in delta across a 400 V three-phase supply. What total power do they dissipate?',
     // Was a duplicate of id 66 (both asked form factor, both keyed 1.11).
     // Repointed at crest factor, which its own explanation already contrasted.
-    options: [
-      '3,200W',
-      '1,067W',
-      '5,542W',
-      '9,600W',
-    ],
+    options: ['3,200W', '1,067W', '5,542W', '9,600W'],
     correctAnswer: 3,
     explanation:
       'In delta, each element sees 400V. Power per phase = 400²/50 = 3,200W. Total = 3 × 3,200 = 9,600W (three times star power)',
@@ -1486,12 +1181,7 @@ export const module3Questions: Question[] = [
   {
     id: 99,
     question: 'What percentage voltage unbalance is typically acceptable for motors?',
-    options: [
-      'Up to 10%',
-      'Any unbalance is acceptable',
-      'Up to 5%',
-      'Up to 2-3%',
-    ],
+    options: ['Up to 10%', 'Any unbalance is acceptable', 'Up to 5%', 'Up to 2-3%'],
     correctAnswer: 3,
     explanation:
       'Voltage unbalance should generally be kept below 2-3%. Even small voltage unbalance causes much larger current unbalance in motors.',
@@ -1502,12 +1192,7 @@ export const module3Questions: Question[] = [
     id: 100,
     question:
       'A three-phase motor delivers 22 kW of mechanical output from a 400 V supply at a power factor of 0.88 with an efficiency of 91 %. What is the full-load line current?',
-    options: [
-      '39.5A',
-      '44.7A',
-      '35.2A',
-      '31.7A',
-    ],
+    options: ['39.5A', '44.7A', '35.2A', '31.7A'],
     correctAnswer: 0,
     explanation:
       'Input = 22000/0.91 = 24,176W. IL = P/(√3 × VL × PF) = 24,176/(1.732 × 400 × 0.88) = 39.5A',
@@ -1552,12 +1237,7 @@ export const module3Questions: Question[] = [
     id: 103,
     question:
       'A transformer has 500 primary turns and 50 secondary turns. If primary voltage is 230V, what is secondary voltage?',
-    options: [
-      '115V',
-      '2,300V',
-      '2.3V',
-      '23V',
-    ],
+    options: ['115V', '2,300V', '2.3V', '23V'],
     correctAnswer: 3,
     explanation:
       'V2 = V1 × (N2/N1) = 230 × (50/500) = 230 × 0.1 = 23V. This is a step-down transformer (10:1 ratio).',
@@ -1598,12 +1278,7 @@ export const module3Questions: Question[] = [
     id: 106,
     question:
       'A 100 VA transformer has a 230 V primary and a 12 V secondary. What is the maximum secondary current?',
-    options: [
-      '0.43A',
-      '100A',
-      '8.33A',
-      '19.2A',
-    ],
+    options: ['0.43A', '100A', '8.33A', '19.2A'],
     correctAnswer: 2,
     explanation: 'VA = V × I, so Isec = VA/Vsec = 100/12 = 8.33A',
     section: '3.4',
@@ -1612,12 +1287,7 @@ export const module3Questions: Question[] = [
   {
     id: 107,
     question: 'What efficiency is typical of a well-designed power transformer?',
-    options: [
-      '50-60%',
-      '70-80%',
-      '100%',
-      '95-99%',
-    ],
+    options: ['50-60%', '70-80%', '100%', '95-99%'],
     correctAnswer: 3,
     explanation:
       'Transformers are highly efficient devices, typically 95-99% efficient, with losses mainly from core hysteresis, eddy currents, and winding resistance.',
@@ -1716,7 +1386,8 @@ export const module3Questions: Question[] = [
   },
   {
     id: 114,
-    question: 'Why must the secondary of a current transformer never be left open circuit while the primary is energised?',
+    question:
+      'Why must the secondary of a current transformer never be left open circuit while the primary is energised?',
     options: [
       'The current in the primary conductor drops suddenly to zero on load',
       'The reading on the connected ammeter simply reverses its polarity',
@@ -1823,10 +1494,10 @@ export const module3Questions: Question[] = [
     id: 121,
     question: 'What is a three-phase transformer connection Dy11?',
     options: [
-      "Star primary, delta secondary with no phase shift",
+      'Star primary, delta secondary with no phase shift',
       "Delta primary, star secondary with 11 o'clock phase shift",
       "Delta primary, delta secondary with 1 o'clock phase shift",
-      "Star primary, star secondary with 180° phase shift",
+      'Star primary, star secondary with 180° phase shift',
     ],
     correctAnswer: 1,
     explanation:
@@ -1881,7 +1552,8 @@ export const module3Questions: Question[] = [
   },
   {
     id: 125,
-    question: 'A 50 kVA transformer has a 400 V three-phase secondary. What is its maximum secondary line current?',
+    question:
+      'A 50 kVA transformer has a 400 V three-phase secondary. What is its maximum secondary line current?',
     options: ['125A', '72.2A', '50A', '200A'],
     correctAnswer: 1,
     explanation: 'For three-phase: I = kVA × 1000/(√3 × V) = 50,000/(1.732 × 400) = 72.2A',
@@ -1984,13 +1656,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 132,
-    question: 'What is the synchronous speed of a four-pole induction motor on a 50 Hz supply, in rev/min?',
-    options: [
-      '1500 RPM',
-      '1000 RPM',
-      '750 RPM',
-      '3000 RPM',
-    ],
+    question:
+      'What is the synchronous speed of a four-pole induction motor on a 50 Hz supply, in rev/min?',
+    options: ['1500 RPM', '1000 RPM', '750 RPM', '3000 RPM'],
     correctAnswer: 0,
     explanation: 'Ns = (120 × f) / p = (120 × 50) / 4 = 6000/4 = 1500 RPM',
     section: '3.5',
@@ -2015,12 +1683,7 @@ export const module3Questions: Question[] = [
     id: 134,
     question:
       'A four-pole motor has a synchronous speed of 1500 rev/min and runs at 1440 rev/min. What is the slip as a percentage?',
-    options: [
-      '6%',
-      '2%',
-      '4%',
-      '60 RPM',
-    ],
+    options: ['6%', '2%', '4%', '60 RPM'],
     correctAnswer: 2,
     explanation: 'Slip = (Ns - Nr)/Ns × 100% = (1500 - 1440)/1500 × 100% = 60/1500 × 100% = 4%',
     section: '3.5',
@@ -2136,7 +1799,7 @@ export const module3Questions: Question[] = [
     id: 142,
     question: 'What is the main function of motor starters?',
     options: [
-      'To correct the motor\'s lagging power factor, and that of its supply cabling',
+      "To correct the motor's lagging power factor, and that of its supply cabling",
       'To convert the alternating supply to direct current, which the windings need',
       'To provide starting, stopping, protection, and sometimes speed control',
       'To step the supply voltage down, matching it to the motor windings in use',
@@ -2439,12 +2102,7 @@ export const module3Questions: Question[] = [
   {
     id: 162,
     question: 'What is the ideal power factor?',
-    options: [
-      '0 (purely reactive)',
-      '0.5 (lagging)',
-      '1.0 (unity)',
-      '-1.0 (negative unity)',
-    ],
+    options: ['0 (purely reactive)', '0.5 (lagging)', '1.0 (unity)', '-1.0 (negative unity)'],
     correctAnswer: 2,
     explanation:
       'Unity power factor (1.0) is ideal - all power supplied does useful work. Current and voltage are in phase.',
@@ -2454,12 +2112,7 @@ export const module3Questions: Question[] = [
   {
     id: 163,
     question: 'What type of load causes lagging power factor?',
-    options: [
-      'LED lights',
-      'Resistive',
-      'Capacitive',
-      'Inductive',
-    ],
+    options: ['LED lights', 'Resistive', 'Capacitive', 'Inductive'],
     correctAnswer: 3,
     explanation:
       'Inductive loads (motors, transformers, inductors) cause lagging power factor because current lags behind voltage.',
@@ -2469,12 +2122,7 @@ export const module3Questions: Question[] = [
   {
     id: 164,
     question: 'What type of load causes leading power factor?',
-    options: [
-      'Capacitive',
-      'Motors',
-      'Resistive',
-      'Inductive',
-    ],
+    options: ['Capacitive', 'Motors', 'Resistive', 'Inductive'],
     correctAnswer: 0,
     explanation:
       'Capacitive loads cause leading power factor because current leads voltage in capacitive circuits.',
@@ -2498,13 +2146,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 166,
-    question: 'A load takes 100 kVA at a power factor of 0.7. What true power does it consume, in kW?',
-    options: [
-      '100kW',
-      '143kW',
-      '70kW',
-      '30kW',
-    ],
+    question:
+      'A load takes 100 kVA at a power factor of 0.7. What true power does it consume, in kW?',
+    options: ['100kW', '143kW', '70kW', '30kW'],
     correctAnswer: 2,
     explanation: 'True Power P = Apparent Power × PF = 100kVA × 0.7 = 70kW',
     section: '3.6',
@@ -2604,12 +2248,7 @@ export const module3Questions: Question[] = [
   {
     id: 173,
     question: 'In what unit is reactive power measured?',
-    options: [
-      'Watts (W)',
-      'VAr (volt-amperes reactive)',
-      'Volt-amperes (VA)',
-      'Joules (J)',
-    ],
+    options: ['Watts (W)', 'VAr (volt-amperes reactive)', 'Volt-amperes (VA)', 'Joules (J)'],
     correctAnswer: 1,
     explanation:
       'Reactive power is measured in VAr (volt-amperes reactive) or kVAr. It represents energy oscillating between source and load, not consumed.',
@@ -2723,7 +2362,8 @@ export const module3Questions: Question[] = [
   },
   {
     id: 181,
-    question: 'Why may the supply voltage rise slightly when power factor correction is switched in?',
+    question:
+      'Why may the supply voltage rise slightly when power factor correction is switched in?',
     options: [
       'A large voltage drop because capacitors absorb supply voltage',
       'Slight voltage rise due to reduced voltage drop from lower reactive current',
@@ -2817,13 +2457,8 @@ export const module3Questions: Question[] = [
   },
   {
     id: 187,
-    question: 'What is the maximum permitted voltage drop for power circuits in BS 7671?',
-    options: [
-      '2%',
-      '4%',
-      '10%',
-      '5%',
-    ],
+    question: 'What is the recommended maximum voltage drop for power circuits in BS 7671?',
+    options: ['2%', '4%', '10%', '5%'],
     correctAnswer: 3,
     explanation:
       'BS 7671 recommends maximum 5% voltage drop from origin to load (3% for lighting, 5% for other circuits) to ensure proper equipment operation.',
@@ -2832,13 +2467,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 188,
-    question: 'A cable has a tabulated volt drop of 7.3 mV/A/m. What is the volt drop for a design current of 30 A over a 25 m run?',
-    options: [
-      '5.48V',
-      '547.5V',
-      '54.75V',
-      '0.548V',
-    ],
+    question:
+      'A cable has a tabulated volt drop of 7.3 mV/A/m. What is the volt drop for a design current of 30 A over a 25 m run?',
+    options: ['5.48V', '547.5V', '54.75V', '0.548V'],
     correctAnswer: 0,
     explanation: 'Vd = (mV/A/m) × I × L / 1000 = 7.3 × 30 × 25 / 1000 = 5.475V ≈ 5.48V',
     section: '3.7',
@@ -2862,12 +2493,7 @@ export const module3Questions: Question[] = [
   {
     id: 190,
     question: 'What is the Earth Fault Loop Impedance formula for circuit protection?',
-    options: [
-      'Zs = Ze × R1 × R2',
-      'Zs = (R1 + R2) / Ze',
-      'Zs = Ze + R1 + R2',
-      'Zs = Ze - R1 - R2',
-    ],
+    options: ['Zs = Ze × R1 × R2', 'Zs = (R1 + R2) / Ze', 'Zs = Ze + R1 + R2', 'Zs = Ze - R1 - R2'],
     correctAnswer: 2,
     explanation:
       'Zs (total earth fault loop impedance) = Ze (external) + (R1 + R2) (circuit phase and CPC conductors).',
@@ -2876,13 +2502,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 191,
-    question: 'What fault current flows in a circuit with an earth fault loop impedance of 0.8 Ω on a 230 V supply?',
-    options: [
-      '184A',
-      '28.75A',
-      '1840A',
-      '287.5A',
-    ],
+    question:
+      'What fault current flows in a circuit with an earth fault loop impedance of 0.8 Ω on a 230 V supply?',
+    options: ['184A', '28.75A', '1840A', '287.5A'],
     correctAnswer: 3,
     explanation:
       'If = V/Zs = 230/0.8 = 287.5A (simplified calculation not accounting for reduced voltage under fault)',
@@ -2891,7 +2513,8 @@ export const module3Questions: Question[] = [
   },
   {
     id: 192,
-    question: 'What multiplier is applied to a conductor resistance measured at ambient temperature to give its value at operating temperature?',
+    question:
+      'What multiplier is applied to a conductor resistance measured at ambient temperature to give its value at operating temperature?',
     options: [
       'Multiply tabulated values by 1.20 (for 70°C operating) for thermoplastic cables',
       'Divide tabulated values by 1.20 (for 70°C operating) for thermoplastic cables',
@@ -2922,12 +2545,7 @@ export const module3Questions: Question[] = [
   {
     id: 194,
     question: 'A 500kVA transformer at 400V with 5% impedance has prospective fault current of:',
-    options: [
-      '25,000A',
-      '1,443A',
-      '14,430A',
-      '7,220A',
-    ],
+    options: ['25,000A', '1,443A', '14,430A', '7,220A'],
     correctAnswer: 2,
     explanation:
       'If = (500 × 1000 × 100) / (√3 × 400 × 5) = 50,000,000 / 3,464 = 14,434A ≈ 14,430A',
@@ -2967,12 +2585,7 @@ export const module3Questions: Question[] = [
   {
     id: 197,
     question: 'What is the adiabatic equation for fault current withstand?',
-    options: [
-      'S² = I²t/k²',
-      'k²S² = I²t',
-      'I = k×S/√t',
-      'S = I²t/k²',
-    ],
+    options: ['S² = I²t/k²', 'k²S² = I²t', 'I = k×S/√t', 'S = I²t/k²'],
     correctAnswer: 1,
     explanation:
       'The adiabatic equation k²S² = I²t relates conductor CSA (S), fault current (I), duration (t), and material constant (k) for fault withstand.',
@@ -2981,13 +2594,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 198,
-    question: 'A fault current of 2000 A flows for 0.1 s. Taking k as 115, what is the minimum cross-sectional area of the protective conductor, in mm²?',
-    options: [
-      '4mm²',
-      '2.5mm²',
-      '6mm²',
-      '10mm²',
-    ],
+    question:
+      'A fault current of 2000 A flows for 0.1 s. Taking k as 115, what is the minimum cross-sectional area of the protective conductor, in mm²?',
+    options: ['4mm²', '2.5mm²', '6mm²', '10mm²'],
     correctAnswer: 2,
     explanation:
       'S = √(I²t)/k = √(2000² × 0.1)/115 = √400,000/115 = 632.5/115 = 5.5mm². The next standard size up (6mm²) is selected, as the adiabatic result must be rounded up.',
@@ -2996,7 +2605,8 @@ export const module3Questions: Question[] = [
   },
   {
     id: 199,
-    question: 'What does the thermal equivalent current of an intermittently loaded circuit represent?',
+    question:
+      'What does the thermal equivalent current of an intermittently loaded circuit represent?',
     options: [
       'The highest peak current reached at any point during the load cycle',
       'The arithmetic average of the maximum and minimum currents in the cycle',
@@ -3012,12 +2622,7 @@ export const module3Questions: Question[] = [
   {
     id: 200,
     question: 'What is the relationship between energy, power and time?',
-    options: [
-      'E = P × t',
-      'E = P / t',
-      'E = P + t',
-      'E = P² × t',
-    ],
+    options: ['E = P × t', 'E = P / t', 'E = P + t', 'E = P² × t'],
     correctAnswer: 0,
     explanation:
       'Energy = Power × Time. In electrical terms: E (joules) = P (watts) × t (seconds), or E (kWh) = P (kW) × t (hours).',
@@ -3033,16 +2638,11 @@ export const module3Questions: Question[] = [
   {
     id: 201,
     question:
-      "A copper conductor is 50 m long with a cross-sectional area of 2.5 mm². Using ρ = 1.72 × 10⁻⁸ Ωm, what is its resistance?",
-    options: [
-      '0.172 Ω',
-      '0.344 Ω',
-      '0.86 Ω',
-      '8.6 Ω',
-    ],
+      'A copper conductor is 50 m long with a cross-sectional area of 2.5 mm². Using ρ = 1.72 × 10⁻⁸ Ωm, what is its resistance?',
+    options: ['0.172 Ω', '0.344 Ω', '0.86 Ω', '8.6 Ω'],
     correctAnswer: 1,
     explanation:
-      "R = ρL/A = (1.72e-8 × 50) / (2.5e-6) = 8.6e-7 / 2.5e-6 = 0.344 Ω. Watch the unit conversion: 2.5 mm² = 2.5 × 10⁻⁶ m².",
+      'R = ρL/A = (1.72e-8 × 50) / (2.5e-6) = 8.6e-7 / 2.5e-6 = 0.344 Ω. Watch the unit conversion: 2.5 mm² = 2.5 × 10⁻⁶ m².',
     section: '3.8',
     difficulty: 'intermediate',
   },
@@ -3050,31 +2650,21 @@ export const module3Questions: Question[] = [
     id: 202,
     question:
       'Aluminium has a resistivity of 2.83 × 10⁻⁸ Ω m. What is the resistance of a 100 m length of 16 mm² aluminium conductor?',
-    options: [
-      '1.77 Ω',
-      '17.7 Ω',
-      '0.177 Ω',
-      '0.0177 Ω',
-    ],
+    options: ['1.77 Ω', '17.7 Ω', '0.177 Ω', '0.0177 Ω'],
     correctAnswer: 2,
     explanation:
-      "R = ρL/A = (2.83e-8 × 100) / (16e-6) = 2.83e-6 / 16e-6 = 0.177 Ω. Aluminium has roughly 1.6× the resistivity of copper, which is why aluminium conductors need a larger CSA for the same current rating.",
+      'R = ρL/A = (2.83e-8 × 100) / (16e-6) = 2.83e-6 / 16e-6 = 0.177 Ω. Aluminium has roughly 1.6× the resistivity of copper, which is why aluminium conductors need a larger CSA for the same current rating.',
     section: '3.8',
     difficulty: 'intermediate',
   },
   {
     id: 203,
     question:
-      "What current flows through a 100 m, 1.5 mm² copper conductor (ρ = 1.72 × 10⁻⁸ Ωm) when 12 V is applied across its ends?",
-    options: [
-      '105 A',
-      '52 A',
-      '5.2 A',
-      '10.5 A',
-    ],
+      'What current flows through a 100 m, 1.5 mm² copper conductor (ρ = 1.72 × 10⁻⁸ Ωm) when 12 V is applied across its ends?',
+    options: ['105 A', '52 A', '5.2 A', '10.5 A'],
     correctAnswer: 3,
     explanation:
-      "R = (1.72e-8 × 100) / (1.5e-6) = 1.147 Ω. I = V/R = 12 / 1.147 = 10.46 A. Note this calculation ignores temperature rise.",
+      'R = (1.72e-8 × 100) / (1.5e-6) = 1.147 Ω. I = V/R = 12 / 1.147 = 10.46 A. Note this calculation ignores temperature rise.',
     section: '3.8',
     difficulty: 'intermediate',
   },
@@ -3082,124 +2672,82 @@ export const module3Questions: Question[] = [
     id: 204,
     question:
       'Copper has a temperature coefficient of resistance of 0.004 per °C. A conductor measures 1 Ω at 20 °C. What is its resistance at 70 °C?',
-    options: [
-      '1.2 Ω',
-      '1.0 Ω',
-      '0.8 Ω',
-      '1.4 Ω',
-    ],
+    options: ['1.2 Ω', '1.0 Ω', '0.8 Ω', '1.4 Ω'],
     correctAnswer: 0,
     explanation:
-      "R(t) = R₂₀ × [1 + α(t - 20)] = 1 × [1 + 0.004 × (70 - 20)] = 1 × [1 + 0.2] = 1.2 Ω. This is why cable manufacturers quote ratings at specific reference temperatures.",
+      'R(t) = R₂₀ × [1 + α(t - 20)] = 1 × [1 + 0.004 × (70 - 20)] = 1 × [1 + 0.2] = 1.2 Ω. This is why cable manufacturers quote ratings at specific reference temperatures.',
     section: '3.8',
     difficulty: 'intermediate',
   },
   {
     id: 205,
     question:
-      "Three resistors of 6 Ω, 3 Ω and 2 Ω are connected in parallel. What is the equivalent resistance?",
-    options: [
-      '0.5 Ω',
-      '1 Ω',
-      '5.5 Ω',
-      '11 Ω',
-    ],
+      'Three resistors of 6 Ω, 3 Ω and 2 Ω are connected in parallel. What is the equivalent resistance?',
+    options: ['0.5 Ω', '1 Ω', '5.5 Ω', '11 Ω'],
     correctAnswer: 1,
     explanation:
-      "1/R = 1/6 + 1/3 + 1/2 = 1/6 + 2/6 + 3/6 = 6/6 = 1, so R = 1 Ω. The total is always less than the smallest individual resistor in a parallel network.",
+      '1/R = 1/6 + 1/3 + 1/2 = 1/6 + 2/6 + 3/6 = 6/6 = 1, so R = 1 Ω. The total is always less than the smallest individual resistor in a parallel network.',
     section: '3.8',
     difficulty: 'intermediate',
   },
   {
     id: 206,
     question:
-      "A 230 V supply feeds two parallel resistive loads of 46 Ω and 23 Ω. What is the total current drawn from the supply?",
-    options: [
-      '5 A',
-      '10 A',
-      '15 A',
-      '20 A',
-    ],
+      'A 230 V supply feeds two parallel resistive loads of 46 Ω and 23 Ω. What is the total current drawn from the supply?',
+    options: ['5 A', '10 A', '15 A', '20 A'],
     correctAnswer: 2,
     explanation:
-      "I₁ = 230 / 46 = 5 A; I₂ = 230 / 23 = 10 A. Total I = 5 + 10 = 15 A. In a parallel circuit, branch currents add together.",
+      'I₁ = 230 / 46 = 5 A; I₂ = 230 / 23 = 10 A. Total I = 5 + 10 = 15 A. In a parallel circuit, branch currents add together.',
     section: '3.8',
     difficulty: 'intermediate',
   },
   {
     id: 207,
     question:
-      "A capacitor is charged via a 10 kΩ resistor from a 100 V supply. The capacitance is 100 µF. What is the time constant?",
-    options: [
-      '0.001 s',
-      '0.1 s',
-      '10 s',
-      '1 s',
-    ],
+      'A capacitor is charged via a 10 kΩ resistor from a 100 V supply. The capacitance is 100 µF. What is the time constant?',
+    options: ['0.001 s', '0.1 s', '10 s', '1 s'],
     correctAnswer: 3,
     explanation:
-      "τ = R × C = 10,000 × 100 × 10⁻⁶ = 1 s. After one time constant, the capacitor reaches roughly 63% of its final voltage.",
+      'τ = R × C = 10,000 × 100 × 10⁻⁶ = 1 s. After one time constant, the capacitor reaches roughly 63% of its final voltage.',
     section: '3.8',
     difficulty: 'intermediate',
   },
   {
     id: 208,
-    question:
-      'After how many time constants is a charging capacitor taken to be fully charged?',
-    options: [
-      '5',
-      '2',
-      '1',
-      '10',
-    ],
+    question: 'After how many time constants is a charging capacitor taken to be fully charged?',
+    options: ['5', '2', '1', '10'],
     correctAnswer: 0,
     explanation:
-      "After 5 time constants, the capacitor reaches roughly 99.3% of the supply voltage and is treated as fully charged. After 1τ it is at 63%, after 3τ at 95%, after 5τ at 99.3%.",
+      'After 5 time constants, the capacitor reaches roughly 99.3% of the supply voltage and is treated as fully charged. After 1τ it is at 63%, after 3τ at 95%, after 5τ at 99.3%.',
     section: '3.8',
     difficulty: 'intermediate',
   },
   {
     id: 209,
-    question:
-      "A 470 µF capacitor is charged to 50 V. What is the charge stored?",
-    options: [
-      '9.4 mC',
-      '23.5 mC',
-      '50 mC',
-      '94 mC',
-    ],
+    question: 'A 470 µF capacitor is charged to 50 V. What is the charge stored?',
+    options: ['9.4 mC', '23.5 mC', '50 mC', '94 mC'],
     correctAnswer: 1,
     explanation:
-      "Q = C × V = 470 × 10⁻⁶ × 50 = 0.0235 C = 23.5 mC. The charge stored on a capacitor is directly proportional to both capacitance and applied voltage.",
+      'Q = C × V = 470 × 10⁻⁶ × 50 = 0.0235 C = 23.5 mC. The charge stored on a capacitor is directly proportional to both capacitance and applied voltage.',
     section: '3.8',
     difficulty: 'intermediate',
   },
   {
     id: 210,
     question:
-      "An inductor of 2 H is connected in series with a 50 Ω resistor. What is the L/R time constant?",
-    options: [
-      '0.1 s',
-      '25 s',
-      '0.04 s',
-      '100 s',
-    ],
+      'An inductor of 2 H is connected in series with a 50 Ω resistor. What is the L/R time constant?',
+    options: ['0.1 s', '25 s', '0.04 s', '100 s'],
     correctAnswer: 2,
     explanation:
-      "τ = L / R = 2 / 50 = 0.04 s. After 5 time constants (0.2 s) the current is regarded as having reached its steady-state value.",
+      'τ = L / R = 2 / 50 = 0.04 s. After 5 time constants (0.2 s) the current is regarded as having reached its steady-state value.',
     section: '3.8',
     difficulty: 'intermediate',
   },
   {
     id: 211,
     question:
-      "A current-carrying conductor is placed in a magnetic field of 0.5 T. The conductor is 0.4 m long and carries 10 A perpendicular to the field. What force acts on it?",
-    options: [
-      '0.5 N',
-      '20 N',
-      '5 N',
-      '2 N',
-    ],
+      'A current-carrying conductor is placed in a magnetic field of 0.5 T. The conductor is 0.4 m long and carries 10 A perpendicular to the field. What force acts on it?',
+    options: ['0.5 N', '20 N', '5 N', '2 N'],
     correctAnswer: 3,
     explanation:
       "F = B × I × L = 0.5 × 10 × 0.4 = 2 N. This is the principle behind motor torque production — Fleming's left-hand rule predicts the direction.",
@@ -3209,13 +2757,8 @@ export const module3Questions: Question[] = [
   {
     id: 212,
     question:
-      "A magnetic flux of 0.2 Wb passes through a coil of 200 turns. If the flux falls to zero in 0.1 s, what EMF is induced?",
-    options: [
-      '400 V',
-      '40 V',
-      '4,000 V',
-      '200 V',
-    ],
+      'A magnetic flux of 0.2 Wb passes through a coil of 200 turns. If the flux falls to zero in 0.1 s, what EMF is induced?',
+    options: ['400 V', '40 V', '4,000 V', '200 V'],
     correctAnswer: 0,
     explanation:
       "E = N × dΦ/dt = 200 × (0.2 / 0.1) = 200 × 2 = 400 V. This is Faraday's Law and is the basic principle of generator and transformer action.",
@@ -3225,16 +2768,11 @@ export const module3Questions: Question[] = [
   {
     id: 213,
     question:
-      "Magnetic flux density B is related to magnetic field strength H by which expression?",
-    options: [
-      'B = µ - H',
-      'B = µ × H',
-      'B = µ + H',
-      'B = H / µ',
-    ],
+      'Magnetic flux density B is related to magnetic field strength H by which expression?',
+    options: ['B = µ - H', 'B = µ × H', 'B = µ + H', 'B = H / µ'],
     correctAnswer: 1,
     explanation:
-      "B = µH where µ is permeability of the medium (µ = µ₀ × µᵣ). For a vacuum, µ₀ = 4π × 10⁻⁷ H/m. Iron has a relative permeability hundreds to thousands of times higher.",
+      'B = µH where µ is permeability of the medium (µ = µ₀ × µᵣ). For a vacuum, µ₀ = 4π × 10⁻⁷ H/m. Iron has a relative permeability hundreds to thousands of times higher.',
     section: '3.8',
     difficulty: 'intermediate',
   },
@@ -3242,31 +2780,20 @@ export const module3Questions: Question[] = [
     id: 214,
     question:
       'A single-loop generator rotates in a magnetic field at 50 revolutions per second. What is the frequency of the induced emf, in Hz?',
-    options: [
-      '25 Hz',
-      '100 Hz',
-      '50 Hz',
-      '3,000 Hz',
-    ],
+    options: ['25 Hz', '100 Hz', '50 Hz', '3,000 Hz'],
     correctAnswer: 2,
     explanation:
-      "For a 2-pole single-loop generator, f = revolutions per second = 50 Hz. This is the basis of UK mains frequency. f = (poles × rpm) / 120 for multi-pole machines.",
+      'For a 2-pole single-loop generator, f = revolutions per second = 50 Hz. This is the basis of UK mains frequency. f = (poles × rpm) / 120 for multi-pole machines.',
     section: '3.8',
     difficulty: 'intermediate',
   },
   {
     id: 215,
-    question:
-      "What is the peak value of a 230 V RMS sine wave?",
-    options: [
-      '163 V',
-      '230 V',
-      '400 V',
-      '325 V',
-    ],
+    question: 'What is the peak value of a 230 V RMS sine wave?',
+    options: ['163 V', '230 V', '400 V', '325 V'],
     correctAnswer: 3,
     explanation:
-      "Vpeak = VRMS × √2 = 230 × 1.414 = 325 V. Equipment insulation must withstand the peak value, not the RMS value.",
+      'Vpeak = VRMS × √2 = 230 × 1.414 = 325 V. Equipment insulation must withstand the peak value, not the RMS value.',
     section: '3.8',
     difficulty: 'intermediate',
   },
@@ -3274,38 +2801,26 @@ export const module3Questions: Question[] = [
     id: 216,
     question:
       'What is the average value of a sinusoidal waveform of 400 V peak, taken over one half cycle?',
-    options: [
-      '255 V',
-      '283 V',
-      '400 V',
-      '566 V',
-    ],
+    options: ['255 V', '283 V', '400 V', '566 V'],
     correctAnswer: 0,
     explanation:
-      "Vavg = Vpeak × (2/π) = 400 × 0.637 = 254.8 V. The average value is used for half-wave rectifier output calculations.",
+      'Vavg = Vpeak × (2/π) = 400 × 0.637 = 254.8 V. The average value is used for half-wave rectifier output calculations.',
     section: '3.8',
     difficulty: 'intermediate',
   },
   {
     id: 217,
-    question:
-      "What is the crest factor of a sinusoidal AC waveform?",
-    options: [
-      '0.637',
-      '1.11',
-      '0.707',
-      '1.414',
-    ],
+    question: 'What is the crest factor of a sinusoidal AC waveform?',
+    options: ['0.637', '1.11', '0.707', '1.414'],
     correctAnswer: 3,
     explanation:
-      "Crest factor = peak / RMS = 1 / 0.707 = 1.414 for a sine wave. Do not confuse it with the form factor, which is RMS / average = 0.707 / 0.637 = 1.11.",
+      'Crest factor = peak / RMS = 1 / 0.707 = 1.414 for a sine wave. Do not confuse it with the form factor, which is RMS / average = 0.707 / 0.637 = 1.11.',
     section: '3.8',
     difficulty: 'basic',
   },
   {
     id: 218,
-    question:
-      'What does total harmonic distortion measure?',
+    question: 'What does total harmonic distortion measure?',
     options: [
       'The phase angle between the supply voltage and current',
       'The peak-to-RMS ratio of the supply waveform',
@@ -3314,55 +2829,39 @@ export const module3Questions: Question[] = [
     ],
     correctAnswer: 2,
     explanation:
-      "THD expresses the contribution of harmonic frequencies relative to the fundamental, usually as a percentage. High THD overheats neutrals and transformers, particularly from third-order triplen harmonics generated by switch-mode power supplies and LED drivers.",
+      'THD expresses the contribution of harmonic frequencies relative to the fundamental, usually as a percentage. High THD overheats neutrals and transformers, particularly from third-order triplen harmonics generated by switch-mode power supplies and LED drivers.',
     section: '3.8',
     difficulty: 'basic',
   },
   {
     id: 219,
     question:
-      "Which harmonic is most problematic for the neutral conductor in a three-phase four-wire system?",
-    options: [
-      'Second harmonic',
-      'Seventh harmonic',
-      'Fifth harmonic',
-      'Third harmonic',
-    ],
+      'Which harmonic is most problematic for the neutral conductor in a three-phase four-wire system?',
+    options: ['Second harmonic', 'Seventh harmonic', 'Fifth harmonic', 'Third harmonic'],
     correctAnswer: 3,
     explanation:
-      "Third harmonics (and other triplens) from each phase add arithmetically in the neutral instead of cancelling rather than summing to zero. Under BS 7671 (Appendix 4, Section 5.5 / Reg 523.6.3) an increase in neutral cross-sectional area may be required where triplen harmonic content exceeds 33% of the fundamental line current.",
+      'Third harmonics (and other triplens) from each phase add arithmetically in the neutral instead of cancelling rather than summing to zero. Under BS 7671 (Appendix 4, Section 5.5 / Reg 523.6.3) an increase in neutral cross-sectional area may be required where triplen harmonic content exceeds 33% of the fundamental line current.',
     section: '3.8',
     difficulty: 'basic',
   },
   {
     id: 220,
     question:
-      "A balanced three-phase star-connected load has a phase voltage of 230 V. What is the line voltage?",
-    options: [
-      '400 V',
-      '460 V',
-      '230 V',
-      '133 V',
-    ],
+      'A balanced three-phase star-connected load has a phase voltage of 230 V. What is the line voltage?',
+    options: ['400 V', '460 V', '230 V', '133 V'],
     correctAnswer: 0,
     explanation:
-      "For star (Y) connection: Vline = √3 × Vphase = 1.732 × 230 = 398.4 V (rounded to 400 V). Line current equals phase current in star.",
+      'For star (Y) connection: Vline = √3 × Vphase = 1.732 × 230 = 398.4 V (rounded to 400 V). Line current equals phase current in star.',
     section: '3.8',
     difficulty: 'intermediate',
   },
   {
     id: 221,
-    question:
-      "A delta-connected load has a phase current of 20 A. What is the line current?",
-    options: [
-      '11.5 A',
-      '34.6 A',
-      '20 A',
-      '60 A',
-    ],
+    question: 'A delta-connected load has a phase current of 20 A. What is the line current?',
+    options: ['11.5 A', '34.6 A', '20 A', '60 A'],
     correctAnswer: 1,
     explanation:
-      "For delta connection: Iline = √3 × Iphase = 1.732 × 20 = 34.64 A. Line voltage equals phase voltage in delta.",
+      'For delta connection: Iline = √3 × Iphase = 1.732 × 20 = 34.64 A. Line voltage equals phase voltage in delta.',
     section: '3.8',
     difficulty: 'intermediate',
   },
@@ -3370,31 +2869,20 @@ export const module3Questions: Question[] = [
     id: 222,
     question:
       'A balanced three-phase load draws a line current of 30 A at 400 V line voltage with a power factor of 0.85 lagging. What is the true power consumed, in kW?',
-    options: [
-      '10.2 kW',
-      '20.4 kW',
-      '17.7 kW',
-      '35.4 kW',
-    ],
+    options: ['10.2 kW', '20.4 kW', '17.7 kW', '35.4 kW'],
     correctAnswer: 2,
-    explanation:
-      "P = √3 × VL × IL × cos φ = 1.732 × 400 × 30 × 0.85 = 17,663 W = 17.7 kW.",
+    explanation: 'P = √3 × VL × IL × cos φ = 1.732 × 400 × 30 × 0.85 = 17,663 W = 17.7 kW.',
     section: '3.8',
     difficulty: 'intermediate',
   },
   {
     id: 223,
     question:
-      "An installation has 50 kW of load at 0.7 lagging power factor. What is the kVA demand?",
-    options: [
-      '35 kVA',
-      '50 kVA',
-      '100 kVA',
-      '71.4 kVA',
-    ],
+      'An installation has 50 kW of load at 0.7 lagging power factor. What is the kVA demand?',
+    options: ['35 kVA', '50 kVA', '100 kVA', '71.4 kVA'],
     correctAnswer: 3,
     explanation:
-      "kVA = kW / cos φ = 50 / 0.7 = 71.4 kVA. Reactive power (kVAr) = √(kVA² - kW²) = √(5,098 - 2,500) = 50.99 kVAr.",
+      'kVA = kW / cos φ = 50 / 0.7 = 71.4 kVA. Reactive power (kVAr) = √(kVA² - kW²) = √(5,098 - 2,500) = 50.99 kVAr.',
     section: '3.8',
     difficulty: 'intermediate',
   },
@@ -3402,15 +2890,10 @@ export const module3Questions: Question[] = [
     id: 224,
     question:
       'A 100 kW load runs at a power factor of 0.7 lagging. Taking tan 45.6° as 1.02 and tan 18.2° as 0.329, what capacitive reactive power, in kvar, is needed to correct it to 0.95 lagging?',
-    options: [
-      '69 kVAr',
-      '33 kVAr',
-      '102 kVAr',
-      '135 kVAr',
-    ],
+    options: ['69 kVAr', '33 kVAr', '102 kVAr', '135 kVAr'],
     correctAnswer: 0,
     explanation:
-      "Qc = P × (tan φ₁ - tan φ₂) = 100 × (1.02 - 0.329) = 100 × 0.691 = 69.1 kVAr. Capacitor banks reduce supply current and avoid kVA penalty charges.",
+      'Qc = P × (tan φ₁ - tan φ₂) = 100 × (1.02 - 0.329) = 100 × 0.691 = 69.1 kVAr. Capacitor banks reduce supply current and avoid kVA penalty charges.',
     section: '3.8',
     difficulty: 'intermediate',
   },
@@ -3418,22 +2901,16 @@ export const module3Questions: Question[] = [
     id: 225,
     question:
       'A three-phase four-wire supply carries 30 A in L1, 25 A in L2 and 20 A in L3, all loads being resistive. What is the approximate neutral current?',
-    options: [
-      '0 A',
-      '8.7 A',
-      '25 A',
-      '75 A',
-    ],
+    options: ['0 A', '8.7 A', '25 A', '75 A'],
     correctAnswer: 1,
     explanation:
-      "For unbalanced resistive loads on three phases displaced by 120°, the neutral current is found by phasor sum. With currents 30, 25, 20: IN ≈ √[(30² + 25² + 20²) − (30·25 + 25·20 + 20·30)] = √[(900+625+400) − (750+500+600)] = √(1925 − 1850) = √75 ≈ 8.66 A.",
+      'For unbalanced resistive loads on three phases displaced by 120°, the neutral current is found by phasor sum. With currents 30, 25, 20: IN ≈ √[(30² + 25² + 20²) − (30·25 + 25·20 + 20·30)] = √[(900+625+400) − (750+500+600)] = √(1925 − 1850) = √75 ≈ 8.66 A.',
     section: '3.8',
     difficulty: 'advanced',
   },
   {
     id: 226,
-    question:
-      "Why should three-phase loads be balanced as far as practicable?",
+    question: 'Why should three-phase loads be balanced as far as practicable?',
     options: [
       'It increases the line voltage, giving more volts to each phase',
       'It allows the neutral conductor to be omitted entirely, saving a conductor',
@@ -3442,7 +2919,7 @@ export const module3Questions: Question[] = [
     ],
     correctAnswer: 2,
     explanation:
-      "Balanced loading minimises neutral current (ideally zero for a perfectly balanced linear load), reduces I²R losses in the neutral, and keeps phase voltages within DNO limits. ESQCR requires DNOs to maintain voltage at the supply terminals between 230 V −6% / +10%.",
+      'Balanced loading minimises neutral current (ideally zero for a perfectly balanced linear load), reduces I²R losses in the neutral, and keeps phase voltages within DNO limits. ESQCR requires DNOs to maintain voltage at the supply terminals between 230 V −6% / +10%.',
     section: '3.8',
     difficulty: 'intermediate',
   },
@@ -3450,38 +2927,27 @@ export const module3Questions: Question[] = [
     id: 227,
     question:
       'An 11 kV/400 V three-phase distribution transformer has approximately what line-to-line turns ratio?',
-    options: [
-      '11:1',
-      '15.9:1',
-      '47.7:1',
-      '27.5:1',
-    ],
+    options: ['11:1', '15.9:1', '47.7:1', '27.5:1'],
     correctAnswer: 3,
     explanation:
-      "Turns ratio N₁/N₂ = V₁/V₂ = 11,000 / 400 = 27.5:1. This is the most common UK secondary distribution transformer ratio.",
+      'Turns ratio N₁/N₂ = V₁/V₂ = 11,000 / 400 = 27.5:1. This is the most common UK secondary distribution transformer ratio.',
     section: '3.8',
     difficulty: 'intermediate',
   },
   {
     id: 228,
     question:
-      "A 500 kVA transformer has copper losses of 6 kW at full load and iron losses of 2 kW. What is its efficiency at full load operating at unity power factor?",
-    options: [
-      '98.4%',
-      '96.0%',
-      '98.8%',
-      '99.2%',
-    ],
+      'A 500 kVA transformer has copper losses of 6 kW at full load and iron losses of 2 kW. What is its efficiency at full load operating at unity power factor?',
+    options: ['98.4%', '96.0%', '98.8%', '99.2%'],
     correctAnswer: 0,
     explanation:
-      "η = Pout / (Pout + losses) × 100 = 500 / (500 + 6 + 2) × 100 = 500 / 508 × 100 = 98.4%. Iron losses are constant; copper losses vary with the square of load current.",
+      'η = Pout / (Pout + losses) × 100 = 500 / (500 + 6 + 2) × 100 = 500 / 508 × 100 = 98.4%. Iron losses are constant; copper losses vary with the square of load current.',
     section: '3.8',
     difficulty: 'intermediate',
   },
   {
     id: 229,
-    question:
-      "At what load does a transformer reach maximum efficiency?",
+    question: 'At what load does a transformer reach maximum efficiency?',
     options: [
       'At no load, when only iron losses are present',
       'When copper losses equal iron losses',
@@ -3490,7 +2956,7 @@ export const module3Questions: Question[] = [
     ],
     correctAnswer: 1,
     explanation:
-      "Maximum efficiency occurs when variable copper losses equal fixed iron losses. Distribution transformers are typically designed so this point falls at around 50-75% of rated load to suit average daily loading.",
+      'Maximum efficiency occurs when variable copper losses equal fixed iron losses. Distribution transformers are typically designed so this point falls at around 50-75% of rated load to suit average daily loading.',
     section: '3.8',
     difficulty: 'basic',
   },
@@ -3498,15 +2964,10 @@ export const module3Questions: Question[] = [
     id: 230,
     question:
       'What is the synchronous speed of a four-pole, 50 Hz three-phase induction motor, in rev/min?',
-    options: [
-      '750 rpm',
-      '1,000 rpm',
-      '1,500 rpm',
-      '3,000 rpm',
-    ],
+    options: ['750 rpm', '1,000 rpm', '1,500 rpm', '3,000 rpm'],
     correctAnswer: 2,
     explanation:
-      "Ns = 120 × f / P = 120 × 50 / 4 = 1,500 rpm. A 2-pole machine runs at 3,000 rpm, a 6-pole at 1,000 rpm, an 8-pole at 750 rpm.",
+      'Ns = 120 × f / P = 120 × 50 / 4 = 1,500 rpm. A 2-pole machine runs at 3,000 rpm, a 6-pole at 1,000 rpm, an 8-pole at 750 rpm.',
     section: '3.8',
     difficulty: 'intermediate',
   },
@@ -3514,15 +2975,10 @@ export const module3Questions: Question[] = [
     id: 231,
     question:
       'A four-pole, 50 Hz induction motor has a full-load speed of 1440 rev/min. What is the slip as a percentage?',
-    options: [
-      '2%',
-      '10%',
-      '6%',
-      '4%',
-    ],
+    options: ['2%', '10%', '6%', '4%'],
     correctAnswer: 3,
     explanation:
-      "Synchronous speed Ns = 1,500 rpm. Slip s = (Ns − Nr) / Ns × 100 = (1,500 − 1,440) / 1,500 × 100 = 4%. Typical slip is 2-6% at full load and rises with mechanical load.",
+      'Synchronous speed Ns = 1,500 rpm. Slip s = (Ns − Nr) / Ns × 100 = (1,500 − 1,440) / 1,500 × 100 = 4%. Typical slip is 2-6% at full load and rises with mechanical load.',
     section: '3.8',
     difficulty: 'advanced',
   },
@@ -3530,22 +2986,16 @@ export const module3Questions: Question[] = [
     id: 232,
     question:
       'An induction motor with a full-load slip of 3 % runs on a 50 Hz supply. What is the frequency of its rotor currents?',
-    options: [
-      '1.5 Hz',
-      '47 Hz',
-      '3 Hz',
-      '50 Hz',
-    ],
+    options: ['1.5 Hz', '47 Hz', '3 Hz', '50 Hz'],
     correctAnswer: 0,
     explanation:
-      "Rotor frequency f₂ = s × f = 0.03 × 50 = 1.5 Hz. At standstill (s = 1) rotor frequency equals supply frequency; at synchronous speed (s = 0) rotor frequency is zero.",
+      'Rotor frequency f₂ = s × f = 0.03 × 50 = 1.5 Hz. At standstill (s = 1) rotor frequency equals supply frequency; at synchronous speed (s = 0) rotor frequency is zero.',
     section: '3.8',
     difficulty: 'intermediate',
   },
   {
     id: 233,
-    question:
-      'How does a variable frequency drive control the speed of an induction motor?',
+    question: 'How does a variable frequency drive control the speed of an induction motor?',
     options: [
       'Switching rotor resistance in and out (wound-rotor/slip-ring starting)',
       'Varying both the supply frequency and the voltage proportionally (V/f control)',
@@ -3554,7 +3004,7 @@ export const module3Questions: Question[] = [
     ],
     correctAnswer: 1,
     explanation:
-      "VFDs use V/f control to keep magnetic flux constant. Reducing voltage with frequency prevents core saturation. VFDs deliver smooth speed control, soft start, regenerative braking and energy savings on variable-torque loads (pumps, fans).",
+      'VFDs use V/f control to keep magnetic flux constant. Reducing voltage with frequency prevents core saturation. VFDs deliver smooth speed control, soft start, regenerative braking and energy savings on variable-torque loads (pumps, fans).',
     section: '3.8',
     difficulty: 'basic',
   },
@@ -3562,15 +3012,10 @@ export const module3Questions: Question[] = [
     id: 234,
     question:
       'A directional LED luminaire of 4000 cd is aimed vertically down at a workbench 4 m directly below. What is the illuminance at the bench, in lux?',
-    options: [
-      '62.5 lx',
-      '125 lx',
-      '250 lx',
-      '1,000 lx',
-    ],
+    options: ['62.5 lx', '125 lx', '250 lx', '1,000 lx'],
     correctAnswer: 2,
     explanation:
-      "Inverse square law: E = I / d² = 4,000 / 4² = 4,000 / 16 = 250 lx. Doubling the mounting height would quarter the illuminance to 62.5 lx.",
+      'Inverse square law: E = I / d² = 4,000 / 4² = 4,000 / 16 = 250 lx. Doubling the mounting height would quarter the illuminance to 62.5 lx.',
     section: '3.8',
     difficulty: 'intermediate',
   },
@@ -3578,15 +3023,10 @@ export const module3Questions: Question[] = [
     id: 235,
     question:
       'A room measuring 8 m × 6 m requires an average illuminance of 500 lx. Taking the utilisation factor as 0.6 and the maintenance factor as 0.8, what total lamp lumen output is required?',
-    options: [
-      '24,000 lm',
-      '36,000 lm',
-      '120,000 lm',
-      '50,000 lm',
-    ],
+    options: ['24,000 lm', '36,000 lm', '120,000 lm', '50,000 lm'],
     correctAnswer: 3,
     explanation:
-      "Lumen method: Φ = (E × A) / (UF × MF) = (500 × 48) / (0.6 × 0.8) = 24,000 / 0.48 = 50,000 lm. This is the total lamp output required to maintain the design illuminance over the lifetime of the installation.",
+      'Lumen method: Φ = (E × A) / (UF × MF) = (500 × 48) / (0.6 × 0.8) = 24,000 / 0.48 = 50,000 lm. This is the total lamp output required to maintain the design illuminance over the lifetime of the installation.',
     section: '3.8',
     difficulty: 'advanced',
   },
@@ -3594,15 +3034,10 @@ export const module3Questions: Question[] = [
     id: 236,
     question:
       'Which equation gives the illuminance on a surface from a source at an angle to the normal?',
-    options: [
-      'E = I × cos θ / d²',
-      'E = I / d',
-      'E = I × sin θ / d',
-      'E = I × d² / cos θ',
-    ],
+    options: ['E = I × cos θ / d²', 'E = I / d', 'E = I × sin θ / d', 'E = I × d² / cos θ'],
     correctAnswer: 0,
     explanation:
-      "Cosine law: E = (I × cos θ) / d² where θ is the angle between the light direction and the surface normal. This corrects the inverse square law when the surface is not perpendicular to the light source.",
+      'Cosine law: E = (I × cos θ) / d² where θ is the angle between the light direction and the surface normal. This corrects the inverse square law when the surface is not perpendicular to the light source.',
     section: '3.8',
     difficulty: 'basic',
   },
@@ -3618,7 +3053,7 @@ export const module3Questions: Question[] = [
     ],
     correctAnswer: 1,
     explanation:
-      "Modern LEDs achieve 80-150 lm/W (good quality 100 lm/W typical). Tungsten GLS achieves only 10-15 lm/W, with most energy radiated as heat. This is why tungsten lamps were banned for general lighting in the EU/UK.",
+      'Modern LEDs achieve 80-150 lm/W (good quality 100 lm/W typical). Tungsten GLS achieves only 10-15 lm/W, with most energy radiated as heat. This is why tungsten lamps were banned for general lighting in the EU/UK.',
     section: '3.8',
     difficulty: 'intermediate',
   },
@@ -3634,7 +3069,7 @@ export const module3Questions: Question[] = [
     ],
     correctAnswer: 2,
     explanation:
-      "Energy required Q = m × c × ΔT = 100 × 4,186 × 50 = 20,930,000 J = 5.81 kWh. Time = energy / power = 5.81 / 3 = 1.94 hours (about 116 minutes). In reality cylinder losses extend this by 10-20%.",
+      'Energy required Q = m × c × ΔT = 100 × 4,186 × 50 = 20,930,000 J = 5.81 kWh. Time = energy / power = 5.81 / 3 = 1.94 hours (about 116 minutes). In reality cylinder losses extend this by 10-20%.',
     section: '3.8',
     difficulty: 'advanced',
   },
@@ -3642,22 +3077,16 @@ export const module3Questions: Question[] = [
     id: 239,
     question:
       'An air source heat pump delivers 9 kW of heat with a SCOP of 3.5. How much electrical energy does it use in one hour of operation?',
-    options: [
-      '12.5 kW',
-      '3.0 kW',
-      '5.5 kW',
-      '2.57 kW',
-    ],
+    options: ['12.5 kW', '3.0 kW', '5.5 kW', '2.57 kW'],
     correctAnswer: 3,
     explanation:
-      "SCOP = thermal output / electrical input, so input = output / SCOP = 9 / 3.5 = 2.57 kW. SCOP is the seasonal average; instantaneous COP varies with outdoor temperature and is typically 4-5 in mild conditions, falling to 2-2.5 below 0°C.",
+      'SCOP = thermal output / electrical input, so input = output / SCOP = 9 / 3.5 = 2.57 kW. SCOP is the seasonal average; instantaneous COP varies with outdoor temperature and is typically 4-5 in mild conditions, falling to 2-2.5 below 0°C.',
     section: '3.8',
     difficulty: 'intermediate',
   },
   {
     id: 240,
-    question:
-      'In which direction does a semiconductor diode allow current to flow?',
+    question: 'In which direction does a semiconductor diode allow current to flow?',
     options: [
       'One direction only (forward bias)',
       'Both directions equally (like a resistor)',
@@ -3666,14 +3095,13 @@ export const module3Questions: Question[] = [
     ],
     correctAnswer: 0,
     explanation:
-      "A diode conducts when forward biased (anode positive relative to cathode, above the forward voltage of about 0.7 V for silicon) and blocks current when reverse biased. This is the basis of rectification.",
+      'A diode conducts when forward biased (anode positive relative to cathode, above the forward voltage of about 0.7 V for silicon) and blocks current when reverse biased. This is the basis of rectification.',
     section: '3.8',
     difficulty: 'basic',
   },
   {
     id: 241,
-    question:
-      'How does a full-wave bridge rectifier convert a.c. into d.c.?',
+    question: 'How does a full-wave bridge rectifier convert a.c. into d.c.?',
     options: [
       'Using a single diode that conducts on one half cycle only',
       'Using four diodes that conduct in pairs on each half cycle',
@@ -3682,14 +3110,13 @@ export const module3Questions: Question[] = [
     ],
     correctAnswer: 1,
     explanation:
-      "A bridge rectifier has four diodes arranged in a diamond. Two diagonally opposite diodes conduct on the positive half cycle, the other two on the negative half cycle, producing a pulsating DC output that is then smoothed by a reservoir capacitor.",
+      'A bridge rectifier has four diodes arranged in a diamond. Two diagonally opposite diodes conduct on the positive half cycle, the other two on the negative half cycle, producing a pulsating DC output that is then smoothed by a reservoir capacitor.',
     section: '3.8',
     difficulty: 'intermediate',
   },
   {
     id: 242,
-    question:
-      "A transistor in a switching application is typically operated in which two regions?",
+    question: 'A transistor in a switching application is typically operated in which two regions?',
     options: [
       'Active and linear',
       'Forward and reverse',
@@ -3698,7 +3125,7 @@ export const module3Questions: Question[] = [
     ],
     correctAnswer: 2,
     explanation:
-      "When used as a switch, a transistor is driven hard between cut-off (off, very low collector current) and saturation (fully on, very low collector-emitter voltage). This minimises power dissipation, unlike linear operation used for amplification.",
+      'When used as a switch, a transistor is driven hard between cut-off (off, very low collector current) and saturation (fully on, very low collector-emitter voltage). This minimises power dissipation, unlike linear operation used for amplification.',
     section: '3.8',
     difficulty: 'intermediate',
   },
@@ -3714,14 +3141,13 @@ export const module3Questions: Question[] = [
     ],
     correctAnswer: 3,
     explanation:
-      "The UK National Grid transmits at 400 kV and 275 kV (super-grid). Sub-transmission is at 132 kV. Distribution drops to 33 kV, 11 kV and finally 400/230 V for consumers. Higher voltage allows the same power to be transmitted at lower current, reducing I²R losses.",
+      'The UK National Grid transmits at 400 kV and 275 kV (super-grid). Sub-transmission is at 132 kV. Distribution drops to 33 kV, 11 kV and finally 400/230 V for consumers. Higher voltage allows the same power to be transmitted at lower current, reducing I²R losses.',
     section: '3.8',
     difficulty: 'intermediate',
   },
   {
     id: 244,
-    question:
-      "Why is electricity transmitted at high voltages over long distances?",
+    question: 'Why is electricity transmitted at high voltages over long distances?',
     options: [
       'To reduce I²R transmission losses by reducing current for the same power',
       'To make the supply safer to touch where it runs on overhead lines',
@@ -3730,14 +3156,14 @@ export const module3Questions: Question[] = [
     ],
     correctAnswer: 0,
     explanation:
-      "P = V × I, so for a fixed power, increasing V allows a proportionally lower I. Conductor losses are I²R, so halving the current reduces losses by a factor of four for the same conductor.",
+      'P = V × I, so for a fixed power, increasing V allows a proportionally lower I. Conductor losses are I²R, so halving the current reduces losses by a factor of four for the same conductor.',
     section: '3.8',
     difficulty: 'intermediate',
   },
   {
     id: 245,
     question:
-      "A photovoltaic (PV) cell generates DC electricity directly from sunlight using which physical effect?",
+      'A photovoltaic (PV) cell generates DC electricity directly from sunlight using which physical effect?',
     options: [
       'The thermoelectric effect, where heat alone drives the current',
       'Photovoltaic effect in a semiconductor p-n junction',
@@ -3746,7 +3172,7 @@ export const module3Questions: Question[] = [
     ],
     correctAnswer: 1,
     explanation:
-      "PV cells use the photovoltaic effect: photons absorbed in a doped silicon p-n junction free electrons that flow as DC current. Inverters then convert this DC to AC for grid synchronisation under G98/G99 ENA agreements.",
+      'PV cells use the photovoltaic effect: photons absorbed in a doped silicon p-n junction free electrons that flow as DC current. Inverters then convert this DC to AC for grid synchronisation under G98/G99 ENA agreements.',
     section: '3.8',
     difficulty: 'intermediate',
   },
@@ -3754,22 +3180,16 @@ export const module3Questions: Question[] = [
     id: 246,
     question:
       'A 100 kVA single-phase transformer has an 11 kV primary. What is its full-load primary current?',
-    options: [
-      '0.91 A',
-      '91 A',
-      '9.1 A',
-      '910 A',
-    ],
+    options: ['0.91 A', '91 A', '9.1 A', '910 A'],
     correctAnswer: 2,
     explanation:
-      "I = kVA × 1000 / V = 100,000 / 11,000 = 9.09 A on the primary. Secondary current at 230 V would be 100,000 / 230 = 434.8 A.",
+      'I = kVA × 1000 / V = 100,000 / 11,000 = 9.09 A on the primary. Secondary current at 230 V would be 100,000 / 230 = 434.8 A.',
     section: '3.8',
     difficulty: 'intermediate',
   },
   {
     id: 247,
-    question:
-      'In what way does a relay differ from a contactor?',
+    question: 'In what way does a relay differ from a contactor?',
     options: [
       'A relay is always operated mechanically by hand, whereas a contactor is operated electromagnetically',
       'A relay can switch alternating circuits only, while a contactor switches direct current only',
@@ -3778,23 +3198,17 @@ export const module3Questions: Question[] = [
     ],
     correctAnswer: 3,
     explanation:
-      "Both are electromagnetically operated switches. Relays are typically used for low-current control circuits (signals to a PLC, panel indicators), whereas contactors are larger, rated for motor-grade switching (AC-3 duty), and incorporate arc chutes and auxiliary blocks.",
+      'Both are electromagnetically operated switches. Relays are typically used for low-current control circuits (signals to a PLC, panel indicators), whereas contactors are larger, rated for motor-grade switching (AC-3 duty), and incorporate arc chutes and auxiliary blocks.',
     section: '3.8',
     difficulty: 'intermediate',
   },
   {
     id: 248,
-    question:
-      "An RCBO combines the functions of which two devices?",
-    options: [
-      'MCB and RCD',
-      'Fuse and switch',
-      'Contactor and overload',
-      'Isolator and timer',
-    ],
+    question: 'An RCBO combines the functions of which two devices?',
+    options: ['MCB and RCD', 'Fuse and switch', 'Contactor and overload', 'Isolator and timer'],
     correctAnswer: 0,
     explanation:
-      "An RCBO (Residual Current Breaker with Overcurrent protection) provides both overcurrent protection (like an MCB — short circuit and overload) and residual current detection (like an RCD — earth fault and additional protection). Tripping one circuit does not affect others, unlike an upstream RCD.",
+      'An RCBO (Residual Current Breaker with Overcurrent protection) provides both overcurrent protection (like an MCB — short circuit and overload) and residual current detection (like an RCD — earth fault and additional protection). Tripping one circuit does not affect others, unlike an upstream RCD.',
     section: '3.8',
     difficulty: 'basic',
   },
@@ -3810,7 +3224,7 @@ export const module3Questions: Question[] = [
     ],
     correctAnswer: 1,
     explanation:
-      "Smaller CSA means higher resistance per metre (R = ρL/A; R is inversely proportional to A). For the same current, voltage drop V = IR is therefore greater. BS 7671 limits voltage drop to 3% for lighting and 5% for other circuits (Appendix 4).",
+      'Smaller CSA means higher resistance per metre (R = ρL/A; R is inversely proportional to A). For the same current, voltage drop V = IR is therefore greater. BS 7671 limits voltage drop to 3% for lighting and 5% for other circuits (Appendix 4).',
     section: '3.8',
     difficulty: 'intermediate',
   },
@@ -3818,27 +3232,17 @@ export const module3Questions: Question[] = [
     id: 250,
     question:
       'A 230 V, 3 kW kettle is supplied by 12 m of 1.5 mm² twin and cpc cable with a tabulated volt drop of 29 mV/A/m. What is the approximate volt drop?',
-    options: [
-      '18 V',
-      '1.5 V',
-      '4.5 V',
-      '9 V',
-    ],
+    options: ['18 V', '1.5 V', '4.5 V', '9 V'],
     correctAnswer: 2,
     explanation:
-      "Current I = 3,000 / 230 = 13 A. Voltage drop = (mV/A/m × I × L) / 1000 = (29 × 13 × 12) / 1000 = 4.52 V. Equivalent to 1.97% — within the 3% limit for non-lighting circuits.",
+      'Current I = 3,000 / 230 = 13 A. Voltage drop = (mV/A/m × I × L) / 1000 = (29 × 13 × 12) / 1000 = 4.52 V. Equivalent to 1.97% — within the 3% limit for non-lighting circuits.',
     section: '3.8',
     difficulty: 'advanced',
   },
   {
     id: 251,
     question: 'A heating element of 46 ohms is connected to a 230 V supply. What current flows?',
-    options: [
-      '5 A',
-      '46 A',
-      '0.2 A',
-      '10580 A',
-    ],
+    options: ['5 A', '46 A', '0.2 A', '10580 A'],
     correctAnswer: 0,
     explanation:
       'I = V / R = 230 / 46 = 5 A. The 0.2 A option comes from inverting the division and working out R / V = 46 / 230, and 10580 A comes from multiplying V x R instead of dividing. Always check the shape of the answer: 5 A through a domestic element is believable, 10580 A is not.',
@@ -3848,12 +3252,7 @@ export const module3Questions: Question[] = [
   {
     id: 252,
     question: 'A current of 10 A flows through a 23 ohm resistive load. What power is dissipated?',
-    options: [
-      '230 W',
-      '2300 W',
-      '5290 W',
-      '23000 W',
-    ],
+    options: ['230 W', '2300 W', '5290 W', '23000 W'],
     correctAnswer: 1,
     explanation:
       'P = I squared x R = 10 x 10 x 23 = 100 x 23 = 2300 W. The 5290 W option is what you get by squaring the resistance instead of the current, 23 x 23 x 10 = 5290. The 230 W option is I x R, which is actually the voltage across the load in volts, not the power.',
@@ -3862,13 +3261,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 253,
-    question: 'A 50 m run of 4 mm² copper conductor has a resistivity of 1.78 × 10⁻⁸ Ω m. What is the resistance of one conductor?',
-    options: [
-      '2.225 ohms',
-      '0.445 ohms',
-      '0.2225 ohms',
-      '0.000000223 ohms',
-    ],
+    question:
+      'A 50 m run of 4 mm² copper conductor has a resistivity of 1.78 × 10⁻⁸ Ω m. What is the resistance of one conductor?',
+    options: ['2.225 ohms', '0.445 ohms', '0.2225 ohms', '0.000000223 ohms'],
     correctAnswer: 2,
     explanation:
       'R = rho x L / A. The area must be in square metres, so 4 mm2 = 4 x 10 to the minus 6 m2. R = (1.78e-8 x 50) / 4e-6 = 8.9e-7 / 4e-6 = 0.2225 ohms. Leaving the area as the number 4 gives the absurd 0.000000223 ohms, which is the classic mm2 versus m2 slip. The 0.445 ohms answer uses the 100 m go and return loop when the question asked for one conductor, and 2.225 ohms is a decimal slip of one place in the area conversion.',
@@ -3878,12 +3273,7 @@ export const module3Questions: Question[] = [
   {
     id: 254,
     question: 'A battery supplies a steady 3 A for 20 minutes. How much charge has been delivered?',
-    options: [
-      '60 C',
-      '216000 C',
-      '180 C',
-      '3600 C',
-    ],
+    options: ['60 C', '216000 C', '180 C', '3600 C'],
     correctAnswer: 3,
     explanation:
       'Q = I x t with t in SECONDS, so t = 20 x 60 = 1200 s and Q = 3 x 1200 = 3600 coulombs. The 60 C option is the mark loser: it leaves the time in minutes, 3 x 20. The 180 C option converts only one minute, 3 x 60, and 216000 C multiplies by 60 twice over.',
@@ -3892,13 +3282,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 255,
-    question: 'An oscilloscope shows a sinusoidal supply with a peak value of 325 V. What is the rms value?',
-    options: [
-      '230 V',
-      '207 V',
-      '325 V',
-      '460 V',
-    ],
+    question:
+      'An oscilloscope shows a sinusoidal supply with a peak value of 325 V. What is the rms value?',
+    options: ['230 V', '207 V', '325 V', '460 V'],
     correctAnswer: 0,
     explanation:
       'Vrms = Vpeak / 1.414 = 325 / 1.414 = 229.8 V, which is the familiar 230 V. The 460 V option multiplies by 1.414 instead of dividing, which is the direction you use to go from rms UP to peak. The 207 V option applies 0.637, the average value factor, rather than 0.707 for rms.',
@@ -3907,13 +3293,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 256,
-    question: 'A coil of inductance 0.12 H is connected to a 50 Hz supply. What is its inductive reactance?',
-    options: [
-      '6.00 ohms',
-      '37.7 ohms',
-      '18.8 ohms',
-      '0.0265 ohms',
-    ],
+    question:
+      'A coil of inductance 0.12 H is connected to a 50 Hz supply. What is its inductive reactance?',
+    options: ['6.00 ohms', '37.7 ohms', '18.8 ohms', '0.0265 ohms'],
     correctAnswer: 1,
     explanation:
       'XL = 2 x pi x f x L = 2 x 3.1416 x 50 x 0.12 = 37.7 ohms. The 6.00 ohm option drops 2 pi altogether and just multiplies 50 x 0.12. The 18.8 ohm option keeps pi but forgets the 2. The 0.0265 ohm option uses the capacitive form 1 / (2 pi f L), which is simply the reciprocal of the right answer.',
@@ -3922,13 +3304,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 257,
-    question: 'A series circuit has a resistance of 8 ohms and an inductive reactance of 15 ohms. What is the impedance?',
-    options: [
-      '7 ohms',
-      '23 ohms',
-      '17 ohms',
-      '120 ohms',
-    ],
+    question:
+      'A series circuit has a resistance of 8 ohms and an inductive reactance of 15 ohms. What is the impedance?',
+    options: ['7 ohms', '23 ohms', '17 ohms', '120 ohms'],
     correctAnswer: 2,
     explanation:
       'R and X are 90 degrees apart, so they combine as the sides of a right triangle: Z = square root of (8 squared + 15 squared) = square root of (64 + 225) = square root of 289 = 17 ohms. The 23 ohm option adds them arithmetically, which is the single most common error here, and 7 ohms subtracts them. The 120 ohm option multiplies. Sanity check: Z must always be larger than either R or X but smaller than their sum.',
@@ -3937,13 +3315,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 258,
-    question: 'A series RLC circuit has R = 12 ohms, XL = 25 ohms and XC = 9 ohms. What is the impedance?',
-    options: [
-      '46 ohms',
-      '28 ohms',
-      '29.2 ohms',
-      '20 ohms',
-    ],
+    question:
+      'A series RLC circuit has R = 12 ohms, XL = 25 ohms and XC = 9 ohms. What is the impedance?',
+    options: ['46 ohms', '28 ohms', '29.2 ohms', '20 ohms'],
     correctAnswer: 3,
     explanation:
       'The two reactances oppose one another, so net X = XL - XC = 25 - 9 = 16 ohms. Then Z = square root of (12 squared + 16 squared) = square root of (144 + 256) = square root of 400 = 20 ohms. The 46 ohm option adds all three values arithmetically. The 28 ohm option finds the net X correctly but then adds 12 + 16 instead of using the triangle. The 29.2 ohm option squares all three separately, which double counts the capacitive reactance instead of cancelling it.',
@@ -3952,13 +3326,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 259,
-    question: 'A 30 microfarad capacitor is connected to a 50 Hz supply. What is its capacitive reactance?',
-    options: [
-      '106.1 ohms',
-      '212.2 ohms',
-      '666.7 ohms',
-      '0.00943 ohms',
-    ],
+    question:
+      'A 30 microfarad capacitor is connected to a 50 Hz supply. What is its capacitive reactance?',
+    options: ['106.1 ohms', '212.2 ohms', '666.7 ohms', '0.00943 ohms'],
     correctAnswer: 0,
     explanation:
       'XC = 1 / (2 x pi x f x C) with C in farads, so C = 30 x 10 to the minus 6 F. The bottom line is 2 x 3.1416 x 50 x 0.00003 = 0.009425, and 1 / 0.009425 = 106.1 ohms. The 212.2 ohm option forgets the 2 in 2 pi. The 666.7 ohm option drops 2 pi entirely. The 0.00943 ohm option is the denominator itself, quoted without taking the reciprocal.',
@@ -3967,13 +3337,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 260,
-    question: 'A balanced three-phase load draws 25 A per line from a 400 V supply at a power factor of 0.85. What is the true power?',
-    options: [
-      '8500 W',
-      '14722 W',
-      '17320 W',
-      '25500 W',
-    ],
+    question:
+      'A balanced three-phase load draws 25 A per line from a 400 V supply at a power factor of 0.85. What is the true power?',
+    options: ['8500 W', '14722 W', '17320 W', '25500 W'],
     correctAnswer: 1,
     explanation:
       'P = root 3 x VL x IL x cos(phi) = 1.732 x 400 x 25 x 0.85 = 17320 x 0.85 = 14722 W. The 17320 W option omits the power factor and is therefore the apparent power in VA, which the cable must still carry. The 8500 W option omits root 3. The 25500 W option uses 3 instead of root 3, which overstates the power by about 73 per cent.',
@@ -3982,13 +3348,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 261,
-    question: 'A delta-connected load draws a line current of 30 A. What current flows in each phase winding?',
-    options: [
-      '10.0 A',
-      '52.0 A',
-      '17.3 A',
-      '30.0 A',
-    ],
+    question:
+      'A delta-connected load draws a line current of 30 A. What current flows in each phase winding?',
+    options: ['10.0 A', '52.0 A', '17.3 A', '30.0 A'],
     correctAnswer: 2,
     explanation:
       'In delta the phase voltage equals the line voltage but the line current is root 3 times the phase current, so Iphase = IL / 1.732 = 30 / 1.732 = 17.3 A. The 52.0 A option multiplies by root 3 instead of dividing, which is the star relationship applied to the wrong quantity. The 10.0 A option divides by 3 rather than root 3. The 30.0 A option is the star answer, where line and phase current are equal.',
@@ -3997,13 +3359,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 262,
-    question: 'A star-connected heater has three identical 44 Ω elements fed from a three-phase supply of 400 V line voltage. What total power does it dissipate?',
-    options: [
-      '1212 W',
-      '6300 W',
-      '10909 W',
-      '3638 W',
-    ],
+    question:
+      'A star-connected heater has three identical 44 Ω elements fed from a three-phase supply of 400 V line voltage. What total power does it dissipate?',
+    options: ['1212 W', '6300 W', '10909 W', '3638 W'],
     correctAnswer: 3,
     explanation:
       'In star each element sees the PHASE voltage, 400 / 1.732 = 231 V. Iphase = 231 / 44 = 5.25 A, and total P = 3 x Vphase x Iphase = 3 x 231 x 5.25 = 3638 W. The 10909 W option puts the 400 V line voltage across each element, 3 x 400 squared / 44, which triples the true output. The 1212 W option is one element only. The 6300 W option mixes bases by using 3 x line voltage x phase current.',
@@ -4012,7 +3370,8 @@ export const module3Questions: Question[] = [
   },
   {
     id: 263,
-    question: 'A three-phase four-wire distribution board supplies a perfectly balanced load. What current flows in the neutral?',
+    question:
+      'A three-phase four-wire distribution board supplies a perfectly balanced load. What current flows in the neutral?',
     options: [
       'Zero, the three currents sum to zero',
       'Equal to one line current, in size and in phase',
@@ -4027,13 +3386,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 264,
-    question: 'A single-phase transformer steps 11000 V down to 400 V. The secondary has 200 turns. How many turns are on the primary?',
-    options: [
-      '7 turns',
-      '5500 turns',
-      '27 turns',
-      '11000 turns',
-    ],
+    question:
+      'A single-phase transformer steps 11000 V down to 400 V. The secondary has 200 turns. How many turns are on the primary?',
+    options: ['7 turns', '5500 turns', '27 turns', '11000 turns'],
     correctAnswer: 1,
     explanation:
       'Turns are in the same ratio as volts: Np = Ns x (Vp / Vs) = 200 x (11000 / 400) = 200 x 27.5 = 5500 turns. The 7 turn option inverts the ratio, 200 x 400 / 11000, and gives fewer turns on the high voltage side, which cannot be right for a step-down transformer. The 27 turn option is the turns ratio itself, not a number of turns, and 11000 turns simply repeats the primary voltage figure.',
@@ -4042,13 +3397,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 265,
-    question: 'A 5 kVA single-phase transformer is rated 230 V / 115 V. What is the full-load secondary current?',
-    options: [
-      '21.7 A',
-      '10.9 A',
-      '43.5 A',
-      '86.9 A',
-    ],
+    question:
+      'A 5 kVA single-phase transformer is rated 230 V / 115 V. What is the full-load secondary current?',
+    options: ['21.7 A', '10.9 A', '43.5 A', '86.9 A'],
     correctAnswer: 2,
     explanation:
       'The kVA rating applies to both windings, so Is = S / Vs = 5000 / 115 = 43.5 A. The 21.7 A option is the PRIMARY current, 5000 / 230, quoted for the secondary; halving the voltage must double the current, so the secondary figure has to be the larger one. The 10.9 A option divides the primary current by the ratio instead of multiplying it, and 86.9 A applies the ratio of 2 twice over.',
@@ -4057,13 +3408,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 266,
-    question: 'A transformer delivers 45 kW to its load while dissipating 1.0 kW of iron loss and 1.5 kW of copper loss. What is its efficiency?',
-    options: [
-      '5.3 per cent',
-      '94.4 per cent',
-      '105.6 per cent',
-      '94.7 per cent',
-    ],
+    question:
+      'A transformer delivers 45 kW to its load while dissipating 1.0 kW of iron loss and 1.5 kW of copper loss. What is its efficiency?',
+    options: ['5.3 per cent', '94.4 per cent', '105.6 per cent', '94.7 per cent'],
     correctAnswer: 3,
     explanation:
       'Efficiency = output / input, and input = output plus losses = 45 + 1.0 + 1.5 = 47.5 kW. So efficiency = 45 / 47.5 = 0.9474, or 94.7 per cent. The 94.4 per cent option subtracts the losses from the output instead of adding them to the input, 42.5 / 45. The 105.6 per cent option inverts the fraction to 47.5 / 45, and any efficiency above 100 per cent should be rejected on sight. The 5.3 per cent figure is the loss fraction, not the efficiency.',
@@ -4072,13 +3419,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 267,
-    question: 'A four-pole induction motor runs at 1440 rev/min from a 50 Hz supply. What is its slip as a percentage?',
-    options: [
-      '4 per cent',
-      '4.2 per cent',
-      '96 per cent',
-      '60 per cent',
-    ],
+    question:
+      'A four-pole induction motor runs at 1440 rev/min from a 50 Hz supply. What is its slip as a percentage?',
+    options: ['4 per cent', '4.2 per cent', '96 per cent', '60 per cent'],
     correctAnswer: 0,
     explanation:
       'Synchronous speed Ns = 120 x f / p = 120 x 50 / 4 = 1500 rev/min. Slip = (Ns - Nr) / Ns = (1500 - 1440) / 1500 = 60 / 1500 = 0.04, so 4 per cent. The 4.2 per cent option divides by the rotor speed 1440 rather than the synchronous speed, which is the usual slip. The 96 per cent option is 1440 / 1500, the fraction of synchronous speed the rotor actually reaches, and 60 is the slip speed in rev/min quoted as if it were a percentage.',
@@ -4087,13 +3430,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 268,
-    question: 'A 7.5 kW three-phase motor on a 400 V supply has an efficiency of 88 per cent and a power factor of 0.85. What is the full-load line current?',
-    options: [
-      '12.3 A',
-      '14.5 A',
-      '12.7 A',
-      '25.1 A',
-    ],
+    question:
+      'A 7.5 kW three-phase motor on a 400 V supply has an efficiency of 88 per cent and a power factor of 0.85. What is the full-load line current?',
+    options: ['12.3 A', '14.5 A', '12.7 A', '25.1 A'],
     correctAnswer: 1,
     explanation:
       'The nameplate 7.5 kW is the mechanical OUTPUT, so first find the electrical input: 7500 / 0.88 = 8523 W. Then IL = P / (root 3 x VL x cos phi) = 8523 / (1.732 x 400 x 0.85) = 8523 / 588.9 = 14.5 A. The 12.7 A option forgets the efficiency and uses 7500 W as the input, which always understates the current. The 12.3 A option leaves out the power factor and 25.1 A leaves out root 3.',
@@ -4102,13 +3441,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 269,
-    question: 'A DC motor has an armature resistance of 0.5 ohms and draws 20 A from a 230 V supply. What is the back emf?',
-    options: [
-      '210 V',
-      '240 V',
-      '220 V',
-      '230 V',
-    ],
+    question:
+      'A DC motor has an armature resistance of 0.5 ohms and draws 20 A from a 230 V supply. What is the back emf?',
+    options: ['210 V', '240 V', '220 V', '230 V'],
     correctAnswer: 2,
     explanation:
       'The armature volt drop is Ia x Ra = 20 x 0.5 = 10 V, and the back emf opposes the supply, so E = V - Ia x Ra = 230 - 10 = 220 V. The 240 V option adds the drop instead of subtracting it, which would make the back emf larger than the supply and no current could flow. The 210 V option doubles the drop. At the instant of starting the back emf is zero, which is exactly why starting current is so high.',
@@ -4117,13 +3452,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 270,
-    question: 'A single-phase load takes 8 A from a 230 V supply and consumes 1472 W. What is the reactive power, in var?',
-    options: [
-      '368 var',
-      '1472 var',
-      '3312 var',
-      '1104 var',
-    ],
+    question:
+      'A single-phase load takes 8 A from a 230 V supply and consumes 1472 W. What is the reactive power, in var?',
+    options: ['368 var', '1472 var', '3312 var', '1104 var'],
     correctAnswer: 3,
     explanation:
       'Apparent power S = V x I = 230 x 8 = 1840 VA. The power triangle gives Q = square root of (S squared minus P squared) = square root of (3385600 - 2166784) = square root of 1218816 = 1104 var. The 368 var option subtracts arithmetically, 1840 - 1472, which ignores that the three powers form a right triangle. The 3312 var option adds S and P. The 1472 var option confuses true power with reactive power.',
@@ -4132,13 +3463,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 271,
-    question: 'A 20 kW load runs at a power factor of 0.7 lagging. What capacitor rating, in kvar, is needed to correct it to 0.95 lagging?',
-    options: [
-      '13.8 kvar',
-      '6.6 kvar',
-      '20.4 kvar',
-      '27.0 kvar',
-    ],
+    question:
+      'A 20 kW load runs at a power factor of 0.7 lagging. What capacitor rating, in kvar, is needed to correct it to 0.95 lagging?',
+    options: ['13.8 kvar', '6.6 kvar', '20.4 kvar', '27.0 kvar'],
     correctAnswer: 0,
     explanation:
       'Work in reactive power. At 0.7 the angle is 45.6 degrees and tan is 1.020, so Q1 = 20 x 1.020 = 20.4 kvar. At 0.95 the angle is 18.2 degrees and tan is 0.329, so Q2 = 20 x 0.329 = 6.6 kvar. The capacitor supplies the DIFFERENCE, 20.4 - 6.6 = 13.8 kvar. The 20.4 kvar option corrects all the way to unity, which overshoots and can leave the load leading. The 6.6 kvar option quotes the reactive power that must remain, and 27.0 kvar adds the two instead of subtracting.',
@@ -4147,13 +3474,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 272,
-    question: 'A 15 kW load at 0.75 power factor is corrected to 0.95. What apparent power does the supply now see?',
-    options: [
-      '11.3 kVA',
-      '15.8 kVA',
-      '14.3 kVA',
-      '20.0 kVA',
-    ],
+    question:
+      'A 15 kW load at 0.75 power factor is corrected to 0.95. What apparent power does the supply now see?',
+    options: ['11.3 kVA', '15.8 kVA', '14.3 kVA', '20.0 kVA'],
     correctAnswer: 1,
     explanation:
       'S = P / cos(phi). Before correction S = 15 / 0.75 = 20 kVA; after correction S = 15 / 0.95 = 15.8 kVA, a saving of 4.2 kVA on the supply and cabling for the same useful 15 kW. The 14.3 kVA and 11.3 kVA options MULTIPLY by the power factor instead of dividing, which would make the apparent power smaller than the true power, and that is impossible. The 20.0 kVA option is the uncorrected figure.',
@@ -4163,12 +3486,7 @@ export const module3Questions: Question[] = [
   {
     id: 273,
     question: 'A series circuit has R = 6 ohms and XL = 8 ohms. What is the power factor?',
-    options: [
-      '0.75 lagging',
-      '0.80 lagging',
-      '0.60 lagging',
-      '1.33 lagging',
-    ],
+    options: ['0.75 lagging', '0.80 lagging', '0.60 lagging', '1.33 lagging'],
     correctAnswer: 2,
     explanation:
       'Z = square root of (36 + 64) = 10 ohms, and power factor = cos(phi) = R / Z = 6 / 10 = 0.6 lagging. The 0.80 option uses X / Z, which is the SINE of the angle, not the cosine. The 0.75 option uses R / X, which is the tangent. The 1.33 option is X / R, and a power factor can never exceed 1, so that one should be rejected immediately.',
@@ -4177,13 +3495,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 274,
-    question: 'A cable with a tabulated volt drop of 7.3 mV/A/m carries a design current of 32 A over a 28 m run. What is the volt drop, in volts?',
-    options: [
-      '0.65 V',
-      '65.4 V',
-      '6541 V',
-      '6.54 V',
-    ],
+    question:
+      'A cable with a tabulated volt drop of 7.3 mV/A/m carries a design current of 32 A over a 28 m run. What is the volt drop, in volts?',
+    options: ['0.65 V', '65.4 V', '6541 V', '6.54 V'],
     correctAnswer: 3,
     explanation:
       'Volt drop = (mV/A/m x Ib x L) / 1000 = (7.3 x 32 x 28) / 1000 = 6540.8 / 1000 = 6.54 V. The 6541 V option is the classic slip of leaving the answer in millivolts and labelling it volts; the divide by 1000 is not optional. The 65.4 V and 0.65 V options are decimal errors of one place either side of that conversion.',
@@ -4192,13 +3506,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 275,
-    question: 'A cable with a tabulated volt drop of 7.3 mV/A/m carries 32 A on a 230 V supply. What is the longest run that keeps the volt drop within 3 per cent?',
-    options: [
-      '29.5 m',
-      '49.2 m',
-      '215 m',
-      '0.03 m',
-    ],
+    question:
+      'A cable with a tabulated volt drop of 7.3 mV/A/m carries 32 A on a 230 V supply. What is the longest run that keeps the volt drop within 3 per cent?',
+    options: ['29.5 m', '49.2 m', '215 m', '0.03 m'],
     correctAnswer: 0,
     explanation:
       'The permitted drop is 3 per cent of 230 = 6.9 V, which is 6900 mV. Rearranging, L = 6900 / (7.3 x 32) = 6900 / 233.6 = 29.5 m. The 49.2 m option uses a 5 per cent limit, rather than the 3 per cent stated in the question. The 215 m option divides by the current only and forgets the mV/A/m figure. The 0.03 m option mixes bases by using 6.9 V against a millivolt denominator.',
@@ -4207,13 +3517,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 276,
-    question: 'Resistors of 6 ohms, 12 ohms and 24 ohms are connected in parallel. What is the total resistance?',
-    options: [
-      '24.0 ohms',
-      '3.43 ohms',
-      '14.0 ohms',
-      '42.0 ohms',
-    ],
+    question:
+      'Resistors of 6 ohms, 12 ohms and 24 ohms are connected in parallel. What is the total resistance?',
+    options: ['24.0 ohms', '3.43 ohms', '14.0 ohms', '42.0 ohms'],
     correctAnswer: 1,
     explanation:
       '1/RT = 1/6 + 1/12 + 1/24 = 4/24 + 2/24 + 1/24 = 7/24, so RT = 24/7 = 3.43 ohms. The 42.0 ohm option adds them as though they were in series and the 14.0 ohm option averages that total. The 24.0 ohm option quotes the largest branch. The check that catches all three: a parallel total must always be SMALLER than the smallest branch, so anything above 6 ohms is wrong before you even reach for a calculator.',
@@ -4222,13 +3528,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 277,
-    question: 'A 3 kW immersion heater raises 120 litres of water from 15 °C to 60 °C. Taking the specific heat capacity of water as 4187 J/kg·K and ignoring losses, how long does it take, in minutes?',
-    options: [
-      '2.79 hours',
-      '6.28 hours',
-      '2.09 hours',
-      '125 hours',
-    ],
+    question:
+      'A 3 kW immersion heater raises 120 litres of water from 15 °C to 60 °C. Taking the specific heat capacity of water as 4187 J/kg·K and ignoring losses, how long does it take, in minutes?',
+    options: ['2.79 hours', '6.28 hours', '2.09 hours', '125 hours'],
     correctAnswer: 2,
     explanation:
       'Energy = m x c x temperature RISE = 120 x 4187 x (60 - 15) = 120 x 4187 x 45 = 22609800 J. Divide by 3600000 to get 6.28 kWh, then time = 6.28 / 3 = 2.09 hours, about 2 hours 5 minutes. The 2.79 hour option uses the final temperature 60 instead of the 45 degree rise. The 6.28 hour option quotes the energy in kWh as if it were hours. The 125 figure is the answer in minutes with the wrong unit attached.',
@@ -4237,13 +3539,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 278,
-    question: 'A 4 ohm and a 6 ohm resistor are connected in series across 230 V. What voltage appears across the 6 ohm resistor?',
-    options: [
-      '23 V',
-      '92 V',
-      '230 V',
-      '138 V',
-    ],
+    question:
+      'A 4 ohm and a 6 ohm resistor are connected in series across 230 V. What voltage appears across the 6 ohm resistor?',
+    options: ['23 V', '92 V', '230 V', '138 V'],
     correctAnswer: 3,
     explanation:
       'Series current is common: I = 230 / (4 + 6) = 23 A. Then V = I x R = 23 x 6 = 138 V, or by proportion 230 x 6/10 = 138 V. The 92 V option is the drop across the 4 ohm resistor instead, and the two must add back to 230 V, which is a quick check. The 23 V option quotes the current value with a volts label, a surprisingly common slip under exam pressure.',
@@ -4252,13 +3550,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 279,
-    question: 'A series circuit contains 0.1 H and 25 microfarads. At what frequency does it resonate?',
-    options: [
-      '100.7 Hz',
-      '632.5 Hz',
-      '63662 Hz',
-      '50.0 Hz',
-    ],
+    question:
+      'A series circuit contains 0.1 H and 25 microfarads. At what frequency does it resonate?',
+    options: ['100.7 Hz', '632.5 Hz', '63662 Hz', '50.0 Hz'],
     correctAnswer: 0,
     explanation:
       'f = 1 / (2 x pi x square root of (L x C)). L x C = 0.1 x 0.000025 = 2.5 x 10 to the minus 6, whose square root is 0.001581. Then 2 x pi x 0.001581 = 0.009935, and 1 / 0.009935 = 100.7 Hz. The 632.5 Hz option omits the 2 pi and is actually the resonant frequency in radians per second. The 63662 Hz option forgets to take the square root of L x C altogether. At resonance XL equals XC, the circuit looks purely resistive and the current peaks.',
@@ -4267,13 +3561,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 280,
-    question: 'A 500 kVA transformer has a 400 V three-phase secondary. What is the full-load secondary line current?',
-    options: [
-      '416.7 A',
-      '721.7 A',
-      '1250 A',
-      '2165 A',
-    ],
+    question:
+      'A 500 kVA transformer has a 400 V three-phase secondary. What is the full-load secondary line current?',
+    options: ['416.7 A', '721.7 A', '1250 A', '2165 A'],
     correctAnswer: 1,
     explanation:
       'IL = S / (root 3 x VL) = 500000 / (1.732 x 400) = 500000 / 692.8 = 721.7 A. Note that no power factor appears, because kVA is already the apparent power. The 1250 A option omits root 3 entirely. The 416.7 A option divides by 3 instead of root 3. The 2165 A option multiplies by root 3 when it should divide, and would size the switchgear at three times the true rating.',
@@ -4282,13 +3572,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 281,
-    question: 'A resistive load draws 10 A from a 230 V single-phase supply. What power does it consume?',
-    options: [
-      '23 W',
-      '230 W',
-      '2300 W',
-      '23000 W',
-    ],
+    question:
+      'A resistive load draws 10 A from a 230 V single-phase supply. What power does it consume?',
+    options: ['23 W', '230 W', '2300 W', '23000 W'],
     correctAnswer: 2,
     explanation:
       'P = V x I = 230 x 10 = 2300 W, or 2.3 kW. Because the load is purely resistive the power factor is 1, so no cos(phi) term is needed. The 230 W option divides instead of multiplying and the 23000 W option slips a decimal place. A 2.3 kW figure is the right order for a domestic appliance on a 13 A plug.',
@@ -4298,12 +3584,7 @@ export const module3Questions: Question[] = [
   {
     id: 282,
     question: 'A 3 kW heater runs for 2 hours 30 minutes. How much energy has it used?',
-    options: [
-      '1.2 kWh',
-      '450 kWh',
-      '7500 kWh',
-      '7.5 kWh',
-    ],
+    options: ['1.2 kWh', '450 kWh', '7500 kWh', '7.5 kWh'],
     correctAnswer: 3,
     explanation:
       'Energy in kWh = kW x HOURS = 3 x 2.5 = 7.5 kWh. The 450 kWh option leaves the time in minutes, 3 x 150, which is the same units trap that catches people in Q = I x t. The 7500 kWh option is the answer in watt hours with the kilo prefix left on by mistake, and 1.2 kWh divides rather than multiplies.',
@@ -4312,13 +3593,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 283,
-    question: 'A sinusoidal waveform has a peak value of 100 V. What is its average value over a half cycle?',
-    options: [
-      '63.7 V',
-      '70.7 V',
-      '141.4 V',
-      '100 V',
-    ],
+    question:
+      'A sinusoidal waveform has a peak value of 100 V. What is its average value over a half cycle?',
+    options: ['63.7 V', '70.7 V', '141.4 V', '100 V'],
     correctAnswer: 0,
     explanation:
       'Average = 0.637 x peak = 0.637 x 100 = 63.7 V. The 70.7 V option uses 0.707, which gives the rms value, not the average; the two factors are easily swapped. The 141.4 V option treats 100 V as an rms figure and multiplies up to peak. Dividing rms by average gives the form factor of 1.11 for a sine wave.',
@@ -4328,12 +3605,7 @@ export const module3Questions: Question[] = [
   {
     id: 284,
     question: 'A UK supply has a frequency of 50 Hz. What is the periodic time of one cycle?',
-    options: [
-      '2 ms',
-      '20 ms',
-      '50 ms',
-      '200 ms',
-    ],
+    options: ['2 ms', '20 ms', '50 ms', '200 ms'],
     correctAnswer: 1,
     explanation:
       'T = 1 / f = 1 / 50 = 0.02 s, which is 20 milliseconds. The 50 ms option simply repeats the frequency figure with a time unit attached. The 2 ms and 200 ms options are decimal slips. This is worth knowing by heart, because a 40 ms disconnection time is two full cycles of the supply.',
@@ -4342,13 +3614,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 285,
-    question: 'A star-connected three-phase system has a phase voltage of 230 V. What is the line voltage?',
-    options: [
-      '133 V',
-      '230 V',
-      '398 V',
-      '690 V',
-    ],
+    question:
+      'A star-connected three-phase system has a phase voltage of 230 V. What is the line voltage?',
+    options: ['133 V', '230 V', '398 V', '690 V'],
     correctAnswer: 2,
     explanation:
       'In star, VL = root 3 x Vphase = 1.732 x 230 = 398 V, which is the nominal 400 V system. The 133 V option divides by root 3 instead of multiplying, giving a line voltage smaller than the phase voltage, which cannot happen in star. The 690 V option multiplies by 3. The 230 V option is the delta relationship, where line and phase voltage are equal.',
@@ -4357,13 +3625,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 286,
-    question: 'A 230 V to 12 V transformer has 1150 turns on the primary. How many secondary turns are there?',
-    options: [
-      '12 turns',
-      '96 turns',
-      '22042 turns',
-      '60 turns',
-    ],
+    question:
+      'A 230 V to 12 V transformer has 1150 turns on the primary. How many secondary turns are there?',
+    options: ['12 turns', '96 turns', '22042 turns', '60 turns'],
     correctAnswer: 3,
     explanation:
       'Ns = Np x (Vs / Vp) = 1150 x (12 / 230) = 1150 / 19.17 = 60 turns. The 22042 turn option inverts the ratio and multiplies by 230/12, which would put far more turns on the low voltage side of a step-down transformer. The 96 turn option divides the primary turns by 12 rather than by the voltage ratio of 19.17.',
@@ -4372,13 +3636,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 287,
-    question: 'A motor produces 5.5 kW of mechanical output at 1440 rev/min. What torque does it develop?',
-    options: [
-      '36.5 Nm',
-      '0.61 Nm',
-      '3.82 Nm',
-      '229 Nm',
-    ],
+    question:
+      'A motor produces 5.5 kW of mechanical output at 1440 rev/min. What torque does it develop?',
+    options: ['36.5 Nm', '0.61 Nm', '3.82 Nm', '229 Nm'],
     correctAnswer: 0,
     explanation:
       'T = P / (2 x pi x n) where n is in revolutions per SECOND. Here n = 1440 / 60 = 24 rev/s, so T = 5500 / (2 x 3.1416 x 24) = 5500 / 150.8 = 36.5 Nm. The 0.61 Nm option leaves the speed in rev/min inside the formula, which is the usual slip and makes the torque 60 times too small. The 229 Nm option drops the 2 pi, and 3.82 Nm is simply power divided by rev/min.',
@@ -4387,13 +3647,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 288,
-    question: 'A motor takes a line current of 90 A when started direct on line. What line current flows on the star position of a star-delta starter?',
-    options: [
-      '52 A',
-      '30 A',
-      '156 A',
-      '270 A',
-    ],
+    question:
+      'A motor takes a line current of 90 A when started direct on line. What line current flows on the star position of a star-delta starter?',
+    options: ['52 A', '30 A', '156 A', '270 A'],
     correctAnswer: 1,
     explanation:
       'Starting in star puts only 1 / root 3 of the line voltage across each winding, and since current falls with voltage AND the windings are then in star rather than delta, the line current falls to one THIRD: 90 / 3 = 30 A. The 52 A option divides by root 3 only, which is the reduction in winding voltage rather than in line current. The 156 A and 270 A options multiply instead of divide. Starting torque also drops to one third, which is why star-delta suits light starting loads only.',
@@ -4402,13 +3658,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 289,
-    question: 'An installation draws 12 kW of true power and 9 kvar of reactive power. What is the apparent power?',
-    options: [
-      '3 kVA',
-      '21 kVA',
-      '15 kVA',
-      '108 kVA',
-    ],
+    question:
+      'An installation draws 12 kW of true power and 9 kvar of reactive power. What is the apparent power?',
+    options: ['3 kVA', '21 kVA', '15 kVA', '108 kVA'],
     correctAnswer: 2,
     explanation:
       'The power triangle is a right triangle, so S = square root of (P squared + Q squared) = square root of (144 + 81) = square root of 225 = 15 kVA. The 21 kVA option adds P and Q arithmetically, which ignores the 90 degree phase difference between them. The 3 kVA option subtracts and 108 kVA multiplies. Power factor here is P / S = 12 / 15 = 0.8 lagging.',
@@ -4417,13 +3669,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 290,
-    question: 'A 40 m copper conductor of resistivity 1.78 × 10⁻⁸ Ω m must have a resistance no greater than 0.15 Ω. What is its minimum cross-sectional area, in mm²?',
-    options: [
-      '0.475 mm2',
-      '47.5 mm2',
-      '475 mm2',
-      '4.75 mm2',
-    ],
+    question:
+      'A 40 m copper conductor of resistivity 1.78 × 10⁻⁸ Ω m must have a resistance no greater than 0.15 Ω. What is its minimum cross-sectional area, in mm²?',
+    options: ['0.475 mm2', '47.5 mm2', '475 mm2', '4.75 mm2'],
     correctAnswer: 3,
     explanation:
       'Rearranging R = rho x L / A gives A = rho x L / R = (1.78e-8 x 40) / 0.15 = 7.12e-7 / 0.15 = 4.75 x 10 to the minus 6 square metres. Converting back, 1 mm2 = 1 x 10 to the minus 6 m2, so the answer is 4.75 mm2, and in practice you would fit the next size up. The 47.5 mm2 and 0.475 mm2 options are decimal slips in that final m2 to mm2 step, which is where most marks are lost on this calculation.',
@@ -4432,13 +3680,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 291,
-    question: 'Resistors of 4 ohms, 6 ohms and 10 ohms are connected in series. What is the total resistance?',
-    options: [
-      '20 ohms',
-      '2.0 ohms',
-      '6.7 ohms',
-      '240 ohms',
-    ],
+    question:
+      'Resistors of 4 ohms, 6 ohms and 10 ohms are connected in series. What is the total resistance?',
+    options: ['20 ohms', '2.0 ohms', '6.7 ohms', '240 ohms'],
     correctAnswer: 0,
     explanation:
       'In series the resistances simply add: RT = 4 + 6 + 10 = 20 ohms. The 6.7 ohm option averages them and the 2.0 ohm option applies the parallel reciprocal method by mistake, which always gives a figure below the smallest branch. The 240 ohm option multiplies. A series total must always be larger than the largest single resistor.',
@@ -4447,13 +3691,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 292,
-    question: 'A 3 kW single-phase load operates at 230 V with unity power factor. What current does it draw?',
-    options: [
-      '1.3 A',
-      '13.0 A',
-      '76.7 A',
-      '690 A',
-    ],
+    question:
+      'A 3 kW single-phase load operates at 230 V with unity power factor. What current does it draw?',
+    options: ['1.3 A', '13.0 A', '76.7 A', '690 A'],
     correctAnswer: 1,
     explanation:
       'I = P / V = 3000 / 230 = 13.04 A, so about 13 A. Note the power must be in watts, not kilowatts: using 3 / 230 gives 0.013 and leads straight to the 1.3 A option. The 76.7 A option inverts the division to 230 / 3, and 690 A multiplies. A 3 kW load sitting right on 13 A is why a standard plug fuse is rated as it is.',
@@ -4462,13 +3702,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 293,
-    question: 'A series circuit has a resistance of 6 Ω and an inductive reactance of 8 Ω. What is the phase angle between the supply voltage and the current?',
-    options: [
-      '36.9 degrees',
-      '48.6 degrees',
-      '53.1 degrees',
-      '126.9 degrees',
-    ],
+    question:
+      'A series circuit has a resistance of 6 Ω and an inductive reactance of 8 Ω. What is the phase angle between the supply voltage and the current?',
+    options: ['36.9 degrees', '48.6 degrees', '53.1 degrees', '126.9 degrees'],
     correctAnswer: 2,
     explanation:
       'tan(phi) = X / R = 8 / 6 = 1.333, so phi = inverse tan of 1.333 = 53.1 degrees. The 36.9 degree option inverts the ratio to R / X, which gives the angle measured from the wrong side of the triangle; note that 36.9 and 53.1 add to 90, which is the giveaway. The 48.6 degree option takes an inverse sine of 6/8 rather than an inverse tangent, and 126.9 degrees is out of range for a single reactive element.',
@@ -4477,13 +3713,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 294,
-    question: 'A balanced three-phase resistive load draws 20 A per line from a 400 V line voltage supply. What is the total power, in kW?',
-    options: [
-      '8000 W',
-      '24000 W',
-      '41569 W',
-      '13856 W',
-    ],
+    question:
+      'A balanced three-phase resistive load draws 20 A per line from a 400 V line voltage supply. What is the total power, in kW?',
+    options: ['8000 W', '24000 W', '41569 W', '13856 W'],
     correctAnswer: 3,
     explanation:
       'P = root 3 x VL x IL x cos(phi), and for a purely resistive load cos(phi) = 1, so P = 1.732 x 400 x 20 = 13856 W. The 24000 W option uses 3 instead of root 3, a mistake that overstates the load by 73 per cent and would oversize the supply. The 41569 W option applies both 3 and root 3. The 8000 W option treats the load as single phase and omits root 3 altogether.',
@@ -4507,13 +3739,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 296,
-    question: 'What is the synchronous speed of a two-pole induction motor on a 50 Hz supply, in rev/min?',
-    options: [
-      '1000 rpm',
-      '3000 rpm',
-      '1500 rpm',
-      '6000 rpm',
-    ],
+    question:
+      'What is the synchronous speed of a two-pole induction motor on a 50 Hz supply, in rev/min?',
+    options: ['1000 rpm', '3000 rpm', '1500 rpm', '6000 rpm'],
     correctAnswer: 1,
     explanation:
       'Ns = 120 x f / p = 120 x 50 / 2 = 3000 rev/min, where p is the number of POLES, not pole pairs. The 1500 rpm option uses four poles, which is the value people quote from memory without checking the machine. The 6000 rpm option treats 2 as a pole pair count and halves the divisor. The rotor always turns slightly slower than this because slip is what generates rotor current.',
@@ -4522,13 +3750,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 297,
-    question: 'A 50 kW load operates at a power factor of 0.7 lagging. What apparent power, in kVA, must the supply provide?',
-    options: [
-      '35.0 kVA',
-      '50.0 kVA',
-      '71.4 kVA',
-      '100 kVA',
-    ],
+    question:
+      'A 50 kW load operates at a power factor of 0.7 lagging. What apparent power, in kVA, must the supply provide?',
+    options: ['35.0 kVA', '50.0 kVA', '71.4 kVA', '100 kVA'],
     correctAnswer: 2,
     explanation:
       'S = P / cos(phi) = 50 / 0.7 = 71.4 kVA. That is the figure the transformer, cables and protective devices must all be sized for, even though only 50 kW does useful work. The 35.0 kVA option multiplies by the power factor instead of dividing, and apparent power can never be less than true power. The 100 kVA option divides by 0.5.',
@@ -4537,13 +3761,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 298,
-    question: 'A protective conductor must withstand a fault current of 3200 A for 0.1 s. Taking k as 115 for this conductor and insulation combination, what is the minimum cross-sectional area, in mm²?',
-    options: [
-      '2.78 mm2',
-      '27.8 mm2',
-      '88.0 mm2',
-      '8.80 mm2',
-    ],
+    question:
+      'A protective conductor must withstand a fault current of 3200 A for 0.1 s. Taking k as 115 for this conductor and insulation combination, what is the minimum cross-sectional area, in mm²?',
+    options: ['2.78 mm2', '27.8 mm2', '88.0 mm2', '8.80 mm2'],
     correctAnswer: 3,
     explanation:
       'S = square root of (I squared x t) divided by k. I squared x t = 3200 x 3200 x 0.1 = 1024000, whose square root is 1012. Then S = 1012 / 115 = 8.80 mm2, so the next standard size up would be selected. The 27.8 mm2 option omits the time altogether and just divides 3200 by 115, which massively oversizes the conductor. The 88.0 mm2 and 2.78 mm2 options are decimal slips of one place.',
@@ -4552,13 +3772,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 299,
-    question: 'A circuit has a measured Ze of 0.35 Ω and a measured (R1 + R2) of 0.42 Ω at ambient temperature. Applying a temperature multiplier of 1.20 to the circuit conductors, what is the corrected Zs?',
-    options: [
-      '0.85 ohms',
-      '0.77 ohms',
-      '0.92 ohms',
-      '1.20 ohms',
-    ],
+    question:
+      'A circuit has a measured Ze of 0.35 Ω and a measured (R1 + R2) of 0.42 Ω at ambient temperature. Applying a temperature multiplier of 1.20 to the circuit conductors, what is the corrected Zs?',
+    options: ['0.85 ohms', '0.77 ohms', '0.92 ohms', '1.20 ohms'],
     correctAnswer: 0,
     explanation:
       'Zs = Ze + (R1 + R2 corrected). The multiplier applies only to the circuit conductors, so 0.42 x 1.20 = 0.504, and Zs = 0.35 + 0.504 = 0.854, rounded to 0.85 ohms. The 0.77 ohm option adds the two measurements raw and forgets the correction, which flatters the result and can pass a circuit that would actually fail hot. The 0.92 ohm option applies the multiplier to the whole sum, including Ze, which belongs to the supply and is not corrected here.',
@@ -4567,13 +3783,9 @@ export const module3Questions: Question[] = [
   },
   {
     id: 300,
-    question: 'A measured volt drop of 5.75 V is recorded on a 230 V final circuit. What percentage drop is that?',
-    options: [
-      '1.25 per cent',
-      '2.50 per cent',
-      '5.75 per cent',
-      '25.0 per cent',
-    ],
+    question:
+      'A measured volt drop of 5.75 V is recorded on a 230 V final circuit. What percentage drop is that?',
+    options: ['1.25 per cent', '2.50 per cent', '5.75 per cent', '25.0 per cent'],
     correctAnswer: 1,
     explanation:
       'Percentage drop = (volt drop / nominal voltage) x 100 = (5.75 / 230) x 100 = 2.50 per cent. The 5.75 per cent option quotes the volts figure straight through as a percentage, which only works by coincidence on a 100 V system. The 25.0 per cent option slips a decimal place, and 1.25 per cent halves the result. Always divide by the NOMINAL voltage of the system, not by the measured terminal voltage on the day.',
@@ -4582,203 +3794,160 @@ export const module3Questions: Question[] = [
   },
   {
     id: 301,
-    question: 'A coil of resistance 30 Ω and inductance 0.15 H is connected to a 230 V, 50 Hz supply. What current flows?',
-    options: [
-      '4.1 A',
-      '3.0 A',
-      '4.9 A',
-      '7.7 A',
-    ],
+    question:
+      'A coil of resistance 30 Ω and inductance 0.15 H is connected to a 230 V, 50 Hz supply. What current flows?',
+    options: ['4.1 A', '3.0 A', '4.9 A', '7.7 A'],
     correctAnswer: 0,
-    explanation: 'XL = 2πfL = 2 x 3.142 x 50 x 0.15 = 47.1 Ω. Z = √(30² + 47.1²) = √(900 + 2219) = 55.9 Ω. I = 230 / 55.9 = 4.1 A. The tempting 3.0 A comes from adding 30 Ω and 47.1 Ω arithmetically to give 77.1 Ω; resistance and reactance are at 90° to one another and must be added by phasor, not by simple addition. 7.7 A ignores the reactance altogether and 4.9 A uses the reactance alone.',
+    explanation:
+      'XL = 2πfL = 2 x 3.142 x 50 x 0.15 = 47.1 Ω. Z = √(30² + 47.1²) = √(900 + 2219) = 55.9 Ω. I = 230 / 55.9 = 4.1 A. The tempting 3.0 A comes from adding 30 Ω and 47.1 Ω arithmetically to give 77.1 Ω; resistance and reactance are at 90° to one another and must be added by phasor, not by simple addition. 7.7 A ignores the reactance altogether and 4.9 A uses the reactance alone.',
     section: '3.2',
     difficulty: 'advanced',
   },
   {
     id: 302,
-    question: 'A series circuit of R = 20 Ω, XL = 60 Ω and XC = 25 Ω is connected to a 230 V supply. What true power does it take?',
-    options: [
-      '139 W',
-      '651 W',
-      '1140 W',
-      '1312 W',
-    ],
+    question:
+      'A series circuit of R = 20 Ω, XL = 60 Ω and XC = 25 Ω is connected to a 230 V supply. What true power does it take?',
+    options: ['139 W', '651 W', '1140 W', '1312 W'],
     correctAnswer: 1,
-    explanation: 'Net reactance X = XL − XC = 60 − 25 = 35 Ω. Z = √(20² + 35²) = √(400 + 1225) = 40.3 Ω. I = 230 / 40.3 = 5.71 A. True power P = I²R = 5.71² x 20 = 651 W. 1312 W is the apparent power (230 x 5.71), which is what you get if you use Z instead of R; only the resistance dissipates true power. 1140 W is the reactive power I²X, and 139 W comes from adding XL and XC instead of subtracting them.',
+    explanation:
+      'Net reactance X = XL − XC = 60 − 25 = 35 Ω. Z = √(20² + 35²) = √(400 + 1225) = 40.3 Ω. I = 230 / 40.3 = 5.71 A. True power P = I²R = 5.71² x 20 = 651 W. 1312 W is the apparent power (230 x 5.71), which is what you get if you use Z instead of R; only the resistance dissipates true power. 1140 W is the reactive power I²X, and 139 W comes from adding XL and XC instead of subtracting them.',
     section: '3.2',
     difficulty: 'advanced',
   },
   {
     id: 303,
-    question: 'A series circuit contains an inductance of 0.2 H and a capacitance of 20 µF. At what frequency does it resonate?',
-    options: [
-      '15.9 Hz',
-      '159 Hz',
-      '79.6 Hz',
-      '500 Hz',
-    ],
+    question:
+      'A series circuit contains an inductance of 0.2 H and a capacitance of 20 µF. At what frequency does it resonate?',
+    options: ['15.9 Hz', '159 Hz', '79.6 Hz', '500 Hz'],
     correctAnswer: 2,
-    explanation: 'f0 = 1 / (2π√(LC)). LC = 0.2 x 20 x 10⁻⁶ = 4 x 10⁻⁶, so √(LC) = 2 x 10⁻³. f0 = 1 / (2 x 3.142 x 0.002) = 1 / 0.01257 = 79.6 Hz. 500 Hz is 1/√(LC) with the 2π left out. 15.9 Hz comes from inverting the expression to (1/2π)√(L/C). 159 Hz is twice the correct answer, from dropping the 2 in 2π.',
+    explanation:
+      'f0 = 1 / (2π√(LC)). LC = 0.2 x 20 x 10⁻⁶ = 4 x 10⁻⁶, so √(LC) = 2 x 10⁻³. f0 = 1 / (2 x 3.142 x 0.002) = 1 / 0.01257 = 79.6 Hz. 500 Hz is 1/√(LC) with the 2π left out. 15.9 Hz comes from inverting the expression to (1/2π)√(L/C). 159 Hz is twice the correct answer, from dropping the 2 in 2π.',
     section: '3.2',
     difficulty: 'intermediate',
   },
   {
     id: 304,
-    question: 'A series RLC circuit is at resonance on a 230 V, 50 Hz supply. The resistance is 15 Ω and the inductance is 0.1 H. What voltage appears across the inductor?',
-    options: [
-      '208 V',
-      '230 V',
-      '681 V',
-      '482 V',
-    ],
+    question:
+      'A series RLC circuit is at resonance on a 230 V, 50 Hz supply. The resistance is 15 Ω and the inductance is 0.1 H. What voltage appears across the inductor?',
+    options: ['208 V', '230 V', '681 V', '482 V'],
     correctAnswer: 3,
-    explanation: 'At resonance XL = XC, so the impedance is the resistance alone: Z = 15 Ω. I = 230 / 15 = 15.33 A. XL = 2πfL = 2 x 3.142 x 50 x 0.1 = 31.42 Ω. VL = I x XL = 15.33 x 31.42 = 482 V. It is greater than the supply voltage because the inductor and capacitor voltages are equal and opposite and cancel one another. 230 V assumes the supply voltage simply appears across the coil. 208 V comes from using Z = √(15² + 31.42²) and forgetting that resonance cancels the reactance. 681 V is the peak value of 482 V rms.',
+    explanation:
+      'At resonance XL = XC, so the impedance is the resistance alone: Z = 15 Ω. I = 230 / 15 = 15.33 A. XL = 2πfL = 2 x 3.142 x 50 x 0.1 = 31.42 Ω. VL = I x XL = 15.33 x 31.42 = 482 V. It is greater than the supply voltage because the inductor and capacitor voltages are equal and opposite and cancel one another. 230 V assumes the supply voltage simply appears across the coil. 208 V comes from using Z = √(15² + 31.42²) and forgetting that resonance cancels the reactance. 681 V is the peak value of 482 V rms.',
     section: '3.2',
     difficulty: 'advanced',
   },
   {
     id: 305,
-    question: 'A 100 Ω resistor is connected in series with a 22 µF capacitor across a 230 V, 50 Hz supply. What current flows?',
-    options: [
-      '1.31 A',
-      '0.94 A',
-      '1.59 A',
-      '2.30 A',
-    ],
+    question:
+      'A 100 Ω resistor is connected in series with a 22 µF capacitor across a 230 V, 50 Hz supply. What current flows?',
+    options: ['1.31 A', '0.94 A', '1.59 A', '2.30 A'],
     correctAnswer: 0,
-    explanation: 'XC = 1 / (2πfC) = 1 / (2 x 3.142 x 50 x 22 x 10⁻⁶) = 1 / 0.006912 = 144.7 Ω. Z = √(100² + 144.7²) = √(10000 + 20938) = 175.9 Ω. I = 230 / 175.9 = 1.31 A. 0.94 A comes from adding 100 Ω and 144.7 Ω arithmetically; they are 90° apart and must be added by phasor. 2.30 A uses the resistance only and 1.59 A uses the reactance only.',
+    explanation:
+      'XC = 1 / (2πfC) = 1 / (2 x 3.142 x 50 x 22 x 10⁻⁶) = 1 / 0.006912 = 144.7 Ω. Z = √(100² + 144.7²) = √(10000 + 20938) = 175.9 Ω. I = 230 / 175.9 = 1.31 A. 0.94 A comes from adding 100 Ω and 144.7 Ω arithmetically; they are 90° apart and must be added by phasor. 2.30 A uses the resistance only and 1.59 A uses the reactance only.',
     section: '3.2',
     difficulty: 'advanced',
   },
   {
     id: 306,
     question: 'What is the capacitive reactance of an 8 µF capacitor on a 50 Hz supply?',
-    options: [
-      '0.40 Ω',
-      '398 Ω',
-      '39.8 Ω',
-      '3979 Ω',
-    ],
+    options: ['0.40 Ω', '398 Ω', '39.8 Ω', '3979 Ω'],
     correctAnswer: 1,
-    explanation: 'XC = 1 / (2πfC) = 1 / (2 x 3.142 x 50 x 8 x 10⁻⁶) = 1 / 0.002513 = 398 Ω. The three wrong values are all prefix errors: 39.8 Ω is what you get for 80 µF, 3979 Ω is the value for 0.8 µF, and 0.40 Ω is 2πfC itself, without inverting it. Converting microfarads to farads before working out the reactance is the step candidates most often miss.',
+    explanation:
+      'XC = 1 / (2πfC) = 1 / (2 x 3.142 x 50 x 8 x 10⁻⁶) = 1 / 0.002513 = 398 Ω. The three wrong values are all prefix errors: 39.8 Ω is what you get for 80 µF, 3979 Ω is the value for 0.8 µF, and 0.40 Ω is 2πfC itself, without inverting it. Converting microfarads to farads before working out the reactance is the step candidates most often miss.',
     section: '3.2',
     difficulty: 'intermediate',
   },
   {
     id: 307,
-    question: 'A coil of resistance 12 Ω and inductive reactance 16 Ω is connected in series with a 30 Ω resistor. What is the total impedance of the circuit?',
-    options: [
-      '34.0 Ω',
-      '50.0 Ω',
-      '44.9 Ω',
-      '58.0 Ω',
-    ],
+    question:
+      'A coil of resistance 12 Ω and inductive reactance 16 Ω is connected in series with a 30 Ω resistor. What is the total impedance of the circuit?',
+    options: ['34.0 Ω', '50.0 Ω', '44.9 Ω', '58.0 Ω'],
     correctAnswer: 2,
-    explanation: 'Add the resistances first: R = 12 + 30 = 42 Ω. The reactance stays at 16 Ω. Z = √(42² + 16²) = √(1764 + 256) = √2020 = 44.9 Ω. 50.0 Ω is the classic error: working out the coil impedance as √(12² + 16²) = 20 Ω and then adding 30 Ω to it arithmetically, which double counts nothing but adds two quantities that are not in phase. 58.0 Ω adds all three values arithmetically, and 34.0 Ω ignores the coil\'s own resistance.',
+    explanation:
+      "Add the resistances first: R = 12 + 30 = 42 Ω. The reactance stays at 16 Ω. Z = √(42² + 16²) = √(1764 + 256) = √2020 = 44.9 Ω. 50.0 Ω is the classic error: working out the coil impedance as √(12² + 16²) = 20 Ω and then adding 30 Ω to it arithmetically, which double counts nothing but adds two quantities that are not in phase. 58.0 Ω adds all three values arithmetically, and 34.0 Ω ignores the coil's own resistance.",
     section: '3.2',
     difficulty: 'advanced',
   },
   {
     id: 308,
-    question: 'A single-phase load takes 6.5 A from a 230 V, 50 Hz supply. Its impedance is 35.4 Ω, of which 18 Ω is resistance. What true power does it take?',
-    options: [
-      '1495 W',
-      '1073 W',
-      '1288 W',
-      '760 W',
-    ],
+    question:
+      'A single-phase load takes 6.5 A from a 230 V, 50 Hz supply. Its impedance is 35.4 Ω, of which 18 Ω is resistance. What true power does it take?',
+    options: ['1495 W', '1073 W', '1288 W', '760 W'],
     correctAnswer: 3,
-    explanation: 'True power is dissipated only in the resistance: P = I²R = 6.5² x 18 = 42.25 x 18 = 760 W. As a check, the power factor is R/Z = 18 / 35.4 = 0.508, and P = V x I x pf = 230 x 6.5 x 0.508 = 760 W. 1495 W is the apparent power 230 x 6.5, obtained by using the impedance in place of the resistance. 1288 W is the reactive power I²X, where X = √(35.4² − 18²) = 30.5 Ω. 1073 W comes from using the peak supply voltage of 325 V instead of the rms value.',
+    explanation:
+      'True power is dissipated only in the resistance: P = I²R = 6.5² x 18 = 42.25 x 18 = 760 W. As a check, the power factor is R/Z = 18 / 35.4 = 0.508, and P = V x I x pf = 230 x 6.5 x 0.508 = 760 W. 1495 W is the apparent power 230 x 6.5, obtained by using the impedance in place of the resistance. 1288 W is the reactive power I²X, where X = √(35.4² − 18²) = 30.5 Ω. 1073 W comes from using the peak supply voltage of 325 V instead of the rms value.',
     section: '3.2',
     difficulty: 'intermediate',
   },
   {
     id: 309,
-    question: 'An oscilloscope shows a sinusoidal supply with a peak-to-peak value of 650 V. What is its rms value?',
-    options: [
-      '230 V',
-      '207 V',
-      '325 V',
-      '460 V',
-    ],
+    question:
+      'An oscilloscope shows a sinusoidal supply with a peak-to-peak value of 650 V. What is its rms value?',
+    options: ['230 V', '207 V', '325 V', '460 V'],
     correctAnswer: 0,
-    explanation: 'Peak-to-peak covers both half cycles, so the peak value is 650 / 2 = 325 V. Vrms = Vpk / √2 = 325 / 1.414 = 230 V. 460 V is the error of dividing the peak-to-peak figure by √2 without halving it first. 325 V is the peak value itself, and 207 V is the half-cycle average (0.637 x 325), not the rms value.',
+    explanation:
+      'Peak-to-peak covers both half cycles, so the peak value is 650 / 2 = 325 V. Vrms = Vpk / √2 = 325 / 1.414 = 230 V. 460 V is the error of dividing the peak-to-peak figure by √2 without halving it first. 325 V is the peak value itself, and 207 V is the half-cycle average (0.637 x 325), not the rms value.',
     section: '3.2',
     difficulty: 'advanced',
   },
   {
     id: 310,
-    question: 'A sinusoidal current has an rms value of 12 A. What is its average value over one half cycle?',
-    options: [
-      '7.6 A',
-      '10.8 A',
-      '13.3 A',
-      '17.0 A',
-    ],
+    question:
+      'A sinusoidal current has an rms value of 12 A. What is its average value over one half cycle?',
+    options: ['7.6 A', '10.8 A', '13.3 A', '17.0 A'],
     correctAnswer: 1,
-    explanation: 'Work back to peak first: Ipk = 12 x 1.414 = 17.0 A. The half-cycle average is 0.637 x peak = 0.637 x 17.0 = 10.8 A. The same answer follows from the form factor: average = rms / 1.11 = 12 / 1.11 = 10.8 A. 7.6 A applies the 0.637 factor to the rms value instead of the peak value. 13.3 A multiplies by the form factor instead of dividing. 17.0 A is the peak value.',
+    explanation:
+      'Work back to peak first: Ipk = 12 x 1.414 = 17.0 A. The half-cycle average is 0.637 x peak = 0.637 x 17.0 = 10.8 A. The same answer follows from the form factor: average = rms / 1.11 = 12 / 1.11 = 10.8 A. 7.6 A applies the 0.637 factor to the rms value instead of the peak value. 13.3 A multiplies by the form factor instead of dividing. 17.0 A is the peak value.',
     section: '3.2',
     difficulty: 'intermediate',
   },
   {
     id: 311,
-    question: 'A coil of inductance 0.5 H and resistance 25 Ω is switched onto a 100 V d.c. supply. What current is flowing 20 ms after switch-on?',
-    options: [
-      '1.47 A',
-      '2.00 A',
-      '2.53 A',
-      '4.00 A',
-    ],
+    question:
+      'A coil of inductance 0.5 H and resistance 25 Ω is switched onto a 100 V d.c. supply. What current is flowing 20 ms after switch-on?',
+    options: ['1.47 A', '2.00 A', '2.53 A', '4.00 A'],
     correctAnswer: 2,
-    explanation: 'Time constant τ = L / R = 0.5 / 25 = 0.02 s, which is 20 ms, so the question is asking for the current after exactly one time constant. Final steady current = V / R = 100 / 25 = 4 A. During growth the current reaches 63.2 % of its final value in one time constant: 0.632 x 4 = 2.53 A. 4.00 A is the final value, reached after about five time constants, not one. 1.47 A uses 36.8 %, which is the decay figure, not the growth figure. 2.00 A assumes the current is simply half way there.',
+    explanation:
+      'Time constant τ = L / R = 0.5 / 25 = 0.02 s, which is 20 ms, so the question is asking for the current after exactly one time constant. Final steady current = V / R = 100 / 25 = 4 A. During growth the current reaches 63.2 % of its final value in one time constant: 0.632 x 4 = 2.53 A. 4.00 A is the final value, reached after about five time constants, not one. 1.47 A uses 36.8 %, which is the decay figure, not the growth figure. 2.00 A assumes the current is simply half way there.',
     section: '3.2',
     difficulty: 'advanced',
   },
   {
     id: 312,
     question: 'A 200 µF capacitor is charged to 400 V. How much energy is stored in it?',
-    options: [
-      '0.04 J',
-      '16 000 J',
-      '32 J',
-      '16 J',
-    ],
+    options: ['0.04 J', '16 000 J', '32 J', '16 J'],
     correctAnswer: 3,
-    explanation: 'W = ½CV² = 0.5 x 200 x 10⁻⁶ x 400² = 0.5 x 200 x 10⁻⁶ x 160 000 = 16 J. 32 J omits the ½. 0.04 J uses V rather than V², which is the charge times a half, not the energy. 16 000 J treats the 200 as millifarads instead of microfarads, a factor of a thousand out.',
+    explanation:
+      'W = ½CV² = 0.5 x 200 x 10⁻⁶ x 400² = 0.5 x 200 x 10⁻⁶ x 160 000 = 16 J. 32 J omits the ½. 0.04 J uses V rather than V², which is the charge times a half, not the energy. 16 000 J treats the 200 as millifarads instead of microfarads, a factor of a thousand out.',
     section: '3.2',
     difficulty: 'intermediate',
   },
   {
     id: 313,
-    question: 'A 47 µF capacitor is charged through a 220 kΩ resistor. How long does it take to be regarded as fully charged?',
-    options: [
-      '51.7 s',
-      '10.3 s',
-      '5.2 s',
-      '103.4 s',
-    ],
+    question:
+      'A 47 µF capacitor is charged through a 220 kΩ resistor. How long does it take to be regarded as fully charged?',
+    options: ['51.7 s', '10.3 s', '5.2 s', '103.4 s'],
     correctAnswer: 0,
-    explanation: 'Time constant τ = CR = 47 x 10⁻⁶ x 220 x 10³ = 10.34 s. A capacitor is taken as fully charged after five time constants: 5 x 10.34 = 51.7 s. 10.3 s is one time constant only, at which point the capacitor has reached just 63 % of the supply voltage. 103.4 s is ten time constants and 5.2 s is half a time constant.',
+    explanation:
+      'Time constant τ = CR = 47 x 10⁻⁶ x 220 x 10³ = 10.34 s. A capacitor is taken as fully charged after five time constants: 5 x 10.34 = 51.7 s. 10.3 s is one time constant only, at which point the capacitor has reached just 63 % of the supply voltage. 103.4 s is ten time constants and 5.2 s is half a time constant.',
     section: '3.2',
     difficulty: 'intermediate',
   },
   {
     id: 314,
-    question: 'A coil has an inductance of 0.25 H. At what supply frequency is its inductive reactance 100 Ω?',
-    options: [
-      '6.4 Hz',
-      '63.7 Hz',
-      '400 Hz',
-      '2513 Hz',
-    ],
+    question:
+      'A coil has an inductance of 0.25 H. At what supply frequency is its inductive reactance 100 Ω?',
+    options: ['6.4 Hz', '63.7 Hz', '400 Hz', '2513 Hz'],
     correctAnswer: 1,
-    explanation: 'Transpose XL = 2πfL to give f = XL / (2πL) = 100 / (2 x 3.142 x 0.25) = 100 / 1.571 = 63.7 Hz. 400 Hz comes from dividing by L alone and leaving out the 2π. 2513 Hz multiplies by 2π instead of dividing by it. 6.4 Hz is a factor-of-ten slip in the inductance.',
+    explanation:
+      'Transpose XL = 2πfL to give f = XL / (2πL) = 100 / (2 x 3.142 x 0.25) = 100 / 1.571 = 63.7 Hz. 400 Hz comes from dividing by L alone and leaving out the 2π. 2513 Hz multiplies by 2π instead of dividing by it. 6.4 Hz is a factor-of-ten slip in the inductance.',
     section: '3.2',
     difficulty: 'intermediate',
   },
   {
     id: 315,
-    question: 'In a purely resistive a.c. circuit, what is the phase relationship between the supply voltage and the current?',
+    question:
+      'In a purely resistive a.c. circuit, what is the phase relationship between the supply voltage and the current?',
     options: [
       'Current leads by 90°',
       'Current lags by 90°',
@@ -4786,147 +3955,118 @@ export const module3Questions: Question[] = [
       'Current lags by 180°',
     ],
     correctAnswer: 2,
-    explanation: 'A resistor stores no energy, so the current rises and falls exactly in step with the voltage and the phase angle is zero. This is why the power factor of a purely resistive circuit is unity. A 90° lag belongs to a purely inductive circuit and a 90° lead to a purely capacitive one; a 180° shift would mean the current reversed relative to the voltage, which no passive component produces.',
+    explanation:
+      'A resistor stores no energy, so the current rises and falls exactly in step with the voltage and the phase angle is zero. This is why the power factor of a purely resistive circuit is unity. A 90° lag belongs to a purely inductive circuit and a 90° lead to a purely capacitive one; a 180° shift would mean the current reversed relative to the voltage, which no passive component produces.',
     section: '3.2',
     difficulty: 'basic',
   },
   {
     id: 316,
-    question: 'A three-phase four-wire board carries 30 A in L1, 20 A in L2 and nothing in L3. All the loads are resistive. What is the neutral current?',
-    options: [
-      '10 A',
-      '50 A',
-      '36.1 A',
-      '26.5 A',
-    ],
+    question:
+      'A three-phase four-wire board carries 30 A in L1, 20 A in L2 and nothing in L3. All the loads are resistive. What is the neutral current?',
+    options: ['10 A', '50 A', '36.1 A', '26.5 A'],
     correctAnswer: 3,
-    explanation: 'The two currents are 120° apart, so IN = √(I1² + I2² − I1I2) = √(30² + 20² − 30 x 20) = √(900 + 400 − 600) = √700 = 26.5 A. 50 A is the arithmetic sum, which would only apply if the currents were in phase. 10 A is the arithmetic difference, which would only apply if they were 180° apart. 36.1 A comes from √(30² + 20²), treating them as 90° apart instead of 120°.',
+    explanation:
+      'The two currents are 120° apart, so IN = √(I1² + I2² − I1I2) = √(30² + 20² − 30 x 20) = √(900 + 400 − 600) = √700 = 26.5 A. 50 A is the arithmetic sum, which would only apply if the currents were in phase. 10 A is the arithmetic difference, which would only apply if they were 180° apart. 36.1 A comes from √(30² + 20²), treating them as 90° apart instead of 120°.',
     section: '3.3',
     difficulty: 'advanced',
   },
   {
     id: 317,
-    question: 'A three-phase four-wire submain carries 25 A in L1, 18 A in L2 and 12 A in L3, all loads being resistive. What is the neutral current?',
-    options: [
-      '11.3 A',
-      '13.0 A',
-      '33.1 A',
-      '55.0 A',
-    ],
+    question:
+      'A three-phase four-wire submain carries 25 A in L1, 18 A in L2 and 12 A in L3, all loads being resistive. What is the neutral current?',
+    options: ['11.3 A', '13.0 A', '33.1 A', '55.0 A'],
     correctAnswer: 0,
-    explanation: 'IN = √(I1² + I2² + I3² − I1I2 − I2I3 − I3I1) = √(625 + 324 + 144 − 450 − 216 − 300) = √(1093 − 966) = √127 = 11.3 A. The neutral carries far less than any line because the three currents partly cancel. 55.0 A is the arithmetic sum, 13.0 A is simply the largest minus the smallest, and 33.1 A is √1093, which stops after the sum of the squares and omits the three cross terms that the 120° displacement introduces.',
+    explanation:
+      'IN = √(I1² + I2² + I3² − I1I2 − I2I3 − I3I1) = √(625 + 324 + 144 − 450 − 216 − 300) = √(1093 − 966) = √127 = 11.3 A. The neutral carries far less than any line because the three currents partly cancel. 55.0 A is the arithmetic sum, 13.0 A is simply the largest minus the smallest, and 33.1 A is √1093, which stops after the sum of the squares and omits the three cross terms that the 120° displacement introduces.',
     section: '3.3',
     difficulty: 'advanced',
   },
   {
     id: 318,
-    question: 'A 400 V three-phase star-connected heater has three 50 Ω elements with the star point connected to neutral. One element goes open circuit. What current now flows in the neutral?',
-    options: [
-      '8.0 A',
-      '4.6 A',
-      '9.2 A',
-      '13.9 A',
-    ],
+    question:
+      'A 400 V three-phase star-connected heater has three 50 Ω elements with the star point connected to neutral. One element goes open circuit. What current now flows in the neutral?',
+    options: ['8.0 A', '4.6 A', '9.2 A', '13.9 A'],
     correctAnswer: 1,
-    explanation: 'Phase voltage = 400 / √3 = 231 V, so each healthy element draws 231 / 50 = 4.6 A. Two equal currents 120° apart give a resultant of the same size as either one: IN = √(4.6² + 4.6² − 4.6 x 4.6) = 4.6 A. 9.2 A is the arithmetic sum of the two remaining currents. 8.0 A multiplies 4.6 A by √3, which applies to line and phase quantities, not to this phasor sum. 13.9 A adds all three original currents.',
+    explanation:
+      'Phase voltage = 400 / √3 = 231 V, so each healthy element draws 231 / 50 = 4.6 A. Two equal currents 120° apart give a resultant of the same size as either one: IN = √(4.6² + 4.6² − 4.6 x 4.6) = 4.6 A. 9.2 A is the arithmetic sum of the two remaining currents. 8.0 A multiplies 4.6 A by √3, which applies to line and phase quantities, not to this phasor sum. 13.9 A adds all three original currents.',
     section: '3.3',
     difficulty: 'advanced',
   },
   {
     id: 319,
-    question: 'Three 60 Ω heater elements are connected in delta across a 400 V three-phase supply. What total power do they dissipate?',
-    options: [
-      '2.67 kW',
-      '4.62 kW',
-      '8.00 kW',
-      '24.0 kW',
-    ],
+    question:
+      'Three 60 Ω heater elements are connected in delta across a 400 V three-phase supply. What total power do they dissipate?',
+    options: ['2.67 kW', '4.62 kW', '8.00 kW', '24.0 kW'],
     correctAnswer: 2,
-    explanation: 'In delta each element sees the full line voltage of 400 V, so element current = 400 / 60 = 6.67 A and power per element = 400 x 6.67 = 2667 W. Total = 3 x 2667 = 8000 W = 8.00 kW. 2.67 kW is the star value, three times smaller, because in star each element would only see 231 V. 4.62 kW comes from using √3 x V x I with the element current treated as a line current. 24.0 kW multiplies the total by three a second time.',
+    explanation:
+      'In delta each element sees the full line voltage of 400 V, so element current = 400 / 60 = 6.67 A and power per element = 400 x 6.67 = 2667 W. Total = 3 x 2667 = 8000 W = 8.00 kW. 2.67 kW is the star value, three times smaller, because in star each element would only see 231 V. 4.62 kW comes from using √3 x V x I with the element current treated as a line current. 24.0 kW multiplies the total by three a second time.',
     section: '3.3',
     difficulty: 'advanced',
   },
   {
     id: 320,
-    question: 'A delta-connected load has an impedance of 25 Ω in each phase winding and is fed from a 400 V three-phase supply. What line current flows?',
-    options: [
-      '9.2 A',
-      '16.0 A',
-      '48.0 A',
-      '27.7 A',
-    ],
+    question:
+      'A delta-connected load has an impedance of 25 Ω in each phase winding and is fed from a 400 V three-phase supply. What line current flows?',
+    options: ['9.2 A', '16.0 A', '48.0 A', '27.7 A'],
     correctAnswer: 3,
-    explanation: 'In delta the phase voltage equals the line voltage, so the winding current is 400 / 25 = 16 A. The line current is √3 times the phase current: 16 x 1.732 = 27.7 A. 16.0 A is the phase current, the value the question does not ask for. 9.2 A divides by √3 instead of multiplying, which is the star relationship applied to a delta load. 48.0 A multiplies by three rather than by √3.',
+    explanation:
+      'In delta the phase voltage equals the line voltage, so the winding current is 400 / 25 = 16 A. The line current is √3 times the phase current: 16 x 1.732 = 27.7 A. 16.0 A is the phase current, the value the question does not ask for. 9.2 A divides by √3 instead of multiplying, which is the star relationship applied to a delta load. 48.0 A multiplies by three rather than by √3.',
     section: '3.3',
     difficulty: 'advanced',
   },
   {
     id: 321,
-    question: 'A star-connected load has an impedance of 30 Ω in each phase and is fed from a 400 V three-phase supply. What line current flows?',
-    options: [
-      '7.7 A',
-      '4.4 A',
-      '13.3 A',
-      '23.1 A',
-    ],
+    question:
+      'A star-connected load has an impedance of 30 Ω in each phase and is fed from a 400 V three-phase supply. What line current flows?',
+    options: ['7.7 A', '4.4 A', '13.3 A', '23.1 A'],
     correctAnswer: 0,
-    explanation: 'In star each phase sees 400 / √3 = 231 V, so the phase current is 231 / 30 = 7.7 A. In star the line current equals the phase current, so the answer is 7.7 A. 13.3 A applies the full 400 V across one phase, which is the delta condition. 4.4 A divides the phase current by √3 a second time, and 23.1 A multiplies it by three.',
+    explanation:
+      'In star each phase sees 400 / √3 = 231 V, so the phase current is 231 / 30 = 7.7 A. In star the line current equals the phase current, so the answer is 7.7 A. 13.3 A applies the full 400 V across one phase, which is the delta condition. 4.4 A divides the phase current by √3 a second time, and 23.1 A multiplies it by three.',
     section: '3.3',
     difficulty: 'advanced',
   },
   {
     id: 322,
-    question: 'A three-phase motor delivers 11 kW of mechanical output at 400 V with an efficiency of 89 % and a power factor of 0.86. What line current does it take at full load?',
-    options: [
-      '17.8 A',
-      '20.7 A',
-      '18.5 A',
-      '35.9 A',
-    ],
+    question:
+      'A three-phase motor delivers 11 kW of mechanical output at 400 V with an efficiency of 89 % and a power factor of 0.86. What line current does it take at full load?',
+    options: ['17.8 A', '20.7 A', '18.5 A', '35.9 A'],
     correctAnswer: 1,
-    explanation: 'Electrical input = output / efficiency = 11 000 / 0.89 = 12 360 W. Then I = P / (√3 x VL x pf) = 12 360 / (1.732 x 400 x 0.86) = 12 360 / 596 = 20.7 A. 18.5 A forgets the efficiency and uses the 11 kW shaft output as the input power. 17.8 A leaves out the power factor. 35.9 A drops the √3, treating a three-phase supply as though it were single-phase, which understates the current by about 42 %.',
+    explanation:
+      'Electrical input = output / efficiency = 11 000 / 0.89 = 12 360 W. Then I = P / (√3 x VL x pf) = 12 360 / (1.732 x 400 x 0.86) = 12 360 / 596 = 20.7 A. 18.5 A forgets the efficiency and uses the 11 kW shaft output as the input power. 17.8 A leaves out the power factor. 35.9 A drops the √3, treating a three-phase supply as though it were single-phase, which understates the current by about 42 %.',
     section: '3.3',
     difficulty: 'advanced',
   },
   {
     id: 323,
-    question: 'A balanced three-phase load draws a line current of 40 A at 400 V line voltage with a power factor of 0.9 lagging. What reactive power does it draw?',
-    options: [
-      '6.97 kvar',
-      '24.9 kvar',
-      '12.1 kvar',
-      '27.7 kvar',
-    ],
+    question:
+      'A balanced three-phase load draws a line current of 40 A at 400 V line voltage with a power factor of 0.9 lagging. What reactive power does it draw?',
+    options: ['6.97 kvar', '24.9 kvar', '12.1 kvar', '27.7 kvar'],
     correctAnswer: 2,
-    explanation: 'Apparent power S = √3 x VL x IL = 1.732 x 400 x 40 = 27 713 VA = 27.7 kVA. sin φ = √(1 − 0.9²) = √0.19 = 0.436. Q = S x sin φ = 27.7 x 0.436 = 12.1 kvar. 24.9 kvar is the true power S x 0.9, which is what you get by using the power factor where the sine of the angle is needed. 27.7 kvar is the apparent power itself. 6.97 kvar drops the √3.',
+    explanation:
+      'Apparent power S = √3 x VL x IL = 1.732 x 400 x 40 = 27 713 VA = 27.7 kVA. sin φ = √(1 − 0.9²) = √0.19 = 0.436. Q = S x sin φ = 27.7 x 0.436 = 12.1 kvar. 24.9 kvar is the true power S x 0.9, which is what you get by using the power factor where the sine of the angle is needed. 27.7 kvar is the apparent power itself. 6.97 kvar drops the √3.',
     section: '3.3',
     difficulty: 'advanced',
   },
   {
     id: 324,
-    question: 'A star-connected three-phase system has a line voltage of 415 V. What is the phase voltage?',
-    options: [
-      '208 V',
-      '719 V',
-      '415 V',
-      '240 V',
-    ],
+    question:
+      'A star-connected three-phase system has a line voltage of 415 V. What is the phase voltage?',
+    options: ['208 V', '719 V', '415 V', '240 V'],
     correctAnswer: 3,
-    explanation: 'In star, VL = √3 x Vph, so Vph = VL / √3 = 415 / 1.732 = 240 V. 719 V multiplies by √3 instead of dividing, which would be the answer if the 415 V had been the phase value. 208 V halves the line voltage, and 415 V would only be right for a delta connection, where phase and line voltages are equal.',
+    explanation:
+      'In star, VL = √3 x Vph, so Vph = VL / √3 = 415 / 1.732 = 240 V. 719 V multiplies by √3 instead of dividing, which would be the answer if the 415 V had been the phase value. 208 V halves the line voltage, and 415 V would only be right for a delta connection, where phase and line voltages are equal.',
     section: '3.3',
     difficulty: 'intermediate',
   },
   {
     id: 325,
-    question: 'A balanced delta-connected load draws a line current of 34.6 A. What current flows in each phase winding?',
-    options: [
-      '20.0 A',
-      '11.5 A',
-      '34.6 A',
-      '59.9 A',
-    ],
+    question:
+      'A balanced delta-connected load draws a line current of 34.6 A. What current flows in each phase winding?',
+    options: ['20.0 A', '11.5 A', '34.6 A', '59.9 A'],
     correctAnswer: 0,
-    explanation: 'In delta, IL = √3 x Iph, so Iph = IL / √3 = 34.6 / 1.732 = 20.0 A. 11.5 A divides by three instead of by √3. 34.6 A would be correct for a star connection, where the line and phase currents are equal. 59.9 A multiplies by √3 instead of dividing.',
+    explanation:
+      'In delta, IL = √3 x Iph, so Iph = IL / √3 = 34.6 / 1.732 = 20.0 A. 11.5 A divides by three instead of by √3. 34.6 A would be correct for a star connection, where the line and phase currents are equal. 59.9 A multiplies by √3 instead of dividing.',
     section: '3.3',
     difficulty: 'intermediate',
   },
@@ -4940,125 +4080,103 @@ export const module3Questions: Question[] = [
       'Copper loss falls in the most loaded phase',
     ],
     correctAnswer: 1,
-    explanation: 'When the three line currents are unequal they no longer cancel at the star point, so a resultant current flows in the neutral. That current produces I²R heating in a conductor that carries almost nothing when the board is balanced, and it does no useful work. Iron loss occurs in magnetic cores, not in conductors. The supply frequency is set by the generators and does not vary with load in this way. Copper loss rises, not falls, in the most heavily loaded phase.',
+    explanation:
+      'When the three line currents are unequal they no longer cancel at the star point, so a resultant current flows in the neutral. That current produces I²R heating in a conductor that carries almost nothing when the board is balanced, and it does no useful work. Iron loss occurs in magnetic cores, not in conductors. The supply frequency is set by the generators and does not vary with load in this way. Copper loss rises, not falls, in the most heavily loaded phase.',
     section: '3.3',
     difficulty: 'intermediate',
   },
   {
     id: 327,
-    question: 'A single-phase transformer has 800 primary turns and 40 secondary turns. The primary is fed at 230 V and the secondary supplies a 5 Ω resistive load. Assuming no losses, what primary current flows?',
-    options: [
-      '2.30 A',
-      '0.46 A',
-      '0.115 A',
-      '46.0 A',
-    ],
+    question:
+      'A single-phase transformer has 800 primary turns and 40 secondary turns. The primary is fed at 230 V and the secondary supplies a 5 Ω resistive load. Assuming no losses, what primary current flows?',
+    options: ['2.30 A', '0.46 A', '0.115 A', '46.0 A'],
     correctAnswer: 2,
-    explanation: 'Secondary voltage V2 = 230 x 40/800 = 11.5 V. Secondary current I2 = 11.5 / 5 = 2.3 A. The current ratio is the inverse of the voltage ratio, so I1 = 2.3 x 40/800 = 0.115 A. Checking by power: 11.5 x 2.3 = 26.5 W, and 26.5 / 230 = 0.115 A. 2.30 A is the secondary current, not the primary. 46.0 A comes from inverting the turns ratio when transferring the current, so the step-down transformer appears to step the current up on the wrong side. 0.46 A comes from reading the ratio as 10:1 rather than 20:1.',
+    explanation:
+      'Secondary voltage V2 = 230 x 40/800 = 11.5 V. Secondary current I2 = 11.5 / 5 = 2.3 A. The current ratio is the inverse of the voltage ratio, so I1 = 2.3 x 40/800 = 0.115 A. Checking by power: 11.5 x 2.3 = 26.5 W, and 26.5 / 230 = 0.115 A. 2.30 A is the secondary current, not the primary. 46.0 A comes from inverting the turns ratio when transferring the current, so the step-down transformer appears to step the current up on the wrong side. 0.46 A comes from reading the ratio as 10:1 rather than 20:1.',
     section: '3.4',
     difficulty: 'advanced',
   },
   {
     id: 328,
-    question: 'A 250 kVA transformer has iron losses of 1.2 kW and full-load copper losses of 3.0 kW. What is its efficiency when delivering 200 kW at unity power factor?',
-    options: [
-      '97.94 %',
-      '98.23 %',
-      '99.05 %',
-      '98.46 %',
-    ],
+    question:
+      'A 250 kVA transformer has iron losses of 1.2 kW and full-load copper losses of 3.0 kW. What is its efficiency when delivering 200 kW at unity power factor?',
+    options: ['97.94 %', '98.23 %', '99.05 %', '98.46 %'],
     correctAnswer: 3,
-    explanation: 'At unity power factor 200 kW is 200 kVA, so the load fraction is 200/250 = 0.8. Copper loss varies with the square of the load: 3.0 x 0.8² = 1.92 kW. Iron loss is constant at 1.2 kW. Total loss = 3.12 kW, input = 203.12 kW, efficiency = 200 / 203.12 = 98.46 %. 97.94 % uses the full-load copper loss without scaling it. 98.23 % scales the copper loss in direct proportion to load instead of as the square. 99.05 % leaves the iron loss out.',
+    explanation:
+      'At unity power factor 200 kW is 200 kVA, so the load fraction is 200/250 = 0.8. Copper loss varies with the square of the load: 3.0 x 0.8² = 1.92 kW. Iron loss is constant at 1.2 kW. Total loss = 3.12 kW, input = 203.12 kW, efficiency = 200 / 203.12 = 98.46 %. 97.94 % uses the full-load copper loss without scaling it. 98.23 % scales the copper loss in direct proportion to load instead of as the square. 99.05 % leaves the iron loss out.',
     section: '3.4',
     difficulty: 'advanced',
   },
   {
     id: 329,
-    question: 'An 11 kV/400 V three-phase transformer is rated at 315 kVA. What is its full-load primary line current?',
-    options: [
-      '16.5 A',
-      '9.5 A',
-      '28.6 A',
-      '454.7 A',
-    ],
+    question:
+      'An 11 kV/400 V three-phase transformer is rated at 315 kVA. What is its full-load primary line current?',
+    options: ['16.5 A', '9.5 A', '28.6 A', '454.7 A'],
     correctAnswer: 0,
-    explanation: 'I = S / (√3 x VL) = 315 000 / (1.732 x 11 000) = 315 000 / 19 053 = 16.5 A. 28.6 A drops the √3 and treats the primary as single-phase. 9.5 A divides by three instead of by √3. 454.7 A is the secondary current, worked out at 400 V, which is the right sum applied to the wrong winding.',
+    explanation:
+      'I = S / (√3 x VL) = 315 000 / (1.732 x 11 000) = 315 000 / 19 053 = 16.5 A. 28.6 A drops the √3 and treats the primary as single-phase. 9.5 A divides by three instead of by √3. 454.7 A is the secondary current, worked out at 400 V, which is the right sum applied to the wrong winding.',
     section: '3.4',
     difficulty: 'intermediate',
   },
   {
     id: 330,
-    question: 'A transformer secondary measures 240 V off load and 228 V at full load. What is its voltage regulation?',
-    options: [
-      '5.26 %',
-      '5.00 %',
-      '12.0 %',
-      '95.0 %',
-    ],
+    question:
+      'A transformer secondary measures 240 V off load and 228 V at full load. What is its voltage regulation?',
+    options: ['5.26 %', '5.00 %', '12.0 %', '95.0 %'],
     correctAnswer: 1,
-    explanation: 'Regulation = (no-load voltage − full-load voltage) / no-load voltage x 100 = (240 − 228) / 240 x 100 = 12 / 240 x 100 = 5.00 %. 5.26 % uses the full-load voltage as the base, which is the commonest slip in this calculation. 12.0 % quotes the volt difference itself as though it were a percentage, and 95.0 % is the ratio of the two voltages rather than the drop between them.',
+    explanation:
+      'Regulation = (no-load voltage − full-load voltage) / no-load voltage x 100 = (240 − 228) / 240 x 100 = 12 / 240 x 100 = 5.00 %. 5.26 % uses the full-load voltage as the base, which is the commonest slip in this calculation. 12.0 % quotes the volt difference itself as though it were a percentage, and 95.0 % is the ratio of the two voltages rather than the drop between them.',
     section: '3.4',
     difficulty: 'intermediate',
   },
   {
     id: 331,
-    question: 'A 100 kVA transformer supplies a load of 80 kW at a power factor of 0.8 lagging. What percentage of its rating is being used?',
-    options: [
-      '64 %',
-      '80 %',
-      '100 %',
-      '125 %',
-    ],
+    question:
+      'A 100 kVA transformer supplies a load of 80 kW at a power factor of 0.8 lagging. What percentage of its rating is being used?',
+    options: ['64 %', '80 %', '100 %', '125 %'],
     correctAnswer: 2,
-    explanation: 'A transformer is rated in kVA because its losses depend on current, not on how much of that current does useful work. Apparent power S = P / pf = 80 / 0.8 = 100 kVA, so the transformer is fully loaded at 100 %. 80 % is the trap: comparing 80 kW directly against a 100 kVA rating ignores the reactive current the transformer must also carry. 64 % multiplies by the power factor a second time, and 125 % divides by the square of the power factor.',
+    explanation:
+      'A transformer is rated in kVA because its losses depend on current, not on how much of that current does useful work. Apparent power S = P / pf = 80 / 0.8 = 100 kVA, so the transformer is fully loaded at 100 %. 80 % is the trap: comparing 80 kW directly against a 100 kVA rating ignores the reactive current the transformer must also carry. 64 % multiplies by the power factor a second time, and 125 % divides by the square of the power factor.',
     section: '3.4',
     difficulty: 'advanced',
   },
   {
     id: 332,
-    question: 'A 1000 kVA transformer with a 400 V three-phase secondary has a percentage impedance of 6 %. What is the prospective short-circuit current at its secondary terminals?',
-    options: [
-      '87 A',
-      '1443 A',
-      '41 667 A',
-      '24 057 A',
-    ],
+    question:
+      'A 1000 kVA transformer with a 400 V three-phase secondary has a percentage impedance of 6 %. What is the prospective short-circuit current at its secondary terminals?',
+    options: ['87 A', '1443 A', '41 667 A', '24 057 A'],
     correctAnswer: 3,
-    explanation: 'Full-load secondary current = 1 000 000 / (1.732 x 400) = 1443 A. The percentage impedance says that 6 % of rated voltage drives full-load current through the transformer, so a full-voltage short circuit drives 100/6 times that: 1443 / 0.06 = 24 057 A. 1443 A is the full-load current itself. 87 A multiplies by 6 % instead of dividing, which gives a fault current smaller than the running current, an impossible result. 41 667 A drops the √3 from the full-load calculation.',
+    explanation:
+      'Full-load secondary current = 1 000 000 / (1.732 x 400) = 1443 A. The percentage impedance says that 6 % of rated voltage drives full-load current through the transformer, so a full-voltage short circuit drives 100/6 times that: 1443 / 0.06 = 24 057 A. 1443 A is the full-load current itself. 87 A multiplies by 6 % instead of dividing, which gives a fault current smaller than the running current, an impossible result. 41 667 A drops the √3 from the full-load calculation.',
     section: '3.4',
     difficulty: 'advanced',
   },
   {
     id: 333,
-    question: 'A transformer with a 230 V primary has 1500 primary turns. What secondary voltage is produced by a winding of 78 turns?',
-    options: [
-      '12.0 V',
-      '24.0 V',
-      '120 V',
-      '4423 V',
-    ],
+    question:
+      'A transformer with a 230 V primary has 1500 primary turns. What secondary voltage is produced by a winding of 78 turns?',
+    options: ['12.0 V', '24.0 V', '120 V', '4423 V'],
     correctAnswer: 0,
-    explanation: 'V2 = V1 x N2/N1 = 230 x 78/1500 = 230 x 0.052 = 12.0 V. 4423 V comes from inverting the ratio to N1/N2, which would turn a step-down transformer into a step-up one. 120 V is a factor-of-ten slip and 24.0 V comes from doubling the secondary turns.',
+    explanation:
+      'V2 = V1 x N2/N1 = 230 x 78/1500 = 230 x 0.052 = 12.0 V. 4423 V comes from inverting the ratio to N1/N2, which would turn a step-down transformer into a step-up one. 120 V is a factor-of-ten slip and 24.0 V comes from doubling the secondary turns.',
     section: '3.4',
     difficulty: 'intermediate',
   },
   {
     id: 334,
-    question: 'A 300/5 A current transformer has an ammeter connected to its secondary reading 3.2 A. What primary current is flowing?',
-    options: [
-      '0.05 A',
-      '192 A',
-      '60 A',
-      '16 A',
-    ],
+    question:
+      'A 300/5 A current transformer has an ammeter connected to its secondary reading 3.2 A. What primary current is flowing?',
+    options: ['0.05 A', '192 A', '60 A', '16 A'],
     correctAnswer: 1,
-    explanation: 'The ratio is 300/5 = 60:1, so the primary current is 60 times the secondary reading: 3.2 x 60 = 192 A. 16 A multiplies by 5 instead of by the ratio. 60 A quotes the ratio itself as a current. 0.05 A divides by the ratio instead of multiplying, which would make the primary current smaller than the secondary current in a step-down current transformer.',
+    explanation:
+      'The ratio is 300/5 = 60:1, so the primary current is 60 times the secondary reading: 3.2 x 60 = 192 A. 16 A multiplies by 5 instead of by the ratio. 60 A quotes the ratio itself as a current. 0.05 A divides by the ratio instead of multiplying, which would make the primary current smaller than the secondary current in a step-down current transformer.',
     section: '3.4',
     difficulty: 'intermediate',
   },
   {
     id: 335,
-    question: 'In a step-down transformer, how does the number of secondary turns compare with the number of primary turns?',
+    question:
+      'In a step-down transformer, how does the number of secondary turns compare with the number of primary turns?',
     options: [
       'There are exactly as many',
       'There are more of them',
@@ -5066,7 +4184,8 @@ export const module3Questions: Question[] = [
       'There are none at all',
     ],
     correctAnswer: 2,
-    explanation: 'The voltage ratio follows the turns ratio, so to produce a lower secondary voltage the secondary must have fewer turns than the primary. More turns would step the voltage up. An equal number of turns gives a one-to-one isolating transformer with no change in voltage. A winding with no turns would produce no output at all.',
+    explanation:
+      'The voltage ratio follows the turns ratio, so to produce a lower secondary voltage the secondary must have fewer turns than the primary. More turns would step the voltage up. An equal number of turns gives a one-to-one isolating transformer with no change in voltage. A winding with no turns would produce no output at all.',
     section: '3.4',
     difficulty: 'basic',
   },
@@ -5080,7 +4199,8 @@ export const module3Questions: Question[] = [
       'Field winding in series with the armature',
     ],
     correctAnswer: 3,
-    explanation: 'In a series machine the whole armature current also passes through the field winding, so at standstill the heavy starting current produces both a strong field and a strong armature current, and torque depends on the product of the two. This is why series motors are used for traction and cranes. A parallel (shunt) field is fed at constant voltage and gives a nearly constant field, so its starting torque is far lower. A separately excited field behaves in the same way as a shunt field. A squirrel cage belongs to an induction motor, not a d.c. machine.',
+    explanation:
+      'In a series machine the whole armature current also passes through the field winding, so at standstill the heavy starting current produces both a strong field and a strong armature current, and torque depends on the product of the two. This is why series motors are used for traction and cranes. A parallel (shunt) field is fed at constant voltage and gives a nearly constant field, so its starting torque is far lower. A separately excited field behaves in the same way as a shunt field. A squirrel cage belongs to an induction motor, not a d.c. machine.',
     section: '3.5',
     difficulty: 'basic',
   },
@@ -5094,7 +4214,8 @@ export const module3Questions: Question[] = [
       'It stays exactly constant at all values of load',
     ],
     correctAnswer: 0,
-    explanation: 'The shunt field is fed at constant voltage so the flux barely changes. Adding load increases the armature current, which increases the volt drop across the armature resistance and lowers the back emf, so the speed falls a little, typically by a few per cent between no load and full load. A rise in speed with load happens in no normal motor. A sharp fall is the series motor characteristic. The speed is nearly constant, but not exactly so, because the armature volt drop always grows with load.',
+    explanation:
+      'The shunt field is fed at constant voltage so the flux barely changes. Adding load increases the armature current, which increases the volt drop across the armature resistance and lowers the back emf, so the speed falls a little, typically by a few per cent between no load and full load. A rise in speed with load happens in no normal motor. A sharp fall is the series motor characteristic. The speed is nearly constant, but not exactly so, because the armature volt drop always grows with load.',
     section: '3.5',
     difficulty: 'intermediate',
   },
@@ -5108,105 +4229,85 @@ export const module3Questions: Question[] = [
       'Its commutator reverses and it runs backwards',
     ],
     correctAnswer: 1,
-    explanation: 'With no load the armature current is very small, so the series field is very weak. Speed varies inversely with flux, so the machine accelerates in an attempt to build enough back emf, and it can run away until centrifugal force damages the windings or commutator. The field current does not fall to zero, it falls to a small value, and a weak field produces overspeed rather than stalling. Armature current falls at light load rather than rising. Direction of rotation is unaffected by load.',
+    explanation:
+      'With no load the armature current is very small, so the series field is very weak. Speed varies inversely with flux, so the machine accelerates in an attempt to build enough back emf, and it can run away until centrifugal force damages the windings or commutator. The field current does not fall to zero, it falls to a small value, and a weak field produces overspeed rather than stalling. Armature current falls at light load rather than rising. Direction of rotation is unaffected by load.',
     section: '3.5',
     difficulty: 'intermediate',
   },
   {
     id: 339,
-    question: 'A d.c. shunt motor takes an armature current of 25 A from a 220 V supply. The armature resistance is 0.4 Ω. What mechanical power is developed in the armature?',
-    options: [
-      '250 W',
-      '5500 W',
-      '5250 W',
-      '5750 W',
-    ],
+    question:
+      'A d.c. shunt motor takes an armature current of 25 A from a 220 V supply. The armature resistance is 0.4 Ω. What mechanical power is developed in the armature?',
+    options: ['250 W', '5500 W', '5250 W', '5750 W'],
     correctAnswer: 2,
-    explanation: 'Back emf Eb = V − IaRa = 220 − (25 x 0.4) = 220 − 10 = 210 V. Mechanical power developed = Eb x Ia = 210 x 25 = 5250 W. 5500 W is the electrical input 220 x 25, which includes the 250 W lost as heat in the armature resistance. 250 W is that armature copper loss on its own. 5750 W adds the armature volt drop instead of subtracting it, which is the generator relationship, not the motor one.',
+    explanation:
+      'Back emf Eb = V − IaRa = 220 − (25 x 0.4) = 220 − 10 = 210 V. Mechanical power developed = Eb x Ia = 210 x 25 = 5250 W. 5500 W is the electrical input 220 x 25, which includes the 250 W lost as heat in the armature resistance. 250 W is that armature copper loss on its own. 5750 W adds the armature volt drop instead of subtracting it, which is the generator relationship, not the motor one.',
     section: '3.5',
     difficulty: 'advanced',
   },
   {
     id: 340,
-    question: 'A three-phase motor delivers 15 kW of mechanical output at a shaft speed of 1455 rev/min. What torque does it develop at the shaft?',
-    options: [
-      '1.6 N·m',
-      '10.3 N·m',
-      '95.5 N·m',
-      '98.4 N·m',
-    ],
+    question:
+      'A three-phase motor delivers 15 kW of mechanical output at a shaft speed of 1455 rev/min. What torque does it develop at the shaft?',
+    options: ['1.6 N·m', '10.3 N·m', '95.5 N·m', '98.4 N·m'],
     correctAnswer: 3,
-    explanation: 'Convert the speed to radians per second: ω = 2πN/60 = 2 x 3.142 x 1455 / 60 = 152.4 rad/s. T = P / ω = 15 000 / 152.4 = 98.4 N·m. 95.5 N·m is the tempting one: it uses the synchronous speed of 1500 rev/min instead of the actual shaft speed, and an induction motor never runs at synchronous speed. 10.3 N·m divides by rev/min without converting to rad/s, and 1.6 N·m leaves out the division by 60.',
+    explanation:
+      'Convert the speed to radians per second: ω = 2πN/60 = 2 x 3.142 x 1455 / 60 = 152.4 rad/s. T = P / ω = 15 000 / 152.4 = 98.4 N·m. 95.5 N·m is the tempting one: it uses the synchronous speed of 1500 rev/min instead of the actual shaft speed, and an induction motor never runs at synchronous speed. 10.3 N·m divides by rev/min without converting to rad/s, and 1.6 N·m leaves out the division by 60.',
     section: '3.5',
     difficulty: 'intermediate',
   },
   {
     id: 341,
-    question: 'A six-pole induction motor on a 50 Hz supply runs with a slip of 4 %. What is its shaft speed?',
-    options: [
-      '960 rev/min',
-      '500 rev/min',
-      '1040 rev/min',
-      '1440 rev/min',
-    ],
+    question:
+      'A six-pole induction motor on a 50 Hz supply runs with a slip of 4 %. What is its shaft speed?',
+    options: ['960 rev/min', '500 rev/min', '1040 rev/min', '1440 rev/min'],
     correctAnswer: 0,
-    explanation: 'Synchronous speed Ns = 120f / p = (120 x 50) / 6 = 1000 rev/min. Shaft speed N = Ns(1 − s) = 1000 x 0.96 = 960 rev/min. 1040 rev/min adds the slip instead of subtracting it, which would put the rotor above synchronous speed and make the machine a generator. 1440 rev/min is the familiar four-pole answer recalled rather than calculated. 500 rev/min uses six as the number of pole pairs rather than the number of poles.',
+    explanation:
+      'Synchronous speed Ns = 120f / p = (120 x 50) / 6 = 1000 rev/min. Shaft speed N = Ns(1 − s) = 1000 x 0.96 = 960 rev/min. 1040 rev/min adds the slip instead of subtracting it, which would put the rotor above synchronous speed and make the machine a generator. 1440 rev/min is the familiar four-pole answer recalled rather than calculated. 500 rev/min uses six as the number of pole pairs rather than the number of poles.',
     section: '3.5',
     difficulty: 'advanced',
   },
   {
     id: 342,
-    question: 'An eight-pole induction motor on a 50 Hz supply runs at 720 rev/min. What is the frequency of the rotor currents?',
-    options: [
-      '0.04 Hz',
-      '2.0 Hz',
-      '4.0 Hz',
-      '48.0 Hz',
-    ],
+    question:
+      'An eight-pole induction motor on a 50 Hz supply runs at 720 rev/min. What is the frequency of the rotor currents?',
+    options: ['0.04 Hz', '2.0 Hz', '4.0 Hz', '48.0 Hz'],
     correctAnswer: 1,
-    explanation: 'Synchronous speed = 120 x 50 / 8 = 750 rev/min. Slip s = (750 − 720) / 750 = 30/750 = 0.04, or 4 %. Rotor frequency = s x f = 0.04 x 50 = 2.0 Hz. 48.0 Hz uses (1 − s) x f, which is the wrong part of the relationship. 4.0 Hz reads the slip percentage straight off as a frequency without multiplying by 50. 0.04 Hz quotes the per-unit slip itself.',
+    explanation:
+      'Synchronous speed = 120 x 50 / 8 = 750 rev/min. Slip s = (750 − 720) / 750 = 30/750 = 0.04, or 4 %. Rotor frequency = s x f = 0.04 x 50 = 2.0 Hz. 48.0 Hz uses (1 − s) x f, which is the wrong part of the relationship. 4.0 Hz reads the slip percentage straight off as a frequency without multiplying by 50. 0.04 Hz quotes the per-unit slip itself.',
     section: '3.5',
     difficulty: 'advanced',
   },
   {
     id: 343,
-    question: 'A 400 V cage motor has a full-load current of 32 A and a direct-on-line starting current six times full load. What line current flows on the star position of a star-delta starter?',
-    options: [
-      '32 A',
-      '111 A',
-      '64 A',
-      '192 A',
-    ],
+    question:
+      'A 400 V cage motor has a full-load current of 32 A and a direct-on-line starting current six times full load. What line current flows on the star position of a star-delta starter?',
+    options: ['32 A', '111 A', '64 A', '192 A'],
     correctAnswer: 2,
-    explanation: 'Direct-on-line starting current = 6 x 32 = 192 A. Connecting the windings in star puts 1/√3 of the line voltage across each winding, which reduces the winding current by √3 and the line current by a further √3, so the line current falls to one third: 192 / 3 = 64 A. 192 A is the direct-on-line figure. 111 A divides by √3 only, which is the winding current reduction rather than the line current reduction. 32 A is the running full-load current.',
+    explanation:
+      'Direct-on-line starting current = 6 x 32 = 192 A. Connecting the windings in star puts 1/√3 of the line voltage across each winding, which reduces the winding current by √3 and the line current by a further √3, so the line current falls to one third: 192 / 3 = 64 A. 192 A is the direct-on-line figure. 111 A divides by √3 only, which is the winding current reduction rather than the line current reduction. 32 A is the running full-load current.',
     section: '3.5',
     difficulty: 'advanced',
   },
   {
     id: 344,
-    question: 'A motor rated 400 V, 50 Hz is driven by a variable frequency drive set to 30 Hz. What stator voltage must the drive apply to hold the flux constant?',
-    options: [
-      '200 V',
-      '533 V',
-      '400 V',
-      '240 V',
-    ],
+    question:
+      'A motor rated 400 V, 50 Hz is driven by a variable frequency drive set to 30 Hz. What stator voltage must the drive apply to hold the flux constant?',
+    options: ['200 V', '533 V', '400 V', '240 V'],
     correctAnswer: 3,
-    explanation: 'Flux is proportional to V/f, so the drive holds that ratio constant. At the rating point V/f = 400/50 = 8 V per Hz. At 30 Hz the voltage must be 8 x 30 = 240 V. Holding 400 V at 30 Hz would raise the flux by a third and saturate the core, drawing heavy magnetising current. 533 V inverts the ratio and would be worse still. 200 V halves the rated voltage without reference to the frequency ratio.',
+    explanation:
+      'Flux is proportional to V/f, so the drive holds that ratio constant. At the rating point V/f = 400/50 = 8 V per Hz. At 30 Hz the voltage must be 8 x 30 = 240 V. Holding 400 V at 30 Hz would raise the flux by a third and saturate the core, drawing heavy magnetising current. 533 V inverts the ratio and would be worse still. 200 V halves the rated voltage without reference to the frequency ratio.',
     section: '3.5',
     difficulty: 'intermediate',
   },
   {
     id: 345,
-    question: 'A three-phase motor takes 28 A at 400 V with a power factor of 0.87 and has an efficiency of 90 %. What mechanical output does it deliver?',
-    options: [
-      '15.2 kW',
-      '8.8 kW',
-      '16.9 kW',
-      '18.8 kW',
-    ],
+    question:
+      'A three-phase motor takes 28 A at 400 V with a power factor of 0.87 and has an efficiency of 90 %. What mechanical output does it deliver?',
+    options: ['15.2 kW', '8.8 kW', '16.9 kW', '18.8 kW'],
     correctAnswer: 0,
-    explanation: 'Apparent power = √3 x 400 x 28 = 19 399 VA. Electrical input = 19 399 x 0.87 = 16 877 W. Mechanical output = input x efficiency = 16 877 x 0.9 = 15 189 W, or 15.2 kW. 16.9 kW is the electrical input, obtained by forgetting the efficiency. 18.8 kW divides by the efficiency instead of multiplying, which would make the shaft output greater than the electrical input. 8.8 kW drops the √3.',
+    explanation:
+      'Apparent power = √3 x 400 x 28 = 19 399 VA. Electrical input = 19 399 x 0.87 = 16 877 W. Mechanical output = input x efficiency = 16 877 x 0.9 = 15 189 W, or 15.2 kW. 16.9 kW is the electrical input, obtained by forgetting the efficiency. 18.8 kW divides by the efficiency instead of multiplying, which would make the shaft output greater than the electrical input. 8.8 kW drops the √3.',
     section: '3.5',
     difficulty: 'advanced',
   },
@@ -5220,7 +4321,8 @@ export const module3Questions: Question[] = [
       'Motor windings must be reconnected into star to run',
     ],
     correctAnswer: 1,
-    explanation: 'Torque varies with the square of the applied voltage. In star each winding sees 1/√3 of the line voltage, so the torque falls to one third of the direct-on-line value at the same time as the current does. On a load that already demands high breakaway torque the motor may not accelerate far enough to change over. Starting current falls rather than rises. Frequency is fixed by the supply and a star-delta starter cannot alter it. The windings run in delta, not star, once the changeover has taken place.',
+    explanation:
+      'Torque varies with the square of the applied voltage. In star each winding sees 1/√3 of the line voltage, so the torque falls to one third of the direct-on-line value at the same time as the current does. On a load that already demands high breakaway torque the motor may not accelerate far enough to change over. Starting current falls rather than rises. Frequency is fixed by the supply and a star-delta starter cannot alter it. The windings run in delta, not star, once the changeover has taken place.',
     section: '3.5',
     difficulty: 'intermediate',
   },
@@ -5234,27 +4336,26 @@ export const module3Questions: Question[] = [
       'Its supply frequency is too low to induce torque',
     ],
     correctAnswer: 2,
-    explanation: 'A single winding fed from one phase produces a field that pulses along one axis rather than rotating, so it exerts equal torque in both directions at standstill and the rotor stays put. Once turning, the motor develops torque, which is why an auxiliary winding or capacitor is used to give the field an initial rotation. The rotor bars are permanently short circuited by the end rings. The supply frequency is the same as that used by three-phase motors. A field rotating faster than the rotor is the normal running condition of every induction motor.',
+    explanation:
+      'A single winding fed from one phase produces a field that pulses along one axis rather than rotating, so it exerts equal torque in both directions at standstill and the rotor stays put. Once turning, the motor develops torque, which is why an auxiliary winding or capacitor is used to give the field an initial rotation. The rotor bars are permanently short circuited by the end rings. The supply frequency is the same as that used by three-phase motors. A field rotating faster than the rotor is the normal running condition of every induction motor.',
     section: '3.5',
     difficulty: 'intermediate',
   },
   {
     id: 348,
-    question: 'Above what rating does BS 7671 require the control equipment of an electric motor to incorporate overload protection?',
-    options: [
-      '3.0 kW',
-      '0.75 kW',
-      '1.5 kW',
-      '0.37 kW',
-    ],
+    question:
+      'Above what rating does BS 7671 require the control equipment of an electric motor to incorporate overload protection?',
+    options: ['3.0 kW', '0.75 kW', '1.5 kW', '0.37 kW'],
     correctAnswer: 3,
-    explanation: 'Regulation 552.1.2 requires every electric motor having a rating exceeding 0.37 kW to be provided with control equipment incorporating means of protection against overload of the motor. Below that figure the winding is generally able to withstand a stalled condition without the risk of fire. The other values are common motor frame ratings but none of them is the threshold stated in BS 7671.',
+    explanation:
+      'Regulation 552.1.2 requires every electric motor having a rating exceeding 0.37 kW to be provided with control equipment incorporating means of protection against overload of the motor. Below that figure the winding is generally able to withstand a stalled condition without the risk of fire. The other values are common motor frame ratings but none of them is the threshold stated in BS 7671.',
     section: '3.5',
     difficulty: 'basic',
   },
   {
     id: 349,
-    question: 'Which motor type is chosen where the shaft speed must stay exactly locked to the supply frequency?',
+    question:
+      'Which motor type is chosen where the shaft speed must stay exactly locked to the supply frequency?',
     options: [
       'Synchronous motor',
       'Wound-rotor motor',
@@ -5262,119 +4363,96 @@ export const module3Questions: Question[] = [
       'Shaded-pole motor',
     ],
     correctAnswer: 0,
-    explanation: 'A synchronous motor has a rotor excited so that it locks to the rotating stator field, so it turns at synchronous speed with no slip whatever the load, up to the point where it pulls out. Every induction machine, whether wound-rotor, capacitor-start or shaded-pole, must run slower than the field in order to induce rotor current and produce torque, so its speed always falls as load is applied.',
+    explanation:
+      'A synchronous motor has a rotor excited so that it locks to the rotating stator field, so it turns at synchronous speed with no slip whatever the load, up to the point where it pulls out. Every induction machine, whether wound-rotor, capacitor-start or shaded-pole, must run slower than the field in order to induce rotor current and produce torque, so its speed always falls as load is applied.',
     section: '3.5',
     difficulty: 'basic',
   },
   {
     id: 350,
-    question: 'A 30 kW load runs at a power factor of 0.72 lagging. What capacitive reactive power is needed to correct it to 0.96 lagging?',
-    options: [
-      '8.8 kvar',
-      '20.2 kvar',
-      '10.4 kvar',
-      '28.9 kvar',
-    ],
+    question:
+      'A 30 kW load runs at a power factor of 0.72 lagging. What capacitive reactive power is needed to correct it to 0.96 lagging?',
+    options: ['8.8 kvar', '20.2 kvar', '10.4 kvar', '28.9 kvar'],
     correctAnswer: 1,
-    explanation: 'Work in kvar at each end. At 0.72, φ1 = 43.9° and tan φ1 = 0.964, so Q1 = 30 x 0.964 = 28.9 kvar. At 0.96, φ2 = 16.3° and tan φ2 = 0.292, so Q2 = 30 x 0.292 = 8.75 kvar. The capacitor must supply the difference: 28.9 − 8.75 = 20.2 kvar. 28.9 kvar corrects all the way to unity, which over-corrects. 8.75 kvar is only the reactive power that remains after correction. 10.4 kvar is the difference between the two kVA figures (41.7 − 31.3), and kVA cannot be subtracted like that because the two values lie at different angles.',
+    explanation:
+      'Work in kvar at each end. At 0.72, φ1 = 43.9° and tan φ1 = 0.964, so Q1 = 30 x 0.964 = 28.9 kvar. At 0.96, φ2 = 16.3° and tan φ2 = 0.292, so Q2 = 30 x 0.292 = 8.75 kvar. The capacitor must supply the difference: 28.9 − 8.75 = 20.2 kvar. 28.9 kvar corrects all the way to unity, which over-corrects. 8.75 kvar is only the reactive power that remains after correction. 10.4 kvar is the difference between the two kVA figures (41.7 − 31.3), and kVA cannot be subtracted like that because the two values lie at different angles.',
     section: '3.6',
     difficulty: 'advanced',
   },
   {
     id: 351,
-    question: 'A single-phase load needs 6 kvar of capacitive correction at 230 V, 50 Hz. What capacitance is required?',
-    options: [
-      '0.36 µF',
-      '36 µF',
-      '361 µF',
-      '3610 µF',
-    ],
+    question:
+      'A single-phase load needs 6 kvar of capacitive correction at 230 V, 50 Hz. What capacitance is required?',
+    options: ['0.36 µF', '36 µF', '361 µF', '3610 µF'],
     correctAnswer: 2,
-    explanation: 'Capacitor current Ic = Q / V = 6000 / 230 = 26.1 A. Capacitive reactance Xc = V / Ic = 230 / 26.1 = 8.82 Ω. C = 1 / (2πfXc) = 1 / (2 x 3.142 x 50 x 8.82) = 1 / 2770 = 3.61 x 10⁻⁴ F, which is 361 µF. The three wrong answers are all prefix slips of a factor of ten or a thousand, which is exactly what happens when farads and microfarads are mixed part way through the working.',
+    explanation:
+      'Capacitor current Ic = Q / V = 6000 / 230 = 26.1 A. Capacitive reactance Xc = V / Ic = 230 / 26.1 = 8.82 Ω. C = 1 / (2πfXc) = 1 / (2 x 3.142 x 50 x 8.82) = 1 / 2770 = 3.61 x 10⁻⁴ F, which is 361 µF. The three wrong answers are all prefix slips of a factor of ten or a thousand, which is exactly what happens when farads and microfarads are mixed part way through the working.',
     section: '3.6',
     difficulty: 'advanced',
   },
   {
     id: 352,
-    question: 'A 400 V three-phase load takes 60 A at 0.75 power factor lagging. After correction to 0.95 lagging, what line current does the supply carry?',
-    options: [
-      '45.0 A',
-      '76.0 A',
-      '60.0 A',
-      '47.4 A',
-    ],
+    question:
+      'A 400 V three-phase load takes 60 A at 0.75 power factor lagging. After correction to 0.95 lagging, what line current does the supply carry?',
+    options: ['45.0 A', '76.0 A', '60.0 A', '47.4 A'],
     correctAnswer: 3,
-    explanation: 'Correction does not change the true power, only the current needed to deliver it. P = √3 x 400 x 60 x 0.75 = 31 177 W. After correction, I = P / (√3 x 400 x 0.95) = 31 177 / 658 = 47.4 A. The short cut is I2 = I1 x pf1 / pf2 = 60 x 0.75 / 0.95 = 47.4 A. 45.0 A multiplies the current by the old power factor and forgets the new one. 76.0 A inverts the ratio, making the current rise. 60.0 A assumes correction changes nothing, but reducing the reactive current is precisely what it does.',
+    explanation:
+      'Correction does not change the true power, only the current needed to deliver it. P = √3 x 400 x 60 x 0.75 = 31 177 W. After correction, I = P / (√3 x 400 x 0.95) = 31 177 / 658 = 47.4 A. The short cut is I2 = I1 x pf1 / pf2 = 60 x 0.75 / 0.95 = 47.4 A. 45.0 A multiplies the current by the old power factor and forgets the new one. 76.0 A inverts the ratio, making the current rise. 60.0 A assumes correction changes nothing, but reducing the reactive current is precisely what it does.',
     section: '3.6',
     difficulty: 'advanced',
   },
   {
     id: 353,
-    question: 'A supply meter records 48 kW and 60 kVA on an installation. What reactive power is being drawn?',
-    options: [
-      '36 kvar',
-      '12 kvar',
-      '38.4 kvar',
-      '76.8 kvar',
-    ],
+    question:
+      'A supply meter records 48 kW and 60 kVA on an installation. What reactive power is being drawn?',
+    options: ['36 kvar', '12 kvar', '38.4 kvar', '76.8 kvar'],
     correctAnswer: 0,
-    explanation: 'The power triangle gives S² = P² + Q², so Q = √(S² − P²) = √(60² − 48²) = √(3600 − 2304) = √1296 = 36 kvar. 12 kvar is 60 − 48, the arithmetic difference, which ignores that the three quantities form a right-angled triangle. 76.8 kvar adds the squares instead of subtracting them. 38.4 kvar multiplies the true power by the power factor of 0.8.',
+    explanation:
+      'The power triangle gives S² = P² + Q², so Q = √(S² − P²) = √(60² − 48²) = √(3600 − 2304) = √1296 = 36 kvar. 12 kvar is 60 − 48, the arithmetic difference, which ignores that the three quantities form a right-angled triangle. 76.8 kvar adds the squares instead of subtracting them. 38.4 kvar multiplies the true power by the power factor of 0.8.',
     section: '3.6',
     difficulty: 'intermediate',
   },
   {
     id: 354,
-    question: 'A single-phase motor takes 9 A from a 230 V supply and dissipates 1.45 kW. What is its power factor?',
-    options: [
-      '0.0007',
-      '0.70',
-      '0.50',
-      '1.43',
-    ],
+    question:
+      'A single-phase motor takes 9 A from a 230 V supply and dissipates 1.45 kW. What is its power factor?',
+    options: ['0.0007', '0.70', '0.50', '1.43'],
     correctAnswer: 1,
-    explanation: 'Apparent power S = V x I = 230 x 9 = 2070 VA. Power factor = true power / apparent power = 1450 / 2070 = 0.70. 1.43 inverts the ratio to kVA over kW, and a power factor can never exceed one. 0.50 uses the peak supply voltage of 325 V instead of the rms value. 0.0007 leaves the 1.45 kW in kilowatts while the apparent power is in volt amperes, a factor of a thousand out.',
+    explanation:
+      'Apparent power S = V x I = 230 x 9 = 2070 VA. Power factor = true power / apparent power = 1450 / 2070 = 0.70. 1.43 inverts the ratio to kVA over kW, and a power factor can never exceed one. 0.50 uses the peak supply voltage of 325 V instead of the rms value. 0.0007 leaves the 1.45 kW in kilowatts while the apparent power is in volt amperes, a factor of a thousand out.',
     section: '3.6',
     difficulty: 'intermediate',
   },
   {
     id: 355,
-    question: 'A series circuit has a resistance of 16 Ω and an inductive reactance of 12 Ω. What is its power factor?',
-    options: [
-      '0.60',
-      '0.75',
-      '0.80',
-      '1.33',
-    ],
+    question:
+      'A series circuit has a resistance of 16 Ω and an inductive reactance of 12 Ω. What is its power factor?',
+    options: ['0.60', '0.75', '0.80', '1.33'],
     correctAnswer: 2,
-    explanation: 'Z = √(16² + 12²) = √(256 + 144) = √400 = 20 Ω. Power factor = cos φ = R / Z = 16 / 20 = 0.80 lagging. 0.60 uses X/Z, which is the sine of the angle, not the cosine. 0.75 uses R/X, which is the tangent of the angle inverted. 1.33 is X/R the other way up, and no power factor can be greater than unity.',
+    explanation:
+      'Z = √(16² + 12²) = √(256 + 144) = √400 = 20 Ω. Power factor = cos φ = R / Z = 16 / 20 = 0.80 lagging. 0.60 uses X/Z, which is the sine of the angle, not the cosine. 0.75 uses R/X, which is the tangent of the angle inverted. 1.33 is X/R the other way up, and no power factor can be greater than unity.',
     section: '3.6',
     difficulty: 'advanced',
   },
   {
     id: 356,
-    question: 'An LED driver takes 4 A rms from a 230 V supply and consumes 690 W, but its current waveform is far from sinusoidal. What is its total power factor?',
-    options: [
-      '0.53',
-      '0.66',
-      '1.33',
-      '0.75',
-    ],
+    question:
+      'An LED driver takes 4 A rms from a 230 V supply and consumes 690 W, but its current waveform is far from sinusoidal. What is its total power factor?',
+    options: ['0.53', '0.66', '1.33', '0.75'],
     correctAnswer: 3,
-    explanation: 'Total power factor is always true power divided by apparent power, whatever the waveform shape: 690 / (230 x 4) = 690 / 920 = 0.75. This is lower than the displacement power factor the driver would show on a phase-angle meter, because the harmonic current adds to the rms value without adding any true power. 1.33 inverts the ratio. 0.66 is √(1 − 0.75²), which is the sine of the angle, not the power factor. 0.53 uses the peak voltage of 325 V in place of the rms value.',
+    explanation:
+      'Total power factor is always true power divided by apparent power, whatever the waveform shape: 690 / (230 x 4) = 690 / 920 = 0.75. This is lower than the displacement power factor the driver would show on a phase-angle meter, because the harmonic current adds to the rms value without adding any true power. 1.33 inverts the ratio. 0.66 is √(1 − 0.75²), which is the sine of the angle, not the power factor. 0.53 uses the peak voltage of 325 V in place of the rms value.',
     section: '3.6',
     difficulty: 'advanced',
   },
   {
     id: 357,
-    question: 'A three-phase installation draws 45 kVA at 0.82 power factor lagging from a 400 V supply. How much capacitive reactive power is needed to raise its power factor to unity?',
-    options: [
-      '25.8 kvar',
-      '8.1 kvar',
-      '36.9 kvar',
-      '45.0 kvar',
-    ],
+    question:
+      'A three-phase installation draws 45 kVA at 0.82 power factor lagging from a 400 V supply. How much capacitive reactive power is needed to raise its power factor to unity?',
+    options: ['25.8 kvar', '8.1 kvar', '36.9 kvar', '45.0 kvar'],
     correctAnswer: 0,
-    explanation: 'True power P = S x pf = 45 x 0.82 = 36.9 kW. sin φ = √(1 − 0.82²) = √0.3276 = 0.572, so Q = S x sin φ = 45 x 0.572 = 25.8 kvar. To reach unity the capacitors must cancel all of it, so 25.8 kvar is required. 36.9 kvar is the true power, quoted in the wrong unit. 45.0 kvar is the apparent power. 8.1 kvar is 45 − 36.9, which subtracts two sides of a right-angled triangle as though they were in line.',
+    explanation:
+      'True power P = S x pf = 45 x 0.82 = 36.9 kW. sin φ = √(1 − 0.82²) = √0.3276 = 0.572, so Q = S x sin φ = 45 x 0.572 = 25.8 kvar. To reach unity the capacitors must cancel all of it, so 25.8 kvar is required. 36.9 kvar is the true power, quoted in the wrong unit. 45.0 kvar is the apparent power. 8.1 kvar is 45 − 36.9, which subtracts two sides of a right-angled triangle as though they were in line.',
     section: '3.6',
     difficulty: 'advanced',
   },
@@ -5388,13 +4466,15 @@ export const module3Questions: Question[] = [
       'An extra winding added to the rotor circuit',
     ],
     correctAnswer: 1,
-    explanation: 'The motor draws a lagging magnetising current. A capacitor draws a leading current, so connecting one across the terminals supplies that magnetising current locally and the supply cable no longer has to carry it. A choke is itself inductive and would make the lag worse. A resistor draws current in phase with the voltage and adds real load without cancelling any reactive current. Rotor windings affect the machine\'s torque and slip characteristics, not the power factor seen at the terminals.',
+    explanation:
+      "The motor draws a lagging magnetising current. A capacitor draws a leading current, so connecting one across the terminals supplies that magnetising current locally and the supply cable no longer has to carry it. A choke is itself inductive and would make the lag worse. A resistor draws current in phase with the voltage and adds real load without cancelling any reactive current. Rotor windings affect the machine's torque and slip characteristics, not the power factor seen at the terminals.",
     section: '3.6',
     difficulty: 'intermediate',
   },
   {
     id: 359,
-    question: 'What can an automatic power factor correction panel do that a fixed capacitor bank cannot?',
+    question:
+      'What can an automatic power factor correction panel do that a fixed capacitor bank cannot?',
     options: [
       'Raise the supply frequency at times of low load',
       'Convert reactive power into useful true power',
@@ -5402,7 +4482,8 @@ export const module3Questions: Question[] = [
       'Store energy overnight for use at peak times',
     ],
     correctAnswer: 2,
-    explanation: 'An automatic panel measures the power factor continuously and contactors switch capacitor stages in and out to match the reactive demand, so the site stays near target through the working day and avoids over-correction at night. A fixed bank supplies the same kvar whatever the load. No capacitor converts reactive power into true power; reactive power does no work. Capacitors do not alter the supply frequency, and a correction panel is not an energy store.',
+    explanation:
+      'An automatic panel measures the power factor continuously and contactors switch capacitor stages in and out to match the reactive demand, so the site stays near target through the working day and avoids over-correction at night. A fixed bank supplies the same kvar whatever the load. No capacitor converts reactive power into true power; reactive power does no work. Capacitors do not alter the supply frequency, and a correction panel is not an energy store.',
     section: '3.6',
     difficulty: 'intermediate',
   },
@@ -5416,13 +4497,15 @@ export const module3Questions: Question[] = [
       'They hold a dangerous charge after isolation',
     ],
     correctAnswer: 3,
-    explanation: 'BS 7671 requires compensation capacitors having a total capacitance exceeding 0.5 µF to be used only in conjunction with discharge resistors. A capacitor keeps its charge after the supply is removed, so terminals that have been isolated and proved dead at one moment can still deliver a severe shock. The resistor bleeds the charge away to a safe value. Inrush current at switch-on is a real effect but a permanently connected bleed resistor does nothing about it. Capacitors do not change the supply frequency and do not lose capacitance simply through being energised.',
+    explanation:
+      'BS 7671 requires compensation capacitors having a total capacitance exceeding 0.5 µF to be used only in conjunction with discharge resistors. A capacitor keeps its charge after the supply is removed, so terminals that have been isolated and proved dead at one moment can still deliver a severe shock. The resistor bleeds the charge away to a safe value. Inrush current at switch-on is a real effect but a permanently connected bleed resistor does nothing about it. Capacitors do not change the supply frequency and do not lose capacitance simply through being energised.',
     section: '3.6',
     difficulty: 'intermediate',
   },
   {
     id: 361,
-    question: 'A factory improves its power factor from 0.7 to 0.95 with no change in the kW drawn. What happens to the losses in its supply cables?',
+    question:
+      'A factory improves its power factor from 0.7 to 0.95 with no change in the kW drawn. What happens to the losses in its supply cables?',
     options: [
       'They fall, because the current drawn is lower',
       'They rise, because the current drawn is higher',
@@ -5430,175 +4513,138 @@ export const module3Questions: Question[] = [
       'They fall, because the supply voltage is raised',
     ],
     correctAnswer: 0,
-    explanation: 'For the same true power, current is inversely proportional to power factor, so the current falls to 0.7/0.95 = 74 % of its former value. Cable loss is I²R, so it falls to 0.74² = 55 % of what it was, a saving of about 45 %. The current falls rather than rises. It does not stay the same, because the kW is only part of what the cable carries; it also carries the reactive current. Any small voltage rise is a consequence of the reduced volt drop, not the reason the losses fall.',
+    explanation:
+      'For the same true power, current is inversely proportional to power factor, so the current falls to 0.7/0.95 = 74 % of its former value. Cable loss is I²R, so it falls to 0.74² = 55 % of what it was, a saving of about 45 %. The current falls rather than rises. It does not stay the same, because the kW is only part of what the cable carries; it also carries the reactive current. Any small voltage rise is a consequence of the reduced volt drop, not the reason the losses fall.',
     section: '3.6',
     difficulty: 'intermediate',
   },
   {
     id: 362,
     question: 'In what unit is apparent power measured?',
-    options: [
-      'Watt hour',
-      'Volt ampere',
-      'Var hour',
-      'Joule per second',
-    ],
+    options: ['Watt hour', 'Volt ampere', 'Var hour', 'Joule per second'],
     correctAnswer: 1,
-    explanation: 'Apparent power is the product of rms voltage and rms current with no regard to phase angle, so it is given in volt amperes, usually kilovolt amperes on an installation. The watt hour and the var hour are units of energy, not power. The joule per second is the watt, which measures true power, the part of the supply that does useful work.',
+    explanation:
+      'Apparent power is the product of rms voltage and rms current with no regard to phase angle, so it is given in volt amperes, usually kilovolt amperes on an installation. The watt hour and the var hour are units of energy, not power. The joule per second is the watt, which measures true power, the part of the supply that does useful work.',
     section: '3.6',
     difficulty: 'basic',
   },
   {
     id: 363,
-    question: 'A three-phase circuit uses a cable with a tabulated volt drop of 2.5 mV/A/m and carries a design current of 45 A over a run of 60 m. What is the volt drop?',
-    options: [
-      '3.9 V',
-      '11.7 V',
-      '6.75 V',
-      '13.5 V',
-    ],
+    question:
+      'A three-phase circuit uses a cable with a tabulated volt drop of 2.5 mV/A/m and carries a design current of 45 A over a run of 60 m. What is the volt drop?',
+    options: ['3.9 V', '11.7 V', '6.75 V', '13.5 V'],
     correctAnswer: 2,
-    explanation: 'Volt drop = (mV/A/m x Ib x L) / 1000 = (2.5 x 45 x 60) / 1000 = 6750 / 1000 = 6.75 V. 11.7 V multiplies the answer by √3, but a tabulated three-phase mV/A/m figure already accounts for the three-phase relationship, so applying √3 again double counts it. 3.9 V divides by √3 for the same mistaken reason. 13.5 V doubles the answer as though the go and return conductors had to be counted separately, which the tabulated figure already does.',
+    explanation:
+      'Volt drop = (mV/A/m x Ib x L) / 1000 = (2.5 x 45 x 60) / 1000 = 6750 / 1000 = 6.75 V. 11.7 V multiplies the answer by √3, but a tabulated three-phase mV/A/m figure already accounts for the three-phase relationship, so applying √3 again double counts it. 3.9 V divides by √3 for the same mistaken reason. 13.5 V doubles the answer as though the go and return conductors had to be counted separately, which the tabulated figure already does.',
     section: '3.7',
     difficulty: 'intermediate',
   },
   {
     id: 364,
-    question: 'A 230 V lighting circuit must be kept within a 3 % volt drop. The cable has a tabulated volt drop of 18 mV/A/m and the design current is 6 A. What is the longest permitted run?',
-    options: [
-      '6.4 m',
-      '21.3 m',
-      '106.5 m',
-      '63.9 m',
-    ],
+    question:
+      'A 230 V lighting circuit must be kept within a 3 % volt drop. The cable has a tabulated volt drop of 18 mV/A/m and the design current is 6 A. What is the longest permitted run?',
+    options: ['6.4 m', '21.3 m', '106.5 m', '63.9 m'],
     correctAnswer: 3,
-    explanation: 'Permitted drop = 3 % of 230 = 6.9 V. Transposing, L = (Vd x 1000) / (mV/A/m x Ib) = (6.9 x 1000) / (18 x 6) = 6900 / 108 = 63.9 m. 106.5 m applies the 5 % limit that belongs to power circuits rather than the 3 % stated in the question. 21.3 m works to a 1 % limit. 6.4 m is a factor-of-ten slip in the millivolt conversion.',
+    explanation:
+      'Permitted drop = 3 % of 230 = 6.9 V. Transposing, L = (Vd x 1000) / (mV/A/m x Ib) = (6.9 x 1000) / (18 x 6) = 6900 / 108 = 63.9 m. 106.5 m applies the 5 % limit that belongs to power circuits rather than the 3 % stated in the question. 21.3 m works to a 1 % limit. 6.4 m is a factor-of-ten slip in the millivolt conversion.',
     section: '3.7',
     difficulty: 'advanced',
   },
   {
     id: 365,
-    question: 'A protective conductor must carry a fault current of 4600 A for 0.2 s. Taking k as 143, what is its minimum cross-sectional area?',
-    options: [
-      '14.4 mm²',
-      '6.4 mm²',
-      '32.2 mm²',
-      '72.0 mm²',
-    ],
+    question:
+      'A protective conductor must carry a fault current of 4600 A for 0.2 s. Taking k as 143, what is its minimum cross-sectional area?',
+    options: ['14.4 mm²', '6.4 mm²', '32.2 mm²', '72.0 mm²'],
     correctAnswer: 0,
-    explanation: 'The adiabatic equation is S = √(I²t) / k. I²t = 4600² x 0.2 = 21 160 000 x 0.2 = 4 232 000. √4 232 000 = 2057. S = 2057 / 143 = 14.4 mm². 32.2 mm² omits the time altogether and uses I/k. 6.4 mm² multiplies by t rather than by √t. 72.0 mm² divides by √t instead of multiplying by it, so a shorter disconnection time appears to demand a larger conductor, which is the wrong way round.',
+    explanation:
+      'The adiabatic equation is S = √(I²t) / k. I²t = 4600² x 0.2 = 21 160 000 x 0.2 = 4 232 000. √4 232 000 = 2057. S = 2057 / 143 = 14.4 mm². 32.2 mm² omits the time altogether and uses I/k. 6.4 mm² multiplies by t rather than by √t. 72.0 mm² divides by √t instead of multiplying by it, so a shorter disconnection time appears to demand a larger conductor, which is the wrong way round.',
     section: '3.7',
     difficulty: 'intermediate',
   },
   {
     id: 366,
-    question: 'A circuit has a measured Ze of 0.28 Ω and a measured (R1 + R2) of 0.55 Ω at ambient temperature. Applying a factor of 1.20 to the circuit conductors for operating temperature, what fault current would flow at 230 V?',
-    options: [
-      '231 A',
-      '245 A',
-      '260 A',
-      '277 A',
-    ],
+    question:
+      'A circuit has a measured Ze of 0.28 Ω and a measured (R1 + R2) of 0.55 Ω at ambient temperature. Applying a factor of 1.20 to the circuit conductors for operating temperature, what fault current would flow at 230 V?',
+    options: ['231 A', '245 A', '260 A', '277 A'],
     correctAnswer: 1,
-    explanation: 'The temperature multiplier applies only to the circuit conductors, not to the supply side. Zs = Ze + 1.20(R1 + R2) = 0.28 + (0.55 x 1.20) = 0.28 + 0.66 = 0.94 Ω. If = 230 / 0.94 = 245 A. 231 A applies the multiplier to the whole loop including Ze, which is not measured at ambient in the same way. 277 A applies no correction at all and overstates the fault current. 260 A applies the multiplier to Ze only, which is the correction put on the wrong term.',
+    explanation:
+      'The temperature multiplier applies only to the circuit conductors, not to the supply side. Zs = Ze + 1.20(R1 + R2) = 0.28 + (0.55 x 1.20) = 0.28 + 0.66 = 0.94 Ω. If = 230 / 0.94 = 245 A. 231 A applies the multiplier to the whole loop including Ze, which is not measured at ambient in the same way. 277 A applies no correction at all and overstates the fault current. 260 A applies the multiplier to Ze only, which is the correction put on the wrong term.',
     section: '3.7',
     difficulty: 'advanced',
   },
   {
     id: 367,
-    question: 'A 230 V cooker circuit supplies an 11.5 kW cooker with a 13 A socket in the control unit. Allowing the first 10 A of the cooker current in full, 30 % of the remainder, and 5 A for the socket, what is the design current?',
-    options: [
-      '20 A',
-      '22 A',
-      '27 A',
-      '35 A',
-    ],
+    question:
+      'A 230 V cooker circuit supplies an 11.5 kW cooker with a 13 A socket in the control unit. Allowing the first 10 A of the cooker current in full, 30 % of the remainder, and 5 A for the socket, what is the design current?',
+    options: ['20 A', '22 A', '27 A', '35 A'],
     correctAnswer: 2,
-    explanation: 'Full cooker current = 11 500 / 230 = 50 A. First 10 A in full = 10 A. Remainder = 50 − 10 = 40 A, of which 30 % = 12 A. Socket allowance = 5 A. Design current = 10 + 12 + 5 = 27 A. 22 A leaves out the socket allowance. 20 A takes 30 % of the whole 50 A instead of only the remainder above 10 A. 35 A adds the full 13 A rating of the socket rather than the 5 A allowance the question specifies.',
+    explanation:
+      'Full cooker current = 11 500 / 230 = 50 A. First 10 A in full = 10 A. Remainder = 50 − 10 = 40 A, of which 30 % = 12 A. Socket allowance = 5 A. Design current = 10 + 12 + 5 = 27 A. 22 A leaves out the socket allowance. 20 A takes 30 % of the whole 50 A instead of only the remainder above 10 A. 35 A adds the full 13 A rating of the socket rather than the 5 A allowance the question specifies.',
     section: '3.7',
     difficulty: 'advanced',
   },
   {
     id: 368,
-    question: 'A 400 V three-phase circuit shows a volt drop of 14 V. What percentage of the nominal voltage is that?',
-    options: [
-      '1.75 %',
-      '28.6 %',
-      '6.09 %',
-      '3.50 %',
-    ],
+    question:
+      'A 400 V three-phase circuit shows a volt drop of 14 V. What percentage of the nominal voltage is that?',
+    options: ['1.75 %', '28.6 %', '6.09 %', '3.50 %'],
     correctAnswer: 3,
-    explanation: 'Percentage drop = (volt drop / nominal voltage) x 100 = (14 / 400) x 100 = 3.50 %. 6.09 % uses 230 V, the phase voltage, when the circuit is a three-phase one referenced to 400 V. 28.6 % divides the nominal voltage by the drop instead of the other way round. 1.75 % halves the correct answer, as though only one conductor of the pair contributed.',
+    explanation:
+      'Percentage drop = (volt drop / nominal voltage) x 100 = (14 / 400) x 100 = 3.50 %. 6.09 % uses 230 V, the phase voltage, when the circuit is a three-phase one referenced to 400 V. 28.6 % divides the nominal voltage by the drop instead of the other way round. 1.75 % halves the correct answer, as though only one conductor of the pair contributed.',
     section: '3.7',
     difficulty: 'intermediate',
   },
   {
     id: 369,
-    question: 'A luminaire of 2500 cd is mounted 3 m above a floor. What is the illuminance at a point 4 m horizontally from the point directly beneath it?',
-    options: [
-      '60 lx',
-      '100 lx',
-      '156 lx',
-      '278 lx',
-    ],
+    question:
+      'A luminaire of 2500 cd is mounted 3 m above a floor. What is the illuminance at a point 4 m horizontally from the point directly beneath it?',
+    options: ['60 lx', '100 lx', '156 lx', '278 lx'],
     correctAnswer: 0,
-    explanation: 'The slant distance is √(3² + 4²) = 5 m, and cos θ = mounting height / slant distance = 3/5 = 0.6. Combining the inverse square law with the cosine law, E = I cos θ / d² = 2500 x 0.6 / 25 = 60 lx. 100 lx uses the correct 5 m distance but leaves out the cosine, so it assumes the light strikes the floor square on. 278 lx uses the 3 m mounting height as the distance, which only applies directly beneath the fitting. 156 lx uses the 4 m horizontal offset as the distance.',
+    explanation:
+      'The slant distance is √(3² + 4²) = 5 m, and cos θ = mounting height / slant distance = 3/5 = 0.6. Combining the inverse square law with the cosine law, E = I cos θ / d² = 2500 x 0.6 / 25 = 60 lx. 100 lx uses the correct 5 m distance but leaves out the cosine, so it assumes the light strikes the floor square on. 278 lx uses the 3 m mounting height as the distance, which only applies directly beneath the fitting. 156 lx uses the 4 m horizontal offset as the distance.',
     section: '3.8',
     difficulty: 'advanced',
   },
   {
     id: 370,
-    question: 'Directly below a downlight the illuminance measures 200 lx. The luminaire is then raised so that its distance from the working plane doubles. What illuminance results?',
-    options: [
-      '100 lx',
-      '50 lx',
-      '400 lx',
-      '800 lx',
-    ],
+    question:
+      'Directly below a downlight the illuminance measures 200 lx. The luminaire is then raised so that its distance from the working plane doubles. What illuminance results?',
+    options: ['100 lx', '50 lx', '400 lx', '800 lx'],
     correctAnswer: 1,
-    explanation: 'Illuminance obeys the inverse square law, so doubling the distance divides the illuminance by 2² = 4: 200 / 4 = 50 lx. 100 lx halves it, treating the relationship as inversely proportional to distance rather than to distance squared. 400 lx and 800 lx have the relationship the wrong way round; moving a source further away can never increase the illuminance on the surface.',
+    explanation:
+      'Illuminance obeys the inverse square law, so doubling the distance divides the illuminance by 2² = 4: 200 / 4 = 50 lx. 100 lx halves it, treating the relationship as inversely proportional to distance rather than to distance squared. 400 lx and 800 lx have the relationship the wrong way round; moving a source further away can never increase the illuminance on the surface.',
     section: '3.8',
     difficulty: 'intermediate',
   },
   {
     id: 371,
-    question: 'An office measuring 12 m x 9 m requires 400 lx. The utilisation factor is 0.55 and the maintenance factor is 0.8. What total lamp lumen output is required?',
-    options: [
-      '19 008 lm',
-      '43 200 lm',
-      '98 182 lm',
-      '78 545 lm',
-    ],
+    question:
+      'An office measuring 12 m x 9 m requires 400 lx. The utilisation factor is 0.55 and the maintenance factor is 0.8. What total lamp lumen output is required?',
+    options: ['19 008 lm', '43 200 lm', '98 182 lm', '78 545 lm'],
     correctAnswer: 2,
-    explanation: 'The lumen method gives total lumens = (E x A) / (UF x MF). Area = 12 x 9 = 108 m². E x A = 400 x 108 = 43 200 lm of useful light on the working plane. Dividing by 0.55 x 0.8 = 0.44 gives 43 200 / 0.44 = 98 182 lm. 43 200 lm is the value before the two factors are applied and would leave the room badly under-lit. 19 008 lm multiplies by the factors instead of dividing, which is the commonest error in this calculation. 78 545 lm applies the utilisation factor but forgets maintenance.',
+    explanation:
+      'The lumen method gives total lumens = (E x A) / (UF x MF). Area = 12 x 9 = 108 m². E x A = 400 x 108 = 43 200 lm of useful light on the working plane. Dividing by 0.55 x 0.8 = 0.44 gives 43 200 / 0.44 = 98 182 lm. 43 200 lm is the value before the two factors are applied and would leave the room badly under-lit. 19 008 lm multiplies by the factors instead of dividing, which is the commonest error in this calculation. 78 545 lm applies the utilisation factor but forgets maintenance.',
     section: '3.8',
     difficulty: 'advanced',
   },
   {
     id: 372,
     question: 'A 12 W LED lamp produces 1320 lm. What is its luminous efficacy?',
-    options: [
-      '0.009 lm/W',
-      '11 lm/W',
-      '15 840 lm/W',
-      '110 lm/W',
-    ],
+    options: ['0.009 lm/W', '11 lm/W', '15 840 lm/W', '110 lm/W'],
     correctAnswer: 3,
-    explanation: 'Luminous efficacy = luminous flux / power = 1320 / 12 = 110 lm/W. 0.009 lm/W inverts the division. 15 840 lm/W multiplies the two figures instead of dividing, giving a value hundreds of times beyond what any lamp can achieve. 11 lm/W is a factor-of-ten slip and would be typical of a tungsten filament lamp rather than an LED.',
+    explanation:
+      'Luminous efficacy = luminous flux / power = 1320 / 12 = 110 lm/W. 0.009 lm/W inverts the division. 15 840 lm/W multiplies the two figures instead of dividing, giving a value hundreds of times beyond what any lamp can achieve. 11 lm/W is a factor-of-ten slip and would be typical of a tungsten filament lamp rather than an LED.',
     section: '3.8',
     difficulty: 'intermediate',
   },
   {
     id: 373,
-    question: 'Which expression gives the illuminance on a surface from a source at an angle θ to the normal?',
-    options: [
-      'E = I cos θ / d²',
-      'E = I sin θ / d²',
-      'E = I cos θ / d',
-      'E = I x d² / cos θ',
-    ],
+    question:
+      'Which expression gives the illuminance on a surface from a source at an angle θ to the normal?',
+    options: ['E = I cos θ / d²', 'E = I sin θ / d²', 'E = I cos θ / d', 'E = I x d² / cos θ'],
     correctAnswer: 0,
-    explanation: 'The cosine law modifies the inverse square law: the luminous intensity I is divided by the square of the distance d from the source to the point, and multiplied by the cosine of the angle between the light path and the normal to the surface. Using the sine would give zero illuminance directly beneath a fitting, which is plainly wrong. Dividing by d rather than d² abandons the inverse square law. The last expression puts distance on the wrong side of the division, so illuminance would rise as the fitting was raised.',
+    explanation:
+      'The cosine law modifies the inverse square law: the luminous intensity I is divided by the square of the distance d from the source to the point, and multiplied by the cosine of the angle between the light path and the normal to the surface. Using the sine would give zero illuminance directly beneath a fitting, which is plainly wrong. Dividing by d rather than d² abandons the inverse square law. The last expression puts distance on the wrong side of the division, so illuminance would rise as the fitting was raised.',
     section: '3.8',
     difficulty: 'intermediate',
   },
@@ -5612,63 +4658,52 @@ export const module3Questions: Question[] = [
       'Its output falls sharply below 20 °C ambient',
     ],
     correctAnswer: 1,
-    explanation: 'A high-pressure sodium discharge emits over a restricted part of the spectrum, giving a strong orange cast and a low colour rendering index, so surfaces do not appear their true colour. Low-temperature output loss is a fluorescent characteristic, not a sodium one. Warm-up takes a few minutes rather than half an hour. Lamp output falls with age through lumen depreciation, it does not rise.',
+    explanation:
+      'A high-pressure sodium discharge emits over a restricted part of the spectrum, giving a strong orange cast and a low colour rendering index, so surfaces do not appear their true colour. Low-temperature output loss is a fluorescent characteristic, not a sodium one. Warm-up takes a few minutes rather than half an hour. Lamp output falls with age through lumen depreciation, it does not rise.',
     section: '3.8',
     difficulty: 'intermediate',
   },
   {
     id: 375,
-    question: 'A warehouse has 60 luminaires of 150 W each, in use for 3500 hours a year. If they are replaced with 60 W LED units, how much energy is saved each year?',
-    options: [
-      '315 kWh',
-      '12 600 kWh',
-      '18 900 kWh',
-      '31 500 kWh',
-    ],
+    question:
+      'A warehouse has 60 luminaires of 150 W each, in use for 3500 hours a year. If they are replaced with 60 W LED units, how much energy is saved each year?',
+    options: ['315 kWh', '12 600 kWh', '18 900 kWh', '31 500 kWh'],
     correctAnswer: 2,
-    explanation: 'Saving per luminaire = 150 − 60 = 90 W. Total saving = 60 x 90 = 5400 W = 5.4 kW. Annual saving = 5.4 x 3500 = 18 900 kWh. 31 500 kWh is the old annual consumption (9 kW x 3500 h) and 12 600 kWh is the new one; the saving is the difference between them. 315 kWh is a factor-of-sixty slip from leaving out the number of luminaires.',
+    explanation:
+      'Saving per luminaire = 150 − 60 = 90 W. Total saving = 60 x 90 = 5400 W = 5.4 kW. Annual saving = 5.4 x 3500 = 18 900 kWh. 31 500 kWh is the old annual consumption (9 kW x 3500 h) and 12 600 kWh is the new one; the saving is the difference between them. 315 kWh is a factor-of-sixty slip from leaving out the number of luminaires.',
     section: '3.8',
     difficulty: 'intermediate',
   },
   {
     id: 376,
-    question: 'A 3 kW immersion heater raises 90 litres of water from 12 °C to 60 °C. Taking the specific heat capacity of water as 4186 J/kg·K and ignoring losses, how long does it take?',
-    options: [
-      '50 min',
-      '201 min',
-      '126 min',
-      '100 min',
-    ],
+    question:
+      'A 3 kW immersion heater raises 90 litres of water from 12 °C to 60 °C. Taking the specific heat capacity of water as 4186 J/kg·K and ignoring losses, how long does it take?',
+    options: ['50 min', '201 min', '126 min', '100 min'],
     correctAnswer: 3,
-    explanation: 'One litre of water has a mass of 1 kg. Heat required = m x c x Δθ = 90 x 4186 x (60 − 12) = 90 x 4186 x 48 = 18 083 520 J. Time = energy / power = 18 083 520 / 3000 = 6028 s = 100 min. 126 min uses 60 °C as the temperature rise instead of the 48 K difference, which is the commonest error in heating calculations. 50 min uses half the rise and 201 min uses double it.',
+    explanation:
+      'One litre of water has a mass of 1 kg. Heat required = m x c x Δθ = 90 x 4186 x (60 − 12) = 90 x 4186 x 48 = 18 083 520 J. Time = energy / power = 18 083 520 / 3000 = 6028 s = 100 min. 126 min uses 60 °C as the temperature rise instead of the 48 K difference, which is the commonest error in heating calculations. 50 min uses half the rise and 201 min uses double it.',
     section: '3.8',
     difficulty: 'advanced',
   },
   {
     id: 377,
-    question: 'A heat pump with a SCOP of 3.8 delivers 12 kW of heat. Electricity costs 26 p/kWh. What does one hour of operation cost?',
-    options: [
-      '82 p',
-      '22 p',
-      '312 p',
-      '1186 p',
-    ],
+    question:
+      'A heat pump with a SCOP of 3.8 delivers 12 kW of heat. Electricity costs 26 p/kWh. What does one hour of operation cost?',
+    options: ['82 p', '22 p', '312 p', '1186 p'],
     correctAnswer: 0,
-    explanation: 'SCOP is heat delivered divided by electrical energy taken in, so electrical input = 12 / 3.8 = 3.16 kW. In one hour that is 3.16 kWh, costing 3.16 x 26 = 82 p. 312 p ignores the SCOP entirely and charges for 12 kWh, which is what a direct electric heater of the same output would cost. 1186 p multiplies by the SCOP instead of dividing. 22 p divides by the SCOP twice over.',
+    explanation:
+      'SCOP is heat delivered divided by electrical energy taken in, so electrical input = 12 / 3.8 = 3.16 kW. In one hour that is 3.16 kWh, costing 3.16 x 26 = 82 p. 312 p ignores the SCOP entirely and charges for 12 kWh, which is what a direct electric heater of the same output would cost. 1186 p multiplies by the SCOP instead of dividing. 22 p divides by the SCOP twice over.',
     section: '3.8',
     difficulty: 'intermediate',
   },
   {
     id: 378,
-    question: 'A 3.4 kW storage heater charges for 7 hours on a night rate of 12 p/kWh. What does one night\'s charge cost?',
-    options: [
-      '£0.41',
-      '£2.86',
-      '£9.79',
-      '£28.56',
-    ],
+    question:
+      "A 3.4 kW storage heater charges for 7 hours on a night rate of 12 p/kWh. What does one night's charge cost?",
+    options: ['£0.41', '£2.86', '£9.79', '£28.56'],
     correctAnswer: 1,
-    explanation: 'Energy = power x time = 3.4 x 7 = 23.8 kWh. Cost = 23.8 x 12 p = 285.6 p = £2.86. £0.41 costs only one hour of charging. £9.79 charges for a full 24 hours, but the heater only draws current during the off-peak charging period. £28.56 is a factor-of-ten slip in converting pence to pounds.',
+    explanation:
+      'Energy = power x time = 3.4 x 7 = 23.8 kWh. Cost = 23.8 x 12 p = 285.6 p = £2.86. £0.41 costs only one hour of charging. £9.79 charges for a full 24 hours, but the heater only draws current during the off-peak charging period. £28.56 is a factor-of-ten slip in converting pence to pounds.',
     section: '3.8',
     difficulty: 'intermediate',
   },
@@ -5682,7 +4717,8 @@ export const module3Questions: Question[] = [
       'A fan draws warm air from the loft space above',
     ],
     correctAnswer: 2,
-    explanation: 'The elements heat a dense refractory core overnight on the off-peak rate. Through the day the element is off and the stored heat passes out through the insulation and casing by conduction, convection and radiation, with a damper or fan controlling how quickly it is released. Running the element on the day tariff would defeat the whole point of the appliance. Storage heaters contain no refrigeration circuit and take no air from the loft.',
+    explanation:
+      'The elements heat a dense refractory core overnight on the off-peak rate. Through the day the element is off and the stored heat passes out through the insulation and casing by conduction, convection and radiation, with a damper or fan controlling how quickly it is released. Running the element on the day tariff would defeat the whole point of the appliance. Storage heaters contain no refrigeration circuit and take no air from the loft.',
     section: '3.8',
     difficulty: 'intermediate',
   },
@@ -5696,27 +4732,26 @@ export const module3Questions: Question[] = [
       'It heats water only as it is drawn off',
     ],
     correctAnswer: 3,
-    explanation: 'An instantaneous heater has no reservoir; a flow switch energises a high-rated element as soon as a tap is opened and the water is heated on its way through, which is why these appliances have large current demands but no standing heat loss. Heating a full vessel overnight describes a storage cylinder. A heat exchanger fed from a boiler describes an indirect cylinder. Both types of appliance use a thermostat and a thermal cut-out.',
+    explanation:
+      'An instantaneous heater has no reservoir; a flow switch energises a high-rated element as soon as a tap is opened and the water is heated on its way through, which is why these appliances have large current demands but no standing heat loss. Heating a full vessel overnight describes a storage cylinder. A heat exchanger fed from a boiler describes an indirect cylinder. Both types of appliance use a thermostat and a thermal cut-out.',
     section: '3.8',
     difficulty: 'intermediate',
   },
   {
     id: 381,
-    question: 'To what maximum temperature must the protective device limit a floor or ceiling heating unit under BS 7671?',
-    options: [
-      '80 °C',
-      '70 °C',
-      '50 °C',
-      '100 °C',
-    ],
+    question:
+      'To what maximum temperature must the protective device limit a floor or ceiling heating unit under BS 7671?',
+    options: ['80 °C', '70 °C', '50 °C', '100 °C'],
     correctAnswer: 0,
-    explanation: 'BS 7671 states that the protective devices required for floor and ceiling heating units are intended to limit the temperature of those units to a maximum of 80 °C. That may be achieved by a thermostat, a thermal cut-out or overtemperature protection built into the heating element or its control system. The limit protects the floor finish and any cable insulation in contact with the heating element.',
+    explanation:
+      'BS 7671 states that the protective devices required for floor and ceiling heating units are intended to limit the temperature of those units to a maximum of 80 °C. That may be achieved by a thermostat, a thermal cut-out or overtemperature protection built into the heating element or its control system. The limit protects the floor finish and any cable insulation in contact with the heating element.',
     section: '3.8',
     difficulty: 'basic',
   },
   {
     id: 382,
-    question: 'What is the purpose of the non-self-resetting thermal cut-out fitted to an immersion heater?',
+    question:
+      'What is the purpose of the non-self-resetting thermal cut-out fitted to an immersion heater?',
     options: [
       'It maintains the water at the chosen set temperature',
       'It isolates the element if the thermostat fails',
@@ -5724,7 +4759,8 @@ export const module3Questions: Question[] = [
       'It bleeds air from the top of the cylinder',
     ],
     correctAnswer: 1,
-    explanation: 'The thermostat is the working control; the cut-out is the safety back-up. If the thermostat sticks closed the water temperature keeps rising, and the cut-out opens the supply and stays open until it is reset by hand, so the fault has to be investigated rather than being allowed to cycle. Maintaining the set temperature is the thermostat\'s job. The cut-out does not alter the element rating, and venting air is done by a separate vent or expansion arrangement.',
+    explanation:
+      "The thermostat is the working control; the cut-out is the safety back-up. If the thermostat sticks closed the water temperature keeps rising, and the cut-out opens the supply and stays open until it is reset by hand, so the fault has to be investigated rather than being allowed to cycle. Maintaining the set temperature is the thermostat's job. The cut-out does not alter the element rating, and venting air is done by a separate vent or expansion arrangement.",
     section: '3.8',
     difficulty: 'intermediate',
   },
@@ -5738,13 +4774,15 @@ export const module3Questions: Question[] = [
       'Its capacitance falls',
     ],
     correctAnswer: 2,
-    explanation: 'Light striking the semiconductor material frees additional charge carriers, so the material conducts more readily and its resistance falls, often from hundreds of kilohms in darkness to a few hundred ohms in bright light. That change is what a photocell control circuit senses. The resistance falls rather than rises. A light-dependent resistor has no significant capacitance or inductance to change.',
+    explanation:
+      'Light striking the semiconductor material frees additional charge carriers, so the material conducts more readily and its resistance falls, often from hundreds of kilohms in darkness to a few hundred ohms in bright light. That change is what a photocell control circuit senses. The resistance falls rather than rises. A light-dependent resistor has no significant capacitance or inductance to change.',
     section: '3.8',
     difficulty: 'basic',
   },
   {
     id: 384,
-    question: 'How does a negative temperature coefficient thermistor behave as its temperature rises?',
+    question:
+      'How does a negative temperature coefficient thermistor behave as its temperature rises?',
     options: [
       'Its resistance becomes negative',
       'Its resistance rises markedly',
@@ -5752,21 +4790,19 @@ export const module3Questions: Question[] = [
       'Its resistance falls markedly',
     ],
     correctAnswer: 3,
-    explanation: 'The negative coefficient means resistance and temperature move in opposite directions, so a rise in temperature produces a marked fall in resistance. The change is far larger than in an ordinary conductor, which is why these devices make sensitive temperature sensors and inrush limiters. A rise in resistance describes a positive coefficient device. Constant resistance would make the device useless as a sensor, and no passive resistance can be negative.',
+    explanation:
+      'The negative coefficient means resistance and temperature move in opposite directions, so a rise in temperature produces a marked fall in resistance. The change is far larger than in an ordinary conductor, which is why these devices make sensitive temperature sensors and inrush limiters. A rise in resistance describes a positive coefficient device. Constant resistance would make the device useless as a sensor, and no passive resistance can be negative.',
     section: '3.8',
     difficulty: 'intermediate',
   },
   {
     id: 385,
-    question: 'A full-wave bridge rectifier is fed from a 24 V rms sinusoidal secondary. Ignoring diode volt drops, what is the mean d.c. output voltage?',
-    options: [
-      '21.6 V',
-      '10.8 V',
-      '24.0 V',
-      '33.9 V',
-    ],
+    question:
+      'A full-wave bridge rectifier is fed from a 24 V rms sinusoidal secondary. Ignoring diode volt drops, what is the mean d.c. output voltage?',
+    options: ['21.6 V', '10.8 V', '24.0 V', '33.9 V'],
     correctAnswer: 0,
-    explanation: 'Find the peak first: Vpk = 24 x 1.414 = 33.9 V. A full-wave bridge inverts both half cycles, so the mean output is 0.637 x peak = 0.637 x 33.9 = 21.6 V. 33.9 V is the peak value, which is what an unloaded smoothing capacitor would charge to, not the mean of the unsmoothed waveform. 24.0 V is the a.c. rms input. 10.8 V is the mean of a half-wave rectifier, which throws away one half cycle.',
+    explanation:
+      'Find the peak first: Vpk = 24 x 1.414 = 33.9 V. A full-wave bridge inverts both half cycles, so the mean output is 0.637 x peak = 0.637 x 33.9 = 21.6 V. 33.9 V is the peak value, which is what an unloaded smoothing capacitor would charge to, not the mean of the unsmoothed waveform. 24.0 V is the a.c. rms input. 10.8 V is the mean of a half-wave rectifier, which throws away one half cycle.',
     section: '3.8',
     difficulty: 'advanced',
   },
@@ -5780,7 +4816,8 @@ export const module3Questions: Question[] = [
       'It behaves as a low resistance',
     ],
     correctAnswer: 1,
-    explanation: 'Current only flows into a capacitor while its plates are charging. Once the plate voltage equals the supply voltage there is no potential difference left to drive charge, so current ceases and the capacitor behaves as an open circuit to steady d.c. Passing a steady current or behaving as a low resistance describes the initial charging instant, not the settled condition. A capacitor does not reverse the polarity of the supply feeding it.',
+    explanation:
+      'Current only flows into a capacitor while its plates are charging. Once the plate voltage equals the supply voltage there is no potential difference left to drive charge, so current ceases and the capacitor behaves as an open circuit to steady d.c. Passing a steady current or behaving as a low resistance describes the initial charging instant, not the settled condition. A capacitor does not reverse the polarity of the supply feeding it.',
     section: '3.8',
     difficulty: 'basic',
   },
@@ -5794,49 +4831,40 @@ export const module3Questions: Question[] = [
       'A rise in temperature',
     ],
     correctAnswer: 2,
-    explanation: 'A changing current changes the flux linking the coil, which induces an emf that acts against the change, so the inductor resists any rise or fall in current. That is why inductive reactance grows with frequency and why a coil produces a large voltage spike when its circuit is broken. Opposing a change in voltage describes a capacitor. A coil offers only its winding resistance to a steady direct current, and it does not oppose temperature change.',
+    explanation:
+      'A changing current changes the flux linking the coil, which induces an emf that acts against the change, so the inductor resists any rise or fall in current. That is why inductive reactance grows with frequency and why a coil produces a large voltage spike when its circuit is broken. Opposing a change in voltage describes a capacitor. A coil offers only its winding resistance to a steady direct current, and it does not oppose temperature change.',
     section: '3.8',
     difficulty: 'basic',
   },
   {
     id: 388,
     question: 'Which device gives a small voltage output proportional to a temperature difference?',
-    options: [
-      'Photodiode array',
-      'Thermistor',
-      'Piezo sensor',
-      'Thermocouple',
-    ],
+    options: ['Photodiode array', 'Thermistor', 'Piezo sensor', 'Thermocouple'],
     correctAnswer: 3,
-    explanation: 'Two dissimilar metals joined at a measuring junction produce a small emf that depends on the temperature difference between that junction and the reference end. This is the Seebeck effect, and it is how thermocouple probes and flame failure devices work. A thermistor changes resistance with temperature but generates no voltage of its own. A piezo sensor responds to mechanical stress and a photodiode array to light.',
+    explanation:
+      'Two dissimilar metals joined at a measuring junction produce a small emf that depends on the temperature difference between that junction and the reference end. This is the Seebeck effect, and it is how thermocouple probes and flame failure devices work. A thermistor changes resistance with temperature but generates no voltage of its own. A piezo sensor responds to mechanical stress and a photodiode array to light.',
     section: '3.8',
     difficulty: 'basic',
   },
   {
     id: 389,
-    question: 'Two capacitors of 40 µF and 60 µF are connected in series. What is the total capacitance?',
-    options: [
-      '24 µF',
-      '50 µF',
-      '100 µF',
-      '2400 µF',
-    ],
+    question:
+      'Two capacitors of 40 µF and 60 µF are connected in series. What is the total capacitance?',
+    options: ['24 µF', '50 µF', '100 µF', '2400 µF'],
     correctAnswer: 0,
-    explanation: 'Capacitors in series combine like resistors in parallel: CT = (C1 x C2) / (C1 + C2) = (40 x 60) / 100 = 2400 / 100 = 24 µF. The total is always smaller than the smaller of the two, because the plate separation is effectively increased. 100 µF is the parallel result, obtained by simply adding them. 50 µF is the average of the two values, and 2400 µF is the product with the division left out.',
+    explanation:
+      'Capacitors in series combine like resistors in parallel: CT = (C1 x C2) / (C1 + C2) = (40 x 60) / 100 = 2400 / 100 = 24 µF. The total is always smaller than the smaller of the two, because the plate separation is effectively increased. 100 µF is the parallel result, obtained by simply adding them. 50 µF is the average of the two values, and 2400 µF is the product with the division left out.',
     section: '3.8',
     difficulty: 'intermediate',
   },
   {
     id: 390,
-    question: 'Two capacitors of 40 µF and 60 µF are connected in series across a 230 V supply. What voltage appears across the 40 µF capacitor?',
-    options: [
-      '92 V',
-      '138 V',
-      '115 V',
-      '153 V',
-    ],
+    question:
+      'Two capacitors of 40 µF and 60 µF are connected in series across a 230 V supply. What voltage appears across the 40 µF capacitor?',
+    options: ['92 V', '138 V', '115 V', '153 V'],
     correctAnswer: 1,
-    explanation: 'In series both capacitors carry the same charge. CT = (40 x 60)/100 = 24 µF, so Q = CT x V = 24 x 10⁻⁶ x 230 = 5.52 mC. V across the 40 µF unit = Q / C = 5.52 x 10⁻³ / 40 x 10⁻⁶ = 138 V. Checking, the 60 µF unit takes 5.52 x 10⁻³ / 60 x 10⁻⁶ = 92 V, and 138 + 92 = 230 V. 92 V is the voltage across the other capacitor: the smaller capacitance takes the larger share, which is the opposite of the way resistors in series behave. 115 V splits the supply equally and 153 V uses the ratio of the two capacitances directly.',
+    explanation:
+      'In series both capacitors carry the same charge. CT = (40 x 60)/100 = 24 µF, so Q = CT x V = 24 x 10⁻⁶ x 230 = 5.52 mC. V across the 40 µF unit = Q / C = 5.52 x 10⁻³ / 40 x 10⁻⁶ = 138 V. Checking, the 60 µF unit takes 5.52 x 10⁻³ / 60 x 10⁻⁶ = 92 V, and 138 + 92 = 230 V. 92 V is the voltage across the other capacitor: the smaller capacitance takes the larger share, which is the opposite of the way resistors in series behave. 115 V splits the supply equally and 153 V uses the ratio of the two capacitances directly.',
     section: '3.8',
     difficulty: 'advanced',
   },
@@ -5892,9 +4920,7 @@ export function validateQuestionBank(): {
   });
 
   if (module3Questions.length < 240) {
-    issues.push(
-      `Insufficient questions: ${module3Questions.length} (target: 250)`
-    );
+    issues.push(`Insufficient questions: ${module3Questions.length} (target: 250)`);
   }
 
   const expectedSections = ['3.1', '3.2', '3.3', '3.4', '3.5', '3.6', '3.7', '3.8'];

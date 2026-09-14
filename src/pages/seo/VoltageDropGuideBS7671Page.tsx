@@ -19,7 +19,7 @@ export default function VoltageDropGuideBS7671Page() {
   return (
     <GuideTemplate
       title="Voltage Drop Limits BS 7671: How to Calculate"
-      description="Complete guide to voltage drop limits and calculations to BS 7671:2018+A4:2026. Regulation 525.1 limits (3% lighting, 5% other)."
+      description="Complete guide to voltage drop limits and calculations to BS 7671:2018+A4:2026. Appendix 4 section 6.4 values (3% lighting, 5% other)."
       datePublished="2025-07-01"
       dateModified="2026-06-10"
       breadcrumbs={[
@@ -47,10 +47,10 @@ export default function VoltageDropGuideBS7671Page() {
           How to Calculate
         </>
       }
-      heroSubtitle="Voltage drop is one of the five checks in the cable sizing process. BS 7671 Regulation 525.1 sets the maximum permitted voltage drop at 3% for lighting circuits and 5% for other circuits. This guide covers the limits, the formula, worked examples, and when voltage drop matters most."
+      heroSubtitle="Voltage drop is one of the five checks in the cable sizing process. BS 7671 Regulation 525.202, via Appendix 4 section 6.4, deems the voltage drop requirement satisfied at 3% for lighting circuits and 5% for other circuits. This guide covers the limits, the formula, worked examples, and when voltage drop matters most."
       readingTime={15}
       keyTakeaways={[
-        'BS 7671 Regulation 525.1 limits voltage drop to 3% for lighting circuits (6.9V from a 230V supply) and 5% for all other circuits (11.5V from a 230V supply).',
+        'BS 7671 Appendix 4 section 6.4 gives 3% for lighting circuits (6.9V from a 230V supply) and 5% for all other circuits (11.5V from a 230V supply).',
         'The formula is: VD = mV/A/m x Ib x L / 1000, where mV/A/m comes from the Appendix 4 tables, Ib is the design current in amps, and L is the cable length in metres.',
         'Voltage drop matters most on long cable runs, lighting circuits (tighter 3% limit), high-current loads like showers and EV chargers, and motor loads where low voltage can prevent starting.',
         'For three-phase 400V circuits, the limits are 12V for lighting (3%) and 20V for other circuits (5%), using three-phase mV/A/m values from Appendix 4.',
@@ -95,8 +95,8 @@ export default function VoltageDropGuideBS7671Page() {
           content: (
             <>
               <p>
-                BS 7671 Regulation 525.1 sets the maximum permitted voltage drop from the origin of
-                the installation to the load. The limits differ depending on the circuit type:
+                BS 7671 Regulation 525.1 sets the recommended maximum voltage drop from the origin
+                of the installation to the load. The limits differ depending on the circuit type:
               </p>
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
                 <h3 className="font-bold text-white text-lg mb-4">Maximum Voltage Drop Limits</h3>
@@ -592,7 +592,7 @@ export default function VoltageDropGuideBS7671Page() {
         {
           question: 'What is the maximum voltage drop allowed in BS 7671?',
           answer:
-            'BS 7671 Regulation 525.1 sets the maximum voltage drop at 3% for lighting circuits and 5% for all other circuits, measured from the origin of the installation to the load. From a 230V single-phase supply, this equates to 6.9V for lighting and 11.5V for power circuits. From a 400V three-phase supply, the limits are 12V for lighting and 20V for other circuits. These limits apply to the installation side only — the supply side voltage drop (from the transformer to the meter) is the responsibility of the Distribution Network Operator and is not included in the BS 7671 limit.',
+            'BS 7671 Regulation 525.1 requires equipment to receive a voltage it can work properly and safely on; Regulation 525.202 then deems that satisfied where the drop does not exceed the Appendix 4 section 6.4 values — 3% for lighting circuits and 5% for all other circuits, measured from the origin of the installation to the load. From a 230V single-phase supply, this equates to 6.9V for lighting and 11.5V for power circuits. From a 400V three-phase supply, the limits are 12V for lighting and 20V for other circuits. These limits apply to the installation side only — the supply side voltage drop (from the transformer to the meter) is the responsibility of the Distribution Network Operator and is not included in the BS 7671 limit.',
         },
         {
           question: 'How do I find the mV/A/m value for a cable?',

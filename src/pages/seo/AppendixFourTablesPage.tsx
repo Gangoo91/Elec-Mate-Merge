@@ -92,9 +92,9 @@ const sections = [
     content: (
       <>
         <p>
-          The quick answer before the theory: pick the cable type, installation method and size,
-          and read the tabulated current-carrying capacity with correction factors applied — the
-          values come from the BS 7671 Appendix 4 tables themselves. Free, no sign-up.
+          The quick answer before the theory: pick the cable type, installation method and size, and
+          read the tabulated current-carrying capacity with correction factors applied — the values
+          come from the BS 7671 Appendix 4 tables themselves. Free, no sign-up.
         </p>
         <CalculatorSurface>
           <CableCurrentCapacityCalculator />
@@ -119,11 +119,9 @@ const sections = [
           Appendix 4 of BS 7671 is the section that every electrician turns to most frequently. It
           contains the current-carrying capacity tables for all standard cable types used in UK
           electrical installations. When you are{' '}
-          <SEOInternalLink href="/how-to-size-cables">
-            sizing a cable
-          </SEOInternalLink>
-          , Appendix 4 is where you look up the maximum current a cable can carry under specific
-          installation conditions.
+          <SEOInternalLink href="/how-to-size-cables">sizing a cable</SEOInternalLink>, Appendix 4
+          is where you look up the maximum current a cable can carry under specific installation
+          conditions.
         </p>
         <p>
           The tables cover every combination of cable type (PVC, XLPE, MICC, SWA, flexible),
@@ -351,9 +349,7 @@ const sections = [
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <h3 className="font-bold text-white mb-1">
-              Methods D1 and D2 — buried in the ground
-            </h3>
+            <h3 className="font-bold text-white mb-1">Methods D1 and D2 — buried in the ground</h3>
             <p className="text-white text-sm leading-relaxed">
               Amendment 4 split these out: Reference Method D1 is a cable in a conduit or duct in
               the ground, and Reference Method D2 is a cable buried in direct contact with soil.
@@ -401,8 +397,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <span>
                 <strong className="text-yellow-400">Table 4D1A</strong> — single-core 70&deg;C
-                thermoplastic (PVC) cables, non-armoured, with or without sheath, copper
-                conductors. The table for singles drawn into conduit or trunking.
+                thermoplastic (PVC) cables, non-armoured, with or without sheath, copper conductors.
+                The table for singles drawn into conduit or trunking.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -452,8 +448,8 @@ const sections = [
                 installer must apply the derating factors and reduced current-carrying capacities
                 set out in BS 7671 Appendix 4 Table 4D5 for the relevant contact/enclosure condition
                 — Installation Methods 100 to 103 of Table 4A2, which the On-Site Guide section 13.5
-                also directs you to. Failure to derate for thermal insulation is one of the most common
-                cable sizing errors in domestic work.
+                also directs you to. Failure to derate for thermal insulation is one of the most
+                common cable sizing errors in domestic work.
               </p>
             </div>
           </div>
@@ -471,10 +467,9 @@ const sections = [
           XLPE (cross-linked polyethylene) or LSF (low smoke and fume) insulation. It mirrors the 4D
           series construction for construction: 4E1A single-core non-armoured, 4E2A multicore
           non-armoured, 4E3A single-core armoured, 4E4A multicore armoured (XLPE/SWA). Thermosetting
-          cables have a higher
-          maximum conductor operating temperature of 90 degrees Celsius, compared to 70 degrees
-          Celsius for PVC. This 20-degree advantage translates directly into higher current-carrying
-          capacity for the same conductor size.
+          cables have a higher maximum conductor operating temperature of 90 degrees Celsius,
+          compared to 70 degrees Celsius for PVC. This 20-degree advantage translates directly into
+          higher current-carrying capacity for the same conductor size.
         </p>
         <p>
           Thermosetting cables are used in several common scenarios: where higher current capacity
@@ -537,9 +532,9 @@ const sections = [
           cautions. First, the gain is only usable if every terminal and accessory in the circuit is
           rated for the higher operating temperature: the introduction to Appendix 4 lists the
           limiting temperatures for the terminals of equipment (Section 526) as one of the
-          considerations that affects conductor size. Second, Regulation 523.1 NOTE 3 expressly allows the
-          70&deg;C tables (4D1 to 4D5) to be used for 90&deg;C thermosetting cables where the rating
-          is to be based on 70&deg;C, which is often what you must do for that reason.
+          considerations that affects conductor size. Second, Regulation 523.1 NOTE 3 expressly
+          allows the 70&deg;C tables (4D1 to 4D5) to be used for 90&deg;C thermosetting cables where
+          the rating is to be based on 70&deg;C, which is often what you must do for that reason.
         </p>
       </>
     ),
@@ -580,7 +575,7 @@ const sections = [
         <p>
           BS 7671 Regulation 525 limits voltage drop to 3% for lighting circuits and 5% for all
           other circuits, measured from the origin of the installation. From a 230V single-phase
-          supply, this gives maximum permissible voltage drops of 6.9V for lighting and 11.5V for
+          supply, this gives recommended maximum voltage drops of 6.9V for lighting and 11.5V for
           power. From a 400V three-phase supply, the limits are 12V for lighting and 20V for power.
         </p>
         <p>
@@ -622,9 +617,9 @@ const sections = [
                   thermoplastic insulated and sheathed flat cable with protective conductor&rdquo;.
                   That is the only table in Appendix 4 written specifically for flat T&amp;E, and it
                   is the one Table 4A3 and the On-Site Guide both point you to. Available in 1.0,
-                  1.5, 2.5, 4.0, 6.0, 10, and 16mm&sup2;. The most commonly used
-                  sizes are 1.5mm&sup2; for lighting, 2.5mm&sup2; for ring circuits, and 6mm&sup2;
-                  or 10mm&sup2; for cookers and showers.
+                  1.5, 2.5, 4.0, 6.0, 10, and 16mm&sup2;. The most commonly used sizes are
+                  1.5mm&sup2; for lighting, 2.5mm&sup2; for ring circuits, and 6mm&sup2; or
+                  10mm&sup2; for cookers and showers.
                 </p>
               </div>
             </div>
@@ -672,13 +667,13 @@ const sections = [
                 <h3 className="font-bold text-white mb-1">Flexible Cables</h3>
                 <p className="text-white text-sm leading-relaxed">
                   Flexible cables for appliance connections and temporary installations. Use the
-                  <strong className="text-yellow-400"> 4F series</strong> tables — 4F1A for
-                  60&deg;C thermosetting insulated flexible cables, 4F2A for 90&deg;C and 180&deg;C
+                  <strong className="text-yellow-400"> 4F series</strong> tables — 4F1A for 60&deg;C
+                  thermosetting insulated flexible cables, 4F2A for 90&deg;C and 180&deg;C
                   thermosetting, and 4F3A for flexible cables generally (Regulation 559.5.2 points
-                  to 4F3A for flexible cord to luminaires). Flexible cables
-                  have different current-carrying capacities from fixed wiring cables because of
-                  their construction — finer conductor strands, different insulation thickness, and
-                  typically different ambient temperature assumptions.
+                  to 4F3A for flexible cord to luminaires). Flexible cables have different
+                  current-carrying capacities from fixed wiring cables because of their construction
+                  — finer conductor strands, different insulation thickness, and typically different
+                  ambient temperature assumptions.
                 </p>
               </div>
             </div>
@@ -781,12 +776,12 @@ const sections = [
     content: (
       <>
         <p>
-          Here are the sizes most often needed for everyday domestic and light commercial work,
-          with indicative capacities for a 90&deg;C thermosetting cable clipped direct with two
-          loaded conductors. Read the tabulated value from Appendix 4 for the cable you are actually
-          using — Table 4D5 for 70&deg;C flat twin and earth, the 4E series for 90&deg;C
-          thermosetting — and remember the protective device rating (In) must sit between the design
-          current and the cable capacity: Ib &le; In &le; Iz, per Regulation 433.1.1.
+          Here are the sizes most often needed for everyday domestic and light commercial work, with
+          indicative capacities for a 90&deg;C thermosetting cable clipped direct with two loaded
+          conductors. Read the tabulated value from Appendix 4 for the cable you are actually using
+          — Table 4D5 for 70&deg;C flat twin and earth, the 4E series for 90&deg;C thermosetting —
+          and remember the protective device rating (In) must sit between the design current and the
+          cable capacity: Ib &le; In &le; Iz, per Regulation 433.1.1.
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-3">

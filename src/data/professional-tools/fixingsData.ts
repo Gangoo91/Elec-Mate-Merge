@@ -8,6 +8,7 @@ import type {
   SurfaceFixing,
   ScrewHeadType,
   ScrewCategory,
+  VanStockItem,
 } from './types';
 
 // ─── 1. Rawl Plugs / Wall Plugs ─────────────────────────────────────────────
@@ -635,13 +636,6 @@ export const screwCategoriesTip =
   'Keep a mixed box of red rawl plugs, #8 x 40mm woodscrews, M4 x 25mm machine screws, and PZ2 screws in your van — they cover 80% of day-to-day fixings work.';
 
 // ─── Van Stock Essentials ────────────────────────────────────────────────
-
-export interface VanStockItem {
-  item: string;
-  quantity: string;
-  approxCost: string;
-  notes: string;
-}
 
 export const vanStockEssentials: VanStockItem[] = [
   {

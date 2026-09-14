@@ -1,5 +1,3 @@
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ChevronDown } from 'lucide-react';
 import { referenceCards, type ReferenceCard } from './data/regulationsReference';
 
 const renderContent = (card: ReferenceCard) => {
@@ -74,9 +72,7 @@ const renderContent = (card: ReferenceCard) => {
             <div key={idx} className="flex items-start justify-between gap-3">
               <div className="min-w-0">
                 <div className="text-[14px] text-white">{test.test}</div>
-                <div className="text-[12px] text-white mt-0.5 leading-relaxed">
-                  {test.reason}
-                </div>
+                <div className="text-[12px] text-white mt-0.5 leading-relaxed">{test.reason}</div>
               </div>
               <span className="flex-shrink-0 text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]">
                 {test.priority}
@@ -91,37 +87,52 @@ const renderContent = (card: ReferenceCard) => {
   }
 };
 
+/**
+ * Nothing here collapses, and the emergency card is pinned.
+ *
+ * All nine cards were accordions, closed by default — including "Emergency
+ * Numbers" and "Safe Isolation Procedure". A quick reference you have to open
+ * is not quick, and emergency numbers behind a tap are worse than that: the
+ * moment you need them is the moment you cannot be working a disclosure
+ * one-handed.
+ */
 const QuickReferenceCards = () => {
-  return (
-    <div className="space-y-3">
-      {referenceCards.map((card) => {
-        const isEmergency = card.color === 'red';
+  const emergency = referenceCards.filter((c) => c.color === 'red');
+  const rest = referenceCards.filter((c) => c.color !== 'red');
 
-        return (
-          <Collapsible key={card.id}>
-            <CollapsibleTrigger
-              className={`w-full flex items-center justify-between p-4 rounded-xl border touch-manipulation h-auto min-h-[44px] ${
-                isEmergency
-                  ? 'border-red-500/30 bg-white/[0.06]'
-                  : 'border-white/[0.10] bg-white/[0.06]'
-              }`}
-            >
-              <div className="flex flex-col items-start gap-1">
-                <span
-                  className={`text-[10px] font-medium uppercase tracking-[0.18em] ${
-                    isEmergency ? 'text-red-300' : 'text-white'
-                  }`}
-                >
-                  {isEmergency ? 'Emergency' : 'Reference'}
-                </span>
-                <span className="text-[14px] font-medium text-white text-left">{card.title}</span>
-              </div>
-              <ChevronDown className="h-4 w-4 text-white transition-transform [[data-state=open]>&]:rotate-180" />
-            </CollapsibleTrigger>
-            <CollapsibleContent>{renderContent(card)}</CollapsibleContent>
-          </Collapsible>
-        );
-      })}
+  return (
+    <div className="space-y-4">
+      {emergency.map((card) => (
+        <section
+          key={card.id}
+          className="space-y-2.5 rounded-xl border border-red-500/40 bg-red-500/[0.05] p-4 sm:p-5"
+        >
+          <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+              Emergency
+            </span>
+            <h3 className="text-[15px] font-semibold tracking-tight text-white">{card.title}</h3>
+          </div>
+          {renderContent(card)}
+        </section>
+      ))}
+
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+        {rest.map((card) => (
+          <section
+            key={card.id}
+            className="space-y-2.5 rounded-xl border border-white/[0.10] bg-white/[0.04] p-4 sm:p-5"
+          >
+            <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                Reference
+              </span>
+              <h3 className="text-[15px] font-semibold tracking-tight text-white">{card.title}</h3>
+            </div>
+            {renderContent(card)}
+          </section>
+        ))}
+      </div>
     </div>
   );
 };

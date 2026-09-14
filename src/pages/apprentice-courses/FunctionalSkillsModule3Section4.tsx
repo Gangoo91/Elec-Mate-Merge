@@ -1,1167 +1,1000 @@
-import {
-  ArrowLeft,
-  ArrowRight,
-  ShieldCheck,
-  Mail,
-  AlertTriangle,
-  KeyRound,
-  Scale,
-  Share2,
-  Video,
-  Heart,
-} from 'lucide-react';
+/**
+ * Functional Skills · Module 3 · Section 4 — Online safety and communication
+ *
+ * CONVERTED (13 Sep) from the 2024 dialect to the StudyPage reading kit. Last
+ * section in Module 3, so the forward button goes to the module page rather
+ * than a Section 5 that does not exist.
+ *
+ * Built to the teaching-density standard set by Module 1: introduce a
+ * technique in a `ConceptBlock`, show it worked in a `WorkedExample`, then
+ * hand the learner a second case as a `TryIt`. Nearly everything on this page
+ * is a judgement call made under pressure — is this email real, is this
+ * password good enough, do I have a lawful basis to hold this — so almost
+ * every block ends in a worked decision rather than a description.
+ *
+ * This page carries forward several accuracy fixes made to the old page and
+ * they are NOT reverted here:
+ *
+ *  - Lawful basis under UK GDPR. The old page wrote "legitimate interest
+ *    (fulfilling a contract)", which conflates two separate Article 6 bases.
+ *    UK GDPR lists six lawful bases; for an electrician the two that usually
+ *    apply are CONTRACT (holding a customer's details to do the job they
+ *    asked for) and LEGAL OBLIGATION (retaining records you are required to
+ *    keep). Legitimate interests is a third, different basis and is not the
+ *    basis for doing a job you were hired to do. Kept exactly.
+ *  - ICO data protection fee. The old page said a flat "£40 per year — this
+ *    is a legal requirement". It is tiered: a sole trader or small firm sits
+ *    in tier 1 (£52 a year, £47 by direct debit at the time of writing), a
+ *    small number of businesses are exempt, and the reader is pointed to the
+ *    ICO's self-assessment and told to check the current fee. Kept exactly.
+ *  - Password strength. "12 characters is 62 trillion times harder to crack
+ *    than 6" was wrong by roughly 85x. The real figure on a full keyboard is
+ *    around 690 billion times as many combinations. Kept exactly, and the
+ *    quiz explanation for the password-length question has been brought
+ *    into line with it rather than left claiming an unqualified "billions
+ *    of years to crack".
+ *  - Zoom's free-tier meeting length and Udemy's course pricing are
+ *    time-sensitive vendor claims and stay hedged ("check the current
+ *    limit" / "check the price on the day") rather than stated as fact.
+ *
+ * No new products have been added. LastPass was removed from the password
+ * manager list previously and does not come back. The construction-sector
+ * mental health charities named at the end (Lighthouse Construction Industry
+ * Charity, Mates in Mind) are kept — they are signposting, not products.
+ *
+ * No <RegsCallout> anywhere: this page paraphrases throughout, and that
+ * component renders its `clause` prop as quoted regulation text. No
+ * competent person scheme is named — ELECSA no longer exists as a brand, and
+ * "a government-authorised competent person scheme" says the same thing
+ * without dating the page to a market that will have moved on.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import {
+  StudyPage,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  Prerequisites,
+  Scenario,
+  ContentEyebrow,
+  SectionRule,
+  WorkedExample,
+  TryIt,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
-const FunctionalSkillsModule3Section4 = () => {
-  useSEO(
-    'Section 4: Online Safety & Communication - Digital Skills for Electricians',
-    'Master email etiquette, phishing awareness, password security, GDPR obligations, social media best practice, video conferencing, online training platforms, and digital wellbeing for electrical professionals.'
-  );
+const TITLE = 'Online Safety & Communication - Functional Skills Module 3.4';
+const DESCRIPTION =
+  'Functional Skills for electricians: email etiquette, spotting phishing and smishing, password security, GDPR obligations, social media practice, video conferencing, online CPD, and managing screen time.';
 
-  const quizQuestions = [
-    {
-      id: 1,
-      question:
-        'You receive an email claiming to be from your electrical wholesaler asking you to verify your account by clicking a link. The email address is support@electrcal-wholesale-uk.com (note the misspelling). What should you do?',
-      options: [
-        'Click the link quickly to verify your account before it gets suspended',
-        'Do not click; contact the wholesaler directly on a number you already know',
-        'Reply to the email asking the sender to confirm the request is genuine',
-        'Forward the email to all your colleagues so they can verify their accounts too',
-      ],
-      correctAnswer: 1,
-      explanation:
-        "This is a classic phishing attempt. The misspelled domain name ('electrcal' instead of 'electrical') is a red flag. Never click links in suspicious emails. Instead, contact the company directly using contact details from their genuine website or your existing records — not the contact details in the suspicious email. Replying confirms your email address is active, which invites more phishing.",
-    },
-    {
-      id: 2,
-      question:
-        "Under GDPR, how long can you retain a customer's personal data (name, address, contact details) after completing their electrical work?",
-      options: [
-        'Indefinitely, because old customer records may always prove useful in future',
-        'Exactly 12 months, after which all of the data must be permanently deleted',
-        'Only while there is a legitimate reason, such as warranty or legal retention',
-        'For 30 days only, unless the customer specifically requests a longer extension',
-      ],
-      correctAnswer: 2,
-      explanation:
-        'GDPR requires that personal data is retained only for as long as there is a legitimate purpose. For electricians, this typically includes the warranty period, legal record retention requirements (electrical certificates should be kept for the life of the installation), and ongoing maintenance agreements. You should have a data retention policy and delete data when it is no longer needed.',
-    },
-    {
-      id: 3,
-      question: 'What is the recommended minimum length for a strong password?',
-      options: [
-        '8 characters',
-        '4 characters',
-        '6 characters',
-        '12 characters or more',
-      ],
-      correctAnswer: 3,
-      explanation:
-        "Security experts recommend passwords of 12 characters or more. Longer passwords are exponentially harder to crack by brute force. A 12-character password using letters, numbers, and symbols would take billions of years to crack using current technology. Better still, use a passphrase — a series of random words like 'correct horse battery staple' — which is both long and memorable.",
-    },
-    {
-      id: 4,
-      question:
-        'Which of the following is the best practice for professional email communication with a client?',
-      options: [
-        'A clear subject line, professional greeting, concise body, and signature block',
-        'Lower case with no subject line, to keep the message informal and friendly',
-        'Plenty of abbreviations and emojis, so the client knows you are approachable',
-        'No greeting or sign-off at all, to save the client a little reading time',
-      ],
-      correctAnswer: 0,
-      explanation:
-        "Professional emails should have a clear subject line (e.g. 'EICR Report — 14 Oak Street'), a proper greeting, concise and well-structured body text, and a signature block containing your name, company, phone number, email, and registration details (NICEIC/ELECSA number). This builds client confidence and presents a professional image.",
-    },
-    {
-      id: 5,
-      question:
-        'A customer posts a negative review about your work on social media. What is the best response?',
-      options: [
-        'Ignore the review completely so as not to draw attention to it',
-        'Respond politely and professionally, acknowledge their concern, and offer to discuss the matter privately to resolve it',
-        'Reply publicly to argue your case and prove the customer is wrong',
-        'Ask friends and family to post fake positive reviews to bury it',
-      ],
-      correctAnswer: 1,
-      explanation:
-        'A professional, empathetic response demonstrates maturity and commitment to customer service. Acknowledge their concern, apologise for their experience, and offer to resolve the issue privately (by phone or in person). Potential customers reading the exchange will judge you more on how you handle the complaint than on the complaint itself. Never respond angrily — it damages your reputation far more than the original review.',
-    },
-    {
-      id: 6,
-      question: 'What is a password manager and why should electricians use one?',
-      options: [
-        'An app that automatically logs you out of every account after each use',
-        'A device that physically locks your laptop to your desk, van, or toolbox',
-        'Software that generates and stores unique passwords behind one master password',
-        'A service that emails you a reminder whenever one of your passwords needs changing',
-      ],
-      correctAnswer: 2,
-      explanation:
-        'A password manager (e.g. Bitwarden, 1Password, LastPass) generates and securely stores unique, strong passwords for every account. You only need to remember one master password. This eliminates the dangerous practice of reusing the same password across multiple sites. If one site is breached, your other accounts remain safe because each has a different password.',
-    },
-    {
-      id: 7,
-      question: 'Which of the following would constitute a GDPR breach if done by an electrician?',
-      options: [
-        "Sending a completed certificate to the customer who commissioned the work",
-        "Keeping electrical installation records to meet legal retention requirements",
-        "Photographing your own finished work for your portfolio with no people in shot",
-        "Passing a customer's contact details to a third party for marketing, without consent",
-      ],
-      correctAnswer: 3,
-      explanation:
-        "Sharing personal data (name, address, phone number) with a third party for marketing purposes without the individual's explicit consent violates GDPR. The other options are legitimate business activities — sending certificates to the data subject, retaining records for legal compliance, and photographing your work (though photographs showing identifiable individuals would need consideration).",
-    },
-    {
-      id: 8,
-      question: "What is 'screen fatigue' and how can electricians manage it?",
-      options: [
-        'Eye strain and lost concentration from screens — managed by breaks and the 20-20-20 rule',
-        'A fault that makes a tablet screen flicker — managed by replacing the display unit',
-        'Glare from working under bright site lighting — managed by wearing tinted safety glasses',
-        'A drop in battery life on older devices — managed by dimming the screen permanently',
-      ],
-      correctAnswer: 0,
-      explanation:
-        'Screen fatigue (or digital eye strain) affects anyone who spends extended periods looking at screens. Symptoms include tired eyes, headaches, neck pain, and difficulty concentrating. The 20-20-20 rule helps: every 20 minutes, look at something 20 feet away for 20 seconds. Also, take regular breaks from screens, adjust brightness to match your environment, and use night mode in the evening.',
-    },
-  ];
+const quizQuestions = [
+  {
+    id: 1,
+    question:
+      'You receive an email claiming to be from your electrical wholesaler asking you to verify your account by clicking a link. The email address is support@electrcal-wholesale-uk.com (note the misspelling). What should you do?',
+    options: [
+      'Click the link quickly to verify your account before it gets suspended',
+      'Do not click; contact the wholesaler directly on a number you already know',
+      'Reply to the email asking the sender to confirm the request is genuine',
+      'Forward the email to all your colleagues so they can verify their accounts too',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "This is a classic phishing attempt. The misspelled domain ('electrcal' instead of 'electrical') is the giveaway once you look for it. Never click links in a suspicious email — contact the company using a number or website you already have on file, not anything in the email itself. Replying confirms your address is live, which invites more of the same.",
+  },
+  {
+    id: 2,
+    question:
+      "Under GDPR, how long can you retain a customer's personal data (name, address, contact details) after completing their electrical work?",
+    options: [
+      'Indefinitely, because old customer records may always prove useful in future',
+      'Exactly 12 months, after which all of the data must be permanently deleted',
+      'Only while there is a legitimate reason, such as warranty or legal retention',
+      'For 30 days only, unless the customer specifically requests a longer extension',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'GDPR requires that personal data is retained only for as long as there is a genuine reason to hold it. For an electrician that usually means the warranty period and the legal retention period for certificates, which for an installation runs for the life of the installation. When neither reason still applies, the data should go.',
+  },
+  {
+    id: 3,
+    question: 'What is the recommended minimum length for a strong password?',
+    options: ['8 characters', '4 characters', '6 characters', '12 characters or more'],
+    correctAnswer: 3,
+    explanation:
+      "Security experts recommend passwords of 12 characters or more. Each extra character multiplies the number of combinations an attacker has to search, which is why length matters more than complexity. Going from 6 characters to 12 on a full keyboard increases that search space by roughly 690 billion times over — enough to make brute-forcing it impractical against current attacks, though 'impractical' depends on what the attacker can throw at it and is not a permanent guarantee. Better still, use a passphrase — a string of random words like 'correct horse battery staple' — which is both long and memorable.",
+  },
+  {
+    id: 4,
+    question:
+      'Which of the following is the best practice for professional email communication with a client?',
+    options: [
+      'A clear subject line, professional greeting, concise body, and signature block',
+      'Lower case with no subject line, to keep the message informal and friendly',
+      'Plenty of abbreviations and emojis, so the client knows you are approachable',
+      'No greeting or sign-off at all, to save the client a little reading time',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'A professional email has a clear subject line naming what it is about, a proper greeting, concise body text, and a signature block carrying your name, company, phone number, email and registration details. That structure is what lets a client act on the email without ringing you to ask what it means.',
+  },
+  {
+    id: 5,
+    question:
+      'A customer posts a negative review about your work on social media. What is the best response?',
+    options: [
+      'Ignore the review completely so as not to draw attention to it',
+      'Respond politely and professionally, acknowledge their concern, and offer to discuss the matter privately to resolve it',
+      'Reply publicly to argue your case and prove the customer is wrong',
+      'Ask friends and family to post fake positive reviews to bury it',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A calm, professional reply that acknowledges the concern and offers to resolve it privately does more for your reputation than the review itself ever will. People reading the exchange judge you on how you handled the complaint, not on the complaint. Arguing publicly, however justified you feel, reads badly to everyone except you.',
+  },
+  {
+    id: 6,
+    question: 'What is a password manager and why should electricians use one?',
+    options: [
+      'An app that automatically logs you out of every account after each use',
+      'A device that physically locks your laptop to your desk, van, or toolbox',
+      'Software that generates and stores unique passwords behind one master password',
+      'A service that emails you a reminder whenever one of your passwords needs changing',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'A password manager (Bitwarden and 1Password are two well-regarded examples) generates and stores a unique, strong password for every account, so you only have to remember one master password. That removes the habit of reusing passwords, which is what turns one breach into many.',
+  },
+  {
+    id: 7,
+    question: 'Which of the following would constitute a GDPR breach if done by an electrician?',
+    options: [
+      'Sending a completed certificate to the customer who commissioned the work',
+      'Keeping electrical installation records to meet legal retention requirements',
+      'Photographing your own finished work for your portfolio with no people in shot',
+      "Passing a customer's contact details to a third party for marketing, without consent",
+    ],
+    correctAnswer: 3,
+    explanation:
+      "Sharing a customer's personal data with a third party for marketing purposes, without their consent, is the clear breach here. The other three are legitimate: giving the data subject their own certificate, retaining records you are legally required to keep, and photographing work with no identifiable people in the frame.",
+  },
+  {
+    id: 8,
+    question: "What is 'screen fatigue' and how can electricians manage it?",
+    options: [
+      'Eye strain and lost concentration from screens — managed by breaks and the 20-20-20 rule',
+      'A fault that makes a tablet screen flicker — managed by replacing the display unit',
+      'Glare from working under bright site lighting — managed by wearing tinted safety glasses',
+      'A drop in battery life on older devices — managed by dimming the screen permanently',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Screen fatigue — digital eye strain — shows up as tired eyes, headaches, and difficulty concentrating after long periods looking at a screen. The 20-20-20 rule helps: every 20 minutes, look at something 20 feet away for 20 seconds. Regular breaks, matching brightness to the room, and a night mode in the evening all help too.',
+  },
+];
+
+const FunctionalSkillsModule3Section4 = () => {
+  const navigate = useNavigate();
+  useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="pb-24 bg-elec-dark min-h-screen">
-      {/* Sticky Header */}
-      <div className="sticky top-0 z-10 bg-elec-dark/95 backdrop-blur-sm border-b border-white/5">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3">
-          <Link
-            to="/study-centre/apprentice/functional-skills/module3"
-            className="p-2 -ml-2 touch-manipulation"
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 3 · Section 4"
+        title="Online safety and communication"
+        backTo="/study-centre/apprentice/functional-skills/module3"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage measure="74rem" wide="94rem">
+          <p className="text-[13px] leading-relaxed text-white">
+            Every electrician now runs a chunk of their business through a screen — quotes by email,
+            certificates on a tablet, enquiries through a Facebook page, training on YouTube. Almost
+            everything in this section is a judgement call you have to make in the moment: is this
+            email real, is this password good enough, do I actually have a right to hold this data.
+            So rather than a tour of the topics, this section works through real cases, step by
+            step, and then gives you a second one to do yourself.
+          </p>
+
+          <LearningOutcomes
+            outcomes={[
+              'Write a professional email with the structure a client can act on without ringing you.',
+              'Work through the indicators of a phishing email or smishing text, one at a time, to a verdict.',
+              'Apply the four tests of password strength, and decide what to fix and in what order.',
+              'Work out which GDPR lawful basis applies to a data-handling decision, and what to do when none does.',
+              'Draft a reply to a negative review that protects your reputation rather than defends your pride.',
+              'Prepare for a professional video call so nothing on your screen surprises you mid-meeting.',
+              'Judge whether an online training source is credible before you act on what it says.',
+              'Diagnose your own screen fatigue and pick the right fix for the actual cause.',
+            ]}
+          />
+
+          <Prerequisites
+            items={[
+              {
+                term: 'An email address you use for work',
+                gist: 'The examples assume you already send quotes, certificates or invoices by email, even informally.',
+              },
+              {
+                term: 'Module 3, earlier sections',
+                gist: 'This section builds on the documentation and app habits already covered in this module — it does not repeat them.',
+              },
+            ]}
+          />
+
+          <TLDR
+            points={[
+              'A misspelled domain, manufactured urgency, or a request for a password are the fastest phishing tells. Any one is reason enough to stop.',
+              'Verify a suspicious message through a channel you already trust — never through anything supplied in the message itself.',
+              'Password strength is mostly length. Going from 6 to 12 characters on a full keyboard multiplies the combinations an attacker has to search by roughly 690 billion.',
+              'A password manager and two-factor authentication together are the single biggest security upgrade most people can make in half an hour.',
+              'UK GDPR lists six lawful bases. An electrician usually relies on contract and legal obligation — not "legitimate interests", which is a different basis.',
+              'The ICO fee is tiered, not flat. Check the self-assessment and the current figure rather than assuming either way.',
+              'Never post a customer address on social media, and check every "before" photo for anything else identifying in the frame.',
+              'Test a new video platform, and share the single window rather than the whole screen.',
+              'Screen fatigue has a cause. Diagnose it before reaching for the fix — the 20-20-20 rule solves a different problem than a boundary around work messages does.',
+            ]}
+          />
+
+          <SectionRule />
+
+          {/* ── 01 ─────────────────────────────────────────────────── */}
+          <ContentEyebrow>01 · Email etiquette for professionals</ContentEyebrow>
+
+          <ConceptBlock
+            title="Five parts, checked every time"
+            onSite="A quote sent by text feels informal. The exact figure sent by email, with a subject line and your signature under it, reads as a professional quotation — and if there is ever a dispute, it is the version that survives."
           >
-            <ArrowLeft className="w-5 h-5 text-white" />
-          </Link>
-          <div>
-            <p className="text-[11px] font-semibold text-green-400 uppercase tracking-wider">
-              Module 3 • Section 4
+            <p>
+              A working email has a subject line naming what it is, which property, and roughly when
+              — "EICR Report — 14 Oak Street — 15 June 2025", not "Update". Then five parts in
+              order: a proper <strong className="text-white">greeting</strong> ("Dear Mr/Mrs
+              [Name]", or "Hi [Name]" once you have a relationship — never "Hey" or nothing at all),
+              an <strong className="text-white">opening</strong> that states the purpose in the
+              first sentence, a short <strong className="text-white">body</strong> in bullet points
+              where a list helps, a <strong className="text-white">call to action</strong> that says
+              exactly what you need from the reader, and a{' '}
+              <strong className="text-white">signature block</strong> with your name, company, phone
+              number, email and your competent person scheme registration number.
             </p>
-            <h1 className="text-base font-bold text-white">Online Safety & Communication</h1>
-          </div>
-        </div>
-      </div>
+          </ConceptBlock>
 
-      {/* Hero with green gradient */}
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-elec-dark via-neutral-900 to-elec-dark" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-green-600/10 via-transparent to-transparent" />
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 py-8 text-center">
-          <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
-            <div className="relative inline-flex mb-4">
-              <div className="absolute inset-0 bg-green-500/30 rounded-2xl blur-xl animate-pulse" />
-              <div className="relative p-4 rounded-2xl bg-gradient-to-br from-green-500 via-green-600 to-emerald-600 shadow-2xl shadow-green-500/25">
-                <ShieldCheck className="h-8 w-8 text-white" />
-              </div>
-            </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
-              Online Safety & Communication
-            </h2>
-            <p className="text-sm text-white max-w-lg mx-auto">
-              Protect yourself and your customers online — from professional email communication and
-              GDPR compliance to spotting phishing scams, securing passwords, and maintaining
-              digital wellbeing.
-            </p>
-          </motion.div>
-        </div>
-      </div>
+          <WorkedExample
+            question='A colleague hands you an account and you find they sent this to the client: "hey job all done let us know if issues, dave". Turn it into an email a client would take seriously.'
+            steps={[
+              {
+                calc: 'Subject — "Consumer Unit Upgrade Complete — 8 Beech Grove"',
+                note: 'Names the job and the property. "Job all done" is not findable in six months.',
+              },
+              {
+                calc: 'Greeting — "Dear Mr Ahmed,"',
+                note: 'Formal until there\'s an established relationship. "Hey" reads as an afterthought, not a job worth the client\'s money.',
+              },
+              {
+                calc: 'Opening — state what and when',
+                note: '"I\'m writing to confirm the consumer unit upgrade at 8 Beech Grove was completed today, 12 September."',
+              },
+              {
+                calc: 'Body — what changed, in one or two lines',
+                note: 'What was replaced and tested, and the certificate that follows it — enough for the client to know the job is genuinely finished.',
+              },
+              {
+                calc: 'Call to action — tell them what to do if something is wrong',
+                note: '"If anything doesn\'t feel right — a switch not resetting, a light flickering — call me on [number] and I\'ll come straight back."',
+              },
+              {
+                calc: 'Signature block',
+                note: 'Name, company, phone, competent person scheme registration number.',
+              },
+            ]}
+            answer="Six lines instead of one, and every one of them earns its place: what the job was, that it is done, what to do if it is not right, and how to reach you. The original told the client nothing they could act on."
+            watchOut='"Let us know if issues" sounds friendly but gives the client no number, no name, and no sense of what "issues" would look like. A call to action has to be specific enough to actually be followed.'
+          />
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 space-y-6 mt-6">
-        {/* Section 01 — Email Etiquette for Professionals */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">
-              01
-            </span>
-            <h3 className="text-lg font-bold text-white">Email Etiquette for Professionals</h3>
-          </div>
-          <div className="space-y-3 text-sm text-white leading-relaxed">
-            <p>
-              Email is the backbone of professional communication. As an electrician, you will use
-              email to send quotations, confirm appointments, deliver certificates, communicate with
-              contractors and suppliers, and correspond with building control. The quality of your
-              emails directly affects how clients and colleagues perceive your professionalism.
-            </p>
-            <p>
-              <strong className="text-white">Professional Email Address</strong> — If you are
-              self-employed or running a business, use a professional email address that includes
-              your business name: info@smithelectrical.co.uk is far more professional than
-              sparky_dave_1995@gmail.com. Many domain registrars offer email hosting for a few
-              pounds per month, or you can use Google Workspace or Microsoft 365 to create
-              professional addresses linked to your domain.
-            </p>
-            <p>
-              <strong className="text-white">Subject Lines</strong> — Every email must have a clear,
-              descriptive subject line. This helps the recipient prioritise your email and find it
-              later. Good examples:
-            </p>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>"EICR Report — 14 Oak Street, Birmingham — 15 June 2025"</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>"Quotation: Full Rewire — Henderson Residence"</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>"Appointment Confirmation — Consumer Unit Upgrade — Tuesday 20 June"</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>"Material Order Query — PO-2025-0042"</span>
-              </li>
-            </ul>
-            <p>
-              <strong className="text-white">Email Structure:</strong>
-            </p>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Greeting</strong> — "Dear Mr/Mrs [Name]" for formal
-                  correspondence, "Hi [Name]" for established business relationships. Avoid "Hey" or
-                  no greeting at all.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Opening</strong> — State the purpose of your email
-                  in the first sentence. "Please find attached the EICR for 14 Oak Street, completed
-                  on 15 June 2025."
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Body</strong> — Provide necessary details in short
-                  paragraphs. Use bullet points for lists. Be concise — busy clients appreciate
-                  brevity.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Call to Action</strong> — Clearly state what you
-                  need from the recipient: "Please review and confirm you are happy to proceed," or
-                  "Please sign and return at your earliest convenience."
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Sign-off</strong> — "Kind regards," or "Best
-                  regards," followed by your full signature block.
-                </span>
-              </li>
-            </ul>
-            <p>
-              <strong className="text-white">Email Signature Block</strong> — Every professional
-              email should include a consistent signature containing: your full name, job title,
-              company name, phone number, email address, website (if applicable), and registration
-              numbers (NICEIC/ELECSA/NAPIT number). This provides recipients with all the
-              information they need to verify your credentials and contact you.
-            </p>
-            <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
-              <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white">
-                Always proofread your emails before sending. Spelling and grammar errors in
-                professional correspondence undermine client confidence. If the email is important,
-                draft it, wait 10 minutes, then re-read it before clicking send. Check that all
-                attachments are actually attached — "Please see attached" with no attachment is
-                embarrassingly common.
-              </p>
-            </div>
-          </div>
-        </motion.div>
+          <TryIt
+            question="You are emailing sixteen leaseholders in a block to tell them when the communal lighting will be off for testing. You put all sixteen addresses in the To field. What have you done, and what should you have done?"
+            steps={[
+              {
+                calc: 'Every recipient can now see all sixteen addresses',
+                note: 'An email address is personal data. You have disclosed all sixteen to all sixteen without any of them agreeing to it.',
+              },
+              {
+                calc: 'That is a personal data breach, not just bad manners',
+                note: 'You have shared identifiable data with third parties who had no lawful basis to receive it.',
+              },
+              {
+                calc: 'Use BCC instead',
+                note: 'Put your own address in To, and all sixteen in BCC. Each person sees only their own.',
+              },
+              {
+                calc: 'Better still for a block: ask the managing agent to circulate it',
+                note: 'Then you never hold the list at all, which is the cleanest answer.',
+              },
+            ]}
+            answer="Sixteen addresses disclosed to sixteen people. Use BCC, or route it through whoever legitimately holds the list. This is one of the most common accidental data breaches in any trade, and it is entirely avoidable by moving one field."
+          />
 
-        {/* Section 02 — Phishing & Scam Awareness */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15 }}
-          className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">
-              02
-            </span>
-            <h3 className="text-lg font-bold text-white">Phishing & Scam Awareness</h3>
-          </div>
-          <div className="space-y-3 text-sm text-white leading-relaxed">
-            <p>
-              Phishing attacks are one of the biggest cyber threats facing small businesses,
-              including electrical contractors. Phishing is the practice of sending fraudulent
-              emails, text messages, or creating fake websites that impersonate legitimate
-              organisations to steal personal information, login credentials, or financial details.
-            </p>
-            <p>
-              <strong className="text-white">
-                Common Phishing Tactics Targeting Tradespeople:
-              </strong>
-            </p>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Fake wholesaler emails</strong> — "Your account has
-                  been suspended. Click here to verify your details." These emails mimic the
-                  branding of major suppliers like Edmundson, CEF, or Rexel.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Fake HMRC emails</strong> — "You are entitled to a
-                  tax refund of £1,247.50. Click here to claim." HMRC will never email you with a
-                  link to claim a refund.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Invoice fraud</strong> — You receive an email
-                  appearing to be from a regular supplier with "updated" bank details, requesting
-                  you pay the next invoice to a different account. Always verify bank detail changes
-                  by phone using a known number.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Fake job enquiries</strong> — "We need urgent
-                  electrical work at [address]. Please click this link to view the specification."
-                  The link downloads malware.
-                </span>
-              </li>
-            </ul>
-            <p>
-              <strong className="text-white">How to Spot a Phishing Email:</strong>
-            </p>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Check the sender's email address</strong> — Hover
-                  over the "From" name to see the actual email address. Phishing emails often use
-                  addresses that are close to but not exactly the legitimate domain (e.g.
-                  support@micr0soft.com instead of support@microsoft.com).
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Urgency and threats</strong> — "Your account will
-                  be closed in 24 hours unless you verify." Legitimate companies do not threaten
-                  account closure via email with tight deadlines.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Spelling and grammar errors</strong> — Professional
-                  organisations proofread their communications. Multiple errors are a strong
-                  indicator of phishing.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Suspicious links</strong> — Hover over (do not
-                  click) any links. The URL shown in the browser bar should match the legitimate
-                  website. If it shows a completely different domain, it is phishing.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Requests for sensitive information</strong> —
-                  Legitimate organisations will never ask for passwords, full bank details, or
-                  National Insurance numbers via email.
-                </span>
-              </li>
-            </ul>
-            <p>
-              <strong className="text-white">What to Do If You Suspect Phishing:</strong> Do not
-              click any links or download any attachments. Do not reply to the email. Report it to
-              the National Cyber Security Centre by forwarding it to report@phishing.gov.uk. If you
-              have already clicked a link or entered information, change your passwords immediately
-              and contact your bank if financial details were shared.
-            </p>
-            <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
-              <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white">
-                When in doubt, do not click. Contact the supposed sender directly using a phone
-                number or website you already know (not one from the suspicious email). Electricians
-                are increasingly targeted because they are busy, often checking emails quickly on
-                site, and may not scrutinise each message carefully. Take an extra 10 seconds to
-                verify before acting.
-              </p>
-            </div>
-          </div>
-        </motion.div>
+          <CommonMistake
+            title="Sending before proofreading"
+            whatHappens="An important email goes out with a typo in the price, a wrong date, or the words 'please see attached' with nothing attached. None of these is a big deal on its own, but together they read as carelessness — and this is a trade where clients are already looking for a reason not to trust the paperwork."
+            doInstead="For anything that matters, draft it, leave it ten minutes, then re-read it before sending. Check the attachment is actually there. It costs almost nothing and it is the difference between looking sharp and looking rushed."
+          />
 
-        {/* InlineCheck after Section 02 */}
-        <InlineCheck
-          question="You receive a text message saying: 'HMRC: You are due a tax refund of £1,847.20. Claim now at: hmrc-refunds-uk.co.com'. What should you do?"
-          options={[
-            'Click the link and enter your bank details to receive the refund quickly',
-            'Forward the text to a friend to check whether they got the same message',
-            'Delete it — HMRC never texts refund links — and report it by forwarding to 7726',
-            'Reply to the message asking the sender for a few more details first',
-          ]}
-          correctIndex={2}
-          explanation="This is a smishing (SMS phishing) attack. HMRC never sends text messages with links for tax refunds. The domain 'hmrc-refunds-uk.co.com' is not a genuine HMRC domain. Delete the message and report it by forwarding to 7726 (the UK's scam text reporting number). Never click links in unsolicited messages claiming to offer refunds or requiring urgent action."
-        />
+          <SectionRule />
 
-        {/* Section 03 — Password Security */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">
-              03
-            </span>
-            <h3 className="text-lg font-bold text-white">Password Security</h3>
-          </div>
-          <div className="space-y-3 text-sm text-white leading-relaxed">
-            <p>
-              Weak passwords are the single biggest vulnerability in most people's digital security.
-              As an electrician, your online accounts contain sensitive information: customer data,
-              financial records, certification details, and business documents. Compromised
-              passwords can lead to identity theft, financial loss, and breach of your GDPR
-              obligations.
-            </p>
-            <p>
-              <strong className="text-white">What Makes a Strong Password:</strong>
-            </p>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Length</strong> — At least 12 characters. Each
-                  additional character exponentially increases the time required to crack the
-                  password. A 12-character password is roughly 62 trillion times harder to crack
-                  than a 6-character password.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Complexity</strong> — Include uppercase letters,
-                  lowercase letters, numbers, and symbols. However, length matters more than
-                  complexity — "correcthorsebatterystaple" is stronger than "P@55w0rd!".
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Uniqueness</strong> — Never reuse passwords across
-                  different accounts. If one account is breached and you use the same password
-                  elsewhere, all your accounts are compromised. This is the most important rule.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Unpredictability</strong> — Avoid dictionary words,
-                  names, dates of birth, pet names, football teams, or any information that could be
-                  guessed from your social media profiles. Criminals specifically target this
-                  information.
-                </span>
-              </li>
-            </ul>
-            <p>
-              <strong className="text-white">Password Managers</strong> — The solution to creating
-              and remembering unique, strong passwords for every account is a password manager.
-              Popular options include:
-            </p>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Bitwarden (Free)</strong> — Open-source,
-                  cross-platform, and highly regarded by security professionals. The free tier is
-                  genuinely comprehensive.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">1Password</strong> — Excellent user interface,
-                  family and business plans available. Includes a feature called "Watchtower" that
-                  alerts you if any of your saved passwords appear in known data breaches.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Apple Keychain / Google Password Manager</strong> —
-                  Built into Apple and Google ecosystems respectively. Convenient if you use one
-                  ecosystem exclusively, but less flexible than dedicated managers.
-                </span>
-              </li>
-            </ul>
-            <p>
-              <strong className="text-white">Two-Factor Authentication (2FA)</strong> — Enable 2FA
-              on every account that supports it. 2FA requires a second verification step after your
-              password — typically a code from an authenticator app (Google Authenticator, Microsoft
-              Authenticator) or a text message. Even if someone steals your password, they cannot
-              access your account without the second factor. Prioritise enabling 2FA on your email,
-              banking, cloud storage, and certification software accounts.
-            </p>
-            <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
-              <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white">
-                Install a password manager today and start migrating your accounts to unique,
-                generated passwords. It takes about 30 minutes to set up and saves you from the
-                catastrophic consequences of a password breach. Combined with two-factor
-                authentication, this is the single most impactful security measure you can take.
-              </p>
-            </div>
-          </div>
-        </motion.div>
+          {/* ── 02 ─────────────────────────────────────────────────── */}
+          <ContentEyebrow>02 · Phishing and scam awareness</ContentEyebrow>
 
-        {/* Section 04 — GDPR for Electricians */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.25 }}
-          className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">
-              04
-            </span>
-            <h3 className="text-lg font-bold text-white">GDPR for Electricians</h3>
-          </div>
-          <div className="space-y-3 text-sm text-white leading-relaxed">
-            <p>
-              The General Data Protection Regulation (GDPR), retained in UK law as the UK GDPR
-              alongside the Data Protection Act 2018, applies to every business that handles
-              personal data — including sole-trader electricians. Personal data includes names,
-              addresses, phone numbers, email addresses, and photographs that identify individuals.
-              Non-compliance can result in significant fines and reputational damage.
-            </p>
-            <p>
-              <strong className="text-white">Personal Data You Handle as an Electrician:</strong>
-            </p>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>Customer names, addresses, phone numbers, and email addresses</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>Property details and access information (key codes, alarm codes)</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>Site photographs that may include people or identifiable locations</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>Payment details (if processing card payments)</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  Information on electrical certificates (occupier details, property information)
-                </span>
-              </li>
-            </ul>
-            <p>
-              <strong className="text-white">Key GDPR Principles for Electricians:</strong>
-            </p>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Lawful basis</strong> — You need a legitimate
-                  reason to hold personal data. For electricians, "legitimate interest" (fulfilling
-                  a contract) and "legal obligation" (retaining certificates) are the most common
-                  bases.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Data minimisation</strong> — Only collect data you
-                  genuinely need. You need the property address and a contact number; you do not
-                  need the customer's date of birth or National Insurance number.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Storage limitation</strong> — Do not keep data
-                  longer than necessary. Delete customer contact details when they are no longer
-                  needed (though retain certificate data for the required retention period).
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Security</strong> — Protect personal data with
-                  appropriate security measures: password-protected devices, encrypted storage,
-                  secure email.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Transparency</strong> — Customers have the right to
-                  know what data you hold about them and why. A simple privacy notice on your
-                  website or included with your quotation satisfies this requirement.
-                </span>
-              </li>
-            </ul>
-            <p>
-              <strong className="text-white">Practical GDPR Steps:</strong> Lock your phone and
-              tablet with a PIN or biometric security. Encrypt your laptop's hard drive (BitLocker
-              on Windows, FileVault on macOS). Do not leave customer paperwork visible in your van.
-              If you lose a device containing customer data, report it to the Information
-              Commissioner's Office (ICO) within 72 hours if there is a risk to individuals' rights.
-              Register with the ICO (£40 per year for most small businesses) — this is a legal
-              requirement.
-            </p>
-            <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
-              <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white">
-                GDPR compliance is not complicated for electricians — it mainly means being sensible
-                with customer information. Lock your devices, do not share customer details
-                unnecessarily, keep data only as long as needed, and register with the ICO. These
-                simple steps protect both your customers and your business.
-              </p>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* InlineCheck after Section 04 */}
-        <InlineCheck
-          question="A letting agent asks you to email them a list of all your residential customers' names and addresses so they can offer property services. What is the correct response?"
-          options={[
-            'Send the list — it helps the agent and your customers might appreciate the service',
-            'Refuse — sharing customer personal data with a third party for marketing without customer consent violates GDPR',
-            'Send just the addresses without names — that is not personal data',
-            'Ask the agent to pay for the list first',
-          ]}
-          correctIndex={1}
-          explanation="Sharing customers' personal data (names and addresses) with a third party for marketing purposes without the customers' explicit consent is a clear GDPR violation. Even addresses alone could constitute personal data if they identify an individual. You must politely refuse and explain that data protection regulations prevent you from sharing customer information."
-        />
-
-        {/* Section 05 — Social Media Best Practice */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">
-              05
-            </span>
-            <h3 className="text-lg font-bold text-white">Social Media Best Practice</h3>
-          </div>
-          <div className="space-y-3 text-sm text-white leading-relaxed">
-            <p>
-              Social media is a powerful marketing tool for electricians. Platforms like Facebook,
-              Instagram, and LinkedIn can generate enquiries, build your reputation, and showcase
-              your work. However, social media also carries risks if used carelessly. Understanding
-              best practice protects your professional reputation and your business.
-            </p>
-            <p>
-              <strong className="text-white">Platforms for Electricians:</strong>
-            </p>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Facebook</strong> — Create a business page separate
-                  from your personal profile. Share before/after photos of installations, customer
-                  testimonials (with permission), and practical electrical tips. Facebook is
-                  particularly effective for domestic work and local community engagement.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Instagram</strong> — A visual platform perfect for
-                  showcasing high-quality photographs of your best work. Consumer unit upgrades,
-                  neatly dressed cables, and finished installations photograph well and demonstrate
-                  your standards to potential clients.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">LinkedIn</strong> — The professional network. Best
-                  for commercial work, connecting with architects, building managers, and main
-                  contractors. Share industry insights, CPD achievements, and professional
-                  milestones.
-                </span>
-              </li>
-            </ul>
-            <p>
-              <strong className="text-white">Content Guidelines:</strong>
-            </p>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Never post customer addresses</strong> — Even an
-                  innocent "Just completed a rewire at 42 Maple Drive" tells potential burglars the
-                  property was recently empty. Use general areas instead: "Rewire completed in
-                  Solihull this week."
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Get permission for photos</strong> — Before posting
-                  photographs of work at a customer's property, ask their permission. Some customers
-                  are private and do not want their home shown on social media.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">
-                    Never criticise other electricians' work publicly
-                  </strong>{' '}
-                  — While it might be tempting to post photos of poor work you have found, publicly
-                  shaming other tradespeople reflects badly on you. Document the issues
-                  professionally in your EICR and move on.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Separate personal and professional</strong> — Keep
-                  your business social media professional. Political opinions, controversial views,
-                  and personal complaints should stay off your business pages.
-                </span>
-              </li>
-            </ul>
-            <p>
-              <strong className="text-white">Handling Negative Reviews</strong> — Negative reviews
-              are inevitable. Respond promptly (within 24 hours), acknowledge the concern, apologise
-              for their experience, and offer to resolve the issue privately. Never argue publicly,
-              use sarcasm, or become defensive. Potential customers judge you more on your response
-              to complaints than on the complaints themselves.
-            </p>
-          </div>
-        </motion.div>
-
-        {/* Section 06 — Video Conferencing */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.35 }}
-          className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">
-              06
-            </span>
-            <h3 className="text-lg font-bold text-white">Video Conferencing</h3>
-          </div>
-          <div className="space-y-3 text-sm text-white leading-relaxed">
-            <p>
-              Video conferencing has become a standard business communication tool. While
-              electricians spend most of their time on site, there are many situations where video
-              calls are useful: pre-contract meetings with clients, progress reviews with project
-              managers, training sessions, manufacturer product demonstrations, and interviews.
-            </p>
-            <p>
-              <strong className="text-white">Popular Platforms:</strong>
-            </p>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Microsoft Teams</strong> — The most widely used
-                  platform in commercial construction. If you work with main contractors or larger
-                  organisations, Teams is likely their standard communication platform. It
-                  integrates with Microsoft 365 for file sharing and collaboration.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Zoom</strong> — Known for its simplicity and
-                  reliability. The free tier allows meetings up to 40 minutes. Widely used for
-                  training sessions and webinars.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Google Meet</strong> — Integrated with Google
-                  Workspace. Accessible directly from a web browser without installing software,
-                  making it convenient for quick calls.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">FaceTime / WhatsApp Video</strong> — Useful for
-                  informal video calls with clients. For example, a client can show you the existing
-                  installation via video call to help you prepare a quotation without a site visit.
-                </span>
-              </li>
-            </ul>
-            <p>
-              <strong className="text-white">Video Call Etiquette:</strong>
-            </p>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  Test your camera, microphone, and internet connection before the meeting starts
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  Choose a quiet location with a tidy background — or use a virtual background
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  Look at the camera (not the screen) when speaking — this creates the impression of
-                  eye contact
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>Mute your microphone when not speaking to avoid background noise</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  Dress appropriately — even if you are at home, business-casual dress maintains
-                  professionalism
-                </span>
-              </li>
-            </ul>
-            <p>
-              <strong className="text-white">Screen Sharing for Electricians</strong> — Screen
-              sharing is invaluable for reviewing drawings, showing cable calculation spreadsheets,
-              or walking clients through quotations. Before sharing your screen, close any personal
-              tabs, notifications, or irrelevant applications. Share only the specific window (not
-              your entire screen) to maintain privacy and focus.
-            </p>
-            <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
-              <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white">
-                Video calls can replace many face-to-face meetings, saving travel time and costs. A
-                15-minute video call to discuss a quotation with a potential client is far more
-                efficient than a 30-minute drive each way. Embrace video conferencing as a
-                productivity tool, not an inconvenience.
-              </p>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* InlineCheck after Section 06 */}
-        <InlineCheck
-          question="You need to discuss a project with a main contractor who uses Microsoft Teams. You have never used Teams before. What is the best approach?"
-          options={[
-            'Refuse and insist on a phone call instead',
-            'Download Teams, set up your account, and test your audio/video before the scheduled meeting',
-            'Tell them you cannot attend',
-            'Ask them to use a platform you are already familiar with',
-          ]}
-          correctIndex={1}
-          explanation="The professional approach is to download and familiarise yourself with the platform before the meeting. Microsoft Teams is free to use and available on Windows, macOS, iOS, and Android. Setting up and testing beforehand shows initiative and professionalism. Most commercial construction companies use Teams, so investing a few minutes in learning it will benefit many future interactions."
-        />
-
-        {/* Section 07 — Online Training Platforms */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">
-              07
-            </span>
-            <h3 className="text-lg font-bold text-white">Online Training Platforms</h3>
-          </div>
-          <div className="space-y-3 text-sm text-white leading-relaxed">
-            <p>
-              Online learning has opened up unprecedented access to training and CPD opportunities
-              for electricians. Whether you are preparing for your AM2 assessment, studying for the
-              18th Edition exam, learning about EV charging installation, or developing business
-              skills, there are online platforms to support your learning — many of which are free
-              or very affordable.
-            </p>
-            <p>
-              <strong className="text-white">Industry-Specific Platforms:</strong>
-            </p>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">IET Academy</strong> — Online courses directly from
-                  the Institution of Engineering and Technology, the publishers of BS 7671. Courses
-                  cover regulation updates, specific chapters of the Wiring Regulations, and
-                  emerging technologies. CPD points are awarded for completion.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">NICEIC/ELECSA Online Training</strong> — Certsure
-                  offers online training modules for registered contractors. Topics include
-                  regulation changes, certification best practice, and technical guidance.
-                  Completion contributes to your CPD record.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Manufacturer E-Learning</strong> — Many
-                  manufacturers provide free online training for their products. Hager, Schneider
-                  Electric, Eaton, and others offer accredited courses on topics from consumer unit
-                  installation to smart home systems. These are excellent for staying current with
-                  new products and often come with CPD certificates.
-                </span>
-              </li>
-            </ul>
-            <p>
-              <strong className="text-white">General Learning Platforms:</strong>
-            </p>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Udemy</strong> — Affordable courses on a wide range
-                  of topics including electrical theory, spreadsheet skills, business management,
-                  and first aid. Courses are often discounted to under £15.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">YouTube</strong> — An enormous library of free
-                  educational content. Search for specific topics like "18th Edition exam
-                  preparation" or "cable sizing calculations explained." Verify the credibility of
-                  the creator by checking their qualifications and credentials.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">LinkedIn Learning</strong> — Professional courses
-                  on business skills, project management, and software tools. Included with LinkedIn
-                  Premium subscriptions. Particularly useful for developing the business and
-                  management skills needed as your career progresses.
-                </span>
-              </li>
-            </ul>
-            <p>
-              <strong className="text-white">Making Online Learning Effective:</strong> Set a
-              regular study schedule — even 30 minutes three times a week produces significant
-              results over time. Take notes as you would in a classroom. Complete all practice
-              exercises and assessments. Apply what you learn on real jobs as soon as possible —
-              practical application reinforces theoretical learning.
-            </p>
-          </div>
-        </motion.div>
-
-        {/* Section 08 — Digital Wellbeing */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.45 }}
-          className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">
-              08
-            </span>
-            <h3 className="text-lg font-bold text-white">Digital Wellbeing</h3>
-          </div>
-          <div className="space-y-3 text-sm text-white leading-relaxed">
-            <p>
-              As digital tools become an ever larger part of electrical work — from certification
-              apps and email to social media and online learning — it is important to manage your
-              relationship with technology to protect your physical and mental health. Digital
-              wellbeing means using technology purposefully and mindfully, not letting it control
-              your time and attention.
-            </p>
-            <p>
-              <strong className="text-white">Screen Fatigue and Eye Strain</strong> — Prolonged
-              screen use causes digital eye strain, characterised by tired eyes, headaches, blurred
-              vision, and dry eyes. This is exacerbated for electricians who alternate between
-              screen work and the varied lighting conditions found on site.
-            </p>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">The 20-20-20 Rule</strong> — Every 20 minutes of
-                  screen use, look at something 20 feet (6 metres) away for at least 20 seconds.
-                  This relaxes the focusing muscles in your eyes and reduces strain.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Adjust Brightness</strong> — Match your screen
-                  brightness to your environment. A very bright screen in a dim room (or a dim
-                  screen in bright sunlight) forces your eyes to work harder. Most devices have an
-                  auto-brightness feature.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Night Mode</strong> — Enable night mode (blue light
-                  filter) in the evening. Blue light from screens can disrupt your sleep cycle. Both
-                  Windows and macOS have built-in night mode settings, as do iOS and Android.
-                </span>
-              </li>
-            </ul>
-            <p>
-              <strong className="text-white">Managing Notifications</strong> — Constant
-              notifications fragment your attention and increase stress. Configure your devices to
-              minimise unnecessary interruptions:
-            </p>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  Turn off notifications for non-essential apps (social media, news, games)
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  Keep notifications enabled for genuinely important communications (calls, messages
-                  from clients, calendar reminders)
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  Use "Do Not Disturb" mode during focused work — whether that is installing on site
-                  or completing certificates at home
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  Schedule specific times to check email and social media rather than responding to
-                  every notification as it arrives
-                </span>
-              </li>
-            </ul>
-            <p>
-              <strong className="text-white">Work-Life Boundaries</strong> — The convenience of
-              digital tools can blur the boundary between work and personal time. When your
-              certification software, work emails, and client messages are all on your personal
-              phone, it becomes difficult to switch off. Consider these strategies:
-            </p>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  Set a specific time after which you do not check work emails or messages (e.g.
-                  after 7pm)
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  Use separate devices or separate user profiles for work and personal use if
-                  possible
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  Set an out-of-office auto-reply for evenings and weekends so clients know when to
-                  expect a response
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  Take regular breaks from all screens — especially on weekends and holidays
-                </span>
-              </li>
-            </ul>
-            <p>
-              <strong className="text-white">Mental Health and Social Media</strong> — Social media
-              can be a valuable professional tool, but excessive use or constant comparison with
-              others can negatively affect mental health. If you find yourself anxiously comparing
-              your business to competitors, feeling stressed by online negativity, or spending more
-              time scrolling than working, it is time to set boundaries. The construction and trades
-              industry has made significant progress in recognising mental health — organisations
-              like the Lighthouse Construction Industry Charity and Mates in Mind provide support
-              specifically for construction workers.
-            </p>
-            <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
-              <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white">
-                Technology should serve you — not the other way around. Use digital tools
-                purposefully during working hours, then switch off and recharge. An electrician who
-                is well-rested, focused, and mentally healthy does better work, makes fewer
-                mistakes, and builds a more sustainable career than one who is constantly connected
-                but perpetually exhausted.
-              </p>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Quiz */}
-        <Quiz questions={quizQuestions} title="Online Safety & Communication Quiz" />
-
-        {/* Nav footer */}
-        <div className="flex items-center justify-between pt-6 border-t border-white/10">
-          <Link
-            to="/study-centre/apprentice/functional-skills/module3/section3"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
+          <ConceptBlock
+            title="Five checks, in order, every time"
+            onSite="Electricians are a good target precisely because you check emails quickly between jobs, often on a small screen, with your mind on the next job rather than the one in your inbox."
           >
-            <ArrowLeft className="w-4 h-4" />
-            Documentation & Apps
-          </Link>
-          <Link
-            to="/study-centre/apprentice/functional-skills/module4"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium text-white bg-green-500 hover:bg-green-600 transition-colors touch-manipulation shadow-lg shadow-green-500/25"
+            <p>
+              Work a suspicious message the same way every time:{' '}
+              <strong className="text-white">the sender's actual address</strong> (not the display
+              name), <strong className="text-white">urgency or threats</strong> (a tight deadline is
+              pressure, not proof), <strong className="text-white">spelling and grammar</strong> (a
+              real organisation proofreads its own mail),{' '}
+              <strong className="text-white">where a link actually goes</strong> (hover, do not
+              click), and <strong className="text-white">what it is asking for</strong> (a password
+              or bank details by email is never legitimate). One flag is a reason to look harder;
+              two or more is a verdict.
+            </p>
+          </ConceptBlock>
+
+          <WorkedExample
+            question='Your electrical wholesaler emails: "Your account has been suspended for security review. Verify your details within 24 hours to restore access." It is from support@electrcal-wholesale-uk.com and asks you to log in via a link. Work through it and reach a verdict.'
+            steps={[
+              {
+                calc: 'Sender domain — electrcal-wholesale-uk.com',
+                note: 'Misspelled ("electrcal" for "electrical"). A genuine wholesaler owns and spells its own domain correctly.',
+              },
+              {
+                calc: 'Urgency — "within 24 hours"',
+                note: 'A tight, unexplained deadline designed to make you act before you think.',
+              },
+              {
+                calc: 'The ask — click a link and log in',
+                note: 'The message wants your login credentials entered on a page it controls, not one you navigated to yourself.',
+              },
+              {
+                calc: 'Cross-check — does the wholesaler usually email like this?',
+                note: 'Genuine account issues are normally raised by phone or shown when you log in directly, not chased by email with a countdown.',
+              },
+            ]}
+            answer="Phishing. Do not click the link. Contact the wholesaler on a number you already have — from an invoice, a saved contact, or their known website typed in yourself — and ask whether there is really an issue."
+            watchOut="Replying to the email to ask 'is this genuine?' still confirms your address is live and monitored, which invites more attempts. Contact through a completely separate channel instead."
+          />
+
+          <WorkedExample
+            question='An email arrives from "HMRC": "You are entitled to a tax refund of £1,247.50. Click here to claim before your case is closed." The sender name shows as HM Revenue & Customs. Work through it.'
+            steps={[
+              {
+                calc: 'Channel and claim — an unsolicited refund by email',
+                note: 'HMRC does not email or text links inviting you to claim a refund. This alone is close to conclusive.',
+              },
+              {
+                calc: 'The precise figure — £1,247.50',
+                note: 'A specific, plausible-looking amount is chosen deliberately, to feel too concrete to be fake.',
+              },
+              {
+                calc: 'Deadline pressure — "before your case is closed"',
+                note: 'Manufactured urgency again, aimed at stopping you checking calmly.',
+              },
+              {
+                calc: 'Display name vs sender address',
+                note: 'A display name can say anything the sender chooses. Check the actual address behind it, which will not be a genuine gov.uk domain.',
+              },
+            ]}
+            answer="Phishing. Delete it, and if you want to be thorough, forward it to report@phishing.gov.uk. If you ever suspect you owe or are owed tax, check by logging into your HMRC account directly through gov.uk — never through a link in an email."
+          />
+
+          <InlineCheck
+            id="m3s4-phishing"
+            question="You receive a text message saying: 'HMRC: You are due a tax refund of £1,847.20. Claim now at: hmrc-refunds-uk.co.com'. What should you do?"
+            options={[
+              'Click the link and enter your bank details to receive the refund quickly',
+              'Forward the text to a friend to check whether they got the same message',
+              'Delete it — HMRC never texts refund links — and report it by forwarding to 7726',
+              'Reply to the message asking the sender for a few more details first',
+            ]}
+            correctIndex={2}
+            explanation="This is smishing — SMS phishing. HMRC never sends text messages with links for tax refunds, and the domain 'hmrc-refunds-uk.co.com' is not a genuine HMRC domain. Delete it and report it by forwarding to 7726, the UK's scam-text reporting number. Never click a link in an unsolicited message offering a refund or demanding urgent action."
+          />
+
+          <TryIt
+            question='A message arrives from a number you do not recognise: "We need urgent electrical work at 14 Trent Close. Please open the attached specification and confirm you can attend tomorrow." Work through the same checks and reach a verdict.'
+            steps={[
+              {
+                calc: 'Sender — an unrecognised personal number',
+                note: 'Genuine commercial enquiries arrive through a company, a referral, or a number already in your records, not cold from nowhere.',
+              },
+              {
+                calc: 'Urgency — "attend tomorrow"',
+                note: 'A short deadline that discourages you from checking the job out first.',
+              },
+              {
+                calc: 'The ask — open an attachment',
+                note: 'A specification, on a genuine job, usually comes after a phone conversation, not before one, and rarely as the very first contact.',
+              },
+              {
+                calc: 'Cross-check — would a real client send it this way?',
+                note: 'A property owner with urgent electrical work almost always rings, or is referred by someone you already know.',
+              },
+            ]}
+            answer="Very likely phishing aimed at getting you to open a malicious attachment. Do not open it. If you want to check, ring the number back rather than opening anything, or ask whoever might have referred the job whether they actually sent it."
+          />
+
+          <SectionRule />
+
+          {/* ── 03 ─────────────────────────────────────────────────── */}
+          <ContentEyebrow>03 · Password security</ContentEyebrow>
+
+          <ConceptBlock
+            title="Four tests, and length wins most arguments"
+            plainEnglish="A long, plain passphrase beats a short, complicated password almost every time."
           >
-            Continue to Module 4
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-      </div>
-    </div>
+            <p>
+              Run every password against four tests: <strong className="text-white">length</strong>{' '}
+              (12 characters minimum — adding six characters to a six-character password multiplies
+              the combinations by the size of the character set six times over, which on a full
+              keyboard is roughly 690 billion times as many combinations as before),{' '}
+              <strong className="text-white">complexity</strong>
+              (helpful, but secondary to length), <strong className="text-white">uniqueness</strong>
+              (never reused — this is the one that matters most, because one breach then stays one
+              breach), and <strong className="text-white">unpredictability</strong> (no dictionary
+              words, names, dates, or anything guessable from your own social media). Pair a strong
+              password with a manager (Bitwarden or 1Password generate and store one for every
+              account) and two-factor authentication, which stops a stolen password being enough on
+              its own — prioritise it on email first, since most other accounts can be reset through
+              it.
+            </p>
+          </ConceptBlock>
+
+          <WorkedExample
+            question='Two passwords: "Sparky2024!" and "van-ladder-thermostat-42". Which is actually stronger, and why?'
+            steps={[
+              {
+                calc: 'Length — 11 characters vs 25',
+                note: 'The passphrase is more than double the length before anything else is considered.',
+              },
+              {
+                calc: 'Predictability — "Sparky2024!"',
+                note: 'A trade word, a plausible current year, and a common symbol on the end. This exact shape — word, year, symbol — is one of the first patterns automated cracking tools try.',
+              },
+              {
+                calc: 'Predictability — the four-word passphrase',
+                note: 'Four unrelated words in no dictionary combination together. There is no shortcut pattern for an attacker to try first.',
+              },
+              {
+                calc: 'Memorability',
+                note: 'The passphrase is arguably easier to actually remember than the "clever" substitution password, which is the usual objection to going long.',
+              },
+            ]}
+            answer="The passphrase is far stronger, mainly on length and because it avoids a well-known predictable pattern — not because it looks more complicated. It does not."
+            watchOut="Do not judge password strength by how complicated it looks to a human eye. Cracking tools do not see complexity the way we do; they see search space, and search space is mostly about length."
+          />
+
+          <TryIt
+            question='You use "ElectricalWork1" for your wholesaler login, your email, and your certification software. Apply the four tests and decide what to change first.'
+            steps={[
+              {
+                calc: 'Length — 16 characters',
+                note: 'Passes the length test on its own, which is exactly why this one is easy to get wrong.',
+              },
+              {
+                calc: 'Uniqueness — reused across three accounts',
+                note: 'Fails outright, regardless of how long it is. One breach on any of the three now exposes all three.',
+              },
+              {
+                calc: 'Unpredictability — trade phrase plus a single digit',
+                note: 'A recognisable pattern, not a random one — closer to "Sparky2024!" than it looks at first glance.',
+              },
+              {
+                calc: 'Which account first?',
+                note: 'Email, because most other accounts (banking, wholesaler, certification software) can be reset through it if it is compromised.',
+              },
+            ]}
+            answer="Change the email password first, to a unique passphrase from a password manager with 2FA enabled, then work down through the other two accounts giving each its own unique password. Length was never the problem here — reuse was."
+          />
+
+          <CommonMistake
+            title="Reusing one strong password everywhere"
+            whatHappens="You put real effort into one memorable, strong password and then use it for email, the wholesaler account, and the certification software, reasoning that at least it's a good one. One of those three gets breached — and breaches happen to the site, not to you — and the attacker now has a working password for all three."
+            doInstead="Uniqueness matters more than any individual password's strength. This is precisely the problem a password manager solves: it makes generating and remembering a different strong password for every site no harder than remembering one master password."
+          />
+
+          <SectionRule />
+
+          {/* ── 04 ─────────────────────────────────────────────────── */}
+          <ContentEyebrow>04 · GDPR for electricians</ContentEyebrow>
+
+          <ConceptBlock
+            title="Two lawful bases, a fee, and a 72-hour clock"
+            onSite="If you ever hear 'legitimate interest' offered as the reason you can keep a customer's details after a job, treat that as a flag rather than an answer."
+          >
+            <p>
+              The UK GDPR, alongside the Data Protection Act 2018, applies to every business
+              handling personal data — including a sole-trader electrician, and including names,
+              addresses, access codes, site photos showing people, and payment details. You need a
+              lawful reason to hold any of it, and the UK GDPR lists six. Two cover most of what an
+              electrician does: <strong className="text-white">contract</strong>, which covers
+              holding a customer's name, address and phone number so you can carry out the work they
+              asked for, and <strong className="text-white">legal obligation</strong>, which covers
+              retaining certificates and records you are required to keep. These are separate bases
+              — "legitimate interests" is a third, different one, and it is not the basis for doing
+              a job you were hired to do.
+            </p>
+            <p>
+              Alongside that: collect only what you need, delete it once neither basis still
+              applies, encrypt devices and lock them with a PIN or biometric, and give customers a
+              short privacy notice explaining what you hold. Most electricians holding customer
+              details electronically also need to pay the ICO's annual data protection fee. It is
+              tiered by size, and a sole trader or small firm falls in tier 1 — £52 a year, or £47
+              by direct debit at the time of writing. A small number of businesses are exempt, and
+              the ICO publishes a short self-assessment that tells you in a couple of minutes which
+              applies to you. Check it rather than assume either way, and check the current fee,
+              because it changes.
+            </p>
+          </ConceptBlock>
+
+          <WorkedExample
+            question="You completed an EICR eighteen months ago. The customer has since sold the property and you have no further contact with them. Do you still have a lawful basis to hold their name, address and the report on file?"
+            steps={[
+              {
+                calc: 'Was the contract basis for a live job?',
+                note: 'No — the job is finished and there is no ongoing work to perform for them.',
+              },
+              {
+                calc: 'Does a legal obligation apply instead?',
+                note: 'Yes — certificate retention requirements mean you should keep the record for the life of the installation, independent of who currently owns the property.',
+              },
+              {
+                calc: 'Is any of the data now surplus to that obligation?',
+                note: 'The contact number, for instance, is not needed to satisfy a record-keeping duty and could reasonably be reviewed once it is no longer needed for anything else.',
+              },
+            ]}
+            answer="Yes, on the legal obligation basis — for the certificate and the details needed to identify the installation it covers. The contract basis that originally justified holding their live contact details has lapsed; keep what the retention requirement actually needs, not everything from the original job by default."
+            watchOut="Do not reach for 'legitimate interests' to justify holding data past the reason you originally collected it for. If neither contract nor legal obligation covers it, that is a sign to review what you are keeping, not a cue to find a third basis to paper over the gap."
+          />
+
+          <TryIt
+            question="You leave your work tablet — customer names, addresses, access codes and site photos — on a train. Work through what you must decide, and by when."
+            steps={[
+              {
+                calc: 'What was actually on it?',
+                note: 'Names, addresses and access codes together is a real risk profile, not just an inconvenience — enough to let a stranger identify and potentially access a property.',
+              },
+              {
+                calc: "Is there a risk to the individuals' rights?",
+                note: 'With access codes involved, plausibly yes. That is the test that decides whether you must report it.',
+              },
+              {
+                calc: 'The 72-hour clock',
+                note: 'It starts when you become aware of the loss, not when you get around to dealing with it. Reporting to the ICO within 72 hours applies where there is a risk.',
+              },
+              {
+                calc: 'What else, immediately',
+                note: 'Remote-lock or wipe the device if you can, and change any passwords it had saved.',
+              },
+            ]}
+            answer="Report to the ICO within 72 hours of realising it is lost, given the risk the access codes create. Remote-wipe the device if the option exists, and tell the affected customers directly if the risk to them is high — for instance, change any access codes that were on it as soon as possible, and let them know why."
+          />
+
+          <InlineCheck
+            id="m3s4-gdpr"
+            question="A letting agent asks you to email them a list of all your residential customers' names and addresses so they can offer property services. What is the correct response?"
+            options={[
+              'Send the list — it helps the agent and your customers might appreciate the service',
+              'Refuse — sharing customer personal data with a third party for marketing without customer consent violates GDPR',
+              'Send just the addresses without names — that is not personal data',
+              'Ask the agent to pay for the list first',
+            ]}
+            correctIndex={1}
+            explanation="Sharing customers' personal data with a third party for marketing purposes, without their explicit consent, is a clear GDPR violation. Even addresses alone can be personal data if they identify an individual. Politely refuse and explain that data protection rules prevent you from sharing customer information this way."
+          />
+
+          <CommonMistake
+            title="Leaving customer paperwork visible in the van"
+            whatHappens="A completed EICR with a customer's name, address and access details sits on the passenger seat, visible through the window, while the van is parked outside the next job. Nobody has to break in for that data to be exposed."
+            doInstead="Keep paperwork in a bag or a locked compartment, out of sight from outside the vehicle, the same way you would treat cash or tools you cannot afford to lose."
+          />
+
+          <SectionRule />
+
+          {/* ── 05 ─────────────────────────────────────────────────── */}
+          <ContentEyebrow>05 · Social media best practice</ContentEyebrow>
+
+          <ConceptBlock title="Never post an address, and reply in three moves">
+            <p>
+              A business page on Facebook, Instagram or LinkedIn can generate real enquiries, but
+              two rules protect you and your customers.{' '}
+              <strong className="text-white">Never post a customer's address</strong>, even
+              innocently — "just completed a rewire at 42 Maple Drive" tells anyone reading it the
+              house was empty all week; use a general area instead. And{' '}
+              <strong className="text-white">get permission before posting a photo</strong> of work
+              at a customer's property, checking the whole frame for anything else identifying, not
+              just the installation you are proud of.
+            </p>
+            <p>
+              A negative review works in three moves: acknowledge the concern, keep the tone even,
+              and take it private to resolve. Never argue publicly, however justified you feel —
+              people reading the exchange judge the response, not the original complaint.
+            </p>
+          </ConceptBlock>
+
+          <WorkedExample
+            question={
+              'A customer posts: "Turned up late, left mess, wouldn\'t recommend." How do you reply, in public, in a way that helps rather than hurts you?'
+            }
+            steps={[
+              {
+                calc: 'Acknowledge, do not dispute',
+                note: '"Sorry to hear the visit didn\'t go as it should have" — accepting the complaint is real, not arguing about whether it is fair.',
+              },
+              {
+                calc: 'One factual line, no more',
+                note: 'If there is a genuine explanation (a prior job overran), one neutral sentence is enough. A defence of every point invites a public argument.',
+              },
+              {
+                calc: 'Move it private',
+                note: '"I\'d like to put this right — please call me on [number] so I can sort it directly."',
+              },
+              {
+                calc: 'Stop there',
+                note: 'Do not post again unless the customer replies. A short, calm reply that ends cleanly reads far better than one that keeps going.',
+              },
+            ]}
+            answer={
+              '"Sorry to hear the visit didn\'t go as it should have — I\'d like to put this right. Please call me on [number] so I can sort it directly." Four sentences, no defensiveness, and a route to resolve it away from public view.'
+            }
+            watchOut="Resist the urge to correct every inaccurate detail publicly. Even a fair correction reads as arguing with a customer in front of everyone else who might hire you."
+          />
+
+          <TryIt
+            question='A review reads: "Overcharged me massively compared to quote, avoid." Your invoice actually matched the quote exactly — the customer added extra sockets on the day and the invoice reflects that. Draft the public reply.'
+            steps={[
+              {
+                calc: 'Acknowledge first, even though you disagree',
+                note: '"Sorry you feel that way about the final cost" keeps the tone even before anything factual is said.',
+              },
+              {
+                calc: 'One neutral factual line',
+                note: '"The invoice reflects the additional sockets added on the day, on top of the original quote" — a fact, not an accusation.',
+              },
+              {
+                calc: 'Offer the paper trail privately, not publicly',
+                note: '"Happy to go through the breakdown with you directly — please call me on [number]."',
+              },
+            ]}
+            answer='"Sorry you feel that way about the final cost. The invoice reflects the additional sockets added on the day, on top of the original quote — happy to go through the breakdown with you directly, please call me on [number]." Corrects the record once, calmly, and takes the detail off the public thread.'
+          />
+
+          <Scenario
+            title="The photo the customer did not expect to see online"
+            situation="You post a proud before/after shot of a consumer unit upgrade to your business Facebook page. The 'before' photo happens to also show the hallway, with a coat rack, post addressed to the occupier, and a house number visible on a letter on the side table. A customer messages, uncomfortable that their name and address are now visible on a public post."
+            whatToDo="Take the post down straight away, apologise, and in future crop or check every 'before' shot for anything identifying — post, letters, name plates, house numbers — before it goes anywhere near a public page."
+            whyItMatters="Permission to photograph the work is not the same as permission to publish everything in frame. It is easy to focus on the consumer unit and miss what else the camera caught, and once it is public you cannot fully undo it."
+          />
+
+          <SectionRule />
+
+          {/* ── 06 ─────────────────────────────────────────────────── */}
+          <ContentEyebrow>06 · Video conferencing</ContentEyebrow>
+
+          <ConceptBlock title="Test the platform, then prepare the screen">
+            <p>
+              Microsoft Teams is the standard on most commercial construction projects and
+              integrates with Microsoft 365 for file sharing. Zoom is simple and reliable, though
+              the free tier caps meeting length — check the current limit before relying on it for a
+              long call. Google Meet runs from a browser with no install, handy for a quick call,
+              and FaceTime or WhatsApp Video covers informal calls, such as a client walking you
+              round an existing installation to help scope a quote without a site visit.
+            </p>
+            <p>
+              Whichever platform, test camera, microphone and connection beforehand, look at the
+              camera rather than the screen when speaking, mute when not talking, and if you are
+              screen-sharing, close anything sensitive first and share the specific window rather
+              than your whole desktop.
+            </p>
+          </ConceptBlock>
+
+          <WorkedExample
+            question="You are about to screen-share a spreadsheet with a client to walk through a quote. Your browser has four other tabs open, including your online banking, and you have desktop notifications enabled. What do you close or change before you share, and in what order?"
+            steps={[
+              {
+                calc: '1. Close anything with financial or personal information',
+                note: 'Banking, personal email, anything you would not want a client glimpsing even briefly.',
+              },
+              {
+                calc: '2. Turn off desktop notifications',
+                note: 'A message preview popping up mid-share can reveal far more than you intended.',
+              },
+              {
+                calc: '3. Close unrelated tabs',
+                note: 'Fewer things visible means fewer chances of a slip, and it looks tidier.',
+              },
+              {
+                calc: '4. Share the single window, not the whole screen',
+                note: 'If the platform offers window-only sharing, use it — it is a hard boundary rather than a habit you have to maintain.',
+              },
+            ]}
+            answer="Close sensitive tabs first, disable notifications, close the rest, then share only the specific window. Doing it in that order means even a slip at step 4 has nothing sensitive left behind it."
+          />
+
+          <TryIt
+            question="A client wants to FaceTime you to show a fault before you quote for the repair. What do you ask them to do before the call, and what do you have ready on your end?"
+            steps={[
+              {
+                calc: 'Ask them to have the area accessible and lit',
+                note: 'Fitting cover off if it is safe for them to remove, curtains open, a torch to hand — a dark, distant shot tells you nothing.',
+              },
+              {
+                calc: 'Ask them to have the consumer unit visible too',
+                note: 'You will likely need to see which circuit and what protective devices are fitted, not just the faulty point.',
+              },
+              {
+                calc: 'Have your notepad and a rough day-rate figure ready',
+                note: 'You will want to note what you see as you see it, and be able to give an honest early estimate rather than a vague "I\'ll get back to you".',
+              },
+              {
+                calc: 'Confirm the appointment before you hang up',
+                note: 'Whether that is a site visit to quote properly or a next step — leaving it open invites a chase-up call later.',
+              },
+            ]}
+            answer="Ask the client to light and clear access to both the fault and the consumer unit before the call. Have your notepad, a rough day-rate figure, and your diary open, and end the call with a concrete next step rather than 'I'll be in touch'."
+          />
+
+          <InlineCheck
+            id="m3s4-video"
+            question="You need to discuss a project with a main contractor who uses Microsoft Teams. You have never used Teams before. What is the best approach?"
+            options={[
+              'Refuse and insist on a phone call instead',
+              'Download Teams, set up your account, and test your audio/video before the scheduled meeting',
+              'Tell them you cannot attend',
+              'Ask them to use a platform you are already familiar with',
+            ]}
+            correctIndex={1}
+            explanation="Download and familiarise yourself with the platform before the meeting. Teams is free and available on Windows, macOS, iOS and Android. Setting up and testing in advance shows initiative, and since most commercial contractors default to Teams, the few minutes it takes will pay off on future calls too."
+          />
+
+          <SectionRule />
+
+          {/* ── 07 ─────────────────────────────────────────────────── */}
+          <ContentEyebrow>07 · Online training platforms</ContentEyebrow>
+
+          <ConceptBlock title="Two tiers of platform, and one test for either">
+            <p>
+              IET Academy courses come direct from the publishers of BS 7671, and a government-
+              authorised competent person scheme typically runs its own modules — both count toward
+              CPD. Manufacturer e-learning (Hager, Schneider Electric, Eaton and others) is usually
+              free and product-specific. General platforms — Udemy, YouTube, LinkedIn Learning —
+              cast a wider net at a lower barrier: Udemy courses are often inexpensive, particularly
+              when discounted, though check the price on the day rather than assuming, and YouTube's
+              free library is enormous but unfiltered.
+            </p>
+            <p>
+              The wider the net, the more the burden of checking falls on you. Before you act on
+              anything a video or a course tells you, check who is telling you, when, and against
+              what.
+            </p>
+          </ConceptBlock>
+
+          <WorkedExample
+            question='A YouTube video titled "18th Edition exam prep — everything you need" states a specific figure for maximum Zs on a particular circuit. How do you decide whether to trust it before you use it on a job?'
+            steps={[
+              {
+                calc: "Check the creator's stated credentials",
+                note: 'A qualified electrician or trainer with a track record is a different proposition to an anonymous channel with no stated background.',
+              },
+              {
+                calc: 'Check the upload date',
+                note: 'BS 7671 is amended periodically. A figure from several editions ago may no longer be current.',
+              },
+              {
+                calc: 'Cross-check the figure against a primary source',
+                note: "BS 7671 itself, or the On-Site Guide, rather than taking the video's word for it.",
+              },
+              {
+                calc: 'Scan the comments',
+                note: 'A confidently wrong video often has someone underneath correcting it — worth ten seconds before you rely on the claim.',
+              },
+            ]}
+            answer="Use the video to understand the idea, but verify the actual figure against BS 7671 or the On-Site Guide before it goes anywhere near a job. Confidence in delivery is not evidence of accuracy, and a wrong Zs figure is not a small mistake."
+          />
+
+          <TryIt
+            question="You are considering paying for a Udemy course on cable sizing calculations before your AM2. Apply the same process to decide whether it is worth the money."
+            steps={[
+              {
+                calc: 'Check who wrote it and their background',
+                note: "The course page usually states the instructor's trade or teaching credentials — look for something specific, not just a job title.",
+              },
+              {
+                calc: 'Check when it was last updated',
+                note: 'A course untouched for several years may predate the current edition of BS 7671.',
+              },
+              {
+                calc: 'Check the current price, not a remembered one',
+                note: "Udemy pricing changes often and discounting is aggressive — do not assume last month's price.",
+              },
+              {
+                calc: 'Read a handful of recent reviews',
+                note: 'Specifically for accuracy complaints, not just general ratings.',
+              },
+            ]}
+            answer="If the instructor's background checks out, the course was updated reasonably recently, the current price is fair, and recent reviews do not flag accuracy problems, it is a reasonable buy. Any one of those failing is a reason to look for another option before paying."
+          />
+
+          <CommonMistake
+            title="Trusting a confident presenter over a checkable source"
+            whatHappens="A video states a figure or a rule with total confidence, it sounds plausible, and you carry it onto a job without checking it against BS 7671, the On-Site Guide, or a manufacturer's own documentation."
+            doInstead="Use video content to understand an idea, then verify anything you intend to act on against a source you could point to if asked — the standard itself, the guidance, or the datasheet."
+          />
+
+          <SectionRule />
+
+          {/* ── 08 ─────────────────────────────────────────────────── */}
+          <ContentEyebrow>08 · Digital wellbeing</ContentEyebrow>
+
+          <ConceptBlock
+            title="Diagnose the cause before you reach for the fix"
+            plainEnglish="Tired eyes, a fragmented afternoon, and a phone that never stops on a Sunday are three different problems with three different fixes."
+          >
+            <p>
+              Screen fatigue — tired eyes, headaches, trouble concentrating — responds to the
+              20-20-20 rule (every 20 minutes, look at something 20 feet away for 20 seconds),
+              matching brightness to the room, and a night mode setting in the evening. A fragmented
+              day responds to turning off non-essential notifications and setting fixed times to
+              check email and social media rather than answering every alert as it lands. And work
+              bleeding into evenings and weekends responds to a boundary you set yourself — a stated
+              reply-time policy, a cut-off hour, separate profiles for work and personal use where
+              your device allows it. If scrolling or comparing your business to others online is
+              wearing you down rather than helping it, that is worth noticing too — the construction
+              trade has made real progress here, and organisations such as the Lighthouse
+              Construction Industry Charity and Mates in Mind support people in it specifically.
+            </p>
+          </ConceptBlock>
+
+          <WorkedExample
+            question="By Friday afternoon your eyes ache, you have a dull headache, and you have lost track of three separate WhatsApp threads with different clients. What is actually going on, and what do you fix first?"
+            steps={[
+              {
+                calc: 'Symptom: aching eyes, headache',
+                note: 'Matches screen fatigue specifically — hours of close screen focus without a break.',
+              },
+              {
+                calc: 'Symptom: lost track of three threads',
+                note: 'Matches fragmented attention from constant notifications, not eye strain — a different mechanism entirely.',
+              },
+              {
+                calc: 'Match each symptom to its fix',
+                note: 'The 20-20-20 rule and a brightness check address the eyes. Turning off non-essential notifications and checking messages at set times addresses the fragmentation.',
+              },
+              {
+                calc: 'Pick one to start with',
+                note: 'The eye strain is the more immediate discomfort, so start there today; restructure notifications from tomorrow so the change actually sticks.',
+              },
+            ]}
+            answer="Two separate problems needing two separate fixes: the 20-20-20 rule and a brightness check for the eye strain, and scheduled message-checking rather than live notifications for the fragmented attention. Treating both as 'too much screen time' and just cutting hours would miss what is actually wrong."
+          />
+
+          <TryIt
+            question="A client has started messaging you at 9pm and on Sundays, and you have been replying quickly because it felt rude not to. Work out the fix."
+            steps={[
+              {
+                calc: 'What set the expectation?',
+                note: 'Your own fast replies, however well-intentioned, taught this client that evenings and weekends get a response.',
+              },
+              {
+                calc: 'Decide the boundary before you announce it',
+                note: 'For example: messages are answered within one working day, evenings and weekends excluded.',
+              },
+              {
+                calc: 'State it once, plainly, not apologetically',
+                note: '"Just to let you know, I reply to messages within one working day — I\'ll pick this up properly tomorrow."',
+              },
+              {
+                calc: 'Hold it the next time it is tested',
+                note: 'A boundary stated once and broken the next weekend teaches the opposite lesson to the one you intended.',
+              },
+            ]}
+            answer='State the policy once — "I reply within one working day, evenings and weekends excluded" — and then actually hold it the next time a Sunday message arrives. The fix is not ignoring the client; it is resetting an expectation you set yourself by accident.'
+          />
+
+          <CommonMistake
+            title="Letting 'always available' become the standard a client expects"
+            whatHappens="You reply to a client message within minutes, once, out of habit or good service. From then on that speed is what they expect every time, including at 9pm on a Sunday, and you have set the boundary yourself without meaning to."
+            doInstead="Reply within your own working hours as a rule, not an exception. An out-of-office message or a simple stated policy sets the expectation once instead of every single message resetting it."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'A working email has a findable subject line and five parts: greeting, opening, body, call to action, signature.',
+              'Work a suspicious message through five checks — sender address, urgency, spelling, link destination, what it asks for — and verify through a channel you already trust.',
+              "Password strength is mostly length: 6 to 12 characters on a full keyboard multiplies the search space by roughly 690 billion. Uniqueness matters more than any single password's cleverness.",
+              'UK GDPR gives six lawful bases. An electrician usually relies on contract and legal obligation — not legitimate interests, which is a separate basis.',
+              'A data breach with real risk to individuals is reported to the ICO within 72 hours of you becoming aware of it, not 72 hours from when it is convenient.',
+              'A negative review gets acknowledged, answered once factually, and moved private — never argued in public.',
+              'Never post a customer address, and check the whole frame of a photo, not just the installation.',
+              'Test a new video platform before the meeting, and share the single window rather than the whole desktop.',
+              'Check who wrote it, when, and against what before acting on anything a video or course tells you.',
+              'Match the fix to the actual cause: the 20-20-20 rule for eye strain, scheduled checking for fragmented attention, a stated boundary for evenings bleeding into work.',
+            ]}
+          />
+
+          <FAQ
+            items={[
+              {
+                question:
+                  'Is it ever safe to click a link in an email from a company I actually deal with?',
+                answer:
+                  "Treat every unexpected link the same way regardless of who it claims to be from: hover to check the destination, and if there is any doubt, go to the company's website directly by typing the address yourself rather than clicking through.",
+              },
+              {
+                question: 'Do I have to register with the ICO even as a one-person business?',
+                answer:
+                  "Most electricians handling customer data electronically do. Use the ICO's self-assessment to check which fee tier applies, or whether an exemption applies to you — do not assume either way, and check the current fee before paying.",
+              },
+              {
+                question:
+                  'Is a password manager actually safe, given it holds all my passwords in one place?',
+                answer:
+                  'Reputable password managers encrypt your data so that even the provider cannot read it, and the alternative — reused or written-down passwords — is demonstrably worse. The realistic risk is your one master password, so make that one genuinely strong and unique, and add two-factor authentication to the manager itself.',
+              },
+              {
+                question: 'Can I post photos of a job at all if I am worried about GDPR?',
+                answer:
+                  "Yes, with the customer's permission and with the address kept general. The GDPR concern is about identifying people or their property without consent, not about photographing your own finished work.",
+              },
+              {
+                question: 'What should I actually do if I realise I have clicked a phishing link?',
+                answer:
+                  'Change the password for that account immediately, and for any other account using the same password. If you entered financial details, contact your bank. Report the message using the address or number given earlier in this section.',
+              },
+            ]}
+          />
+
+          <SectionRule />
+
+          <Quiz questions={quizQuestions} title="Section 4: Online Safety & Communication Quiz" />
+
+          {/* ── prev / next ─────────────────────────────────────────── */}
+          <div className="mt-8 flex items-center justify-between gap-3">
+            <button
+              type="button"
+              onClick={() =>
+                navigate('/study-centre/apprentice/functional-skills/module3/section3')
+              }
+              className="inline-flex h-11 items-center gap-2 rounded-xl border border-white/[0.12] bg-white/[0.04] px-4 text-sm font-medium text-white touch-manipulation"
+            >
+              <ChevronLeft className="h-4 w-4" />
+              Section 3
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate('/study-centre/apprentice/functional-skills/module3')}
+              className="inline-flex h-11 items-center gap-2 rounded-xl border border-elec-yellow/35 bg-elec-yellow/[0.08] px-4 text-sm font-semibold text-white touch-manipulation"
+            >
+              Module 3
+              <ChevronRight className="h-4 w-4" />
+            </button>
+          </div>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

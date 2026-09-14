@@ -36,7 +36,7 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         id: 'ppe-hard-hat',
         text: 'Hard hat - BS EN 397 compliant with electrical protection',
         whyItMatters:
-          'Protects against falling objects and electrical arc flash. Non-compliance is a criminal offence under CDM 2015.',
+          'Protects against falling objects and electrical arc flash. Your employer must provide it and you must use it — Personal Protective Equipment at Work Regulations 1992, amended 2022.',
         regulation: 'BS EN 397',
         riskLevel: 'critical',
       },
@@ -232,7 +232,7 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         id: 'dc-risk-assessment',
         text: 'Risk assessment completed and communicated',
         whyItMatters:
-          'A legal requirement before any work begins. Identifies hazards and the controls needed to manage them.',
+          'Your employer must carry out a suitable and sufficient assessment before work begins — Management of Health and Safety at Work Regulations 1999, reg 3. It identifies the hazards and the controls needed.',
         regulation: 'Management of H&S at Work Regs 1999',
         riskLevel: 'critical',
       },
@@ -240,7 +240,7 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         id: 'dc-permit',
         text: 'Permit to work obtained if required',
         whyItMatters:
-          'Required for high-risk activities like live working, confined spaces, and hot work. Working without one is a criminal offence.',
+          'Required by your safe system of work for high-risk activities — live working, confined spaces, hot work. Starting without one means nobody has authorised the job or checked the controls are in place.',
         riskLevel: 'critical',
       },
       {
@@ -268,7 +268,7 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         id: 'dc-insurance',
         text: 'Insurance and certification documents available',
         whyItMatters:
-          'Working without valid insurance or certifications is illegal and leaves you personally liable for any incidents.',
+          'Employers with staff must hold Employers\u2019 Liability cover by law (ELCI Act 1969). Public liability is not compulsory but most clients and main contractors require it — without cover you are personally exposed.',
         riskLevel: 'advisory',
       },
     ],
@@ -531,7 +531,7 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         id: 'sc-suitable',
         text: 'Building structure suitable for proposed work',
         whyItMatters:
-          'The building must be able to support the equipment being installed. Overloading structures is dangerous and illegal.',
+          'The structure has to carry what you are fixing to it. Overloading it risks collapse and puts the installation in breach of the Building Regulations.',
         riskLevel: 'important',
       },
       {
@@ -575,7 +575,7 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         id: 'sc-modifications',
         text: 'Structural modifications approved if required',
         whyItMatters:
-          'Unauthorised modifications to load-bearing walls or fire barriers are illegal and dangerous.',
+          'Cutting into a load-bearing wall or breaching a fire barrier without approval is a Building Regulations matter — and a breached fire barrier lets fire and smoke through the compartment it was built to hold.',
         riskLevel: 'important',
       },
     ],

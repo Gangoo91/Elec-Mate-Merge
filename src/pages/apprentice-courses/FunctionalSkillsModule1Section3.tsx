@@ -1,1170 +1,840 @@
-import { ArrowLeft, ArrowRight, FunctionSquare, AlertTriangle } from 'lucide-react';
+/**
+ * Functional Skills · Module 1 · Section 3 — Algebra and formulae
+ *
+ * CONVERTED (13 Sep) to the StudyPage reading kit and rewritten around worked
+ * examples, following Sections 1 and 2.
+ *
+ * Two quiz explanations were corrected rather than carried over:
+ *
+ *   - One said "the recommended maximum voltage drop for a 230 V circuit (5%) is
+ *     11.5 V, so 9 V is compliant." BS 7671 Appendix 4 Table 4Ab gives 3% for
+ *     lighting and 5% for other uses on a public LV supply, and both are
+ *     *recommended* maxima. Calling 5% a permitted limit and a result
+ *     "compliant" renders guidance as law, and the 3% lighting case was missing.
+ *   - One concluded from a 13.04 A load that "a 16 A MCB is the minimum
+ *     required protection." That is a design decision involving the cable, the
+ *     installation method and the characteristics of the device — not something
+ *     that follows from the arithmetic. The maths is the point on this page.
+ *
+ * The adiabatic question was kept: √(800² × 0.4) ÷ 115 = 4.4 mm² is correct, and
+ * rounding up to 6 mm² is right. It is a good question because the rounding
+ * direction matters, which is the theme running through this module.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import {
+  StudyPage,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  Prerequisites,
+  Scenario,
+  ContentEyebrow,
+  SectionRule,
+  WorkedExample,
+  TryIt,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
-const FunctionalSkillsModule1Section3 = () => {
-  useSEO(
-    'Section 3: Algebra & Formulae - Mathematics for Electricians',
-    "Learn to use and rearrange the key formulae that underpin every electrical calculation, from Ohm's Law to cable sizing equations."
-  );
+const TITLE = 'Algebra and Formulae - Functional Skills Module 1.3';
+const DESCRIPTION =
+  'Functional Skills maths for electricians: symbols and substitution, Ohm’s law, the power formulae, transposing an equation for any subject, and the formulae you will meet on site — every one worked through.';
 
-  const quizQuestions = [
-    {
-      id: 1,
-      question:
-        "Using Ohm's Law (V = IR), what is the voltage across a 12 Ω resistor carrying 5 A?",
-      options: [
-        '2.4 V',
-        '60 V',
-        '17 V',
-        '7 V',
-      ],
-      correctAnswer: 1,
-      explanation:
-        "V = I × R = 5 × 12 = 60 V. Ohm's Law is the single most-used formula in electrical work.",
-    },
-    {
-      id: 2,
-      question:
-        'Rearrange the power formula P = IV to find the current drawn by a 3 kW immersion heater on a 230 V supply.',
-      options: [
-        '0.077 A',
-        '12.50 A',
-        '13.04 A',
-        '1.30 A',
-      ],
-      correctAnswer: 2,
-      explanation:
-        'P = 3,000 W. Rearranging: I = P ÷ V = 3,000 ÷ 230 = 13.04 A. This tells you a 16 A MCB is the minimum required protection.',
-    },
-    {
-      id: 3,
-      question:
-        'Using P = I²R, what power is dissipated in a 6 Ω resistance element carrying 10 A?',
-      options: [
-        '360 W',
-        '60 W',
-        '160 W',
-        '600 W',
-      ],
-      correctAnswer: 3,
-      explanation:
-        'P = I² × R = 10² × 6 = 100 × 6 = 600 W. This formula is particularly useful when calculating heat losses in cables.',
-    },
-    {
-      id: 4,
-      question:
-        'The formula for voltage drop is Vd = (mV/A/m × Ib × L) ÷ 1,000. If mV/A/m = 18, Ib = 20 A and L = 25 m, what is the voltage drop?',
-      options: [
-        '9 V',
-        '9,000 V',
-        '0.9 V',
-        '90 V',
-      ],
-      correctAnswer: 0,
-      explanation:
-        'Vd = (18 × 20 × 25) ÷ 1,000 = 9,000 ÷ 1,000 = 9 V. The maximum permitted voltage drop for a 230 V circuit (5%) is 11.5 V, so 9 V is compliant.',
-    },
-    {
-      id: 5,
-      question: 'Rearrange V = IR to find R when V = 230 V and I = 10 A.',
-      options: [
-        '2,300 Ω',
-        '23 Ω',
-        '24 Ω',
-        '0.043 Ω',
-      ],
-      correctAnswer: 1,
-      explanation:
-        'Rearranging: R = V ÷ I = 230 ÷ 10 = 23 Ω. This is used to calculate the total resistance of a circuit when you know the voltage and current.',
-    },
-    {
-      id: 6,
-      question:
-        'Two resistors of 10 Ω and 15 Ω are connected in parallel. What is the combined resistance?',
-      options: [
-        '25 Ω',
-        '5 Ω',
-        '6 Ω',
-        '12.5 Ω',
-      ],
-      correctAnswer: 2,
-      explanation:
-        'For two resistors in parallel: R = (R1 × R2) ÷ (R1 + R2) = (10 × 15) ÷ (10 + 15) = 150 ÷ 25 = 6 Ω. The combined resistance is always less than the smallest individual resistor.',
-    },
-    {
-      id: 7,
-      question:
-        'A circuit has a design current (Ib) of 22 A. Using the adiabatic equation S = √(I²t) ÷ k, what minimum cable CSA is needed if fault current I = 800 A, disconnection time t = 0.4 s and k = 115?',
-      options: [
-        '4.0 mm²',
-        '6.0 mm²',
-        '2.5 mm²',
-        '4.4 mm²',
-      ],
-      correctAnswer: 3,
-      explanation:
-        'S = √(I² × t) ÷ k = √(800² × 0.4) ÷ 115 = √(256,000) ÷ 115 = 506 ÷ 115 = 4.4 mm². You would select the next standard cable size of 6 mm².',
-    },
-    {
-      id: 8,
-      question:
-        'Rearrange the formula for energy (E = P × t) to find how long it takes a 2 kW heater to use 5 kWh of energy.',
-      options: [
-        '2.5 hours',
-        '0.4 hours',
-        '10 hours',
-        '10,000 hours',
-      ],
-      correctAnswer: 0,
-      explanation:
-        'Rearranging: t = E ÷ P = 5 ÷ 2 = 2.5 hours. This is useful when estimating running costs from appliance ratings.',
-    },
-  ];
+const quizQuestions = [
+  {
+    id: 1,
+    question: 'A 12 Ω heating element carries 5 A. What voltage is across it?',
+    options: ['2.4 V', '60 V', '17 V', '7 V'],
+    correctAnswer: 1,
+    explanation:
+      'V = I × R = 5 × 12 = 60 V. When you know two of the three quantities in Ohm’s law, the third follows.',
+  },
+  {
+    id: 2,
+    question:
+      'Rearrange the power formula P = IV to find the current drawn by a 3 kW immersion heater on a 230 V supply.',
+    options: ['0.077 A', '12.50 A', '13.04 A', '1.30 A'],
+    correctAnswer: 2,
+    explanation:
+      'Convert first: 3 kW = 3,000 W. Then I = P ÷ V = 3,000 ÷ 230 = 13.04 A. Which protective device suits it is a design question involving the cable and the installation method — the arithmetic only gives you the load current.',
+  },
+  {
+    id: 3,
+    question: 'Using P = I²R, what power is dissipated in a 6 Ω element carrying 10 A?',
+    options: ['360 W', '60 W', '160 W', '600 W'],
+    correctAnswer: 3,
+    explanation:
+      'P = I² × R = 10² × 6 = 100 × 6 = 600 W. Square the current first — BIDMAS puts indices before multiplication. Doing 10 × 6 then squaring gives 3,600 W, which is one of the ways this goes wrong.',
+  },
+  {
+    id: 4,
+    question:
+      'Voltage drop is Vd = (mV/A/m × Ib × L) ÷ 1,000. If mV/A/m = 18, Ib = 20 A and L = 25 m, what is the voltage drop?',
+    options: ['9,000 V', '0.9 V', '90 V', '9 V'],
+    correctAnswer: 3,
+    explanation:
+      'Vd = (18 × 20 × 25) ÷ 1,000 = 9,000 ÷ 1,000 = 9 V. For context: BS 7671 Appendix 4 Table 4Ab recommends a maximum of 3% for lighting and 5% for other uses on a public LV supply — on 230 V that is 6.9 V and 11.5 V. So 9 V sits inside the recommendation for a power circuit but outside it for lighting.',
+  },
+  {
+    id: 5,
+    question: 'Rearrange V = IR to find R when V = 230 V and I = 10 A.',
+    options: ['2,300 Ω', '23 Ω', '24 Ω', '0.043 Ω'],
+    correctAnswer: 1,
+    explanation:
+      'R = V ÷ I = 230 ÷ 10 = 23 Ω. Dividing the other way round gives 0.043, which is one of the options precisely because inverting the fraction is the standard slip.',
+  },
+  {
+    id: 6,
+    question:
+      'Two resistors, 10 Ω and 15 Ω, are connected in parallel. What is the combined resistance?',
+    options: ['25 Ω', '12.5 Ω', '6 Ω', '5 Ω'],
+    correctAnswer: 2,
+    explanation:
+      'For two in parallel: R = (R1 × R2) ÷ (R1 + R2) = (10 × 15) ÷ (10 + 15) = 150 ÷ 25 = 6 Ω. A useful sense-check: the combined resistance of a parallel pair is always smaller than the smaller of the two.',
+  },
+  {
+    id: 7,
+    question:
+      'Using the adiabatic equation S = √(I²t) ÷ k, what minimum cross-sectional area is needed for a fault current of 800 A, a disconnection time of 0.4 s and k = 115?',
+    options: ['4.0 mm²', '6.0 mm²', '2.5 mm²', '4.4 mm²'],
+    correctAnswer: 3,
+    explanation:
+      'S = √(800² × 0.4) ÷ 115 = √256,000 ÷ 115 = 505.96 ÷ 115 = 4.4 mm². That is the minimum the calculation demands — in practice you would then select the next standard size up, 6 mm², because 4 mm² is below what the equation requires.',
+  },
+  {
+    id: 8,
+    question: 'Rearrange E = P × t to find how long a 2 kW heater takes to use 5 kWh of energy.',
+    options: ['2.5 hours', '0.4 hours', '10 hours', '10,000 hours'],
+    correctAnswer: 0,
+    explanation:
+      't = E ÷ P = 5 ÷ 2 = 2.5 hours. Because the energy is in kWh and the power in kW, the units cancel and the answer comes out in hours without any conversion.',
+  },
+];
+
+const FunctionalSkillsModule1Section3 = () => {
+  const navigate = useNavigate();
+  useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="pb-24 bg-elec-dark min-h-screen">
-      {/* Header */}
-      <div className="sticky top-0 z-10 bg-elec-dark/95 backdrop-blur-sm border-b border-white/5">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3">
-          <Link
-            to="/study-centre/apprentice/functional-skills/module1"
-            className="p-2 -ml-2 touch-manipulation"
-          >
-            <ArrowLeft className="w-5 h-5 text-white" />
-          </Link>
-          <div>
-            <p className="text-[11px] font-semibold text-green-400 uppercase tracking-wider">
-              Module 1 &bull; Section 3
-            </p>
-            <h1 className="text-base font-bold text-white">Algebra &amp; Formulae</h1>
-          </div>
-        </div>
-      </div>
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 1 · Section 3"
+        title="Algebra and formulae"
+        backTo="/study-centre/apprentice/functional-skills/module1"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        {/* Wider than the 64rem default. These pages are carrying worked
+            calculations in a mono face, and a column sized for prose squeezes
+            the working onto two lines where it should sit on one. */}
+        <StudyPage measure="74rem" wide="94rem">
+          <p className="text-[13px] leading-relaxed text-white">
+            Algebra has a reputation it does not deserve. A letter in a formula is just a box
+            waiting for a number — and every formula you will meet in this trade is published with
+            one subject while the job asks for a different one. Rearranging is the skill that closes
+            that gap, and it comes down to a single rule.
+          </p>
 
-      {/* Hero */}
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-elec-dark via-neutral-900 to-elec-dark" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-green-600/10 via-transparent to-transparent" />
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 py-8 text-center">
-          <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
-            <div className="relative inline-flex mb-4">
-              <div className="absolute inset-0 bg-green-500/30 rounded-2xl blur-xl animate-pulse" />
-              <div className="relative p-4 rounded-2xl bg-gradient-to-br from-green-500 via-green-600 to-emerald-600 shadow-2xl shadow-green-500/25">
-                <FunctionSquare className="h-8 w-8 text-white" />
+          <LearningOutcomes
+            outcomes={[
+              'Read a formula and say what each symbol stands for.',
+              'Substitute numbers into a formula and evaluate it in the right order.',
+              'State the balance rule and use it to rearrange a formula for any subject.',
+              'Use Ohm’s law in all three arrangements.',
+              'Use the three power formulae and pick the right one for the quantities you have.',
+              'Handle a formula containing a square or a square root without losing the order.',
+              'Check an answer by substituting it back into the original formula.',
+            ]}
+          />
+
+          <Prerequisites
+            items={[
+              {
+                term: 'BIDMAS',
+                gist: 'Indices before multiplication, and brackets before anything. Substitution goes wrong without it.',
+                where: '1.1',
+              },
+              {
+                term: 'SI prefixes',
+                gist: 'Almost every formula question starts with a kW or a mA that has to become W or A first.',
+                where: '1.2',
+              },
+            ]}
+          />
+
+          <TLDR
+            points={[
+              'A symbol is a box waiting for a number. Substitution is filling the boxes, then doing the arithmetic in BIDMAS order.',
+              'One rule governs every rearrangement: whatever you do to one side, do to the other.',
+              'Ohm’s law has three forms — V = IR, I = V ÷ R, R = V ÷ I — and they are all the same equation.',
+              'Power has three forms too: P = VI, P = I²R and P = V² ÷ R. Pick the one matching the quantities you already have.',
+              'Convert prefixes before you substitute, not after. 3 kW becomes 3,000 W first.',
+              'Check your answer by putting it back into the original formula. It takes ten seconds and catches inverted fractions.',
+            ]}
+          />
+
+          <SectionRule />
+
+          {/* ── 01 ─────────────────────────────────────────────────── */}
+          <ContentEyebrow>01 · Symbols and substitution</ContentEyebrow>
+
+          <ConceptBlock title="A letter is a box waiting for a number">
+            <p>
+              When you see <strong>V = I × R</strong>, the letters are not algebra for its own sake
+              — they are shorthand for quantities. V is voltage in volts, I is current in amps, R is
+              resistance in ohms. Put the numbers in place of the letters and you have an ordinary
+              sum.
+            </p>
+            <p>
+              Two habits make substitution reliable. Write down what each symbol equals before you
+              start, so you cannot mix them up. And convert every prefix first — a formula does not
+              know that you meant kilowatts.
+            </p>
+          </ConceptBlock>
+
+          <WorkedExample
+            nonCalculator
+            question="A 12 Ω heating element carries 5 A. What voltage is across it?"
+            steps={[
+              { calc: 'V = I × R', note: 'Write the formula down first.' },
+              { calc: 'I = 5, R = 12', note: 'List what you have.' },
+              { calc: 'V = 5 × 12 = 60' },
+            ]}
+            answer="60 V"
+            watchOut="Always finish with the unit. A bare 60 could be volts, watts or ohms — and in an exam an answer without its unit can lose a mark even when the number is right."
+          />
+
+          <TryIt
+            nonCalculator
+            question="A 4 Ω element carries 6 A. What voltage is across it?"
+            steps={[{ calc: 'V = I × R' }, { calc: 'V = 6 × 4 = 24' }]}
+            answer="24 V"
+          />
+
+          <SectionRule />
+
+          <WorkedExample
+            nonCalculator
+            question="Substitute into P = I²R where I = 6 A and R = 12 Ω. Then do the same where I = 12 A and R = 6 Ω, and say why the answers differ."
+            steps={[
+              {
+                calc: 'First: I² = 6 × 6 = 36',
+                note: 'Square the current BEFORE multiplying by R. The index binds tighter than the multiplication.',
+              },
+              { calc: 'P = 36 × 12 = 432 W' },
+              { calc: 'Second: I² = 12 × 12 = 144' },
+              { calc: 'P = 144 × 6 = 864 W' },
+            ]}
+            answer="432 W and 864 W"
+            watchOut="Swapping the two numbers does not swap the answer — it doubles it. Current is squared and resistance is not, so current has far more influence on heating than resistance does. That is not a maths curiosity; it is why a loose connection carrying a big current gets hot."
+          />
+
+          <SectionRule />
+
+          {/* ── 02 ─────────────────────────────────────────────────── */}
+          <ContentEyebrow>02 · The balance rule</ContentEyebrow>
+
+          <ConceptBlock title="Whatever you do to one side, do to the other">
+            <p>
+              An equation is a pair of scales. The equals sign says the two sides balance. You can
+              do anything you like to it — add, subtract, multiply, divide — provided you do the
+              same thing to both sides, because that keeps it balanced.
+            </p>
+            <p>
+              Every shortcut you were ever taught comes from this. &ldquo;Move it across and change
+              the sign&rdquo; is what it looks like when you subtract the same thing from both sides
+              and tidy up. Learn the rule and you never have to remember the shortcuts.
+            </p>
+          </ConceptBlock>
+
+          <WorkedExample
+            nonCalculator
+            question="Rearrange V = IR to make R the subject."
+            steps={[
+              { calc: 'V = I × R', note: 'R is currently multiplied by I.' },
+              { calc: 'V ÷ I = (I × R) ÷ I', note: 'Divide BOTH sides by I.' },
+              { calc: 'V ÷ I = R', note: 'On the right, I ÷ I = 1 and cancels.' },
+              { calc: 'R = V ÷ I', note: 'Write it with the subject on the left.' },
+            ]}
+            answer="R = V ÷ I"
+            watchOut="To undo a multiplication you divide, and to undo a division you multiply. If the rearranged formula still has the subject tangled up with something else, you have undone the wrong operation."
+          />
+
+          <WorkedExample
+            question="Using that rearrangement: V = 230 V and I = 10 A. What is R?"
+            steps={[
+              { calc: 'R = V ÷ I' },
+              { calc: 'R = 230 ÷ 10 = 23' },
+              { calc: 'Check: 10 × 23 = 230 ✓', note: 'Substitute back into the original.' },
+            ]}
+            answer="23 Ω"
+            watchOut="Dividing the wrong way round gives 0.043 Ω. The check catches it instantly: 10 × 0.043 = 0.43, nothing like 230."
+          />
+
+          <TryIt
+            nonCalculator
+            question="Rearrange P = I × V to make V the subject."
+            steps={[
+              { calc: 'P = I × V' },
+              { calc: 'P ÷ I = V', note: 'Divide both sides by I.' },
+              { calc: 'V = P ÷ I' },
+            ]}
+            answer="V = P ÷ I"
+          />
+
+          <CommonMistake
+            title="Moving a term without undoing what it does"
+            whatHappens={
+              <p>
+                You have <code>V = I × R</code> and want R, so you write <code>R = V − I</code> —
+                subtracting because moving things across feels like subtraction. But I was
+                multiplying R, not adding to it, so subtracting undoes nothing.
+              </p>
+            }
+            doInstead={
+              <p>
+                Ask what is being done to the subject, then do the opposite to both sides.
+                Multiplied? Divide. Divided? Multiply. Added? Subtract. Squared? Take the root.
+              </p>
+            }
+          />
+
+          <SectionRule />
+
+          <WorkedExample
+            nonCalculator
+            question="Rearrange P = V × I to make I the subject, then use it: a 3kW immersion heater on 230V. Then rearrange R = V ÷ I to make V the subject and check your answer a different way."
+            steps={[
+              {
+                calc: 'P = V × I. Divide BOTH sides by V.',
+                note: 'Whatever you do to one side you do to the other. That is the whole rule.',
+              },
+              { calc: 'P ÷ V = I, so I = P ÷ V' },
+              {
+                calc: 'I = 3000 ÷ 230 = 13.04 A',
+                note: 'Watts, not kilowatts — convert before you substitute, not after.',
+              },
+              { calc: 'R = V ÷ I. Multiply both sides by I → R × I = V, so V = I × R' },
+              {
+                calc: 'Check: if R = 17.64Ω, then V = 13.04 × 17.64 = 230 V',
+                note: 'Back where you started, which means the rearrangement was sound.',
+              },
+            ]}
+            answer="I = P ÷ V = 13.04 A; V = I × R, and substituting back returns 230 V."
+            watchOut="The commonest transposition error is moving a term across and forgetting to change what it does — taking V from a multiplication and adding it on the other side instead of dividing. Substituting your answer back into the ORIGINAL formula catches that every time, and it takes ten seconds."
+          />
+
+          <SectionRule />
+
+          <TryIt
+            nonCalculator
+            question="Rearrange Vd = (mV/A/m × Ib × L) ÷ 1000 to make L the subject. Then find the longest run of 2.5mm² (18 mV/A/m) carrying 20 A that stays within a 6.9 V drop."
+            steps={[
+              { calc: 'Multiply both sides by 1000: Vd × 1000 = mV/A/m × Ib × L' },
+              { calc: 'Divide both sides by (mV/A/m × Ib): L = (Vd × 1000) ÷ (mV/A/m × Ib)' },
+              { calc: 'L = (6.9 × 1000) ÷ (18 × 20) = 6900 ÷ 360' },
+              { calc: 'L = 19.17 m' },
+            ]}
+            answer="About 19 m. Note you round DOWN here, not up — 19.17 m is the point at which it stops complying, so 20 m would exceed it."
+          />
+
+          <SectionRule />
+
+          {/* ── 03 ─────────────────────────────────────────────────── */}
+          <ContentEyebrow>03 · Ohm’s law</ContentEyebrow>
+
+          <ConceptBlock title="One equation, three arrangements">
+            <p>
+              <strong>V = I × R</strong>, <strong>I = V ÷ R</strong> and <strong>R = V ÷ I</strong>{' '}
+              are not three facts to memorise. They are the same statement rearranged three ways,
+              and if you can do the rearranging you only ever need to remember the first one.
+            </p>
+            <p>
+              Volts, amps and ohms. Know any two and the third follows — which is what makes this
+              the single most used formula in the trade.
+            </p>
+          </ConceptBlock>
+
+          <WorkedExample
+            question="A 230 V supply feeds a load of 19.17 Ω. What current flows?"
+            steps={[
+              { calc: 'I = V ÷ R', note: 'We want current, so use that arrangement.' },
+              { calc: 'I = 230 ÷ 19.17' },
+              { calc: 'I = 12.0 A', note: 'To one decimal place.' },
+            ]}
+            answer="12.0 A"
+          />
+
+          <InlineCheck
+            question="A circuit draws 8 A from a 230 V supply. What is its resistance, to the nearest ohm?"
+            options={['1,840 Ω', '29 Ω', '0.03 Ω', '238 Ω']}
+            correctIndex={1}
+            explanation="R = V ÷ I = 230 ÷ 8 = 28.75, which is 29 Ω to the nearest ohm. 1,840 comes from multiplying instead of dividing."
+          />
+
+          <SectionRule />
+
+          <TryIt
+            nonCalculator
+            question="A 230V circuit supplies a load of 11.5Ω. What current flows? Then: if the same load were fed at 115V, what current would flow?"
+            steps={[
+              { calc: 'I = V ÷ R = 230 ÷ 11.5 = 20 A' },
+              {
+                calc: 'At 115 V: I = 115 ÷ 11.5 = 10 A',
+                note: 'Half the voltage across the same resistance gives half the current — the two are directly proportional.',
+              },
+            ]}
+            answer="20 A at 230 V, 10 A at 115 V"
+          />
+
+          <SectionRule />
+
+          {/* ── 04 ─────────────────────────────────────────────────── */}
+          <ContentEyebrow>04 · The power formulae</ContentEyebrow>
+
+          <ConceptBlock title="Three versions, and how to choose">
+            <p>
+              Power in watts can be found three ways: <strong>P = V × I</strong> when you have volts
+              and amps, <strong>P = I² × R</strong> when you have amps and ohms, and{' '}
+              <strong>P = V² ÷ R</strong> when you have volts and ohms.
+            </p>
+            <p>
+              They are all consequences of Ohm&rsquo;s law — substitute V = IR into P = VI and you
+              get P = I²R. So you are never choosing between different facts, only picking the form
+              that matches the numbers in front of you.
+            </p>
+          </ConceptBlock>
+
+          <WorkedExample
+            question="A 3 kW immersion heater runs on 230 V. What current does it draw?"
+            steps={[
+              { calc: '3 kW = 3,000 W', note: 'Convert the prefix BEFORE substituting.' },
+              { calc: 'I = P ÷ V', note: 'Rearranged from P = VI.' },
+              { calc: 'I = 3,000 ÷ 230 = 13.04 A' },
+            ]}
+            answer="13.04 A"
+            watchOut="Substituting 3 instead of 3,000 gives 0.013 A — a heater drawing thirteen milliamps. Convert the prefix first, every time."
+          />
+
+          <WorkedExample
+            nonCalculator
+            question="What power is dissipated in a 6 Ω element carrying 10 A?"
+            steps={[
+              { calc: 'P = I² × R', note: 'We have current and resistance.' },
+              { calc: '10² = 100', note: 'Indices before multiplication — BIDMAS.' },
+              { calc: '100 × 6 = 600' },
+            ]}
+            answer="600 W"
+            watchOut="Multiplying first and squaring after — (10 × 6)² = 3,600 — is the classic error here, and it is BIDMAS that prevents it."
+          />
+
+          <TryIt
+            question="A 2.3 kW element runs on 230 V. What current does it draw?"
+            steps={[
+              { calc: '2.3 kW = 2,300 W' },
+              { calc: 'I = P ÷ V = 2,300 ÷ 230' },
+              { calc: 'I = 10 A' },
+            ]}
+            answer="10 A"
+          />
+
+          <SectionRule />
+
+          <TryIt
+            nonCalculator
+            question="A 2.3kW load on 230V. Find the current, then the resistance, using two different power formulae and check they agree."
+            steps={[
+              { calc: 'I = P ÷ V = 2300 ÷ 230 = 10 A' },
+              { calc: 'Route one: R = V ÷ I = 230 ÷ 10 = 23 Ω' },
+              {
+                calc: 'Route two: R = V² ÷ P = 52900 ÷ 2300 = 23 Ω',
+                note: 'Different formula, same answer — which is the check.',
+              },
+            ]}
+            answer="10 A and 23 Ω. Two independent routes landing on the same figure is far stronger evidence than doing the same sum twice."
+          />
+
+          <SectionRule />
+
+          {/* ── 05 ─────────────────────────────────────────────────── */}
+          <ContentEyebrow>05 · Formulae with several terms</ContentEyebrow>
+
+          <ConceptBlock title="Work inwards, then outwards">
+            <p>
+              Longer formulae look harder and mostly are not. Substitute everything, then evaluate
+              in BIDMAS order: brackets first, then indices, then multiplication and division, then
+              addition and subtraction.
+            </p>
+            <p>
+              The voltage drop formula is a good example:{' '}
+              <strong>
+                Vd = (mV/A/m × I<sub>b</sub> × L) ÷ 1,000
+              </strong>
+              . The bracket is doing the work, and the division by a thousand at the end is a unit
+              conversion — millivolts to volts — not part of the physics.
+            </p>
+          </ConceptBlock>
+
+          <WorkedExample
+            question="A cable has mV/A/m = 18, carries Ib = 20 A over L = 25 m. What is the voltage drop?"
+            steps={[
+              { calc: 'Vd = (18 × 20 × 25) ÷ 1,000' },
+              { calc: '18 × 20 = 360', note: 'Inside the bracket, left to right.' },
+              { calc: '360 × 25 = 9,000' },
+              { calc: '9,000 ÷ 1,000 = 9 V', note: 'The division converts mV to V.' },
+            ]}
+            answer="9 V"
+            watchOut="Forgetting the ÷ 1,000 gives 9,000 V. The clue is in the unit of the first term — millivolts per amp per metre — so the answer starts life in millivolts."
+          />
+
+          <InlineCheck
+            question="Same formula, with mV/A/m = 44, Ib = 6 A and L = 12 m. What is the voltage drop?"
+            options={['3.17 V', '31.7 V', '0.32 V', '3,168 V']}
+            correctIndex={0}
+            explanation="44 × 6 = 264, 264 × 12 = 3,168, then ÷ 1,000 = 3.168 V, which is 3.17 V to two decimal places."
+          />
+
+          <SectionRule />
+
+          <TryIt
+            nonCalculator
+            question="Zs = Ze + (R1 + R2). A TN-S supply measures Ze = 0.35Ω. The circuit has R1 = 0.22Ω and R2 = 0.41Ω. Find Zs. Then find what Ze would have to be for Zs to reach 1.37Ω, the limit for a 32A Type B device."
+            steps={[
+              {
+                calc: 'R1 + R2 = 0.22 + 0.41 = 0.63Ω',
+                note: 'Brackets first — that is BIDMAS doing real work, not being tidy.',
+              },
+              { calc: 'Zs = 0.35 + 0.63 = 0.98Ω' },
+              { calc: 'Rearranged: Ze = Zs − (R1 + R2) = 1.37 − 0.63 = 0.74Ω' },
+            ]}
+            answer="Zs = 0.98Ω. Ze would have to rise to 0.74Ω before this circuit reached the 1.37Ω limit — so there is room, but the second calculation is the one that tells you how much."
+          />
+
+          <SectionRule />
+
+          {/* ── 06 ─────────────────────────────────────────────────── */}
+          <ContentEyebrow>06 · Squares and roots</ContentEyebrow>
+
+          <ConceptBlock title="A root is the undo button for a square">
+            <p>
+              Squaring a number multiplies it by itself: 10² = 100. A square root asks the reverse
+              question — what number, multiplied by itself, gives this? √100 = 10.
+            </p>
+            <p>
+              In a rearrangement they cancel each other out, which is how you get a subject out from
+              under a square root or out of a squared term. And in BIDMAS they come immediately
+              after brackets, before any multiplying.
+            </p>
+          </ConceptBlock>
+
+          <WorkedExample
+            question="The adiabatic equation is S = √(I²t) ÷ k. With I = 800 A, t = 0.4 s and k = 115, find S."
+            steps={[
+              { calc: '800² = 640,000', note: 'Square the current first.' },
+              { calc: '640,000 × 0.4 = 256,000', note: 'Finish inside the bracket.' },
+              { calc: '√256,000 = 505.96', note: 'Now the root.' },
+              { calc: '505.96 ÷ 115 = 4.4', note: 'Finally the division.' },
+            ]}
+            answer="4.4 mm²"
+            watchOut="That is the minimum the calculation demands, not a cable you can buy. 4 mm² is below it, so the next standard size up is 6 mm² — rounding down here would leave the conductor undersized for the fault."
+          />
+
+          <TryIt
+            question="Find √(400 × 0.25)."
+            steps={[
+              { calc: '400 × 0.25 = 100', note: 'Inside the bracket first.' },
+              { calc: '√100 = 10' },
+            ]}
+            answer="10"
+          />
+
+          <SectionRule />
+
+          <WorkedExample
+            nonCalculator
+            question="A cable run goes 8m along a wall and then 6m up to a board. Find the straight-line length, then say how much cable the right-angled route costs you over the diagonal."
+            steps={[
+              { calc: 'c² = a² + b² = 8² + 6² = 64 + 36 = 100' },
+              {
+                calc: 'c = √100 = 10 m',
+                note: 'A 3-4-5 triangle scaled up by two — worth recognising, it saves working it out.',
+              },
+              { calc: 'The routed length is 8 + 6 = 14 m' },
+              { calc: '14 − 10 = 4 m extra' },
+            ]}
+            answer="Diagonal 10 m; the right-angled route uses 14 m, so 4 m more."
+            watchOut="You almost always have to run the right-angled route — cables follow the building, not the shortest line. The point of the diagonal is not to route along it, it is to know what the run SHOULD be near, so a measured 22 m tells you something has gone wrong."
+          />
+
+          <SectionRule />
+
+          <TryIt
+            nonCalculator
+            question="A tray rises 5m over a horizontal run of 12m. What length of tray do you need, and what do you order if it comes in 3m lengths?"
+            steps={[
+              { calc: 'c² = 5² + 12² = 25 + 144 = 169' },
+              { calc: 'c = √169 = 13 m', note: 'The 5-12-13 triple.' },
+              { calc: '13 ÷ 3 = 4.33 lengths → round up to 5' },
+            ]}
+            answer="13 m of tray, so 5 × 3m lengths."
+          />
+
+          <SectionRule />
+
+          {/* ── 07 ─────────────────────────────────────────────────── */}
+          <ContentEyebrow>07 · Checking your answer</ContentEyebrow>
+
+          <ConceptBlock title="Put it back in">
+            <p>
+              Every rearrangement can be checked in one step: substitute your answer into the
+              original formula and see whether it balances. If it does, the rearrangement and the
+              arithmetic are both right. If it does not, one of them is wrong and you know to look.
+            </p>
+            <p>
+              This is the single most valuable habit on this page. It catches inverted fractions,
+              which are the commonest algebra error and the hardest to spot by staring.
+            </p>
+          </ConceptBlock>
+
+          <WorkedExample
+            nonCalculator
+            question="You calculate R = 23 Ω from V = 230 V and I = 10 A. Check it."
+            steps={[
+              { calc: 'Original: V = I × R' },
+              { calc: '10 × 23 = 230', note: 'Substitute the answer back in.' },
+              { calc: '230 = 230 ✓', note: 'It balances, so the answer is right.' },
+            ]}
+            answer="Confirmed: 23 Ω"
+          />
+
+          <TryIt
+            question="Someone calculates that a 2 kW heater on 230 V draws 460 A. Check it without redoing their working."
+            steps={[
+              { calc: 'Original: P = V × I' },
+              { calc: '230 × 460 = 105,800 W', note: 'That is 105.8 kW, not 2 kW.' },
+              { calc: 'So the answer is wrong', note: 'They multiplied instead of dividing.' },
+            ]}
+            answer="Wrong — it should be 2,000 ÷ 230 = 8.7 A"
+          />
+
+          <SectionRule />
+
+          <TryIt
+            nonCalculator
+            question="A colleague works out that a 10.5kW shower at 230V draws 4.57 A. Without redoing their sum, give two reasons you know it is wrong."
+            steps={[
+              {
+                calc: 'Size check: 10.5 kW is a big load',
+                note: 'A shower is one of the largest single loads in a house. A few amps cannot be right — a kettle draws more than that.',
+              },
+              {
+                calc: 'Direction check: they have divided the wrong way round',
+                note: '230 ÷ 10500 = 0.0219; 10500 ÷ 230 = 45.65. The 4.57 looks like 10500 ÷ 2300 — a decimal slip in the voltage.',
+              },
+              { calc: 'Correct: I = P ÷ V = 10500 ÷ 230 = 45.65 A' },
+            ]}
+            answer="It fails a size check (far too small for a shower) and the error is a factor of ten, which points at a decimal place rather than a wrong method. The real answer is 45.65 A — which also tells you this shower needs a 50 A device, not a 45 A one, because no 45 A rung exists."
+          />
+
+          <SectionRule />
+
+          {/* ── 08 ─────────────────────────────────────────────────── */}
+          <ContentEyebrow>08 · Putting it together</ContentEyebrow>
+
+          <Scenario
+            title="Sizing up an immersion heater circuit"
+            situation={
+              <p>
+                A customer wants a 3 kW immersion heater on a 230 V supply. You need the load
+                current, and then the voltage drop over a 22 m run of cable whose tabulated figure
+                is 18 mV/A/m.
+              </p>
+            }
+            whatToDo={
+              <div className="space-y-2">
+                <p>
+                  Convert first: 3 kW = 3,000 W. Then the current — P = VI rearranges to I = P ÷ V,
+                  giving 3,000 ÷ 230 = 13.04 A.
+                </p>
+                <p>
+                  Now the voltage drop, using that current: Vd = (18 × 13.04 × 22) ÷ 1,000. Inside
+                  the bracket, 18 × 13.04 = 234.72, and 234.72 × 22 = 5,163.8. Divide by 1,000 and
+                  you get 5.16 V.
+                </p>
+                <p>
+                  For context on that figure: Table 4Ab recommends a maximum of 5% for other uses on
+                  a public LV supply, which on 230 V is 11.5 V. 5.16 V sits comfortably inside it.
+                </p>
               </div>
-            </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
-              Algebra &amp; Formulae
-            </h2>
-            <p className="text-sm text-white max-w-lg mx-auto">
-              Learn to use, rearrange and apply the key formulae that underpin every electrical
-              calculation &mdash; from Ohm&apos;s Law and power equations to cable sizing and fault
-              current protection.
-            </p>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 space-y-6 mt-6">
-        {/* Section 01 — Introduction to Algebra */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">
-              01
-            </span>
-            <h3 className="text-lg font-bold text-white">Introduction to Algebra</h3>
-          </div>
-          <div className="space-y-3 text-sm text-white leading-relaxed">
-            <p>
-              <strong className="text-white">Algebra</strong> is the branch of mathematics that uses
-              letters and symbols to represent unknown values and relationships. Far from being
-              abstract theory, algebra is the everyday language of electrical engineering. Every
-              time you use Ohm&apos;s Law (V = IR), select a cable size or calculate a voltage drop,
-              you are using algebra.
-            </p>
-            <p>
-              The key idea is simple:{' '}
-              <strong className="text-white">
-                a letter stands for a number you don&apos;t yet know
-              </strong>
-              . Once you substitute in the values you <em>do</em> know, you can solve for the
-              unknown. For example, if V = IR and you know V = 230&thinsp;V and R =
-              23&thinsp;&Omega;, you can find I.
-            </p>
-            <p>
-              <strong className="text-white">Variables</strong> (letters representing unknowns) and{' '}
-              <strong className="text-white">constants</strong> (fixed values) appear in every
-              electrical formula:
-            </p>
-            <ul className="space-y-2 pl-1">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">V</strong> = voltage (potential difference) in
-                  volts
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">I</strong> = current in amperes (from the French{' '}
-                  <em>intensité</em>)
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">R</strong> = resistance in ohms (&Omega;)
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">P</strong> = power in watts
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">E</strong> = energy in joules (or kWh)
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">t</strong> = time in seconds (or hours for energy
-                  billing)
-                </span>
-              </li>
-            </ul>
-
-            <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
-              <p className="text-xs font-semibold text-green-400 mb-1">Why Algebra Matters</p>
-              <p className="text-sm text-white">
-                Without algebra, you would need to memorise a separate formula for every possible
-                calculation. With algebra, a single formula like V = IR gives you three
-                calculations: V = IR, I = V/R, and R = V/I. Learning to rearrange formulae is one of
-                the most valuable skills you can develop as an apprentice.
+            }
+            whyItMatters={
+              <p>
+                Prefix conversion, rearrangement, substitution and a multi-term formula — one job,
+                four techniques, and the output of the first calculation is the input to the second.
+                That chaining is what the exam is really testing.
               </p>
-            </div>
+            }
+          />
 
-            <p>
-              <strong className="text-white">Algebraic notation conventions:</strong> In electrical
-              formulae, multiplication is usually implied when two letters are next to each other:
-              IR means I &times; R. Division is shown with a line (fraction) or the &divide; symbol.
-              Squared values use a superscript: I² means I &times; I.
-            </p>
+          <SectionRule />
 
-            <p>
-              <strong className="text-white">The equals sign as a balance:</strong> Think of every
-              equation as a balance. Whatever you do to one side, you must do to the other to keep
-              it balanced. If V = IR and you divide both sides by R, you get V/R = I. This is the
-              fundamental principle behind all formula rearrangement.
-            </p>
-          </div>
-        </motion.div>
+          <KeyTakeaways
+            points={[
+              'Transposition is one rule: whatever you do to one side, do to the other. Substitute your answer back into the original to check it.',
+              'In P = I²R the current is squared and the resistance is not — current has far more influence on heating.',
+              'Recognise 3-4-5 and 5-12-13 triangles; they turn a square-root problem into something you can do in your head.',
+              'When rearranging for a maximum length, round DOWN — rounding up takes you past the limit.',
+              'A symbol is a box waiting for a number. Write down what each one equals before you substitute.',
+              'Convert every prefix before substituting, not after. 3 kW becomes 3,000 W first.',
+              'One rule rearranges everything: do the same thing to both sides.',
+              'To undo a multiplication, divide. To undo a square, take the root.',
+              'Ohm’s law is one equation in three arrangements, and so are the power formulae.',
+              'BIDMAS decides the order: brackets, then indices, then multiply and divide, then add and subtract.',
+              'Check by substituting the answer back into the original — it catches inverted fractions in seconds.',
+              'A calculated minimum is not a size you can buy. Round up to the next standard size.',
+            ]}
+          />
 
-        {/* Section 02 — Ohm's Law */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15 }}
-          className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">
-              02
-            </span>
-            <h3 className="text-lg font-bold text-white">Ohm&apos;s Law</h3>
-          </div>
-          <div className="space-y-3 text-sm text-white leading-relaxed">
-            <p>
-              <strong className="text-white">Ohm&apos;s Law</strong> states that the current flowing
-              through a conductor is directly proportional to the potential difference across it and
-              inversely proportional to its resistance, provided the temperature remains constant.
-              The formula is:
-            </p>
-            <p className="text-center text-lg font-bold text-green-400 py-2">V = I &times; R</p>
-            <p>This single equation gives you three arrangements:</p>
-            <ul className="space-y-2 pl-1">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">Find voltage:</strong> V = I &times; R. Example: A
-                  10&thinsp;A current through a 23&thinsp;&Omega; resistance produces V = 10 &times;
-                  23 = 230&thinsp;V.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">Find current:</strong> I = V &divide; R. Example: A
-                  230&thinsp;V supply across a 46&thinsp;&Omega; load draws I = 230 &divide; 46 =
-                  5&thinsp;A.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">Find resistance:</strong> R = V &divide; I.
-                  Example: If 230&thinsp;V causes a current of 10&thinsp;A, then R = 230 &divide; 10
-                  = 23&thinsp;&Omega;.
-                </span>
-              </li>
-            </ul>
+          <SectionRule />
 
-            <p>
-              <strong className="text-white">
-                Practical application &mdash; continuity testing:
-              </strong>{' '}
-              During initial verification, you measure the continuity of a ring final circuit. Your
-              tester applies a small test voltage and measures the current that flows, then uses
-              Ohm&apos;s Law internally to calculate and display the resistance. A typical R1+R2
-              reading for a 2.5&thinsp;mm²/1.5&thinsp;mm² ring circuit might be 0.35&thinsp;&Omega;.
-            </p>
-
-            <p>
-              <strong className="text-white">The Ohm&apos;s Law triangle:</strong> A helpful memory
-              aid is to draw a triangle with V at the top and I and R side by side at the bottom.
-              Cover the letter you want to find: if you cover V, you see I &times; R. If you cover
-              I, you see V over R (V &divide; R). If you cover R, you see V over I (V &divide; I).
-            </p>
-
-            <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
-              <p className="text-xs font-semibold text-green-400 mb-1">
-                Worked Example &mdash; Earth Fault Loop Impedance
-              </p>
-              <p className="text-sm text-white">
-                Using Ohm&apos;s Law to calculate prospective fault current: If the earth fault loop
-                impedance Zs = 1.15&thinsp;&Omega; and the supply voltage is 230&thinsp;V, the
-                prospective earth fault current = V &divide; Zs = 230 &divide; 1.15 = 200&thinsp;A.
-                This value must cause the protective device to operate within the required
-                disconnection time stated in BS 7671 Table 41.1.
-              </p>
-            </div>
-
-            <p>
-              <strong className="text-white">Temperature effects:</strong> Ohm&apos;s Law assumes
-              constant temperature. In practice, the resistance of copper conductors increases as
-              temperature rises. This is why BS 7671 provides correction factors for ambient
-              temperature. At 20&deg;C, a 2.5&thinsp;mm² copper conductor has a resistance of
-              approximately 7.27&thinsp;m&Omega;/m (line conductor). At 70&deg;C (maximum operating
-              temperature for PVC cable), this increases to approximately 9.22&thinsp;m&Omega;/m.
-            </p>
-          </div>
-        </motion.div>
-
-        {/* InlineCheck 1 — After Section 02 */}
-        <InlineCheck
-          id="fs-m1s3-check1"
-          question="A heater element has a resistance of 19.2 Ω and is connected to a 230 V supply. Using Ohm's Law, what current does it draw?"
-          options={['4,416 A', '11.98 A', '0.083 A', '249.2 A']}
-          correctIndex={1}
-          explanation="I = V ÷ R = 230 ÷ 19.2 = 11.98 A. This is just under 12 A, so a 13 A fuse or 16 A MCB would be suitable for protection."
-        />
-
-        {/* Section 03 — Power Formulae */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">
-              03
-            </span>
-            <h3 className="text-lg font-bold text-white">Power Formulae</h3>
-          </div>
-          <div className="space-y-3 text-sm text-white leading-relaxed">
-            <p>
-              <strong className="text-white">Electrical power</strong> is the rate at which energy
-              is transferred or consumed. It is measured in watts (W). There are three key power
-              formulae, each derived from combining Ohm&apos;s Law with the basic power equation:
-            </p>
-            <ul className="space-y-2 pl-1">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">P = V &times; I</strong> &mdash; use when you know
-                  voltage and current. Example: a 230&thinsp;V supply drawing 10&thinsp;A delivers P
-                  = 230 &times; 10 = 2,300&thinsp;W (2.3&thinsp;kW).
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">P = I² &times; R</strong> &mdash; use when you know
-                  current and resistance. This form is especially useful for calculating{' '}
-                  <strong className="text-white">heat losses in cables</strong>. Example:
-                  20&thinsp;A through a cable with 0.5&thinsp;&Omega; resistance produces P = 20²
-                  &times; 0.5 = 200&thinsp;W of heat.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">P = V² &divide; R</strong> &mdash; use when you
-                  know voltage and resistance. Example: a 230&thinsp;V supply across a
-                  52.9&thinsp;&Omega; heating element gives P = 230² &divide; 52.9 = 52,900 &divide;
-                  52.9 = 1,000&thinsp;W (1&thinsp;kW).
-                </span>
-              </li>
-            </ul>
-
-            <p>
-              <strong className="text-white">Rearranging the power formulae:</strong> Each formula
-              can be rearranged to find any unknown. From P = VI:
-            </p>
-            <ul className="space-y-2 pl-1">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  I = P &divide; V &mdash; find the current drawn by an appliance. Example: a
-                  3&thinsp;kW shower on 230&thinsp;V draws I = 3,000 &divide; 230 = 13.04&thinsp;A.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  V = P &divide; I &mdash; find what voltage produces a given power at a known
-                  current.
-                </span>
-              </li>
-            </ul>
-
-            <p>
-              <strong className="text-white">The design current (Ib):</strong> When designing a
-              circuit, you calculate the design current using I = P &divide; V. This tells you the
-              minimum MCB rating and cable size needed. For example, a 7.2&thinsp;kW electric
-              shower: I = 7,200 &divide; 230 = 31.3&thinsp;A. You would select a 32&thinsp;A MCB and
-              6&thinsp;mm² cable as a minimum.
-            </p>
-
-            <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
-              <p className="text-xs font-semibold text-green-400 mb-1">Power Factor Warning</p>
-              <p className="text-sm text-white">
-                The formulae P = VI and P = I²R give <em>apparent power</em> (VA) when dealing with
-                AC circuits containing reactive loads (motors, fluorescent ballasts). For
-                <em> true power</em> (W), multiply by the power factor: P = V &times; I &times;
-                cos&phi;. For purely resistive loads (heaters, kettles), power factor = 1, so P = VI
-                holds true.
-              </p>
-            </div>
-
-            <p>
-              <strong className="text-white">Energy consumption:</strong> Energy = Power &times;
-              Time. E = P &times; t. In practical terms, energy is measured in kilowatt-hours (kWh).
-              A 2&thinsp;kW heater running for 3 hours uses 2 &times; 3 = 6&thinsp;kWh. At 34p per
-              kWh, this costs 6 &times; 34p = &pound;2.04.
-            </p>
-          </div>
-        </motion.div>
-
-        {/* Section 04 — Transposing Formulae */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.25 }}
-          className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">
-              04
-            </span>
-            <h3 className="text-lg font-bold text-white">Transposing Formulae</h3>
-          </div>
-          <div className="space-y-3 text-sm text-white leading-relaxed">
-            <p>
-              <strong className="text-white">Transposing</strong> (rearranging) a formula means
-              isolating the variable you want to find on one side of the equals sign. This is the
-              most important algebraic skill for an electrician. The golden rule is:{' '}
-              <strong className="text-white">
-                whatever you do to one side, you must do to the other.
-              </strong>
-            </p>
-
-            <p>
-              <strong className="text-white">Step-by-step method:</strong>
-            </p>
-            <ul className="space-y-2 pl-1">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">Step 1:</strong> Identify the variable you need to
-                  find (the &ldquo;subject&rdquo;).
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">Step 2:</strong> Use inverse operations to
-                  &ldquo;undo&rdquo; what has been done to it. If it has been multiplied, divide. If
-                  it has been added, subtract. If it is squared, take the square root.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">Step 3:</strong> Perform the same operation on both
-                  sides of the equation.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">Step 4:</strong> Simplify until the subject stands
-                  alone.
-                </span>
-              </li>
-            </ul>
-
-            <p>
-              <strong className="text-white">
-                Example 1 &mdash; Rearranging V = IR to find R:
-              </strong>
-            </p>
-            <ul className="space-y-2 pl-1">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>Start with: V = IR</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>R is being multiplied by I. To undo this, divide both sides by I.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>V &divide; I = IR &divide; I</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  Result: <strong className="text-white">R = V &divide; I</strong>
-                </span>
-              </li>
-            </ul>
-
-            <p>
-              <strong className="text-white">
-                Example 2 &mdash; Rearranging P = I²R to find I:
-              </strong>
-            </p>
-            <ul className="space-y-2 pl-1">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>Start with: P = I²R</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>Divide both sides by R: P &divide; R = I²</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>Take the square root of both sides: &radic;(P &divide; R) = I</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  Result: <strong className="text-white">I = &radic;(P/R)</strong>
-                </span>
-              </li>
-            </ul>
-
-            <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4">
-              <div className="flex items-start gap-2">
-                <AlertTriangle className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
-                <div>
-                  <p className="text-xs font-semibold text-yellow-400 mb-1">
-                    Common Rearrangement Error
+          <FAQ
+            items={[
+              {
+                question: 'Will formulae be given to me in the exam?',
+                answer: (
+                  <p>
+                    For Functional Skills maths, formulae you need are normally provided or built
+                    into the question — you are being assessed on using them, not on recall. The
+                    electrical qualifications are different, and Ohm&rsquo;s law and the power
+                    formulae are worth knowing cold regardless.
                   </p>
-                  <p className="text-sm text-white">
-                    When rearranging P = I²R to find I, a common mistake is to forget to take the
-                    square root. Dividing P by R gives you I², not I. You must then square-root the
-                    result to get I. Always check your answer by substituting back into the original
-                    formula.
+                ),
+              },
+              {
+                question: 'Why do I keep getting the fraction upside down?',
+                answer: (
+                  <p>
+                    Because both versions look plausible on the page. The cure is the check: put
+                    your answer back into the original formula. An inverted fraction fails that test
+                    immediately and by a wide margin, which is exactly what you want from a check.
                   </p>
-                </div>
+                ),
+              },
+              {
+                question: 'Do I need to memorise all three power formulae?',
+                answer: (
+                  <p>
+                    You need P = V × I. The other two follow from substituting Ohm&rsquo;s law into
+                    it, so if you can rearrange you can derive them. Recognising which one fits the
+                    quantities you have saves time, though.
+                  </p>
+                ),
+              },
+              {
+                question: 'What is mV/A/m actually saying?',
+                answer: (
+                  <p>
+                    Millivolts dropped, per amp of current, per metre of cable. Multiply it by your
+                    current and your length and you get the total drop in millivolts — which is why
+                    the formula finishes by dividing by 1,000 to give volts.
+                  </p>
+                ),
+              },
+            ]}
+          />
+
+          <WorkedExample
+            question="A 7.36kW shower on a 230V supply, 16m of 10.0mm² T&E clipped direct (mV/A/m = 4.4), Ze = 0.25Ω on a TN-C-S supply, R1+R2 for 10.0/4.0mm² = 6.44 mΩ/m. Work the whole chain: design current, device, voltage drop, and Zs."
+            steps={[
+              {
+                calc: 'Ib = P ÷ V = 7360 ÷ 230 = 32 A',
+                note: 'Start with the load. Everything downstream depends on it.',
+              },
+              {
+                calc: 'In = 32 A',
+                note: 'The design current lands exactly on a standard rung, so the device is 32 A.',
+              },
+              {
+                calc: 'Vd = 4.4 × 32 × 16 ÷ 1000 = 2.25 V',
+                note: 'mV/A/m × current × length, then ÷1000 because the table is in millivolts.',
+              },
+              {
+                calc: '5% of 230 = 11.5 V → 2.25 V is well inside it',
+                note: 'And 5% is the recommended maximum for a non-lighting circuit, not a hard legal limit.',
+              },
+              { calc: 'R1+R2 = 6.44 × 16 ÷ 1000 = 0.103Ω' },
+              { calc: 'Zs = Ze + (R1+R2) = 0.25 + 0.103 = 0.353Ω' },
+              { calc: 'Max Zs for a 32 A Type B = 1.37Ω → 0.353 passes comfortably' },
+            ]}
+            answer="Ib = 32 A, In = 32 A, Vd = 2.25 V (limit 11.5 V), Zs = 0.353Ω (limit 1.37Ω). The circuit passes on both counts."
+            watchOut="Notice the order is fixed and each step feeds the next: you cannot size the device before you know the current, and you cannot check Zs before you know the cable length. Working these out of sequence is how people end up redoing the whole thing. One simplification here: Zs is shown as Ze + (R1+R2) straight, without the temperature correction factor you will meet in the electrical modules. That factor matters on a real design — it is left out here so the chain of steps stays visible."
+          />
+
+          <SectionRule />
+
+          <TryIt
+            question="Same method, different job: a 9.2kW shower at 230V, 12m of 10.0mm² (mV/A/m = 4.4), Ze = 0.30Ω, R1+R2 = 6.44 mΩ/m. Find Ib, the device rating, the voltage drop and Zs."
+            steps={[
+              { calc: 'Ib = 9200 ÷ 230 = 40 A' },
+              { calc: 'In = 40 A', note: 'Again it lands exactly on a rung.' },
+              { calc: 'Vd = 4.4 × 40 × 12 ÷ 1000 = 2.11 V', note: 'Against a recommended 11.5 V.' },
+              { calc: 'R1+R2 = 6.44 × 12 ÷ 1000 = 0.077Ω' },
+              { calc: 'Zs = 0.30 + 0.077 = 0.377Ω', note: 'Max Zs for a 40 A Type B is 1.09Ω.' },
+            ]}
+            answer="Ib = 40 A, In = 40 A, Vd = 2.11 V, Zs = 0.377Ω — passes on both. Note the shorter run has a lower volt drop despite the higher current, because length matters as much as current in that formula."
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Check yourself</ContentEyebrow>
+          <p className="text-[13px] leading-relaxed text-white">
+            Eight questions on substitution, rearrangement and the formulae above. Several of the
+            wrong options are inverted fractions — do the check and they will not catch you.
+          </p>
+          <Quiz questions={quizQuestions} />
+
+          <SectionRule />
+
+          <div className="grid gap-3 sm:grid-cols-2">
+            <button
+              onClick={() =>
+                navigate('/study-centre/apprentice/functional-skills/module1/section2')
+              }
+              className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
               </div>
-            </div>
-
-            <p>
-              <strong className="text-white">Example 3 &mdash; The voltage drop formula:</strong> Vd
-              = (mV/A/m &times; Ib &times; L) &divide; 1,000. To find the maximum cable length (L)
-              for a given voltage drop limit:
-            </p>
-            <ul className="space-y-2 pl-1">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  Multiply both sides by 1,000: Vd &times; 1,000 = mV/A/m &times; Ib &times; L
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  Divide both sides by (mV/A/m &times; Ib): L = (Vd &times; 1,000) &divide; (mV/A/m
-                  &times; Ib)
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  If maximum Vd = 11.5&thinsp;V, mV/A/m = 18, Ib = 20&thinsp;A: L = (11.5 &times;
-                  1,000) &divide; (18 &times; 20) = 11,500 &divide; 360 ={' '}
-                  <strong className="text-white">31.9&thinsp;m</strong>
-                </span>
-              </li>
-            </ul>
+              <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                Units and measurement
+              </div>
+            </button>
+            <button
+              onClick={() =>
+                navigate('/study-centre/apprentice/functional-skills/module1/section4')
+              }
+              className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+            >
+              <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                Next <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 truncate text-right text-[14px] font-semibold text-white">
+                Data and statistics
+              </div>
+            </button>
           </div>
-        </motion.div>
-
-        {/* InlineCheck 2 — After Section 04 */}
-        <InlineCheck
-          id="fs-m1s3-check2"
-          question="Rearrange the formula P = V²/R to make R the subject. What is the correct rearrangement?"
-          options={['R = V² × P', 'R = P ÷ V²', 'R = V² ÷ P', 'R = √(V² × P)']}
-          correctIndex={2}
-          explanation="Start with P = V²/R. Multiply both sides by R: PR = V². Divide both sides by P: R = V²/P = V² ÷ P. This is useful for calculating the resistance of a heating element from its power rating."
-        />
-
-        {/* Section 05 — Substitution */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">
-              05
-            </span>
-            <h3 className="text-lg font-bold text-white">Substitution</h3>
-          </div>
-          <div className="space-y-3 text-sm text-white leading-relaxed">
-            <p>
-              <strong className="text-white">Substitution</strong> means replacing the letters in a
-              formula with actual numbers. It is what you do every time you plug values into an
-              equation to get a result. The process is straightforward:
-            </p>
-            <ul className="space-y-2 pl-1">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">Step 1:</strong> Write down the formula.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">Step 2:</strong> List the values you know and
-                  identify the unknown.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">Step 3:</strong> Rearrange if necessary so the
-                  unknown is the subject.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">Step 4:</strong> Replace each letter with its value
-                  and calculate.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">Step 5:</strong> Check the answer is reasonable
-                  (use estimation).
-                </span>
-              </li>
-            </ul>
-
-            <p>
-              <strong className="text-white">
-                Example &mdash; Selecting an MCB for a cooker circuit:
-              </strong>
-            </p>
-            <p>
-              A hob is rated at 7.2&thinsp;kW and an oven at 2.5&thinsp;kW. Using the current demand
-              formula with diversity applied:
-            </p>
-            <ul className="space-y-2 pl-1">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>Total connected load = 7,200 + 2,500 = 9,700&thinsp;W.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>First 10&thinsp;A at full load = 10 &times; 230 = 2,300&thinsp;W.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  Remaining load: 9,700 &minus; 2,300 = 7,400&thinsp;W at 30% diversity = 7,400
-                  &times; 0.3 = 2,220&thinsp;W.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>Assessed demand = 2,300 + 2,220 = 4,520&thinsp;W.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  Design current: I = P &divide; V = 4,520 &divide; 230 = 19.65&thinsp;A. Select
-                  next standard MCB rating: 20&thinsp;A or 32&thinsp;A depending on the BS 88 or BS
-                  EN 60898 range.
-                </span>
-              </li>
-            </ul>
-
-            <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
-              <p className="text-xs font-semibold text-green-400 mb-1">Unit Consistency</p>
-              <p className="text-sm text-white">
-                Before substituting values, always check your units are consistent. If the formula
-                uses watts, convert kW to W first (multiply by 1,000). If the formula uses metres,
-                convert mm to m first (divide by 1,000). Mixing units is the most common cause of
-                calculation errors.
-              </p>
-            </div>
-
-            <p>
-              <strong className="text-white">Example &mdash; Cable resistance:</strong> A
-              30&thinsp;m run of 2.5&thinsp;mm² copper cable has a resistance per metre (r1) of
-              7.41&thinsp;m&Omega;/m and the CPC (1.5&thinsp;mm²) has r2 = 12.10&thinsp;m&Omega;/m.
-              The combined R1+R2 per metre = 7.41 + 12.10 = 19.51&thinsp;m&Omega;/m. For
-              30&thinsp;m: R1+R2 = 19.51 &times; 30 = 585.3&thinsp;m&Omega; = 0.585&thinsp;&Omega;.
-              This value is used in the earth fault loop impedance calculation: Zs = Ze + R1+R2.
-            </p>
-          </div>
-        </motion.div>
-
-        {/* Section 06 — Simultaneous Equations */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.35 }}
-          className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">
-              06
-            </span>
-            <h3 className="text-lg font-bold text-white">Simultaneous Equations</h3>
-          </div>
-          <div className="space-y-3 text-sm text-white leading-relaxed">
-            <p>
-              <strong className="text-white">Simultaneous equations</strong> are two or more
-              equations that share the same unknowns. Solving them finds the values that satisfy
-              both equations at the same time. While you may not use simultaneous equations every
-              day, they appear in more advanced electrical calculations such as balanced three-phase
-              loads and Kirchhoff&apos;s Laws.
-            </p>
-
-            <p>
-              <strong className="text-white">Method 1 &mdash; Substitution:</strong>
-            </p>
-            <ul className="space-y-2 pl-1">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  Given: V = IR and P = IV. If you know P = 2,300&thinsp;W and V = 230&thinsp;V:
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>From P = IV: I = P &divide; V = 2,300 &divide; 230 = 10&thinsp;A.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  Substitute into V = IR: 230 = 10 &times; R, so R = 230 &divide; 10 =
-                  23&thinsp;&Omega;.
-                </span>
-              </li>
-            </ul>
-
-            <p>
-              <strong className="text-white">Method 2 &mdash; Elimination:</strong> This method is
-              used when you have two equations with two unknowns and want to eliminate one variable
-              by adding or subtracting the equations.
-            </p>
-
-            <p>
-              <strong className="text-white">
-                Practical example &mdash; Kirchhoff&apos;s Voltage Law:
-              </strong>{' '}
-              In a series circuit with two resistors R1 and R2:
-            </p>
-            <ul className="space-y-2 pl-1">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>V(total) = V1 + V2 = 230&thinsp;V</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>You measure V1 = 138&thinsp;V across R1.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>Therefore V2 = 230 &minus; 138 = 92&thinsp;V.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  If the current is 2&thinsp;A throughout (series circuit): R1 = 138 &divide; 2 =
-                  69&thinsp;&Omega;, R2 = 92 &divide; 2 = 46&thinsp;&Omega;. Total R = 69 + 46 =
-                  115&thinsp;&Omega;. Check: V = IR = 2 &times; 115 = 230&thinsp;V. Correct.
-                </span>
-              </li>
-            </ul>
-
-            <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
-              <p className="text-xs font-semibold text-green-400 mb-1">
-                Kirchhoff&apos;s Laws &mdash; Quick Reference
-              </p>
-              <p className="text-sm text-white">
-                <strong className="text-white">KVL</strong> (Kirchhoff&apos;s Voltage Law): The sum
-                of all voltages around a closed loop equals zero.{' '}
-                <strong className="text-white">KCL</strong> (Kirchhoff&apos;s Current Law): The
-                total current entering a junction equals the total current leaving it. Both laws are
-                fundamental to circuit analysis and rely on simultaneous equations for complex
-                circuits.
-              </p>
-            </div>
-
-            <p>
-              <strong className="text-white">Three-phase example:</strong> In a balanced three-phase
-              system, the line voltage V(L) relates to the phase voltage V(P) by: V(L) = V(P)
-              &times; &radic;3. If V(L) = 400&thinsp;V: V(P) = 400 &divide; &radic;3 = 400 &divide;
-              1.732 = 231&thinsp;V. Similarly, line current I(L) relates to phase current I(P) in a
-              delta connection by: I(L) = I(P) &times; &radic;3.
-            </p>
-          </div>
-        </motion.div>
-
-        {/* InlineCheck 3 — After Section 06 */}
-        <InlineCheck
-          id="fs-m1s3-check3"
-          question="In a series circuit, the supply voltage is 230 V. Resistor R1 drops 92 V. What voltage is dropped across R2?"
-          options={['322 V', '138 V', '92 V', '230 V']}
-          correctIndex={1}
-          explanation="By Kirchhoff's Voltage Law, the sum of voltage drops in a series circuit equals the supply voltage. V2 = V(total) − V1 = 230 − 92 = 138 V."
-        />
-
-        {/* Section 07 — Cable Sizing Equations */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">
-              07
-            </span>
-            <h3 className="text-lg font-bold text-white">Cable Sizing Equations</h3>
-          </div>
-          <div className="space-y-3 text-sm text-white leading-relaxed">
-            <p>
-              Selecting the correct cable size is one of the most important calculations an
-              electrician performs. BS 7671 requires that cables are sized to meet three criteria
-              simultaneously: <strong className="text-white">current-carrying capacity</strong>,{' '}
-              <strong className="text-white">voltage drop</strong> and{' '}
-              <strong className="text-white">fault current protection (adiabatic equation)</strong>.
-              All three involve algebra.
-            </p>
-
-            <p>
-              <strong className="text-white">1. Current-carrying capacity:</strong> The fundamental
-              inequality is:
-            </p>
-            <p className="text-center text-lg font-bold text-green-400 py-2">It &ge; In &ge; Ib</p>
-            <p>
-              Where It = tabulated current rating of the cable (from BS 7671 Appendix 4), In =
-              nominal rating of the protective device, and Ib = design current. The tabulated value
-              must be adjusted by correction factors:
-            </p>
-            <ul className="space-y-2 pl-1">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">Ca</strong> &mdash; ambient temperature correction
-                  factor.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">Cg</strong> &mdash; grouping correction factor
-                  (when cables are bunched together).
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">Ci</strong> &mdash; thermal insulation correction
-                  factor.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">Cf</strong> &mdash; semi-enclosed fuse correction
-                  factor (0.725 for BS 3036 fuses).
-                </span>
-              </li>
-            </ul>
-            <p>
-              The minimum tabulated current required is: It &ge; In &divide; (Ca &times; Cg &times;
-              Ci &times; Cf).
-            </p>
-
-            <p>
-              <strong className="text-white">2. Voltage drop:</strong> Vd = (mV/A/m &times; Ib
-              &times; L) &divide; 1,000. The mV/A/m value is found in BS 7671 Appendix 4 tables for
-              the chosen cable and installation method. L is the route length in metres.
-            </p>
-
-            <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
-              <p className="text-xs font-semibold text-green-400 mb-1">
-                Worked Example &mdash; Cable Selection
-              </p>
-              <p className="text-sm text-white">
-                Design current Ib = 28&thinsp;A, 32&thinsp;A MCB (In = 32), Ca = 0.94, Cg = 0.80, Ci
-                = 1.0, Cf = 1.0. Minimum It = 32 &divide; (0.94 &times; 0.80 &times; 1.0 &times;
-                1.0) = 32 &divide; 0.752 = 42.55&thinsp;A. From tables, 6&thinsp;mm² T&amp;E clipped
-                direct has It = 47&thinsp;A. 47 &gt; 42.55, so 6&thinsp;mm² is acceptable for
-                current capacity.
-              </p>
-            </div>
-
-            <p>
-              <strong className="text-white">
-                3. Adiabatic equation (fault current protection):
-              </strong>{' '}
-              S = &radic;(I²t) &divide; k. Where S = minimum conductor CSA (mm²), I = fault current
-              (A), t = disconnection time (s), and k = a constant depending on conductor material
-              and insulation (115 for copper with PVC). This ensures the cable can withstand the
-              thermal stress during a fault.
-            </p>
-
-            <p>
-              <strong className="text-white">Example:</strong> If prospective fault current =
-              1,200&thinsp;A and disconnection time = 0.1&thinsp;s: S = &radic;(1,200² &times; 0.1)
-              &divide; 115 = &radic;(144,000) &divide; 115 = 379.5 &divide; 115 = 3.3&thinsp;mm².
-              The next standard cable size (4&thinsp;mm²) would satisfy this requirement.
-            </p>
-          </div>
-        </motion.div>
-
-        {/* Section 08 — Practical Formula Applications */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.45 }}
-          className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">
-              08
-            </span>
-            <h3 className="text-lg font-bold text-white">Practical Formula Applications</h3>
-          </div>
-          <div className="space-y-3 text-sm text-white leading-relaxed">
-            <p>
-              This final section brings together the algebraic skills from this section with
-              realistic installation scenarios. Work through each example carefully, showing all
-              your working.
-            </p>
-
-            <p>
-              <strong className="text-white">Scenario 1 &mdash; Electric shower circuit</strong>
-            </p>
-            <p>
-              An 8.5&thinsp;kW instantaneous electric shower is to be installed. The cable route
-              from the consumer unit to the shower is 18&thinsp;m. The installation method is
-              clipped direct (Method C). Ambient temperature is 30&deg;C.
-            </p>
-            <ul className="space-y-2 pl-1">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">Step 1 &mdash; Design current:</strong> Ib = P
-                  &divide; V = 8,500 &divide; 230 = 36.96&thinsp;A.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">Step 2 &mdash; Select MCB:</strong> Next standard
-                  rating above 36.96&thinsp;A is 40&thinsp;A. In = 40&thinsp;A.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">Step 3 &mdash; Correction factors:</strong> Ca at
-                  30&deg;C for 70&deg;C PVC = 0.94. Cg = 1.0 (single cable). Ci = 1.0 (not enclosed
-                  in insulation).
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">Step 4 &mdash; Minimum It:</strong> It &ge; 40
-                  &divide; (0.94 &times; 1.0 &times; 1.0) = 42.55&thinsp;A. From tables:
-                  10&thinsp;mm² T&amp;E clipped direct has It = 64&thinsp;A. 64 &gt; 42.55 &mdash;
-                  OK.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">Step 5 &mdash; Voltage drop:</strong> For
-                  10&thinsp;mm² T&amp;E, mV/A/m = 4.4. Vd = (4.4 &times; 36.96 &times; 18) &divide;
-                  1,000 = 2,927.2 &divide; 1,000 = 2.93&thinsp;V. Maximum permitted = 11.5&thinsp;V.
-                  2.93 &lt; 11.5 &mdash; compliant.
-                </span>
-              </li>
-            </ul>
-
-            <p>
-              <strong className="text-white">
-                Scenario 2 &mdash; Earth fault loop impedance check
-              </strong>
-            </p>
-            <p>
-              A 32&thinsp;A Type B MCB protects a ring final circuit. The external earth loop
-              impedance Ze = 0.35&thinsp;&Omega;. The measured R1+R2 for the circuit =
-              0.72&thinsp;&Omega;.
-            </p>
-            <ul className="space-y-2 pl-1">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">Total Zs:</strong> Zs = Ze + R1+R2 = 0.35 + 0.72 =
-                  1.07&thinsp;&Omega;.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">Maximum Zs (BS 7671):</strong> For a 32&thinsp;A
-                  Type B MCB, maximum Zs = 1.37&thinsp;&Omega; (from Table 41.3).
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">Result:</strong> 1.07 &lt; 1.37 &mdash; the circuit
-                  complies with the maximum disconnection time requirement of 0.4&thinsp;s.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">Prospective fault current:</strong> If = V &divide;
-                  Zs = 230 &divide; 1.07 = 215&thinsp;A.
-                </span>
-              </li>
-            </ul>
-
-            <p>
-              <strong className="text-white">Scenario 3 &mdash; Energy cost calculation</strong>
-            </p>
-            <p>
-              A commercial premises has 48 LED panels each rated at 36&thinsp;W. They operate 10
-              hours per day, 5 days per week. Electricity costs 34p per kWh.
-            </p>
-            <ul className="space-y-2 pl-1">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">Total power:</strong> 48 &times; 36 =
-                  1,728&thinsp;W = 1.728&thinsp;kW.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">Daily energy:</strong> 1.728 &times; 10 =
-                  17.28&thinsp;kWh.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">Weekly energy:</strong> 17.28 &times; 5 =
-                  86.4&thinsp;kWh.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">Weekly cost:</strong> 86.4 &times; &pound;0.34 =
-                  &pound;29.38.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">&bull;</span>
-                <span>
-                  <strong className="text-white">Annual cost (50 weeks):</strong> &pound;29.38
-                  &times; 50 = &pound;1,468.80.
-                </span>
-              </li>
-            </ul>
-
-            <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
-              <p className="text-xs font-semibold text-green-400 mb-1">Key Takeaway</p>
-              <p className="text-sm text-white">
-                Every electrical calculation comes back to algebra &mdash; using a formula,
-                substituting known values, and solving for the unknown. The formulae themselves are
-                straightforward; the skill lies in choosing the right formula, rearranging it
-                correctly, and checking that your units are consistent. Practise rearranging V = IR,
-                P = IV, P = I²R and the voltage drop formula until they become second nature.
-              </p>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Quiz */}
-        <Quiz questions={quizQuestions} title="Algebra & Formulae Quiz" />
-
-        {/* Navigation Footer */}
-        <div className="flex items-center justify-between pt-6 border-t border-white/10">
-          <Link
-            to="/study-centre/apprentice/functional-skills/module1/section2"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Units &amp; Measurement
-          </Link>
-          <Link
-            to="/study-centre/apprentice/functional-skills/module1/section4"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium text-white bg-green-500 hover:bg-green-600 transition-colors touch-manipulation shadow-lg shadow-green-500/25"
-          >
-            Data &amp; Statistics
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-      </div>
-    </div>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

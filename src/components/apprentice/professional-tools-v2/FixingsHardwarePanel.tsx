@@ -1,6 +1,3 @@
-import { useState } from 'react';
-import { ChevronDown, ChevronRight } from 'lucide-react';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import FixingsReferenceTable from './FixingsReferenceTable';
 import {
   rawlPlugs,
@@ -53,20 +50,6 @@ const TipBox = ({ tip }: { tip: string }) => (
 );
 
 const FixingsHardwarePanel = () => {
-  const [openSections, setOpenSections] = useState<Set<string>>(new Set());
-
-  const toggleSection = (id: string) => {
-    setOpenSections((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) {
-        next.delete(id);
-      } else {
-        next.add(id);
-      }
-      return next;
-    });
-  };
-
   const rawlPlugColumns = [
     { header: 'Colour', accessor: 'colour', colourSwatch: true },
     { header: 'Drill Bit', accessor: 'drillBit' },
@@ -220,9 +203,7 @@ const FixingsHardwarePanel = () => {
                           {method.maxLoad}
                         </span>
                       </div>
-                      <p className="text-[14px] text-white leading-relaxed">
-                        {method.description}
-                      </p>
+                      <p className="text-[14px] text-white leading-relaxed">{method.description}</p>
                       <p className="text-[13px] text-elec-yellow">{method.tip}</p>
                     </div>
                   ))}
@@ -242,9 +223,7 @@ const FixingsHardwarePanel = () => {
                 className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2"
               >
                 <h4 className="text-[14px] font-semibold text-white">{head.name}</h4>
-                <p className="text-[14px] text-white leading-relaxed">
-                  {head.identificationTip}
-                </p>
+                <p className="text-[14px] text-white leading-relaxed">{head.identificationTip}</p>
                 <div className="text-[13px] text-white space-y-1">
                   <div>
                     <span className="font-medium">Driver sizes:</span> {head.driverSizes}
@@ -320,45 +299,22 @@ const FixingsHardwarePanel = () => {
 
   return (
     <div className="space-y-3 animate-fade-in">
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Fixings & hardware quick reference
-        </span>
-        <p className="text-[14px] text-white leading-relaxed">
-          Everything you need to know about rawl plugs, bolts, glands, conduit, trunking, and
-          screws. The practical knowledge that separates a good sparky from a great one.
-        </p>
-      </div>
-
-      {sections.map((section) => {
-        const isOpen = openSections.has(section.id);
-        return (
-          <Collapsible
-            key={section.id}
-            open={isOpen}
-            onOpenChange={() => toggleSection(section.id)}
-          >
-            <CollapsibleTrigger asChild>
-              <button className="w-full flex items-center justify-between p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] transition-all touch-manipulation active:scale-[0.99] hover:bg-white/[0.04] min-h-[44px]">
-                <div className="flex items-center gap-2">
-                  <span className="text-[14px] font-semibold text-white">{section.title}</span>
-                  <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
-                    {section.count}
-                  </span>
-                </div>
-                {isOpen ? (
-                  <ChevronDown className="h-4 w-4 text-white" />
-                ) : (
-                  <ChevronRight className="h-4 w-4 text-white" />
-                )}
-              </button>
-            </CollapsibleTrigger>
-            <CollapsibleContent>
-              <div className="pt-3">{renderSectionContent(section.id)}</div>
-            </CollapsibleContent>
-          </Collapsible>
-        );
-      })}
+      {/* 🔴 Flat, not collapsed. These are ten lookup tables — the thing an
+          apprentice opens mid-job to check a drill size against a wall plug.
+          Hiding each one behind a chevron put a tap between them and every
+          answer, and with all ten shut the chapter rendered as a stack of
+          buttons. A reference table that has to be opened is a reference table
+          that gets replaced by a Google search. Flat also means browser
+          find-in-page reaches every row. */}
+      {sections.map((section) => (
+        <section key={section.id} className="space-y-3 pt-1">
+          <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
+            <h3 className="text-[15px] font-semibold tracking-tight text-white">{section.title}</h3>
+            <span className="text-[12px] text-white">{section.count}</span>
+          </div>
+          {renderSectionContent(section.id)}
+        </section>
+      ))}
     </div>
   );
 };

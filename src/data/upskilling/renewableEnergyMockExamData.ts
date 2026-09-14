@@ -8,12 +8,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 1,
     question:
       'What percentage of global electricity generation came from renewable sources in 2023?',
-    options: [
-      '35%',
-      '30%',
-      '15%',
-      '25%',
-    ],
+    options: ['35%', '30%', '15%', '25%'],
     correctAnswer: 1,
     explanation:
       'Renewable energy accounted for approximately 30% of global electricity generation in 2023.',
@@ -25,12 +20,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 2,
     question: 'Which renewable energy source has the fastest growth rate globally?',
-    options: [
-      'Wind',
-      'Hydroelectric',
-      'Solar PV',
-      'Biomass',
-    ],
+    options: ['Wind', 'Hydroelectric', 'Solar PV', 'Biomass'],
     correctAnswer: 2,
     explanation:
       'Solar PV has experienced the fastest growth rate among renewable energy technologies.',
@@ -95,12 +85,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 6,
     question: 'What is the typical efficiency range for monocrystalline silicon solar panels?',
-    options: [
-      '22-26%',
-      '15-18%',
-      '18-22%',
-      '12-15%',
-    ],
+    options: ['22-26%', '15-18%', '18-22%', '12-15%'],
     correctAnswer: 2,
     explanation: 'Modern monocrystalline silicon panels typically achieve 18-22% efficiency.',
     section: 'Solar PV Technology',
@@ -162,12 +147,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 10,
     question: 'What is the typical degradation rate of modern solar panels per year?',
-    options: [
-      '0.1-0.3%',
-      '1.0-1.5%',
-      '0.4-0.8%',
-      '2.0-3.0%',
-    ],
+    options: ['0.1-0.3%', '1.0-1.5%', '0.4-0.8%', '2.0-3.0%'],
     correctAnswer: 2,
     explanation: 'Modern solar panels typically degrade at 0.4-0.8% per year.',
     section: 'Solar PV Technology',
@@ -197,12 +177,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 12,
     question: 'Which inverter type is best for installations with partial shading?',
-    options: [
-      'Micro inverters',
-      'Central inverter',
-      'Power optimisers',
-      'String inverter',
-    ],
+    options: ['Micro inverters', 'Central inverter', 'Power optimisers', 'String inverter'],
     correctAnswer: 0,
     explanation:
       'Micro inverters perform best with partial shading as each panel operates independently.',
@@ -214,12 +189,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 13,
     question: 'What is the optimal tilt angle for solar panels in London?',
-    options: [
-      '25°',
-      '35°',
-      '45°',
-      '55°',
-    ],
+    options: ['25°', '35°', '45°', '55°'],
     correctAnswer: 1,
     explanation: 'The optimal tilt angle for London is approximately 35°, matching the latitude.',
     section: 'System Design',
@@ -230,12 +200,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 14,
     question: 'Which direction provides maximum solar irradiance in the UK?',
-    options: [
-      'East',
-      'South-West',
-      'South',
-      'South-East',
-    ],
+    options: ['East', 'South-West', 'South', 'South-East'],
     correctAnswer: 2,
     explanation: 'South-facing panels receive maximum solar irradiance in the UK.',
     section: 'System Design',
@@ -246,12 +211,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 15,
     question: 'What is the minimum spacing between panel rows to avoid shading?',
-    options: [
-      '1.5 x panel height',
-      '2 x panel height',
-      '3 x panel height',
-      '2.5 x panel height',
-    ],
+    options: ['1.5 x panel height', '2 x panel height', '3 x panel height', '2.5 x panel height'],
     correctAnswer: 3,
     explanation:
       'Minimum spacing is typically 2.5 times the panel height to avoid shading during winter months.',
@@ -266,12 +226,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 16,
     question:
       'According to BS 7671, what is the maximum DC voltage for a domestic solar installation?',
-    options: [
-      '1000V',
-      '800V',
-      '600V',
-      '1500V',
-    ],
+    options: ['1000V', '800V', '600V', '1500V'],
     correctAnswer: 0,
     explanation: 'BS 7671 allows up to 1000V DC for domestic solar installations.',
     section: 'Installation',
@@ -282,12 +237,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 17,
     question: 'What is the minimum clearance required around roof-mounted solar panels?',
-    options: [
-      '2.0m',
-      '1.0m',
-      '0.5m',
-      '1.5m',
-    ],
+    options: ['2.0m', '1.0m', '0.5m', '1.5m'],
     correctAnswer: 1,
     explanation:
       'A minimum 1.0m clearance is required around roof-mounted panels for maintenance access.',
@@ -299,12 +249,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 18,
     question: 'Which regulation covers the installation of solar PV systems?',
-    options: [
-      'BS 7909',
-      'BS EN 62446',
-      'BS 7671',
-      'MCS 012',
-    ],
+    options: ['BS 7909', 'BS EN 62446', 'BS 7671', 'MCS 012'],
     correctAnswer: 2,
     explanation:
       'BS 7671 (IET Wiring Regulations) covers the electrical installation of solar PV systems.',
@@ -368,7 +313,8 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 22,
-    question: 'Under ENA G99, what is the registered capacity range for a Type A Power Generating Module?',
+    question:
+      'Under ENA G99, what is the registered capacity range for a Type A Power Generating Module?',
     options: [
       'Below 0.8 kW',
       '0.8 kW or greater but less than 1 MW',
@@ -385,7 +331,8 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 23,
-    question: 'Which device is used to actively limit the power exported to the grid from a solar installation?',
+    question:
+      'Which device is used to actively limit the power exported to the grid from a solar installation?',
     options: [
       'A surge protective device fitted on the a.c. side',
       'A Type B residual current device fitted on the a.c. supply',
@@ -402,13 +349,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 24,
-    question: 'What is the standard export limit for a single-phase domestic connection under G98 fast-track notification?',
-    options: [
-      '3.68 kW (16 A)',
-      '2.0 kW (8 A)',
-      '5.5 kW (24 A)',
-      '11.04 kW (16 A per phase)',
-    ],
+    question:
+      'What is the standard export limit for a single-phase domestic connection under G98 fast-track notification?',
+    options: ['3.68 kW (16 A)', '2.0 kW (8 A)', '5.5 kW (24 A)', '11.04 kW (16 A per phase)'],
     correctAnswer: 0,
     explanation:
       'The fast-track G98 export limit for a single-phase connection is 3.68 kW, equivalent to 16 A on one phase.',
@@ -439,12 +382,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 26,
     question: 'What is the acceptable insulation resistance for a solar PV installation?',
-    options: [
-      '≥0.5MΩ',
-      '≥2MΩ',
-      '≥1MΩ',
-      '≥5MΩ',
-    ],
+    options: ['≥0.5MΩ', '≥2MΩ', '≥1MΩ', '≥5MΩ'],
     correctAnswer: 2,
     explanation: 'The minimum acceptable insulation resistance for solar PV installations is 1MΩ.',
     section: 'Testing',
@@ -454,7 +392,8 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 27,
-    question: 'Which test verifies that the DC string conductors of a PV array are connected with correct polarity?',
+    question:
+      'Which test verifies that the DC string conductors of a PV array are connected with correct polarity?',
     options: [
       'A polarity test',
       'An earth fault loop impedance test',
@@ -472,12 +411,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 28,
     question: 'What is the typical open-circuit voltage test range for a 10-panel string?',
-    options: [
-      '400-500V',
-      '300-400V',
-      '200-250V',
-      '500-600V',
-    ],
+    options: ['400-500V', '300-400V', '200-250V', '500-600V'],
     correctAnswer: 0,
     explanation:
       'A 10-panel string typically produces 400-500V open-circuit voltage depending on panel specifications.',
@@ -489,12 +423,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 29,
     question: 'Which standard covers testing of solar PV installations?',
-    options: [
-      'BS 7671',
-      'BS EN 62446',
-      'MCS 012',
-      'G99',
-    ],
+    options: ['BS 7671', 'BS EN 62446', 'MCS 012', 'G99'],
     correctAnswer: 1,
     explanation:
       'BS EN 62446 specifically covers testing and commissioning of solar PV installations.',
@@ -505,7 +434,8 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 30,
-    question: 'Which document must be issued to the client to certify a completed PV electrical installation?',
+    question:
+      'Which document must be issued to the client to certify a completed PV electrical installation?',
     options: [
       'An Electrical Installation Certificate',
       'A G99 export application form copy',
@@ -525,12 +455,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 31,
     question: 'How often should solar panels be visually inspected?',
-    options: [
-      'Monthly',
-      'Quarterly',
-      'Every 2 years',
-      'Annually',
-    ],
+    options: ['Monthly', 'Quarterly', 'Every 2 years', 'Annually'],
     correctAnswer: 3,
     explanation: 'Annual visual inspections are recommended for residential solar installations.',
     section: 'Maintenance',
@@ -558,12 +483,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 33,
     question: 'What is the typical lifespan of a solar inverter?',
-    options: [
-      '5-8 years',
-      '12-15 years',
-      '8-12 years',
-      '20-25 years',
-    ],
+    options: ['5-8 years', '12-15 years', '8-12 years', '20-25 years'],
     correctAnswer: 1,
     explanation:
       'Solar inverters typically last 12-15 years, shorter than the 25-year panel warranty.',
@@ -574,7 +494,8 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 34,
-    question: 'During routine PV maintenance, why are DC connections inspected for signs of overheating?',
+    question:
+      'During routine PV maintenance, why are DC connections inspected for signs of overheating?',
     options: [
       'Loose or corroded DC joints can arc and cause fire',
       'All DC connectors must be replaced once every year by law',
@@ -592,12 +513,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 35,
     question: 'What is the recommended cleaning frequency for solar panels in urban areas?',
-    options: [
-      'Monthly',
-      'Quarterly',
-      'Once each year',
-      'Twice yearly',
-    ],
+    options: ['Monthly', 'Quarterly', 'Once each year', 'Twice yearly'],
     correctAnswer: 3,
     explanation:
       'Urban installations typically benefit from cleaning twice yearly due to pollution and debris.',
@@ -611,12 +527,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 36,
     question: 'What is the most common battery technology for residential solar storage?',
-    options: [
-      'Lithium-ion',
-      'Lead-acid',
-      'Nickel-metal hydride',
-      'Flow batteries',
-    ],
+    options: ['Lithium-ion', 'Lead-acid', 'Nickel-metal hydride', 'Flow batteries'],
     correctAnswer: 0,
     explanation:
       'Lithium-ion batteries are the most common choice for residential solar storage due to efficiency and lifespan.',
@@ -628,12 +539,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 37,
     question: 'What is the typical depth of discharge for lithium-ion batteries?',
-    options: [
-      '50%',
-      '90%',
-      '70%',
-      '100%',
-    ],
+    options: ['50%', '90%', '70%', '100%'],
     correctAnswer: 1,
     explanation:
       'Lithium-ion batteries can typically discharge to 90% depth without significant degradation.',
@@ -662,12 +568,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 39,
     question: 'What is the typical round-trip efficiency of lithium-ion batteries?',
-    options: [
-      '75-80%',
-      '85-90%',
-      '95-98%',
-      '90-95%',
-    ],
+    options: ['75-80%', '85-90%', '95-98%', '90-95%'],
     correctAnswer: 3,
     explanation: 'Modern lithium-ion batteries achieve 90-95% round-trip efficiency.',
     section: 'Energy Storage',
@@ -714,12 +615,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 42,
     question: 'What is the typical payback period for a domestic solar installation?',
-    options: [
-      '3-5 years',
-      '25+ years',
-      '7-12 years',
-      '15-20 years',
-    ],
+    options: ['3-5 years', '25+ years', '7-12 years', '15-20 years'],
     correctAnswer: 2,
     explanation: 'Domestic solar installations typically have payback periods of 7-12 years.',
     section: 'Financial',
@@ -729,13 +625,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 43,
-    question: 'What VAT rate currently applies to the installation of domestic solar panels in Great Britain?',
-    options: [
-      '12.5%',
-      '5%',
-      '20%',
-      '0%',
-    ],
+    question:
+      'What VAT rate currently applies to the installation of domestic solar panels in Great Britain?',
+    options: ['12.5%', '5%', '20%', '0%'],
     correctAnswer: 3,
     explanation:
       'Since April 2022, the installation of qualifying domestic solar panels in Great Britain attracts a 0% rate of VAT (in place until 2027).',
@@ -746,7 +638,8 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 44,
-    question: 'Why do commercial solar installations often achieve a stronger financial return than domestic ones?',
+    question:
+      'Why do commercial solar installations often achieve a stronger financial return than domestic ones?',
     options: [
       'Higher daytime self-consumption of generated power',
       'Access to higher export tariffs than households',
@@ -782,12 +675,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 46,
     question: 'What is the standard test condition (STC) irradiance for solar panel rating?',
-    options: [
-      '1200 W/m²',
-      '1500 W/m²',
-      '1000 W/m²',
-      '800 W/m²',
-    ],
+    options: ['1200 W/m²', '1500 W/m²', '1000 W/m²', '800 W/m²'],
     correctAnswer: 2,
     explanation: 'Standard Test Conditions use 1000 W/m² irradiance at 25°C cell temperature.',
     section: 'Solar PV Technology',
@@ -797,7 +685,8 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 47,
-    question: 'How does rising cell temperature typically affect a solar panel rated at standard test conditions?',
+    question:
+      'How does rising cell temperature typically affect a solar panel rated at standard test conditions?',
     options: [
       'Output increases roughly in proportion to cell temperature',
       'Output is unaffected by the cell temperature at all',
@@ -815,12 +704,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 48,
     question: 'What is the minimum roof loading capacity required for solar panels?',
-    options: [
-      '50 kg/m²',
-      '35 kg/m²',
-      '75 kg/m²',
-      '100 kg/m²',
-    ],
+    options: ['50 kg/m²', '35 kg/m²', '75 kg/m²', '100 kg/m²'],
     correctAnswer: 0,
     explanation:
       'Most installations require a minimum roof loading capacity of 50 kg/m² including snow loads.',
@@ -849,12 +733,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 50,
     question: 'What is the typical warranty period for solar panels?',
-    options: [
-      '10 years',
-      '15 years',
-      '25 years',
-      '20 years',
-    ],
+    options: ['10 years', '15 years', '25 years', '20 years'],
     correctAnswer: 2,
     explanation: 'Most solar panels come with 25-year performance warranties.',
     section: 'Solar PV Technology',
@@ -864,7 +743,8 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 51,
-    question: 'What is the key distinguishing feature of an off-grid solar system compared with a grid-tied one?',
+    question:
+      'What is the key distinguishing feature of an off-grid solar system compared with a grid-tied one?',
     options: [
       'It must include battery storage to supply loads',
       'It exports surplus power to the network',
@@ -898,12 +778,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 53,
     question: 'What causes potential induced degradation (PID) in solar panels?',
-    options: [
-      'Mechanical stress',
-      'Voltage stress',
-      'UV exposure',
-      'High temperatures',
-    ],
+    options: ['Mechanical stress', 'Voltage stress', 'UV exposure', 'High temperatures'],
     correctAnswer: 1,
     explanation: 'PID is caused by high voltage stress between the solar cell and frame.',
     section: 'Solar PV Technology',
@@ -931,12 +806,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 55,
     question: 'What is the typical efficiency of modern string inverters?',
-    options: [
-      '85-90%',
-      '90-95%',
-      '98-99%',
-      '95-98%',
-    ],
+    options: ['85-90%', '90-95%', '98-99%', '95-98%'],
     correctAnswer: 3,
     explanation: 'Modern string inverters typically achieve 95-98% efficiency.',
     section: 'System Design',
@@ -947,12 +817,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 56,
     question: 'What is the recommended cable size for a 4kW solar installation?',
-    options: [
-      '4mm²',
-      '2.5mm²',
-      '1.5mm²',
-      '6mm²',
-    ],
+    options: ['4mm²', '2.5mm²', '1.5mm²', '6mm²'],
     correctAnswer: 0,
     explanation:
       '4mm² cable is typically recommended for 4kW installations to handle current and voltage drop.',
@@ -981,12 +846,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 58,
     question: 'What is the typical string voltage range for residential inverters?',
-    options: [
-      '150-400V',
-      '300-800V',
-      '200-600V',
-      '400-1000V',
-    ],
+    options: ['150-400V', '300-800V', '200-600V', '400-1000V'],
     correctAnswer: 2,
     explanation: 'Residential inverters typically operate in the 200-600V DC input range.',
     section: 'System Design',
@@ -997,12 +857,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 59,
     question: 'What is the purpose of earthing in solar installations?',
-    options: [
-      'Improve efficiency',
-      'Extend lifespan',
-      'Reduce noise',
-      'Safety protection',
-    ],
+    options: ['Improve efficiency', 'Extend lifespan', 'Reduce noise', 'Safety protection'],
     correctAnswer: 3,
     explanation:
       'Earthing provides essential safety protection against electric shock and fault conditions.',
@@ -1014,12 +869,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 60,
     question: 'What is the typical peak sun hours in London?',
-    options: [
-      '2.5-3 hours',
-      '3.5-4 hours',
-      '4.5-5 hours',
-      '5.5-6 hours',
-    ],
+    options: ['2.5-3 hours', '3.5-4 hours', '4.5-5 hours', '5.5-6 hours'],
     correctAnswer: 0,
     explanation: 'London typically receives 2.5-3 peak sun hours annually on average.',
     section: 'System Design',
@@ -1029,7 +879,8 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 61,
-    question: 'What is the primary technical benefit of continuous performance monitoring on a solar system?',
+    question:
+      'What is the primary technical benefit of continuous performance monitoring on a solar system?',
     options: [
       'It improves the rated efficiency of the panels',
       'It detects underperformance and faults early',
@@ -1047,12 +898,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 62,
     question: 'What is the typical degradation pattern of solar panels?',
-    options: [
-      'Step function',
-      'Exponential decline',
-      'Linear decline',
-      'Random variation',
-    ],
+    options: ['Step function', 'Exponential decline', 'Linear decline', 'Random variation'],
     correctAnswer: 2,
     explanation: 'Solar panels typically show linear degradation over their lifetime.',
     section: 'Solar PV Technology',
@@ -1063,12 +909,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 63,
     question: 'What is the minimum ground clearance for solar panel installations?',
-    options: [
-      '0.5m',
-      '1.2m',
-      '1.0m',
-      '0.8m',
-    ],
+    options: ['0.5m', '1.2m', '1.0m', '0.8m'],
     correctAnswer: 3,
     explanation:
       'Minimum ground clearance of 0.8m is typically required for safety and maintenance access.',
@@ -1079,7 +920,8 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 64,
-    question: 'What is a key benefit of module-level power electronics (MLPE) such as optimisers or microinverters?',
+    question:
+      'What is a key benefit of module-level power electronics (MLPE) such as optimisers or microinverters?',
     options: [
       'They optimise output per module and enable module-level shutdown',
       'They eliminate the need for any DC isolation on the roof',
@@ -1097,12 +939,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 65,
     question: 'What is the typical voltage drop limit for DC cabling?',
-    options: [
-      '1%',
-      '2%',
-      '3%',
-      '5%',
-    ],
+    options: ['1%', '2%', '3%', '5%'],
     correctAnswer: 1,
     explanation: 'DC voltage drop should typically be limited to 2% to maintain system efficiency.',
     section: 'Installation',
@@ -1130,12 +967,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 67,
     question: 'What is the typical lifespan of a solar PV system?',
-    options: [
-      '15-20 years',
-      '20-25 years',
-      '30+ years',
-      '25-30 years',
-    ],
+    options: ['15-20 years', '20-25 years', '30+ years', '25-30 years'],
     correctAnswer: 3,
     explanation: 'Solar PV systems typically have operational lifespans of 25-30 years or more.',
     section: 'Solar PV Technology',
@@ -1162,12 +994,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 69,
     question: 'What is the typical capacity factor for solar PV in the UK?',
-    options: [
-      '12-16%',
-      '8-12%',
-      '16-20%',
-      '20-24%',
-    ],
+    options: ['12-16%', '8-12%', '16-20%', '20-24%'],
     correctAnswer: 1,
     explanation:
       'UK solar PV typically achieves capacity factors of 8-12% depending on location and system design.',
@@ -1179,12 +1006,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 70,
     question: 'What is the main benefit of string monitoring?',
-    options: [
-      'Higher efficiency',
-      'Cost reduction',
-      'Fault detection',
-      'Easier installation',
-    ],
+    options: ['Higher efficiency', 'Cost reduction', 'Fault detection', 'Easier installation'],
     correctAnswer: 2,
     explanation: 'String monitoring enables rapid fault detection and system optimisation.',
     section: 'Maintenance',
@@ -1195,12 +1017,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 71,
     question: 'What is the typical AC cable size for connecting inverters?',
-    options: [
-      '1.5mm²',
-      '6mm²',
-      '4mm²',
-      '2.5mm²',
-    ],
+    options: ['1.5mm²', '6mm²', '4mm²', '2.5mm²'],
     correctAnswer: 3,
     explanation: '2.5mm² cable is typically used for AC connections from residential inverters.',
     section: 'Installation',
@@ -1228,12 +1045,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 73,
     question: 'What is the typical operating temperature range for solar panels?',
-    options: [
-      '-20°C to +60°C',
-      '-40°C to +85°C',
-      '-10°C to +80°C',
-      '0°C to +70°C',
-    ],
+    options: ['-20°C to +60°C', '-40°C to +85°C', '-10°C to +80°C', '0°C to +70°C'],
     correctAnswer: 1,
     explanation: 'Solar panels typically operate in the range -40°C to +85°C.',
     section: 'Solar PV Technology',
@@ -1261,12 +1073,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 75,
     question: 'What is the purpose of power factor correction in solar systems?',
-    options: [
-      'Reduce costs',
-      'Improve efficiency',
-      'Safety improvement',
-      'Grid stability',
-    ],
+    options: ['Reduce costs', 'Improve efficiency', 'Safety improvement', 'Grid stability'],
     correctAnswer: 3,
     explanation:
       'Power factor correction improves grid stability and reduces reactive power demand.',
@@ -1278,12 +1085,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 76,
     question: 'What is the typical mounting system load rating?',
-    options: [
-      '2.4 kN/m²',
-      '1.5 kN/m²',
-      '3.6 kN/m²',
-      '4.8 kN/m²',
-    ],
+    options: ['2.4 kN/m²', '1.5 kN/m²', '3.6 kN/m²', '4.8 kN/m²'],
     correctAnswer: 0,
     explanation: 'Mounting systems typically need to handle 2.4 kN/m² wind and snow loads.',
     section: 'Installation',
@@ -1311,12 +1113,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 78,
     question: 'What is the typical efficiency loss due to inverter aging?',
-    options: [
-      '0.1% per year',
-      '1.0% per year',
-      '0.5% per year',
-      '2.0% per year',
-    ],
+    options: ['0.1% per year', '1.0% per year', '0.5% per year', '2.0% per year'],
     correctAnswer: 2,
     explanation: 'Inverters typically degrade at approximately 0.5% per year.',
     section: 'Maintenance',
@@ -1343,12 +1140,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 80,
     question: 'What is the typical string size for residential installations?',
-    options: [
-      '8-12 panels',
-      '6-8 panels',
-      '12-16 panels',
-      '16-20 panels',
-    ],
+    options: ['8-12 panels', '6-8 panels', '12-16 panels', '16-20 panels'],
     correctAnswer: 0,
     explanation:
       'Residential strings typically contain 8-12 panels depending on inverter specifications.',
@@ -1360,12 +1152,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 81,
     question: 'What is the main factor affecting solar panel orientation?',
-    options: [
-      'Wind direction',
-      'Solar irradiance',
-      'Roof structure',
-      'Aesthetic preferences',
-    ],
+    options: ['Wind direction', 'Solar irradiance', 'Roof structure', 'Aesthetic preferences'],
     correctAnswer: 1,
     explanation: 'Solar irradiance is the primary factor determining optimal panel orientation.',
     section: 'System Design',
@@ -1376,12 +1163,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 82,
     question: 'What is the typical commissioning period for solar installations?',
-    options: [
-      '1 week',
-      '3-5 days',
-      '1-2 days',
-      '2 weeks',
-    ],
+    options: ['1 week', '3-5 days', '1-2 days', '2 weeks'],
     correctAnswer: 2,
     explanation: 'Most residential solar installations can be commissioned within 1-2 days.',
     section: 'Testing',
@@ -1391,7 +1173,8 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 83,
-    question: 'What is the primary purpose of earthing (grounding) the metal frames of solar modules?',
+    question:
+      'What is the primary purpose of earthing (grounding) the metal frames of solar modules?',
     options: [
       'To improve the conversion efficiency of the cells',
       'To provide protection against electric shock under fault',
@@ -1409,12 +1192,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 84,
     question: 'What is the typical power tolerance of solar panels?',
-    options: [
-      '±5%',
-      '±1%',
-      '±10%',
-      '±3%',
-    ],
+    options: ['±5%', '±1%', '±10%', '±3%'],
     correctAnswer: 0,
     explanation: 'Solar panels typically have power tolerance of ±5% from rated output.',
     section: 'Solar PV Technology',
@@ -1476,12 +1254,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 88,
     question: 'What is the typical wind speed rating for solar panels?',
-    options: [
-      '200 km/h',
-      '150 km/h',
-      '180 km/h',
-      '120 km/h',
-    ],
+    options: ['200 km/h', '150 km/h', '180 km/h', '120 km/h'],
     correctAnswer: 0,
     explanation: 'Solar panels are typically rated for wind speeds up to 200 km/h (55 m/s).',
     section: 'Solar PV Technology',
@@ -1491,7 +1264,8 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 89,
-    question: 'Which factor most directly determines the usable kWh capacity needed when sizing a home battery?',
+    question:
+      'Which factor most directly determines the usable kWh capacity needed when sizing a home battery?',
     options: [
       'The household evening and overnight energy consumption',
       'The open-circuit voltage of the whole PV string',
@@ -1509,12 +1283,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 90,
     question: 'What is the typical efficiency of charge controllers?',
-    options: [
-      '85-90%',
-      '90-95%',
-      '95-98%',
-      '98-99%',
-    ],
+    options: ['85-90%', '90-95%', '95-98%', '98-99%'],
     correctAnswer: 2,
     explanation: 'Modern MPPT charge controllers typically achieve 95-98% efficiency.',
     section: 'Energy Storage',
@@ -1524,7 +1293,8 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 91,
-    question: 'What does an insulation (isolation) monitoring device on the DC side of a PV system detect?',
+    question:
+      'What does an insulation (isolation) monitoring device on the DC side of a PV system detect?',
     options: [
       'A deterioration of insulation resistance to earth',
       'The instantaneous power output of the complete array',
@@ -1542,12 +1312,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 92,
     question: 'What is the typical cable ampacity for 4mm² DC cable?',
-    options: [
-      '32A',
-      '40A',
-      '50A',
-      '25A',
-    ],
+    options: ['32A', '40A', '50A', '25A'],
     correctAnswer: 0,
     explanation: '4mm² DC cable typically has an ampacity of approximately 32A.',
     section: 'Installation',
@@ -1575,12 +1340,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 94,
     question: 'What is the typical return on investment (ROI) for solar installations?',
-    options: [
-      '12-16%',
-      '16-20%',
-      '8-12%',
-      '5-8%',
-    ],
+    options: ['12-16%', '16-20%', '8-12%', '5-8%'],
     correctAnswer: 2,
     explanation: 'Solar installations typically achieve ROI of 8-12% over their lifetime.',
     section: 'Financial',
@@ -1608,12 +1368,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 96,
     question: 'What is the typical specific yield for solar systems in the UK?',
-    options: [
-      '800-1000 kWh/kWp',
-      '600-800 kWh/kWp',
-      '1000-1200 kWh/kWp',
-      '1200-1400 kWh/kWp',
-    ],
+    options: ['800-1000 kWh/kWp', '600-800 kWh/kWp', '1000-1200 kWh/kWp', '1200-1400 kWh/kWp'],
     correctAnswer: 0,
     explanation: 'UK solar systems typically achieve specific yields of 800-1000 kWh/kWp annually.',
     section: 'System Design',
@@ -1658,12 +1413,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 99,
     question: 'What is the typical carbon payback time for solar panels?',
-    options: [
-      '6 months',
-      '5-6 years',
-      '3-4 years',
-      '1-2 years',
-    ],
+    options: ['6 months', '5-6 years', '3-4 years', '1-2 years'],
     correctAnswer: 3,
     explanation: 'Modern solar panels typically have carbon payback times of 1-2 years.',
     section: 'Introduction',
@@ -1673,7 +1423,8 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 100,
-    question: 'Which factor most strongly influences whether a PV system maintains its output over 20+ years?',
+    question:
+      'Which factor most strongly influences whether a PV system maintains its output over 20+ years?',
     options: [
       'The quality and durability of the components installed',
       'The rated peak power printed on the module label',
@@ -1694,12 +1445,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 101,
     question:
       'What is the maximum allowable fault ride-through time for a Type B renewable energy system under G99?',
-    options: [
-      '0.5 seconds',
-      '0.14 seconds',
-      '1.5 seconds',
-      '3 seconds',
-    ],
+    options: ['0.5 seconds', '0.14 seconds', '1.5 seconds', '3 seconds'],
     correctAnswer: 1,
     explanation:
       'Type B systems must remain connected for faults lasting up to 0.14 seconds under G99 requirements.',
@@ -1765,12 +1511,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 105,
     question:
       'What is the typical depth of discharge (DoD) recommendation for lead-acid batteries to maximise lifespan?',
-    options: [
-      '80%',
-      '50%',
-      '20%',
-      '90%',
-    ],
+    options: ['80%', '50%', '20%', '90%'],
     correctAnswer: 1,
     explanation:
       'Lead-acid batteries should typically not be discharged below 50% to maximise their operational lifespan.',
@@ -1783,12 +1524,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 106,
     question:
       'Which renewable energy technology has the fastest deployment time from planning to operation?',
-    options: [
-      'Offshore wind',
-      'Hydroelectric',
-      'Solar PV',
-      'Biomass',
-    ],
+    options: ['Offshore wind', 'Hydroelectric', 'Solar PV', 'Biomass'],
     correctAnswer: 2,
     explanation:
       'Solar PV systems typically have the fastest deployment time, often completed within months rather than years.',
@@ -1835,12 +1571,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 109,
     question: 'What is the typical efficiency range for modern crystalline silicon solar panels?',
-    options: [
-      '10-15%',
-      '20-25%',
-      '15-20%',
-      '25-30%',
-    ],
+    options: ['10-15%', '20-25%', '15-20%', '25-30%'],
     correctAnswer: 1,
     explanation:
       'Modern crystalline silicon solar panels typically achieve efficiencies between 20-25% under standard test conditions.',
@@ -1852,12 +1583,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 110,
     question: 'Which factor most significantly affects wind turbine power output?',
-    options: [
-      'Air density',
-      'Temperature',
-      'Wind speed',
-      'Humidity',
-    ],
+    options: ['Air density', 'Temperature', 'Wind speed', 'Humidity'],
     correctAnswer: 2,
     explanation:
       'Wind speed has the most significant impact on power output, with power proportional to the cube of wind speed.',
@@ -1937,12 +1663,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 115,
     question: 'What is the typical operating temperature range for lithium-ion batteries?',
-    options: [
-      '-20°C to 60°C',
-      '10°C to 25°C',
-      '0°C to 35°C',
-      '-10°C to 45°C',
-    ],
+    options: ['-20°C to 60°C', '10°C to 25°C', '0°C to 35°C', '-10°C to 45°C'],
     correctAnswer: 3,
     explanation:
       'Most lithium-ion batteries operate safely between -10°C to 45°C, with optimal performance around 15-25°C.',
@@ -1980,7 +1701,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     ],
     correctAnswer: 1,
     explanation:
-      "Distributed generation reduces transmission losses by producing power closer to where it is consumed.",
+      'Distributed generation reduces transmission losses by producing power closer to where it is consumed.',
     section: 'Introduction',
     difficulty: 'intermediate',
     topic: 'Distributed Generation',
@@ -1989,12 +1710,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 118,
     question: 'Which type of solar tracking system provides the highest energy gain?',
-    options: [
-      'Fixed tilt',
-      'Single-axis tracking',
-      'Dual-axis tracking',
-      'Seasonal adjustment',
-    ],
+    options: ['Fixed tilt', 'Single-axis tracking', 'Dual-axis tracking', 'Seasonal adjustment'],
     correctAnswer: 2,
     explanation:
       "Dual-axis tracking systems provide the highest energy gain by following the sun's path throughout the day and seasons.",
@@ -2006,12 +1722,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 119,
     question: 'What is the typical lifespan of a wind turbine gearbox?',
-    options: [
-      '5-10 years',
-      '10-15 years',
-      '20-25 years',
-      '15-20 years',
-    ],
+    options: ['5-10 years', '10-15 years', '20-25 years', '15-20 years'],
     correctAnswer: 3,
     explanation:
       'Wind turbine gearboxes typically last 15-20 years, though they may require maintenance or replacement during this period.',
@@ -2059,12 +1770,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 122,
     question: 'Which material is commonly used for the absorber layer in thin-film solar cells?',
-    options: [
-      'Silicon',
-      'Indium phosphide',
-      'Cadmium telluride',
-      'Gallium arsenide',
-    ],
+    options: ['Silicon', 'Indium phosphide', 'Cadmium telluride', 'Gallium arsenide'],
     correctAnswer: 2,
     explanation:
       'Cadmium telluride (CdTe) is one of the most common materials used in commercial thin-film solar cells.',
@@ -2138,7 +1844,8 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 127,
-    question: 'What is the most significant limitation currently holding back commercial perovskite solar cells?',
+    question:
+      'What is the most significant limitation currently holding back commercial perovskite solar cells?',
     options: [
       'Their very low efficiency in laboratory testing',
       'Long-term stability and degradation in real conditions',
@@ -2190,12 +1897,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 130,
     question: 'Which renewable energy source has the highest capacity factor globally?',
-    options: [
-      'Solar PV arrays',
-      'Onshore wind farms',
-      'Hydroelectric',
-      'Offshore wind farms',
-    ],
+    options: ['Solar PV arrays', 'Onshore wind farms', 'Hydroelectric', 'Offshore wind farms'],
     correctAnswer: 2,
     explanation:
       'Hydroelectric power typically has the highest capacity factor, often exceeding 40-50% due to consistent water flow.',
@@ -2207,12 +1909,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 131,
     question: 'What is the primary benefit of using power optimisers in solar PV systems?',
-    options: [
-      'Lower unit cost',
-      'Higher voltage',
-      'Simplified array wiring',
-      'Module-level MPPT',
-    ],
+    options: ['Lower unit cost', 'Higher voltage', 'Simplified array wiring', 'Module-level MPPT'],
     correctAnswer: 3,
     explanation:
       'Power optimisers provide module-level MPPT, reducing the impact of shading and module mismatch on system performance.',
@@ -2241,12 +1938,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 133,
     question: 'What is the typical round-trip efficiency of pumped hydro storage?',
-    options: [
-      '60-70%',
-      '80-90%',
-      '70-80%',
-      '90-95%',
-    ],
+    options: ['60-70%', '80-90%', '70-80%', '90-95%'],
     correctAnswer: 1,
     explanation:
       'Pumped hydro storage systems typically achieve round-trip efficiencies of 80-90%.',
@@ -2325,7 +2017,8 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 138,
-    question: 'Which mechanism is a leading cause of accelerated solar panel degradation in hot, humid climates?',
+    question:
+      'Which mechanism is a leading cause of accelerated solar panel degradation in hot, humid climates?',
     options: [
       'Repeated thermal cycling combined with moisture ingress',
       'Prolonged exposure to artificial indoor lighting over time',
@@ -2343,12 +2036,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 139,
     question: 'What is the typical degradation rate of crystalline silicon solar panels per year?',
-    options: [
-      '0.8-1.0%',
-      '0.3-0.5%',
-      '0.5-0.8%',
-      '0.1-0.3%',
-    ],
+    options: ['0.8-1.0%', '0.3-0.5%', '0.5-0.8%', '0.1-0.3%'],
     correctAnswer: 3,
     explanation:
       'High-quality crystalline silicon panels typically degrade at 0.1-0.3% per year under normal conditions.',
@@ -2446,12 +2134,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 145,
     question: 'What is the typical hub height for modern utility-scale wind turbines?',
-    options: [
-      '50-80 metres',
-      '120-160 metres',
-      '80-120 metres',
-      '160-200 metres',
-    ],
+    options: ['50-80 metres', '120-160 metres', '80-120 metres', '160-200 metres'],
     correctAnswer: 1,
     explanation:
       'Modern utility-scale wind turbines typically have hub heights of 120-160 metres to access better wind resources.',
@@ -2462,7 +2145,8 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 146,
-    question: 'Which factor most directly determines the energy yield, and so the revenue, of a solar PV project on a given site?',
+    question:
+      'Which factor most directly determines the energy yield, and so the revenue, of a solar PV project on a given site?',
     options: [
       'The available solar irradiance at the location',
       'The rated efficiency printed on the module datasheet',
@@ -2534,12 +2218,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 150,
     question:
       'Which renewable energy technology has shown the steepest cost reduction over the past decade?',
-    options: [
-      'Onshore wind',
-      'Battery storage',
-      'Solar PV',
-      'Offshore wind',
-    ],
+    options: ['Onshore wind', 'Battery storage', 'Solar PV', 'Offshore wind'],
     correctAnswer: 2,
     explanation:
       'Solar PV has experienced the steepest cost reductions, with prices falling by over 80% in the past decade.',
@@ -2551,12 +2230,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 151,
     question: 'What is the typical energy density of lithium-ion batteries compared to lead-acid?',
-    options: [
-      '2-3 times higher',
-      '7-10 times higher',
-      '5-7 times higher',
-      '3-5 times higher',
-    ],
+    options: ['2-3 times higher', '7-10 times higher', '5-7 times higher', '3-5 times higher'],
     correctAnswer: 3,
     explanation:
       'Lithium-ion batteries typically have 3-5 times higher energy density than lead-acid batteries.',
@@ -2620,12 +2294,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 155,
     question: 'What is the typical capacity factor for solar PV in the UK?',
-    options: [
-      '20-25%',
-      '12-16%',
-      '16-20%',
-      '8-12%',
-    ],
+    options: ['20-25%', '12-16%', '16-20%', '8-12%'],
     correctAnswer: 3,
     explanation:
       'Solar PV systems in the UK typically achieve capacity factors of 8-12% due to the local climate conditions.',
@@ -2655,12 +2324,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 157,
     question:
       'What is the primary advantage of using artificial intelligence in renewable energy forecasting?',
-    options: [
-      'Lower costs',
-      'Improved accuracy',
-      'Faster processing',
-      'Better visualization',
-    ],
+    options: ['Lower costs', 'Improved accuracy', 'Faster processing', 'Better visualization'],
     correctAnswer: 1,
     explanation:
       'AI and machine learning can significantly improve the accuracy of renewable energy production forecasts.',
@@ -2671,7 +2335,8 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 158,
-    question: 'Which physical constraint most strongly limits where fixed-foundation offshore wind farms can be built?',
+    question:
+      'Which physical constraint most strongly limits where fixed-foundation offshore wind farms can be built?',
     options: [
       'The distance from the nearest airport',
       'The quality of mobile phone coverage at sea',
@@ -2689,12 +2354,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 159,
     question: 'What is the typical efficiency loss due to soiling on solar panels in the UK?',
-    options: [
-      '8-12%',
-      '3-5%',
-      '5-8%',
-      '1-3%',
-    ],
+    options: ['8-12%', '3-5%', '5-8%', '1-3%'],
     correctAnswer: 3,
     explanation:
       "In the UK's relatively clean environment, soiling typically causes 1-3% efficiency loss for solar panels.",
@@ -2723,12 +2383,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 161,
     question: 'What is the main environmental concern with large-scale solar installations?',
-    options: [
-      'Water usage',
-      'Land use',
-      'Waste heat',
-      'Electromagnetic fields',
-    ],
+    options: ['Water usage', 'Land use', 'Waste heat', 'Electromagnetic fields'],
     correctAnswer: 1,
     explanation:
       'Land use is the primary environmental concern for utility-scale solar installations, though impacts can be minimised.',
@@ -2740,12 +2395,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 162,
     question: 'Which wind turbine component typically requires the most frequent maintenance?',
-    options: [
-      'Rotor blades',
-      'Main gearbox',
-      'Yaw system',
-      'Generator windings',
-    ],
+    options: ['Rotor blades', 'Main gearbox', 'Yaw system', 'Generator windings'],
     correctAnswer: 2,
     explanation:
       'The yaw system requires frequent maintenance due to its continuous operation to orient the turbine into the wind.',
@@ -2774,12 +2424,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 164,
     question: "In energy storage, what does 'depth of discharge' affect most significantly?",
-    options: [
-      'Cycle life',
-      'Charging speed',
-      'Power output',
-      'Efficiency',
-    ],
+    options: ['Cycle life', 'Charging speed', 'Power output', 'Efficiency'],
     correctAnswer: 0,
     explanation:
       'Depth of discharge significantly affects battery cycle life, with deeper discharges generally reducing lifespan.',
@@ -2791,12 +2436,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 165,
     question: 'What is the typical noise level of a modern wind turbine at 500 metres?',
-    options: [
-      '25-35 dB',
-      '35-45 dB',
-      '45-55 dB',
-      '55-65 dB',
-    ],
+    options: ['25-35 dB', '35-45 dB', '45-55 dB', '55-65 dB'],
     correctAnswer: 1,
     explanation:
       'Modern wind turbines typically produce noise levels of 35-45 dB at 500 metres, similar to a quiet library.',
@@ -2808,12 +2448,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 166,
     question: 'Which solar panel technology performs best in low-light conditions?',
-    options: [
-      'Monocrystalline silicon',
-      'Polycrystalline silicon',
-      'Thin-film',
-      'Concentrator PV',
-    ],
+    options: ['Monocrystalline silicon', 'Polycrystalline silicon', 'Thin-film', 'Concentrator PV'],
     correctAnswer: 2,
     explanation:
       'Thin-film solar panels typically perform better in low-light and diffuse light conditions.',
@@ -2825,12 +2460,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 167,
     question: 'What is the main advantage of DC-coupled battery storage in solar systems?',
-    options: [
-      'Lower cost',
-      'Better grid services',
-      'Simpler design',
-      'Higher efficiency',
-    ],
+    options: ['Lower cost', 'Better grid services', 'Simpler design', 'Higher efficiency'],
     correctAnswer: 3,
     explanation:
       'DC-coupled systems are more efficient because they avoid additional DC-AC-DC conversions.',
@@ -2875,7 +2505,8 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 170,
-    question: 'Which on-site condition most commonly depresses the performance ratio of a PV system?',
+    question:
+      'Which on-site condition most commonly depresses the performance ratio of a PV system?',
     options: [
       'Elevated module temperature reducing output',
       'A high open-circuit voltage in the strings',
@@ -2893,12 +2524,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 171,
     question: 'What is the typical warranty period for solar panel power output?',
-    options: [
-      '10 years',
-      '15 years',
-      '30 years',
-      '20-25 years',
-    ],
+    options: ['10 years', '15 years', '30 years', '20-25 years'],
     correctAnswer: 3,
     explanation:
       'Most solar panels come with 20-25 year power output warranties, guaranteeing performance over time.',
@@ -2945,12 +2571,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 174,
     question: 'Which battery parameter is most important for grid frequency regulation services?',
-    options: [
-      'Energy capacity',
-      'Efficiency',
-      'Power rating',
-      'Cycle life',
-    ],
+    options: ['Energy capacity', 'Efficiency', 'Power rating', 'Cycle life'],
     correctAnswer: 2,
     explanation:
       'Power rating (how fast the battery can respond) is most critical for frequency regulation services.',
@@ -2962,12 +2583,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 175,
     question: 'What is the typical blade tip speed of modern wind turbines?',
-    options: [
-      '50-70 m/s',
-      '110-130 m/s',
-      '90-110 m/s',
-      '70-90 m/s',
-    ],
+    options: ['50-70 m/s', '110-130 m/s', '90-110 m/s', '70-90 m/s'],
     correctAnswer: 3,
     explanation:
       'Modern wind turbines typically operate with blade tip speeds of 70-90 m/s for optimal efficiency and noise control.',
@@ -3064,12 +2680,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 181,
     question: 'What is the typical capacity factor for offshore wind in the UK?',
-    options: [
-      '25-35%',
-      '45-55%',
-      '55-65%',
-      '35-45%',
-    ],
+    options: ['25-35%', '45-55%', '55-65%', '35-45%'],
     correctAnswer: 1,
     explanation:
       'UK offshore wind typically achieves capacity factors of 45-55% due to stronger, more consistent winds at sea.',
@@ -3115,12 +2726,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 184,
     question: "In wind energy, what does 'wind resource assessment' typically require?",
-    options: [
-      '2-3 years of data',
-      '1 year of data',
-      '6 months of data',
-      '5+ years of data',
-    ],
+    options: ['2-3 years of data', '1 year of data', '6 months of data', '5+ years of data'],
     correctAnswer: 0,
     explanation:
       'Accurate wind resource assessment typically requires 2-3 years of on-site measurements to capture variability.',
@@ -3148,7 +2754,8 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 186,
-    question: 'Why does cycle life have such a strong influence on the economics of battery storage?',
+    question:
+      'Why does cycle life have such a strong influence on the economics of battery storage?',
     options: [
       'More usable cycles spread the capital cost over more energy delivered',
       'A longer cycle life directly increases the round-trip efficiency of the cells',
@@ -3167,12 +2774,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 187,
     question:
       'What is the typical response time for battery storage to provide frequency regulation?',
-    options: [
-      'Days',
-      'Several minutes',
-      'Hours',
-      'Seconds',
-    ],
+    options: ['Days', 'Several minutes', 'Hours', 'Seconds'],
     correctAnswer: 3,
     explanation:
       'Battery storage can respond to frequency regulation signals within seconds, much faster than conventional generators.',
@@ -3235,12 +2837,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 191,
     question: 'What is the typical energy payback time for modern solar panels?',
-    options: [
-      '6 months - 1 year',
-      '4-6 years',
-      '2-4 years',
-      '1-2 years',
-    ],
+    options: ['6 months - 1 year', '4-6 years', '2-4 years', '1-2 years'],
     correctAnswer: 3,
     explanation:
       'Modern solar panels typically have energy payback times of 1-2 years in favourable climates.',
@@ -3320,7 +2917,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 196,
-    question: "In solar PV systems, what is the primary function of DC power optimisers?",
+    question: 'In solar PV systems, what is the primary function of DC power optimisers?',
     options: [
       'Module-level maximum power point tracking',
       'Converting the array output directly to AC',
@@ -3338,12 +2935,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   {
     id: 197,
     question: 'What is the typical lifetime of a lithium-ion battery in stationary applications?',
-    options: [
-      '15-20 years',
-      '10-15 years',
-      '20-25 years',
-      '5-10 years',
-    ],
+    options: ['15-20 years', '10-15 years', '20-25 years', '5-10 years'],
     correctAnswer: 1,
     explanation:
       'Lithium-ion batteries in stationary applications typically last 10-15 years depending on usage and chemistry.',
@@ -3603,8 +3195,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 212,
-    question:
-      'Which of the following battery installations sits outside the scope of Chapter 57?',
+    question: 'Which of the following battery installations sits outside the scope of Chapter 57?',
     options: [
       'A battery inside a pluggable uninterruptible power supply unit',
       'A wall mounted home storage battery charged from a PV array',
@@ -3621,8 +3212,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 213,
-    question:
-      'Within which Part of BS 7671:2018+A4:2026 has the new Chapter 57 been placed?',
+    question: 'Within which Part of BS 7671:2018+A4:2026 has the new Chapter 57 been placed?',
     options: [
       'Part 6, because it concerns inspection and testing of batteries',
       'Part 7, because battery rooms are treated as special locations',
@@ -3765,8 +3355,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 221,
-    question:
-      'What is the subject of the new Chapter 82 in BS 7671:2018+A4:2026?',
+    question: 'What is the subject of the new Chapter 82 in BS 7671:2018+A4:2026?',
     options: [
       'Requirements for testing of high voltage switchgear on site',
       'Recommendations for the layout of consumer unit enclosures',
@@ -3801,8 +3390,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 223,
-    question:
-      'What do the two chapters that make up the new Part 8 of BS 7671 cover?',
+    question: 'What do the two chapters that make up the new Part 8 of BS 7671 cover?',
     options: [
       'Chapter 81 verification and Chapter 82 periodic inspection intervals',
       'Chapter 81 energy efficiency and Chapter 82 prosumer installations',
@@ -3998,8 +3586,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 234,
-    question:
-      'What is the purpose of Regulation 753.522 in relation to heating system wiring?',
+    question: 'What is the purpose of Regulation 753.522 in relation to heating system wiring?',
     options: [
       'Wiring must be selected so external influences do not impair safety',
       'Wiring must be replaced at intervals stated by the manufacturer',
@@ -4076,7 +3663,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
       'Because the compressor draws a large inrush current when starting',
       'Because smooth or pulsating DC leakage can stop it from tripping',
       'Because outdoor equipment must always have a time delayed device',
-      'Because the circuit will exceed the permitted voltage drop limit',
+      'Because the circuit will exceed the recommended maximum voltage drop limit',
     ],
     correctAnswer: 1,
     explanation:
@@ -4123,8 +3710,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 241,
-    question:
-      'What brings the additional requirements of Regulation 551.7 into effect?',
+    question: 'What brings the additional requirements of Regulation 551.7 into effect?',
     options: [
       'Where the generating set may operate in parallel with other sources',
       'Only once the set has actually run in parallel for a full year',

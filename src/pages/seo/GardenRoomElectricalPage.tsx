@@ -52,7 +52,7 @@ const faqs = [
   {
     question: 'How far can electricity travel to a garden room without voltage drop issues?',
     answer:
-      'The maximum permissible voltage drop from the consumer unit to any point in a circuit is 3% for lighting and 5% for power under BS 7671 Section 525. In practice, for a 6mm² cable feeding a garden room sub-board with a 32A protective device, the maximum run before voltage drop becomes an issue is approximately 35 metres. For longer runs, 10mm² or 16mm² cable is required. Your electrician will calculate the correct cable size for your specific installation based on the distance, the load, and the protective device rating.',
+      'The recommended maximum voltage drop from the consumer unit to any point in a circuit is 3% for lighting and 5% for power under BS 7671 Section 525. In practice, for a 6mm² cable feeding a garden room sub-board with a 32A protective device, the maximum run before voltage drop becomes an issue is approximately 35 metres. For longer runs, 10mm² or 16mm² cable is required. Your electrician will calculate the correct cable size for your specific installation based on the distance, the load, and the protective device rating.',
   },
   {
     question: 'Can I add an EV charger to my garden room electrical installation?',
@@ -404,8 +404,8 @@ const sections = [
                 <strong>EIC on completion</strong> — an Electrical Installation Certificate (EIC)
                 covering the entire installation — SWA cable, sub-board, all circuits, earthing
                 system, and test results — must be issued on completion. Use the{' '}
-                <SEOInternalLink href="/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
-                to complete and issue the EIC on site, including the earth electrode resistance
+                <SEOInternalLink href="/eic-certificate">Elec-Mate EIC app</SEOInternalLink> to
+                complete and issue the EIC on site, including the earth electrode resistance
                 measurement.
               </span>
             </li>
@@ -464,10 +464,7 @@ const sections = [
                   When quoting a garden room installation, always discuss EV charging and data
                   infrastructure. A client who is not planning an EV now may be planning one in two
                   years — upsizing the cable now costs little but saves them thousands later. Use
-                  the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
+                  the <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>{' '}
                   to produce clear alternative quotes for standard, EV-ready, and full-spec options.
                 </p>
               </div>

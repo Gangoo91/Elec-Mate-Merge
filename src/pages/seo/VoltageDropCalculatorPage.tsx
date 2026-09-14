@@ -223,7 +223,9 @@ export default function VoltageDropCalculatorPage() {
       {/* Live calculator — free, no signup, BS 7671:2018+A4:2026 compliant */}
       <section id="calculator" className="px-5 pb-12 scroll-mt-24">
         <div className="max-w-4xl mx-auto">
-          <CalculatorSurface><VoltageDropCalculator /></CalculatorSurface>
+          <CalculatorSurface>
+            <VoltageDropCalculator />
+          </CalculatorSurface>
         </div>
       </section>
 
@@ -289,7 +291,7 @@ export default function VoltageDropCalculatorPage() {
           <div className="space-y-4 text-white leading-relaxed">
             <p>
               BS 7671:2018+A4:2026, the 18th Edition of the IET Wiring Regulations, sets out the
-              maximum permitted voltage drop for electrical installations in the United Kingdom.
+              recommended maximum voltage drop for electrical installations in the United Kingdom.
               These limits are defined in{' '}
               <strong className="text-yellow-400">Regulation 525.1</strong> and quantified in{' '}
               <strong className="text-yellow-400">Table 4Ab</strong>.
@@ -319,9 +321,9 @@ export default function VoltageDropCalculatorPage() {
             </div>
             <p>
               For installations supplied from a private LV supply (such as a generator or
-              transformer), the permitted voltage drop is higher: 6% for lighting and 8% for other
-              uses. This is because the supply point is typically closer to the installation and the
-              electrician has more control over the supply characteristics.
+              transformer), the recommended maximum voltage drop is higher: 6% for lighting and 8%
+              for other uses. This is because the supply point is typically closer to the
+              installation and the electrician has more control over the supply characteristics.
             </p>
             <p>
               It is important to note that these percentage limits apply from the origin of the

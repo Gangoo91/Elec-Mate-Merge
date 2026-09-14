@@ -293,7 +293,7 @@ const AM2Module6Section4 = () => {
           title="The keyword trap — read this question carefully"
           situation={
             <>
-              "Which of the following is the maximum permissible voltage drop for a lighting circuit
+              "Which of the following is the recommended maximum voltage drop for a lighting circuit
               from the origin of the installation, expressed as a percentage of the nominal supply
               voltage?"
               <br />

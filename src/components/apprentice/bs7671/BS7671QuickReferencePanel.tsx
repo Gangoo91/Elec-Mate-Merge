@@ -1,9 +1,4 @@
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ChevronDown } from 'lucide-react';
-import {
-  bs7671ReferenceCards,
-  type BS7671ReferenceCard,
-} from './data/bs7671ReferenceData';
+import { bs7671ReferenceCards, type BS7671ReferenceCard } from './data/bs7671ReferenceData';
 
 const renderContent = (card: BS7671ReferenceCard) => {
   const { content } = card;
@@ -108,17 +103,25 @@ const renderContent = (card: BS7671ReferenceCard) => {
   }
 };
 
+/**
+ * 🔴 Flat. Every reference card was closed by default.
+ *
+ * Third time this shape has turned up — the site-assessment quick reference
+ * and the safety-cases one were the same. A reference you have to open is
+ * not a reference, and with all of them shut the panel rendered as a stack
+ * of identical grey bars telling you nothing.
+ */
 const BS7671QuickReferencePanel = () => {
   return (
-    <div className="space-y-2 text-left">
+    <div className="grid grid-cols-1 gap-3 text-left lg:grid-cols-2">
       {bs7671ReferenceCards.map((card) => (
-        <Collapsible key={card.id}>
-          <CollapsibleTrigger className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.06] border border-white/[0.10] hover:bg-white/[0.04] touch-manipulation h-auto min-h-[44px] transition-colors">
-            <span className="text-[14px] font-medium text-white text-left">{card.title}</span>
-            <ChevronDown className="h-4 w-4 text-white transition-transform [[data-state=open]>&]:rotate-180 flex-shrink-0" />
-          </CollapsibleTrigger>
-          <CollapsibleContent>{renderContent(card)}</CollapsibleContent>
-        </Collapsible>
+        <section
+          key={card.id}
+          className="space-y-2.5 rounded-xl border border-white/[0.10] bg-white/[0.04] p-4 sm:p-5"
+        >
+          <h3 className="text-[14.5px] font-semibold tracking-tight text-white">{card.title}</h3>
+          {renderContent(card)}
+        </section>
       ))}
     </div>
   );

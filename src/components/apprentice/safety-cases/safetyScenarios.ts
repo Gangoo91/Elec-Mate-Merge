@@ -1967,7 +1967,7 @@ export const safetyScenarios: SafetyScenario[] = [
             text: 'Energise the system but explain the risks to the client',
             isCorrect: false,
             feedback:
-              'You cannot transfer legal responsibility to the client. Energising untested work is illegal under EAWR.',
+              'You cannot transfer responsibility to the client. BS 7671 Regulation 643.1 requires the dead tests to be completed before the installation is energised, and energising work you have not proved leaves you in breach of your duty under the Electricity at Work Regulations 1989 to prevent danger.',
             outcome: 'Potential prosecution, insurance invalidation, safety risks',
             regulation: 'Electricity at Work Regulations 1989, Regulation 4',
           },

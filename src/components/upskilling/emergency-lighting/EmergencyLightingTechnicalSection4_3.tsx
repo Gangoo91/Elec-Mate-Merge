@@ -660,7 +660,7 @@ export const EmergencyLightingTechnicalSection4_3 = () => {
                     <p className="text-foreground font-medium mb-1">Voltage Drop:</p>
                     <p className="text-gray-300 text-red-400">
                       Critical consideration — long cable runs from battery room to furthest
-                      luminaire. Maximum 5% voltage drop permitted.
+                      luminaire. Maximum 5% voltage drop recommended.
                     </p>
                   </div>
                   <div>

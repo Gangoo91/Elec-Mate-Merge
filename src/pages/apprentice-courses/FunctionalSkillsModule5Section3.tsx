@@ -1,1418 +1,929 @@
-import {
-  ArrowLeft,
-  ArrowRight,
-  Brain,
-  Clock,
-  Lightbulb,
-  BookOpen,
-  Heart,
-  Target,
-  RefreshCw,
-  Calendar,
-  Zap,
-  BarChart3,
-} from 'lucide-react';
+/**
+ * Functional Skills · Module 5 · Section 3 — Study techniques and exam skills
+ *
+ * CONVERTED (13 Sep) from the 2024 dialect to the StudyPage reading kit.
+ *
+ * 🔴 THE TRAP ON THIS PAGE, AND HOW IT WAS HANDLED: study-skills content is
+ * the easiest material in the whole course to fill with generic revision-guide
+ * commentary — "make a timetable", "find a quiet space", "get enough sleep".
+ * The old page was built almost entirely from that material: eight sections of
+ * prose about spaced repetition, the Pomodoro technique, breathing exercises
+ * and SMART goals, with three worked calculations across the whole page and
+ * nothing that touched an actual Functional Skills question. None of that
+ * teaches a learner how to sit THIS exam. This pass replaces it with eight
+ * sections built the other way round — a technique applied directly to real,
+ * multi-step trade-contextualised material (cable takeoffs, timesheets, VAT
+ * invoices, a site safety bulletin, a returns policy) — because reading a
+ * question correctly, spotting a distractor answer, deciding calculator vs
+ * mental, estimating first, showing method, allocating time by marks, scanning
+ * a longer text for the answer, and checking a result by a second route are
+ * skills a learner can only acquire by doing them, not by being told they
+ * matter. 8 ConceptBlocks (the page cap), 11 WorkedExamples, 10 TryIts.
+ *
+ * 🔴 THE AWARDING BODY IS NOT NAMED, AND NO EXAM FORMAT IS STATED AS FACT.
+ * Paper length, timing, and the calculator/non-calculator split all differ
+ * between awarding bodies, and none has been confirmed for this cohort.
+ * Section 06 (time management) deliberately teaches time allocation BY MARKS
+ * AVAILABLE rather than by any stated number of minutes, and says explicitly
+ * that format details vary and must be checked with the learner's own
+ * provider — the same line closes the TLDR and appears again in the FAQ. No
+ * specific exam duration, paper count or pass mark appears anywhere on this
+ * page.
+ *
+ * Quiz bank (all 8 questions, options, correctAnswer indices, explanations)
+ * is carried over verbatim — none of the eight questions asserts a specific
+ * exam format as fact, and question 7's wrong option about "awarding bodies"
+ * is a distractor, not a claim this page makes. All three InlineChecks are
+ * also carried over verbatim (spaced repetition, the Pomodoro interval, and
+ * the past-paper three-pass strategy) with m5s3- prefixed ids added, since
+ * none of them had one — this page did not invent, remove or reword any of
+ * their question or answer text.
+ *
+ * No regulation number, competent person scheme, or commercial product is
+ * named anywhere on this page — it is exam technique, not BS 7671 territory.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import {
+  StudyPage,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  Prerequisites,
+  Scenario,
+  ContentEyebrow,
+  SectionRule,
+  WorkedExample,
+  TryIt,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
-const FunctionalSkillsModule5Section3 = () => {
-  useSEO(
-    'Section 3: Study Techniques & Exam Skills - Assessment Preparation',
-    'Proven revision methods, spaced repetition, active recall, time management for study, managing exam stress, past paper practice, memory techniques for formulae, and creating a study plan for UK electrical apprentices.'
-  );
+const TITLE = 'Study Techniques and Exam Skills - Functional Skills Module 5.3';
+const DESCRIPTION =
+  'Functional Skills exam technique for electricians: reading a multi-step question correctly, spotting a distractor answer, calculator vs mental, estimating first, showing method, managing time by marks, scanning a longer text, and checking your answer by a second route.';
 
-  const quizQuestions = [
-    {
-      id: 1,
-      question: "What is 'spaced repetition' in the context of revision?",
-      options: [
-        'Studying the same topic for an entire day without breaks',
-        'Reviewing material at increasing intervals over time to improve long-term memory',
-        'Reading your notes once the night before the exam',
-        'Spacing out your desk and chair for comfort while studying',
-      ],
-      correctAnswer: 1,
-      explanation:
-        'Spaced repetition involves reviewing material at gradually increasing intervals (e.g. after 1 day, then 3 days, then 1 week, then 2 weeks). This takes advantage of how memory consolidation works and is far more effective than cramming everything into one session.',
-    },
-    {
-      id: 2,
-      question: 'Which breathing technique can help reduce exam anxiety quickly?',
-      options: [
-        'Only breathing through your mouth throughout the exam',
-        'Breathing as fast as possible to increase oxygen',
-        '4-7-8 breathing: inhale for 4, hold for 7, exhale for 8 counts',
-        'Holding your breath for 60 seconds',
-      ],
-      correctAnswer: 2,
-      explanation:
-        'The 4-7-8 technique (inhale for 4 counts, hold for 7, exhale for 8) activates your parasympathetic nervous system, which calms your body and reduces anxiety. It can be done quietly at your desk without anyone noticing.',
-    },
-    {
-      id: 3,
-      question: 'What is the recommended length of a single Pomodoro study session?',
-      options: ['45 minutes', '10 minutes', '60 minutes', '25 minutes'],
-      correctAnswer: 3,
-      explanation:
-        'A standard Pomodoro session is 25 minutes of focused study followed by a 5-minute break. After four Pomodoros, you take a longer 15-30 minute break. This technique prevents mental fatigue and maintains concentration.',
-    },
-    {
-      id: 4,
-      question:
-        'When using past papers for revision, what should you do after marking your answers?',
-      options: [
-        'Review every wrong answer, understand the mistake, and revise that topic before trying again',
-        'File the paper away and move straight on to the next past paper',
-        'Only count your score and ignore which questions you got wrong',
-        'Repeat the whole paper immediately without revising any topics first',
-      ],
-      correctAnswer: 0,
-      explanation:
-        'The real learning happens when you review your mistakes. Understand why you got each answer wrong, revise that specific topic, and then try similar questions again to confirm you have improved. This feedback loop is what transforms past papers from a test into a learning tool.',
-    },
-    {
-      id: 5,
-      question: "What does the mnemonic 'Very Icy Roads' help you remember?",
-      options: [
-        'The order of cable colours',
-        "Ohm's Law formula: V = I x R",
-        'The hierarchy of PPE requirements',
-        'The sequence of testing procedures',
-      ],
-      correctAnswer: 1,
-      explanation:
-        "Very Icy Roads = V = I x R (Ohm's Law). The first letter of each word matches the formula components: Voltage = Current x Resistance. Mnemonics like this create memorable associations that make formulae easier to recall under exam pressure.",
-    },
-    {
-      id: 6,
-      question: "What is 'active recall' as a study technique?",
-      options: [
-        'Re-reading your notes several times until they feel familiar',
-        'Highlighting the most important points in your textbook',
-        'Testing yourself by trying to remember information without looking at your notes',
-        'Listening to a recording of the topic while doing other tasks',
-      ],
-      correctAnswer: 2,
-      explanation:
-        'Active recall involves deliberately trying to retrieve information from memory without looking at your notes. This strengthens neural pathways and is far more effective than passive re-reading. Flashcards, practice questions, and covering your notes while reciting key points are all forms of active recall.',
-    },
-    {
-      id: 7,
-      question: 'Why should you create a study timetable that includes rest days?',
-      options: [
-        'Because awarding bodies require a fixed number of rest days to be recorded',
-        'Because studying every single day guarantees you will pass the exam',
-        'Because rest days are when you should catch up on missed coursework',
-        'Because your brain consolidates memories during rest, preventing burnout and maintaining motivation',
-      ],
-      correctAnswer: 3,
-      explanation:
-        'Rest is essential for memory consolidation — your brain processes and stores information during downtime and sleep. Without rest days, you risk burnout, reduced concentration, and diminishing returns on your study time. A sustainable plan with built-in rest will always outperform unsustainable cramming.',
-    },
-    {
-      id: 8,
-      question: 'What is the most effective way to use the last 10 minutes of an exam?',
-      options: [
-        'Check your answers, correct obvious errors, and ensure you have not left any questions blank',
-        'Start an entirely new question that you had not planned to attempt',
-        'Put your pen down early to stay calm and rest before the end',
-        'Rewrite all your answers neatly to improve your handwriting',
-      ],
-      correctAnswer: 0,
-      explanation:
-        'The final 10 minutes should be used for checking. Go back to skipped questions, verify calculations, check units and decimal points, proofread writing for SPaG errors, and ensure every question has been attempted. These quick checks can easily recover 5-10 marks.',
-    },
-  ];
+const quizQuestions = [
+  {
+    id: 1,
+    question: "What is 'spaced repetition' in the context of revision?",
+    options: [
+      'Studying the same topic for an entire day without breaks',
+      'Reviewing material at increasing intervals over time to improve long-term memory',
+      'Reading your notes once the night before the exam',
+      'Spacing out your desk and chair for comfort while studying',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Spaced repetition involves reviewing material at gradually increasing intervals (e.g. after 1 day, then 3 days, then 1 week, then 2 weeks). This takes advantage of how memory consolidation works and is far more effective than cramming everything into one session.',
+  },
+  {
+    id: 2,
+    question: 'Which breathing technique can help reduce exam anxiety quickly?',
+    options: [
+      'Only breathing through your mouth throughout the exam',
+      'Breathing as fast as possible to increase oxygen',
+      '4-7-8 breathing: inhale for 4, hold for 7, exhale for 8 counts',
+      'Holding your breath for 60 seconds',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The 4-7-8 technique (inhale for 4 counts, hold for 7, exhale for 8) activates your parasympathetic nervous system, which calms your body and reduces anxiety. It can be done quietly at your desk without anyone noticing.',
+  },
+  {
+    id: 3,
+    question: 'What is the recommended length of a single Pomodoro study session?',
+    options: ['45 minutes', '10 minutes', '60 minutes', '25 minutes'],
+    correctAnswer: 3,
+    explanation:
+      'A standard Pomodoro session is 25 minutes of focused study followed by a 5-minute break. After four Pomodoros, you take a longer 15-30 minute break. This technique prevents mental fatigue and maintains concentration.',
+  },
+  {
+    id: 4,
+    question: 'When using past papers for revision, what should you do after marking your answers?',
+    options: [
+      'Review every wrong answer, understand the mistake, and revise that topic before trying again',
+      'File the paper away and move straight on to the next past paper',
+      'Only count your score and ignore which questions you got wrong',
+      'Repeat the whole paper immediately without revising any topics first',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The real learning happens when you review your mistakes. Understand why you got each answer wrong, revise that specific topic, and then try similar questions again to confirm you have improved. This feedback loop is what transforms past papers from a test into a learning tool.',
+  },
+  {
+    id: 5,
+    question: "What does the mnemonic 'Very Icy Roads' help you remember?",
+    options: [
+      'The order of cable colours',
+      "Ohm's Law formula: V = I x R",
+      'The hierarchy of PPE requirements',
+      'The sequence of testing procedures',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Very Icy Roads = V = I x R (Ohm's Law). The first letter of each word matches the formula components: Voltage = Current x Resistance. Mnemonics like this create memorable associations that make formulae easier to recall under exam pressure.",
+  },
+  {
+    id: 6,
+    question: "What is 'active recall' as a study technique?",
+    options: [
+      'Re-reading your notes several times until they feel familiar',
+      'Highlighting the most important points in your textbook',
+      'Testing yourself by trying to remember information without looking at your notes',
+      'Listening to a recording of the topic while doing other tasks',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Active recall involves deliberately trying to retrieve information from memory without looking at your notes. This strengthens neural pathways and is far more effective than passive re-reading. Flashcards, practice questions, and covering your notes while reciting key points are all forms of active recall.',
+  },
+  {
+    id: 7,
+    question: 'Why should you create a study timetable that includes rest days?',
+    options: [
+      'Because awarding bodies require a fixed number of rest days to be recorded',
+      'Because studying every single day guarantees you will pass the exam',
+      'Because rest days are when you should catch up on missed coursework',
+      'Because your brain consolidates memories during rest, preventing burnout and maintaining motivation',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Rest is essential for memory consolidation — your brain processes and stores information during downtime and sleep. Without rest days, you risk burnout, reduced concentration, and diminishing returns on your study time. A sustainable plan with built-in rest will always outperform unsustainable cramming.',
+  },
+  {
+    id: 8,
+    question: 'What is the most effective way to use the last 10 minutes of an exam?',
+    options: [
+      'Check your answers, correct obvious errors, and ensure you have not left any questions blank',
+      'Start an entirely new question that you had not planned to attempt',
+      'Put your pen down early to stay calm and rest before the end',
+      'Rewrite all your answers neatly to improve your handwriting',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The final minutes should be used for checking. Go back to skipped questions, verify calculations, check units and decimal points, proofread writing for SPaG errors, and ensure every question has been attempted. These quick checks can easily recover 5-10 marks.',
+  },
+];
+
+const FunctionalSkillsModule5Section3 = () => {
+  const navigate = useNavigate();
+  useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="pb-24 bg-elec-dark min-h-screen">
-      {/* Sticky Header */}
-      <div className="sticky top-0 z-10 bg-elec-dark/95 backdrop-blur-sm border-b border-white/5">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3">
-          <Link
-            to="/study-centre/apprentice/functional-skills/module5"
-            className="p-2 -ml-2 touch-manipulation"
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 5 · Section 3"
+        title="Study techniques and exam skills"
+        backTo="/study-centre/apprentice/functional-skills/module5"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        {/* Wider than the 64rem default, to match the rest of the course — this
+            page carries multi-step calculations and source-text extracts that
+            wrap badly at the narrower measure. */}
+        <StudyPage measure="74rem" wide="94rem">
+          <p className="text-[13px] leading-relaxed text-white">
+            Knowing the maths and knowing the exam are two different skills, and the second one is
+            rarely taught directly. A learner who can genuinely do percentages can still lose marks
+            to a question they misread, a distractor they picked without checking, or a calculation
+            they never wrote down because it was "obvious". This section is not about revision
+            timetables or how to feel calm — it is eight techniques for handling the actual
+            questions in front of you, each one practised on real trade material rather than
+            described in the abstract.
+          </p>
+
+          <LearningOutcomes
+            outcomes={[
+              'Read a multi-step question and identify exactly what is being asked, and with which figures, before starting to calculate.',
+              'Recognise a distractor answer option built from an intermediate calculation, and avoid selecting it just because it appears in the working.',
+              'Decide quickly whether a calculation needs a calculator or can be done mentally, and apply the right method either way.',
+              'Estimate a calculation before doing it precisely, so a place-value or decimal-point error produces an answer that obviously does not fit.',
+              'Set out full working on a multi-step calculation so that correct method still earns credit even when an earlier figure was wrong.',
+              'Allocate your time and effort across a paper in proportion to the marks a question carries, and have a fixed rule for what to do when stuck.',
+              'Skim a longer source text for its structure, then scan for the specific sentence that answers a given question, rather than reading it end to end.',
+              'Check a numerical answer using a genuinely different method to the one that produced it, and plan a written response by audience and purpose before writing a word.',
+            ]}
+          />
+
+          <Prerequisites
+            items={[
+              {
+                term: 'Comfortable with the underlying arithmetic',
+                gist: 'This page teaches exam technique, not new maths. Percentages, decimals and simple multi-step arithmetic should already be familiar from earlier Functional Skills modules.',
+              },
+              {
+                term: 'Module 5, Sections 1-2',
+                gist: 'The revision groundwork and practice-paper habits covered earlier feed directly into the technique on this page — this section assumes you are already sitting down with real questions, not starting from nothing.',
+              },
+            ]}
+          />
+
+          <TLDR
+            points={[
+              'A question is asking for one specific thing, usually stated in its final sentence — read to the end before you start calculating.',
+              'A wrong multiple-choice option is often a real, correctly-calculated intermediate value from the working, not a random number. If an option answers an earlier step rather than the actual question, it is a distractor.',
+              'Round numbers, halves, quarters and multiples of 10% are worth doing mentally. Several chained operations on an uneven decimal are worth a calculator — deciding takes two seconds and the wrong call costs you far more.',
+              'A rough estimate done first turns a slipped decimal point into an answer that obviously does not fit, rather than one that looks plausible and gets written down.',
+              'Marks are available for correct method at each step, even when an earlier figure in a multi-step calculation was wrong — a blank space with only a final answer cannot earn any of them.',
+              'Time is best spent in proportion to the marks a question carries, not equally across every question — and a stuck question gets marked and returned to, not fought.',
+              'A longer source text is read for structure first, then scanned for the key words in the question — not read start to finish hoping to spot the answer.',
+              'Redoing a calculation the same way checks that you can repeat a mistake, not that there was not one. Check by a genuinely different method instead.',
+              'Paper length, timing and the calculator/non-calculator split all vary between providers — this page never states one as fact. Check the specific format with your own tutor.',
+            ]}
+          />
+
+          <SectionRule />
+
+          {/* ── 01 ─────────────────────────────────────────────────── */}
+          <ContentEyebrow>01 · Reading the question before the numbers</ContentEyebrow>
+
+          <ConceptBlock
+            title="Extract the question before you extract a number"
+            onSite="The step people skip costs about fifteen seconds and saves an entire wrong answer: say what is actually being asked, in one sentence, before you pick up a pen."
           >
-            <ArrowLeft className="w-5 h-5 text-white" />
-          </Link>
-          <div>
-            <p className="text-[11px] font-semibold text-green-400 uppercase tracking-wider">
-              Module 5 • Section 3
-            </p>
-            <h1 className="text-base font-bold text-white">Study Techniques & Exam Skills</h1>
-          </div>
-        </div>
-      </div>
-
-      {/* Hero Section */}
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-elec-dark via-neutral-900 to-elec-dark" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-green-600/10 via-transparent to-transparent" />
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 py-8 text-center">
-          <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
-            <div className="relative inline-flex mb-4">
-              <div className="absolute inset-0 bg-green-500/30 rounded-2xl blur-xl animate-pulse" />
-              <div className="relative p-4 rounded-2xl bg-gradient-to-br from-green-500 via-green-600 to-emerald-600 shadow-2xl shadow-green-500/25">
-                <Brain className="h-8 w-8 text-white" />
-              </div>
-            </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
-              Study Techniques & Exam Skills
-            </h2>
-            <p className="text-sm text-white max-w-lg mx-auto">
-              Master proven study techniques and exam strategies that will help you revise
-              efficiently, manage your time, and perform at your best on assessment day.
-            </p>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Content Cards */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 space-y-6 mt-6">
-        {/* 01 - Effective Revision Methods */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">
-              01
-            </span>
-            <h3 className="text-lg font-bold text-white">Effective Revision Methods</h3>
-          </div>
-          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
-              Not all revision is created equal. Research consistently shows that some study methods
-              are far more effective than others. Understanding the difference between passive and
-              active revision is the first step to studying smarter, not harder.
+              A Functional Skills-style maths question dresses up ordinary arithmetic in a paragraph
+              of scenario, and the scenario is not decoration — it decides which numbers matter and
+              which are just describing the goods. The technique is to read the question twice. The
+              first read is for what quantity is actually wanted, and in what unit. The second read
+              is for which of the numbers given are needed to get there, and which are scenery. On a
+              multi-step problem, the actual instruction — "what is his net spend", "how much
+              change", "what is the difference" — very often sits in the last sentence, which means
+              starting to calculate from the first number you see answers a different,
+              easier-sounding question than the one that was asked.
             </p>
             <p>
-              Passive methods — such as re-reading notes, highlighting text, and watching videos
-              without taking notes — feel productive but create only a weak impression in your
-              memory. Active methods force your brain to work harder, which builds stronger, more
-              durable memories that you can rely on under exam pressure.
+              This matters more on a multi-step word problem than anywhere else, because each extra
+              step is a fresh place to drift off the actual question without noticing. Restating the
+              question in your own words, before touching a single figure, is the check that catches
+              it.
             </p>
+          </ConceptBlock>
 
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <div className="flex items-center gap-2 mb-3">
-                <Lightbulb className="w-4 h-4 text-green-400" />
-                <h4 className="text-white font-semibold text-sm">Passive vs Active Revision</h4>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="bg-white/5 rounded-lg p-3">
-                  <p className="text-xs font-semibold text-white mb-2">Passive (Less Effective)</p>
-                  <ul className="space-y-1.5 text-xs text-white">
-                    <li className="flex items-start gap-2">
-                      <span className="text-white mt-0.5">•</span>
-                      <span>Re-reading notes or textbooks</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-white mt-0.5">•</span>
-                      <span>Highlighting or underlining passages</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-white mt-0.5">•</span>
-                      <span>Copying notes out again neatly</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-white mt-0.5">•</span>
-                      <span>Watching revision videos without taking notes</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-white mt-0.5">•</span>
-                      <span>Listening to someone else explain a topic</span>
-                    </li>
-                  </ul>
-                </div>
-                <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
-                  <p className="text-xs font-semibold text-green-400 mb-2">
-                    Active (Highly Effective)
-                  </p>
-                  <ul className="space-y-1.5 text-xs text-white">
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-400 mt-0.5">•</span>
-                      <span>Doing practice questions and past papers</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-400 mt-0.5">•</span>
-                      <span>Testing yourself with flashcards</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-400 mt-0.5">•</span>
-                      <span>Teaching a topic to someone else</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-400 mt-0.5">•</span>
-                      <span>Creating mind maps from memory</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-400 mt-0.5">•</span>
-                      <span>Writing summaries without looking at notes</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+          <WorkedExample
+            question="An apprentice buys 4 rolls of 25 m twin-and-earth cable at £34.60 a roll, and a box of 100 cable clips at £5.80. He uses 3 of the 4 rolls on the job and returns the unused roll to the supplier for a full refund. What is his net spend on cable and clips for this job?"
+            steps={[
+              {
+                calc: 'Identify what is actually asked',
+                note: '"Net spend for THIS job" — not the amount he originally paid, and not the value of the returned roll on its own.',
+              },
+              {
+                calc: 'Identify the numbers that matter',
+                note: '4 rolls at £34.60, 1 roll refunded, and the £5.80 clips. The 25 m roll length and the 100-clip count describe the goods; they do not drive the calculation.',
+              },
+              {
+                calc: 'Cost of cable actually kept: 3 × £34.60 = £103.80',
+                note: 'Only the 3 rolls he did not return.',
+              },
+              { calc: 'Add the clips: £103.80 + £5.80 = £109.60', note: '' },
+            ]}
+            answer="£109.60"
+            watchOut="Calculating 4 × £34.60 = £138.40 and stopping there answers 'what did he originally spend', which is not the question. The refund is not a detail to skip past — it is the entire reason this question was worth asking."
+          />
 
-            <h4 className="text-white font-semibold pt-2">The Testing Effect</h4>
-            <p>
-              Psychologists call it the "testing effect" — the act of trying to recall information
-              strengthens your memory far more than simply reviewing it. Every time you test
-              yourself and successfully retrieve information, you make that memory more accessible.
-              This is why practice questions are the single most effective revision tool.
-            </p>
+          <SectionRule />
 
-            <h4 className="text-white font-semibold pt-2">Interleaving Topics</h4>
-            <p>
-              Instead of studying one topic for hours (called "blocking"), mix different topics
-              within a single study session. This is called interleaving and it forces your brain to
-              practise selecting the right approach for each problem type. For example, in one
-              90-minute session you might spend 30 minutes on percentages, 30 minutes on reading
-              comprehension, and 30 minutes on area calculations.
-            </p>
+          <TryIt
+            question="A test engineer buys 3 packs of 20 crimp connectors at £4.25 a pack, and a replacement multimeter lead at £11.50. She only needs 2 packs of connectors for the job and returns the third pack for a full refund. What is her net spend for this job?"
+            steps={[
+              {
+                calc: 'Identify what is asked',
+                note: 'Net spend for the job, after the refund — not the original total.',
+              },
+              { calc: 'Connectors kept: 2 × £4.25 = £8.50', note: '' },
+              { calc: 'Add the lead: £8.50 + £11.50 = £20.00', note: '' },
+            ]}
+            answer="£20.00"
+          />
 
-            <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
-              <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white">
-                Revision should feel challenging. If it feels easy and comfortable, you are probably
-                using passive methods that are not building strong memories. The slight discomfort
-                of trying to recall something you cannot quite remember is exactly when the most
-                powerful learning happens.
-              </p>
-            </div>
-          </div>
-        </motion.div>
+          <SectionRule />
 
-        {/* 02 - Spaced Repetition */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15 }}
-          className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">
-              02
-            </span>
-            <h3 className="text-lg font-bold text-white">Spaced Repetition</h3>
-          </div>
-          <div className="space-y-3 text-sm text-white leading-relaxed">
-            <p>
-              Spaced repetition is one of the most scientifically supported study techniques. It
-              works by reviewing material at gradually increasing intervals, which moves information
-              from short-term into long-term memory. Instead of cramming everything the night
-              before, you distribute your learning across days and weeks.
-            </p>
+          {/* ── 02 ─────────────────────────────────────────────────── */}
+          <ContentEyebrow>02 · Spotting the distractor</ContentEyebrow>
 
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <div className="flex items-center gap-2 mb-3">
-                <RefreshCw className="w-4 h-4 text-green-400" />
-                <h4 className="text-white font-semibold text-sm">How Spaced Repetition Works</h4>
-              </div>
-              <p className="text-xs text-white mb-3">
-                When you first learn something, your memory of it fades quickly. By reviewing at
-                precisely the right moment — just as you are about to forget — you reset and
-                strengthen the memory. Each time you review, the memory lasts longer before fading.
-              </p>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <div className="bg-white/5 rounded-lg p-3 text-center">
-                  <div className="text-lg text-green-400 font-bold">Day 1</div>
-                  <div className="text-xs text-white">Learn the topic</div>
-                </div>
-                <div className="bg-white/5 rounded-lg p-3 text-center">
-                  <div className="text-lg text-green-400 font-bold">Day 2</div>
-                  <div className="text-xs text-white">First review (10 min)</div>
-                </div>
-                <div className="bg-white/5 rounded-lg p-3 text-center">
-                  <div className="text-lg text-green-400 font-bold">Day 5</div>
-                  <div className="text-xs text-white">Second review (10 min)</div>
-                </div>
-                <div className="bg-white/5 rounded-lg p-3 text-center">
-                  <div className="text-lg text-green-400 font-bold">Day 14</div>
-                  <div className="text-xs text-white">Third review (5 min)</div>
-                </div>
-              </div>
-            </div>
-
-            <h4 className="text-white font-semibold pt-2">Implementing Spaced Repetition</h4>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Flashcards:</strong> Create physical or digital
-                  flashcards. Review new cards daily, then move cards you know well to a "review
-                  less often" pile. Cards you struggle with stay in the daily pile.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Leitner System:</strong> Use 3-5 boxes. New cards
-                  start in Box 1 (review daily). If you get a card right, it moves to the next box
-                  (reviewed less frequently). If wrong, it returns to Box 1.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Digital apps:</strong> Apps like Anki or Quizlet
-                  use algorithms to schedule reviews at optimal intervals automatically.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Study calendar:</strong> Mark review dates on your
-                  calendar when you first learn a topic. Treat review sessions as non-negotiable
-                  appointments.
-                </span>
-              </li>
-            </ul>
-
-            <h4 className="text-white font-semibold pt-2">Why Cramming Fails</h4>
-            <p>
-              Cramming the night before feels productive because the information is fresh in your
-              short-term memory. However, short-term memory decays rapidly — within 24-48 hours, you
-              may have forgotten 70% of what you crammed. Spaced repetition builds memories that
-              last weeks, months, and even years, because each review session reinforces the neural
-              connections.
-            </p>
-
-            <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
-              <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white">
-                Start early. Spaced repetition requires time between reviews to work. If you start
-                revising 6 weeks before your exam, you can review each topic 4-5 times. If you start
-                2 days before, you can only cram — and most of it will be forgotten by the time you
-                sit the exam.
-              </p>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* InlineCheck after 02 */}
-        <InlineCheck
-          question="In spaced repetition, what happens to the review intervals as you successfully recall information?"
-          correctAnswer="The intervals between reviews increase over time. After your first review (Day 1 to Day 2, just one day apart), the gaps get progressively longer (Day 2 to Day 5 is three days, Day 5 to Day 14 is nine days). This is because each successful recall strengthens the memory, so it takes longer to fade."
-        />
-
-        {/* 03 - Active Recall Techniques */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">
-              03
-            </span>
-            <h3 className="text-lg font-bold text-white">Active Recall Techniques</h3>
-          </div>
-          <div className="space-y-3 text-sm text-white leading-relaxed">
-            <p>
-              Active recall is the practice of deliberately trying to retrieve information from
-              memory without looking at your notes. It is the opposite of passive re-reading and is
-              arguably the most powerful study technique available. Every time you struggle to
-              remember something and then successfully recall it, you strengthen that memory
-              significantly.
-            </p>
-
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <div className="flex items-center gap-2 mb-3">
-                <Zap className="w-4 h-4 text-green-400" />
-                <h4 className="text-white font-semibold text-sm">Active Recall Methods</h4>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div className="bg-white/5 rounded-lg p-3">
-                  <p className="text-xs font-semibold text-green-400 mb-2">Flashcards</p>
-                  <ul className="space-y-1.5 text-xs text-white">
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-400 mt-0.5">•</span>
-                      <span>Write a question on one side, the answer on the other</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-400 mt-0.5">•</span>
-                      <span>Test yourself without peeking at the answer first</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-400 mt-0.5">•</span>
-                      <span>Great for formulae, definitions, and key facts</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-400 mt-0.5">•</span>
-                      <span>Portable — revise on your break at work or on the commute</span>
-                    </li>
-                  </ul>
-                </div>
-                <div className="bg-white/5 rounded-lg p-3">
-                  <p className="text-xs font-semibold text-green-400 mb-2">Blank Page Method</p>
-                  <ul className="space-y-1.5 text-xs text-white">
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-400 mt-0.5">•</span>
-                      <span>After studying a topic, close your notes</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-400 mt-0.5">•</span>
-                      <span>Write everything you can remember on a blank page</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-400 mt-0.5">•</span>
-                      <span>Then compare your page with the original notes</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-400 mt-0.5">•</span>
-                      <span>Identify gaps and focus your next session on those areas</span>
-                    </li>
-                  </ul>
-                </div>
-                <div className="bg-white/5 rounded-lg p-3">
-                  <p className="text-xs font-semibold text-green-400 mb-2">Practice Questions</p>
-                  <ul className="space-y-1.5 text-xs text-white">
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-400 mt-0.5">•</span>
-                      <span>The single most effective revision technique</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-400 mt-0.5">•</span>
-                      <span>Work through past paper questions by topic area</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-400 mt-0.5">•</span>
-                      <span>Mark your own work honestly and review every mistake</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-400 mt-0.5">•</span>
-                      <span>Redo questions you got wrong after revising the topic</span>
-                    </li>
-                  </ul>
-                </div>
-                <div className="bg-white/5 rounded-lg p-3">
-                  <p className="text-xs font-semibold text-green-400 mb-2">Teaching Others</p>
-                  <ul className="space-y-1.5 text-xs text-white">
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-400 mt-0.5">•</span>
-                      <span>Explaining a concept to someone else forces deep understanding</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-400 mt-0.5">•</span>
-                      <span>Study with a mate and take turns explaining topics</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-400 mt-0.5">•</span>
-                      <span>
-                        If you cannot explain it simply, you do not understand it well enough
-                      </span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-400 mt-0.5">•</span>
-                      <span>Even explaining aloud to yourself or a rubber duck helps</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <h4 className="text-white font-semibold pt-2">The Cornell Note-Taking Method</h4>
-            <p>
-              The Cornell method turns your notes into a built-in active recall tool. Divide each
-              page into three sections: a narrow left column for cues and questions, a wide right
-              column for your main notes, and a bottom strip for a summary.
-            </p>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Right column:</strong> Write your main notes during
-                  the lesson or reading session
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Left column:</strong> After the session, write
-                  questions or keywords that relate to the notes
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Bottom strip:</strong> Write a brief summary of the
-                  entire page in your own words
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">To revise:</strong> Cover the right column and test
-                  yourself using only the left column cues
-                </span>
-              </li>
-            </ul>
-
-            <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
-              <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white">
-                The most important part of active recall is the struggle. When you cannot quite
-                remember something and have to work hard to retrieve it, that is when the strongest
-                learning happens. Do not give in and look at your notes too quickly — give yourself
-                at least 30 seconds of genuine effort before checking.
-              </p>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* 04 - Time Management for Study */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.25 }}
-          className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">
-              04
-            </span>
-            <h3 className="text-lg font-bold text-white">Time Management for Study</h3>
-          </div>
-          <div className="space-y-3 text-sm text-white leading-relaxed">
-            <p>
-              As an apprentice, you are juggling work on site, college days, personal life, and
-              revision. Effective time management is not about finding more hours — it is about
-              using the hours you have more effectively. Even 20-30 minutes of focused, active study
-              is better than 2 hours of distracted, passive reading.
-            </p>
-
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <div className="flex items-center gap-2 mb-3">
-                <Clock className="w-4 h-4 text-green-400" />
-                <h4 className="text-white font-semibold text-sm">The Pomodoro Technique</h4>
-              </div>
-              <p className="text-xs text-white mb-3">
-                The Pomodoro Technique uses timed intervals to maintain focus and prevent mental
-                fatigue. It is particularly effective for people who struggle to concentrate for
-                long periods.
-              </p>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3 text-center">
-                  <div className="text-lg text-green-400 font-bold">25 min</div>
-                  <div className="text-xs text-white">Focused study</div>
-                </div>
-                <div className="bg-white/5 rounded-lg p-3 text-center">
-                  <div className="text-lg text-green-400 font-bold">5 min</div>
-                  <div className="text-xs text-white">Short break</div>
-                </div>
-                <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3 text-center">
-                  <div className="text-lg text-green-400 font-bold">x 4</div>
-                  <div className="text-xs text-white">Repeat 4 times</div>
-                </div>
-                <div className="bg-white/5 rounded-lg p-3 text-center">
-                  <div className="text-lg text-green-400 font-bold">15-30 min</div>
-                  <div className="text-xs text-white">Long break</div>
-                </div>
-              </div>
-            </div>
-
-            <h4 className="text-white font-semibold pt-2">Sample Weekly Study Timetable</h4>
-            <p>
-              Here is a realistic timetable for an apprentice working Monday to Friday with college
-              one day per week. Adjust to suit your own schedule — the key is consistency.
-            </p>
-
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <div className="space-y-2 text-xs text-white">
-                <div className="grid grid-cols-3 gap-2 pb-2 border-b border-white/10">
-                  <span className="font-semibold text-white">Day</span>
-                  <span className="font-semibold text-white">Activity</span>
-                  <span className="font-semibold text-white">Duration</span>
-                </div>
-                <div className="grid grid-cols-3 gap-2">
-                  <span>Monday</span>
-                  <span>Maths practice questions</span>
-                  <span className="text-green-400">30 min (evening)</span>
-                </div>
-                <div className="grid grid-cols-3 gap-2">
-                  <span>Tuesday</span>
-                  <span>English reading + writing practice</span>
-                  <span className="text-green-400">30 min (evening)</span>
-                </div>
-                <div className="grid grid-cols-3 gap-2">
-                  <span>Wednesday</span>
-                  <span>College day — review notes after</span>
-                  <span className="text-green-400">20 min (evening)</span>
-                </div>
-                <div className="grid grid-cols-3 gap-2">
-                  <span>Thursday</span>
-                  <span>Flashcard review (spaced repetition)</span>
-                  <span className="text-green-400">20 min (evening)</span>
-                </div>
-                <div className="grid grid-cols-3 gap-2">
-                  <span>Friday</span>
-                  <span className="text-white">Rest day — no revision</span>
-                  <span className="text-white">—</span>
-                </div>
-                <div className="grid grid-cols-3 gap-2">
-                  <span>Saturday</span>
-                  <span>Past paper under timed conditions</span>
-                  <span className="text-green-400">90 min (morning)</span>
-                </div>
-                <div className="grid grid-cols-3 gap-2">
-                  <span>Sunday</span>
-                  <span>Review mistakes + weak topics</span>
-                  <span className="text-green-400">45 min (afternoon)</span>
-                </div>
-              </div>
-            </div>
-
-            <h4 className="text-white font-semibold pt-2">Making the Most of Short Windows</h4>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Commute:</strong> Review flashcards on the bus or
-                  train (5-15 minutes)
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Lunch break:</strong> Do 5 quick practice questions
-                  on your phone (10 minutes)
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Waiting time:</strong> Revise mental maths while
-                  waiting for materials or in a queue (5 minutes)
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Before bed:</strong> Review the day's flashcards —
-                  your brain consolidates memories during sleep (10 minutes)
-                </span>
-              </li>
-            </ul>
-
-            <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
-              <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white">
-                Tell your employer and family about your upcoming exams. They may offer support such
-                as flexible hours, reduced overtime, or a quiet space to study. Most employers
-                understand that your qualifications benefit them too and will be supportive if you
-                ask.
-              </p>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* InlineCheck after 04 */}
-        <InlineCheck
-          question="In the Pomodoro Technique, how long is a single focused study session before taking a break?"
-          correctAnswer="A single Pomodoro is 25 minutes of focused study followed by a 5-minute break. After completing four Pomodoros (about 2 hours total), you take a longer break of 15-30 minutes. This structure prevents mental fatigue and maintains high concentration throughout your study session."
-        />
-
-        {/* 05 - Managing Exam Stress */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">
-              05
-            </span>
-            <h3 className="text-lg font-bold text-white">Managing Exam Stress</h3>
-          </div>
-          <div className="space-y-3 text-sm text-white leading-relaxed">
-            <p>
-              Some nervousness before an exam is completely normal — and even helpful. A small
-              amount of adrenaline sharpens your focus and helps you perform better. However,
-              excessive anxiety can interfere with your ability to think clearly, recall
-              information, and manage your time. Here is how to keep stress under control.
-            </p>
-
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <div className="flex items-center gap-2 mb-3">
-                <Heart className="w-4 h-4 text-green-400" />
-                <h4 className="text-white font-semibold text-sm">Breathing Techniques</h4>
-              </div>
-              <p className="text-xs text-white mb-3">
-                Controlled breathing is the fastest way to calm your nervous system. These
-                techniques can be done quietly at your desk during the exam:
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
-                  <p className="text-xs font-semibold text-green-400 mb-1">4-7-8 Technique</p>
-                  <p className="text-xs text-white">
-                    Breathe in for 4 counts, hold for 7 counts, breathe out slowly for 8 counts.
-                    Repeat 3-4 times. This activates your parasympathetic nervous system and reduces
-                    heart rate.
-                  </p>
-                </div>
-                <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
-                  <p className="text-xs font-semibold text-green-400 mb-1">Box Breathing</p>
-                  <p className="text-xs text-white">
-                    Breathe in for 4 counts, hold for 4 counts, breathe out for 4 counts, hold for 4
-                    counts. Repeat until calm. Used by military and emergency services for
-                    high-pressure situations.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <h4 className="text-white font-semibold pt-2">Positive Mindset Strategies</h4>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Reframe anxiety:</strong> Replace "I'm going to
-                  fail" with "I have prepared and I will do my best." Your inner voice affects your
-                  performance.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Recall past successes:</strong> Remind yourself of
-                  challenges you have overcome before — you have already proven you can learn and
-                  adapt.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Visualise success:</strong> Spend a few minutes
-                  imagining yourself in the exam, feeling calm, reading questions clearly, and
-                  writing confident answers.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Normalise nerves:</strong> Accept that some anxiety
-                  is normal. It shows you care about the result — and that energy can be channelled
-                  into focus.
-                </span>
-              </li>
-            </ul>
-
-            <h4 className="text-white font-semibold pt-2">Physical Wellbeing Before Exams</h4>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Sleep:</strong> Get 7-8 hours the night before.
-                  Your brain consolidates memories during sleep — pulling an all-nighter is
-                  counterproductive.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Nutrition:</strong> Eat a balanced meal before the
-                  exam. Avoid excessive caffeine which can increase jitteriness. Water is essential
-                  for concentration.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Exercise:</strong> Even a 20-minute walk before the
-                  exam can reduce anxiety and improve focus by releasing endorphins.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Avoid last-minute cramming:</strong> Do not study
-                  new material on exam day. Light review of flashcards is fine, but panic-reading
-                  new topics will increase anxiety.
-                </span>
-              </li>
-            </ul>
-
-            <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
-              <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white">
-                The single best way to reduce exam anxiety is thorough preparation over time. When
-                you have practised enough questions under timed conditions, you will feel confident
-                because you know what to expect. There are no surprises when you are well-prepared.
-                Preparation is the ultimate stress-reduction strategy.
-              </p>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* 06 - Past Paper Practice */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.35 }}
-          className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">
-              06
-            </span>
-            <h3 className="text-lg font-bold text-white">Past Paper Practice</h3>
-          </div>
-          <div className="space-y-3 text-sm text-white leading-relaxed">
-            <p>
-              Past papers are the closest thing you have to seeing the actual exam in advance. Used
-              properly, they are the single most valuable revision resource available. They
-              familiarise you with the question style, help you practise time management, and
-              identify your weak areas before the real exam.
-            </p>
-
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <div className="flex items-center gap-2 mb-3">
-                <BookOpen className="w-4 h-4 text-green-400" />
-                <h4 className="text-white font-semibold text-sm">Where to Find Past Papers</h4>
-              </div>
-              <ul className="space-y-2 text-xs text-white">
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400 mt-0.5">•</span>
-                  <span>
-                    <strong className="text-white">Awarding body websites:</strong> City & Guilds,
-                    Pearson/Edexcel, NCFE, and Open Awards publish sample papers and past papers
-                    online
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400 mt-0.5">•</span>
-                  <span>
-                    <strong className="text-white">Your college or training provider:</strong> They
-                    often have printed copies available in the library or learning resource centre
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400 mt-0.5">•</span>
-                  <span>
-                    <strong className="text-white">Ask your tutor:</strong> They may have additional
-                    sample papers, specimen papers, or practice booklets
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400 mt-0.5">•</span>
-                  <span>
-                    <strong className="text-white">Free revision websites:</strong> Sites like BBC
-                    Bitesize and Skills Workshop offer free practice papers and questions
-                  </span>
-                </li>
-              </ul>
-            </div>
-
-            <h4 className="text-white font-semibold pt-2">The Three-Pass Strategy</h4>
-            <p>
-              Do not just do past papers once. Use them strategically in three rounds to maximise
-              their value:
-            </p>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">First pass (learning):</strong> Work through the
-                  paper untimed. Check the mark scheme as you go. Use it as a learning tool to
-                  understand what the examiners expect.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Second pass (practice):</strong> Complete the paper
-                  under timed conditions without looking at the mark scheme. Mark it honestly
-                  afterwards and note your score.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Third pass (targeted):</strong> Focus only on the
-                  question types you got wrong in the second pass. Revise those topics, then
-                  reattempt just those questions.
-                </span>
-              </li>
-            </ul>
-
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <div className="flex items-center gap-2 mb-3">
-                <BarChart3 className="w-4 h-4 text-green-400" />
-                <h4 className="text-white font-semibold text-sm">Self-Marking Tips</h4>
-              </div>
-              <ul className="space-y-2 text-xs text-white">
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400 mt-0.5">•</span>
-                  <span>
-                    <strong className="text-white">Be honest:</strong> Do not give yourself the
-                    benefit of the doubt. If your answer does not match the mark scheme, it is
-                    wrong.
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400 mt-0.5">•</span>
-                  <span>
-                    <strong className="text-white">Check for method marks:</strong> In maths, even a
-                    wrong final answer can earn marks if the working shows the correct method.
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400 mt-0.5">•</span>
-                  <span>
-                    <strong className="text-white">Read mark scheme notes:</strong> They often
-                    include acceptable alternative answers you might not have considered.
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400 mt-0.5">•</span>
-                  <span>
-                    <strong className="text-white">Track your scores:</strong> Keep a log of your
-                    scores with dates. Seeing improvement over time is powerfully motivating.
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400 mt-0.5">•</span>
-                  <span>
-                    <strong className="text-white">Error analysis:</strong> For every wrong answer,
-                    write down why you got it wrong (misread question, calculation error, did not
-                    know the topic) so you can address the root cause.
-                  </span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
-              <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white">
-                Aim to complete at least 3-4 full past papers under timed conditions before your
-                exam. The first paper will feel challenging, but by the third or fourth, you will
-                know the format inside out and can focus entirely on answering the questions
-                accurately. Familiarity with the format reduces anxiety dramatically.
-              </p>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* InlineCheck after 06 */}
-        <InlineCheck
-          question="In the three-pass strategy for past papers, what is the purpose of the second pass?"
-          correctAnswer="The second pass is a practice run under exam conditions. You complete the paper timed, without looking at the mark scheme, then mark it honestly afterwards. This simulates the real exam experience and gives you an accurate picture of your current ability level, including your time management."
-        />
-
-        {/* 07 - Memory Techniques for Formulae */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">
-              07
-            </span>
-            <h3 className="text-lg font-bold text-white">Memory Techniques for Formulae</h3>
-          </div>
-          <div className="space-y-3 text-sm text-white leading-relaxed">
-            <p>
-              Remembering formulae, key facts, and technical values is essential for both your
-              Functional Skills exams and your electrical apprenticeship. Memory techniques
-              (mnemonics) create strong associations in your brain that make recall much easier
-              under pressure. The more vivid, unusual, or personal the association, the stronger the
-              memory.
-            </p>
-
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <div className="flex items-center gap-2 mb-3">
-                <Zap className="w-4 h-4 text-green-400" />
-                <h4 className="text-white font-semibold text-sm">Electrical Formulae Mnemonics</h4>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
-                  <p className="text-xs font-semibold text-green-400 mb-1">Ohm's Law Triangle</p>
-                  <p className="text-xs text-white mb-1">V = I x R</p>
-                  <p className="text-xs text-white">
-                    "<strong className="text-white">V</strong>ery{' '}
-                    <strong className="text-white">I</strong>cy{' '}
-                    <strong className="text-white">R</strong>oads" — picture yourself driving on
-                    very icy roads while thinking about voltage, current, and resistance.
-                  </p>
-                </div>
-                <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
-                  <p className="text-xs font-semibold text-green-400 mb-1">Power Formula</p>
-                  <p className="text-xs text-white mb-1">P = V x I</p>
-                  <p className="text-xs text-white">
-                    "<strong className="text-white">P</strong>ut{' '}
-                    <strong className="text-white">V</strong>olts{' '}
-                    <strong className="text-white">I</strong>n" — power equals voltage multiplied by
-                    current. Picture plugging something in to get power.
-                  </p>
-                </div>
-                <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
-                  <p className="text-xs font-semibold text-green-400 mb-1">
-                    Three-Phase Colour Codes
-                  </p>
-                  <p className="text-xs text-white mb-1">L1=Brown, L2=Black, L3=Grey</p>
-                  <p className="text-xs text-white">
-                    "<strong className="text-white">B</strong>rown{' '}
-                    <strong className="text-white">B</strong>lack{' '}
-                    <strong className="text-white">G</strong>rey" — "BBG" like a barbecue (BBQ) but
-                    with a G for grey.
-                  </p>
-                </div>
-                <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
-                  <p className="text-xs font-semibold text-green-400 mb-1">Area Formula</p>
-                  <p className="text-xs text-white mb-1">Area = Length x Width</p>
-                  <p className="text-xs text-white">
-                    Imagine a rectangular room. To find how much flooring you need, you multiply the
-                    two sides — just like measuring for carpet on a job.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <h4 className="text-white font-semibold pt-2">The Triangle Method</h4>
-            <p>
-              For any formula with three variables where one equals the other two multiplied (like V
-              = I x R), you can use a triangle to find any value:
-            </p>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  Place the variable that equals the product (V) at the top of the triangle
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>Place the other two variables (I and R) at the bottom left and right</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  Cover the variable you want to find. What remains is the formula you need.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  Cover V: you see I x R (side by side = multiply). Cover I: you see V over R
-                  (above/below = divide). Cover R: you see V over I (divide).
-                </span>
-              </li>
-            </ul>
-
-            <h4 className="text-white font-semibold pt-2">Chunking for Numbers</h4>
-            <p>
-              Break large amounts of numerical information into smaller, grouped chunks. Your
-              working memory can hold about 7 items at once — chunking helps you work within this
-              limit.
-            </p>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Cable sizes by application:</strong> Lighting (1.0,
-                  1.5 mm²), sockets (2.5 mm²), cookers (6.0, 10.0 mm²), showers (10.0, 16.0 mm²)
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">MCB ratings by type:</strong> Type B (general,
-                  3-5x), Type C (motors, 5-10x), Type D (transformers, 10-20x)
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Metric conversions:</strong> Group the "1,000s"
-                  together — 1 km = 1,000 m, 1 m = 1,000 mm, 1 kg = 1,000 g, 1 litre = 1,000 ml
-                </span>
-              </li>
-            </ul>
-
-            <h4 className="text-white font-semibold pt-2">Visual Association</h4>
-            <p>
-              Link abstract concepts to vivid mental images. The more unusual or exaggerated the
-              image, the easier it is to remember:
-            </p>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  Picture a <strong className="text-white">waterfall</strong> when thinking about
-                  current flow — water flowing through a pipe is like current flowing through a
-                  conductor
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  Imagine a <strong className="text-white">narrow pipe</strong> for high resistance
-                  and a <strong className="text-white">wide pipe</strong> for low resistance
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  Think of <strong className="text-white">percentages as slices of a pie</strong> —
-                  25% is one quarter, 50% is half, 75% is three quarters
-                </span>
-              </li>
-            </ul>
-
-            <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
-              <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white">
-                The best mnemonics are personal ones. Create your own associations that mean
-                something to you. A mnemonic someone else invented is useful, but one you created
-                yourself — connected to your own experiences — will be far easier to recall because
-                it is encoded with personal meaning.
-              </p>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* 08 - Creating a Study Plan */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.45 }}
-          className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">
-              08
-            </span>
-            <h3 className="text-lg font-bold text-white">Creating a Study Plan</h3>
-          </div>
-          <div className="space-y-3 text-sm text-white leading-relaxed">
-            <p>
-              A structured study plan is the foundation of effective exam preparation. Without a
-              plan, it is easy to waste time revising topics you already know whilst neglecting
-              areas that need work. A good plan gives you direction, accountability, and the
-              confidence that you are covering everything you need to.
-            </p>
-
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <div className="flex items-center gap-2 mb-3">
-                <Calendar className="w-4 h-4 text-green-400" />
-                <h4 className="text-white font-semibold text-sm">Step-by-Step Plan Creation</h4>
-              </div>
-              <div className="space-y-3">
-                <div className="bg-white/5 rounded-lg p-3">
-                  <p className="text-xs font-semibold text-green-400 mb-1">
-                    Step 1 — Know Your Exam Dates
-                  </p>
-                  <p className="text-xs text-white">
-                    Write down every exam date and work backwards to count the available weeks. If
-                    your maths exam is in 8 weeks, you have 8 weeks of revision to plan.
-                  </p>
-                </div>
-                <div className="bg-white/5 rounded-lg p-3">
-                  <p className="text-xs font-semibold text-green-400 mb-1">
-                    Step 2 — List All Topics
-                  </p>
-                  <p className="text-xs text-white">
-                    Get the full specification from your awarding body. List every topic area for
-                    each exam. For Level 1 Maths, this might be: number, fractions, decimals,
-                    percentages, measurement, area, perimeter, data handling.
-                  </p>
-                </div>
-                <div className="bg-white/5 rounded-lg p-3">
-                  <p className="text-xs font-semibold text-green-400 mb-1">
-                    Step 3 — Traffic Light Assessment
-                  </p>
-                  <p className="text-xs text-white">
-                    Rate each topic: <strong className="text-green-400">Green</strong> = confident,{' '}
-                    <strong className="text-yellow-400">Amber</strong> = need some practice,{' '}
-                    <strong className="text-red-400">Red</strong> = need significant work. This
-                    tells you where to focus your time.
-                  </p>
-                </div>
-                <div className="bg-white/5 rounded-lg p-3">
-                  <p className="text-xs font-semibold text-green-400 mb-1">
-                    Step 4 — Allocate Topics to Weeks
-                  </p>
-                  <p className="text-xs text-white">
-                    Prioritise red and amber topics in the early weeks when you have the most time.
-                    Schedule green topics as lighter review sessions nearer the exam.
-                  </p>
-                </div>
-                <div className="bg-white/5 rounded-lg p-3">
-                  <p className="text-xs font-semibold text-green-400 mb-1">
-                    Step 5 — Build in Past Papers
-                  </p>
-                  <p className="text-xs text-white">
-                    Schedule your first timed past paper about halfway through your revision (week 4
-                    of 8). Schedule 2-3 more in the final 2 weeks. These are your reality checks.
-                  </p>
-                </div>
-                <div className="bg-white/5 rounded-lg p-3">
-                  <p className="text-xs font-semibold text-green-400 mb-1">
-                    Step 6 — Include Rest Days
-                  </p>
-                  <p className="text-xs text-white">
-                    At least one full rest day per week. Your brain consolidates memories during
-                    rest. A sustainable plan beats an intense one you abandon after 3 days.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <h4 className="text-white font-semibold pt-2">Setting SMART Revision Goals</h4>
-            <p>Vague goals like "revise maths" are unhelpful. Instead, set SMART goals:</p>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Specific:</strong> "Complete 10 percentage
-                  questions from the practice book"
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Measurable:</strong> "Score at least 7 out of 10 to
-                  demonstrate understanding"
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Achievable:</strong> Set targets you can
-                  realistically meet in the time available
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Relevant:</strong> Focus on topics that will appear
-                  in your specific exam
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  <strong className="text-white">Time-bound:</strong> "By the end of this study
-                  session" or "by Saturday"
-                </span>
-              </li>
-            </ul>
-
-            <h4 className="text-white font-semibold pt-2">Tracking Progress</h4>
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <div className="flex items-center gap-2 mb-3">
-                <Target className="w-4 h-4 text-green-400" />
-                <h4 className="text-white font-semibold text-sm">Weekly Review Checklist</h4>
-              </div>
-              <ul className="space-y-2 text-xs text-white">
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400 mt-0.5">•</span>
-                  <span>What topics did I cover this week? Did I complete everything planned?</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400 mt-0.5">•</span>
-                  <span>What topics did I find easy? (Move these to less frequent review)</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400 mt-0.5">•</span>
-                  <span>What topics did I struggle with? (Schedule extra time next week)</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400 mt-0.5">•</span>
-                  <span>What is my practice paper score trend? (Is it improving?)</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400 mt-0.5">•</span>
-                  <span>Do I need to adjust my plan for next week? (Be flexible)</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400 mt-0.5">•</span>
-                  <span>Am I maintaining a healthy balance? (Rest, exercise, social time)</span>
-                </li>
-              </ul>
-            </div>
-
-            <h4 className="text-white font-semibold pt-2">Adjusting Your Approach</h4>
-            <p>
-              If your scores are not improving, change your approach rather than simply studying
-              more hours:
-            </p>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  If calculation questions are consistently wrong, practise more worked examples
-                  before attempting questions alone
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  If reading comprehension is weak, read more varied texts in your daily life —
-                  articles, instructions, reports
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  If writing scores are low, focus on the marking criteria and practise structuring
-                  paragraphs with clear topic sentences
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 mt-0.5">•</span>
-                <span>
-                  If time management is the issue, practise shorter timed sections (e.g., 15-minute
-                  bursts) before attempting full papers
-                </span>
-              </li>
-            </ul>
-
-            <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
-              <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white">
-                The most successful learners are not necessarily the most talented — they are the
-                ones who consistently plan, review their performance, identify weaknesses, and
-                adjust their approach. Make this feedback loop a habit and your results will follow.
-                A written plan you actually follow is worth more than a perfect plan you abandon
-                after day one.
-              </p>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Quiz */}
-        <Quiz questions={quizQuestions} title="Study Techniques & Exam Skills Knowledge Check" />
-
-        {/* Navigation */}
-        <div className="flex items-center justify-between pt-6 border-t border-white/10">
-          <Link
-            to="/study-centre/apprentice/functional-skills/module5/section2"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
+          <ConceptBlock
+            title="The wrong answer that almost works"
+            plainEnglish="Before you pick an option, ask what QUESTION it would be the right answer to. If it answers an earlier step rather than the one actually asked, that is the trap, not the answer."
           >
-            <ArrowLeft className="w-4 h-4" />
-            Level 2 Practice
-          </Link>
-          <Link
-            to="/study-centre/apprentice/functional-skills/module5/section4"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium text-white bg-green-500 hover:bg-green-600 transition-colors touch-manipulation shadow-lg shadow-green-500/25"
+            <p>
+              In a multiple-choice question, at least one wrong option is usually not a random
+              number — it is exactly what you get if you stop one step early, or apply only the
+              first instruction and ignore the second. Recognising the shape of a distractor is a
+              specific skill: if an option matches an intermediate figure you calculated on the way
+              to the real answer, that is the sign you have found the trap, not the sign you have
+              found the answer.
+            </p>
+            <p>
+              The fix is mechanical rather than instinctive. Before selecting an option, state to
+              yourself what question that option would be the correct answer to. If it answers "what
+              is the price before the discount" and the question asked for the price after it, the
+              option is a distractor however confidently it sits in the list.
+            </p>
+          </ConceptBlock>
+
+          <WorkedExample
+            question="A job costs £640 in materials and labour. The company adds a 15% markup, then a customer negotiates a flat £20 discount off the marked-up price. Which is the correct final price: £736, £716, £644, or £656?"
+            steps={[
+              {
+                calc: 'Apply the markup first: £640 × 1.15 = £736',
+                note: 'A real, correct figure — but only the price with markup applied.',
+              },
+              {
+                calc: '£736 is on the list, but check what it answers',
+                note: 'It answers "what is the marked-up price", not the question asked, because the £20 discount has not been applied yet.',
+              },
+              { calc: 'Apply the discount to the marked-up price: £736 − £20 = £716', note: '' },
+            ]}
+            answer="£716"
+            watchOut="£736 is the classic distractor: a real, correctly-calculated intermediate value offered as if it were the final answer. £644 and £656 are the same idea in reverse — numbers from the question recombined the wrong way rather than genuinely random guesses."
+          />
+
+          <WorkedExample
+            question="A quote is £480 net. VAT at 20% is added, then the customer pays a £40 deposit off the total. How much is still owed? Options: £576, £536, £440, £460."
+            steps={[
+              {
+                calc: 'VAT-inclusive total: £480 × 1.20 = £576',
+                note: 'Correct, but this is the total BEFORE the deposit.',
+              },
+              {
+                calc: '£576 is on the list — check what it answers',
+                note: 'It answers "what is the total after VAT", not "how much is still owed after the deposit".',
+              },
+              { calc: 'Subtract the deposit: £576 − £40 = £536', note: '' },
+            ]}
+            answer="£536"
+            watchOut="Every option here is a real number that appears somewhere in a correct or half-correct working — £440 comes from subtracting £40 from the net price instead of the gross one; £460 comes from a VAT slip. Distractors on VAT questions are almost always built by applying the right operation to the wrong figure."
+          />
+
+          <CommonMistake
+            title="Picking the first number that matches"
+            whatHappens="You calculate one step correctly, see that exact figure sitting in the options list, and select it with relief — without checking whether the question actually stopped at that step."
+            doInstead="Before selecting an option, reread the last sentence of the question. If it asks for something 'after' a second operation — a discount, a deposit, a refund — the figure from before that operation is never the answer, however confidently it appears in the list."
+          />
+
+          <SectionRule />
+
+          <TryIt
+            question="A retailer buys stock for £250 and adds a 40% markup. The customer then gets a 10% loyalty discount off the marked-up price. What is the final price? Options: £350, £315, £275, £300."
+            steps={[
+              {
+                calc: 'Markup: £250 × 1.40 = £350',
+                note: 'On the list, but this is pre-discount.',
+              },
+              { calc: 'Discount off the marked-up price: £350 × 0.90 = £315', note: '' },
+            ]}
+            answer="£315"
+          />
+
+          <InlineCheck
+            id="m5s3-spaced-repetition"
+            question="In spaced repetition, what happens to the review intervals as you successfully recall information?"
+            correctAnswer="The intervals between reviews increase over time. After your first review (Day 1 to Day 2, just one day apart), the gaps get progressively longer (Day 2 to Day 5 is three days, Day 5 to Day 14 is nine days). This is because each successful recall strengthens the memory, so it takes longer to fade."
+          />
+
+          <SectionRule />
+
+          {/* ── 03 ─────────────────────────────────────────────────── */}
+          <ContentEyebrow>03 · Calculator or mental — deciding fast</ContentEyebrow>
+
+          <ConceptBlock
+            title="Not every number needs a calculator, and reaching for one costs time you don't get back"
+            onSite="Round numbers, halves, quarters and 10%/50% multiples are worth doing in your head. Several chained operations on an uneven decimal are worth a calculator. Deciding takes two seconds; getting it wrong either way costs a lot more."
           >
-            Portfolio Building
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-      </div>
-    </div>
+            <p>
+              Some figures reduce to a friendly mental route the moment you look at them: 10%, 25%
+              and 50% of anything, doubling, halving, and round pounds. Working those out on a
+              calculator is not wrong, but it costs seconds you will want back later in the paper,
+              and it is one more place to mistype a number. Other figures genuinely do not reduce —
+              several operations chained together on a number with several decimal places is exactly
+              where a mental slip creeps in unnoticed, because there is no way to sense-check the
+              arithmetic as you go.
+            </p>
+            <p>
+              The decision is worth making deliberately rather than by habit: glance at the numbers
+              before you start, decide which route the question needs, and commit to it. Habitually
+              reaching for a calculator on everything is as much a time cost as habitually avoiding
+              one.
+            </p>
+          </ConceptBlock>
+
+          <WorkedExample
+            question="A 40% discount is applied to a £50 item. Decide whether this needs a calculator, and find the answer."
+            nonCalculator
+            steps={[
+              {
+                calc: '10% of £50 = £5',
+                note: 'The easiest percentage to find mentally — move the decimal point one place.',
+              },
+              { calc: '40% = 4 × £5 = £20', note: '' },
+              { calc: '£50 − £20 = £30', note: '' },
+            ]}
+            answer="£30, done entirely mentally"
+            watchOut="Reaching for a calculator for a sum like this costs you seconds you will want back later in the paper. Round percentages of round numbers are exactly the kind of question worth being able to do without one."
+          />
+
+          <WorkedExample
+            question="A job's total cost of £1,247.60 is split three ways after a 12.5% deduction for overheads. Decide whether this needs a calculator, and find the answer."
+            steps={[
+              {
+                calc: '12.5% of £1,247.60 = £155.95',
+                note: 'Not a round percentage of a round number — this is where a calculator earns its keep.',
+              },
+              { calc: '£1,247.60 − £155.95 = £1,091.65', note: '' },
+              { calc: '£1,091.65 ÷ 3 = £363.88', note: 'To the nearest penny.' },
+            ]}
+            answer="£363.88 per share (to the nearest penny)"
+            watchOut="Three chained operations on a non-round decimal is exactly where mental arithmetic starts producing errors under pressure — this one genuinely needs a calculator, and pretending otherwise to save time is a false economy."
+          />
+
+          <SectionRule />
+
+          <TryIt
+            question="Decide calculator or mental, then solve: 25% of £360."
+            nonCalculator
+            steps={[
+              { calc: 'A quarter is one of the percentages worth doing instantly', note: '' },
+              { calc: '£360 ÷ 4 = £90', note: '' },
+            ]}
+            answer="£90, mental"
+          />
+
+          <TryIt
+            question="Decide calculator or mental, then solve: a cable run of 17.35 m split into 4 equal sections."
+            steps={[
+              {
+                calc: '17.35 does not reduce to a friendly mental fraction',
+                note: 'Calculator needed.',
+              },
+              { calc: '17.35 ÷ 4 = 4.3375', note: '' },
+              { calc: 'Rounded to 2 decimal places: 4.34 m', note: '' },
+            ]}
+            answer="4.34 m per section (to 2 d.p.), calculator"
+          />
+
+          <SectionRule />
+
+          {/* ── 04 ─────────────────────────────────────────────────── */}
+          <ContentEyebrow>04 · Estimating first so an error announces itself</ContentEyebrow>
+
+          <ConceptBlock title="Estimate before you calculate, so a slipped decimal point stands out">
+            <p>
+              Round every figure to one significant figure, do the sum roughly, and only then do the
+              precise calculation — comparing the two. A precise answer that is wildly different
+              from the rough one is almost always a place-value error — a decimal point in the wrong
+              place, or a missed digit — rather than a wrong method. This technique earns its keep
+              most on calculator-heavy multi-step questions, where a single mistyped keystroke can
+              produce an answer that looks perfectly plausible on its own and only reveals itself
+              against an estimate.
+            </p>
+            <p>
+              The estimate does not need to be accurate — it needs to be in the right order of
+              magnitude. A rough figure that is "close enough" to the precise one is the whole point
+              of doing it; a precise figure ten times too large or too small will miss that target
+              by a mile, which is exactly what makes the check work.
+            </p>
+          </ConceptBlock>
+
+          <WorkedExample
+            question="A job needs 6 circuit runs of cable: 18.4 m, 22.7 m, 9.3 m, 31.6 m, 14.2 m and 27.8 m, priced at £2.85 per metre. Estimate the total cost, then calculate it precisely, and use the estimate to catch a place-value error."
+            steps={[
+              {
+                calc: 'Round each length to the nearest 10 m: 20 + 20 + 10 + 30 + 10 + 30 = 120 m',
+                note: 'The rough total.',
+              },
+              {
+                calc: 'Round the price to £3/m for the estimate: 120 × £3 = £360',
+                note: 'A rough figure to compare against.',
+              },
+              {
+                calc: 'Precise total length: 18.4 + 22.7 + 9.3 + 31.6 + 14.2 + 27.8 = 124.0 m',
+                note: '',
+              },
+              { calc: 'Precise cost: 124.0 × £2.85 = £353.40', note: '' },
+              {
+                calc: 'Compare: £353.40 is close to the £360 estimate',
+                note: 'The precise figure passes the sense check.',
+              },
+            ]}
+            answer="£353.40"
+            watchOut="If a slipped decimal point had produced £35.34 or £3,534.00 instead, the £360 estimate would have caught it immediately — both are wildly off the rough figure. The estimate only needs to be roughly right; it is not meant to be accurate on its own."
+          />
+
+          <SectionRule />
+
+          <TryIt
+            question="A job needs 4 circuit runs of cable: 12.6 m, 27.3 m, 8.9 m and 16.4 m, priced at £3.15 per metre. Estimate the total cost, then calculate precisely, and check the two agree."
+            steps={[
+              { calc: 'Rounded estimate: 10 + 30 + 10 + 20 = 70 m; 70 × £3 = £210', note: '' },
+              { calc: 'Precise length: 12.6 + 27.3 + 8.9 + 16.4 = 65.2 m', note: '' },
+              { calc: 'Precise cost: 65.2 × £3.15 = £205.38', note: '' },
+            ]}
+            answer="£205.38, close to the £210 estimate"
+          />
+
+          <SectionRule />
+
+          {/* ── 05 ─────────────────────────────────────────────────── */}
+          <ContentEyebrow>05 · Showing your method</ContentEyebrow>
+
+          <ConceptBlock
+            title="Method earns marks even when the final figure is wrong"
+            onSite="A blank space with only a final answer earns nothing if that figure is wrong. The same wrong answer WITH the working shown can still recover every mark for the steps that came after the mistake."
+          >
+            <p>
+              On a multi-step calculation, marks are frequently available for correct method at each
+              stage, not only for the final number. Writing each operation as its own line, with
+              what it represents, means that an early slip does not cost every mark in the question
+              — a correct method applied to a wrong figure is still correct method, and mark schemes
+              routinely credit it. "Correct method, wrong number" recovers marks that "just an
+              answer, wrong number" cannot.
+            </p>
+            <p>
+              This is worth doing even when a question only prints a small box for the final figure.
+              Use the margin, the back of the page, or a spare line — anywhere the working actually
+              gets written down rather than done in your head and discarded.
+            </p>
+          </ConceptBlock>
+
+          <WorkedExample
+            question="A rewire is estimated at 3.5 days at 7.5 hours a day, at £28 per hour. Show full working for the total labour cost — and suppose you mistakenly calculate the daily hours as 8 instead of 7.5. Show that the working after that point can still earn credit."
+            steps={[
+              {
+                calc: 'Total hours (with the slip): 3.5 × 8 = 28 hours',
+                note: 'Wrong — 7.5 was the correct daily figure — but written clearly as its own step.',
+              },
+              {
+                calc: 'Total cost from that (wrong) hours figure: 28 × £28 = £784',
+                note: 'This step correctly applies the hourly rate to whatever the hours figure was — the METHOD here is right even though the number it used was wrong.',
+              },
+              { calc: 'Correct working: 3.5 × 7.5 = 26.25 hours', note: '' },
+              { calc: 'Correct total: 26.25 × £28 = £735', note: '' },
+            ]}
+            answer="£735 is the correct final figure; the version worked with 28 hours shows exactly where the error entered, and every step after it is methodologically sound."
+            watchOut="A blank space with only '£784' written down earns nothing once that figure turns out wrong. The same wrong answer with the working shown recovers the marks for every correct step after the slip — this is the entire reason to write working down at all."
+          />
+
+          <CommonMistake
+            title="Writing only the final number"
+            whatHappens="You calculate the whole multi-step problem in your head or on scrap paper, then write only the final figure in the answer space. If that figure is wrong — even from a single early slip — there is nothing on the page for a mark scheme to award credit against."
+            doInstead="Write every step as its own line, including what it represents, even for a calculation you did mostly in your head. It costs seconds, and it is the only way a single early mistake does not cost you every mark for the rest of the question."
+          />
+
+          <SectionRule />
+
+          <TryIt
+            question="A quote uses 4 days at 8 hours a day at £30/hr, but the working mistakenly starts from 4.5 days. Write out the (wrong) working in full, then the correct working, and say which lines of the wrong version still show valid method."
+            steps={[
+              { calc: 'Wrong hours: 4.5 × 8 = 36 hours', note: '' },
+              {
+                calc: 'Wrong cost: 36 × £30 = £1,080',
+                note: 'Correct method applied to the wrong hours figure.',
+              },
+              { calc: 'Correct hours: 4 × 8 = 32', note: '' },
+              { calc: 'Correct cost: 32 × £30 = £960', note: '' },
+            ]}
+            answer="£960 is correct. In the wrong version, the second line (hours × rate) is valid method even though the first line's day count was wrong."
+          />
+
+          <SectionRule />
+
+          {/* ── 06 ─────────────────────────────────────────────────── */}
+          <ContentEyebrow>06 · Managing time across the paper</ContentEyebrow>
+
+          <ConceptBlock
+            title="Spend time in proportion to the marks, and have a fixed rule for what to do when stuck"
+            plainEnglish="Marks tell you where your time is best spent — a 6-mark question deserves noticeably longer than a 1-mark one. Paper timing and structure vary between providers, so this page teaches the principle, not a number of minutes."
+          >
+            <p>
+              Marks are printed on the paper, and they are the best guide to how much a question is
+              "worth" your time and checking effort. A question worth six marks deserves noticeably
+              more of your time than one worth a single mark, and re-checking a one-mark answer
+              three times while an unattempted six-mark question sits further down the paper is time
+              spent in the wrong place.
+            </p>
+            <p>
+              The second half of this technique is a fixed personal rule for being stuck. If you
+              have genuinely tried a question and are not making progress, write down whatever
+              partial working you do have, mark the question to come back to, and move to one you
+              can make headway on. Paper length and timing vary between providers and papers — this
+              page will not state a number of minutes as if it were fixed, and neither should you
+              assume one from someone else's exam. What does not vary is the principle: marks guide
+              where your time goes, and a fixed rule for "stuck" protects the rest of the paper from
+              one question.
+            </p>
+          </ConceptBlock>
+
+          <WorkedExample
+            question="A paper's mark scheme awards 2 marks for question 4, 6 marks for question 9, and 1 mark for question 12. Without knowing the total time allowed, work out roughly how the time you spend on each should compare, and what your rule should be if you get stuck."
+            steps={[
+              {
+                calc: 'Compare the marks: Q9 (6) is three times Q4 (2) and six times Q12 (1)',
+                note: 'Marks are the best guide available in the absence of a stated time limit per question.',
+              },
+              {
+                calc: 'Allocate roughly in proportion',
+                note: 'Noticeably longer on Q9 than Q4, and barely any time re-checking Q12 once it is answered.',
+              },
+              {
+                calc: 'Set the stuck rule in advance',
+                note: 'If nothing is coming after a genuine attempt, note down whatever partial working exists, mark the question, and move to one you can make progress on.',
+              },
+            ]}
+            answer="Time spent roughly in proportion to the marks available, and a fixed personal rule for abandoning a stuck question and returning to it — never fixed minutes regardless of marks, and never staying on one question at the cost of others you could complete."
+            watchOut="Paper structure and timing vary between providers — check the specific format of your own assessment with your tutor rather than assume a figure from anyone else's paper. What holds regardless is that marks tell you where your time is best spent."
+          />
+
+          <Scenario
+            title="Stuck on question 6 with half the paper still to go"
+            situation="You have read question 6 three times and still cannot see how to start. Several minutes have gone and you have nothing written down."
+            whatToDo="Write down anything you DO understand about the question — what is being asked, any figures you can identify — even if you cannot complete it. Then move on to a question you can make progress on, and return to question 6 at the end if there is time left."
+            whyItMatters="A blank answer earns zero marks whatever the reason. Partial working sometimes earns partial credit, and finishing the rest of the paper protects the marks you CAN get rather than losing them to one question you were always going to struggle with."
+          />
+
+          <InlineCheck
+            id="m5s3-pomodoro"
+            question="In the Pomodoro Technique, how long is a single focused study session before taking a break?"
+            correctAnswer="A single Pomodoro is 25 minutes of focused study followed by a 5-minute break. After completing four Pomodoros (about 2 hours total), you take a longer break of 15-30 minutes. This structure prevents mental fatigue and maintains high concentration throughout your study session."
+          />
+
+          <SectionRule />
+
+          <TryIt
+            question="A paper awards 1 mark for question 2, 4 marks for question 7, and 8 marks for question 15. Rank the three in the order you would most want to be sure you have attempted, and explain why, without assuming a fixed time limit for any of them."
+            steps={[
+              { calc: 'Compare the marks: 8 > 4 > 1', note: '' },
+              {
+                calc: 'Priority order: Q15, then Q7, then Q2',
+                note: 'An unattempted 8-mark question costs far more than an unattempted 1-mark one if time runs short near the end.',
+              },
+            ]}
+            answer="Q15 first priority to secure an attempt, then Q7, then Q2 — mark value drives the priority, not the order the questions appear on the page."
+          />
+
+          <SectionRule />
+
+          {/* ── 07 ─────────────────────────────────────────────────── */}
+          <ContentEyebrow>07 · Reading a longer text</ContentEyebrow>
+
+          <ConceptBlock
+            title="Skim for structure first, then scan for the exact sentence that answers the question"
+            onSite="A longer source text is a reference document for the ten seconds it takes to answer one question — treat it that way rather than reading it like an article."
+          >
+            <p>
+              For an English reading question built on a longer source text — a workplace policy
+              extract, a supplier's terms, a safety bulletin — the technique runs in two passes.
+              Skim the whole text first, before reading the question, just for its shape: how many
+              points does it make, who is it addressed to, what kind of document is it. This builds
+              a rough map of where things are without committing to reading every word.
+            </p>
+            <p>
+              Then read the question and pull out its key words. Scan the text — do not re-read it —
+              for those key words or close synonyms. The sentence that answers the question is
+              usually near a matching word or phrase, not spread evenly across the whole text. Quote
+              or closely paraphrase that specific sentence; a summary of the whole document is not
+              what the question is asking for, and it is also slower to produce.
+            </p>
+          </ConceptBlock>
+
+          <WorkedExample
+            question={
+              <>
+                Source text (extract from a site safety bulletin): "All operatives must sign in at
+                the site office before 8:00 am. Visitors must be accompanied at all times and must
+                wear a hi-vis vest supplied by the site office. Any operative found not wearing the
+                correct PPE will be removed from site for the remainder of the day." Question: what
+                happens to an operative who is not wearing the correct PPE?
+              </>
+            }
+            steps={[
+              {
+                calc: 'Skim first',
+                note: 'Three sentences, each about a different topic — signing in, visitors, then PPE.',
+              },
+              {
+                calc: "Pull the question's key words",
+                note: "'operative', 'not wearing', 'correct PPE'.",
+              },
+              {
+                calc: 'Scan for those words rather than re-reading',
+                note: "The third sentence contains 'operative' and 'PPE' together — that is the match, not the first or second sentence.",
+              },
+              {
+                calc: 'Read that sentence closely',
+                note: '"will be removed from site for the remainder of the day."',
+              },
+            ]}
+            answer="They will be removed from site for the remainder of that day."
+            watchOut="The first sentence also contains the word 'operative', but it answers a different question, about signing in. Matching a shared word is not enough on its own — check that the sentence you have found actually answers the question asked, not just that it contains a matching word."
+          />
+
+          <SectionRule />
+
+          <TryIt
+            question={
+              <>
+                Source text (extract from a supplier's returns policy): "Goods may be returned
+                within 30 days of purchase in original packaging. Items marked as special order are
+                non-returnable. A restocking fee of 15% applies to bulk orders over 50 units."
+                Question: what fee applies if you return a bulk order of 80 units?
+              </>
+            }
+            steps={[
+              {
+                calc: 'Skim',
+                note: 'A three-sentence returns policy, each sentence covering a different condition.',
+              },
+              { calc: "Key words in the question: 'bulk order', 'fee'", note: '' },
+              {
+                calc: 'Scan for a match',
+                note: "The third sentence names a 'restocking fee' for 'bulk orders over 50 units' — 80 exceeds 50, so this sentence applies.",
+              },
+            ]}
+            answer="A 15% restocking fee applies, because 80 units exceeds the 'over 50 units' bulk threshold named in the third sentence."
+          />
+
+          <SectionRule />
+
+          {/* ── 08 ─────────────────────────────────────────────────── */}
+          <ContentEyebrow>08 · Checking your work before you commit to it</ContentEyebrow>
+
+          <ConceptBlock title="Verify before you submit — a second route for a number, a plan for prose">
+            <p>
+              Two related habits close out a paper. First, for a calculation: check the answer using
+              a genuinely different method rather than simply redoing the same steps. Repeating an
+              identical method reproduces an identical mistake if there was one in the first place —
+              it checks that you can repeat an error consistently, not that the answer is right. A
+              different operation, run in the opposite direction, is the only check that actually
+              tests the result: multiply back after a division, add in a different grouping, find a
+              percentage by a different route to the one that produced it.
+            </p>
+            <p>
+              Second, for a written response — a letter, an email, a short report extract — the plan
+              comes before a single sentence is written. Identify who you are writing to (the
+              audience), what you want them to understand or do as a result (the purpose), and the
+              specific points that need to be there, in the order a reader who does not already know
+              the answer would need them. Only then start writing.
+            </p>
+          </ConceptBlock>
+
+          <WorkedExample
+            question="A 72 m cable run divided into 5 equal sections gives 14.4 m per section, according to your division. Check this a different way rather than by simply repeating the division."
+            steps={[
+              { calc: 'Original method: 72 ÷ 5 = 14.4 m', note: '' },
+              {
+                calc: 'Check by the reverse operation: 14.4 × 5 = 72',
+                note: 'A genuinely different operation, not the same division redone.',
+              },
+              { calc: '72 = 72 — the check confirms the answer', note: '' },
+            ]}
+            answer="14.4 m per section, confirmed by multiplying back rather than re-dividing"
+            watchOut="Redoing the same division a second time will reproduce an identical arithmetic slip if you made one — it checks that you can repeat a mistake consistently, not that the mistake is not there. A different operation is the only check that actually tests the answer."
+          />
+
+          <WorkedExample
+            question="A client emails asking why their consumer unit upgrade is taking two extra days. Plan the reply before writing a word: who is it for, what is the purpose, and what points need to be in it, in what order?"
+            steps={[
+              {
+                calc: 'Audience: the client',
+                note: 'Not a colleague — no trade jargon without a plain-English gloss.',
+              },
+              {
+                calc: 'Purpose: reassure and explain',
+                note: 'The job is under control, and the specific cause of the delay is stated, so the client does not feel ignored or overcharged.',
+              },
+              {
+                calc: 'Points, in the order a reader needs them',
+                note: '(1) acknowledge the delay directly, (2) state the specific cause in plain terms, (3) give the revised completion date, (4) confirm there is no extra cost, if that is true.',
+              },
+              {
+                calc: 'Draft the opening line from that plan',
+                note: "\"I'm sorry for the delay on your consumer unit upgrade — here's exactly what's happened and when we'll finish.\"",
+              },
+            ]}
+            answer="A four-point plan — acknowledge, explain, revise date, confirm cost — drafted before any sentence is written, so the reply answers the client's real question first rather than opening with technical detail."
+            watchOut="Leading with the technical explanation ('the new board needed a part on back-order') before acknowledging the delay reads as excuse-making, even when the explanation is entirely true. The ORDER in the plan is doing real work here, not just the content."
+          />
+
+          <InlineCheck
+            id="m5s3-past-papers"
+            question="In the three-pass strategy for past papers, what is the purpose of the second pass?"
+            correctAnswer="The second pass is a practice run under exam conditions. You complete the paper timed, without looking at the mark scheme, then mark it honestly afterwards. This simulates the real exam experience and gives you an accurate picture of your current ability level, including your time management."
+          />
+
+          <SectionRule />
+
+          <TryIt
+            question="A quote of £1,748 is split evenly across 4 stage payments, giving £437 per stage according to your division. Check this a different way."
+            steps={[
+              { calc: 'Multiply back: £437 × 4 = £1,748', note: '' },
+              { calc: 'Matches the original figure', note: 'The check confirms the answer.' },
+            ]}
+            answer="£437 per stage, confirmed by multiplying back"
+          />
+
+          <TryIt
+            question="A tutor asks you to write a short paragraph explaining a delay in submitting a piece of coursework. Plan it before drafting: audience, purpose, and the points in order."
+            steps={[
+              {
+                calc: 'Audience: the tutor',
+                note: 'Professional and brief, not the tone you would use with a friend.',
+              },
+              { calc: 'Purpose: explain, reassure, and give a way forward', note: '' },
+              {
+                calc: 'Points, in order',
+                note: '(1) state the delay, (2) give the reason briefly, (3) give the new date.',
+              },
+            ]}
+            answer="A three-point plan — state, explain, reschedule — drafted before writing a single sentence"
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Restate the question in one sentence before calculating — the actual instruction is usually in its last sentence, and starting from the first number often answers a different, easier question.',
+              'A wrong multiple-choice option is frequently a correctly-calculated intermediate value. Ask what question an option answers before selecting it.',
+              'Round numbers, halves and quarters are worth doing mentally. Several chained operations on an uneven decimal are worth a calculator — decide deliberately, not by habit.',
+              'Estimate roughly before calculating precisely. A precise answer wildly off the rough one usually means a place-value or decimal-point error, not a wrong method.',
+              'Write every step of a calculation, including what it represents. Correct method applied to a wrong figure can still earn marks; a blank space with only a final answer cannot.',
+              'Spend time in proportion to the marks a question carries, not equally across every question, and have a fixed rule for a stuck question: note partial working, mark it, move on, return later.',
+              'Skim a longer source text for its shape first, then scan for the key words in the question — the answer is usually near a matching word, not spread across the whole text.',
+              'Check a calculation by a genuinely different method, not by repeating the same one — repetition confirms you can repeat a mistake, not that there was not one.',
+              'Plan a written response by audience and purpose before writing a word, and put the points in the order a reader who does not already know the answer needs them.',
+              'Paper length, timing and the calculator/non-calculator split vary between providers. This page never states one as fact — check the specific format with your own tutor.',
+            ]}
+          />
+
+          <FAQ
+            items={[
+              {
+                question: 'Will I be told which questions are worth more marks?',
+                answer:
+                  'Yes — mark allocations are shown on the paper. Use them to guide how much time and checking effort a question deserves, rather than treating every question as equally important.',
+              },
+              {
+                question: 'Is a calculator allowed for the whole maths paper?',
+                answer:
+                  "This varies by provider and paper — some split calculator and non-calculator sections, others do not. Check the specific format with your own tutor rather than assume from someone else's exam.",
+              },
+              {
+                question:
+                  "I've spotted a distractor answer but I'm still not sure which option is right — what now?",
+                answer:
+                  "Redo the working for the operation you're least confident in, and if you still can't decide, check which option matches the LAST instruction in the question rather than an earlier one — that is usually where a distractor comes from.",
+              },
+              {
+                question:
+                  'Do I need to write full working if the question only prints a box for the final answer?',
+                answer:
+                  'Write it anyway, in the margin or on spare space if there is nowhere else. Method marks exist on many mark schemes even when only the final figure is printed for, and working is the only way to recover marks if that figure turns out wrong.',
+              },
+              {
+                question: 'How long should I spend planning before writing a longer answer?',
+                answer:
+                  'Long enough to list the points in the right order — a plan of three or four lines takes under a minute and saves far more than that in redrafting once you have started writing in the wrong order.',
+              },
+            ]}
+          />
+
+          <SectionRule />
+
+          <Quiz questions={quizQuestions} title="Study Techniques & Exam Skills Knowledge Check" />
+
+          {/* ── prev / next ─────────────────────────────────────────── */}
+          <div className="mt-8 flex items-center justify-between gap-3">
+            <button
+              type="button"
+              onClick={() =>
+                navigate('/study-centre/apprentice/functional-skills/module5/section2')
+              }
+              className="inline-flex h-11 items-center gap-2 rounded-xl border border-white/[0.12] bg-white/[0.04] px-4 text-sm font-medium text-white touch-manipulation"
+            >
+              <ChevronLeft className="h-4 w-4" />
+              Section 2
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                navigate('/study-centre/apprentice/functional-skills/module5/section4')
+              }
+              className="inline-flex h-11 items-center gap-2 rounded-xl border border-elec-yellow/35 bg-elec-yellow/[0.08] px-4 text-sm font-semibold text-white touch-manipulation"
+            >
+              Section 4
+              <ChevronRight className="h-4 w-4" />
+            </button>
+          </div>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

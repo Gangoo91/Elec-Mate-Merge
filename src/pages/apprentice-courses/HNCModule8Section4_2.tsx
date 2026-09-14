@@ -62,7 +62,7 @@ const quickCheckQuestions = [
   {
     id: 'voltage-drop-limit',
     question:
-      'What is the typical maximum permissible voltage drop during motor starting according to BS 7671 guidance?',
+      'What is the typical recommended maximum voltage drop during motor starting according to BS 7671 guidance?',
     options: ['2%', '4%', '10%', '6%'],
     correctIndex: 3,
     explanation:
@@ -172,7 +172,7 @@ const quizQuestions = [
       'Which factor determines the maximum motor size that can be started DOL on a given supply?',
     options: [
       'The number of accessible terminals on the motor',
-      'The supply capacity and permissible voltage drop on starting',
+      'The supply capacity and recommended maximum voltage drop on starting',
       'The colour of the cores in the motor supply cable',
       'The ambient temperature of the plant room',
     ],

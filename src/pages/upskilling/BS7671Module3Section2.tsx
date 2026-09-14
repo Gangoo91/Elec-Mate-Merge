@@ -249,7 +249,7 @@ const faqItems = [
   {
     question: 'How does maximum demand relate to voltage drop?',
     answer:
-      "Voltage drop is calculated at maximum demand — the worst-case load condition. If maximum demand is 80 A, voltage drop on the relevant cable is calculated at 80 A. BS 7671 Reg 525.1: voltage at fixed equipment shall not be less than the lower limit appropriate to the equipment's nominal voltage. Reg 525 / Table 4Ab in OSG specify maximum permitted voltage drop (3% for final circuits, 5% for lighting origin-to-far-point, 8% for other circuits origin-to-far-point). Cable sizing for voltage drop is independent of CCC sizing — both must be satisfied; whichever is binding determines the cable.",
+      "Voltage drop is calculated at maximum demand — the worst-case load condition. If maximum demand is 80 A, voltage drop on the relevant cable is calculated at 80 A. BS 7671 Reg 525.1: voltage at fixed equipment shall not be less than the lower limit appropriate to the equipment's nominal voltage. Reg 525 / Table 4Ab in OSG specify recommended maximum voltage drop (3% for final circuits, 5% for lighting origin-to-far-point, 8% for other circuits origin-to-far-point). Cable sizing for voltage drop is independent of CCC sizing — both must be satisfied; whichever is binding determines the cable.",
   },
   {
     question: 'When is it appropriate to override OSG diversity guidance?',
