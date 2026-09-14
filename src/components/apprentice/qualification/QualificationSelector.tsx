@@ -11,6 +11,7 @@ import { useQualifications } from '@/hooks/qualification/useQualifications';
 import { Qualification } from '@/types/qualification';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
 import QualificationConfirmationDialog from './QualificationConfirmationDialog';
 import PortfolioSetupAnimation from './PortfolioSetupAnimation';
 import { cn } from '@/lib/utils';
@@ -31,6 +32,7 @@ interface QualificationSelectorProps {
 }
 
 const QualificationSelector = ({ lockedToCode }: QualificationSelectorProps = {}) => {
+  const navigate = useNavigate();
   const {
     qualifications,
     awardingBodies,
@@ -129,7 +131,19 @@ const QualificationSelector = ({ lockedToCode }: QualificationSelectorProps = {}
   const handleSetupComplete = () => {
     setIsSettingUp(false);
     setSelectedQualification(null);
-    toast.success('Your portfolio is ready!');
+    /*
+     * ELE-1728 — this used to be `toast.success('Your portfolio is ready!')`
+     * and nothing else. It closed the loop at the exact moment the learner
+     * needed it opened: no navigation, and no hint of where the portfolio was
+     * or what to do in it. Cole Humphreys picked his qualification and was
+     * left on the dashboard wondering what he had to do.
+     *
+     * Say what is now waiting, and take him to it.
+     */
+    toast.success('Your course requirements are ready', {
+      description: 'Your units and assessment criteria are under My Work.',
+    });
+    navigate('/apprentice/hub?tab=work');
   };
 
   const selectedQualificationCategories = selectedQualification

@@ -48,39 +48,33 @@ export function useCombinedRequirements(options: UseCombinedRequirementsOptions 
   const [evidenceCounts, setEvidenceCounts] = useState<Map<string, number>>(new Map());
   const [isLoadingEvidence, setIsLoadingEvidence] = useState(false);
 
-  // Fetch evidence counts for this category
-  const fetchEvidenceCounts = useCallback(async () => {
-    if (!user || !categoryId) return;
-
-    setIsLoadingEvidence(true);
-    try {
-      // Get count of portfolio items by evidence type for this category
-      const { data, error } = await supabase
-        .from('portfolio_items')
-        .select('evidence_type')
-        .eq('user_id', user.id)
-        .eq('category_id', categoryId);
-
-      if (error) throw error;
-
-      // Count by evidence type
-      const counts = new Map<string, number>();
-      (data || []).forEach((item: { evidence_type: string }) => {
-        if (item.evidence_type) {
-          counts.set(item.evidence_type, (counts.get(item.evidence_type) || 0) + 1);
-        }
-      });
-      setEvidenceCounts(counts);
-    } catch (err) {
-      console.error('Error fetching evidence counts:', err);
-    } finally {
-      setIsLoadingEvidence(false);
-    }
-  }, [user, categoryId]);
-
+  /*
+   * Evidence counts per type are NOT AVAILABLE, and pretending otherwise was
+   * costing an error on every render of the evidence form.
+   *
+   * This queried `portfolio_items.evidence_type` filtered on `category_id`.
+   * The table has NEITHER column — the real ones are `qualification_category_id`
+   * and (unused, always null) `file_type`. So PostgREST rejected every request,
+   * the catch logged "Error fetching evidence counts", and `evidenceCounts`
+   * stayed empty — which is why every requirement has always read "0 uploaded".
+   * `EvidenceRequirementsGuide` renders inside `PortfolioEntryForm`, so an
+   * apprentice hit that error each time they added evidence.
+   *
+   * Counting by type cannot be done from this table: nothing on a portfolio
+   * item records which of the ten `evidence_types` codes it satisfies. Rather
+   * than guess a mapping from `tags` or `category` — both inconsistent, 16 of
+   * 20 rows hold a slug where 4 hold a UUID — the counts stay empty and honest
+   * until an item can actually state its evidence type. The requirement list
+   * itself is unaffected and still renders.
+   *
+   * To restore this properly: add an `evidence_type` column to
+   * `portfolio_items` (or a join table), populate it from the capture flow,
+   * then count on `qualification_category_id`.
+   */
   useEffect(() => {
-    fetchEvidenceCounts();
-  }, [fetchEvidenceCounts]);
+    setEvidenceCounts(new Map());
+    setIsLoadingEvidence(false);
+  }, [user, categoryId]);
 
   // Combine and transform requirements
   const combinedRequirements = useMemo((): CombinedEvidenceRequirement[] => {
@@ -296,8 +290,12 @@ export function useCombinedRequirements(options: UseCombinedRequirementsOptions 
     isEvidenceTypeNeeded,
     getEvidenceType,
 
-    // Refetch
-    refetch: fetchEvidenceCounts,
+    /*
+     * Kept so callers do not break. There is nothing to refetch while evidence
+     * counts are unavailable (see the note above); the requirement lists come
+     * from their own hooks and refresh themselves.
+     */
+    refetch: () => setEvidenceCounts(new Map()),
   };
 }
 

@@ -18,6 +18,7 @@ import { ApprenticeHubShell } from '@/components/apprentice-hub/ApprenticeHubShe
 import { ApprenticeHubTab } from '@/components/apprentice-hub/ApprenticeHubNav';
 import { UnifiedDashboard } from '@/components/apprentice-hub/UnifiedDashboard';
 import { PortfolioGrid } from '@/components/apprentice-hub/PortfolioGrid';
+import { CourseRequirementsPanel } from '@/components/apprentice-hub/CourseRequirementsPanel';
 import { ProfileSection } from '@/components/apprentice-hub/ProfileSection';
 import { UnifiedCaptureSheet } from '@/components/apprentice-hub/UnifiedCaptureSheet';
 import { ProgressDashboard } from '@/components/apprentice/progress/ProgressDashboard';
@@ -100,7 +101,25 @@ export default function UnifiedApprenticeHub() {
       case 'home':
         return <UnifiedDashboard onNavigate={handleTabChange} onCapture={handleCapture} />;
       case 'work':
-        return <PortfolioGrid onCapture={handleCapture} />;
+        /*
+         * ELE-1728 — what you have to do, above what you have done.
+         *
+         * `CourseRequirementsPanel` was built, worked, and was rendered
+         * NOWHERE: its only other home was `PortfolioOverview`, which sits
+         * behind the retired `/apprentice/portfolio-hub` redirect. So the app
+         * held 2,581 assessment criteria and showed a learner none of them.
+         * 92 people chose a qualification; 7 ever added a portfolio item.
+         *
+         * Cole Humphreys, redoing his NVQ 3: "i've choose my qualification on
+         * the app, but it doesn't seem straight forward on what i've got to do
+         * for my portfolio." He was right — nothing told him.
+         */
+        return (
+          <div className="space-y-4">
+            <CourseRequirementsPanel onChangeCourse={() => handleTabChange('home')} />
+            <PortfolioGrid onCapture={handleCapture} />
+          </div>
+        );
       case 'progress':
         return <ProgressDashboard />;
       case 'me':
