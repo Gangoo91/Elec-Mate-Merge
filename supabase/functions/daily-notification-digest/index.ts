@@ -2,6 +2,7 @@ import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import { isActionableOverdueTask } from '../_shared/overdueTasks.ts';
 import { captureException } from '../_shared/sentry.ts';
+import { withRetry, RetryPresets } from '../_shared/retry.ts';
 
 /**
  * daily-notification-digest — "Your Day" morning briefing
@@ -55,7 +56,10 @@ async function callRpc<T>(
   args: Record<string, unknown>
 ): Promise<T | null> {
   const client = supabase as unknown as {
-    rpc: (fn: string, params: Record<string, unknown>) => Promise<{ data: unknown; error: unknown }>;
+    rpc: (
+      fn: string,
+      params: Record<string, unknown>
+    ) => Promise<{ data: unknown; error: unknown }>;
   };
   const { data, error } = await client.rpc(name, args);
   if (error) {
@@ -81,7 +85,6 @@ interface NextAction {
  * be distinct from, and the channel stops meaning anything.
  */
 const MILESTONES = new Set([3, 7, 14, 30, 50, 100, 200, 365]);
-
 
 /**
  * Morning copy for a ranked action.
@@ -177,6 +180,27 @@ function morningCopy(
 }
 
 /** Call send-push-notification for a single user */
+/**
+ * Deliver one push, and actually notice when it fails.
+ *
+ * This awaited `fetch` and then dropped the response on the floor. `fetch` only
+ * rejects on a transport failure — a 429 resolves perfectly happily — so every
+ * rate-limited push returned as success and the notification was silently lost.
+ * On 14 Sep that cost 23 users their 19:00 nudge inside six seconds: the digest
+ * walks users in a tight loop, each iteration invoking send-push-notification,
+ * and the platform's per-function limit cut in partway through.
+ *
+ * The limit is not an error so much as backpressure — it arrives with a
+ * Retry-After saying exactly how long to wait, which nothing read. So: honour
+ * that header when it is there, and fall back to `withRetry`'s backoff when it
+ * is not.
+ *
+ * 🔴 Failures are logged, never rethrown. Six call sites await this inside
+ * `for (const userId of userIds)` loops with no try/catch; throwing here would
+ * abandon every user queued behind the one that failed, turning one dropped
+ * push into a truncated run. One person missing a nudge must not cost everyone
+ * else theirs.
+ */
 async function sendPush(
   supabaseUrl: string,
   serviceKey: string,
@@ -186,15 +210,41 @@ async function sendPush(
   type: string,
   data?: Record<string, unknown>
 ): Promise<void> {
-  await fetch(`${supabaseUrl}/functions/v1/send-push-notification`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${serviceKey}`,
-      apikey: serviceKey,
-    },
-    body: JSON.stringify({ userId, title, body, type, data, skipQuietHours: true }),
-  });
+  const payload = JSON.stringify({ userId, title, body, type, data, skipQuietHours: true });
+
+  try {
+    await withRetry(async () => {
+      const res = await fetch(`${supabaseUrl}/functions/v1/send-push-notification`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${serviceKey}`,
+          apikey: serviceKey,
+        },
+        body: payload,
+      });
+      if (res.ok) return;
+
+      // Retry-After is in seconds per RFC 9110. Capped so a long one cannot
+      // stall the whole digest behind a single user.
+      const retryAfter = Number(res.headers.get('retry-after'));
+      if (Number.isFinite(retryAfter) && retryAfter > 0) {
+        await new Promise((r) => setTimeout(r, Math.min(retryAfter * 1000, 10_000)));
+      }
+
+      // The status goes in the message because `withRetry`'s default
+      // `shouldRetry` matches on the text — '429' and 'rate limit' are both in
+      // its list, and a 4xx that is not those correctly stops immediately.
+      const detail = await res.text().catch(() => '');
+      throw new Error(`send-push-notification ${res.status}: ${detail}`.slice(0, 300));
+    }, RetryPresets.FAST);
+  } catch (err) {
+    console.error('[digest] push undelivered after retries', {
+      userId,
+      type,
+      error: String(err),
+    });
+  }
 }
 
 /** Check if we already sent this alert today */
@@ -724,7 +774,8 @@ async function buildAlertsForUser(
 
   const hasStudiedToday =
     (studiedToday && studiedToday.length > 0) ||
-    (streakState?.last_study_date ?? '').slice(0, 10) === todayStartStudy.toISOString().slice(0, 10);
+    (streakState?.last_study_date ?? '').slice(0, 10) ===
+      todayStartStudy.toISOString().slice(0, 10);
 
   // Only worth defending from two days up. Warning someone about a one-day
   // streak is warning them about yesterday.
@@ -992,8 +1043,15 @@ serve(async (req: Request): Promise<Response> => {
           // The morning plan already named this action today and promised this
           // follow-up, so the evening one is expected — but it must not be the
           // third time of asking.
-          if (await alreadySent(supabase, row.user_id, 'morning_plan', `plan-${now.toDateString()}`)
-              && best.kind === 'daily_goal') {
+          if (
+            (await alreadySent(
+              supabase,
+              row.user_id,
+              'morning_plan',
+              `plan-${now.toDateString()}`
+            )) &&
+            best.kind === 'daily_goal'
+          ) {
             peakSkipped++;
             continue;
           }
@@ -1028,7 +1086,13 @@ serve(async (req: Request): Promise<Response> => {
         `[daily-digest] peak_nudge hour=${targetHour}: ${peakSent} sent, ${peakSkipped} skipped, ${rows.length} due`
       );
       return new Response(
-        JSON.stringify({ mode, targetHour, sent: peakSent, skipped: peakSkipped, due: rows.length }),
+        JSON.stringify({
+          mode,
+          targetHour,
+          sent: peakSent,
+          skipped: peakSkipped,
+          due: rows.length,
+        }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
@@ -1518,7 +1582,10 @@ serve(async (req: Request): Promise<Response> => {
             // Long enough that the section title means little. What they have
             // already banked is the stronger argument for coming back.
             stage = 'comeback_progress';
-            title = doneCount && doneCount > 0 ? 'Your progress is still saved' : 'Your course is still here';
+            title =
+              doneCount && doneCount > 0
+                ? 'Your progress is still saved'
+                : 'Your course is still here';
             body =
               doneCount && doneCount > 0
                 ? `${doneCount} section${doneCount === 1 ? '' : 's'} finished before you stopped. The next one is about ten minutes.`
