@@ -20,7 +20,11 @@ interface SectionCompleteProps {
   showIndicator?: boolean;
 }
 
-export function SectionComplete({ courseKey, sectionKey, showIndicator = true }: SectionCompleteProps) {
+export function SectionComplete({
+  courseKey,
+  sectionKey,
+  showIndicator = true,
+}: SectionCompleteProps) {
   const ref = useRef<HTMLDivElement>(null);
   const { recordProgress, getProgress } = useCourseProgress();
   const [recorded, setRecorded] = useState(false);
@@ -32,6 +36,10 @@ export function SectionComplete({ courseKey, sectionKey, showIndicator = true }:
   useEffect(() => {
     if (recorded || alreadyDone) return;
 
+    // Bail rather than throw where the API is missing — an unguarded
+    // constructor here took the whole page down through the error
+    // boundary, on public SEO pages included (Mobile Safari, iOS 15).
+    if (typeof IntersectionObserver === 'undefined') return;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && !recorded) {

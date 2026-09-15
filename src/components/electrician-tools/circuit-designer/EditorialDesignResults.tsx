@@ -147,7 +147,7 @@ function getComplianceScore(circuit: any, design: any): number {
 interface CircuitContext {
   boardName: string;
   boardId: string;
-  wayNumber: number;          // local to its board (1-N), accounts for submain feeds
+  wayNumber: number; // local to its board (1-N), accounts for submain feeds
   phaseAssignment?: 'L1' | 'L2' | 'L3' | 'L1L2L3';
 }
 
@@ -316,8 +316,7 @@ const deriveBSFeatures = (
 };
 
 // Backwards-compat alias for any caller that still imports the old name.
-const deriveA4Features = (circuits: any[]) =>
-  deriveBSFeatures(circuits, 'domestic', undefined);
+const deriveA4Features = (circuits: any[]) => deriveBSFeatures(circuits, 'domestic', undefined);
 
 const EditorialDesignResults = ({ design, onReset }: EditorialDesignResultsProps) => {
   const navigate = useNavigate();
@@ -357,9 +356,7 @@ const EditorialDesignResults = ({ design, onReset }: EditorialDesignResultsProps
   const [userCreatedBoards, setUserCreatedBoards] = useState<
     Array<{ id: string; name: string; location: string }>
   >([]);
-  const [circuitBoardOverrides, setCircuitBoardOverrides] = useState<
-    Record<number, string>
-  >({});
+  const [circuitBoardOverrides, setCircuitBoardOverrides] = useState<Record<number, string>>({});
 
   const addUserBoard = (name: string, location: string) => {
     const id = `user-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
@@ -390,8 +387,7 @@ const EditorialDesignResults = ({ design, onReset }: EditorialDesignResultsProps
   };
 
   const hasManualBoardEdits =
-    userCreatedBoards.length > 0 ||
-    Object.keys(circuitBoardOverrides).length > 0;
+    userCreatedBoards.length > 0 || Object.keys(circuitBoardOverrides).length > 0;
 
   const baseCircuits = design?.circuits ?? [];
   const circuits = useMemo(
@@ -608,7 +604,8 @@ const EditorialDesignResults = ({ design, onReset }: EditorialDesignResultsProps
   );
 
   const supply = design?.supply || {};
-  const installType = design?.installationType || design?.projectInfo?.installationType || 'domestic';
+  const installType =
+    design?.installationType || design?.projectInfo?.installationType || 'domestic';
   const projectName = design?.projectName || design?.projectInfo?.projectName || 'Untitled';
   const location = design?.location || design?.projectInfo?.location || '—';
 
@@ -631,7 +628,8 @@ const EditorialDesignResults = ({ design, onReset }: EditorialDesignResultsProps
       scope: 'circuit' as const,
       circuitNumber:
         typeof issue.circuitNumber === 'number' ? (issue.circuitNumber as number) : undefined,
-      circuitName: typeof issue.circuitName === 'string' ? (issue.circuitName as string) : undefined,
+      circuitName:
+        typeof issue.circuitName === 'string' ? (issue.circuitName as string) : undefined,
       title: 'Cable capacity below protective device rating',
       detail: String(issue.error ?? 'Cable current-carrying capacity is insufficient.'),
       reg: '433.1.1',
@@ -668,15 +666,9 @@ const EditorialDesignResults = ({ design, onReset }: EditorialDesignResultsProps
       const reasons: string[] = [];
 
       const aiZs = Number(c?.calculations?.zs ?? NaN);
-      const correctedZs = Number.isFinite(aiZs)
-        ? aiZs + Math.max(0, zdb - supplyZeNum)
-        : NaN;
+      const correctedZs = Number.isFinite(aiZs) ? aiZs + Math.max(0, zdb - supplyZeNum) : NaN;
       const maxZs = Number(c?.calculations?.maxZs ?? NaN);
-      if (
-        Number.isFinite(correctedZs) &&
-        Number.isFinite(maxZs) &&
-        correctedZs > maxZs
-      ) {
+      if (Number.isFinite(correctedZs) && Number.isFinite(maxZs) && correctedZs > maxZs) {
         reasons.push(`Zs ${correctedZs.toFixed(2)} Ω > max ${maxZs.toFixed(2)} Ω`);
       }
       if (c?.calculations?.izCompliant === false) {
@@ -770,6 +762,10 @@ const EditorialDesignResults = ({ design, onReset }: EditorialDesignResultsProps
   useEffect(() => {
     const el = heroSentinelRef.current;
     if (!el) return;
+    // Bail rather than throw where the API is missing — an unguarded
+    // constructor here took the whole page down through the error
+    // boundary, on public SEO pages included (Mobile Safari, iOS 15).
+    if (typeof IntersectionObserver === 'undefined') return;
     const obs = new IntersectionObserver(([entry]) => setShowMiniHeader(!entry.isIntersecting), {
       rootMargin: '-48px 0px 0px 0px',
     });
@@ -785,6 +781,10 @@ const EditorialDesignResults = ({ design, onReset }: EditorialDesignResultsProps
   useEffect(() => {
     const els = document.querySelectorAll<HTMLElement>('[data-board-id]');
     if (els.length === 0) return;
+    // Bail rather than throw where the API is missing — an unguarded
+    // constructor here took the whole page down through the error
+    // boundary, on public SEO pages included (Mobile Safari, iOS 15).
+    if (typeof IntersectionObserver === 'undefined') return;
     const obs = new IntersectionObserver(
       (entries) => {
         // Pick the entry closest to top of viewport that's actively intersecting.
@@ -1067,7 +1067,9 @@ const EditorialDesignResults = ({ design, onReset }: EditorialDesignResultsProps
               <span
                 className={cn(
                   'inline-block h-2 w-2 rounded-full',
-                  totalEditedCircuits > 0 || hasStructuralEdits ? 'bg-elec-yellow' : 'bg-emerald-400'
+                  totalEditedCircuits > 0 || hasStructuralEdits
+                    ? 'bg-elec-yellow'
+                    : 'bg-emerald-400'
                 )}
               />
               {totalEditedCircuits > 0 || hasStructuralEdits
@@ -1256,9 +1258,7 @@ const EditorialDesignResults = ({ design, onReset }: EditorialDesignResultsProps
                 }))}
                 onMoveToBoard={(boardId) => moveCircuitToBoard(selectedIdx, boardId)}
                 boardZdb={
-                  layout.boards.find(
-                    (b) => b.id === circuitContext.get(selectedIdx)?.boardId
-                  )?.zdb
+                  layout.boards.find((b) => b.id === circuitContext.get(selectedIdx)?.boardId)?.zdb
                 }
                 supplyZe={Number(supply.Ze ?? 0.35)}
               />
@@ -1427,7 +1427,13 @@ const HeadlineStats = ({
   totalCircuits,
   cost,
 }: {
-  stats: { totalLoad: number; diversifiedLoad: number; factor: number; totalIb: number; passCount: number };
+  stats: {
+    totalLoad: number;
+    diversifiedLoad: number;
+    factor: number;
+    totalIb: number;
+    passCount: number;
+  };
   totalCircuits: number;
   cost: InstallationCost;
 }) => (
@@ -1441,17 +1447,9 @@ const HeadlineStats = ({
         unit="kW"
         accent
       />
-      <BigStat
-        label="Factor"
-        value={stats.factor > 0 ? stats.factor.toFixed(2) : '—'}
-        unit=""
-      />
+      <BigStat label="Factor" value={stats.factor > 0 ? stats.factor.toFixed(2) : '—'} unit="" />
       <BigStat label="Total Ib" value={stats.totalIb.toFixed(1)} unit="A" />
-      <BigStat
-        label="Compliance"
-        value={`${stats.passCount}`}
-        unit={`/ ${totalCircuits}`}
-      />
+      <BigStat label="Compliance" value={`${stats.passCount}`} unit={`/ ${totalCircuits}`} />
       <BigStat
         label="Indicative cost"
         value={formatGBP(cost.grandTotal, { compact: true })}
@@ -1576,7 +1574,8 @@ const A4FeaturesPanel = ({
   if (a4.spdRecommended) {
     items.push({
       title: 'Surge protection',
-      detail: 'Risk assessment performed — SPD recommended at the origin (Type 2 minimum, Type 1+2 if exposed location).',
+      detail:
+        'Risk assessment performed — SPD recommended at the origin (Type 2 minimum, Type 1+2 if exposed location).',
       reg: '443.4',
     });
   }
@@ -1590,7 +1589,8 @@ const A4FeaturesPanel = ({
   if (a4.ttRcdApplied) {
     items.push({
       title: 'TT earthing',
-      detail: 'TT system — every final circuit needs 30 mA RCBO (or upstream 100 mA selective at origin).',
+      detail:
+        'TT system — every final circuit needs 30 mA RCBO (or upstream 100 mA selective at origin).',
       reg: '411.5',
     });
   }
@@ -1614,14 +1614,16 @@ const A4FeaturesPanel = ({
     if (a4.hasBathroom) {
       items.push({
         title: 'Bathroom (Section 701)',
-        detail: 'Zones 0/1/2 — supplementary equipotential bonding, IP rating + 30 mA RCD on socket / lighting in zones.',
+        detail:
+          'Zones 0/1/2 — supplementary equipotential bonding, IP rating + 30 mA RCD on socket / lighting in zones.',
         reg: '701',
       });
     }
     if (a4.hasKitchen) {
       items.push({
         title: 'Kitchen — splash zones',
-        detail: 'Sockets ≥ 300 mm from sinks / hobs; cooker outlet within 2 m of unit; dedicated cooker circuit if > 13 A.',
+        detail:
+          'Sockets ≥ 300 mm from sinks / hobs; cooker outlet within 2 m of unit; dedicated cooker circuit if > 13 A.',
         reg: '511.1',
       });
     }
@@ -1635,7 +1637,8 @@ const A4FeaturesPanel = ({
     if (a4.hasSmokeAlarm) {
       items.push({
         title: 'Smoke / heat detection',
-        detail: 'BS 5839-6 + BS EN 14604 — interlinked grade D, mains + battery backup, dedicated 6 A circuit.',
+        detail:
+          'BS 5839-6 + BS EN 14604 — interlinked grade D, mains + battery backup, dedicated 6 A circuit.',
         reg: 'BS 5839-6',
       });
     }
@@ -1646,35 +1649,40 @@ const A4FeaturesPanel = ({
     if (a4.hasMedical) {
       items.push({
         title: 'Medical locations (710)',
-        detail: 'Group 1/2 medical — IT system where applicable, supplementary EQB, separated supply for life-support equipment.',
+        detail:
+          'Group 1/2 medical — IT system where applicable, supplementary EQB, separated supply for life-support equipment.',
         reg: '710',
       });
     }
     if (a4.hasEmergencyLighting) {
       items.push({
         title: 'Emergency lighting',
-        detail: 'BS 5266-1 — escape route + open area + high-risk task. 1 hr or 3 hr duration depending on building use.',
+        detail:
+          'BS 5266-1 — escape route + open area + high-risk task. 1 hr or 3 hr duration depending on building use.',
         reg: 'BS 5266',
       });
     }
     if (a4.hasFireAlarm) {
       items.push({
         title: 'Fire alarm system',
-        detail: 'BS 5839-1 — category L/P/M depending on building use. Dedicated supply with 24 h standby battery.',
+        detail:
+          'BS 5839-1 — category L/P/M depending on building use. Dedicated supply with 24 h standby battery.',
         reg: 'BS 5839-1',
       });
     }
     if (a4.hasHvac) {
       items.push({
         title: 'HVAC isolation (537.4)',
-        detail: 'Local emergency switching + isolator at plant + remote stop. Ratings to match motor inrush.',
+        detail:
+          'Local emergency switching + isolator at plant + remote stop. Ratings to match motor inrush.',
         reg: '537.4',
       });
     }
     if (a4.hasReception || a4.hasRetail || a4.hasStaff) {
       items.push({
         title: 'Public / staff areas',
-        detail: 'Front-of-house and staff facilities — mid-trip isolation, cleanable accessories (IP54+), thermal disconnection consideration on heavy daytime peaks.',
+        detail:
+          'Front-of-house and staff facilities — mid-trip isolation, cleanable accessories (IP54+), thermal disconnection consideration on heavy daytime peaks.',
         reg: '512.2 / 718',
       });
     }
@@ -1685,42 +1693,48 @@ const A4FeaturesPanel = ({
     if (a4.hasMotor) {
       items.push({
         title: `Three-phase motor protection${a4.motorCount > 1 ? ` (${a4.motorCount} circuits)` : ''}`,
-        detail: 'Type C/D MCB or motor-rated MCCB for inrush, soft-start where I_st > 10×In, EM stop (537.3) and overload heater for continuous duty.',
+        detail:
+          'Type C/D MCB or motor-rated MCCB for inrush, soft-start where I_st > 10×In, EM stop (537.3) and overload heater for continuous duty.',
         reg: '535 / 537',
       });
     }
     if (a4.hasMachineTools || a4.hasWelding) {
       items.push({
         title: 'Conducting locations (706)',
-        detail: 'Restricted-conductive locations — SELV / functional earthing, 30 mA RCD, Class II equipment where possible.',
+        detail:
+          'Restricted-conductive locations — SELV / functional earthing, 30 mA RCD, Class II equipment where possible.',
         reg: '706',
       });
     }
     if (a4.hasWelding) {
       items.push({
         title: 'Welding sets',
-        detail: 'BS EN 60974 — dedicated supply, Type A RCD (DC component), reduced low-voltage where possible (110 V CTE).',
+        detail:
+          'BS EN 60974 — dedicated supply, Type A RCD (DC component), reduced low-voltage where possible (110 V CTE).',
         reg: 'BS EN 60974',
       });
     }
     if (a4.hasWorkshop) {
       items.push({
         title: 'Workshop circuits',
-        detail: 'High-current radials / 3φ outlets, dedicated isolators, IP54 sockets near machinery, mechanical protection of cabling.',
+        detail:
+          'High-current radials / 3φ outlets, dedicated isolators, IP54 sockets near machinery, mechanical protection of cabling.',
         reg: '522.6',
       });
     }
     if (a4.hasAgricultural) {
       items.push({
         title: 'Agricultural (705)',
-        detail: 'Stricter IP, livestock-safe disconnection (300 mA RCD on outgoing), supplementary EQB on metal structures.',
+        detail:
+          'Stricter IP, livestock-safe disconnection (300 mA RCD on outgoing), supplementary EQB on metal structures.',
         reg: '705',
       });
     }
     if (a4.hasPv) {
       items.push({
         title: 'Photovoltaic / inverters',
-        detail: 'DC + AC isolation, RCD Type B on AC side (DC fault current), G99 for grid-connected ≥ 16 A/phase.',
+        detail:
+          'DC + AC isolation, RCD Type B on AC side (DC fault current), G99 for grid-connected ≥ 16 A/phase.',
         reg: '712 / G99',
       });
     }
@@ -1728,9 +1742,7 @@ const A4FeaturesPanel = ({
 
   // ── Special-location fallback (anything specialLocation = ... not caught above) ──
   if (a4.specialLocations.length > 0) {
-    const remaining = a4.specialLocations.filter(
-      (s) => !['bathroom', 'kitchen'].includes(s)
-    );
+    const remaining = a4.specialLocations.filter((s) => !['bathroom', 'kitchen'].includes(s));
     if (remaining.length > 0) {
       items.push({
         title: 'Special locations',
@@ -1754,10 +1766,10 @@ const A4FeaturesPanel = ({
     <section className="space-y-4">
       <Eyebrow>03 · BS 7671 — {installLabel} CHECKS</Eyebrow>
       <p className="text-[12.5px] leading-relaxed text-white/85 max-w-3xl">
-        Sections of BS 7671 (and adjoining standards) that this design touches —
-        tailored to a {installType} installation. Auto-derived from your supply,
-        circuit names and load types.
-        {earthingSystem === 'TT' && ' TT earthing demands 30 mA RCD on every final circuit per 411.5.'}
+        Sections of BS 7671 (and adjoining standards) that this design touches — tailored to a{' '}
+        {installType} installation. Auto-derived from your supply, circuit names and load types.
+        {earthingSystem === 'TT' &&
+          ' TT earthing demands 30 mA RCD on every final circuit per 411.5.'}
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
         {items.map((item) => (
@@ -1875,7 +1887,9 @@ const ComplianceConcernsBanner = ({
                 'h-full rounded-full transition-all duration-300',
                 progress.failed > 0 ? 'bg-amber-400' : 'bg-emerald-400'
               )}
-              style={{ width: `${Math.round((progress.done / Math.max(1, progress.total)) * 100)}%` }}
+              style={{
+                width: `${Math.round((progress.done / Math.max(1, progress.total)) * 100)}%`,
+              }}
             />
           </div>
         </div>
@@ -1885,11 +1899,10 @@ const ComplianceConcernsBanner = ({
       {!progress?.inProgress && failing.length > 0 && (
         <>
           <p className="mt-3 text-[12.5px] leading-relaxed text-white max-w-3xl">
-            These circuits don't meet BS 7671 disconnection / cable-capacity / voltage-drop
-            limits. Click <span className="font-semibold text-elec-yellow">Auto-fix all</span> and
-            the AI will engineer a compliance route per circuit (CPC upsize → cable upsize →
-            curve relax → parallel earth → split as needed). Or click a circuit to inspect + fix
-            manually.
+            These circuits don't meet BS 7671 disconnection / cable-capacity / voltage-drop limits.
+            Click <span className="font-semibold text-elec-yellow">Auto-fix all</span> and the AI
+            will engineer a compliance route per circuit (CPC upsize → cable upsize → curve relax →
+            parallel earth → split as needed). Or click a circuit to inspect + fix manually.
           </p>
           <div className="mt-3 flex flex-wrap gap-2">
             {failing.map((f) => (
@@ -1913,8 +1926,8 @@ const ComplianceConcernsBanner = ({
 
       {progress && !progress.inProgress && progress.failed === 0 && (
         <p className="mt-3 text-[12.5px] leading-relaxed text-white max-w-3xl">
-          All circuits now pass BS 7671 compliance. Review the impact ribbons inside each
-          circuit detail to see what changed.
+          All circuits now pass BS 7671 compliance. Review the impact ribbons inside each circuit
+          detail to see what changed.
         </p>
       )}
     </section>
@@ -2059,7 +2072,8 @@ const RecommendedBoardsView = ({
         <div className="flex items-center gap-3">
           <span className="text-[11px] text-white/60 tabular-nums">
             {boards.length} board{boards.length === 1 ? '' : 's'}{' '}
-            {submainFeeds.length > 0 && `· ${submainFeeds.length} submain feed${submainFeeds.length === 1 ? '' : 's'}`}
+            {submainFeeds.length > 0 &&
+              `· ${submainFeeds.length} submain feed${submainFeeds.length === 1 ? '' : 's'}`}
           </span>
           <button
             type="button"
@@ -2097,9 +2111,7 @@ const RecommendedBoardsView = ({
               boardCost={cost.perBoard[board.id]}
               displayName={getBoardDisplayName(board.id, board.name)}
               onRename={(ref) => onBoardReferenceChange(board.id, ref)}
-              onMergeIntoMain={() =>
-                onMergeBoardIntoMain(board.id, board.circuitIndices)
-              }
+              onMergeIntoMain={() => onMergeBoardIntoMain(board.id, board.circuitIndices)}
             />
           </div>
         ))}
@@ -2117,9 +2129,8 @@ const RecommendedBoardsView = ({
             </SheetTitle>
           </SheetHeader>
           <p className="mt-2 text-[12.5px] leading-relaxed text-white/65">
-            Creates an empty submain board. Move circuits onto it from any
-            circuit's `Board` picker. Useful when the recommender's grouping
-            doesn't match how you'd actually wire the job.
+            Creates an empty submain board. Move circuits onto it from any circuit's `Board` picker.
+            Useful when the recommender's grouping doesn't match how you'd actually wire the job.
           </p>
           <div className="mt-5 space-y-4">
             <div>
@@ -2156,9 +2167,7 @@ const RecommendedBoardsView = ({
                 className="w-full bg-black/40 border border-white/[0.12] rounded-lg px-3 py-2.5 min-h-[44px] text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
                 maxLength={60}
               />
-              <p className="mt-1 text-[11px] text-white/50">
-                Optional. Defaults to "Submain".
-              </p>
+              <p className="mt-1 text-[11px] text-white/50">Optional. Defaults to "Submain".</p>
             </div>
             <div className="flex gap-2 pt-2">
               <button
@@ -2216,7 +2225,9 @@ const BoardCard = ({
   const totalWays = boardCircuits.length + originatingFeeds.length;
 
   // Per-board compliance — count how many of THIS board's circuits pass.
-  const passCount = boardCircuits.filter(({ circuit }) => getCircuitStatus(circuit) === 'pass').length;
+  const passCount = boardCircuits.filter(
+    ({ circuit }) => getCircuitStatus(circuit) === 'pass'
+  ).length;
   const reviewCount = boardCircuits.length - passCount;
 
   // Way utilisation — recommend a 14-way working capacity (18-way enclosure
@@ -2225,8 +2236,7 @@ const BoardCard = ({
   const recommendedCapacity = Math.max(waysUsed + 4, 14);
   const sparesAvailable = Math.max(0, recommendedCapacity - waysUsed);
   const utilisationPct = Math.min(100, Math.round((waysUsed / recommendedCapacity) * 100));
-  const utilisationTone =
-    utilisationPct >= 90 ? 'amber' : utilisationPct >= 75 ? 'yellow' : 'ok';
+  const utilisationTone = utilisationPct >= 90 ? 'amber' : utilisationPct >= 75 ? 'yellow' : 'ok';
 
   return (
     <article className="bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-2xl overflow-hidden">
@@ -2334,7 +2344,8 @@ const BoardCard = ({
             </span>
             {boardCost.submainFeed > 0 && (
               <span>
-                Submain feed <span className="text-white/85">{formatGBP(boardCost.submainFeed)}</span>
+                Submain feed{' '}
+                <span className="text-white/85">{formatGBP(boardCost.submainFeed)}</span>
               </span>
             )}
             <span>
@@ -2405,10 +2416,7 @@ const BoardCard = ({
               <FeedFact label="Breaking" value={`${board.feedFromParent.protectionKa} kA`} />
               <FeedFact label="Cable" value={`${board.feedFromParent.cableSize} mm²`} />
               <FeedFact label="Type" value={board.feedFromParent.cableType} />
-              <FeedFact
-                label="Length"
-                value={`~${board.feedFromParent.cableLengthEstimateM} m`}
-              />
+              <FeedFact label="Length" value={`~${board.feedFromParent.cableLengthEstimateM} m`} />
             </div>
             <p className="text-[11.5px] leading-relaxed text-white/55">
               ↳ {board.feedFromParent.rationale}
@@ -2568,10 +2576,7 @@ const PhaseHeaderCell = ({ phase, colour }: { phase: string; colour: string }) =
     className="bg-[hsl(0_0%_8%)] px-3 py-2.5 flex items-center gap-2 border-r border-white/[0.06] last:border-r-0"
     aria-label={`Phase ${phase} — ${PHASE_COLOUR_NAMES[phase] ?? ''}`}
   >
-    <span
-      className={cn('inline-block w-2 h-2 rounded-full', colour)}
-      aria-hidden="true"
-    />
+    <span className={cn('inline-block w-2 h-2 rounded-full', colour)} aria-hidden="true" />
     <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/70 tabular-nums">
       {phase}
     </span>
@@ -2991,13 +2996,16 @@ const CircuitDetail = ({
   const status = getCircuitStatus(circuit);
   const regs = getRegRefs(circuit);
   const vd = circuit?.calculations?.voltageDrop;
-  const justification = circuit?.justifications?.designJustification ||
+  const justification =
+    circuit?.justifications?.designJustification ||
     circuit?.justifications?.cableSize ||
     circuit?.structuredOutput?.sections?.designJustification ||
     '';
 
   const boardLabel = context?.boardName ?? 'Circuit';
-  const wayLabel = context ? `Way ${String(context.wayNumber).padStart(2, '0')}` : `${String(circuitIndex + 1).padStart(2, '0')} of ${totalCircuits}`;
+  const wayLabel = context
+    ? `Way ${String(context.wayNumber).padStart(2, '0')}`
+    : `${String(circuitIndex + 1).padStart(2, '0')} of ${totalCircuits}`;
   const phaseLabel = context?.phaseAssignment;
 
   // ── AI Recheck state ────────────────────────────────────────────────
@@ -3019,7 +3027,8 @@ const CircuitDetail = ({
     if (redesign.cpcSize != null) onEdit('cpcSize', Number(redesign.cpcSize));
     if (redesign.cableType) onEdit('cableType', String(redesign.cableType));
     if (redesign.cableLength != null) onEdit('cableLength', Number(redesign.cableLength));
-    if (redesign.installationMethod) onEdit('installationMethod', String(redesign.installationMethod));
+    if (redesign.installationMethod)
+      onEdit('installationMethod', String(redesign.installationMethod));
     if (redesign.protectionDevice?.type) {
       onEdit('protectionDevice.type', String(redesign.protectionDevice.type));
     }
@@ -3071,10 +3080,10 @@ const CircuitDetail = ({
         });
       } else {
         applyRedesign(result);
-        toast.success(
-          mode === 'recheck' ? 'Redesign applied' : 'Compliance route applied',
-          { id: loading, description: 'Review the changes in the impact ribbon above.' }
-        );
+        toast.success(mode === 'recheck' ? 'Redesign applied' : 'Compliance route applied', {
+          id: loading,
+          description: 'Review the changes in the impact ribbon above.',
+        });
         setAiReason('');
       }
     } catch (err: any) {
@@ -3110,11 +3119,7 @@ const CircuitDetail = ({
     >
       {/* EDIT IMPACT RIBBON — surfaces the last edit's before→after deltas. */}
       {latestEditWithSnapshot && (
-        <EditImpactRibbon
-          edit={latestEditWithSnapshot}
-          boardZdb={boardZdb}
-          supplyZe={supplyZe}
-        />
+        <EditImpactRibbon edit={latestEditWithSnapshot} boardZdb={boardZdb} supplyZe={supplyZe} />
       )}
 
       {/* Header — circuit name is editable (Tier 1 free).
@@ -3174,7 +3179,9 @@ const CircuitDetail = ({
           >
             {/* Short label on mobile, full on desktop */}
             <span className="sm:hidden">{status === 'pass' ? 'PASS' : 'REVIEW'}</span>
-            <span className="hidden sm:inline">{status === 'pass' ? 'PASS' : 'REVIEW REQUIRED'}</span>
+            <span className="hidden sm:inline">
+              {status === 'pass' ? 'PASS' : 'REVIEW REQUIRED'}
+            </span>
           </span>
           {status === 'review' && (
             <AutoFixButton
@@ -3190,238 +3197,229 @@ const CircuitDetail = ({
       {/* KEY STATS — always-visible summary of the circuit's most-important
           numbers. Sits between the header and the detail sections so the
           user has a permanent reminder of the current state while editing. */}
-      <CircuitKeyStats
-        circuit={circuit}
-        boardZdb={boardZdb}
-        supplyZe={supplyZe}
-        status={status}
-      />
+      <CircuitKeyStats circuit={circuit} boardZdb={boardZdb} supplyZe={supplyZe} status={status} />
 
       {/* Desktop 2-col layout for the INPUT sections (LOAD + CABLE).
           Mobile: stacks naturally. lg+: side-by-side. PROTECTION / COMPLIANCE
           / TESTS stay full-width below since they benefit from more breathing
           room (more fields, regulation chips, longer values). */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5 lg:gap-6">
-
-      {/* 01 · LOAD — diversity factor + special location editable */}
-      <DetailSection number="01" title="LOAD">
-        <DetailGrid>
-          <DetailField label="Power" value={`${(circuit.loadPower / 1000).toFixed(2)} kW`} />
-          <DetailField
-            label="Design current (Ib)"
-            value={`${Number(circuit?.calculations?.Ib ?? 0).toFixed(2)} A`}
-          />
-          <DetailField label="Phases" value={circuit.phases === 'three' ? 'Three' : 'Single'} />
-          {/* Board assignment — pick which board this circuit lives on. The
+        {/* 01 · LOAD — diversity factor + special location editable */}
+        <DetailSection number="01" title="LOAD">
+          <DetailGrid>
+            <DetailField label="Power" value={`${(circuit.loadPower / 1000).toFixed(2)} kW`} />
+            <DetailField
+              label="Design current (Ib)"
+              value={`${Number(circuit?.calculations?.Ib ?? 0).toFixed(2)} A`}
+            />
+            <DetailField label="Phases" value={circuit.phases === 'three' ? 'Three' : 'Single'} />
+            {/* Board assignment — pick which board this circuit lives on. The
               user can move circuits between boards to override the
               recommender's grouping (split a board, merge into another, etc).
               Picker shows current board as the value but lists OTHER boards
               as the move targets — selecting a different one fires the move. */}
-          {allBoards.length > 1 && context?.boardId && (
-            <EditableDetailField
-              label="Board"
-              isEdited={false}
-              field={
-                <EditableField
-                  kind="select"
-                  label="Board"
-                  value={context.boardId}
-                  options={allBoards.map((b) => ({
-                    value: b.id,
-                    label: b.id === context.boardId ? `${b.name} (current)` : `Move to ${b.name}`,
-                  }))}
-                  validate={() => ({ ok: true as const })}
-                  onCommit={(v) => {
-                    const target = String(v);
-                    if (target !== context.boardId) onMoveToBoard(target);
-                  }}
-                />
-              }
-            />
-          )}
-          {/* Phase assignment — only editable for single-phase circuits on 3φ boards.
-              The user's choice pins the phase; the recommender honours it and
-              greedy-balances the remaining circuits around it. */}
-          {context?.boardId &&
-            circuit.phases !== 'three' &&
-            (context?.phaseAssignment === 'L1' ||
-              context?.phaseAssignment === 'L2' ||
-              context?.phaseAssignment === 'L3') && (
+            {allBoards.length > 1 && context?.boardId && (
               <EditableDetailField
-                label="Phase assignment"
-                isEdited={isEdited('phaseAssignment')}
+                label="Board"
+                isEdited={false}
                 field={
                   <EditableField
                     kind="select"
-                    label="Phase"
-                    value={String(context.phaseAssignment)}
-                    edited={isEdited('phaseAssignment')}
-                    options={[
-                      { value: 'L1', label: 'L1 (brown)' },
-                      { value: 'L2', label: 'L2 (black)' },
-                      { value: 'L3', label: 'L3 (grey)' },
-                    ]}
+                    label="Board"
+                    value={context.boardId}
+                    options={allBoards.map((b) => ({
+                      value: b.id,
+                      label: b.id === context.boardId ? `${b.name} (current)` : `Move to ${b.name}`,
+                    }))}
                     validate={() => ({ ok: true as const })}
-                    onCommit={(v) => onEdit('phaseAssignment', v)}
+                    onCommit={(v) => {
+                      const target = String(v);
+                      if (target !== context.boardId) onMoveToBoard(target);
+                    }}
                   />
                 }
               />
             )}
-          <EditableDetailField
-            label="Diversity factor"
-            isEdited={isEdited('calculations.diversityFactor')}
-            field={
-              <EditableField
-                kind="number"
-                label="Diversity factor"
-                value={Number(circuit?.calculations?.diversityFactor ?? 1)}
-                step={0.05}
-                edited={isEdited('calculations.diversityFactor')}
-                validate={(v) => validateDiversityFactorChange(circuit, v)}
-                onCommit={(v) => onEdit('calculations.diversityFactor', v)}
-              />
-            }
-          />
-          <EditableDetailField
-            label="Special location"
-            isEdited={isEdited('specialLocation')}
-            field={
-              <EditableField
-                kind="select"
-                label="Special location"
-                value={String(circuit?.specialLocation ?? 'none')}
-                edited={isEdited('specialLocation')}
-                options={SPECIAL_LOCATIONS}
-                validate={(v) => validateSpecialLocationChange(circuit, String(v))}
-                onCommit={(v) => onEdit('specialLocation', v)}
-              />
-            }
-          />
-          {circuit?.calculations?.diversifiedLoad ? (
-            <DetailField
-              label="Diversified load"
-              value={`${(circuit.calculations.diversifiedLoad / 1000).toFixed(2)} kW`}
+            {/* Phase assignment — only editable for single-phase circuits on 3φ boards.
+              The user's choice pins the phase; the recommender honours it and
+              greedy-balances the remaining circuits around it. */}
+            {context?.boardId &&
+              circuit.phases !== 'three' &&
+              (context?.phaseAssignment === 'L1' ||
+                context?.phaseAssignment === 'L2' ||
+                context?.phaseAssignment === 'L3') && (
+                <EditableDetailField
+                  label="Phase assignment"
+                  isEdited={isEdited('phaseAssignment')}
+                  field={
+                    <EditableField
+                      kind="select"
+                      label="Phase"
+                      value={String(context.phaseAssignment)}
+                      edited={isEdited('phaseAssignment')}
+                      options={[
+                        { value: 'L1', label: 'L1 (brown)' },
+                        { value: 'L2', label: 'L2 (black)' },
+                        { value: 'L3', label: 'L3 (grey)' },
+                      ]}
+                      validate={() => ({ ok: true as const })}
+                      onCommit={(v) => onEdit('phaseAssignment', v)}
+                    />
+                  }
+                />
+              )}
+            <EditableDetailField
+              label="Diversity factor"
+              isEdited={isEdited('calculations.diversityFactor')}
+              field={
+                <EditableField
+                  kind="number"
+                  label="Diversity factor"
+                  value={Number(circuit?.calculations?.diversityFactor ?? 1)}
+                  step={0.05}
+                  edited={isEdited('calculations.diversityFactor')}
+                  validate={(v) => validateDiversityFactorChange(circuit, v)}
+                  onCommit={(v) => onEdit('calculations.diversityFactor', v)}
+                />
+              }
             />
-          ) : null}
-          <DetailField
-            label="Voltage"
-            value={`${circuit.voltage ?? 230} V`}
-          />
-        </DetailGrid>
-      </DetailSection>
-
-      {/* 02 · CABLE — size + length editable, validated */}
-      <DetailSection number="02" title="CABLE">
-        <DetailGrid>
-          <EditableDetailField
-            label="Live conductor"
-            isEdited={isEdited('cableSize')}
-            lock={checkTier4Lock(circuit, 'cableSize')}
-            field={
-              <EditableField
-                kind="select"
-                label="Cable size"
-                value={String(circuit.cableSize ?? '')}
-                format={(v) => (v ? `${v} mm²` : '—')}
-                edited={isEdited('cableSize')}
-                lock={checkTier4Lock(circuit, 'cableSize')}
-                options={CABLE_SIZE_OPTIONS}
-                validate={(v) => validateCableSizeChange(circuit, Number(v))}
-                onCommit={(v) => onEdit('cableSize', Number(v))}
-              />
-            }
-          />
-          <EditableDetailField
-            label="CPC"
-            isEdited={isEdited('cpcSize')}
-            field={
-              <EditableField
-                kind="select"
-                label="CPC size"
-                value={String(circuit.cpcSize ?? '')}
-                format={(v) => (v ? `${v} mm²` : '—')}
-                edited={isEdited('cpcSize')}
-                options={CPC_SIZE_OPTIONS}
-                validate={(v) => validateCpcSizeChange(circuit, Number(v))}
-                onCommit={(v) => onEdit('cpcSize', Number(v))}
-              />
-            }
-          />
-          <EditableDetailField
-            label="Cable type"
-            isEdited={isEdited('cableType')}
-            lock={checkTier4Lock(circuit, 'cableType')}
-            className="sm:col-span-2"
-            field={
-              <EditableField
-                kind="select"
-                label="Cable type"
-                value={String(circuit.cableType ?? '')}
-                edited={isEdited('cableType')}
-                lock={checkTier4Lock(circuit, 'cableType')}
-                options={getAllowedCableTypes(circuit).map((t) => ({ value: t, label: t }))}
-                validate={(v) => validateCableTypeChange(circuit, String(v))}
-                onCommit={(v) => onEdit('cableType', v)}
-              />
-            }
-          />
-          <EditableDetailField
-            label="Length"
-            isEdited={isEdited('cableLength')}
-            field={
-              <EditableField
-                kind="number"
-                label="Cable length"
-                value={Number(circuit.cableLength ?? 0)}
-                format={(v) => `${v} m`}
-                edited={isEdited('cableLength')}
-                step={1}
-                validate={(v) => validateLengthChange(circuit, v)}
-                onCommit={(v) => onEdit('cableLength', v)}
-              />
-            }
-          />
-          <EditableDetailField
-            label="Method"
-            isEdited={isEdited('installationMethod')}
-            className="sm:col-span-2"
-            field={
-              <EditableField
-                kind="select"
-                label="Installation method"
-                value={String(circuit.installationMethod ?? 'C')}
-                format={(v) => {
-                  // Match the saved value (which may be the full label) back to a short token
-                  const code = String(v).match(/^[A-F]/)?.[0] ?? String(v)[0] ?? 'C';
-                  return INSTALLATION_METHODS.find((m) => m.value === code)?.label ?? String(v);
-                }}
-                edited={isEdited('installationMethod')}
-                options={INSTALLATION_METHODS}
-                validate={(v) => validateInstallationMethodChange(circuit, String(v))}
-                onCommit={(v) => onEdit('installationMethod', v)}
-              />
-            }
-          />
-          <DetailField
-            label="Iz (current capacity)"
-            value={
-              circuit?.calculations?.Iz != null
-                ? `${Number(circuit.calculations.Iz).toFixed(1)} A`
-                : '—'
-            }
-          />
-          {circuit.cable_table_ref ? (
-            <DetailField
-              label="Table"
-              value={circuit.cable_table_ref}
-              chip={circuit.cable_table_ref !== 'ungrounded'}
-              warn={circuit.cable_table_ref === 'ungrounded'}
+            <EditableDetailField
+              label="Special location"
+              isEdited={isEdited('specialLocation')}
+              field={
+                <EditableField
+                  kind="select"
+                  label="Special location"
+                  value={String(circuit?.specialLocation ?? 'none')}
+                  edited={isEdited('specialLocation')}
+                  options={SPECIAL_LOCATIONS}
+                  validate={(v) => validateSpecialLocationChange(circuit, String(v))}
+                  onCommit={(v) => onEdit('specialLocation', v)}
+                />
+              }
             />
-          ) : null}
-        </DetailGrid>
-      </DetailSection>
+            {circuit?.calculations?.diversifiedLoad ? (
+              <DetailField
+                label="Diversified load"
+                value={`${(circuit.calculations.diversifiedLoad / 1000).toFixed(2)} kW`}
+              />
+            ) : null}
+            <DetailField label="Voltage" value={`${circuit.voltage ?? 230} V`} />
+          </DetailGrid>
+        </DetailSection>
 
-      </div>{/* end 2-col grid for LOAD + CABLE */}
+        {/* 02 · CABLE — size + length editable, validated */}
+        <DetailSection number="02" title="CABLE">
+          <DetailGrid>
+            <EditableDetailField
+              label="Live conductor"
+              isEdited={isEdited('cableSize')}
+              lock={checkTier4Lock(circuit, 'cableSize')}
+              field={
+                <EditableField
+                  kind="select"
+                  label="Cable size"
+                  value={String(circuit.cableSize ?? '')}
+                  format={(v) => (v ? `${v} mm²` : '—')}
+                  edited={isEdited('cableSize')}
+                  lock={checkTier4Lock(circuit, 'cableSize')}
+                  options={CABLE_SIZE_OPTIONS}
+                  validate={(v) => validateCableSizeChange(circuit, Number(v))}
+                  onCommit={(v) => onEdit('cableSize', Number(v))}
+                />
+              }
+            />
+            <EditableDetailField
+              label="CPC"
+              isEdited={isEdited('cpcSize')}
+              field={
+                <EditableField
+                  kind="select"
+                  label="CPC size"
+                  value={String(circuit.cpcSize ?? '')}
+                  format={(v) => (v ? `${v} mm²` : '—')}
+                  edited={isEdited('cpcSize')}
+                  options={CPC_SIZE_OPTIONS}
+                  validate={(v) => validateCpcSizeChange(circuit, Number(v))}
+                  onCommit={(v) => onEdit('cpcSize', Number(v))}
+                />
+              }
+            />
+            <EditableDetailField
+              label="Cable type"
+              isEdited={isEdited('cableType')}
+              lock={checkTier4Lock(circuit, 'cableType')}
+              className="sm:col-span-2"
+              field={
+                <EditableField
+                  kind="select"
+                  label="Cable type"
+                  value={String(circuit.cableType ?? '')}
+                  edited={isEdited('cableType')}
+                  lock={checkTier4Lock(circuit, 'cableType')}
+                  options={getAllowedCableTypes(circuit).map((t) => ({ value: t, label: t }))}
+                  validate={(v) => validateCableTypeChange(circuit, String(v))}
+                  onCommit={(v) => onEdit('cableType', v)}
+                />
+              }
+            />
+            <EditableDetailField
+              label="Length"
+              isEdited={isEdited('cableLength')}
+              field={
+                <EditableField
+                  kind="number"
+                  label="Cable length"
+                  value={Number(circuit.cableLength ?? 0)}
+                  format={(v) => `${v} m`}
+                  edited={isEdited('cableLength')}
+                  step={1}
+                  validate={(v) => validateLengthChange(circuit, v)}
+                  onCommit={(v) => onEdit('cableLength', v)}
+                />
+              }
+            />
+            <EditableDetailField
+              label="Method"
+              isEdited={isEdited('installationMethod')}
+              className="sm:col-span-2"
+              field={
+                <EditableField
+                  kind="select"
+                  label="Installation method"
+                  value={String(circuit.installationMethod ?? 'C')}
+                  format={(v) => {
+                    // Match the saved value (which may be the full label) back to a short token
+                    const code = String(v).match(/^[A-F]/)?.[0] ?? String(v)[0] ?? 'C';
+                    return INSTALLATION_METHODS.find((m) => m.value === code)?.label ?? String(v);
+                  }}
+                  edited={isEdited('installationMethod')}
+                  options={INSTALLATION_METHODS}
+                  validate={(v) => validateInstallationMethodChange(circuit, String(v))}
+                  onCommit={(v) => onEdit('installationMethod', v)}
+                />
+              }
+            />
+            <DetailField
+              label="Iz (current capacity)"
+              value={
+                circuit?.calculations?.Iz != null
+                  ? `${Number(circuit.calculations.Iz).toFixed(1)} A`
+                  : '—'
+              }
+            />
+            {circuit.cable_table_ref ? (
+              <DetailField
+                label="Table"
+                value={circuit.cable_table_ref}
+                chip={circuit.cable_table_ref !== 'ungrounded'}
+                warn={circuit.cable_table_ref === 'ungrounded'}
+              />
+            ) : null}
+          </DetailGrid>
+        </DetailSection>
+      </div>
+      {/* end 2-col grid for LOAD + CABLE */}
 
       {/* 03 · PROTECTION — rating editable, validated */}
       <DetailSection number="03" title="PROTECTION">
@@ -3468,10 +3466,7 @@ const CircuitDetail = ({
             label="Breaking capacity"
             value={`${circuit.protectionDevice?.kaRating ?? '—'} kA`}
           />
-          <DetailField
-            label="RCD protected"
-            value={circuit.rcdProtected ? 'Yes' : 'No'}
-          />
+          <DetailField label="RCD protected" value={circuit.rcdProtected ? 'Yes' : 'No'} />
         </DetailGrid>
       </DetailSection>
 
@@ -3485,12 +3480,7 @@ const CircuitDetail = ({
               warn={vd.compliant === false}
             />
           ) : null}
-          {vd ? (
-            <DetailField
-              label="VD limit"
-              value={`${vd.limit ?? '—'}%`}
-            />
-          ) : null}
+          {vd ? <DetailField label="VD limit" value={`${vd.limit ?? '—'}%`} /> : null}
           {(() => {
             // The AI calculates Zs assuming supply Ze. For circuits on a
             // submain board, the real loop starts from the board's Zdb (Ze
@@ -3503,9 +3493,7 @@ const CircuitDetail = ({
             const correctedZs = Number.isFinite(aiZs) ? aiZs + correction : NaN;
             const isSubmain = correction > 0.01;
             const correctedFails =
-              Number.isFinite(correctedZs) &&
-              Number.isFinite(maxZs) &&
-              correctedZs > maxZs;
+              Number.isFinite(correctedZs) && Number.isFinite(maxZs) && correctedZs > maxZs;
             return (
               <>
                 <DetailField
@@ -3526,10 +3514,7 @@ const CircuitDetail = ({
               </>
             );
           })()}
-          <DetailField
-            label="In (device rating)"
-            value={`${circuit?.calculations?.In ?? '—'} A`}
-          />
+          <DetailField label="In (device rating)" value={`${circuit?.calculations?.In ?? '—'} A`} />
         </DetailGrid>
       </DetailSection>
 
@@ -3555,18 +3540,11 @@ const CircuitDetail = ({
           <DetailField
             label="Insulation resistance"
             value={
-              circuit?.expectedTests?.insulationResistance?.minResistance ??
-              '≥1.0 MΩ @ 500 V DC'
+              circuit?.expectedTests?.insulationResistance?.minResistance ?? '≥1.0 MΩ @ 500 V DC'
             }
           />
-          <DetailField
-            label="RCD trip (1×)"
-            value={circuit?.expectedTests?.rcdTest?.at1x ?? '—'}
-          />
-          <DetailField
-            label="RCD trip (5×)"
-            value={circuit?.expectedTests?.rcdTest?.at5x ?? '—'}
-          />
+          <DetailField label="RCD trip (1×)" value={circuit?.expectedTests?.rcdTest?.at1x ?? '—'} />
+          <DetailField label="RCD trip (5×)" value={circuit?.expectedTests?.rcdTest?.at5x ?? '—'} />
           <DetailField
             label="Polarity"
             value={circuit?.expectedTests?.polarity ?? 'Verify all terminations'}
@@ -3592,7 +3570,8 @@ const CircuitDetail = ({
             </div>
           ) : (
             <p className="text-[12px] text-amber-400">
-              No regulation refs cited — older job or fallback design. Newer designs cite at least 2 regs per circuit.
+              No regulation refs cited — older job or fallback design. Newer designs cite at least 2
+              regs per circuit.
             </p>
           )}
 
@@ -3663,9 +3642,8 @@ const CircuitDetail = ({
           </span>
         </div>
         <p className="mt-2 text-[12.5px] leading-relaxed text-white/85 max-w-2xl">
-          Not happy with this circuit? Get a fresh take from the designer. Tell it what
-          you want — smaller cable, future-proofed, optimised for inrush, etc. — or just
-          ask it to recheck.
+          Not happy with this circuit? Get a fresh take from the designer. Tell it what you want —
+          smaller cable, future-proofed, optimised for inrush, etc. — or just ask it to recheck.
         </p>
         <textarea
           value={aiReason}
@@ -3730,9 +3708,7 @@ const CircuitDetail = ({
             <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-300">
               AI rationale
             </div>
-            <p className="mt-1.5 text-[12.5px] leading-relaxed text-white">
-              {aiRationale.text}
-            </p>
+            <p className="mt-1.5 text-[12.5px] leading-relaxed text-white">{aiRationale.text}</p>
             {aiRationale.regs.length > 0 && (
               <div className="mt-2 flex flex-wrap gap-1.5">
                 {aiRationale.regs.map((r, i) => (
@@ -3761,8 +3737,8 @@ const CircuitDetail = ({
             </SheetTitle>
           </SheetHeader>
           <p className="mt-2 text-[12.5px] leading-relaxed text-white">
-            Each one is BS 7671-compliant. Pick the trade-off that fits your job —
-            tap "Apply this option" to use it.
+            Each one is BS 7671-compliant. Pick the trade-off that fits your job — tap "Apply this
+            option" to use it.
           </p>
           <div className="mt-4 grid grid-cols-1 lg:grid-cols-2 gap-3">
             {alternatives?.map((alt: any, i: number) => (
@@ -3782,9 +3758,7 @@ const CircuitDetail = ({
                   </span>
                 </div>
                 {alt.rationale && (
-                  <p className="text-[12.5px] leading-relaxed text-white/85">
-                    {alt.rationale}
-                  </p>
+                  <p className="text-[12.5px] leading-relaxed text-white/85">{alt.rationale}</p>
                 )}
                 {alt.tradeOff && (
                   <p className="text-[11.5px] leading-relaxed text-amber-300/85">
@@ -3837,7 +3811,7 @@ const phaseStripeClass = (phase?: 'L1' | 'L2' | 'L3' | 'L1L2L3'): string => {
 };
 
 const phaseLabel = (phase?: 'L1' | 'L2' | 'L3' | 'L1L2L3'): string =>
-  phase === 'L1L2L3' ? '3φ' : phase ?? '';
+  phase === 'L1L2L3' ? '3φ' : (phase ?? '');
 
 /**
  * Circuits navigation — grouped by board, with each board's ways numbered
@@ -4519,14 +4493,8 @@ const ActionStrip = ({
       />
       <ActionButton label="Send to Cost Engineer" onClick={() => onSendTo('cost-engineer')} />
       <ActionButton label="Send to RAMS / H&S" onClick={() => onSendTo('rams')} />
-      <ActionButton
-        label="Send to Method Statement"
-        onClick={() => onSendTo('method-statement')}
-      />
-      <ActionButton
-        label="Send to Maintenance"
-        onClick={() => onSendTo('maintenance')}
-      />
+      <ActionButton label="Send to Method Statement" onClick={() => onSendTo('method-statement')} />
+      <ActionButton label="Send to Maintenance" onClick={() => onSendTo('maintenance')} />
       <ActionButton label="Send to Installer" onClick={() => onSendTo('installer')} />
       {onReset && <ActionButton label="New design" onClick={onReset} />}
     </div>
@@ -4637,7 +4605,9 @@ const CircuitKeyStats = ({
   const vd = getVoltageDrop(circuit);
 
   const iz = cable.iz ?? Number(circuit?.calculations?.Iz ?? 0);
-  const vdPct = vd.known ? (vd.percent ?? 0) : Number(circuit?.calculations?.voltageDrop?.percent ?? 0);
+  const vdPct = vd.known
+    ? (vd.percent ?? 0)
+    : Number(circuit?.calculations?.voltageDrop?.percent ?? 0);
   const vdLimit = vd.limit;
   const zs = zsCheck.value;
   const maxZs = zsCheck.max;
@@ -4664,7 +4634,13 @@ const CircuitKeyStats = ({
         ? 'good'
         : 'bad';
   const izTone =
-    izHeadroomPct == null ? 'neutral' : izHeadroomPct >= 20 ? 'good' : izHeadroomPct >= 0 ? 'warn' : 'bad';
+    izHeadroomPct == null
+      ? 'neutral'
+      : izHeadroomPct >= 20
+        ? 'good'
+        : izHeadroomPct >= 0
+          ? 'warn'
+          : 'bad';
 
   return (
     <div className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_15%)_0%,hsl(0_0%_12%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] overflow-hidden">
@@ -4756,9 +4732,7 @@ const KeyStatCell = ({
       >
         {value}
       </div>
-      {sub && (
-        <div className="mt-0.5 text-[10px] tabular-nums text-white/65 truncate">{sub}</div>
-      )}
+      {sub && <div className="mt-0.5 text-[10px] tabular-nums text-white/65 truncate">{sub}</div>}
     </div>
   );
 };
@@ -4999,9 +4973,7 @@ const EditImpactRibbon = ({
           >
             Last edit
           </span>
-          <span className="text-[12.5px] text-white capitalize">
-            Changed {fieldLabel}
-          </span>
+          <span className="text-[12.5px] text-white capitalize">Changed {fieldLabel}</span>
           {statusFlipped && (
             <span
               className={cn(
@@ -5020,7 +4992,10 @@ const EditImpactRibbon = ({
       {diffs.length > 0 && (
         <div className="mt-2.5 flex flex-wrap gap-x-4 gap-y-1.5">
           {diffs.map((d, i) => (
-            <span key={i} className="text-[11.5px] tabular-nums text-white/80 inline-flex items-baseline gap-1.5">
+            <span
+              key={i}
+              className="text-[11.5px] tabular-nums text-white/80 inline-flex items-baseline gap-1.5"
+            >
               <span className="text-white/55 uppercase tracking-[0.12em] text-[10px] font-semibold">
                 {d.label}
               </span>
@@ -5112,7 +5087,10 @@ const EditableDetailField = ({
     <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/75 inline-flex items-center gap-1.5">
       {label}
       {isEdited && (
-        <span className="inline-block w-1.5 h-1.5 rounded-full bg-elec-yellow" aria-label="edited" />
+        <span
+          className="inline-block w-1.5 h-1.5 rounded-full bg-elec-yellow"
+          aria-label="edited"
+        />
       )}
       {lock && (
         <svg className="w-3 h-3 text-white/40" viewBox="0 0 16 16" fill="currentColor">
@@ -5385,9 +5363,7 @@ const StickyMiniHeader = ({
               {context.boardName} · Way {String(context.wayNumber).padStart(2, '0')}
             </span>
             <span className="text-white/30 shrink-0">·</span>
-            <span className="font-medium text-white truncate flex-1 min-w-0">
-              {circuit.name}
-            </span>
+            <span className="font-medium text-white truncate flex-1 min-w-0">{circuit.name}</span>
             {context.phaseAssignment && (
               <span className="text-[10px] font-semibold tabular-nums text-white/55 border border-white/15 rounded px-1.5 py-0.5 shrink-0">
                 {context.phaseAssignment === 'L1L2L3' ? '3φ' : context.phaseAssignment}

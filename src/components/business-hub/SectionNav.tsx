@@ -106,6 +106,10 @@ const SectionNav = ({
   // Only depends on section IDs (stringified), NOT on onSectionChange callback
   const sectionIds = sections.map((s) => s.id).join(',');
   useEffect(() => {
+    // Bail rather than throw where the API is missing — an unguarded
+    // constructor here took the whole page down through the error
+    // boundary, on public SEO pages included (Mobile Safari, iOS 15).
+    if (typeof IntersectionObserver === 'undefined') return;
     observerRef.current = new IntersectionObserver(
       (entries) => {
         if (isScrollingRef.current) return;

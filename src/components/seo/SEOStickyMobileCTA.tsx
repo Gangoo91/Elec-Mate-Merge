@@ -77,13 +77,25 @@ export function SEOStickyMobileCTA({
   useEffect(() => {
     const onFocusIn = (e: FocusEvent) => {
       const t = e.target as HTMLElement | null;
-      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable)) {
+      if (
+        t &&
+        (t.tagName === 'INPUT' ||
+          t.tagName === 'TEXTAREA' ||
+          t.tagName === 'SELECT' ||
+          t.isContentEditable)
+      ) {
         setInputFocused(true);
       }
     };
     const onFocusOut = (e: FocusEvent) => {
       const t = e.target as HTMLElement | null;
-      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable)) {
+      if (
+        t &&
+        (t.tagName === 'INPUT' ||
+          t.tagName === 'TEXTAREA' ||
+          t.tagName === 'SELECT' ||
+          t.isContentEditable)
+      ) {
         setInputFocused(false);
       }
     };
@@ -101,10 +113,13 @@ export function SEOStickyMobileCTA({
     if (!hideWhileVisible) return;
     const el = document.querySelector(hideWhileVisible);
     if (!el) return;
-    const io = new IntersectionObserver(
-      ([entry]) => setMainCtaOnScreen(entry.isIntersecting),
-      { threshold: 0 }
-    );
+    // Bail rather than throw where the API is missing — an unguarded
+    // constructor here took the whole page down through the error
+    // boundary, on public SEO pages included (Mobile Safari, iOS 15).
+    if (typeof IntersectionObserver === 'undefined') return;
+    const io = new IntersectionObserver(([entry]) => setMainCtaOnScreen(entry.isIntersecting), {
+      threshold: 0,
+    });
     io.observe(el);
     return () => io.disconnect();
   }, [hideWhileVisible]);

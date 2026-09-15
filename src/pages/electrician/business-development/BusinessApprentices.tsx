@@ -60,6 +60,10 @@ const BusinessApprentices = () => {
 
   // Intersection Observer for active section tracking
   useEffect(() => {
+    // Bail rather than throw where the API is missing — an unguarded
+    // constructor here took the whole page down through the error
+    // boundary, on public SEO pages included (Mobile Safari, iOS 15).
+    if (typeof IntersectionObserver === 'undefined') return;
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -90,16 +94,26 @@ const BusinessApprentices = () => {
 
   // Key Stats Data
   const keyStats = [
-    { label: 'SME Hire Incentive', value: 'Up to £2,000', sublabel: 'Ages 16-24, from Oct 2026', icon: PoundSterling },
+    {
+      label: 'SME Hire Incentive',
+      value: 'Up to £2,000',
+      sublabel: 'Ages 16-24, from Oct 2026',
+      icon: PoundSterling,
+    },
     { label: 'Apprentice Wage', value: '£8.00/hr', sublabel: 'April 2026 minimum', icon: Users },
-    { label: 'Full Qualification', value: '4 Years', sublabel: 'Typical training period', icon: BookOpen },
+    {
+      label: 'Full Qualification',
+      value: '4 Years',
+      sublabel: 'Typical training period',
+      icon: BookOpen,
+    },
   ];
 
   // Recruitment Section Data
   const recruitmentMetrics = [
     { label: 'Time to Hire', value: '6-8 weeks', sublabel: 'Typical, quality candidates' },
     { label: 'Training Funding', value: '100%', sublabel: 'Eligible under-25s, small employers' },
-    { label: "Employer NI", value: '£0', sublabel: 'Apprentices under 25' },
+    { label: 'Employer NI', value: '£0', sublabel: 'Apprentices under 25' },
     { label: 'Cost Per Hire', value: '£1,200-2,500', sublabel: 'Typical total investment' },
   ];
 
@@ -443,7 +457,9 @@ const BusinessApprentices = () => {
                     <li>SME incentive: up to £2,000 (16-24, from Oct 2026)</li>
                     <li>Training funding: 100% eligible under-25s</li>
                     <li>Employer NI: £0 for apprentices under 25</li>
-                    <li className="font-medium text-yellow-300 pt-1">Support often covers hire costs</li>
+                    <li className="font-medium text-yellow-300 pt-1">
+                      Support often covers hire costs
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -526,9 +542,7 @@ const BusinessApprentices = () => {
                 </div>
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="text-xs font-medium text-white">Scotland - SDS</h4>
-                  <p className="text-xs text-white">
-                    Scottish standards, enhanced funding rates
-                  </p>
+                  <p className="text-xs text-white">Scottish standards, enhanced funding rates</p>
                 </div>
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="text-xs font-medium text-white">Wales - Welsh Gov</h4>
@@ -787,9 +801,7 @@ const BusinessApprentices = () => {
                 <Button
                   variant="outline"
                   className="w-full justify-start border-white/20 text-left h-auto p-3 hover:border-yellow-400/40"
-                  onClick={() =>
-                    openExternalUrl('https://www.citb.co.uk/apprentices/support')
-                  }
+                  onClick={() => openExternalUrl('https://www.citb.co.uk/apprentices/support')}
                 >
                   <ExternalLink className="h-4 w-4 mr-3 text-yellow-400 flex-shrink-0" />
                   <div className="text-left flex-1 min-w-0">
@@ -922,8 +934,7 @@ const BusinessApprentices = () => {
             <div className="p-4 rounded-xl bg-white/[0.04] border border-white/[0.08]">
               <p className="text-sm text-white flex items-center gap-2">
                 <Zap className="h-4 w-4 text-yellow-400 flex-shrink-0" />
-                Tools for apprentice planning, cost optimisation, and compliance
-                management.
+                Tools for apprentice planning, cost optimisation, and compliance management.
               </p>
             </div>
 

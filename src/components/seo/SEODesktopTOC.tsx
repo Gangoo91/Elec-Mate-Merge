@@ -14,6 +14,10 @@ export function SEODesktopTOC({ items }: SEODesktopTOCProps) {
   const [activeId, setActiveId] = useState<string>('');
 
   useEffect(() => {
+    // Bail rather than throw where the API is missing — an unguarded
+    // constructor here took the whole page down through the error
+    // boundary, on public SEO pages included (Mobile Safari, iOS 15).
+    if (typeof IntersectionObserver === 'undefined') return;
     const observer = new IntersectionObserver(
       (entries) => {
         const visible = entries.filter((e) => e.isIntersecting);
