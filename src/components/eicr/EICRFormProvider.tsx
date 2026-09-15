@@ -875,10 +875,31 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       certNumberGenerated.current = true;
       return;
     }
+    /*
+     * 🔴 Never allocate while the saved report is still hydrating.
+     *
+     * `initialReportId` is set from the first render, but `formData` does not
+     * carry that report's saved certificate number until the load resolves.
+     * Allocating on the gap asked the counter for a number that the report
+     * already had — burning one from the account's sequence, and, when the RPC
+     * won the race against the load, writing a SECOND number into `data` for a
+     * certificate that was already issued under the first.
+     *
+     * That is how EICR-2026-4432 came to print EICR-2026-4433. The `prev
+     * .certificateNumber ? prev` guard inside ensureCertificateNumber only
+     * helps when the load lands first; it is a tiebreak, not a gate.
+     */
+    if (isLoadingReport) return;
     if (currentReportId || initialReportId) {
       ensureCertificateNumber();
     }
-  }, [currentReportId, initialReportId, formData.certificateNumber, ensureCertificateNumber]);
+  }, [
+    currentReportId,
+    initialReportId,
+    formData.certificateNumber,
+    isLoadingReport,
+    ensureCertificateNumber,
+  ]);
 
   // Stable identity — the five details sections are React.memo'd on
   // prevProps.onUpdate === nextProps.onUpdate; a recreated-per-render function

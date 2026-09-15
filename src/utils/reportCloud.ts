@@ -992,6 +992,29 @@ export const reportCloud = {
           data.installationAddress || data.propertyAddress || data.premisesAddress || null,
         inspection_date: reportInspectionDate(data),
         inspector_name: reportInspectorName(data),
+        /*
+         * `certificate_number` is a denormalised copy of `data.certificateNumber`,
+         * exactly like `client_name` and `inspector_name` above — and it was the
+         * only one this path never refreshed. It was written once, by createReport,
+         * and every save after that updated `data` alone.
+         *
+         * So when the number in `data` moved, the column stayed behind: the
+         * reports list showed one number and the PDF printed another. 258 reports
+         * had diverged that way. US Electrical reported it as missing data — he
+         * was comparing EICR-2026-4432 in the app against EICR-2026-4433 on the
+         * certificate and concluding he was looking at two different jobs.
+         *
+         * `data` wins because `data` is what the certificate prints; the document
+         * in the client's hands is the authority. Guarded on a non-empty string so
+         * a payload that omits the field cannot blank an issued number.
+         *
+         * No collision risk: there is no unique index on this column. The
+         * `uniq_reports_user_cert_active` that createReport's error handler below
+         * still tests for does not exist on the live database.
+         */
+        ...(typeof data.certificateNumber === 'string' && data.certificateNumber.trim()
+          ? { certificate_number: data.certificateNumber.trim() }
+          : {}),
         data: data,
         pdf_payload: null, // Clear stale formatted data — will be re-populated on next PDF generation
         last_synced_at: new Date().toISOString(),
@@ -1409,6 +1432,11 @@ export const reportCloud = {
           data.installationAddress || data.propertyAddress || data.premisesAddress || null,
         inspection_date: reportInspectionDate(data),
         inspector_name: reportInspectorName(data),
+        // Mirror the number the certificate prints — see the note in updateReport.
+        // This is the path every autosave writes, so it is the one that matters.
+        ...(typeof data.certificateNumber === 'string' && data.certificateNumber.trim()
+          ? { certificate_number: data.certificateNumber.trim() }
+          : {}),
         data: data,
         pdf_payload: null, // Clear stale formatted data — will be re-populated on next PDF generation
         last_synced_at: new Date().toISOString(),

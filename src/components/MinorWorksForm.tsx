@@ -793,10 +793,21 @@ const MinorWorksForm = ({
       certNumberGenerated.current = true;
       return;
     }
+    // Never allocate while the saved report is still hydrating — see the note
+    // in EICRFormProvider. Asking the counter for a number the report already
+    // has burns one from the account's sequence, and can stamp a second number
+    // onto a certificate that was already issued under the first.
+    if (isLoadingReport) return;
     if (currentReportId || initialReportId) {
       ensureCertificateNumber();
     }
-  }, [currentReportId, initialReportId, formData.certificateNumber, ensureCertificateNumber]);
+  }, [
+    currentReportId,
+    initialReportId,
+    formData.certificateNumber,
+    isLoadingReport,
+    ensureCertificateNumber,
+  ]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleUpdate = (field: string, value: any) => {
@@ -1173,6 +1184,13 @@ const MinorWorksForm = ({
         .update({
           status: 'completed',
           data: completedData,
+          // This write issues the certificate, so it is the worst possible
+          // moment to leave the denormalised number behind — mirror it here
+          // too, exactly as both reportCloud update paths now do.
+          ...(typeof completedData.certificateNumber === 'string' &&
+          completedData.certificateNumber.trim()
+            ? { certificate_number: completedData.certificateNumber.trim() }
+            : {}),
           updated_at: new Date().toISOString(),
           last_synced_at: new Date().toISOString(),
         })

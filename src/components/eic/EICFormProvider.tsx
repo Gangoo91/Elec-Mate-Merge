@@ -502,10 +502,21 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
       certNumberGenerated.current = true;
       return;
     }
+    // Never allocate while the saved report is still hydrating — see the note
+    // in EICRFormProvider. Asking the counter for a number the report already
+    // has burns one from the account's sequence, and can stamp a second number
+    // onto a certificate that was already issued under the first.
+    if (isLoadingReport) return;
     if (currentReportId || initialReportId) {
       ensureCertificateNumber();
     }
-  }, [currentReportId, initialReportId, formData.certificateNumber, ensureCertificateNumber]);
+  }, [
+    currentReportId,
+    initialReportId,
+    formData.certificateNumber,
+    isLoadingReport,
+    ensureCertificateNumber,
+  ]);
 
   // Cloud sync integration
   const handleReportCreated = useCallback((newReportId: string) => {
