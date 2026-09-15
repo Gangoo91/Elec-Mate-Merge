@@ -1,6 +1,8 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { logger } from '@/utils/logger';
+import { describeCustomerDeleteError, customerDeleteErrorContext } from '@/lib/customerDeleteError';
 
 export type CustomerStatus = 'lead' | 'active' | 'inactive';
 
@@ -102,12 +104,7 @@ const mapCustomerRow = (row: CustomerRow): Customer => {
 };
 
 export type SortField =
-  | 'name'
-  | 'email'
-  | 'createdAt'
-  | 'lastActivityAt'
-  | 'certificateCount'
-  | 'propertyCount';
+  'name' | 'email' | 'createdAt' | 'lastActivityAt' | 'certificateCount' | 'propertyCount';
 export type SortDirection = 'asc' | 'desc';
 
 interface UseCustomersOptions {
@@ -355,10 +352,7 @@ export const useCustomers = (options?: UseCustomersOptions) => {
         updated_at: new Date().toISOString(),
       };
 
-      const { error } = await supabase
-        .from('customers')
-        .update(normalisedUpdates)
-        .eq('id', id);
+      const { error } = await supabase.from('customers').update(normalisedUpdates).eq('id', id);
 
       if (error) throw error;
 
@@ -394,9 +388,11 @@ export const useCustomers = (options?: UseCustomersOptions) => {
       await loadCustomers(currentPage);
       return true;
     } catch (error) {
+      // ELE-1736: say which constraint blocked it, and put the code in Sentry.
+      logger.error('Customer delete failed', error, customerDeleteErrorContext(error, id));
       toast({
         title: 'Delete failed',
-        description: 'Failed to delete customer.',
+        description: describeCustomerDeleteError(error),
         variant: 'destructive',
       });
       return false;
@@ -404,100 +400,103 @@ export const useCustomers = (options?: UseCustomersOptions) => {
   };
 
   // Export customers to CSV
-  const exportCustomers = useCallback(async (selectedIds?: string[]) => {
-    try {
-      // Fetch all customers for export (no pagination). If selectedIds passed,
-      // filter to that subset.
-      let query = supabase.from('customers').select('*').order('name');
-      if (selectedIds && selectedIds.length > 0) {
-        query = query.in('id', selectedIds);
-      }
-      const { data, error } = await query;
+  const exportCustomers = useCallback(
+    async (selectedIds?: string[]) => {
+      try {
+        // Fetch all customers for export (no pagination). If selectedIds passed,
+        // filter to that subset.
+        let query = supabase.from('customers').select('*').order('name');
+        if (selectedIds && selectedIds.length > 0) {
+          query = query.in('id', selectedIds);
+        }
+        const { data, error } = await query;
 
-      if (error) throw error;
+        if (error) throw error;
 
-      // Spreadsheets coerce bare digit strings to numbers, dropping the
-      // leading 0 (and any +44). Normalise to national format with a space —
-      // "07506 026934" — which every spreadsheet keeps as text.
-      const formatPhone = (phone?: string | null): string => {
-        if (!phone) return '';
-        const digits = phone.replace(/[^\d]/g, '');
-        let national = digits;
-        if (digits.startsWith('44') && digits.length >= 11) national = '0' + digits.slice(2);
-        else if (!digits.startsWith('0') && digits.length === 10) national = '0' + digits;
-        if (national.length === 11) return `${national.slice(0, 5)} ${national.slice(5)}`;
-        return phone;
-      };
+        // Spreadsheets coerce bare digit strings to numbers, dropping the
+        // leading 0 (and any +44). Normalise to national format with a space —
+        // "07506 026934" — which every spreadsheet keeps as text.
+        const formatPhone = (phone?: string | null): string => {
+          if (!phone) return '';
+          const digits = phone.replace(/[^\d]/g, '');
+          let national = digits;
+          if (digits.startsWith('44') && digits.length >= 11) national = '0' + digits.slice(2);
+          else if (!digits.startsWith('0') && digits.length === 10) national = '0' + digits;
+          if (national.length === 11) return `${national.slice(0, 5)} ${national.slice(5)}`;
+          return phone;
+        };
 
-      const formatDate = (d?: string | null) =>
-        d ? new Date(d).toLocaleDateString('en-GB') : '';
+        const formatDate = (d?: string | null) =>
+          d ? new Date(d).toLocaleDateString('en-GB') : '';
 
-      const capitalise = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+        const capitalise = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
-      const csvContent =
-        '\ufeff' + // UTF-8 BOM so Excel renders £ and accented names correctly
-        [
+        const csvContent =
+          '\ufeff' + // UTF-8 BOM so Excel renders £ and accented names correctly
           [
-            'Name',
-            'Company',
-            'Email',
-            'Phone',
-            'Address',
-            'Status',
-            'Tags',
-            'Notes',
-            'Certificates',
-            'Properties',
-            'Last activity',
-            'Added',
-          ],
-          ...(data || []).map((c) => {
-            const row = c as typeof c & {
-              company_name?: string;
-              status?: string;
-              tags?: string[];
-            };
-            return [
-              row.name,
-              row.company_name || '',
-              row.email || '',
-              formatPhone(row.phone),
-              row.address || '',
-              capitalise(row.status || 'active'),
-              (row.tags || []).join('; '),
-              row.notes || '',
-              (row.certificate_count || 0).toString(),
-              (row.property_count || 0).toString(),
-              formatDate(row.last_activity_at),
-              formatDate(row.created_at),
-            ];
-          }),
-        ]
-          .map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(','))
-          .join('\r\n');
+            [
+              'Name',
+              'Company',
+              'Email',
+              'Phone',
+              'Address',
+              'Status',
+              'Tags',
+              'Notes',
+              'Certificates',
+              'Properties',
+              'Last activity',
+              'Added',
+            ],
+            ...(data || []).map((c) => {
+              const row = c as typeof c & {
+                company_name?: string;
+                status?: string;
+                tags?: string[];
+              };
+              return [
+                row.name,
+                row.company_name || '',
+                row.email || '',
+                formatPhone(row.phone),
+                row.address || '',
+                capitalise(row.status || 'active'),
+                (row.tags || []).join('; '),
+                row.notes || '',
+                (row.certificate_count || 0).toString(),
+                (row.property_count || 0).toString(),
+                formatDate(row.last_activity_at),
+                formatDate(row.created_at),
+              ];
+            }),
+          ]
+            .map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(','))
+            .join('\r\n');
 
-      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `customers-${new Date().toISOString().split('T')[0]}.csv`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `customers-${new Date().toISOString().split('T')[0]}.csv`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
 
-      toast({
-        title: 'Export successful',
-        description: `Exported ${data?.length || 0} customers to CSV.`,
-      });
-    } catch (error) {
-      toast({
-        title: 'Export failed',
-        description: 'Failed to export customers.',
-        variant: 'destructive',
-      });
-    }
-  }, [toast]);
+        toast({
+          title: 'Export successful',
+          description: `Exported ${data?.length || 0} customers to CSV.`,
+        });
+      } catch (error) {
+        toast({
+          title: 'Export failed',
+          description: 'Failed to export customers.',
+          variant: 'destructive',
+        });
+      }
+    },
+    [toast]
+  );
 
   // Pagination helpers
   const totalPages = Math.ceil(totalCount / pageSize);

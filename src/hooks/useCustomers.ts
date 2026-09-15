@@ -3,6 +3,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useQuery } from '@tanstack/react-query';
 import { trackUserEvent } from '@/hooks/useActivityTracking';
+import { logger } from '@/utils/logger';
+import { describeCustomerDeleteError, customerDeleteErrorContext } from '@/lib/customerDeleteError';
 
 export interface Customer {
   id: string;
@@ -298,9 +300,11 @@ export const useCustomers = () => {
 
       await loadCustomers();
     } catch (error) {
+      // ELE-1736: say which constraint blocked it, and put the code in Sentry.
+      logger.error('Customer delete failed', error, customerDeleteErrorContext(error, id));
       toast({
         title: 'Delete failed',
-        description: 'Failed to delete customer.',
+        description: describeCustomerDeleteError(error),
         variant: 'destructive',
       });
     }
