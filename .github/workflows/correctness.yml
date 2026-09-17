@@ -52,6 +52,15 @@ jobs:
       - name: Calculator report contract
         run: npm run check:calc-reports
 
+      # Green from the start, so enforced. ELE-1747: the mobile test grid showed
+      # each column's input prompt as its value, so an untouched schedule of
+      # test results displayed `>200` insulation, `✓` polarity and `0.00` Zs and
+      # printed N/A. A styling sweep that removed grey text is what made the
+      # prompt indistinguishable from a reading, and neither tsc nor eslint has
+      # anything to say about that.
+      - name: Test grid shows no prompt as a reading
+        run: npm run check:test-placeholders
+
       # Advisory ONLY because it is currently red: four general-upskilling mock
       # exam banks report CHANGED KEYS against HEAD (asbestos, first aid, MEWP,
       # PASMA). Those banks are graded against their keys, so this needs a

@@ -10,6 +10,10 @@ import { captureException } from '../_shared/sentry.ts';
 import { createClient } from '../_shared/deps.ts';
 import { handleError, ValidationError, ExternalAPIError } from '../_shared/errors.ts';
 import { decryptToken, encryptToken } from '../_shared/encryption.ts';
+import {
+  resolveXeroSalesAccountCode,
+  isInvalidAccountCodeError,
+} from '../_shared/xero-accounts.ts';
 import { withRetry, RetryPresets } from '../_shared/retry.ts';
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 
@@ -420,7 +424,7 @@ Deno.serve(async (req: Request) => {
     };
 
     // Sync to provider - WITHOUT retry/timeout wrappers for now to simplify debugging
-    let externalInvoiceId: string;
+    let externalInvoiceId: string | undefined;
     let externalInvoiceUrl: string | undefined;
 
     console.log('=== STEP: Provider sync ===');
@@ -431,13 +435,38 @@ Deno.serve(async (req: Request) => {
 
     try {
       switch (provider as AccountingProvider) {
-        case 'xero':
+        case 'xero': {
           console.log('Syncing to Xero...');
-          const xeroResult = await syncToXero(accessToken, tenantId, invoiceData);
+          /*
+           * ELE-1744 — resolve the sales account here, not just at connect.
+           *
+           * Detecting only in the OAuth callback would have fixed nobody who
+           * had already connected, and at the time of writing that was every
+           * Xero user on the platform: all 12 connections predate the change
+           * and would have kept falling back to '200' forever, because they do
+           * not pass through the callback again unless something forces a
+           * reconnect.
+           *
+           * Resolving on the sync path means an existing connection repairs
+           * itself the first time the electrician presses Sync, with nothing
+           * asked of them. A stored choice is returned untouched, so this
+           * costs one extra call only on the first sync after connecting.
+           */
+          const configuredSalesCode =
+            (await resolveXeroSalesAccountCode(supabase, user.id, accessToken, tenantId)) ??
+            XERO_DEFAULT_SALES_ACCOUNT_CODE;
+          console.log('Xero sales account code:', configuredSalesCode);
+          const xeroResult = await syncToXero(
+            accessToken,
+            tenantId,
+            invoiceData,
+            configuredSalesCode
+          );
           externalInvoiceId = xeroResult.invoiceId;
           externalInvoiceUrl = xeroResult.invoiceUrl;
           console.log('Xero sync SUCCESS:', xeroResult);
           break;
+        }
 
         case 'quickbooks':
           console.log('Syncing to QuickBooks...');
@@ -533,6 +562,69 @@ Deno.serve(async (req: Request) => {
                   409
                 );
               }
+
+              /*
+               * ELE-1744 — the account code is wrong for this organisation.
+               *
+               * Xero says "Account code '200' is not a valid code for this
+               * document", which is true and completely useless to an
+               * electrician: it names no product, no screen and no next step.
+               * Patrick at Elctric Ltd read exactly that, could find nothing
+               * in Settings to change, and emailed Andrew — which is the
+               * failure this whole ticket is about.
+               *
+               * The account is now detected at connect time and pickable in
+               * Settings, so anyone who still lands here needs pointing at
+               * that screen rather than at Xero's wording.
+               */
+              if (isInvalidAccountCodeError(xeroValidation)) {
+                /*
+                 * Before telling the electrician to go and fix something, try
+                 * to fix it. A stored code goes stale in ordinary ways — the
+                 * account archived, the chart renumbered, an accountant
+                 * restructured it — and in every one of those cases the right
+                 * new code is sitting in Xero waiting to be read.
+                 *
+                 * Re-detect, save, and sync once more. Only if THAT fails does
+                 * a human get involved.
+                 */
+                if (provider === 'xero' && tenantId) {
+                  const freshCode = await resolveXeroSalesAccountCode(
+                    supabase,
+                    user.id,
+                    accessToken,
+                    tenantId,
+                    { forceRedetect: true }
+                  );
+                  if (freshCode && freshCode !== XERO_DEFAULT_SALES_ACCOUNT_CODE) {
+                    console.log(`[ELE-1744] retrying sync with re-detected account ${freshCode}`);
+                    try {
+                      const retry = await syncToXero(
+                        accessToken,
+                        tenantId,
+                        invoiceData,
+                        freshCode
+                      );
+                      // Succeeded on the second attempt. Fall through to the
+                      // normal success path by recording the result and
+                      // carrying on, rather than returning the error.
+                      externalInvoiceId = retry.invoiceId;
+                      externalInvoiceUrl = retry.invoiceUrl;
+                      console.log('Xero sync SUCCESS after re-detect:', retry);
+                    } catch (retryError) {
+                      console.warn('[ELE-1744] retry after re-detect also failed:', retryError);
+                    }
+                  }
+                }
+
+                if (!externalInvoiceId) {
+                  return errorResponse(
+                    'Choose your Xero sales account',
+                    `Your Xero chart of accounts does not include the account this invoice tried to post to. Open Settings → Business → Accounting and pick your sales account, then tap Re-sync. (Xero said: ${xeroValidation.join(' — ')})`,
+                    409
+                  );
+                }
+              }
             } else if (parsed?.Message) {
               detailMsg = `${providerLabel}: ${parsed.Message}`;
             }
@@ -543,9 +635,14 @@ Deno.serve(async (req: Request) => {
         console.log('Detailed error:', detailMsg);
       }
 
-      // Stack traces stay in the server logs (console.error above) — the
-      // client toast only gets the human-readable reason.
-      return errorResponse(`Failed to sync to ${provider}`, detailMsg, 500);
+      // ELE-1744 — a re-detected account code already carried this invoice
+      // through on the second attempt, so this is no longer a failure. Fall
+      // out of the catch and take the normal success path below.
+      if (!externalInvoiceId) {
+        // Stack traces stay in the server logs (console.error above) — the
+        // client toast only gets the human-readable reason.
+        return errorResponse(`Failed to sync to ${provider}`, detailMsg, 500);
+      }
     }
 
     // Update invoice with external reference
@@ -1033,10 +1130,25 @@ function assertLinesReconcile(lines: NetLine[], netTarget: number, provider: str
   }
 }
 
+/**
+ * ELE-1744 — the sales account every invoice line posts to.
+ *
+ * '200' is Xero's DEFAULT UK sales code, so hardcoding it worked only for
+ * organisations that kept the stock chart of accounts. Patrick at Elctric Ltd
+ * uses 001 and every sync was rejected outright:
+ *
+ *   "Xero: Account code '200' is not a valid code for this document"
+ *
+ * Kept as the fallback because it IS right for a default chart and most
+ * connections have no setting yet — but a configured code now wins.
+ */
+const XERO_DEFAULT_SALES_ACCOUNT_CODE = '200';
+
 async function syncToXero(
   accessToken: string,
   tenantId: string,
-  invoice: InvoiceData
+  invoice: InvoiceData,
+  salesAccountCode: string = XERO_DEFAULT_SALES_ACCOUNT_CODE
 ): Promise<SyncResult> {
   // First, find or create the contact
   const contactId = await findOrCreateXeroContact(accessToken, tenantId, invoice.client);
@@ -1073,7 +1185,7 @@ async function syncToXero(
     Quantity: line.quantity,
     UnitAmount: line.unitAmount,
     LineAmount: line.lineAmount,
-    AccountCode: '200', // Sales account - user may need to configure this
+    AccountCode: salesAccountCode, // ELE-1744 — the org's own sales code
     TaxType: salesTaxType,
   }));
 
@@ -1095,7 +1207,7 @@ async function syncToXero(
       Quantity: 1,
       UnitAmount: -xeroDiscount,
       LineAmount: -xeroDiscount,
-      AccountCode: '200',
+      AccountCode: salesAccountCode,
       TaxType: salesTaxType,
     });
   }
@@ -1129,7 +1241,7 @@ async function syncToXero(
       Quantity: 1,
       UnitAmount: -xeroGrant,
       LineAmount: -xeroGrant,
-      AccountCode: '200',
+      AccountCode: salesAccountCode,
       TaxType: 'NONE',
     });
   }

@@ -12,7 +12,7 @@ const LIFETIME_PAYMENT_URL = 'https://buy.stripe.com/bJe6oAf7cgLOcet0gSbjW0c';
 const INCLUDED = [
   'Everything built — all 19 certificate types, quotes, invoices, AI tools and 70+ calculators',
   'Employer Hub — team, timesheets, job management, purchase orders and client CRM',
-  'Study Centre — 46+ courses and 6,000+ practice questions',
+  'Study Centre — 46+ courses and 20,000+ practice questions',
   'Every new feature we ever ship, forever',
   'No renewal, no price rises, no subscription — one payment and it is yours',
 ];

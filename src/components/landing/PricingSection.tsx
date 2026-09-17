@@ -27,7 +27,7 @@ const tiers: PricingTier[] = [
     description: 'Everything you need to pass your exams.',
     features: [
       'Level 2 & 3 courses',
-      '6,800+ practice questions',
+      '20,000+ practice questions',
       'AM2 exam preparation',
       'Progress tracking',
       'Mental Health Hub',

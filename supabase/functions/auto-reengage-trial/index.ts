@@ -111,7 +111,7 @@ const APPRENTICE_FEATURES: Array<{ t: string; d: string }> = [
     d: 'Timed mocks with worked explanations — practise the assessment before the real thing.',
   },
   {
-    t: '2,000+ practice questions',
+    t: '20,000+ practice questions',
     d: 'Level 2 & 3, sorted by topic. Quiz yourself on a break or in the van.',
   },
   {

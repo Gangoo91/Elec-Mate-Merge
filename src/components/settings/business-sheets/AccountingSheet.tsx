@@ -4,6 +4,7 @@ import SettingsSheetContent from '@/components/settings/SettingsSheetContent';
 import { ACCOUNTING_PROVIDERS } from '@/types/accounting';
 import { useAccountingIntegrations } from '@/hooks/useAccountingIntegrations';
 import { Eyebrow } from '@/components/college/primitives';
+import XeroSalesAccountField from './XeroSalesAccountField';
 
 interface AccountingSheetProps {
   open: boolean;
@@ -193,6 +194,11 @@ const AccountingSheet = ({ open, onOpenChange }: AccountingSheetProps) => {
                 </button>
               </div>
             </div>
+
+            {/* ELE-1744 — only meaningful once Xero is connected, and the
+                reason it exists is that there was nowhere at all to change the
+                sales code when Xero rejected the hardcoded 200. */}
+            {xeroConnected && <XeroSalesAccountField />}
 
             <div className="rounded-2xl border border-elec-yellow/35 bg-white/[0.05] px-4 py-3">
               <p className="text-[12px] text-white leading-relaxed">

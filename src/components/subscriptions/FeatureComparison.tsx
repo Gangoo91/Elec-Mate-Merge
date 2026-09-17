@@ -50,7 +50,7 @@ const SECTIONS: MatrixSection[] = [
     heading: 'Learning & qualifications',
     rows: [
       row('Level 2, Level 3, AM2, HNC, MOET & Functional Skills', 'apprentice'),
-      row('15,000+ practice questions & 8 mock exams', 'apprentice'),
+      row('20,000+ practice questions & 8 mock exams', 'apprentice'),
       row('30 flashcard sets with spaced repetition', 'apprentice'),
       row('400+ curated training videos from approved UK creators', 'apprentice'),
       row('12 guided video learning paths', 'apprentice'),

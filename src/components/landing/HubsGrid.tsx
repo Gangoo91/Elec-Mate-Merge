@@ -28,7 +28,7 @@ const hubs = [
     title: 'Study Centre',
     description: 'Master BS7671 with thousands of practice questions and adaptive learning.',
     icon: BookOpen,
-    features: ['6,800+ Questions', 'Adaptive Learning', 'Exam Mode'],
+    features: ['20,000+ Questions', 'Adaptive Learning', 'Exam Mode'],
     href: '/study-centre',
     gradient: 'bg-gradient-to-br from-green-500/15 to-emerald-600/5',
     iconColor: 'text-green-400',

@@ -607,7 +607,7 @@ const sections = [
           2365, 2391, and the AM2 syllabus.
         </p>
         <p>
-          <strong>Practice questions:</strong> Over 2,000 practice questions include testing topics
+          <strong>Practice questions:</strong> Over 20,000 practice questions include testing topics
           at every level. From basic questions about test instrument functions for Level 2 students
           to complex scenario-based questions about interpreting results and diagnosing faults for
           2391 candidates.

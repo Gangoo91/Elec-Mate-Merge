@@ -197,7 +197,7 @@ function copyFor(role: Role): RoleCopy {
         { t: 'AM2 & mock exams', d: 'Practise on the simulator and see where you stand' },
         {
           t: 'Ask Dave & Study Centre',
-          d: 'Your AI mentor plus Level 2, Level 3 and 2,000+ practice questions',
+          d: 'Your AI mentor plus Level 2, Level 3 and 20,000+ practice questions',
         },
       ],
     };

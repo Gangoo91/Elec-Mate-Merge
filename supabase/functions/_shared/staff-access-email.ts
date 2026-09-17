@@ -74,7 +74,7 @@ export function firstNameFromEmail(email: string): string {
 const ITEMS: Array<{ t: string; d: string }> = [
   {
     t: 'Study Centre',
-    d: 'Level 2 and Level 3 learning, 2,000+ practice questions, mock exams and AM2 preparation',
+    d: 'Level 2 and Level 3 learning, 20,000+ practice questions, mock exams and AM2 preparation',
   },
   {
     t: 'Certificates & testing',

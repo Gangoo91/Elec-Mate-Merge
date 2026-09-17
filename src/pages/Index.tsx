@@ -41,7 +41,7 @@ const Index = () => {
       icon: GraduationCap,
       link: '/apprentice',
       features: ['Level 2 & 3', 'AM2 Prep', 'OJT Log'],
-      stat: '2,000+ questions',
+      stat: '20,000+ questions',
       color: 'blue',
     },
     {

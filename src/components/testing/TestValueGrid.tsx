@@ -15,16 +15,45 @@ interface TestTile {
   field: keyof TestResult;
   label: string;
   unit: string;
-  placeholder: string;
+  /**
+   * 🔴 Prompt text for the INPUT only. It must never be rendered as the tile's
+   * value — see EMPTY_READING below for why that distinction is not cosmetic.
+   */
+  inputPlaceholder: string;
   validate?: (value: string, circuit: TestResult) => 'pass' | 'fail' | 'warning' | null;
 }
+
+/**
+ * What a tile shows when nothing has been recorded.
+ * ────────────────────────────────────────────────────────────────────────
+ * ELE-1747. Samair Hussain issued an EICR whose schedule showed `>200`
+ * insulation readings on screen and printed `N/A`. He had not entered them:
+ * the tile was rendering `tile.placeholder` **as the value**, so an untouched
+ * IR cell displayed a real, passing reading.
+ *
+ * It was not only IR. Every column's prompt is a plausible result — `0.00` for
+ * R1+R2 and Zs, `✓` for polarity, `<300` for the RCD, `0.0` for PFC — so an
+ * untouched schedule of test results read as a complete and passing one.
+ *
+ * It used to be survivable: the empty state was `text-white/30`, a faint ghost.
+ * Commit 4960e8c5b (7 Apr 2026, "App-wide audit — grey text") applied the
+ * house rule that there is no grey text and made it
+ * `value ? 'text-white' : 'text-white'` — both branches identical — so the
+ * ghost became solid and indistinguishable from a reading. It stood for five
+ * months. 107 issued EICRs across 38 users carry at least one blank IR field.
+ *
+ * An em dash satisfies the no-grey-text rule and cannot be mistaken for a
+ * measurement, which is what the faint prompt was trying and failing to do.
+ * Do not replace this with anything that could be read as a result.
+ */
+const EMPTY_READING = '—';
 
 const TEST_TILES: TestTile[] = [
   {
     field: 'r1r2',
     label: 'R1+R2',
     unit: 'Ω',
-    placeholder: '0.00',
+    inputPlaceholder: '0.00',
     validate: (value) => {
       if (!value) return null;
       const num = parseFloat(value);
@@ -37,7 +66,7 @@ const TEST_TILES: TestTile[] = [
     field: 'zs',
     label: 'Zs',
     unit: 'Ω',
-    placeholder: '0.00',
+    inputPlaceholder: '0.00',
     validate: (value, circuit) => {
       if (!value) return null;
       const zs = parseFloat(value);
@@ -52,7 +81,7 @@ const TEST_TILES: TestTile[] = [
     field: 'insulationLiveEarth',
     label: 'Ir (L-E)',
     unit: 'MΩ',
-    placeholder: '>200',
+    inputPlaceholder: '>200',
     validate: (value) => {
       if (!value) return null;
       if (value.includes('>') || parseFloat(value) >= 2) return 'pass';
@@ -64,7 +93,7 @@ const TEST_TILES: TestTile[] = [
     field: 'polarity',
     label: 'Polarity',
     unit: '',
-    placeholder: '✓',
+    inputPlaceholder: '✓',
     validate: (value) => {
       if (!value) return null;
       const v = value.toLowerCase();
@@ -79,7 +108,7 @@ const EXTRA_TILES: TestTile[] = [
     field: 'rcdOneX',
     label: 'RCD 1×',
     unit: 'ms',
-    placeholder: '<300',
+    inputPlaceholder: '<300',
     validate: (value) => {
       if (!value) return null;
       const num = parseFloat(value);
@@ -92,7 +121,7 @@ const EXTRA_TILES: TestTile[] = [
     field: 'pfc',
     label: 'Ipf',
     unit: 'kA',
-    placeholder: '0.0',
+    inputPlaceholder: '0.0',
     validate: () => null, // No automatic validation
   },
 ];
@@ -177,7 +206,7 @@ const TestValueGrid: React.FC<TestValueGridProps> = ({ circuit, onUpdate }) => {
                   onClose={handleInputClose}
                   label={tile.label}
                   unit={tile.unit}
-                  placeholder={tile.placeholder}
+                  placeholder={tile.inputPlaceholder}
                   validationStatus={validationStatus}
                 />
               ) : (
@@ -193,12 +222,12 @@ const TestValueGrid: React.FC<TestValueGridProps> = ({ circuit, onUpdate }) => {
                   {/* Label */}
                   <span className="text-xs text-white/50 mb-1">{tile.label}</span>
 
-                  {/* Value */}
+                  {/* Value — an em dash when nothing has been recorded, NEVER
+                      the input prompt, which is a passing result in every
+                      column. See EMPTY_READING. */}
                   <div className="flex items-center gap-1">
-                    <span
-                      className={cn('text-2xl font-bold', value ? 'text-white' : 'text-white')}
-                    >
-                      {value || tile.placeholder}
+                    <span className="text-2xl font-bold text-white">
+                      {value || EMPTY_READING}
                     </span>
                     {tile.unit && value && (
                       <span className="text-sm text-white/50">{tile.unit}</span>

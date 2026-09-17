@@ -63,7 +63,7 @@ const TIER_FEATURES: Record<
     {
       icon: '&#128218;',
       iconColor: '#3b82f6',
-      title: '2,000+ Practice Questions',
+      title: '20,000+ Practice Questions',
       subtitle: 'AM2 prep, mock exams, flashcards & progress tracking',
     },
     {

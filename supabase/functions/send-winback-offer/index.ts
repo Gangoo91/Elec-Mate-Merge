@@ -1600,7 +1600,7 @@ function generateV8AppStoreLaunchHTML(firstName: string): string {
 <td width="44" valign="top" style="padding-top:2px"><div style="width:36px;height:36px;background:rgba(168,85,247,0.12);border-radius:10px;text-align:center;line-height:36px;font-size:18px">&#x1F4DA;</div></td>
 <td style="padding-left:14px">
 <p style="margin:0;font-size:16px;font-weight:600;color:#ffffff">Study Centre</p>
-<p style="margin:4px 0 0;font-size:14px;color:#ffffff;line-height:1.4">Level 2 &amp; 3 courses, AM2 simulator, flashcards, EPA prep. Over 2,000 practice questions.</p>
+<p style="margin:4px 0 0;font-size:14px;color:#ffffff;line-height:1.4">Level 2 &amp; 3 courses, AM2 simulator, flashcards, EPA prep. Over 20,000 practice questions.</p>
 </td>
 </tr>
 </table>

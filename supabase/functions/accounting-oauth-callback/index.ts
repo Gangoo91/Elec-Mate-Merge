@@ -10,6 +10,7 @@ import { handleError, ValidationError, ExternalAPIError } from '../_shared/error
 import { encryptToken } from '../_shared/encryption.ts';
 import { withRetry, RetryPresets } from '../_shared/retry.ts';
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
+import { resolveXeroSalesAccountCode } from '../_shared/xero-accounts.ts';
 
 // Provider credentials
 const XERO_CLIENT_ID = Deno.env.get('XERO_CLIENT_ID');
@@ -218,6 +219,38 @@ serve(async (req: Request) => {
     if (upsertError) {
       console.error('Failed to store accounting tokens:', upsertError);
       throw new Error('Failed to save accounting configuration');
+    }
+
+    /*
+     * ELE-1744 — work out which account invoices should post to, now, while we
+     * are holding a fresh token and know the organisation.
+     *
+     * Invoice sync used to hardcode Xero's default UK sales code, '200'. That
+     * is right for a stock chart of accounts and wrong for anyone who has
+     * customised theirs: Patrick at Elctric Ltd uses 001 and every sync came
+     * back "Account code '200' is not a valid code for this document", with no
+     * setting anywhere to change it.
+     *
+     * Asking an electrician for an account code is asking them to do homework
+     * in a product that is supposed to save them time. Their chart of accounts
+     * is one API call away at exactly this moment, so the code is detected
+     * instead of requested. Only a genuinely ambiguous chart reaches the
+     * picker in Settings.
+     *
+     * Best-effort by design: a failure here must never break connecting. The
+     * sync still falls back to '200' and the picker is still there.
+     */
+    if (provider === 'xero' && tenantInfo?.tenantId) {
+      // Resolves and saves the code, leaving any existing choice alone —
+      // reconnecting is routine (expired refresh token, re-auth, changed
+      // password) and must never overwrite a code the electrician chose
+      // deliberately. Never throws; connecting has already succeeded.
+      await resolveXeroSalesAccountCode(
+        supabase,
+        userId,
+        tokenData.access_token,
+        tenantInfo.tenantId
+      );
     }
 
     // Update company_profiles with integration status
@@ -473,3 +506,4 @@ async function getFreshBooksIdentity(accessToken: string): Promise<TenantInfo> {
     tenantName: businessMembership?.business?.name || 'FreshBooks Account',
   };
 }
+

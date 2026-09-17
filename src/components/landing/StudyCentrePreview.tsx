@@ -51,7 +51,7 @@ export const StudyCentrePreview = () => {
           </div>
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">Learn, Train & Upskill</h2>
           <p className="text-white max-w-2xl mx-auto">
-            6,800+ practice questions across apprentice courses, 18th Edition, AM2 prep, and
+            20,000+ practice questions across apprentice courses, 18th Edition, AM2 prep, and
             specialist upskilling modules.
           </p>
         </motion.div>

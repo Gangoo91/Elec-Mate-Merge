@@ -80,7 +80,7 @@ const SPOTLIGHT_FEATURES: Record<string, { name: string; description: string }> 
   study_centre: {
     name: 'Study Centre',
     description:
-      '36 courses covering Level 2, Level 3, EAL, City & Guilds, HNC, and 18th Edition. 500+ practice questions to nail your exams.',
+      '36 courses covering Level 2, Level 3, EAL, City & Guilds, HNC, and 18th Edition. 20,000+ practice questions to nail your exams.',
   },
   am2_simulator: {
     name: 'AM2 Simulator',
@@ -242,7 +242,7 @@ function generateFeatureSpotlightEmail(firstName: string, featureKey: string): s
           <tr>
             <td style="padding: 0 24px 20px;">
               <p style="margin: 0; font-size: 15px; color: #94a3b8; line-height: 1.6;">
-                This is just one feature &mdash; there are dozens more inside Elec-Mate. 36 courses, AM2 &amp; EPA simulators, 500+ questions, 60 learning videos, 40+ calculators, and your own 24/7 AI mentor.
+                This is just one feature &mdash; there are dozens more inside Elec-Mate. 36 courses, AM2 &amp; EPA simulators, 20,000+ questions, 60 learning videos, 40+ calculators, and your own 24/7 AI mentor.
               </p>
             </td>
           </tr>
@@ -302,7 +302,7 @@ function generateEngagementNudgeEmail(firstName: string): string {
   const features = [
     {
       name: 'Study Centre',
-      desc: '36 courses, Level 2 &amp; 3, EAL &amp; City &amp; Guilds, 500+ questions',
+      desc: '36 courses, Level 2 &amp; 3, EAL &amp; City &amp; Guilds, 20,000+ questions',
       colour: '#22c55e',
     },
     {
@@ -438,7 +438,7 @@ function generateTrialWinbackEmail(firstName: string, id: PayerIdentity): string
               <div style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0.02) 100%); border: 1px solid rgba(34, 197, 94, 0.25); border-radius: 14px; padding: 16px;">
                 <p style="margin: 0 0 8px; font-size: 13px; color: #22c55e; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Learning</p>
                 <p style="margin: 0 0 4px; font-size: 14px; color: #e2e8f0; line-height: 1.6;">36 courses (Level 2, Level 3, EAL, City &amp; Guilds, HNC, 18th Edition)</p>
-                <p style="margin: 0 0 4px; font-size: 14px; color: #e2e8f0; line-height: 1.6;">500+ practice questions</p>
+                <p style="margin: 0 0 4px; font-size: 14px; color: #e2e8f0; line-height: 1.6;">20,000+ practice questions</p>
                 <p style="margin: 0 0 4px; font-size: 14px; color: #e2e8f0; line-height: 1.6;">60 curated learning videos</p>
                 <p style="margin: 0; font-size: 14px; color: #e2e8f0; line-height: 1.6;">Inspection &amp; Testing learning hub</p>
               </div>
@@ -534,7 +534,7 @@ function generateTrialWinbackEmailV2(firstName: string, id: PayerIdentity): stri
                 Quick one &mdash; your trial's done but I wanted to check in.
               </p>
               <p style="margin: 0; font-size: 16px; color: #e2e8f0; line-height: 1.7;">
-                Elec-Mate has <strong style="color: #fbbf24;">36 courses</strong>, AM2 &amp; EPA simulators, 500+ questions, 60 videos, 40+ calculators, and your own 24/7 AI mentor &mdash; all for <strong style="color: #fbbf24;">&pound;4.99/mo</strong>.
+                Elec-Mate has <strong style="color: #fbbf24;">36 courses</strong>, AM2 &amp; EPA simulators, 20,000+ questions, 60 videos, 40+ calculators, and your own 24/7 AI mentor &mdash; all for <strong style="color: #fbbf24;">&pound;4.99/mo</strong>.
               </p>
             </td>
           </tr>
@@ -602,7 +602,7 @@ function generateTrialWinbackEmailV3(firstName: string, signupMonth: string, id:
             <td style="padding: 0 20px 20px;">
               <div style="background: rgba(255,255,255,0.03); border-left: 3px solid #22c55e; border-radius: 0 10px 10px 0; padding: 14px 16px; margin-bottom: 10px;">
                 <p style="margin: 0 0 4px; font-size: 15px; color: #ffffff; font-weight: 600;">Study Centre</p>
-                <p style="margin: 0; font-size: 14px; color: #ffffff; line-height: 1.5;">36 courses covering Level 2, Level 3, EAL, City &amp; Guilds &mdash; plus 500+ practice questions. Everything you need to smash your exams, all in one place.</p>
+                <p style="margin: 0; font-size: 14px; color: #ffffff; line-height: 1.5;">36 courses covering Level 2, Level 3, EAL, City &amp; Guilds &mdash; plus 20,000+ practice questions. Everything you need to smash your exams, all in one place.</p>
               </div>
               <div style="background: rgba(255,255,255,0.03); border-left: 3px solid #3b82f6; border-radius: 0 10px 10px 0; padding: 14px 16px; margin-bottom: 10px;">
                 <p style="margin: 0 0 4px; font-size: 15px; color: #ffffff; font-weight: 600;">AM2 &amp; EPA Simulators</p>

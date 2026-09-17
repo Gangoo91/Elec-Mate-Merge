@@ -367,8 +367,8 @@ const sections = [
           mandatory gateway requirements for the End Point Assessment.
         </p>
         <SEOAppBridge
-          title="2,000+ Practice Questions for Level 2 and Level 3"
-          description="Elec-Mate has over 2,000 practice questions covering every topic in the Level 2 and Level 3 diplomas."
+          title="20,000+ Practice Questions for Level 2 and Level 3"
+          description="Elec-Mate has over 20,000 practice questions covering every topic in the Level 2 and Level 3 diplomas."
           icon={Brain}
         />
       </>

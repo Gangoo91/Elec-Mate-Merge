@@ -15,7 +15,7 @@ const SubscriptionFAQ = () => {
   const faqItems = [
     {
       q: 'What is included in the Apprentice plan?',
-      a: 'Level 2, Level 3, AM2, HNC, MOET and Functional Skills courses · 15,000+ practice questions · 8 mock exams · 30 flashcard sets · 400+ curated training videos · 75 electrical calculators · full BS 7671 A4:2026 study guide with interactive diagrams · OJT logbook with evidence upload and assessor sign-off · portfolio builder · EPA simulator · full study centre access (45 courses including CSCS, IPAF, PASMA, soft skills) · Ask Dave AI mentor · mental health hub.',
+      a: 'Level 2, Level 3, AM2, HNC, MOET and Functional Skills courses · 20,000+ practice questions · 8 mock exams · 30 flashcard sets · 400+ curated training videos · 75 electrical calculators · full BS 7671 A4:2026 study guide with interactive diagrams · OJT logbook with evidence upload and assessor sign-off · portfolio builder · EPA simulator · full study centre access (45 courses including CSCS, IPAF, PASMA, soft skills) · Ask Dave AI mentor · mental health hub.',
     },
     {
       q: 'What do I get with the Electrician plan?',

@@ -1562,7 +1562,14 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
         // done, so the box is never blank. Matches the EIC formatter (2026-07-17).
         position:
           get('inspectedByPosition') || get('reportAuthorisedByPosition') || 'Inspector & Tester',
-        address: get('inspectedByAddress'),
+        // ELE-1747. Every other field in this block is backfilled — name,
+        // signature, and position down to a hardcoded default so the box is
+        // never blank — and address alone was not, so a declaration that looked
+        // complete in the app printed with the address missing. Samair Hussain
+        // reported exactly that on EICR-2026-4433, where companyAddress was
+        // populated on every version while these two were empty. Falls back the
+        // same way the designer block above already does.
+        address: get('inspectedByAddress') || get('companyAddress'),
         date: get('inspectedByDate'),
         cp_scheme: get('inspectedByCpScheme'),
         cp_scheme_na: getBool('inspectedByCpSchemeNA'),
@@ -1574,7 +1581,8 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
         for_on_behalf_of: get('reportAuthorisedByForOnBehalfOf'),
         // Role, not qualifications — consistent with inspected_by above.
         position: get('reportAuthorisedByPosition') || 'Inspector & Tester',
-        address: get('reportAuthorisedByAddress'),
+        // ELE-1747 — see inspected_by above.
+        address: get('reportAuthorisedByAddress') || get('companyAddress'),
         membership_no: get('reportAuthorisedByMembershipNo'),
       },
       // 3-state — 'na' passes through so N/A doesn't print as "No"
@@ -1788,7 +1796,10 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     inspectedBySignature: get('inspectedBySignature') || get('inspectorSignature'),
     inspected_by_for_on_behalf_of: get('inspectedByForOnBehalfOf'),
     inspected_by_position: get('inspectedByPosition'),
-    inspected_by_address: get('inspectedByAddress'),
+    // ELE-1747 — same fallback as declarations.inspected_by.address. These flat
+    // keys are the ones an older template reads, so fixing only the nested
+    // block would leave the PDF unchanged depending on which the template uses.
+    inspected_by_address: get('inspectedByAddress') || get('companyAddress'),
     inspected_by_date: get('inspectedByDate'),
     inspected_by_cp_scheme: get('inspectedByCpScheme'),
 
@@ -1798,7 +1809,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     report_authorised_by_signature: get('reportAuthorisedBySignature') || get('inspectorSignature'),
     report_authorised_by_for_on_behalf_of: get('reportAuthorisedByForOnBehalfOf'),
     report_authorised_by_position: get('reportAuthorisedByPosition'),
-    report_authorised_by_address: get('reportAuthorisedByAddress'),
+    report_authorised_by_address: get('reportAuthorisedByAddress') || get('companyAddress'),
     report_authorised_by_membership_no: get('reportAuthorisedByMembershipNo'),
 
     // Inspector Details (flat)

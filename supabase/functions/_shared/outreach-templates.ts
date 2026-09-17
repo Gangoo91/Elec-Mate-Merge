@@ -116,7 +116,7 @@ const collegeColdPitchV1: OutreachTemplate = {
   category: 'college',
   subject: 'A free tool built for your electrical apprentices',
   preheader:
-    'Portfolio, EPA prep, Study Centre and 500+ practice questions — free for tutors, optional trial for your cohort.',
+    'Portfolio, EPA prep, Study Centre and 20,000+ practice questions — free for tutors, optional trial for your cohort.',
   description:
     'Primary cold email to UK colleges. Dual-path: offers a college-wide trial, free tutor access, or a forward-to-students share. Leads with apprentice outcomes (EPA readiness, portfolio, study centre).',
   thumbnail_emoji: '🎓',
@@ -124,7 +124,7 @@ const collegeColdPitchV1: OutreachTemplate = {
   merge_tags: ['FirstName', 'OrganisationName', 'Region'],
   html_body:
     emailOpen(
-      'Portfolio, EPA prep, Study Centre and 500+ practice questions — free for tutors, optional trial for your cohort.'
+      'Portfolio, EPA prep, Study Centre and 20,000+ practice questions — free for tutors, optional trial for your cohort.'
     ) +
     `
 <tr><td align="center" style="padding:0 32px">
@@ -365,7 +365,7 @@ const apprenticeFeatures: OutreachTemplate = {
     featureRow(
       '&#x1F4D6;',
       'rgba(99,102,241,0.22)',
-      '500+ practice questions, 36 courses',
+      '20,000+ practice questions, 36 courses',
       'BS 7671, H&amp;S, working at height, MEWP, electrical theory. Chunked into modules you can actually finish.'
     ) +
     featureRow(
@@ -438,7 +438,7 @@ const collegeFollowUp: OutreachTemplate = {
 <tr><td style="height:20px;line-height:20px;font-size:0">&nbsp;</td></tr>
 
 <tr><td style="padding:0 32px">
-<p style="margin:0;font-size:15px;color:#f4f4f5;line-height:1.7">If you teach electrical apprentices at {{OrganisationName}}, I'd love to give you <strong style="color:#fbbf24">free access to Elec-Mate</strong> &mdash; the app most UK apprentices are already using for portfolio, EPA prep, regs and 500+ practice questions.</p>
+<p style="margin:0;font-size:15px;color:#f4f4f5;line-height:1.7">If you teach electrical apprentices at {{OrganisationName}}, I'd love to give you <strong style="color:#fbbf24">free access to Elec-Mate</strong> &mdash; the app most UK apprentices are already using for portfolio, EPA prep, regs and 20,000+ practice questions.</p>
 <p style="margin:18px 0 0;font-size:15px;color:#f4f4f5;line-height:1.7">No card, no expiry. Download, sign up with your college email, you're in.</p>
 </td></tr>
 
@@ -1830,7 +1830,7 @@ const businessMasterIntroV1: OutreachTemplate = {
       '&#x1F393;',
       'rgba(244,63,94,0.18)',
       'Apprentice Hub &mdash; pass EPA first time',
-      'EPA simulator, AM2 practice, flash cards, quizzes, KSB-mapped portfolio, inspection &amp; testing learning modules, and 500+ practice questions. Your apprentices walk into end-assessment ready &mdash; first-time pass rate lifts, training losses drop.'
+      'EPA simulator, AM2 practice, flash cards, quizzes, KSB-mapped portfolio, inspection &amp; testing learning modules, and 20,000+ practice questions. Your apprentices walk into end-assessment ready &mdash; first-time pass rate lifts, training losses drop.'
     ) +
     `
 </td></tr>

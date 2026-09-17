@@ -446,6 +446,7 @@ export type Database = {
       };
       accounting_oauth_tokens: {
         Row: {
+          account_settings: Json;
           created_at: string | null;
           encrypted_access_token: string;
           encrypted_refresh_token: string | null;
@@ -458,6 +459,7 @@ export type Database = {
           user_id: string;
         };
         Insert: {
+          account_settings?: Json;
           created_at?: string | null;
           encrypted_access_token: string;
           encrypted_refresh_token?: string | null;
@@ -470,6 +472,7 @@ export type Database = {
           user_id: string;
         };
         Update: {
+          account_settings?: Json;
           created_at?: string | null;
           encrypted_access_token?: string;
           encrypted_refresh_token?: string | null;
