@@ -13,6 +13,9 @@ import {
   thermalBandFor,
   THERMAL_PRIORITY_ACTION,
   thermalSurveyWarnings,
+  reportPhotoBytes,
+  formatPhotoBytes,
+  PHOTO_BUDGET_MAX_BYTES,
   type RoutineInspectionFormData,
   type SurveyMode,
   type ThermalAnomaly,
@@ -77,6 +80,17 @@ const PRIORITY_CLS: Record<string, string> = {
 };
 
 export default function ThermalSurveySection({ formData, onUpdate }: Props) {
+  /*
+   * Derived here rather than passed in. A thermal finding carries TWO strips —
+   * the thermogram and the visible-light shot — so this screen can add photos
+   * twice as fast as any other, and a budget it did not know about would be a
+   * budget enforced everywhere except the place it binds first.
+   */
+  const photoUsage = reportPhotoBytes(formData);
+  const budgetBlockedReason =
+    photoUsage.bytes >= PHOTO_BUDGET_MAX_BYTES
+      ? `The report is carrying ${formatPhotoBytes(photoUsage.bytes)} of photos, which is as much as it can send. Remove one to add another.`
+      : undefined;
   const warnings = thermalSurveyWarnings(formData);
   const quantitative = formData.surveyMode === 'quantitative';
 
@@ -604,6 +618,7 @@ export default function ThermalSurveySection({ formData, onUpdate }: Props) {
                       /* 🔴 library, not camera — see PhotoStrip's header. */
                       source="library"
                       label="Import thermal image"
+                      budgetBlockedReason={budgetBlockedReason}
                       altPrefix={`Finding ${idx + 1} thermal image`}
                       className={fieldWideCn}
                     />
@@ -612,6 +627,7 @@ export default function ThermalSurveySection({ formData, onUpdate }: Props) {
                       onChange={(visiblePhotos) => setAnomaly(a.id, { visiblePhotos })}
                       source="camera"
                       label="Add photo of the equipment"
+                      budgetBlockedReason={budgetBlockedReason}
                       altPrefix={`Finding ${idx + 1} photo`}
                       className={fieldWideCn}
                     />

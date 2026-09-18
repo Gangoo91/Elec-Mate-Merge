@@ -5,7 +5,9 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['dist'] },
+  // `scripts/routine-render` holds esbuild output written by the render and
+  // mobile checks — generated, gitignored, and not ours to lint.
+  { ignores: ['dist', 'scripts/routine-render/*.js'] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ['**/*.{ts,tsx}'],

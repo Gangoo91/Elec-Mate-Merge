@@ -105,7 +105,7 @@ const RenewalsBookPage = () => {
         )
         .eq('user_id', user.id)
         .eq('status', 'completed')
-        .in('report_type', ['eicr', 'eic', 'fire-alarm-inspection', 'fire-alarm', 'pat-testing', 'emergency-lighting', 'smoke-co-alarm', 'ev-charging', 'bess'])
+        .in('report_type', ['eicr', 'eic', 'fire-alarm-inspection', 'fire-alarm', 'pat-testing', 'emergency-lighting', 'smoke-co-alarm', 'ev-charging', 'bess', 'routine-inspection'])
         .or('next_inspection_due.not.is.null,expiry_date.not.is.null,data->>nextInspectionDate.not.is.null,data->>nextAnnualTestDue.not.is.null');
       if (error) throw error;
 
@@ -196,6 +196,12 @@ const RenewalsBookPage = () => {
     if (t === 'pat-testing') return { jobType: 'PAT testing', frequency: 'annually' };
     if (t === 'emergency-lighting')
       return { jobType: 'Emergency lighting test', frequency: 'annually' };
+    /* The whole point of the visit record is that it recurs — a landlord's
+       annual check between the five-yearly EICRs. It would fall through to the
+       same answer below, but naming it keeps the intent visible when the
+       landlord/commercial split lands. */
+    if (t === 'routine-inspection')
+      return { jobType: 'Routine inspection', frequency: 'annually' };
     return { jobType: typeLabel(t), frequency: 'annually' };
   };
 

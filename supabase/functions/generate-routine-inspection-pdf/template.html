@@ -10,8 +10,28 @@
   function for the values used (A4 portrait, 12mm bottom for the footer band).
 
   🔴 The limitations block must not be removed or softened. This document is not
-  a BS 7671 model form, nothing in BS 7671 governs thermography, and its standing
-  is Regulation 4(2) of the Electricity at Work Regulations 1989.
+  a BS 7671 model form, and nothing in BS 7671 governs thermography.
+
+  🔴 TWO VISIT TYPES, TWO DUTIES — `metadata.is_landlord_visit` switches them.
+  A landlord annual visit evidences the repairing duty (Landlord and Tenant Act
+  1985 s.11(1)(b), or Housing (Scotland) Act 2014 s.13); a commercial
+  maintenance visit evidences EAWR 1989 Reg 4(2). The duty line in the masthead
+  comes from `metadata.legal_basis` and MUST NOT be written back into this file
+  as a literal — it was, and every landlord report cited the workplace duty.
+  `npm run check:routine-inspection` guards both that and the limitations text.
+
+  ⚠️ STRUCTURE: the verdict and "What needs doing" come FIRST, before the client
+  and property details. The reader of a landlord report is usually not an
+  electrician, and the question they open it to answer is "do I have to do
+  something?". `actions` is pre-ordered by urgency in the JSON formatter and
+  covers C1, thermal P1, C2 and FI — advisory items (C3, thermal P2-P4) are
+  deliberately excluded so the list stays worth reading, and appear in full
+  further down.
+
+  ⚠️ THE PAGE FOOTER IS NOT IN THIS FILE. It lives in the `settings` blob on the
+  API resource — `settings.footer.content` — along with the page size and the
+  margins, and it carries the page numbers. A CSS footer added here prints a
+  SECOND one. The 12mm bottom margin exists to make room for it.
 
   ⚠️ Liquid: an empty string is TRUTHY and `for` silently drops nils. Every
   conditional below keys off an explicit boolean from the payload
@@ -33,11 +53,21 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 10mm;
-    border-bottom: 2.5pt solid {{ company.primary_color }};
+    gap: 8mm;
+    border-bottom: 2pt solid {{ company.primary_color }};
     padding-bottom: 4mm;
     margin-bottom: 5mm;
   }
+  /*
+    ⚠️ Both columns need an explicit basis. Left to themselves the flex items
+    sized to content and the company block was squeezed until an email address
+    broke mid-word ("hello@elec-" / "mate.com") on a document going to a client.
+    The duty line on the right is the longest single string on the page, so it
+    gets the wider share.
+  */
+  .brand-col { flex: 0 1 68mm; min-width: 0; }
+  .doc-col { flex: 1 1 auto; min-width: 0; }
+  .brand-lines, .doc-sub { overflow-wrap: normal; word-break: keep-all; }
   .brand-logo { max-height: 18mm; max-width: 52mm; object-fit: contain; }
   .brand-name { font-size: 13pt; font-weight: bold; color: {{ company.primary_color }}; }
   .brand-lines { font-size: 7.5pt; color: #475569; line-height: 1.5; }
@@ -49,7 +79,7 @@
     text-transform: uppercase;
     letter-spacing: 0.4pt;
   }
-  .doc-sub { text-align: right; font-size: 7.5pt; color: #475569; margin-top: 1mm; }
+  .doc-sub { text-align: right; font-size: 7pt; color: #475569; margin-top: 1.2mm; line-height: 1.45; }
   .doc-ref { text-align: right; font-size: 10pt; font-weight: bold; margin-top: 2mm; }
 
   /* ── Sections ───────────────────────────────────────────────────── */
@@ -98,6 +128,17 @@
   */
   td.c-num { width: 11mm; font-weight: bold; }
   td.c-out { width: 24mm; text-align: center; font-weight: bold; }
+  /*
+    🔴 A RESULT COLUMN WHERE EVERY ANSWER LOOKS THE SAME IS NOT A RESULT COLUMN.
+    The landlord schedule runs to 42 rows, and "Defect" set in the same bold
+    black as "Satisfactory" is invisible to anyone scanning for the problems —
+    which is every reader of this document. Colour carries it, and the row tint
+    means it survives being photocopied in grey.
+  */
+  td.o-defect { color: #B91C1C; background: #FEF2F2; }
+  td.o-not-verified { color: #B45309; background: #FFFBEB; }
+  td.o-not-applicable { color: #64748B; font-weight: normal; }
+  td.o-satisfactory { color: #047857; }
   .group-row td {
     background: #E2E8F0;
     font-weight: bold;
@@ -166,8 +207,36 @@
     evidence comes out ragged and the page reflows unpredictably.
   */
   .shots { display: flex; flex-wrap: wrap; gap: 2mm; margin-top: 2mm; }
-  .shot { width: 42mm; height: 32mm; object-fit: cover; border: 0.5pt solid #CBD5E1; border-radius: 1mm; }
+  /* ⚠️ Sized so a finding with two photos still fits the tail of a page.
+     `.finding` cannot break, so an oversized block does not just look big —
+     it pushes itself onto the next sheet and leaves a third of a page blank. */
+  .shot { width: 38mm; height: 28mm; object-fit: cover; border: 0.5pt solid #CBD5E1; border-radius: 1mm; }
   .shot-label { font-size: 7pt; color: #64748B; margin-top: 1.5mm; font-weight: bold; text-transform: uppercase; letter-spacing: 0.2pt; }
+
+  /* ── Site photo appendix ────────────────────────────────────────── */
+  .plate-grid { display: flex; flex-wrap: wrap; gap: 3mm; }
+  .plate { width: 58mm; page-break-inside: avoid; }
+  .plate img {
+    width: 58mm;
+    height: 43mm;
+    object-fit: cover;
+    border: 0.5pt solid #CBD5E1;
+    border-radius: 1mm;
+    display: block;
+  }
+  /*
+    ⚠️ Fixed height on the caption as well as the image. Without it a two-line
+    caption makes its plate taller than its neighbours and the next row of the
+    grid steps down raggedly across the page.
+  */
+  .plate-cap {
+    font-size: 7pt;
+    color: #334155;
+    margin-top: 1mm;
+    min-height: 7mm;
+    line-height: 1.35;
+  }
+  .plate-no { font-weight: bold; }
 
   /* ── Limitations ────────────────────────────────────────────────── */
   .limits {
@@ -186,11 +255,70 @@
   .sig-box { border: 0.5pt solid #CBD5E1; border-radius: 1.5mm; padding: 3mm; }
   .sig-img { max-height: 18mm; max-width: 60mm; object-fit: contain; display: block; }
   .sig-rule { border-top: 0.5pt solid #94A3B8; margin-top: 1.5mm; padding-top: 1mm; font-size: 7.5pt; color: #64748B; }
+
+  /* ── What needs doing ───────────────────────────────────────────────
+     The landlord's page. Deliberately the loudest thing after the verdict,
+     because it is the only part most readers will act on. */
+  .action {
+    display: flex;
+    gap: 3mm;
+    padding: 2.5mm 3mm;
+    border-radius: 1.5mm;
+    margin-bottom: 2mm;
+    page-break-inside: avoid;
+    border: 0.5pt solid #CBD5E1;
+    border-left-width: 3pt;
+  }
+  /* P1 is styled as C1 deliberately: the NETA criteria call it "repair
+     immediately", which is the same instruction a C1 carries, and a reader
+     should not have to learn two scales to see which is worse. */
+  .action-C1, .action-P1 { border-left-color: #DC2626; background: #FEF2F2; }
+  .action-C2 { border-left-color: #EA580C; background: #FFF7ED; }
+  .action-FI { border-left-color: #0284C7; background: #F0F9FF; }
+  .action-rank {
+    flex: 0 0 15mm;
+    font-size: 11pt;
+    font-weight: bold;
+    line-height: 1.1;
+  }
+  .rank-C1, .rank-P1 { color: #B91C1C; }
+  .rank-C2 { color: #C2410C; }
+  .rank-FI { color: #0369A1; }
+  .action-meaning { font-size: 6.5pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.2pt; display: block; margin-top: 0.5mm; }
+  .action-where { font-weight: bold; font-size: 8.5pt; }
+  .action-what { font-size: 8pt; margin-top: 0.8mm; }
+  .action-do { font-size: 7.5pt; margin-top: 1mm; font-style: italic; color: #334155; }
+
+  .all-clear {
+    border: 0.5pt solid #A7F3D0;
+    background: #ECFDF5;
+    border-radius: 1.5mm;
+    padding: 3mm;
+    font-size: 8pt;
+    color: #065F46;
+  }
+
+  /* ── Compliance strip ───────────────────────────────────────────────
+     Dates RECORDED, never assessed — the wording under it says so. */
+  .compliance { display: flex; gap: 2mm; }
+  .comp-card {
+    flex: 1;
+    border: 0.5pt solid #CBD5E1;
+    border-radius: 1.5mm;
+    padding: 2.5mm 3mm;
+  }
+  .comp-label { font-size: 6.5pt; text-transform: uppercase; letter-spacing: 0.3pt; color: #64748B; }
+  .comp-value { font-size: 10pt; font-weight: bold; margin-top: 0.8mm; }
+  .comp-note { font-size: 7pt; margin-top: 0.8mm; }
+  .comp-overdue { border-color: #DC2626; background: #FEF2F2; }
+  .comp-overdue .comp-value, .comp-overdue .comp-note { color: #B91C1C; }
+  .comp-soon { border-color: #D97706; background: #FFFBEB; }
+  .comp-soon .comp-value, .comp-soon .comp-note { color: #B45309; }
 </style>
 
 <!-- ══ Masthead ══════════════════════════════════════════════════════ -->
 <div class="masthead">
-  <div>
+  <div class="brand-col">
     {% if company.logo_url != blank %}
       <img class="brand-logo" src="{{ company.logo_url }}" alt="">
     {% else %}
@@ -207,17 +335,124 @@
       {% endif %}
     </div>
   </div>
-  <div>
-    <div class="doc-title">Routine Inspection Report</div>
+  <div class="doc-col">
+    <div class="doc-title">
+      {% if metadata.is_landlord_visit %}Landlord Inspection Report{% else %}Routine Inspection Report{% endif %}
+    </div>
+    <!--
+      🔴 THE DUTY LINE COMES FROM THE PAYLOAD. It used to be the literal
+      "Supports EAWR 1989 Regulation 4(2)" on every report — the duty to
+      maintain systems AT WORK, printed on a document about a tenant's home.
+      `metadata.legal_basis` carries the right statute for the visit type; the
+      limitations paragraph later in this template states the same thing at
+      length, and the two must never disagree.
+    -->
     <div class="doc-sub">
-      Planned maintenance visit{% if thermal.carried_out %} with thermographic survey{% endif %}<br>
-      Supports EAWR 1989 Regulation 4(2) · Not an EICR
+      {% if metadata.is_landlord_visit %}Annual visit{% else %}Planned maintenance visit{% endif %}{% if thermal.carried_out %} with thermographic survey{% endif %}<br>
+      {{ metadata.legal_basis }}
     </div>
     <div class="doc-ref">{{ metadata.certificate_number }}</div>
     {% if company.scheme_logo_url != blank %}
       <img src="{{ company.scheme_logo_url }}" alt="" style="max-height:12mm;max-width:34mm;object-fit:contain;margin-top:2mm;">
     {% endif %}
   </div>
+</div>
+
+<!-- ══ Outcome ═══════════════════════════════════════════════════════ -->
+<div class="section avoid-break">
+  <div class="section-title">Result of this visit</div>
+  <div class="verdict {% if outcome.is_satisfactory %}v-sat{% elsif outcome.requires_attention %}v-att{% else %}v-uns{% endif %}">
+    <div class="verdict-word">{{ outcome.assessment }}</div>
+    <div style="font-size:7pt;margin-top:1mm;color:#475569;font-weight:bold;">
+      The result of this visit — not an EICR outcome
+    </div>
+    <div style="font-size:7.5pt;margin-top:1.5mm;color:#334155;">
+      {% if outcome.is_unsatisfactory %}
+        {% if thermal.carried_out %}A C1, a C2 or a Priority 1 thermal finding was recorded.{% else %}A C1 or a C2 was recorded.{% endif %} Action is required now.
+      {% elsif outcome.requires_attention %}
+        {% if thermal.carried_out %}Defects or thermal findings were{% else %}Defects were{% endif %} recorded that need attention, but nothing requiring immediate action.
+      {% else %}
+        {% if thermal.carried_out %}No defects or thermal findings were{% else %}No defects were{% endif %} recorded during this visit.
+      {% endif %}
+    </div>
+  </div>
+
+  <!--
+    ⚠️ The key is not decoration. C1/C2/C3/FI is trade shorthand, and the reader
+    of a landlord report is usually not in the trade — without this line the
+    summary row is a set of numbers against letters nobody has defined.
+  -->
+  <div class="counts">
+    <div class="count-pill"><span class="count-n">{{ outcome.counts.c1 }}</span>C1</div>
+    <div class="count-pill"><span class="count-n">{{ outcome.counts.c2 }}</span>C2</div>
+    <div class="count-pill"><span class="count-n">{{ outcome.counts.c3 }}</span>C3</div>
+    <div class="count-pill"><span class="count-n">{{ outcome.counts.fi }}</span>FI</div>
+    <div class="count-pill"><span class="count-n">{{ outcome.counts.defects }}</span>Schedule {% if outcome.counts.defects == 1 %}defect{% else %}defects{% endif %}</div>
+    {% if thermal.carried_out %}
+      <div class="count-pill"><span class="count-n">{{ outcome.counts.p1 }}</span>Thermal P1</div>
+      <div class="count-pill"><span class="count-n">{{ outcome.counts.p2 }}</span>Thermal P2</div>
+      <div class="count-pill"><span class="count-n">{{ outcome.counts.p3 }}</span>Thermal P3</div>
+      <div class="count-pill"><span class="count-n">{{ outcome.counts.p4 }}</span>Thermal P4</div>
+    {% endif %}
+  </div>
+  <div style="font-size:7pt;color:#475569;margin-top:1.5mm;">
+    C1 danger present · C2 potentially dangerous · C3 improvement recommended ·
+    FI further investigation required{% if thermal.carried_out %} · Thermal priorities are the
+    temperature-rise criteria, 1 most severe{% endif %}
+  </div>
+
+  <!--
+    ══ What needs doing ══════════════════════════════════════════════════
+    🔴 THE LANDLORD'S SECTION, and the reason the report is worth paying for.
+
+    Ordered by urgency in the payload, not by the order the inspector typed
+    them — a C1 sitting third behind an advisory about socket provision is the
+    one finding most likely to be skimmed past, by a reader who is usually not
+    an electrician.
+
+    ⚠️ C3 is deliberately NOT here. It is an improvement, not a thing that must
+    be done, and putting advisory items in a list headed "needs doing" is how a
+    safety record turns into a sales document. They appear in full under
+    Observations with everything else.
+
+    The sentence under each code says what the CODE means. It does not invent a
+    remedy — the inspector's own recommendations are printed above.
+  -->
+  {% if has_actions %}
+    <div style="margin-top:3.5mm;">
+      <div class="section-title">What needs doing</div>
+      {% for a in actions %}
+        <div class="action action-{{ a.code }}">
+          <div class="action-rank rank-{{ a.code }}">
+            {{ a.code }}
+            <span class="action-meaning">{{ a.code_meaning }}</span>
+          </div>
+          <div>
+            <span class="action-where">{% if a.location != blank %}{{ a.location }}{% else %}See observation {{ a.number }}{% endif %}</span>
+            <div class="action-what">{{ a.description }}</div>
+            <div class="action-do">{{ a.code_action }}</div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="all-clear" style="margin-top:3.5mm;">
+      <strong>Nothing requires action.</strong> No danger or potentially dangerous
+      condition was found on this visit, and nothing needs further investigation.
+      Any improvements worth considering are listed under Observations.
+    </div>
+  {% endif %}
+
+  {% if outcome.general_condition != blank %}
+    <table class="kv" style="margin-top:2.5mm;">
+      <tr><td class="kv-key">General condition</td><td class="kv-val">{{ outcome.general_condition }}</td></tr>
+    </table>
+  {% endif %}
+  {% if outcome.recommendations != blank %}
+    <table class="kv">
+      <tr><td class="kv-key">Recommendations</td><td class="kv-val">{{ outcome.recommendations }}</td></tr>
+    </table>
+  {% endif %}
 </div>
 
 <!-- ══ Client, installation, visit ═══════════════════════════════════ -->
@@ -236,11 +471,36 @@
       <td class="kv-key">Installation address</td><td class="kv-val">{{ installation.address }}</td>
       <td class="kv-key">Supply</td><td class="kv-val">{{ installation.supply_type }}</td>
     </tr>
-    {% if client.occupier != blank %}
+    <!--
+      ⚠️ The two halves are gated SEPARATELY. They were one condition, so a
+      report with an occupier but no contact details printed the word "Contact"
+      against nothing at all — a labelled blank on a document going to a client
+      reads as something the inspector forgot, not as something absent.
+    -->
+    {% if client.occupier != blank or client.has_contact %}
     <tr>
-      <td class="kv-key">Occupier</td><td class="kv-val">{{ client.occupier }}</td>
-      <td class="kv-key">Contact</td>
-      <td class="kv-val">{{ client.phone }}{% if client.email != blank %} · {{ client.email }}{% endif %}</td>
+      <td class="kv-key">Occupier</td>
+      <td class="kv-val">{% if client.occupier != blank %}{{ client.occupier }}{% else %}—{% endif %}</td>
+      {% if client.has_contact %}
+        <td class="kv-key">Contact</td>
+        <td class="kv-val">{{ client.phone }}{% if client.phone != blank and client.email != blank %} · {% endif %}{{ client.email }}</td>
+      {% else %}
+        <td class="kv-key"></td><td class="kv-val"></td>
+      {% endif %}
+    </tr>
+    {% endif %}
+    {% if client.has_letting_agent or client.has_property_reference %}
+    <tr>
+      <td class="kv-key">Managed by</td>
+      <td class="kv-val">{% if client.has_letting_agent %}{{ client.letting_agent }}{% else %}—{% endif %}</td>
+      <td class="kv-key">Property reference</td>
+      <td class="kv-val">{% if client.has_property_reference %}{{ client.property_reference }}{% else %}—{% endif %}</td>
+    </tr>
+    {% endif %}
+    {% if installation.has_dwelling_type %}
+    <tr>
+      <td class="kv-key">Dwelling</td>
+      <td class="kv-val" colspan="3">{{ installation.dwelling_type }}</td>
     </tr>
     {% endif %}
     {% if installation.boards_covered != blank %}
@@ -250,6 +510,34 @@
     </tr>
     {% endif %}
   </table>
+
+  <!--
+    ══ Condition report on file ══════════════════════════════════════════
+    🔴 RECORDED, NEVER ASSESSED. This visit carried out no testing, so it can
+    report the dates it was shown and nothing more — the note under the cards
+    says exactly that. Its worth is that the annual visit is the moment the
+    five-yearly renewal becomes visible to a landlord who would otherwise meet
+    it as a surprise.
+  -->
+  {% if compliance.has_eicr_record %}
+    <div class="compliance" style="margin-top:3mm;">
+      <div class="comp-card">
+        <div class="comp-label">Last condition report (EICR)</div>
+        <div class="comp-value">{% if compliance.eicr_date != blank %}{{ compliance.eicr_date }}{% else %}Not stated{% endif %}</div>
+      </div>
+      <div class="comp-card {% if compliance.eicr_is_overdue %}comp-overdue{% elsif compliance.eicr_due_soon %}comp-soon{% endif %}">
+        <div class="comp-label">Next due</div>
+        <div class="comp-value">{% if compliance.eicr_next_due != blank %}{{ compliance.eicr_next_due }}{% else %}Not stated{% endif %}</div>
+        {% if compliance.eicr_status_note != blank %}
+          <div class="comp-note">{{ compliance.eicr_status_note }}</div>
+        {% endif %}
+      </div>
+    </div>
+    <div style="font-size:7pt;color:#64748B;margin-top:1.5mm;">
+      Taken from the report shown on the day. This visit carried out no testing and
+      takes no view on what that report found.
+    </div>
+  {% endif %}
 </div>
 
 <div class="section avoid-break">
@@ -273,51 +561,11 @@
   </table>
 </div>
 
-<!-- ══ Outcome ═══════════════════════════════════════════════════════ -->
-<div class="section avoid-break">
-  <div class="section-title">Result of this visit</div>
-  <div class="verdict {% if outcome.is_satisfactory %}v-sat{% elsif outcome.requires_attention %}v-att{% else %}v-uns{% endif %}">
-    <div class="verdict-word">{{ outcome.assessment }}</div>
-    <div style="font-size:7.5pt;margin-top:1.5mm;color:#334155;">
-      {% if outcome.is_unsatisfactory %}
-        A C1, a C2 or a Priority 1 thermal finding was recorded. Action is required now.
-      {% elsif outcome.requires_attention %}
-        Defects or thermal findings were recorded that need attention, but nothing requiring immediate action.
-      {% else %}
-        No defects or thermal findings were recorded during this visit.
-      {% endif %}
-    </div>
-  </div>
-
-  <div class="counts">
-    <div class="count-pill"><span class="count-n">{{ outcome.counts.c1 }}</span>C1</div>
-    <div class="count-pill"><span class="count-n">{{ outcome.counts.c2 }}</span>C2</div>
-    <div class="count-pill"><span class="count-n">{{ outcome.counts.c3 }}</span>C3</div>
-    <div class="count-pill"><span class="count-n">{{ outcome.counts.fi }}</span>FI</div>
-    <div class="count-pill"><span class="count-n">{{ outcome.counts.defects }}</span>{% if outcome.counts.defects == 1 %}Defect{% else %}Defects{% endif %}</div>
-    {% if thermal.carried_out %}
-      <div class="count-pill"><span class="count-n">{{ outcome.counts.p1 }}</span>Thermal P1</div>
-      <div class="count-pill"><span class="count-n">{{ outcome.counts.p2 }}</span>Thermal P2</div>
-      <div class="count-pill"><span class="count-n">{{ outcome.counts.p3 }}</span>Thermal P3</div>
-      <div class="count-pill"><span class="count-n">{{ outcome.counts.p4 }}</span>Thermal P4</div>
-    {% endif %}
-  </div>
-
-  {% if outcome.general_condition != blank %}
-    <table class="kv" style="margin-top:2.5mm;">
-      <tr><td class="kv-key">General condition</td><td class="kv-val">{{ outcome.general_condition }}</td></tr>
-    </table>
-  {% endif %}
-  {% if outcome.recommendations != blank %}
-    <table class="kv">
-      <tr><td class="kv-key">Recommendations</td><td class="kv-val">{{ outcome.recommendations }}</td></tr>
-    </table>
-  {% endif %}
-</div>
-
 <!-- ══ Maintenance schedule ══════════════════════════════════════════ -->
 <div class="section">
-  <div class="section-title">Schedule of maintenance inspection</div>
+  <div class="section-title">
+    {% if metadata.is_landlord_visit %}What was checked on this visit{% else %}Schedule of maintenance inspection{% endif %}
+  </div>
   <table class="grid">
     <thead>
       <tr><th style="width:11mm;">Item</th><th>Checked</th><th style="width:24mm;">Result</th></tr>
@@ -335,7 +583,7 @@
             {{ i.description }}
             {% if i.notes != blank %}<span class="note">{{ i.notes }}</span>{% endif %}
           </td>
-          <td class="c-out">{{ i.outcome }}</td>
+          <td class="c-out o-{{ i.outcome_key }}">{{ i.outcome }}</td>
         </tr>
       {% endfor %}
     </tbody>
@@ -345,14 +593,18 @@
 <!-- ══ Observations ══════════════════════════════════════════════════ -->
 {% if has_observations %}
 <div class="section">
-  <div class="section-title">Observations</div>
+  <div class="section-title">
+    {% if metadata.is_landlord_visit %}What we found{% else %}Observations{% endif %}
+  </div>
   {% for o in observations %}
     <div class="finding">
       <div class="finding-head">
         <span class="finding-no">
           {{ o.number }}. {% if o.location != blank %}{{ o.location }}{% endif %}
         </span>
-        {% if o.code != blank %}<span class="code-chip c-{{ o.code }}">{{ o.code }}</span>{% endif %}
+        {% if o.has_code %}
+          <span class="code-chip c-{{ o.code }}">{{ o.code }} — {{ o.code_meaning }}</span>
+        {% endif %}
       </div>
       <div>{{ o.description }}</div>
       {% if o.has_photos %}
@@ -483,6 +735,97 @@
 </div>
 {% endif %}
 
+<!-- ══ Spot checks ═══════════════════════════════════════════════════
+  🔴 NOT a Schedule of Test Results, and the heading and the note both say so.
+
+  Individual readings at stated points. No pass/fail column exists here and none
+  may be added — judging a Zs needs the protective device, the circuit, Cmin and
+  the ambient temperature, none of which this report holds. A reading the
+  inspector considers wrong appears as an OBSERVATION with a code, which is what
+  puts it in the summary and the verdict.
+
+  ⚠️ When this section prints, the limitations paragraph MUST be the spot-check
+  wording — the categorical "no verification testing was carried out" sentence
+  is false the moment one reading appears. `routineInspectionLimitations` takes
+  the same flag that gates this block, so the two cannot drift apart.
+-->
+{% if has_spot_checks %}
+<div class="section">
+  <div class="section-title">Spot checks</div>
+  {% if instrument.has_any %}
+    <table class="kv avoid-break">
+      <tr>
+        <td class="kv-key">Instrument</td>
+        <td class="kv-val">{{ instrument.name }}{% if instrument.serial != blank %} — serial {{ instrument.serial }}{% endif %}</td>
+        <td class="kv-key">Calibrated</td>
+        <td class="kv-val">{% if instrument.calibration_date != blank %}{{ instrument.calibration_date }}{% else %}Not stated{% endif %}</td>
+      </tr>
+    </table>
+  {% endif %}
+  <table class="grid">
+    <thead>
+      <tr>
+        <th style="width:9mm;">No.</th>
+        <th style="width:46mm;">Measured</th>
+        <th>Where</th>
+        <th style="width:30mm;">Reading</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for c in spot_checks %}
+        <tr>
+          <td class="c-num">{{ c.number }}</td>
+          <td>{{ c.kind }}</td>
+          <td>
+            {{ c.location }}
+            {% if c.notes != blank %}<span class="note">{{ c.notes }}</span>{% endif %}
+          </td>
+          <td style="text-align:center;font-weight:bold;">
+            {% if c.has_x5 %}
+              ×1 {{ c.value }} {{ c.unit }}<br>×5 {{ c.value_x5 }} {{ c.unit }}
+            {% else %}
+              {{ c.value }} {{ c.unit }}
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div style="font-size:7pt;color:#475569;margin-top:1.5mm;">
+    Individual readings at the points stated. This is not a schedule of test
+    results and no sampling plan has been applied — no circuit has been tested in
+    full, and no reading here is an assessment of compliance with BS 7671.
+  </div>
+</div>
+{% endif %}
+
+<!-- ══ Site photographs ══════════════════════════════════════════════
+  Photographs of the installation as a whole — distinct from the photographs
+  attached to a finding, which print with that finding above.
+
+  🔴 These print. The equivalent on the EICR deliberately does NOT, because
+  printing photo-heavy certificates broke generation and delivery. What makes it
+  safe here is the byte budget enforced in the form (`reportPhotoBytes`), not
+  optimism — a report that cannot be rendered or emailed is worse than one with
+  fewer pictures in it.
+-->
+{% if has_site_photos %}
+<div class="section">
+  <div class="section-title">Photographs of the installation</div>
+  <div class="plate-grid">
+    {% for p in site_photos %}
+      <div class="plate">
+        <img src="{{ p.src }}" alt="">
+        <div class="plate-cap">
+          <span class="plate-no">{{ p.number }}.</span>
+          {% if p.has_caption %}{{ p.caption }}{% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
 <!-- ══ Not inspected ═════════════════════════════════════════════════ -->
 {% if scope.has_not_seen %}
 <div class="section avoid-break">
@@ -504,7 +847,15 @@
 
 <!-- ══ Next inspection ═══════════════════════════════════════════════ -->
 <div class="section avoid-break">
-  <div class="section-title">Next inspection</div>
+  <!--
+    🔴 "Next VISIT", not "next inspection", on a landlord report.
+    The landlord already has a five-yearly EICR recorded further up this page.
+    Calling this one "next inspection" invites the reader to think the two are
+    the same thing and that the EICR has just been pushed out a year.
+  -->
+  <div class="section-title">
+    {% if metadata.is_landlord_visit %}Next visit{% else %}Next inspection{% endif %}
+  </div>
   <table class="kv">
     <tr>
       <td class="kv-key">Recommended date</td>
@@ -518,10 +869,17 @@
     {% endif %}
   </table>
   <div style="font-size:7.5pt;color:#475569;margin-top:1.5mm;">
-    The interval is determined by the type of installation, how it is used, the
-    frequency and quality of maintenance, external influences, and the findings
-    of previous reports. It is a judgement for the duty holder, informed by this
-    recommendation.
+    {% if metadata.is_landlord_visit %}
+      This is the date of the next annual visit. It is separate from the condition
+      report (EICR) recorded above, and does not change when that falls due. The
+      interval is the inspector's recommendation, weighing how the property is
+      used and what was found on this visit; the decision rests with the landlord.
+    {% else %}
+      The interval is determined by the type of installation, how it is used, the
+      frequency and quality of maintenance, external influences, and the findings
+      of previous reports. It is a judgement for the duty holder, informed by this
+      recommendation.
+    {% endif %}
   </div>
 </div>
 
@@ -539,9 +897,9 @@
   <div class="section-title">Declaration</div>
   <div class="sig-box">
     <div style="font-size:8pt;margin-bottom:2.5mm;">
-      I certify that the routine maintenance inspection described above was
-      carried out by me on the date stated, and that the findings recorded are an
-      accurate account of what was found on that visit.
+      I certify that the {% if metadata.is_landlord_visit %}inspection{% else %}routine maintenance inspection{% endif %}
+      described above was carried out by me on the date stated, and that the
+      findings recorded are an accurate account of what was found on that visit.
     </div>
     <table class="kv">
       <tr>

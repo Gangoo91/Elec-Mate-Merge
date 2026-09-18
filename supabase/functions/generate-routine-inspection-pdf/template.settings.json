@@ -1,0 +1,17 @@
+{
+  "height": 500,
+  "width": 500,
+  "paper_format": "a4",
+  "orientation": "portrait",
+  "margin": {
+    "top": 10,
+    "right": 10,
+    "bottom": 12,
+    "left": 10
+  },
+  "footer": {
+    "content": "<div style=\"font-size:7pt;width:100%;padding:0 6mm;color:#64748B;font-family:Arial\"><span style=\"float:left\">{{ metadata.certificate_number }} \u2014 {{ installation.address }} \u2014 valid only as a complete document</span><span style=\"float:right\">Page <span class=\"pageNumber\"></span> of <span class=\"totalPages\"></span></span></div>"
+  },
+  "paper_width": 210,
+  "paper_height": 297
+}

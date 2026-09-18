@@ -68,7 +68,12 @@ export interface CertificateClientData {
     | 'Pre-Purchase Survey'
     // ELE-1660. Same again — the remedial items come from the suitability
     // assessment, and outstanding ones are carried across pre-loaded but unpriced.
-    | 'Plug-in Solar Assessment';
+    | 'Plug-in Solar Assessment'
+    // A maintenance visit record, not a certificate — but it is the one document
+    // that ends with the electrician stood in front of the client knowing
+    // exactly what the property needs, which is the same reason the survey and
+    // the EICR arrive here.
+    | 'Routine Inspection';
   certificateReference?: string;
   // Certificate attachment info
   reportId?: string;

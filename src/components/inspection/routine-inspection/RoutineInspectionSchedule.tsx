@@ -2,12 +2,13 @@ import { useMemo, useState } from 'react';
 import { ChevronDown, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Textarea } from '@/components/ui/textarea';
-import { FormCard, SectionHeading } from '@/components/forms';
+import { FormCard, FieldLabel, SectionHeading } from '@/components/forms';
 import { textareaCn } from '@/components/forms/fieldStyles';
 import {
-  routineInspectionGroups,
+  groupsForVisitType,
   type RoutineInspectionItem,
   type RoutineOutcome,
+  type VisitType,
 } from '@/data/routineInspectionItems';
 import type { RoutineObservation, ObservationCode } from '@/types/routine-inspection';
 import PhotoStrip from './PhotoStrip';
@@ -23,10 +24,29 @@ import PhotoStrip from './PhotoStrip';
  */
 
 interface Props {
+  /**
+   * 🔴 Drives the SECTION ORDER, and nothing else here.
+   *
+   * The items themselves come from `items` — the form's own state — so this
+   * component never has to decide which schedule is in play. That matters
+   * during a visit-type change: state updates in one render, and a component
+   * that derived its items from the type while reading answers from props
+   * would spend that render showing one schedule's questions against the
+   * other's answers.
+   */
+  visitType: VisitType;
   items: RoutineInspectionItem[];
   observations: RoutineObservation[];
   onItemsChange: (items: RoutineInspectionItem[]) => void;
   onObservationsChange: (obs: RoutineObservation[]) => void;
+  /**
+   * Set when the report's photo budget is spent.
+   *
+   * ⚠️ It has to reach the FINDING photos too, not just the site photos. The
+   * budget is the whole report's, and a limit that only stopped one of the two
+   * places photos are added would simply move the overflow to the other.
+   */
+  budgetBlockedReason?: string;
 }
 
 /*
@@ -47,25 +67,46 @@ const OUTCOMES: { value: RoutineOutcome; label: string; cls: string }[] = [
 const CODES: {
   value: ObservationCode; label: string; hint: string; short: string; cls: string;
 }[] = [
-  { value: 'C1', label: 'C1', hint: 'Danger present', short: 'Danger', cls: 'bg-red-500 border-red-500 text-white' },
-  { value: 'C2', label: 'C2', hint: 'Potentially dangerous', short: 'Pot. dang.', cls: 'bg-orange-500 border-orange-500 text-black' },
-  { value: 'C3', label: 'C3', hint: 'Improvement recommended', short: 'Improve', cls: 'bg-amber-300 border-amber-300 text-black' },
-  { value: 'FI', label: 'FI', hint: 'Further investigation', short: 'Investigate', cls: 'bg-sky-400 border-sky-400 text-black' },
+  { value: 'C1', label: 'C1', hint: 'Danger present', short: 'Danger present', cls: 'bg-red-500 border-red-500 text-white' },
+  { value: 'C2', label: 'C2', hint: 'Potentially dangerous', short: 'Potentially dangerous', cls: 'bg-orange-500 border-orange-500 text-black' },
+  { value: 'C3', label: 'C3', hint: 'Improvement recommended', short: 'Improvement', cls: 'bg-amber-300 border-amber-300 text-black' },
+  { value: 'FI', label: 'FI', hint: 'Further investigation', short: 'Investigation', cls: 'bg-sky-400 border-sky-400 text-black' },
 ];
 
 export default function RoutineInspectionSchedule({
+  visitType,
   items,
   observations,
   onItemsChange,
   onObservationsChange,
+  budgetBlockedReason,
 }: Props) {
-  const [openGroup, setOpenGroup] = useState<string>(routineInspectionGroups[0]);
+  const groups = useMemo(() => groupsForVisitType(visitType), [visitType]);
+
+  /*
+   * ⚠️ Derived from the items, not held in state.
+   *
+   * Held in state, the open section would be a name from the PREVIOUS
+   * schedule after a visit-type change — every section collapsed, with no
+   * indication why. `openGroup` is therefore a nullable override that falls
+   * back to whichever section is first in the schedule actually on screen.
+   */
+  const [openOverride, setOpenOverride] = useState<string | null>(null);
+  const openGroup =
+    // '' is the user having collapsed everything — a real choice, not "unset".
+    openOverride === ''
+      ? ''
+      : // A name left over from the OTHER schedule matches nothing here, so it
+        // falls through to the first section rather than collapsing the lot.
+        openOverride !== null && groups.includes(openOverride)
+        ? openOverride
+        : groups[0];
 
   const byGroup = useMemo(() => {
     const m = new Map<string, RoutineInspectionItem[]>();
-    for (const g of routineInspectionGroups) m.set(g, items.filter((i) => i.group === g));
+    for (const g of groups) m.set(g, items.filter((i) => i.group === g));
     return m;
-  }, [items]);
+  }, [items, groups]);
 
   /** The text `setOutcome` pre-fills, and the test for "still untouched". */
   const seedText = (item?: RoutineInspectionItem) =>
@@ -141,7 +182,7 @@ export default function RoutineInspectionSchedule({
         </p>
       </FormCard>
 
-      {routineInspectionGroups.map((group) => {
+      {groups.map((group) => {
         const groupItems = byGroup.get(group) ?? [];
         const done = groupItems.filter((i) => i.outcome !== '').length;
         const open = openGroup === group;
@@ -149,7 +190,7 @@ export default function RoutineInspectionSchedule({
           <FormCard key={group} className="space-y-0 p-0 sm:p-0">
             <button
               type="button"
-              onClick={() => setOpenGroup(open ? '' : group)}
+              onClick={() => setOpenOverride(open ? '' : group)}
               className="flex h-14 w-full items-center justify-between gap-3 px-4 text-left touch-manipulation sm:px-5"
             >
               <span className="text-[15px] font-semibold tracking-tight text-white">{group}</span>
@@ -172,6 +213,39 @@ export default function RoutineInspectionSchedule({
 
             {open && (
               <div className="space-y-4 border-t border-white/[0.1] px-4 py-4 sm:px-5">
+                {/*
+                  ── "Mark the rest OK" ──────────────────────────────────────
+                  The landlord schedule runs to 42 items and most of them are
+                  fine on most visits; forty-two taps to say so is the
+                  difference between a form that gets used on site and one that
+                  gets filled in afterwards from memory.
+
+                  🔴 IT ONLY FILLS BLANKS. Marking everything satisfactory
+                  would erase a defect the inspector had already recorded — the
+                  one answer on the page that took real work — and they would
+                  have no way of knowing. So the label counts what is still
+                  unanswered, and the button disappears when nothing is.
+                */}
+                {groupItems.some((i) => i.outcome === '') && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const ids = new Set(
+                        groupItems.filter((i) => i.outcome === '').map((i) => i.id)
+                      );
+                      onItemsChange(
+                        items.map((i) =>
+                          ids.has(i.id) ? { ...i, outcome: 'satisfactory' as const } : i
+                        )
+                      );
+                    }}
+                    className="h-11 w-full rounded-xl border border-emerald-500/40 bg-emerald-500/10 text-[13px] font-semibold text-emerald-300 touch-manipulation active:scale-[0.98]"
+                  >
+                    Mark the remaining{' '}
+                    {groupItems.filter((i) => i.outcome === '').length} OK
+                  </button>
+                )}
+
                 {groupItems.map((item) => (
                   <div key={item.id} className="space-y-2">
                     <div className="flex gap-2">
@@ -260,24 +334,60 @@ export default function RoutineInspectionSchedule({
                 </button>
               </div>
 
-              <Textarea
-                value={o.description}
-                onChange={(e) => updateObs(o.id, { description: e.target.value })}
-                placeholder="What did you find?"
-                className={cn(textareaCn, 'min-h-[64px]')}
-              />
-              <Textarea
-                value={o.location}
-                onChange={(e) => updateObs(o.id, { location: e.target.value })}
-                placeholder="Where? e.g. DB2, way 6"
-                className={cn(textareaCn, 'min-h-[44px]')}
-              />
+              {/*
+                ⚠️ LABELLED, not just placeheld.
 
+                A placeholder disappears the moment anything is typed into it,
+                so two stacked boxes of free text ended up with nothing on
+                screen saying which was the finding and which was the location.
+                Both reach the client's report — the first as the description of
+                a defect, the second as the place it is — and an inspector
+                coming back to a half-written observation had to guess.
+              */}
+              <div>
+                <FieldLabel>What did you find?</FieldLabel>
+                <Textarea
+                  value={o.description}
+                  onChange={(e) => updateObs(o.id, { description: e.target.value })}
+                  placeholder="e.g. Socket front cracked and scorched around the live terminal"
+                  className={cn(textareaCn, 'min-h-[64px]')}
+                />
+              </div>
+              <div>
+                <FieldLabel>Where is it?</FieldLabel>
+                <Textarea
+                  value={o.location}
+                  onChange={(e) => updateObs(o.id, { location: e.target.value })}
+                  placeholder={
+                    visitType === 'landlord'
+                      ? 'e.g. Kitchen, socket left of the sink'
+                      : 'e.g. DB2, way 6'
+                  }
+                  className={cn(textareaCn, 'min-h-[44px]')}
+                />
+              </div>
+
+              <div>
+                <FieldLabel>How serious is it?</FieldLabel>
               {/*
                 ⚠️ The meaning is ALWAYS on screen, never in a `title` tooltip —
                 a tooltip needs hover, and there is no hover on a phone.
               */}
-              <div className="flex flex-wrap gap-1.5">
+              {/*
+                ⚠️ TWO COLUMNS ON A PHONE, four across from `sm` up.
+
+                Four chips across a 390px screen leaves about 85px each, which
+                is why the meanings were abbreviated to "Pot. dang." and set at
+                9px — unreadable on a phone, in a hall cupboard, at arm's
+                length, which is exactly where this gets used. Two columns give
+                each chip roughly 170px: the full words fit, and they fit at a
+                size someone can actually read.
+
+                The meaning stays ON SCREEN rather than in a `title` tooltip —
+                a tooltip needs hover and there is no hover on a phone. Choosing
+                the wrong code is not a cosmetic mistake.
+              */}
+              <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-4">
                 {CODES.map((c) => (
                   <button
                     key={c.value}
@@ -286,17 +396,37 @@ export default function RoutineInspectionSchedule({
                     aria-label={`${c.label} — ${c.hint}`}
                     aria-pressed={o.code === c.value}
                     className={cn(
-                      'flex h-14 flex-1 flex-col items-center justify-center gap-0.5 rounded-xl border px-1 transition-colors touch-manipulation active:scale-[0.97]',
+                      'flex h-14 min-w-0 flex-col items-center justify-center gap-0.5 rounded-xl border px-1.5 transition-colors touch-manipulation active:scale-[0.97]',
                       o.code === c.value ? c.cls : 'border-white/[0.14] bg-white/[0.05] text-white'
                     )}
                   >
                     <span className="text-[13px] font-bold leading-none">{c.label}</span>
-                    <span className="text-[9px] font-medium leading-tight opacity-90">
+                    <span className="text-center text-[11px] font-medium leading-tight">
                       {c.short}
                     </span>
                   </button>
                 ))}
               </div>
+              </div>
+
+              {/*
+                Shown only once the finding is coded, because an uncoded
+                observation never reaches the quote anyway — offering the switch
+                before then would suggest a choice that does not exist yet.
+              */}
+              {o.code && (
+                <label className="flex min-h-[44px] cursor-pointer items-center gap-3 rounded-xl border border-white/[0.14] bg-white/[0.04] px-3 touch-manipulation">
+                  <input
+                    type="checkbox"
+                    checked={!o.excludeFromQuote}
+                    onChange={(e) => updateObs(o.id, { excludeFromQuote: !e.target.checked })}
+                    className="h-5 w-5 flex-shrink-0 accent-elec-yellow"
+                  />
+                  <span className="text-[13px] leading-snug text-white">
+                    Include when pricing the remedial work
+                  </span>
+                </label>
+              )}
 
               <PhotoStrip
                 photos={o.photos ?? []}
@@ -304,6 +434,7 @@ export default function RoutineInspectionSchedule({
                 source="camera"
                 label="Add photo"
                 altPrefix={`Observation ${idx + 1} photo`}
+                budgetBlockedReason={budgetBlockedReason}
               />
             </div>
           ))

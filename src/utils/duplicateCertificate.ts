@@ -33,7 +33,8 @@ export type DuplicableReportType =
   | 'smoke-co-alarm'
   | 'lightning-protection'
   | 'g98-commissioning'
-  | 'g99-commissioning';
+  | 'g99-commissioning'
+  | 'routine-inspection';
 
 const DUPLICABLE_TYPES: readonly string[] = [
   'eicr', 'eic', 'minor-works',
@@ -41,6 +42,7 @@ const DUPLICABLE_TYPES: readonly string[] = [
   'fire-alarm-inspection', 'fire-alarm-modification',
   'ev-charging', 'emergency-lighting', 'testing-only', 'solar-pv', 'bess', 'plug-in-solar',
   'smoke-co-alarm', 'lightning-protection', 'g98-commissioning', 'g99-commissioning',
+  'routine-inspection',
 ];
 
 /** Quick check — is this a type the duplicate flow accepts? */
@@ -114,6 +116,13 @@ const IDENTITY_FIELDS_TO_STRIP = [
   // Inspection dates / sign-off
   'inspectionDate',
   'nextInspectionDate',
+  // ⚠️ `nextInspectionDue` is the OTHER spelling, and it was missing here.
+  // Live data: minor-works writes the next date under this key on 160 of its
+  // 165 completed certs, and fire-alarm on all of its — both duplicable types,
+  // both therefore carrying the previous job's re-inspection date onto a new
+  // certificate. Stripping more identity data is the safe direction for this
+  // list, so it is fixed for every type rather than only the one that found it.
+  'nextInspectionDue',
   'workDate',
   'dateOfCompletion',
   'signatureDate',
@@ -237,6 +246,109 @@ const TYPE_SPECIFIC_FIELDS_TO_STRIP: Partial<Record<DuplicableReportType, readon
   // TYPE-test certificate, a property of the product model.
   'g98-commissioning': ['equipmentSerial', 'exportMeterSerial', 'associatedCertRef', 'prevIndexRef'],
   'g99-commissioning': ['equipmentSerial', 'exportMeterSerial', 'associatedCertRef', 'prevIndexRef'],
+  /*
+   * The yearly re-visit is the PRIMARY use of duplicate for this type, not a
+   * block-of-flats edge case: same property, same boards, same engineer, twelve
+   * months on. So the setup carries hard — premisesType, supplyType,
+   * boardsCovered, purpose, extent, the torque instrument and settings, the
+   * thermal camera and the thermographer's qualification are all either the
+   * property's spec or the engineer's own kit.
+   *
+   * 🔴 WHAT MUST NOT CARRY IS THE VISIT ITSELF.
+   *
+   * `inspectionItems` holds an `outcome` per item. Carried over, a brand-new
+   * report opens with last year's schedule already answered — and the guard
+   * that stops an unwalked report being issued is `answered > 0`, so the copy
+   * would arrive already past it. Stripping the key is enough: the form merges
+   * `getDefaultRoutineInspectionFormData()` underneath whatever was stored, so
+   * a fresh unanswered set takes its place.
+   *
+   * `observations` are stripped for the same reason, and for a second one — each
+   * is bound to an item by `itemId`. Keeping them while resetting the outcomes
+   * produces exactly the orphan the schedule works to prevent: an observation
+   * saying an item failed, against a schedule saying it was never looked at.
+   *
+   * ⚠️ This is the opposite of the EICR decision (ELE-1439), where observations
+   * deliberately carry. That is not an inconsistency: an EICR is duplicated to
+   * RE-ISSUE after remedial work, where the codes are the record of what was put
+   * right. A maintenance visit is duplicated to go and do it again. Carrying
+   * last year's findings forward as an "outstanding / now resolved" list is a
+   * real feature and belongs in the schedule, deliberately — not as a side
+   * effect of a copy.
+   */
+  'routine-inspection': [
+    // The visit's own findings and conclusions.
+    'inspectionItems',
+    'observations',
+    'anomalies',
+    // Photographs of the installation AS FOUND on that visit. Carrying last
+    // year's pictures onto this year's report would be evidence of a property
+    // as it was twelve months ago, printed under today's date and signature.
+    'sitePhotos',
+    // The readings themselves, and whether any were taken. Both describe what
+    // happened on the day; last year's RCD trip time on this year's report
+    // would be a measured value that nobody measured.
+    'spotChecks',
+    'spotChecksCarriedOut',
+    'overallAssessment',
+    'generalCondition',
+    'recommendations',
+    'nextInspectionReasoning',
+    // What was not covered ON THE DAY. The universal list strips
+    // `limitationsOfInspection` and `operationalLimitations`; this form's field
+    // is plain `limitations`, so it needs naming here or last year's "could not
+    // shut down the production line" prints on a visit that never met one.
+    'limitations',
+    // Conditions measured at the time of the thermal sweep — meaningless, and
+    // actively misleading, twelve months later.
+    'loadAtSurvey',
+    'ambientTemp',
+    'environmentalConditions',
+    // Per-step completion ticks — otherwise a blank report opens fully green.
+    'completedSections',
+  ],
+};
+
+/**
+ * Fields a given type puts BACK after the universal strip.
+ *
+ * 🔴 READ THIS BEFORE ADDING A TYPE. Everything in `IDENTITY_FIELDS_TO_STRIP`
+ * is there because carrying it to a new certificate is a compliance problem.
+ * An entry here is an assertion that for THIS type, on THIS field, the reverse
+ * is true — and it has to be argued, not assumed.
+ *
+ * Empty for every type but one, so behaviour elsewhere is provably unchanged.
+ *
+ * ── Why routine-inspection keeps the client and the site ──────────────────
+ * Duplicate exists for two different jobs. The original (ELE-881) is the block
+ * of flats: same spec, thirty different addresses, so the identity must go.
+ * A maintenance visit is the opposite case — it is duplicated to go back to THE
+ * SAME PROPERTY a year later, for the same landlord. Blanking the address there
+ * does not protect anyone; it just makes the electrician retype the one thing
+ * that has not changed, every year, which is the tedium the feature exists to
+ * remove.
+ *
+ * ⚠️ What still goes, and must: the certificate number, `_clientCertId`, the
+ * signature, every date, and the whole of the visit — schedule, observations,
+ * thermal findings, conclusions. A copy still cannot be signed off without
+ * being walked. The identity is kept; the INSPECTION is not.
+ *
+ * ⚠️ If someone duplicates a visit onto a different property, the client
+ * details come with it and must be changed. That is a visible field at the top
+ * of step one, and the toast on duplicate says the property carried over — a
+ * populated field the user can see and correct, rather than a blank one they
+ * must remember to fill.
+ */
+const TYPE_SPECIFIC_FIELDS_TO_KEEP: Partial<Record<DuplicableReportType, readonly string[]>> = {
+  'routine-inspection': [
+    'clientName',
+    'clientAddress',
+    'clientPhone',
+    'clientEmail',
+    'installationAddress',
+    'sameAsClientAddress',
+    'occupier',
+  ],
 };
 
 /**
@@ -306,7 +418,19 @@ export const duplicateCertificate = async (
       ? structuredClone(sourceData)
       : JSON.parse(JSON.stringify(sourceData));
 
-  // 4) Strip identity fields
+  // 4) Strip identity fields.
+  //
+  // A type may assert that a particular identity field should survive for it —
+  // see TYPE_SPECIFIC_FIELDS_TO_KEEP. Those values are taken BEFORE the strip
+  // and put back after, so the keep list cannot be defeated by the order the
+  // three strip passes happen to run in, and so a field named in both lists
+  // resolves one way only.
+  const keep = TYPE_SPECIFIC_FIELDS_TO_KEEP[reportType] ?? [];
+  const kept = new Map<string, unknown>();
+  for (const field of keep) {
+    if (field in cloned) kept.set(field, cloned[field]);
+  }
+
   for (const field of IDENTITY_FIELDS_TO_STRIP) {
     delete cloned[field];
   }
@@ -317,6 +441,12 @@ export const duplicateCertificate = async (
   // ELE-1443 — per-installation fields unique to this cert type
   for (const field of TYPE_SPECIFIC_FIELDS_TO_STRIP[reportType] ?? []) {
     delete cloned[field];
+  }
+
+  // Restore what this type asserted it needs — last, so it wins over all three
+  // strip passes above.
+  for (const [field, value] of kept) {
+    cloned[field] = value;
   }
 
   // 5) Set new cert number + provenance trail

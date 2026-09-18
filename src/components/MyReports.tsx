@@ -942,7 +942,18 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
       }
       toast({
         title: 'Duplicated',
-        description: `New ${reportType.toUpperCase()} ${newCertNumber} ready — change client + address.`,
+        description:
+          /*
+           * "Change client + address" is the block-of-flats instruction, and it
+           * is the WRONG one for a maintenance visit — there the property is
+           * the same one, twelve months on, and the client and address are
+           * exactly what should stay. What the inspector has to do instead is
+           * walk it again: the schedule and the findings are deliberately not
+           * carried (see TYPE_SPECIFIC_FIELDS_TO_STRIP), so they start blank.
+           */
+          reportType === 'routine-inspection'
+            ? `New visit ${newCertNumber} ready — same property and client carried over. Check they're still right, then walk the schedule.`
+            : `New ${reportType.toUpperCase()} ${newCertNumber} ready — change client + address.`,
       });
       refetchReports();
       onEditReport(result.reportId, reportType);

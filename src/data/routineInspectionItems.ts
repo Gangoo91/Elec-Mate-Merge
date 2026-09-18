@@ -1,6 +1,11 @@
 /**
  * Routine Inspection & Thermal Imaging Report — schedules (ELE-1110).
  *
+ * ⚠️ THIS FILE HOLDS THE COMMERCIAL SCHEDULE AND THE VISIT-TYPE PLUMBING.
+ * The landlord annual schedule lives in `landlordInspectionItems.ts`, which
+ * carries its own sources — a rented dwelling rests on a repairing duty, not on
+ * the workplace duty set out below. `itemsForVisitType` picks between them.
+ *
  * 🔴 THIS IS NOT A BS 7671 MODEL FORM, and the app must never imply that it is.
  * BS 7671 Part 6 specifies three: the EIC, the Minor Works Certificate and the
  * EICR. A planned-maintenance visit record is not among them, and nothing in
@@ -48,6 +53,8 @@
  * Schedule of Inspections. It does not mean a periodic maintenance visit. This
  * report is not a GN3 "routine check" and does not use the phrase.
  */
+
+import { landlordInspectionItems } from './landlordInspectionItems';
 
 /** What a maintenance visit can honestly conclude about an item. */
 export type RoutineOutcome =
@@ -209,7 +216,7 @@ export const routineInspectionItems: RoutineInspectionItem[] = [
     itemNumber: '4.2',
     description: 'RCD / RCBO test buttons operated and devices reset',
     outcome: '',
-    hint: 'The test button proves the mechanism only. It does not measure trip time — that needs an instrument and is not part of this visit.',
+    hint: 'The test button proves the mechanism only — it does not measure trip time. If you measured it with an instrument, record it under Spot checks.',
   },
   {
     id: 'rir_4_3',
@@ -281,11 +288,74 @@ export const routineInspectionItems: RoutineInspectionItem[] = [
   },
 ];
 
-/** Section order for rendering — derived so it cannot drift from the items. */
+/**
+ * Section order for the COMMERCIAL schedule.
+ *
+ * ⚠️ Kept only because it reads like the general answer and is not. Anything
+ * rendering a schedule wants `groupsForVisitType`, which follows the visit type;
+ * this one is the commercial list whatever the report says. It has no callers.
+ */
 export const routineInspectionGroups: string[] = Array.from(
   new Set(routineInspectionItems.map((i) => i.group))
 );
 
-/** A fresh, unanswered copy. Never hand out the module-level array itself. */
-export const getDefaultRoutineInspectionItems = (): RoutineInspectionItem[] =>
-  routineInspectionItems.map((i) => ({ ...i, outcome: '', notes: '' }));
+/* ═══════════════════════════════════════════════════════════════════════════
+ * VISIT TYPE
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+/**
+ * What kind of visit this is — and therefore which schedule, which legal frame
+ * and which steps the form shows.
+ *
+ * 🔴 The two are NOT variants of one schedule with a few items hidden. They
+ * rest on different law and describe different work:
+ *
+ *   landlord   — a yearly walk round of a rented dwelling, between EICRs.
+ *                Repairing duty: Landlord and Tenant Act 1985 s11(1)(b), or
+ *                Housing (Scotland) Act 2014 s13.
+ *   commercial — planned maintenance of a commercial or industrial
+ *                installation, with an optional thermographic survey.
+ *                Electricity at Work Regulations 1989, Reg 4(2).
+ *
+ * Merging them would mean printing one of those two statements on a document
+ * where it is not the duty that applies, which is the kind of overclaim that
+ * makes the whole record worthless.
+ */
+export type VisitType = 'landlord' | 'commercial';
+
+/** Default for a new report. Landlord annual visits are the common case. */
+export const DEFAULT_VISIT_TYPE: VisitType = 'landlord';
+
+export const VISIT_TYPE_LABEL: Record<VisitType, string> = {
+  landlord: 'Landlord annual visit',
+  commercial: 'Commercial maintenance',
+};
+
+/**
+ * The schedule for a visit type.
+ *
+ * ⚠️ Item ids are namespaced per schedule (`lai_` / `rir_`), so an answer
+ * recorded under one visit type can never be read back against a different
+ * question under the other.
+ */
+export function itemsForVisitType(visitType: VisitType): RoutineInspectionItem[] {
+  return visitType === 'commercial' ? routineInspectionItems : landlordInspectionItems;
+}
+
+/** Section order for a visit type — derived, so it cannot drift from the items. */
+export function groupsForVisitType(visitType: VisitType): string[] {
+  return Array.from(new Set(itemsForVisitType(visitType).map((i) => i.group)));
+}
+
+/**
+ * A fresh, unanswered copy. Never hand out the module-level array itself.
+ *
+ * ⚠️ Defaults to the landlord schedule because `DEFAULT_VISIT_TYPE` does. A new
+ * report and its item set have to agree from the first render — seeding blank
+ * state from one schedule while the selector says the other would show a full
+ * set of unanswerable questions.
+ */
+export const getDefaultRoutineInspectionItems = (
+  visitType: VisitType = DEFAULT_VISIT_TYPE
+): RoutineInspectionItem[] =>
+  itemsForVisitType(visitType).map((i) => ({ ...i, outcome: '', notes: '' }));

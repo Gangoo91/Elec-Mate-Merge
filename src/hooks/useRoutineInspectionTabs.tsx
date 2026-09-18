@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import type { RoutineInspectionFormData } from '@/types/routine-inspection';
 
 export type RoutineInspectionTabValue =
@@ -58,8 +58,43 @@ const tabConfigs: TabConfig[] = [
 export const useRoutineInspectionTabs = (formData: RoutineInspectionFormData) => {
   const [currentTab, setCurrentTab] = useState<RoutineInspectionTabValue>('client');
 
-  const currentTabIndex = tabConfigs.findIndex((t) => t.id === currentTab);
-  const totalTabs = tabConfigs.length;
+  /*
+   * 🔴 THE THERMAL STEP IS NOT PART OF A LANDLORD VISIT.
+   *
+   * Thermography needs a camera almost nobody doing a rented two-bed owns, and
+   * a survey of a domestic consumer unit under household load tells you close
+   * to nothing. Left in, it costs a fifth of a phone's step rail and a tap past
+   * an empty screen on every visit — and, worse, a step that is always complete
+   * because it was never applicable quietly inflates the progress bar.
+   *
+   * So it is removed from the rail rather than hidden: four steps, a progress
+   * percentage over four, and `navigateNext` that cannot land on it.
+   */
+  const steps = useMemo(
+    () =>
+      formData.visitType === 'landlord'
+        ? tabConfigs.filter((t) => t.id !== 'thermal')
+        : tabConfigs,
+    [formData.visitType]
+  );
+
+  /*
+   * ⚠️ Falls back to 0, never -1.
+   *
+   * Changing the visit type to landlord while standing ON the thermal step
+   * leaves `currentTab` naming a step that is no longer in the rail.
+   * `findIndex` then returns -1, `canNavigatePrevious` goes false and
+   * `navigateNext` reads `steps[0]`, so the footer strands the user on a screen
+   * with no way forward or back. Treating it as the first step keeps the form
+   * navigable; the effect below then moves them somewhere real.
+   */
+  const rawIndex = steps.findIndex((t) => t.id === currentTab);
+  const currentTabIndex = rawIndex === -1 ? 0 : rawIndex;
+  const totalTabs = steps.length;
+
+  useEffect(() => {
+    if (rawIndex === -1) setCurrentTab(steps[0].id);
+  }, [rawIndex, steps]);
 
   const hasRequiredFields = (tabId: RoutineInspectionTabValue): boolean => {
     const tab = tabConfigs.find((t) => t.id === tabId);
@@ -125,23 +160,27 @@ export const useRoutineInspectionTabs = (formData: RoutineInspectionFormData) =>
   const canNavigatePrevious = currentTabIndex > 0;
 
   const navigateNext = () => {
-    if (canNavigateNext) setCurrentTab(tabConfigs[currentTabIndex + 1].id);
+    if (canNavigateNext) setCurrentTab(steps[currentTabIndex + 1].id);
   };
   const navigatePrevious = () => {
-    if (canNavigatePrevious) setCurrentTab(tabConfigs[currentTabIndex - 1].id);
+    if (canNavigatePrevious) setCurrentTab(steps[currentTabIndex - 1].id);
   };
 
+  /* Over the steps ACTUALLY shown — otherwise a landlord visit tops out at 80%
+     with a thermal step it never had. */
   const getProgressPercentage = (): number =>
-    Math.round((tabConfigs.filter((t) => isTabComplete(t.id)).length / totalTabs) * 100);
+    Math.round((steps.filter((t) => isTabComplete(t.id)).length / totalTabs) * 100);
 
   const getCurrentTabLabel = (): string =>
-    tabConfigs.find((t) => t.id === currentTab)?.label ?? '';
+    steps.find((t) => t.id === currentTab)?.label ?? '';
 
   return {
     currentTab,
     setCurrentTab,
-    tabs: tabConfigs,
-    tabConfigs,
+    tabs: steps,
+    tabConfigs: steps,
+    /** The steps actually on the rail, for the shell header and footer. */
+    steps,
     currentTabIndex,
     totalTabs,
     canAccessTab,

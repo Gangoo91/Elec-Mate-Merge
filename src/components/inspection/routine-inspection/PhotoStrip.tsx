@@ -32,6 +32,15 @@ interface Props {
   /** Distinguishes the two strips on a thermal finding for screen readers. */
   altPrefix: string;
   className?: string;
+  /**
+   * Set when the report's whole photo budget is spent — blocks adding, and
+   * says why rather than simply refusing. See `reportPhotoBytes`.
+   *
+   * ⚠️ The budget belongs to the REPORT, not to this strip. `MAX_PHOTOS` below
+   * caps one strip; without this, six photos per finding across several
+   * findings would still build a report too large to render or to email.
+   */
+  budgetBlockedReason?: string;
 }
 
 export default function PhotoStrip({
@@ -41,6 +50,7 @@ export default function PhotoStrip({
   label,
   altPrefix,
   className,
+  budgetBlockedReason,
 }: Props) {
   const fileRef = useRef<HTMLInputElement>(null);
   /*
@@ -59,6 +69,7 @@ export default function PhotoStrip({
   photosRef.current = photos;
 
   const full = photos.length >= MAX_PHOTOS;
+  const blocked = full || !!budgetBlockedReason;
 
   /*
    * Compressed to 1000px / JPEG 75 before it ever reaches state, matching the
@@ -100,7 +111,7 @@ export default function PhotoStrip({
     <div className={cn('space-y-2', className)}>
       <button
         type="button"
-        disabled={full}
+        disabled={blocked}
         onClick={() => fileRef.current?.click()}
         className="flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-white/[0.16] bg-white/[0.06] text-[13px] font-semibold text-white transition-colors hover:bg-white/[0.12] touch-manipulation active:scale-[0.98] disabled:opacity-50"
       >
@@ -111,6 +122,10 @@ export default function PhotoStrip({
             ? `${label} — ${photos.length} added`
             : label}
       </button>
+
+      {budgetBlockedReason && !full && (
+        <p className="text-[12px] leading-snug text-elec-yellow">{budgetBlockedReason}</p>
+      )}
 
       {photos.length > 0 && (
         <div className="flex flex-wrap gap-2">
