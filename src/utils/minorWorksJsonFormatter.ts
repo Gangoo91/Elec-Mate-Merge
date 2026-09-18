@@ -16,6 +16,7 @@
  */
 import { formatFieldForPdf } from '@/utils/minorWorksValidation';
 import { normalisePdfDates } from '@/utils/certDate';
+import { importWithRetry } from '@/utils/lazyWithRetry';
 
 /** Company branding, already loaded by the caller. Null when none is saved. */
 export interface MinorWorksBranding {
@@ -65,20 +66,44 @@ export const formatMinorWorksJson = async (
   // the edge function receives them. Relative paths like
   // `/logos/schemes/niceic.png` would otherwise render as broken images
   // in PDFMonkey because it can't fetch our static asset paths.
-  const { resolveSchemeLogo, resolveCompanyLogo } = await import('@/utils/resolveSchemeLogo');
+  const { resolveSchemeLogo, resolveCompanyLogo } = await importWithRetry(() => import('@/utils/resolveSchemeLogo'));
 
   // ELE-1671 — the cover palette. The caller passes a narrow branding object
   // that predates this, so fall back to the signed-in electrician's profile.
-  const { fetchCertBranding } = await import('@/utils/certBranding');
-  const { coverPayloadKeys } = await import('@/utils/certCoverPayload');
-  const emCover = coverPayloadKeys(await fetchCertBranding('#d69e2e'));
+  const { fetchCertBranding } = await importWithRetry(() => import('@/utils/certBranding'));
+  const { coverPayloadKeys } = await importWithRetry(() => import('@/utils/certCoverPayload'));
+  // Kept as a named value, not inlined: the logo on it is the fallback the
+  // company-logo resolution below depends on (ELE-1751).
+  const emCoverBranding = await fetchCertBranding('#d69e2e');
+  const emCover = coverPayloadKeys(emCoverBranding);
   const resolvedSchemeLogo = await resolveSchemeLogo(
     dataWithBranding.schemeLogoDataUrl ||
       dataWithBranding.registrationSchemeLogo ||
       dataWithBranding.schemeLogo,
     dataWithBranding.registrationScheme || dataWithBranding.schemeProvider
   );
-  const resolvedCompanyLogo = await resolveCompanyLogo(dataWithBranding.companyLogo);
+  /*
+   * ELE-1751 — the company logo was missing from every Minor Works PDF while
+   * the scheme badge rendered fine beside it.
+   *
+   * The logo only ever arrived through the optional `branding` argument, and
+   * `MinorWorksPdfGenerator` passes `hasSavedCompanyBranding ? … : null` — so
+   * whenever that flag is false the logo is simply never set, and
+   * `company.logo_url` reaches the template empty.
+   *
+   * The irony is that the real logo was already in hand: `fetchCertBranding()`
+   * above reads `logo_url`/`logo_data_url` straight off the company profile,
+   * and the result was being used for the cover palette and then thrown away.
+   * Craig Soper's profile has both fields populated — the data was never the
+   * problem.
+   *
+   * So the fetched branding is the fallback. The caller's value still wins
+   * where it is given, and the scheme logo's three-way fallback beside it is
+   * the pattern being matched here rather than invented.
+   */
+  const resolvedCompanyLogo = await resolveCompanyLogo(
+    dataWithBranding.companyLogo || emCoverBranding.companyLogo || ''
+  );
   dataWithBranding = {
     ...dataWithBranding,
     schemeLogo: resolvedSchemeLogo,
@@ -98,7 +123,15 @@ export const formatMinorWorksJson = async (
   // Qualifying Supervisor countersignature — included in the payload when
   // the latest QS review is approved (rendered once the template has a QS
   // block; unknown keys are ignored by PDFMonkey until then).
-  const { getLatestApprovedQsReview, formatQsReviewDate } = await import('@/utils/qsReviewPdf');
+  /*
+   * ELE-1750 — this is the import that failed for Craig Soper. His browser was
+   * on a pre-deploy build and `IqsReviewPdf-C2wOb7K7.js` had been replaced, so
+   * the 404 took the whole certificate down. Wrapped so a stale client
+   * recovers instead of failing to issue a legal document.
+   */
+  const { getLatestApprovedQsReview, formatQsReviewDate } = await importWithRetry(
+    () => import('@/utils/qsReviewPdf')
+  );
   const qsReview = savedReportId ? await getLatestApprovedQsReview(savedReportId) : null;
   if (qsReview) {
     formattedFormData.qsName = qsReview.reviewer_name;

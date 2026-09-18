@@ -61,6 +61,15 @@ jobs:
       - name: Test grid shows no prompt as a reading
         run: npm run check:test-placeholders
 
+      # Green from the start, so enforced. ELE-1750: a Minor Works certificate
+      # could not be generated, previewed or emailed because a bare
+      # `await import()` in the formatter asked for a chunk hash that a deploy
+      # had replaced. Every deploy does this to whoever has the app open at the
+      # time, and neither tsc nor eslint sees it — the code is valid and works
+      # on every machine where the chunk still exists.
+      - name: Certificate dynamic imports are retried
+        run: npm run check:cert-imports
+
       # Advisory ONLY because it is currently red: four general-upskilling mock
       # exam banks report CHANGED KEYS against HEAD (asbestos, first aid, MEWP,
       # PASMA). Those banks are graded against their keys, so this needs a

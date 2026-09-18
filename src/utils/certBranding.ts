@@ -3,6 +3,7 @@ import { schemeDisplayLabel } from '@/utils/registrationScheme';
 import { TRANSPARENT_PIXEL } from '@/utils/resolveSchemeLogo';
 import { mastheadFor, measureLogoTone, logoTonePreference, type LogoTone } from '@/utils/logoTone';
 import { getSchemeInfo, schemeLogoPath } from '@/constants/schemeLogos';
+import { importWithRetry } from '@/utils/lazyWithRetry';
 
 /**
  * Company branding for certificate PDFs — ONE reader for the whole fleet.
@@ -383,7 +384,7 @@ const schemeLogoForBackground = async (
     const info = schemeName ? getSchemeInfo(schemeName) : undefined;
     if (!info) return stored;
     const wanted = schemeLogoPath(info, variant === 'reversed' ? 'dark' : 'light');
-    const { resolveSchemeLogo } = await import('@/utils/resolveSchemeLogo');
+    const { resolveSchemeLogo } = await importWithRetry(() => import('@/utils/resolveSchemeLogo'));
     return (await resolveSchemeLogo(wanted, schemeName)) || stored;
   } catch {
     return stored;

@@ -212,9 +212,20 @@ serve(async (req) => {
   } catch (error: any) {
     await captureException(error, { functionName: 'stripe-connect-oauth', requestUrl: req.url, requestMethod: req.method });
     console.error('❌ Error:', error);
-    return new Response(JSON.stringify({ error: error.message }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    // Stripe's messages quote the API key that was used, so they are not
+    // returned to the browser. This function's own throws are written for the
+    // electrician and still are.
+    const isStripeError = typeof error?.type === 'string' && error.type.startsWith('Stripe');
+    return new Response(
+      JSON.stringify({
+        error: isStripeError
+          ? 'Could not reach Stripe just now. Please try connecting again in a moment.'
+          : error.message,
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });

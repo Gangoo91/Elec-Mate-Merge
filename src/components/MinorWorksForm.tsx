@@ -1381,6 +1381,20 @@ const MinorWorksForm = ({
         {/* v3 shell footer — single sticky step bar replaces per-tab inline nav */}
         {!isLocked && (
           <MWStickyFooter
+            /*
+             * ELE-1750 — without this, Preview showed the form's own HTML
+             * instead of the PDF. `CertShellFooter` gates on
+             * `canPreview = !!previewReportType && !!previewData`, and its own
+             * comment says to supply BOTH. Minor Works only ever supplied the
+             * data, so the button never rendered and the user fell through to
+             * the web layout — Craig Soper reported it as "not as a PDF like if
+             * I was doing an EICR". EICR passes previewReportType="eicr" and
+             * EIC passes "eic"; this was the one certificate passing neither.
+             *
+             * ReportPdfViewer already routes 'minor-works' to
+             * generate-minor-works-pdf, so nothing else was missing.
+             */
+            previewReportType="minor-works"
             previewData={formData as unknown as Record<string, unknown>}
             currentTabIndex={currentTabIndex}
             totalTabs={totalTabs}

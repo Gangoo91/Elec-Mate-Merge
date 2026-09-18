@@ -8,6 +8,7 @@ import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import Stripe from 'https://esm.sh/stripe@14.21.0?target=deno';
 import { captureException } from '../_shared/sentry.ts';
+import { isAccountUnreachable } from '../_shared/stripe-connect.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -184,10 +185,7 @@ serve(async (req) => {
         ? Math.min(Number(invSettings.grantAmount), Number(invoice.total) || 0)
         : 0;
 
-    const chargeableTotal = Math.max(
-      0,
-      Number(invoice.total) - paidSoFar - grantAmount
-    );
+    const chargeableTotal = Math.max(0, Number(invoice.total) - paidSoFar - grantAmount);
     if (chargeableTotal <= 0) {
       throw new Error('Invoice is already fully paid — no balance left to charge');
     }
@@ -204,65 +202,116 @@ serve(async (req) => {
     // HARDCODED: Always use www.elec-mate.com (non-www has no SSL certificate)
     const appUrl = 'https://www.elec-mate.com';
 
-    const session = await stripe.checkout.sessions.create({
-      mode: 'payment',
-      line_items: [
-        {
-          price_data: {
-            currency: 'gbp',
-            product_data: {
-              name: paidSoFar > 0
-                ? `Invoice ${invoice.invoice_number} — remaining balance`
-                : `Invoice ${invoice.invoice_number}`,
-              description: jobDetails?.title || 'Electrical Work',
+    /*
+     * ⚠️ The status check above is a cache, not a guarantee.
+     *
+     * `stripe_account_status` was last written whenever the settings page was
+     * loaded. An electrician can revoke our access from their Stripe dashboard
+     * at any moment after that, and the first thing to find out is this call —
+     * which threw Stripe's raw permission error into the generic catch and
+     * returned it, key reference and all, as a 500. The electrician saw
+     * "does not have access to account acct_…" while trying to get paid.
+     *
+     * Detected, recorded and explained instead. Clearing the profile here is
+     * what makes the next page load show a "connect" button rather than
+     * repeating the failure (same condition as JAVASCRIPT-REACT-H3).
+     */
+    let session;
+    try {
+      session = await stripe.checkout.sessions.create({
+        mode: 'payment',
+        line_items: [
+          {
+            price_data: {
+              currency: 'gbp',
+              product_data: {
+                name:
+                  paidSoFar > 0
+                    ? `Invoice ${invoice.invoice_number} — remaining balance`
+                    : `Invoice ${invoice.invoice_number}`,
+                description: jobDetails?.title || 'Electrical Work',
+              },
+              unit_amount: invoiceAmountPence,
             },
-            unit_amount: invoiceAmountPence,
+            quantity: 1,
           },
-          quantity: 1,
+        ],
+        payment_intent_data: {
+          application_fee_amount: platformFeePence, // 1% to ElecMate
+          transfer_data: {
+            destination: profile.stripe_account_id, // Rest to electrician
+          },
+          metadata: {
+            invoice_id: invoiceId,
+            invoice_number: invoice.invoice_number,
+            electrician_user_id: ownerId,
+          },
         },
-      ],
-      payment_intent_data: {
-        application_fee_amount: platformFeePence, // 1% to ElecMate
-        transfer_data: {
-          destination: profile.stripe_account_id, // Rest to electrician
-        },
+        customer_email: clientData?.email || undefined,
+        // ELE-955 — for deposit invoices, hop to the existing PublicBooking
+        // page after pay so the client can finish booking. We pass the
+        // electrician's user_id and the quote_id so PublicBooking pre-fills
+        // from the quote and links the booking back. For regular invoices,
+        // fall back to the generic success page.
+        success_url:
+          invoice.deposit_for_quote && invoice.parent_quote_id && invoice.user_id
+            ? `${appUrl}/book/${invoice.user_id}?quote=${invoice.parent_quote_id}`
+            : `${appUrl}/invoice-payment-success?invoice=${invoiceId}&session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${appUrl}/invoice/${invoiceId}?cancelled=true`,
         metadata: {
           invoice_id: invoiceId,
           invoice_number: invoice.invoice_number,
           electrician_user_id: ownerId,
+          client_name: clientData?.name || '',
         },
-      },
-      customer_email: clientData?.email || undefined,
-      // ELE-955 — for deposit invoices, hop to the existing PublicBooking
-      // page after pay so the client can finish booking. We pass the
-      // electrician's user_id and the quote_id so PublicBooking pre-fills
-      // from the quote and links the booking back. For regular invoices,
-      // fall back to the generic success page.
-      success_url:
-        invoice.deposit_for_quote && invoice.parent_quote_id && invoice.user_id
-          ? `${appUrl}/book/${invoice.user_id}?quote=${invoice.parent_quote_id}`
-          : `${appUrl}/invoice-payment-success?invoice=${invoiceId}&session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${appUrl}/invoice/${invoiceId}?cancelled=true`,
-      metadata: {
-        invoice_id: invoiceId,
-        invoice_number: invoice.invoice_number,
-        electrician_user_id: ownerId,
-        client_name: clientData?.name || '',
-      },
-    });
+      });
+    } catch (stripeError) {
+      if (!isAccountUnreachable(stripeError)) throw stripeError;
+
+      await supabaseAdmin
+        .from('company_profiles')
+        .update({ stripe_account_id: null, stripe_account_status: null })
+        .eq('user_id', ownerId);
+
+      console.warn(
+        `⚠️ Stripe account ${profile.stripe_account_id} unreachable while creating a payment link — cleared for user ${ownerId}`
+      );
+
+      // Same response shape as the not-connected branch above — `error` is a
+      // sentinel the client matches on, the human wording goes in `message`.
+      // Reusing it means `InvoiceViewPage` already routes this to its "Connect
+      // Stripe first" toast with no frontend change; `code` distinguishes a
+      // revoked account from one that was never set up, for anything that cares.
+      return new Response(
+        JSON.stringify({
+          error: 'stripe_not_connected',
+          code: 'connect_access_revoked',
+          message:
+            'Your Stripe account is no longer connected to Elec-Mate. Reconnect it in Settings to take card payments on this invoice.',
+        }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
 
     console.log(`✅ Checkout session created: ${session.id}`);
 
     // Save payment link to whichever table the invoice lives in. Try the new
     // `invoices` table first; if no row matches, fall back to legacy quotes.
+    // `count` belongs to `.update()`, not to the `.select()` that follows it.
+    // Passing it to `.select()` type-errors (TS2554) — which made `deno check`
+    // fail for this whole file, so nothing in a money path was type-checked at
+    // all. Same query, same count, and the guard is back.
     const { count: invoicesUpdated } = await supabaseAdmin
       .from('invoices')
-      .update({
-        stripe_payment_link_url: session.url,
-        stripe_checkout_session_id: session.id,
-      })
+      .update(
+        {
+          stripe_payment_link_url: session.url,
+          stripe_checkout_session_id: session.id,
+        },
+        { count: 'exact' }
+      )
       .eq('id', invoiceId)
-      .select('id', { count: 'exact', head: true });
+      .select('id');
 
     if (!invoicesUpdated) {
       await supabaseAdmin
@@ -294,9 +343,25 @@ serve(async (req) => {
       requestMethod: req.method,
     });
 
-    return new Response(JSON.stringify({ error: error.message }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    /*
+     * The function's own thrown messages are written for the electrician
+     * ("Invoice is already fully paid — no balance left to charge") and are
+     * worth showing. Stripe's are not: its permission errors quote the API key
+     * that was used — masked, but still our live key in a response body — and
+     * they are written for a developer, not a user.
+     */
+    const isStripeError =
+      typeof error?.type === 'string' && error.type.startsWith('Stripe');
+    return new Response(
+      JSON.stringify({
+        error: isStripeError
+          ? 'Could not create the payment link. Please try again, or check your Stripe connection in Settings.'
+          : error.message,
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });

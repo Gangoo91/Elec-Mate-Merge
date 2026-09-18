@@ -366,11 +366,24 @@ serve(async (req) => {
       requestMethod: req.method,
     });
 
+    /*
+     * 🔴 `stack: error.stack` used to be returned here — a full server stack
+     * trace in a response body, to a function six frontend components call.
+     * Nothing ever read it; it only told anyone watching the network tab how
+     * the server is put together. Removed.
+     *
+     * Stripe's own messages are sanitised for the same reason the status
+     * endpoint sanitises them: its permission errors quote the API key that was
+     * used. The function's own thrown messages are written for the electrician
+     * and are still shown.
+     */
+    const isStripeError = typeof error?.type === 'string' && error.type.startsWith('Stripe');
     return new Response(
       JSON.stringify({
-        error: error.message || 'Unknown error',
+        error: isStripeError
+          ? 'Stripe could not set up the account just now. Please try again in a moment.'
+          : error.message || 'Unknown error',
         type: error.name,
-        stack: error.stack,
       }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );

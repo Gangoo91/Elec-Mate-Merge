@@ -79,6 +79,29 @@ function parseAddresses(input: string | string[]): BrevoAddress[] {
   return arr.filter(Boolean).map(parseAddress);
 }
 
+/**
+ * Is this address sendable at all?
+ *
+ * Deliberately permissive: it rejects what is obviously unsendable (no `@`, no
+ * dot in the domain, whitespace or a separator in the middle) and does not try
+ * to out-guess a mail server about what is actually deliverable. Anything
+ * stricter would start refusing real addresses, which is a far worse failure
+ * than letting Brevo have the final say.
+ *
+ * This exists because nothing validates the email on a customer record, so a
+ * typo travelled all the way to the provider and came back as
+ * `Brevo (400): email is not valid in to` — a 500 and a Sentry error for what
+ * is really a data-entry mistake (JAVASCRIPT-REACT-H0). That was fixed at the
+ * call site in `send-booking-confirmation`, where a domain-specific message can
+ * tell the electrician which record to correct; this is the net under the other
+ * seventy-odd functions that send through this shim.
+ */
+const SENDABLE_EMAIL = /^[^\s@,;]+@[^\s@,;.]+(\.[^\s@,;.]+)+$/;
+
+export function isSendableEmail(address: string): boolean {
+  return SENDABLE_EMAIL.test(address.trim().toLowerCase());
+}
+
 function bytesToBase64(bytes: Uint8Array): string {
   let bin = '';
   for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
@@ -98,11 +121,41 @@ async function brevoSend(
   }
 
   const sender = params.from ? parseAddress(params.from) : DEFAULT_FROM;
-  const to = parseAddresses(params.to);
-  if (to.length === 0) {
+  const parsedTo = parseAddresses(params.to);
+  if (parsedTo.length === 0) {
     return {
       data: null,
       error: { message: 'No recipients provided', name: 'no_recipients' },
+    };
+  }
+
+  /*
+   * Drop unsendable addresses before Brevo sees them.
+   *
+   * Invalid ones are filtered rather than failing the whole send, because some
+   * callers pass a list: one bad address in a batch must not stop the other
+   * recipients receiving their email. Dropping is never silent — the address is
+   * logged — and if NOTHING is left the send fails with the offending address
+   * named, which is the single-recipient case that produced the original bug.
+   */
+  const to = parsedTo.filter((addr) => isSendableEmail(addr.email));
+  const unsendable = parsedTo.filter((addr) => !isSendableEmail(addr.email));
+
+  if (unsendable.length > 0) {
+    console.warn(
+      `[mailer] dropped ${unsendable.length} unsendable recipient(s): ${unsendable
+        .map((a) => a.email)
+        .join(', ')}`
+    );
+  }
+
+  if (to.length === 0) {
+    return {
+      data: null,
+      error: {
+        message: `Not a valid email address: ${unsendable.map((a) => a.email).join(', ')}`,
+        name: 'invalid_recipient',
+      },
     };
   }
 
@@ -127,8 +180,33 @@ async function brevoSend(
   if (typeof replyToRaw === 'string' && replyToRaw.trim()) {
     body.replyTo = parseAddress(replyToRaw);
   }
-  if (params.cc) body.cc = parseAddresses(params.cc);
-  if (params.bcc) body.bcc = parseAddresses(params.bcc);
+  /*
+   * cc and bcc get the same filter as `to`.
+   *
+   * Brevo validates every address on the message, not just the recipients, so
+   * one malformed cc rejects the whole send — which would have made the `to`
+   * filtering above pointless. Dropped rather than fatal: a copy that cannot be
+   * delivered must never stop the person the email is actually for receiving
+   * it. An empty list is omitted entirely; sending `cc: []` is not the same as
+   * sending no cc.
+   */
+  const ccAddresses = params.cc ? parseAddresses(params.cc) : [];
+  const bccAddresses = params.bcc ? parseAddresses(params.bcc) : [];
+  const badCopies = [...ccAddresses, ...bccAddresses].filter(
+    (addr) => !isSendableEmail(addr.email)
+  );
+  if (badCopies.length > 0) {
+    console.warn(
+      `[mailer] dropped ${badCopies.length} unsendable cc/bcc address(es): ${badCopies
+        .map((a) => a.email)
+        .join(', ')}`
+    );
+  }
+
+  const cc = ccAddresses.filter((addr) => isSendableEmail(addr.email));
+  const bcc = bccAddresses.filter((addr) => isSendableEmail(addr.email));
+  if (cc.length > 0) body.cc = cc;
+  if (bcc.length > 0) body.bcc = bcc;
   if (params.headers && Object.keys(params.headers).length) body.headers = params.headers;
 
   if (params.tags?.length) {

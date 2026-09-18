@@ -265,8 +265,17 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
   // that knows whether the bar is rendered at all.
   useEffect(() => {
     if (user) return;
-    document.body.classList.add('has-sticky-cta');
-    return () => document.body.classList.remove('has-sticky-cta');
+    // `document.body` is read defensively because the cleanup can run while the
+    // document is being torn down, and a null body there threw
+    // "Cannot read properties of null (reading 'classList')" straight into the
+    // ErrorBoundary — on a public SEO page, which means a visitor saw an error
+    // screen instead of a calculator (Sentry JAVASCRIPT-REACT-GX).
+    const body = document.body;
+    if (!body) return;
+    body.classList.add('has-sticky-cta');
+    return () => {
+      document.body?.classList.remove('has-sticky-cta');
+    };
   }, [user]);
 
   return (

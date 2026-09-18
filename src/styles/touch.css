@@ -49,6 +49,22 @@
   input[type='password'],
   input[type='search'],
   input[type='url'],
+  /*
+   * ELE-1752 — `file` was missing from this list, so every upload in the app
+   * sat outside the very rule meant to stop iOS zooming.
+   *
+   * Ben Parkin: attaching a photo in Elec-AI on iOS zooms the viewport hard and
+   * the app has to be restarted. The chat textarea beside it is fine because it
+   * sets `fontSize: '16px'` inline, with the note "16px is load-bearing" — the
+   * file input had no such protection and inherits a smaller default, which is
+   * what WKWebView zooms on.
+   *
+   * It bites hardest in the chat because the keyboard is already up for the
+   * textarea, so the zoom lands on a layout mid-resize and does not recover.
+   * Every other `type="file"` in the app — eight or more, all hidden the same
+   * way — carries the same latent fault.
+   */
+  input[type='file'],
   textarea,
   select {
     font-size: 16px !important;

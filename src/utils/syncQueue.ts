@@ -32,6 +32,16 @@ class SyncQueueManager {
    * Get or create the IndexedDB database
    */
   private getDB(): Promise<IDBDatabase> {
+    // `indexedDB` is not merely disabled but UNDEFINED in some WebViews and in
+    // iOS private browsing, so touching it throws a ReferenceError rather than
+    // failing a call — which took out the page instead of degrading
+    // (Sentry JAVASCRIPT-REACT-GE, on /settings). Rejecting keeps the existing
+    // failure path: callers already handle a database that will not open, and
+    // the queue simply has nowhere local to persist. Same guard
+    // `offlineAICache` already uses.
+    if (typeof indexedDB === 'undefined') {
+      return Promise.reject(new Error('IndexedDB is not available in this browser'));
+    }
     if (!this.dbPromise) {
       this.dbPromise = new Promise((resolve, reject) => {
         const request = indexedDB.open(DB_NAME, DB_VERSION);

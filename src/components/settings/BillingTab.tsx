@@ -10,6 +10,7 @@ import { RevenueCatUI } from '@revenuecat/purchases-capacitor-ui';
 import { useRevenueCat } from '@/hooks/useRevenueCat';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { readEdgeFunctionError } from '@/lib/edgeFunctionError';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -87,8 +88,17 @@ const BillingTab = () => {
       // No subscription id is sent: the server resolves the caller's own
       // subscriptions. The client should not be able to name a target.
       const { data, error } = await supabase.functions.invoke('cancel-subscription', { body: {} });
-      if (error) throw new Error(error.message);
-      if (data?.error === 'no_subscription') {
+      // `no_subscription` comes back with a 404, which `invoke` surfaces as a
+      // thrown FunctionsHttpError — so the body is on `error`, not on `data`.
+      // Read it BEFORE throwing: this check used to sit after a bare
+      // `throw new Error(error.message)`, so the branch below was unreachable
+      // and an App Store subscriber pressing Cancel got "Edge Function returned
+      // a non-2xx status code" instead of being pointed at Manage Subscription.
+      const failure = await readEdgeFunctionError(error);
+      if (error && failure?.error !== 'no_subscription') {
+        throw new Error(failure?.message || error.message);
+      }
+      if (data?.error === 'no_subscription' || failure?.error === 'no_subscription') {
         toast({
           title: 'No Stripe subscription found',
           description: isNative

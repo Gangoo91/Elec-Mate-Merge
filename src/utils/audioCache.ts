@@ -17,6 +17,13 @@ interface CachedAudio {
 let dbPromise: Promise<IDBDatabase> | null = null;
 
 const openDB = (): Promise<IDBDatabase> => {
+  // Undefined — not just unavailable — in some WebViews and in iOS private
+  // browsing, so reading it throws a ReferenceError instead of failing a call.
+  // Rejecting degrades to "no cached audio", which is what callers already
+  // handle. Same guard `offlineAICache` uses.
+  if (typeof indexedDB === 'undefined') {
+    return Promise.reject(new Error('IndexedDB is not available in this browser'));
+  }
   if (dbPromise) return dbPromise;
 
   dbPromise = new Promise((resolve, reject) => {

@@ -12,6 +12,7 @@ import { getBoardWays, getMainBoard, MAIN_BOARD_ID, sortBoards,
 import { formatBsAmendment, formatDesignStandard } from '@/data/standards';
 import type { EICRPayload } from '@/types/eicr-payload';
 import { normaliseRcdRating } from '@/utils/rcdRating';
+import { importWithRetry } from '@/utils/lazyWithRetry';
 
 const toSnakeCase = (str: string): string =>
   str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`);
@@ -1025,14 +1026,14 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
   // PDFMonkey can't fetch — convert to data URLs. If the stored scheme logo
   // is missing entirely but `registrationScheme` is set, derive from the
   // bundled lookup.
-  const { resolveSchemeLogo, resolveCompanyLogo } = await import('@/utils/resolveSchemeLogo');
+  const { resolveSchemeLogo, resolveCompanyLogo } = await importWithRetry(() => import('@/utils/resolveSchemeLogo'));
 
   // ELE-1671 — the cover palette. This formatter is handed only formData and a
   // reportId, so it reads the signed-in electrician's own branding. On the
   // default `house` style the values equal the template's Liquid defaults, so
   // output is unchanged for anyone who has not opted in.
-  const { fetchCertBranding } = await import('@/utils/certBranding');
-  const { coverPayloadKeys } = await import('@/utils/certCoverPayload');
+  const { fetchCertBranding } = await importWithRetry(() => import('@/utils/certBranding'));
+  const { coverPayloadKeys } = await importWithRetry(() => import('@/utils/certCoverPayload'));
   const emCover = coverPayloadKeys(await fetchCertBranding('#f59e0b'));
   const resolvedSchemeLogo = await resolveSchemeLogo(
     get('registrationSchemeLogo'),
@@ -1044,7 +1045,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
   // this report is approved, the QS signs the "report authorised for issue
   // by" block (overrides any manual entry: the QS signature is the verified
   // one, with an audit trail in report_qs_reviews).
-  const { getLatestApprovedQsReview, formatQsReviewDate } = await import('@/utils/qsReviewPdf');
+  const { getLatestApprovedQsReview, formatQsReviewDate } = await importWithRetry(() => import('@/utils/qsReviewPdf'));
   const qsReview = await getLatestApprovedQsReview(reportId);
 
   const payload: EICRPayload = {

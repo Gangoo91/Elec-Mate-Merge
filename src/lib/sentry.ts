@@ -50,6 +50,11 @@ export function initSentry() {
         /extensions\//i,
         /^chrome-extension:\/\//,
         /^moz-extension:\/\//,
+        // An extension content script messaging its own background page after
+        // the tab closed. It arrives with no extension URL anywhere in the
+        // frames, so the three patterns above never matched it and it sat on
+        // the board as one of ours (Sentry JAVASCRIPT-REACT-9X).
+        /Invalid call to runtime\.sendMessage/i,
 
         // User cancelled an action — intentional, not a bug
         'AbortError',
@@ -176,23 +181,78 @@ export function initSentry() {
         // too. "Failed to send a request to the Edge Function" is supabase-js's
         // wording for the same dead connection (Sentry CZ); "Load failed" is
         // Safari's.
+        //
+        // `__serialized__` is the third place it hides, and the one that was
+        // missing. When a Supabase error OBJECT (code/details/hint/message) is
+        // rejected without being caught, Sentry cannot make an Error out of it,
+        // so the title becomes "Object captured as promise rejection with keys:
+        // code, details, hint, message" and the real cause — "TimeoutError:
+        // signal timed out" — is moved into `extra.__serialized__`. The message
+        // test above sees only the generic title, so these stayed at full error
+        // level while the identical failure arriving as a real Error sat at
+        // warning. Sentry JAVASCRIPT-REACT-65: 18 occurrences, 4 users, and it
+        // had regressed rather than ever being understood.
         let nestedError = '';
         try {
-          nestedError = JSON.stringify(event.extra?.originalError ?? event.extra?.originalValue ?? '');
+          nestedError = JSON.stringify(
+            event.extra?.originalError ??
+              event.extra?.originalValue ??
+              event.extra?.__serialized__ ??
+              ''
+          );
         } catch {
           nestedError = '';
         }
-        if (
-          // "Subscription check timed out" is useSubscriptionStatus giving up
-          // after three retries against check-subscription — the same dead
-          // connection wearing our own wording (Sentry 9V, 7 users since May).
-          /Failed to fetch|NetworkError|fetch failed|net::ERR_|AbortError.*(Fetch is aborted|signal timed out)|TimeoutError: signal timed out|Failed to send a request to the Edge Function|Load failed|Subscription check timed out/i.test(
-            message
-          ) ||
-          /AbortError|Fetch is aborted|signal timed out|Failed to fetch|Failed to send a request/i.test(
-            nestedError
-          )
-        ) {
+
+        // Give a rejected Supabase error object a title worth reading.
+        //
+        // "Object captured as promise rejection with keys: code, details, hint,
+        // message" describes the SHAPE of the thing and says nothing about what
+        // went wrong, so every unrelated failure — a timeout, a constraint
+        // violation, a permission denial — collapses into one issue that cannot
+        // be triaged. Rewriting the value with the real message both makes the
+        // title legible and lets Sentry group these by actual cause.
+        const serialised = event.extra?.__serialized__ as
+          | { message?: string; details?: string; code?: string }
+          | undefined;
+        const realMessage = serialised?.message || serialised?.details;
+        if (realMessage && /Object captured as promise rejection/i.test(message)) {
+          const values = event.exception?.values;
+          if (values?.[0]) {
+            values[0].value = serialised?.code
+              ? `${realMessage} (${serialised.code})`
+              : realMessage;
+          }
+        }
+
+        /*
+         * ONE pattern, tested against both places a dead connection can hide.
+         *
+         * 🔴 There used to be two regexes here — one for `message`, a different
+         * one for the nested payload — and they had drifted. `Load failed`,
+         * `NetworkError`, `net::ERR_` and `fetch failed` were in the first and
+         * missing from the second, which meant a network failure was downgraded
+         * only when it happened to surface in the title.
+         *
+         * That gap is not hypothetical. `useCompanyProfile` wraps its failures
+         * as "API call failed: company_profiles/fetch" and puts the real cause
+         * in `extra.originalError` — so Safari's "TypeError: Load failed" was
+         * invisible to the nested test, and a paying customer's transient
+         * network blip was filed as a full error (JAVASCRIPT-REACT-H4, and 58
+         * before it, which this block already claimed to cover).
+         *
+         * Keeping one definition is the actual fix: two lists WILL drift again.
+         * The union is deliberately a superset of both, so nothing that was
+         * being downgraded stops being downgraded.
+         *
+         * "Subscription check timed out" is useSubscriptionStatus giving up
+         * after three retries against check-subscription — the same dead
+         * connection wearing our own wording (Sentry 9V, 7 users since May).
+         */
+        const NETWORK_FAILURE =
+          /Failed to fetch|NetworkError|fetch failed|net::ERR_|AbortError|Fetch is aborted|signal timed out|Failed to send a request|Load failed|Subscription check timed out/i;
+
+        if (NETWORK_FAILURE.test(message) || NETWORK_FAILURE.test(nestedError)) {
           event.level = 'warning';
           event.tags = { ...event.tags, category: 'network' };
         }
@@ -248,6 +308,31 @@ export function initSentry() {
         // Three wordings for one failure: Chrome/Edge "does not provide an
         // export named", Firefox "doesn't provide an export named:", Safari
         // "Importing binding name 'x' is not found".
+        // Errors thrown by the iOS in-app browser's page-translation layer,
+        // not by us.
+        //
+        // Signature, consistent across every occurrence: an iPhone, a
+        // NON-ENGLISH locale (uk-UA, th-TH), an unhandled rejection, a message
+        // that is two or three minified characters ("La", "pa"), and — the
+        // decisive part — NOT ONE stack frame in any of our own bundles. Every
+        // genuine error in this project carries a frame from `/assets/<chunk>.js`;
+        // these carry none, because the throw happens inside a script the
+        // browser injected to translate the page.
+        //
+        // A mock exam is thousands of text nodes, which is why
+        // `/mock-exams/ipaf` produced both a RangeError and this on the same
+        // trace (JAVASCRIPT-REACT-H2/H1, and GC/GD on a guide page). Confirmed
+        // unreproducible: loading that page and running the exam end to end in
+        // Playwright raises nothing.
+        //
+        // Deliberately narrow — a short message ALONE is not enough to drop an
+        // event, because a real error could be terse. Both conditions must hold.
+        const frames = event.exception?.values?.[0]?.stacktrace?.frames ?? [];
+        const touchesOurCode = frames.some((f) => /\/assets\/|\.tsx?$/.test(f.filename ?? ''));
+        if (message.length > 0 && message.length <= 3 && !touchesOurCode) {
+          return null;
+        }
+
         const staleChunkMessage =
           /provide an export|importing binding name/i.test(
             event.exception?.values?.[0]?.value || ''

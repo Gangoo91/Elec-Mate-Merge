@@ -12,6 +12,7 @@ import { ChevronDown, FileText, Loader2, Trash2 } from 'lucide-react';
 
 import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
+import { Capacitor } from '@capacitor/core';
 import { openExternalUrl } from '@/utils/open-external-url';
 import {
   useCalculationReports,
@@ -36,11 +37,38 @@ export function SavedReports() {
   // Nothing to offer yet — say nothing rather than show an empty drawer.
   if (loading || reports.length === 0) return null;
 
+  /*
+   * ELE-1738 — Colin at Property Services & Maintenance: "I notice a tab for
+   * saved results but when I click nothing happens??" Twice, four days apart.
+   *
+   * His reports were never the problem: four rows, four PDFs present in
+   * storage, RLS scoped correctly, and the list does not filter by calculator.
+   * The tap itself was being swallowed.
+   *
+   * Signing the URL is async, and Safari drops the user-activation context
+   * across an `await`. By the time `window.open()` ran it was no longer a
+   * user-initiated open, so Safari blocked it — silently, with no error for
+   * the code to catch, which is why it reported success and showed nothing.
+   * Chrome is lenient here, which is why only the iPad user ever saw it.
+   *
+   * So the tab is claimed SYNCHRONOUSLY, on the gesture, and pointed at the
+   * URL once it resolves. If the sign fails the placeholder is closed again
+   * rather than left as a stray blank tab.
+   *
+   * Native is untouched — Capacitor routes through SFSafariViewController and
+   * has no popup blocker to satisfy, so it keeps the existing path.
+   */
   const handleOpen = async (r: SavedCalculationReport) => {
     setBusyId(r.id);
+
+    const isWeb = !Capacitor.isNativePlatform();
+    // Opened before any await — this is the part Safari cares about.
+    const placeholder = isWeb ? window.open('', '_blank') : null;
+
     try {
       const url = await open(r);
       if (!url) {
+        placeholder?.close();
         toast({
           title: 'Could not open that report',
           description: 'Please try again, or generate a fresh one.',
@@ -48,7 +76,12 @@ export function SavedReports() {
         });
         return;
       }
-      openExternalUrl(url);
+      if (placeholder && !placeholder.closed) {
+        placeholder.location.href = url;
+      } else {
+        // Popup blocked outright, or native. Fall back to the normal path.
+        openExternalUrl(url);
+      }
     } finally {
       setBusyId(null);
     }
@@ -70,10 +103,24 @@ export function SavedReports() {
         onClick={() => setExpanded((v) => !v)}
         className="flex min-h-[44px] w-full touch-manipulation items-center justify-between gap-3 px-4 py-3 text-left"
       >
-        <span className="flex items-center gap-2 text-[14px] font-semibold text-white">
-          <FileText className="h-4 w-4 text-elec-yellow" />
-          Saved reports
-          <span className="text-[12px] font-medium text-white">({total})</span>
+        <span className="flex min-w-0 flex-1 flex-col text-left">
+          <span className="flex items-center gap-2 text-[14px] font-semibold text-white">
+            <FileText className="h-4 w-4 text-elec-yellow" />
+            Saved PDF reports
+            <span className="text-[12px] font-medium text-white">({total})</span>
+          </span>
+          {/*
+            ELE-1738 — Colin read "Saved reports" as saved CALCULATIONS and
+            expected to reopen one and edit the figures: "can a calc be saved
+            as one I started last night had now gone." What is stored is the
+            generated PDF, not the calculator's inputs. Saying so here is the
+            honest fix — the alternative was implying a feature that does not
+            exist and losing his work again.
+          */}
+          <span className="mt-0.5 text-[12px] text-white">
+            The PDFs you&rsquo;ve generated. Calculator entries aren&rsquo;t saved &mdash; note
+            your figures before you leave.
+          </span>
         </span>
         <ChevronDown
           className={cn(

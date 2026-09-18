@@ -7,6 +7,7 @@ import { Sheet, SheetContent, SheetTitle, SheetDescription } from '@/components/
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { useEffect, useState, useMemo, Fragment } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { readEdgeFunctionError } from '@/lib/edgeFunctionError';
 import { Quote } from '@/types/quote';
 import { computeQuoteTotals } from '@/utils/quote-calculations';
 import { isInvoiceOverdue as invoiceIsOverdue, getInvoiceDaysOverdue } from '@/utils/invoice-status';
@@ -284,11 +285,18 @@ const InvoiceViewPage = () => {
         headers: { Authorization: `Bearer ${session.session.access_token}` },
         body: { invoiceId: invoice.id },
       });
-      if (res.data?.error === 'stripe_not_connected') {
+      // The function returns `stripe_not_connected` with a 400 — for an account
+      // that was never set up, and for one whose access has since been revoked.
+      // A non-2xx arrives as a thrown FunctionsHttpError, so the body is on
+      // `res.error`, never on `res.data`; reading it from `data` was dead code
+      // and this branch never ran.
+      const failure = await readEdgeFunctionError(res.error);
+      if (failure?.error === 'stripe_not_connected') {
         throw new Error('connect_first');
       }
       const url = res.data?.url || res.data?.paymentUrl || (invoice as { stripe_payment_link_url?: string }).stripe_payment_link_url;
-      if (res.error || !url) throw new Error(res.error?.message || 'No payment link returned');
+      if (res.error || !url)
+        throw new Error(failure?.message || res.error?.message || 'No payment link returned');
       return url as string;
     };
     try {

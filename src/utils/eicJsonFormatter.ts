@@ -16,6 +16,7 @@ import { getBoardWays,
 } from '@/types/distributionBoard';
 import { formatDesignStandard } from '@/data/standards';
 import type { EICPayload } from '@/types/eic-payload';
+import { importWithRetry } from '@/utils/lazyWithRetry';
 
 /* ------------------------------------------------------------------ */
 /*  Normaliser helpers                                                  */
@@ -269,15 +270,15 @@ export async function formatEicJson(
   // ELE-876 — resolve scheme + company logos to PDF-safe forms (data URL or
   // absolute URL). Relative paths get fetched + converted to data URLs so
   // PDFMonkey's renderer can embed them inline.
-  const { resolveSchemeLogo, resolveCompanyLogo } = await import('@/utils/resolveSchemeLogo');
+  const { resolveSchemeLogo, resolveCompanyLogo } = await importWithRetry(() => import('@/utils/resolveSchemeLogo'));
 
   // ELE-1671 — the cover palette. Derived from the profile this formatter was
   // handed rather than the signed-in user's, so regenerating someone else's
   // certificate keeps THEIR branding. On the default `house` style these values
   // are identical to the template's own Liquid defaults, so nothing changes for
   // anyone who has not opted in.
-  const { brandingFromCompanyProfile } = await import('@/utils/certBranding');
-  const { coverPayloadKeys } = await import('@/utils/certCoverPayload');
+  const { brandingFromCompanyProfile } = await importWithRetry(() => import('@/utils/certBranding'));
+  const { coverPayloadKeys } = await importWithRetry(() => import('@/utils/certCoverPayload'));
   const emCover = coverPayloadKeys(brandingFromCompanyProfile(companyProfile, '#f59e0b'));
   const resolvedSchemeLogo = await resolveSchemeLogo(
     companyProfile?.scheme_logo_data_url || companyProfile?.registration_scheme_logo,
@@ -1063,7 +1064,7 @@ export async function formatEicJson(
   // this report is approved, the QS signs the "report authorised for issue
   // by" block (overrides any manual entry: the QS signature is the verified
   // one, with an audit trail in report_qs_reviews).
-  const { getLatestApprovedQsReview, formatQsReviewDate } = await import('@/utils/qsReviewPdf');
+  const { getLatestApprovedQsReview, formatQsReviewDate } = await importWithRetry(() => import('@/utils/qsReviewPdf'));
   const qsReview = await getLatestApprovedQsReview(reportId);
   if (qsReview && json.declarations) {
     json.declarations.report_authorised_by = {

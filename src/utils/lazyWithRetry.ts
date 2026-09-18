@@ -12,7 +12,34 @@ export function lazyWithRetry<T extends ComponentType<unknown>>(
   importFn: () => Promise<{ default: T }>,
   retries = 2
 ): React.LazyExoticComponent<T> {
-  return lazy(async () => {
+  return lazy(() => importWithRetry(importFn, retries));
+}
+
+/**
+ * The same recovery, for a dynamic import that is NOT a React component.
+ * ────────────────────────────────────────────────────────────────────────
+ * ELE-1750. Craig Soper could not issue a Minor Works certificate:
+ *
+ *   "Failed to fetch dynamically imported module:
+ *    https://www.elec-mate.com/assets/IqsReviewPdf-C2wOb7K7.js"
+ *
+ * That chunk returns 404. His browser was running a build from before a
+ * deploy, asking for an asset hash that no longer exists — and the import sat
+ * in `minorWorksJsonFormatter`, which is a plain `await import()`, not a lazy
+ * component. So none of the recovery above applied and the certificate simply
+ * failed.
+ *
+ * `lazyWithRetry` only ever protected React route components. There are ~249
+ * bare `await import()` calls in the codebase and every one of them can fail
+ * this way for anyone with the app open across a deploy — which is every
+ * deploy, for someone.
+ *
+ * Deliberately the SAME function rather than a second copy: the comment above
+ * ends "Keep all four in step", and a fifth path that drifts is how the
+ * service-worker case got missed the first time.
+ */
+export function importWithRetry<T>(importFn: () => Promise<T>, retries = 2): Promise<T> {
+  return (async () => {
     let lastError: Error | undefined;
 
     for (let attempt = 0; attempt <= retries; attempt++) {
@@ -71,9 +98,31 @@ export function lazyWithRetry<T extends ComponentType<unknown>>(
     // This happens when deployment renamed chunks and user has old bundle
     console.error('[lazyWithRetry] All retries failed, forcing page reload');
 
-    // Set flag to prevent infinite reload loops
+    /*
+     * Loop guard — one reload per INCIDENT, not one per session.
+     *
+     * The timestamp written below was never read: the check was
+     * `if (!sessionStorage.getItem(key))`, so any session that had reloaded
+     * once stayed unprotected for the rest of its life. A reload fetches a
+     * fresh index.html and a complete new set of chunks, so a second failure
+     * minutes later is a NEW deploy, not the same loop — and refusing to
+     * recover from it is how someone ends up unable to issue a certificate
+     * (ELE-1750).
+     *
+     * That mattered less when only route components could reach this. It now
+     * backs `importWithRetry` as well, so every dynamic import in the app
+     * shares this guard and one stale flag would silence all of them.
+     *
+     * A genuine loop reloads within seconds, so anything older than the
+     * window is treated as a fresh incident.
+     */
     const reloadKey = 'lazyRetry_reloaded';
-    const hasReloaded = sessionStorage.getItem(reloadKey);
+    const RELOAD_LOOP_WINDOW_MS = 30_000;
+    const previousReload = Number(sessionStorage.getItem(reloadKey) ?? '');
+    const hasReloaded =
+      Number.isFinite(previousReload) &&
+      previousReload > 0 &&
+      Date.now() - previousReload < RELOAD_LOOP_WINDOW_MS;
 
     if (!hasReloaded) {
       sessionStorage.setItem(reloadKey, Date.now().toString());
@@ -91,7 +140,7 @@ export function lazyWithRetry<T extends ComponentType<unknown>>(
     // Already reloaded once - clear flag and throw error
     sessionStorage.removeItem(reloadKey);
     throw lastError;
-  });
+  })();
 }
 
 /**

@@ -28,6 +28,7 @@ import { Capacitor } from '@capacitor/core';
 import QsReviewPanel from '@/components/inspection/shared/QsReviewPanel';
 import { sharePdfBytesFromUrlToWhatsAppWeb } from '@/utils/share-pdf-to-whatsapp-web';
 import { sharePdfFileNative, canShareFilesToWhatsApp } from '@/utils/share-pdf-file-native';
+import { importWithRetry } from '@/utils/lazyWithRetry';
 
 // Feature flag: set to true to use Gotenberg (v2), false to revert to PDF Monkey (v1)
 const USE_GOTENBERG_PDF = false;
@@ -223,7 +224,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
     }
 
     // Per-company "QS approval required before issue" gate
-    const { checkQsIssueGate, qsGateMessage } = await import('@/utils/qsGate');
+    const { checkQsIssueGate, qsGateMessage } = await importWithRetry(() => import('@/utils/qsGate'));
     const gate = await checkQsIssueGate(reportId);
     if (gate.blocked) {
       toast({
@@ -252,7 +253,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
         throw new Error('User not authenticated');
       }
 
-      const { reportCloud } = await import('@/utils/reportCloud');
+      const { reportCloud } = await importWithRetry(() => import('@/utils/reportCloud'));
 
       const existingReport = reportId
         ? await reportCloud.getReportByReportId(reportId, user.id)
@@ -275,7 +276,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
       setExportProgress(20);
 
       // Get saved template ID from settings
-      const { offlineStorage: offlineStorageModule } = await import('@/utils/offlineStorage');
+      const { offlineStorage: offlineStorageModule } = await importWithRetry(() => import('@/utils/offlineStorage'));
       const credentials = await offlineStorageModule.getApiCredentials('pdfMonkey');
       const savedTemplateId = credentials.templateId;
 
@@ -455,7 +456,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
         throw new Error('You must be signed in to email certificates.');
       }
 
-      const { reportCloud } = await import('@/utils/reportCloud');
+      const { reportCloud } = await importWithRetry(() => import('@/utils/reportCloud'));
       let savedReportId = reportId;
       const existingReport = reportId
         ? await reportCloud.getReportByReportId(reportId, user.id)
@@ -485,7 +486,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
 
       // Custom PDFMonkey template — same lookup the Generate path uses, so
       // emailing doesn't silently fall back to the default template.
-      const { offlineStorage } = await import('@/utils/offlineStorage');
+      const { offlineStorage } = await importWithRetry(() => import('@/utils/offlineStorage'));
       const credentials = await offlineStorage.getApiCredentials('pdfMonkey');
 
       const { data: result, error: fnError } = await supabase.functions.invoke(

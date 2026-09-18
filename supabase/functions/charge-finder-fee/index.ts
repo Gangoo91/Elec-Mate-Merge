@@ -26,10 +26,13 @@ import Stripe from 'https://esm.sh/stripe@14.21.0?target=deno';
 import { withSentry } from '../_shared/sentry.ts';
 const GUARANTEE_DAYS = 14;
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
+// 🔴 This list omitted `x-request-id`, which `src/integrations/supabase/client.ts`
+// sets on EVERY request for tracing. A preflight carrying a header the function
+// does not allow is rejected by the browser, so this function could not be
+// called from the app at all — and it is invoked from
+// `JobVacanciesSection.tsx:366` to charge an employer's finder's fee.
+// Imported now so the allowed headers cannot drift from what the client sends.
+import { corsHeaders } from '../_shared/cors.ts';
 
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), {

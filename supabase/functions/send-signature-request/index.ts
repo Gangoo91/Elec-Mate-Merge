@@ -113,7 +113,16 @@ const handler = async (req: Request): Promise<Response> => {
 
     if (emailError) {
       console.error('Resend API error:', emailError);
-      throw emailError;
+      // Thrown as a real Error carrying the provider's text.
+      //
+      // The mailer returns a plain `{ message, name }` object, not an Error, so
+      // `throw emailError` reached Sentry as the literal title
+      // "Error: [object Object]" — nine of them since April, every one hiding
+      // why the send actually failed and all grouped together as one
+      // meaningless issue (JAVASCRIPT-REACT-75).
+      throw new Error(
+        `Signature request email failed: ${emailError.message || JSON.stringify(emailError)}`
+      );
     }
 
     console.log('Signature request email sent successfully:', emailData?.id);

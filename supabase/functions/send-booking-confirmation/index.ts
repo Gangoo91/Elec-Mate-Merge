@@ -18,7 +18,12 @@
 import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { corsHeaders } from '../_shared/cors.ts';
-import { Resend, clientFacingSender, htmlToPlainText } from '../_shared/mailer.ts';
+import {
+  Resend,
+  clientFacingSender,
+  htmlToPlainText,
+  isSendableEmail,
+} from '../_shared/mailer.ts';
 import { buildBookingConfirmationEmail } from '../_shared/email-templates/booking-confirmation.ts';
 import { buildBookingIcs, bookingIcsFilename } from '../_shared/booking-ics.ts';
 import { captureException } from '../_shared/sentry.ts';
@@ -114,6 +119,30 @@ serve(async (req) => {
 
     const to = (customer?.email ?? '').trim().toLowerCase();
     if (!to) return json({ error: 'That customer has no email address on file' }, 400);
+
+    /*
+     * Check the address is sendable BEFORE handing it to Brevo.
+     *
+     * Nothing validates the email on a customer record, so a typo ("j.smith@",
+     * a stray space, a name typed into the wrong field) reached the provider
+     * and came back as `Brevo (400): email is not valid in to`. That threw,
+     * which meant the electrician saw a generic send failure with no idea which
+     * field was wrong, and Sentry logged it as a server error when it is a data
+     * entry problem (JAVASCRIPT-REACT-H0).
+     *
+     * `isSendableEmail` is the mailer's own check, imported rather than
+     * re-written, so this can never drift from what the shim will actually
+     * accept. The shim rejects these too; catching it here is what turns
+     * "something went wrong" into a message naming the record to fix.
+     */
+    if (!isSendableEmail(to)) {
+      return json(
+        {
+          error: `"${customer?.email}" is not a valid email address. Update it on the customer's record and try again.`,
+        },
+        400
+      );
+    }
 
     /*
      * Suppression list.

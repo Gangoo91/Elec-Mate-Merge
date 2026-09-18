@@ -5,9 +5,16 @@ import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { captureException } from '../_shared/sentry.ts';
 
+import { corsHeaders as sharedCorsHeaders } from '../_shared/cors.ts';
+
+// 🔴 The inline list omitted `x-request-id`, which the Supabase client sets on
+// every request for tracing. The browser rejects a preflight whose response does
+// not allow a header the request carries, so the Cold Outreach admin page
+// (`AdminColdOutreach.tsx:74`) could not reach this function at all.
+// Spread from the shared definition so it cannot drift again; the Methods line
+// is kept because this endpoint is POST-only.
 const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, content-type, x-client-info, apikey',
+  ...sharedCorsHeaders,
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
 };
 

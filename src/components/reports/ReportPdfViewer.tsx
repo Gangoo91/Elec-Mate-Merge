@@ -34,6 +34,7 @@ import {
 import { useIsMobile } from '@/hooks/use-mobile';
 import { openOrDownloadPdf } from '@/utils/pdf-download';
 import { saveOrShareFile } from '@/utils/save-or-share-file';
+import { importWithRetry } from '@/utils/lazyWithRetry';
 import {
   isFireAlarmReportType,
   fireAlarmTemplateId,
@@ -334,7 +335,7 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
 
     try {
       // Per-company "QS approval required before issue" gate
-      const { checkQsIssueGate, qsGateMessage } = await import('@/utils/qsGate');
+      const { checkQsIssueGate, qsGateMessage } = await importWithRetry(() => import('@/utils/qsGate'));
       const gate = await checkQsIssueGate(reportData.report_id);
       if (gate.blocked) {
         setGenerationError(qsGateMessage(gate.companyName));
@@ -370,7 +371,7 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
       else edgeFunctionName = `generate-${rt}-pdf`;
 
       // Load template IDs from storage
-      const { offlineStorage } = await import('@/utils/offlineStorage');
+      const { offlineStorage } = await importWithRetry(() => import('@/utils/offlineStorage'));
       const credentials = await offlineStorage.getApiCredentials('pdfMonkey');
       let templateId: string | undefined;
 
@@ -394,13 +395,13 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
           `[ReportPdfViewer] No pdf_payload, attempting on-the-fly format for ${reportType}`
         );
         if (reportType === 'eicr') {
-          const { formatEICRJson } = await import('@/utils/eicrJsonFormatter');
+          const { formatEICRJson } = await importWithRetry(() => import('@/utils/eicrJsonFormatter'));
           dataForPdf = await formatEICRJson(reportData.data, reportData.report_id);
         } else if (reportType === 'ev-charging' || reportType === 'ev charging') {
-          const { formatEVChargingJson } = await import('@/utils/evChargingJsonFormatter');
+          const { formatEVChargingJson } = await importWithRetry(() => import('@/utils/evChargingJsonFormatter'));
           dataForPdf = formatEVChargingJson(reportData.data);
         } else if (reportType === 'pat-testing' || reportType === 'pat testing') {
-          const { formatPATTestingJson } = await import('@/utils/patTestingJsonFormatter');
+          const { formatPATTestingJson } = await importWithRetry(() => import('@/utils/patTestingJsonFormatter'));
           dataForPdf = formatPATTestingJson(reportData.data);
         } else if (isFireAlarmReportType(reportType)) {
           // All FIVE fire alarm certs, each via its own formatter. This used to
@@ -410,11 +411,11 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
           if (formatted) dataForPdf = formatted;
         } else if (reportType === 'emergency-lighting' || reportType === 'emergency lighting') {
           const { formatEmergencyLightingJson } =
-            await import('@/utils/emergencyLightingJsonFormatter');
+            await importWithRetry(() => import('@/utils/emergencyLightingJsonFormatter'));
           dataForPdf = formatEmergencyLightingJson(reportData.data);
         } else if (reportType === 'disconnection') {
           const { formatDisconnectionCertificatePayload } =
-            await import('@/utils/disconnection-certificate-formatter');
+            await importWithRetry(() => import('@/utils/disconnection-certificate-formatter'));
           dataForPdf = formatDisconnectionCertificatePayload(
             reportData.data as Record<string, any>
           );
@@ -447,7 +448,7 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
            * viewer. A QS opening a team member's certificate must not stamp
            * their own registration scheme and number onto it.
            */
-          const { formatEicJson } = await import('@/utils/eicJsonFormatter');
+          const { formatEicJson } = await importWithRetry(() => import('@/utils/eicJsonFormatter'));
           const { data: ownerProfile } = await supabase
             .from('company_profiles')
             .select('*')
@@ -476,6 +477,41 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
          */
       }
 
+      /*
+       * ELE-1751 — the company logo, grafted for the RAW Minor Works path.
+       *
+       * Minor Works must reach `generate-minor-works-pdf` unformatted (see the
+       * warning above), so it never passes through `formatMinorWorksJson` —
+       * which is where the logo fallback lives. Without this, the fix puts a
+       * logo on the generated PDF and leaves the preview blank, which is more
+       * confusing than the bug it replaces.
+       *
+       * The OWNER's profile, not the viewer's — the same rule the EIC branch
+       * above is careful about. A QS previewing a team member's certificate
+       * must see that electrician's logo, never their own.
+       */
+      try {
+        const rtNorm = String(reportData.report_type || '').replace(/\s+/g, '-');
+        const fdLogo = dataForPdf as Record<string, unknown> | undefined;
+        if (rtNorm === 'minor-works' && fdLogo && !fdLogo.companyLogo) {
+          const { data: owner } = await supabase
+            .from('company_profiles')
+            .select('logo_url, logo_data_url')
+            .eq('user_id', reportData.user_id)
+            .maybeSingle();
+          const logo = owner?.logo_url || owner?.logo_data_url || '';
+          if (logo) {
+            const { resolveCompanyLogo } = await importWithRetry(
+              () => import('@/utils/resolveSchemeLogo')
+            );
+            fdLogo.companyLogo = await resolveCompanyLogo(logo);
+          }
+        }
+      } catch (logoError) {
+        // Never fatal — a missing logo must not stop a preview rendering.
+        console.warn('[ReportPdfViewer] minor-works logo graft failed', logoError);
+      }
+
       // QS countersignature must survive stale pdf_payloads (saved before the
       // QS approved) and the raw EIC/MW fall-through — graft the verified
       // block onto whatever payload we ended up with. The RPC returns null
@@ -483,7 +519,7 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
       // matches what the QS signed, so this can never stamp an edited cert.
       try {
         const { getLatestApprovedQsReview, formatQsReviewDate } =
-          await import('@/utils/qsReviewPdf');
+          await importWithRetry(() => import('@/utils/qsReviewPdf'));
         const qsReview = await getLatestApprovedQsReview(reportData.report_id);
         if (qsReview && dataForPdf && typeof dataForPdf === 'object') {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -515,7 +551,7 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
       // broken images in PDFMonkey. This is a safety net — formatters that
       // already resolved the logos will pass through unchanged.
       try {
-        const { resolveSchemeLogo, resolveCompanyLogo } = await import('@/utils/resolveSchemeLogo');
+        const { resolveSchemeLogo, resolveCompanyLogo } = await importWithRetry(() => import('@/utils/resolveSchemeLogo'));
         const fd = dataForPdf as Record<string, unknown>;
         const resolvedScheme = await resolveSchemeLogo(
           (fd.registration_scheme_logo as string) ||

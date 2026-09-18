@@ -1624,8 +1624,36 @@ export default function ConversationalSearch() {
                   ).map((a) => (
                     <button
                       key={a.label}
-                      onClick={() => {
+                      onClick={async () => {
                         setShowAttachMenu(false);
+                        /*
+                         * ELE-1752 — dismiss the keyboard BEFORE the picker.
+                         *
+                         * Ben Parkin: attaching a photo on iOS zooms the
+                         * viewport hard and the app has to be restarted.
+                         * Capacitor runs `Keyboard.resize: 'native'`, which
+                         * shrinks the WKWebView while the keyboard is up — a
+                         * deliberate choice so bottom sheets clear it. The chat
+                         * has the keyboard open for the textarea, so the picker
+                         * opens over a shrunken WebView and the resize on
+                         * return races the picker's dismissal, leaving
+                         * WKWebView at a scale it never recovers from.
+                         *
+                         * Closing the keyboard first puts the WebView back to
+                         * full size before the picker takes over, so there is
+                         * nothing to race. Best effort only: the plugin is
+                         * native-only and must never stop an attachment.
+                         */
+                        try {
+                          (document.activeElement as HTMLElement | null)?.blur();
+                          const { Capacitor } = await import('@capacitor/core');
+                          if (Capacitor.isNativePlatform()) {
+                            const { Keyboard } = await import('@capacitor/keyboard');
+                            await Keyboard.hide();
+                          }
+                        } catch {
+                          // Never block the picker on keyboard cleanup.
+                        }
                         a.ref.current?.click();
                       }}
                       disabled={isCompressing}

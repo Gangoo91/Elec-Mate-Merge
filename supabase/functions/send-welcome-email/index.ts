@@ -142,7 +142,16 @@ const handler = async (req: Request): Promise<Response> => {
 
     if (emailError) {
       console.error('Mailer error:', emailError);
-      throw emailError;
+      // Thrown as a real Error carrying the provider's text.
+      //
+      // The mailer returns a plain `{ message, name }` object, not an Error, so
+      // `throw emailError` reached Sentry as the literal title
+      // "Error: [object Object]" — nine of them since April, every one hiding
+      // why the send actually failed and all grouped together as one
+      // meaningless issue (JAVASCRIPT-REACT-75).
+      throw new Error(
+        `Welcome email failed: ${emailError.message || JSON.stringify(emailError)}`
+      );
     }
 
     console.log('Welcome email sent:', emailData?.id, 'attachment:', !!attachments);

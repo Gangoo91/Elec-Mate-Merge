@@ -85,7 +85,16 @@ export const CopyResultButton = ({ title, className }: CopyResultButtonProps) =>
     const ok = await copyToClipboard(text);
     if (ok) {
       setCopied(true);
-      toast({ title: 'Result copied' });
+      /*
+       * ELE-1738 — Colin at Property Services & Maintenance asked outright:
+       * "What does copy result do??" A button labelled "Copy result" and a
+       * toast reading "Result copied" never say WHERE it went or what it is
+       * for. The answer belongs here rather than left for the user to guess.
+       */
+      toast({
+        title: 'Copied to clipboard',
+        description: 'The figures and working — paste them into a certificate, email or message.',
+      });
       setTimeout(() => setCopied(false), 2000);
     } else {
       toast({ title: 'Copy failed', variant: 'destructive' });
@@ -97,6 +106,10 @@ export const CopyResultButton = ({ title, className }: CopyResultButtonProps) =>
       ref={ref}
       type="button"
       onClick={handleCopy}
+      /* Says what the button does for anyone who hovers or uses a screen
+         reader, instead of making them press it to find out. */
+      title="Copy the figures and working to your clipboard"
+      aria-label="Copy the result to your clipboard"
       className={cn(
         'inline-flex h-11 items-center gap-1.5 rounded-xl px-3 text-[12.5px] font-semibold',
         'text-white transition-colors touch-manipulation hover:bg-white/[0.08]',
