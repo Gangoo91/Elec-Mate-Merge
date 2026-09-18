@@ -125,13 +125,15 @@ export default function PhotoViewer({
           text: photo.description,
           url: photo.file_url,
         });
+        return;
       } catch (err) {
-        // User cancelled or error
+        // Cancelling is a decision; anything else means the share never
+        // happened, so fall through rather than leave the button dead.
+        if ((err as Error)?.name === 'AbortError') return;
       }
-    } else {
-      // Fallback - copy URL
-      copyToClipboard(photo.file_url);
     }
+    // Fallback - copy URL
+    copyToClipboard(photo.file_url);
   }, [photo]);
 
   // Handle download

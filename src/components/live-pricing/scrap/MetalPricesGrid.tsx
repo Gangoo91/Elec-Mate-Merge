@@ -144,22 +144,28 @@ const MetalPricesGrid = ({ className }: { className?: string }) => {
 
     const shareText = `Scrap Metal Calculation\n${calcWeight}kg of ${calcGrade || calcMetal}\nEstimated Value: £${calculatedValue}\nPrice: ${formatPrice(getSelectedPrice())}/kg\n\nCalculated with Elec-Mate`;
 
-    try {
-      if (navigator.share) {
+    const copyInstead = async () => {
+      const ok = await copyToClipboard(shareText);
+      if (ok) {
+        setShareSuccess(true);
+        setTimeout(() => setShareSuccess(false), 2000);
+      }
+    };
+
+    if (navigator.share) {
+      try {
         await navigator.share({
           title: 'Scrap Metal Calculation',
           text: shareText,
         });
-      } else {
-        const ok = await copyToClipboard(shareText);
-        if (ok) {
-          setShareSuccess(true);
-          setTimeout(() => setShareSuccess(false), 2000);
-        }
+        return;
+      } catch (err) {
+        // Cancelling is a decision; anything else means the share never
+        // happened, so fall through rather than leave the button dead.
+        if ((err as Error)?.name === 'AbortError') return;
       }
-    } catch {
-      // User cancelled — nothing to do
     }
+    await copyInstead();
   };
 
   const usingFallback =

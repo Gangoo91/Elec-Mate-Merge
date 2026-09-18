@@ -207,17 +207,19 @@ export function useShareBriefing() {
           text: `Please sign off on the briefing: ${briefing.title}`,
           url: signOffUrl,
         });
-      } catch {
-        // User cancelled or share failed - ignore
+        return;
+      } catch (err) {
+        // Cancelling is a decision; anything else means the share never
+        // happened, so fall through rather than leave the button dead.
+        if ((err as Error)?.name === 'AbortError') return;
       }
-    } else {
-      // Fallback to clipboard
-      await copyToClipboard(signOffUrl);
-      toast({
-        title: 'Link copied',
-        description: 'Share not available - link copied to clipboard instead.',
-      });
     }
+    // Fallback to clipboard
+    await copyToClipboard(signOffUrl);
+    toast({
+      title: 'Link copied',
+      description: 'Share not available - link copied to clipboard instead.',
+    });
   };
 
   return { share };

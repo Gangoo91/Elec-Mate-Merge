@@ -28,6 +28,8 @@ import {
 import { fadeUpVariants } from './animations/variants';
 import { Eyebrow } from '@/components/college/primitives';
 import type { LiveEducationData } from '@/hooks/useLiveEducationData';
+import { toast } from 'sonner';
+import { copyToClipboard } from '@/utils/clipboard';
 
 interface CompareDrawerProps {
   open: boolean;
@@ -203,17 +205,25 @@ const CompareDrawer = ({
   maxItems = 3,
 }: CompareDrawerProps) => {
   const handleShare = async () => {
-    if (navigator.share && programmes.length >= 2) {
+    if (programmes.length < 2) return;
+    const titles = programmes.map((p) => p.title).join(' vs ');
+    const body = programmes.map((p) => `- ${p.title} at ${p.institution}`).join('\n');
+
+    if (navigator.share) {
       try {
-        const titles = programmes.map((p) => p.title).join(' vs ');
-        await navigator.share({
-          title: `Comparing: ${titles}`,
-          text: programmes.map((p) => `- ${p.title} at ${p.institution}`).join('\n'),
-        });
-      } catch {
-        // user cancelled
+        await navigator.share({ title: `Comparing: ${titles}`, text: body });
+        return;
+      } catch (err) {
+        // Cancelling is a decision; anything else means the share never
+        // happened, so fall through rather than leave the button dead.
+        if ((err as Error)?.name === 'AbortError') return;
       }
     }
+    // No fallback existed: without the Web Share API this did nothing at all.
+    const ok = await copyToClipboard(`${titles}\n\n${body}`);
+    toast[ok ? 'success' : 'error'](
+      ok ? 'Comparison copied' : 'Could not share or copy the comparison'
+    );
   };
 
   return (

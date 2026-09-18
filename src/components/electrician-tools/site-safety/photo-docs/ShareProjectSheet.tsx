@@ -261,12 +261,14 @@ export default function ShareProjectSheet({
             text: `View ${filteredPhotos.length} photos from ${projectReference}`,
             url,
           });
-        } catch {
-          // User cancelled
+          return;
+        } catch (err) {
+          // Cancelling is a decision; anything else means the share never
+          // happened, so fall through rather than leave the button dead.
+          if ((err as Error)?.name === 'AbortError') return;
         }
-      } else {
-        handleCopy(token);
       }
+      handleCopy(token);
     },
     [title, projectReference, filteredPhotos.length, getShareUrl, handleCopy]
   );

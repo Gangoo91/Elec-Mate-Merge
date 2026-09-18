@@ -56,8 +56,10 @@ async function triggerShare(url: string, title: string): Promise<void> {
     try {
       await navigator.share({ title, url });
       return;
-    } catch {
-      // User cancelled or not supported — fall through
+    } catch (err) {
+      // Cancelling is a decision; anything else means the share never
+      // happened, so fall through rather than leave the button dead.
+      if ((err as Error)?.name === 'AbortError') return;
     }
   }
 

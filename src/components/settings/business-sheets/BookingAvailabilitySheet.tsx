@@ -5,6 +5,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
 import { toast } from 'sonner';
+import { shareContent } from '@/utils/share';
 import { useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Eyebrow } from '@/components/college/primitives';
@@ -370,16 +371,26 @@ const BookingAvailabilitySheet = ({ open, onOpenChange }: BookingAvailabilityShe
                     type="button"
                     onClick={async () => {
                       const url = `${window.location.origin}/book/${userId}`;
-                      try {
-                        if (navigator.share) {
-                          await navigator.share({ title: 'Book a visit', url });
-                        } else {
-                          await navigator.clipboard.writeText(url);
-                          toast.success('Booking link copied');
-                        }
-                      } catch {
-                        /* user cancelled the share sheet */
-                      }
+                      /*
+                       * Every outcome says something. This used to call
+                       * `navigator.share` behind a bare `catch {}`, so anything
+                       * that went wrong — no Web Share API, a blocked clipboard,
+                       * a non-secure context — produced complete silence. The
+                       * button looked dead, which is how it was reported.
+                       *
+                       * `shareContent` also handles the native app properly:
+                       * the old code never reached Capacitor's share sheet, and
+                       * `navigator.clipboard` is not dependable inside WKWebView.
+                       */
+                      const outcome = await shareContent({
+                        title: 'Book a visit',
+                        text: 'Pick a time that suits you:',
+                        url,
+                      });
+                      if (outcome === 'copied') toast.success('Booking link copied');
+                      else if (outcome === 'failed')
+                        toast.error('Could not share the link — select it above to copy it');
+                      // 'shared' shows its own sheet; 'cancelled' was deliberate.
                     }}
                     className="h-11 shrink-0 rounded-xl bg-elec-yellow px-4 text-[13px] font-semibold text-black touch-manipulation transition-[filter] active:brightness-110"
                   >

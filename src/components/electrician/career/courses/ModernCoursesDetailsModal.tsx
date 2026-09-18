@@ -28,6 +28,8 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Eyebrow } from '@/components/college/primitives';
+import { toast } from 'sonner';
+import { copyToClipboard } from '@/utils/clipboard';
 
 interface ModernCoursesDetailsModalProps {
   course: EnhancedCareerCourse | null;
@@ -68,17 +70,27 @@ const ModernCoursesDetailsModal = ({
   };
 
   const handleShare = async () => {
+    const url = course.external_url || window.location.href;
     if (navigator.share) {
       try {
         await navigator.share({
           title: course.title,
           text: `${course.title} — ${course.provider}`,
-          url: course.external_url || window.location.href,
+          url,
         });
-      } catch {
-        // user cancelled
+        return;
+      } catch (err) {
+        // Cancelling is a decision; anything else means the share never
+        // happened, so fall through rather than leave the button dead.
+        if ((err as Error)?.name === 'AbortError') return;
       }
     }
+    // There was no fallback here at all: on any browser without the Web Share
+    // API this button did nothing whatsoever, silently.
+    const ok = await copyToClipboard(url);
+    toast[ok ? 'success' : 'error'](
+      ok ? 'Course link copied' : 'Could not share or copy the course link'
+    );
   };
 
   const demandPill: { label: string; tone: string } | null =

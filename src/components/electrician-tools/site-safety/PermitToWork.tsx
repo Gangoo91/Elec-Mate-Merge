@@ -767,12 +767,14 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
     if (navigator.share) {
       try {
         await navigator.share({ title: 'Permit to Work — sign-off', url: signLink });
-      } catch {
-        /* cancelled */
+        return;
+      } catch (err) {
+        // Cancelling is a decision; anything else means the share never
+        // happened, so fall through rather than leave the button dead.
+        if ((err as Error)?.name === 'AbortError') return;
       }
-    } else {
-      copySignLink();
     }
+    copySignLink();
   };
 
   const issuePermit = async () => {

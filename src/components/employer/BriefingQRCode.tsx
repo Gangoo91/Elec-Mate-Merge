@@ -116,13 +116,15 @@ export function BriefingQRCode({ open, onOpenChange, briefing }: BriefingQRCodeP
           text: `Scan to sign off on the briefing: ${briefing.title}`,
           url: signOffUrl,
         });
-      } catch {
-        // User cancelled or share failed
+        return;
+      } catch (err) {
+        // Cancelling is a decision; anything else means the share never
+        // happened, so fall through rather than leave the button dead.
+        if ((err as Error)?.name === 'AbortError') return;
       }
-    } else {
-      // Fallback to copy
-      handleCopyLink();
     }
+    // Fallback to copy
+    handleCopyLink();
   };
 
   // Open in new tab

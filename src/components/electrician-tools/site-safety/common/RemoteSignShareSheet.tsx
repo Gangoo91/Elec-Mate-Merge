@@ -32,12 +32,14 @@ export function RemoteSignShareSheet({
     if (navigator.share) {
       try {
         await navigator.share({ title: 'Sign-off request', url });
-      } catch {
-        /* cancelled */
+        return;
+      } catch (err) {
+        // Cancelling is a decision; anything else means the share never
+        // happened, so fall through rather than leave the button dead.
+        if ((err as Error)?.name === 'AbortError') return;
       }
-    } else {
-      copy();
     }
+    copy();
   };
 
   return (

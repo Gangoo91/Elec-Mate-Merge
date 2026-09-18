@@ -131,13 +131,15 @@ export const DailyAffirmation = () => {
     if (navigator.share) {
       try {
         await navigator.share({ text: shareText });
-      } catch {
-        /* user cancelled */
+        return;
+      } catch (err) {
+        // Cancelling is a decision; anything else means the share never
+        // happened, so fall through rather than leave the button dead.
+        if ((err as Error)?.name === 'AbortError') return;
       }
-    } else {
-      await copyToClipboard(shareText);
-      toast.success('Copied to clipboard');
     }
+    await copyToClipboard(shareText);
+    toast.success('Copied to clipboard');
   };
 
   return (

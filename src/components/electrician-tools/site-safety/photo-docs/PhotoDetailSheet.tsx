@@ -165,12 +165,14 @@ export default function PhotoDetailSheet({
           text: photo.description,
           url: photo.file_url,
         });
-      } catch {
-        // User cancelled
+        return;
+      } catch (err) {
+        // Cancelling is a decision; anything else means the share never
+        // happened, so fall through rather than leave the button dead.
+        if ((err as Error)?.name === 'AbortError') return;
       }
-    } else {
-      await copyToClipboard(photo.file_url);
     }
+    await copyToClipboard(photo.file_url);
   }, [photo]);
 
   const handleDelete = useCallback(() => {

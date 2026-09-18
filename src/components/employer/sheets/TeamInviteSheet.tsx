@@ -94,8 +94,10 @@ export function TeamInviteSheet({ open, onOpenChange, companyName }: Props) {
       try {
         await navigator.share({ title: 'Join our team on Elec-Mate', text: shareText });
         return;
-      } catch {
-        /* user cancelled — fall through to copy */
+      } catch (err) {
+        // Cancelling is a decision; anything else means the share never
+        // happened, so fall through rather than leave the button dead.
+        if ((err as Error)?.name === 'AbortError') return;
       }
     }
     await copyToClipboard(shareText);
