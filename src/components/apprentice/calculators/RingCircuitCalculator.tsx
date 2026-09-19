@@ -1,7 +1,8 @@
 import { copyToClipboard } from '@/utils/clipboard';
 import type { CalcReport } from '@/lib/calculator-report';
 import { useProvideCalcReport } from '@/lib/calculator-report-context';
-import { useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
+import type { CalculatorResultReporter } from '@/lib/calculator-outcome';
 import { Copy, Check, CheckCircle, AlertTriangle, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
@@ -142,10 +143,35 @@ interface RingResult {
   temp: number;
 }
 
-const RingCircuitCalculator = () => {
+const RingCircuitCalculator = ({ onResult }: CalculatorResultReporter = {}) => {
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);
   const [result, setResult] = useState<RingResult | null>(null);
+
+  // Published for the "email me this" offer on the public pages.
+  useEffect(() => {
+    if (!onResult) return;
+    if (!result) return onResult(null);
+    onResult({
+      headline: `${result.r1PlusR2.toFixed(3)} \u03a9`,
+      headlineLabel: '(R1+R2) at the furthest point',
+      inputs: [
+        { label: 'r1 (line loop)', value: `${result.r1.toFixed(3)} \u03a9` },
+        { label: 'rn (neutral loop)', value: `${result.rn.toFixed(3)} \u03a9` },
+        { label: 'r2 (cpc loop)', value: `${result.r2.toFixed(3)} \u03a9` },
+      ],
+      outputs: [
+        { label: '(R1+R2)', value: `${result.r1PlusR2.toFixed(3)} \u03a9` },
+        { label: 'End-to-end L', value: `${result.e2eLive.toFixed(3)} \u03a9` },
+        { label: 'End-to-end N', value: `${result.e2eNeutral.toFixed(3)} \u03a9` },
+        { label: 'End-to-end cpc', value: `${result.e2eCpc.toFixed(3)} \u03a9` },
+        { label: 'Expected L-E at a socket', value: `${result.expectedLE.toFixed(3)} \u03a9` },
+      ],
+      // (r1 + r2)/4 is the ring derivation; naming it keeps the figure from
+      // being read as a radial R1+R2, which it is not.
+      basis: 'GN3 ring final continuity \u2014 (R1+R2) = (r1 + r2) / 4',
+    });
+  }, [result, onResult]);
 
   // Readings
   const [endToEndLive, setEndToEndLive] = useState('');

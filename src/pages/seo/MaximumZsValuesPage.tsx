@@ -26,9 +26,24 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Max Zs Values: B6 7.28Ω, B16 2.73Ω, B32 1.37Ω';
+/*
+ * Numbers removed 19 Sep 2026, same reasoning as the Ze page: 12,549
+ * impressions at position 6.5 returning 0.71% CTR, because three worked
+ * examples in the title answer most of the lookups outright.
+ *
+ * What replaces them is the one thing a snippet cannot hand over — the
+ * WHOLE table. The queries support it: alongside "max zs b16" and "max zs
+ * 32a mcb" sits "max zs values 18th edition table pdf free download", which
+ * is someone wanting the sheet, not a single figure.
+ *
+ * Baseline: 12,549 imp, 89 clicks, 0.71% CTR, position 6.5, 28 days to
+ * 16 Sep 2026.
+ */
+const PAGE_TITLE = 'Max Zs Values: Full BS 7671 Table, Every Device';
+// Leads with the completeness of the table rather than three worked values,
+// so the listing gives a reason to open the page instead of replacing it.
 const PAGE_DESCRIPTION =
-  'Max permitted Zs per BS 7671: B6 7.28Ω, B16 2.73Ω, B32 1.37Ω, C16 1.37Ω, C20 1.09Ω. All Type B, C and BS 3036 values, ×0.8 corrected. RCBOs the same.';
+  'Every maximum Zs in BS 7671 Tables 41.2–41.5 — Type B, C and D MCBs, RCBOs, BS 88 and BS 3036 fuses, at 0.4 s and 5 s, with the ×0.8 test limits. Look yours up and have the result emailed to you.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -425,7 +440,10 @@ const sections = [
           protective device that reading would satisfy — useful when you are deciding whether a
           circuit needs a smaller rating or a different curve.
         </p>
-        <CalculatorWithEmailCapture calculatorName="Max Zs Lookup" calculatorPath="/guides/maximum-zs-values-bs-7671">
+        <CalculatorWithEmailCapture
+          calculatorName="Max Zs Lookup"
+          calculatorPath="/guides/maximum-zs-values-bs-7671"
+        >
           {(onResult) => (
             <CalculatorSurface>
               <BS7671ZsLookupCalculator onResult={onResult} />

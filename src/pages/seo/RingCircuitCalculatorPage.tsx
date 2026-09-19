@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet';
 import { RecentReviews } from '@/components/seo/RecentReviews';
 import { CalculatorSurface } from '@/components/calculators/shared';
 import RingCircuitCalculator from '@/components/apprentice/calculators/RingCircuitCalculator';
+import { CalculatorWithEmailCapture } from '@/components/seo/CalculatorWithEmailCapture';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
@@ -220,7 +221,16 @@ export default function RingCircuitCalculatorPage() {
       {/* Live calculator — free, no signup, BS 7671:2018+A4:2026 compliant */}
       <section id="calculator" className="px-5 pb-12 scroll-mt-24">
         <div className="max-w-4xl mx-auto">
-          <CalculatorSurface><RingCircuitCalculator /></CalculatorSurface>
+          <CalculatorWithEmailCapture
+            calculatorName="Ring Circuit Calculator"
+            calculatorPath="/tools/ring-circuit-calculator"
+          >
+            {(onResult) => (
+              <CalculatorSurface>
+                <RingCircuitCalculator onResult={onResult} />
+              </CalculatorSurface>
+            )}
+          </CalculatorWithEmailCapture>
         </div>
       </section>
 

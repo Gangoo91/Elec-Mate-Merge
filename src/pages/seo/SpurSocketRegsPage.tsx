@@ -2,6 +2,7 @@ import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import SpurDecisionChecker from '@/components/seo/SpurDecisionChecker';
 import { CalculatorSurface } from '@/components/calculators/shared';
 import RingCircuitCalculator from '@/components/apprentice/calculators/RingCircuitCalculator';
+import { CalculatorWithEmailCapture } from '@/components/seo/CalculatorWithEmailCapture';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
@@ -481,12 +482,12 @@ const sections = [
                 connection units intended to supply two or more items of equipment where the total
                 protective conductor current in normal service is known or reasonably expected to
                 exceed 10mA — typically IT and office equipment circuits. Where it applies, the
-                circuit needs a high-integrity protective conductor connection to Regulation 543.7.1,
-                and spurs taken from the ring are not exempt: they require high-integrity CPC
-                connections of their own (BS 7671:2018+A4:2026 Reg 543.7.2.201(a); OSG Reg 7.5.3).
-                On an ordinary domestic ring this threshold is not normally reached, but the CPC
-                continuity of every spur still has to be verified with a low-resistance continuity
-                tester and the result recorded on the certificate.
+                circuit needs a high-integrity protective conductor connection to Regulation
+                543.7.1, and spurs taken from the ring are not exempt: they require high-integrity
+                CPC connections of their own (BS 7671:2018+A4:2026 Reg 543.7.2.201(a); OSG Reg
+                7.5.3). On an ordinary domestic ring this threshold is not normally reached, but the
+                CPC continuity of every spur still has to be verified with a low-resistance
+                continuity tester and the result recorded on the certificate.
               </p>
             </div>
           </div>
@@ -528,7 +529,12 @@ const sections = [
           is the one to investigate.
         </p>
         <CalculatorSurface>
-          <RingCircuitCalculator />
+          <CalculatorWithEmailCapture
+            calculatorName="Ring Circuit Calculator"
+            calculatorPath="/guides/spur-socket-regulations"
+          >
+            {(onResult) => <RingCircuitCalculator onResult={onResult} />}
+          </CalculatorWithEmailCapture>
         </CalculatorSurface>
       </>
     ),

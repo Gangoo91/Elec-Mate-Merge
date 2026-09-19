@@ -246,9 +246,9 @@ const sections = [
           <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">
             earthing arrangement
           </SEOInternalLink>{' '}
-          provides a separate earth conductor from the supply transformer to the installation. In practice, this earth return path is
-          the metallic sheath or armour of the supply cable — typically lead sheath on older cables
-          or steel wire armour on newer ones.
+          provides a separate earth conductor from the supply transformer to the installation. In
+          practice, this earth return path is the metallic sheath or armour of the supply cable —
+          typically lead sheath on older cables or steel wire armour on newer ones.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <div className="flex items-start gap-3">
@@ -411,18 +411,21 @@ const sections = [
           Knowing the expected Ze for the earthing arrangement is only half the job. What decides
           whether a circuit passes is the total loop impedance at the far end — Zs = Ze + (R1+R2) —
           measured against the maximum for the protective device on that circuit. A TN-C-S supply at
-          0.20 ohms leaves plenty of headroom; a TN-S supply at 0.78 ohms leaves very little, and the
-          same cable run that passes on one will fail on the other.
+          0.20 ohms leaves plenty of headroom; a TN-S supply at 0.78 ohms leaves very little, and
+          the same cable run that passes on one will fail on the other.
         </p>
         <p>
           Use the lookup below to find the maximum Zs for the device — MCB curve and rating, RCBO,
-          fuse or RCD — at 0.4 s or 5 s disconnection, and to check a measured Zs against it. It also
-          gives the 80% rule-of-thumb figure used when testing at ambient temperature.
+          fuse or RCD — at 0.4 s or 5 s disconnection, and to check a measured Zs against it. It
+          also gives the 80% rule-of-thumb figure used when testing at ambient temperature.
         </p>
         <p>
           <strong>Free to use, no sign-up and no email required.</strong>
         </p>
-        <CalculatorWithEmailCapture calculatorName="Max Zs Lookup" calculatorPath="/guides/ze-values-uk">
+        <CalculatorWithEmailCapture
+          calculatorName="Max Zs Lookup"
+          calculatorPath="/guides/ze-values-uk"
+        >
           {(onResult) => (
             <CalculatorSurface>
               <BS7671ZsLookupCalculator onResult={onResult} />
@@ -682,8 +685,8 @@ const sections = [
         </p>
         <p>
           Record the DNO query on the{' '}
-          <SEOInternalLink href="/how-to-fill-in-eicr">EICR</SEOInternalLink> under
-          "Observations" with a note of the measured Ze value and the action taken.
+          <SEOInternalLink href="/how-to-fill-in-eicr">EICR</SEOInternalLink> under "Observations"
+          with a note of the measured Ze value and the action taken.
         </p>
         <SEOAppBridge
           title="Record Ze, PFC, and all supply characteristics digitally"
@@ -754,8 +757,32 @@ const sections = [
 export default function ZeValuesUKPage() {
   return (
     <GuideTemplate
-      title="Max Ze Values: TN-S 0.80Ω, TN-C-S 0.35Ω, TT 21Ω"
-      description="Maximum Ze: TN-S 0.80 Ω, TN-C-S (PME) 0.35 Ω, TT 21 Ω. How to measure Ze, why PME differs, and what to do when your reading is too high. Free Ze checker."
+      /*
+       * The numbers came OUT of this title on 19 Sep 2026, deliberately.
+       *
+       * It ranked 2.4–2.7 for the whole "max ze" family — tncs max ze, max
+       * ze for tns, max ze for tt — across ~950 impressions, and took about
+       * six clicks. "tncs max ze" sat at position 2.7 with ZERO. The title
+       * was not failing; it was succeeding at the wrong thing. It printed
+       * 0.35 Ω straight into the results page, so the search was over before
+       * anyone arrived.
+       *
+       * Every entity term is kept (max Ze, TN-S, TN-C-S, TT) so relevance is
+       * unchanged; what replaces the figures is a reason to come — the
+       * checker is now genuinely on the page, and it emails the result.
+       *
+       * Baseline to judge it against: 15,157 impressions, 164 clicks, 1.08%
+       * CTR at position 4.7 in the 28 days to 16 Sep 2026. If CTR does not
+       * move by the next comparable window, put the numbers back — the
+       * ranking is worth more than the theory.
+       */
+      title="Max Ze Values: TN-S, TN-C-S & TT + Free Ze Checker"
+      // Description moved off the figures for the same reason as the title —
+      // Google renders it in the result, so leading with 0.35 Ω finishes the
+      // search there. It still names every earthing arrangement, so the page
+      // is no less relevant to "max ze for tncs"; it just stops answering it
+      // in the listing.
+      description="Maximum Ze for TN-S, TN-C-S (PME) and TT supplies, with the distributor-quoted limits, how to measure Ze safely, why PME differs, and what to do when your reading is too high. Free Ze checker with the result emailed to you."
       datePublished="2025-08-01"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
