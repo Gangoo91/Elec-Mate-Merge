@@ -1,7 +1,8 @@
 import { copyToClipboard } from '@/utils/clipboard';
 import type { CalcReport } from '@/lib/calculator-report';
 import { useProvideCalcReport } from '@/lib/calculator-report-context';
-import { useState, useMemo, useCallback } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
+import type { CalculatorResultReporter } from '@/lib/calculator-outcome';
 import {
   Copy,
   Check,
@@ -84,10 +85,75 @@ interface TTResult {
 
 type CalcResult = TNResult | TTResult;
 
-const EarthFaultLoopCalculator = () => {
+const EarthFaultLoopCalculator = ({ onResult }: CalculatorResultReporter = {}) => {
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);
   const [result, setResult] = useState<CalcResult | null>(null);
+
+  /*
+   * Publish upward for the "email me this" offer on the public pages.
+   *
+   * The two result shapes are genuinely different calculations — a TN loop
+   * impedance against a tabulated max Zs, and a TT electrode against the 50 V
+   * touch-voltage product — so each gets its own summary rather than a lowest
+   * common denominator that would misdescribe one of them.
+   */
+  useEffect(() => {
+    if (!onResult) return;
+    if (!result) return onResult(null);
+
+    if (result.type === 'tn') {
+      const pass = result.compliance80 ?? result.compliance100;
+      onResult({
+        headline: `${result.zsValue.toFixed(2)} \u03a9`,
+        headlineLabel:
+          result.maxZsValue == null
+            ? 'Zs'
+            : `Zs \u2014 ${pass ? 'within' : 'over'} the ${result.deviceLabel} limit`,
+        inputs: [
+          ...(result.zeValue != null ? [{ label: 'Ze', value: `${result.zeValue} \u03a9` }] : []),
+          ...(result.r1r2Value != null
+            ? [{ label: 'R1+R2', value: `${result.r1r2Value} \u03a9` }]
+            : []),
+          { label: 'Device', value: result.deviceLabel },
+          { label: 'Disconnection time', value: `${result.disconnectionTime} s` },
+        ],
+        outputs: [
+          { label: 'Zs', value: `${result.zsValue.toFixed(2)} \u03a9` },
+          ...(result.maxZsValue != null
+            ? [{ label: 'Max Zs', value: `${result.maxZsValue} \u03a9` }]
+            : []),
+          ...(result.testLimit80 != null
+            ? [{ label: 'Test limit (80%)', value: `${result.testLimit80.toFixed(2)} \u03a9` }]
+            : []),
+          { label: 'Fault current', value: `${Math.round(result.faultCurrent)} A` },
+        ],
+        basis: `BS 7671:2018+A4:2026 ${result.tableRef} (${result.disconnectionTime} s)`,
+      });
+      return;
+    }
+
+    onResult({
+      headline: `${result.raValue} \u03a9`,
+      headlineLabel: result.touchVoltageOk ? 'RA \u2014 within 50 V' : 'RA \u2014 exceeds 50 V',
+      inputs: [
+        { label: 'RA (electrode)', value: `${result.raValue} \u03a9` },
+        { label: 'RCD I\u0394n', value: `${result.iDeltaNValue} mA` },
+      ],
+      outputs: [
+        { label: 'RA \u00d7 I\u0394n', value: `${result.product.toFixed(1)} V` },
+        { label: 'Maximum RA', value: `${result.maxRa.toFixed(1)} \u03a9` },
+        {
+          label: 'Verdict',
+          value: result.touchVoltageOk ? 'Within the 50 V limit' : 'Exceeds the 50 V limit',
+        },
+        ...(result.electrodeAboveStabilityLimit
+          ? [{ label: 'Note', value: 'Above the Table 41.5 NOTE 2 stability caveat' }]
+          : []),
+      ],
+      basis: 'BS 7671:2018+A4:2026 Reg 411.5.3 and Table 41.5',
+    });
+  }, [result, onResult]);
 
   // Earthing system and measurement mode
   const [earthingSystem, setEarthingSystem] = useState<EarthingSystem>('tn');

@@ -2,6 +2,7 @@ import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import PdfDownloadCard from '@/components/seo/PdfDownloadCard';
 import { CalculatorSurface } from '@/components/calculators/shared';
 import BS7671ZsLookupCalculator from '@/components/apprentice/calculators/BS7671ZsLookupCalculator';
+import { CalculatorWithEmailCapture } from '@/components/seo/CalculatorWithEmailCapture';
 import ZeQuickChecker from '@/components/seo/ZeQuickChecker';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
@@ -421,9 +422,13 @@ const sections = [
         <p>
           <strong>Free to use, no sign-up and no email required.</strong>
         </p>
-        <CalculatorSurface>
-          <BS7671ZsLookupCalculator />
-        </CalculatorSurface>
+        <CalculatorWithEmailCapture calculatorName="Max Zs Lookup" calculatorPath="/guides/ze-values-uk">
+          {(onResult) => (
+            <CalculatorSurface>
+              <BS7671ZsLookupCalculator onResult={onResult} />
+            </CalculatorSurface>
+          )}
+        </CalculatorWithEmailCapture>
         <p>
           To work the sum the other way — Ze plus a measured R1+R2 to give the expected Zs — use the{' '}
           <SEOInternalLink href="/tools/earth-loop-impedance-calculator">

@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet';
 import { RecentReviews } from '@/components/seo/RecentReviews';
 import { CalculatorSurface } from '@/components/calculators/shared';
 import ConduitFillCalculator from '@/components/apprentice/calculators/ConduitFillCalculator';
+import { CalculatorWithEmailCapture } from '@/components/seo/CalculatorWithEmailCapture';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
@@ -204,7 +205,13 @@ export default function ConduitFillCalculatorPage() {
       {/* Live calculator — free, no signup, BS 7671:2018+A4:2026 compliant */}
       <section id="calculator" className="px-5 pb-12 scroll-mt-24">
         <div className="max-w-4xl mx-auto">
-          <CalculatorSurface><ConduitFillCalculator /></CalculatorSurface>
+          <CalculatorWithEmailCapture calculatorName="Conduit Fill Calculator" calculatorPath="/tools/conduit-fill-calculator">
+            {(onResult) => (
+              <CalculatorSurface>
+                <ConduitFillCalculator onResult={onResult} />
+              </CalculatorSurface>
+            )}
+          </CalculatorWithEmailCapture>
         </div>
       </section>
 

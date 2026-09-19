@@ -4,6 +4,7 @@ import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import { CalculatorSurface } from '@/components/calculators/shared';
 import EarthFaultLoopCalculator from '@/components/apprentice/calculators/EarthFaultLoopCalculator';
+import { CalculatorWithEmailCapture } from '@/components/seo/CalculatorWithEmailCapture';
 import {
   AlertTriangle,
   Zap,
@@ -285,7 +286,11 @@ const sections = [
           <sub>A</sub> × I<sub>Δn</sub> ≤ 50 V under Regulation 411.5.3(b) instead.
         </p>
         <CalculatorSurface>
-          <EarthFaultLoopCalculator />
+          <CalculatorWithEmailCapture calculatorName="Earth Fault Loop Impedance Calculator" calculatorPath="/guides/earth-fault-loop-impedance-too-high">
+            {(onResult) => (
+              <EarthFaultLoopCalculator onResult={onResult} />
+            )}
+          </CalculatorWithEmailCapture>
         </CalculatorSurface>
         <p>
           If the verdict is fail or marginal, measure Ze at the origin next — that splits the

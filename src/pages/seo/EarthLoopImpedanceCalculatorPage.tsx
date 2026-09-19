@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet';
 import { RecentReviews } from '@/components/seo/RecentReviews';
 import { CalculatorSurface } from '@/components/calculators/shared';
 import EarthFaultLoopCalculator from '@/components/apprentice/calculators/EarthFaultLoopCalculator';
+import { CalculatorWithEmailCapture } from '@/components/seo/CalculatorWithEmailCapture';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
@@ -219,7 +220,13 @@ export default function EarthLoopImpedanceCalculatorPage() {
       {/* Live calculator — free, no signup, BS 7671:2018+A4:2026 compliant */}
       <section id="calculator" className="px-5 pb-12 scroll-mt-24">
         <div className="max-w-4xl mx-auto">
-          <CalculatorSurface><EarthFaultLoopCalculator /></CalculatorSurface>
+          <CalculatorWithEmailCapture calculatorName="Earth Fault Loop Impedance Calculator" calculatorPath="/tools/earth-loop-impedance-calculator">
+            {(onResult) => (
+              <CalculatorSurface>
+                <EarthFaultLoopCalculator onResult={onResult} />
+              </CalculatorSurface>
+            )}
+          </CalculatorWithEmailCapture>
         </div>
       </section>
 

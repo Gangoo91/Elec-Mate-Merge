@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import type { CalculatorResultReporter } from '@/lib/calculator-outcome';
 import type { CalcReport } from '@/lib/calculator-report';
 import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { Plus, Trash2, ChevronDown } from 'lucide-react';
@@ -81,13 +82,36 @@ interface TrunkingResult {
   groupingFactor: number;
 }
 
-const TrunkingSizeCalculator = () => {
+const TrunkingSizeCalculator = ({ onResult }: CalculatorResultReporter = {}) => {
   const [containmentType, setContainmentType] = useState<ContainmentType>('pvc-trunking');
   const [circuits, setCircuits] = useState('1');
   const [cables, setCables] = useState<CableRow[]>([
     { id: crypto.randomUUID(), cableType: 'twin-earth', size: '2.5', quantity: 1 },
   ]);
   const [result, setResult] = useState<TrunkingResult | null>(null);
+
+  // Publish upward from an effect on `result`, so the reset path clears the
+  // email offer too rather than leaving it advertising a stale answer.
+  useEffect(() => {
+    if (!onResult) return;
+    if (!result) return onResult(null);
+    onResult({
+      headline: result.recommendedSize,
+      headlineLabel: `${result.fillPercent.toFixed(1)}% fill \u2014 ${result.statusLabel}`,
+      inputs: [
+        { label: 'Containment', value: containmentType },
+        { label: 'Cables', value: String(result.cableCount) },
+        { label: 'Circuits', value: String(result.circuits) },
+      ],
+      outputs: [
+        { label: 'Recommended size', value: result.recommendedSize },
+        { label: 'Fill', value: `${result.fillPercent.toFixed(1)}%` },
+        { label: 'Total cable area', value: `${result.totalCableArea.toFixed(1)} mm\u00b2` },
+        { label: 'Grouping factor', value: String(result.groupingFactor) },
+      ],
+      basis: 'BS 7671 Appendix 4 grouping; 45% trunking / 40% conduit space factor',
+    });
+  }, [result, containmentType, onResult]);
 
   const addCable = () => {
     setCables((prev) => [

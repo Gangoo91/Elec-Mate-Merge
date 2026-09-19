@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import type { CalculatorResultReporter } from '@/lib/calculator-outcome';
 import type { CalcReport } from '@/lib/calculator-report';
 import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { Calculator, Info, AlertTriangle, CheckCircle2, BookOpen, ChevronDown } from 'lucide-react';
@@ -45,7 +46,7 @@ const cableMassKgPerM: Record<string, number> = {
 const FRICTION_COEFFICIENT = 0.3;
 const GRAVITY = 9.81;
 
-const ConduitFillCalculator = () => {
+const ConduitFillCalculator = ({ onResult }: CalculatorResultReporter = {}) => {
   const config = CALCULATOR_CONFIG['cable'];
 
   const [conduitSize, setConduitSize] = useState('');
@@ -68,6 +69,25 @@ const ConduitFillCalculator = () => {
     warnings: string[];
     pullTension: number;
   } | null>(null);
+
+  // Published from an effect on `result` so the clear path also clears the
+  // email offer, rather than leaving it advertising a stale answer.
+  useEffect(() => {
+    if (!onResult) return;
+    if (!result) return onResult(null);
+    onResult({
+      headline: `${result.fillPercentage.toFixed(1)}%`,
+      headlineLabel: result.suitable ? 'Within the space factor' : 'Over the space factor',
+      inputs: [{ label: 'Cables', value: String(result.maxCables) }],
+      outputs: [
+        { label: 'Fill', value: `${result.fillPercentage.toFixed(1)}%` },
+        { label: 'Space factor', value: `${result.spaceFactor}%` },
+        { label: 'Grouping factor', value: String(result.groupingFactor) },
+        { label: 'Min bend radius', value: `${result.bendRadius} mm` },
+      ],
+      basis: 'BS 7671 Reg 522.8 and Appendix 4 grouping; 40% conduit space factor',
+    });
+  }, [result, onResult]);
 
   // Nominal internal bore and typical former bend radius by conduit size.
   // NOTE: these are manufacturer/product figures. BS 7671, GN3 and the On-Site Guide publish no

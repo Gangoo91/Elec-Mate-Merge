@@ -4,6 +4,7 @@ import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import { CalculatorSurface } from '@/components/calculators/shared';
 import BS7671ZsLookupCalculator from '@/components/apprentice/calculators/BS7671ZsLookupCalculator';
+import { CalculatorWithEmailCapture } from '@/components/seo/CalculatorWithEmailCapture';
 import {
   Zap,
   ShieldCheck,
@@ -424,9 +425,13 @@ const sections = [
           protective device that reading would satisfy — useful when you are deciding whether a
           circuit needs a smaller rating or a different curve.
         </p>
-        <CalculatorSurface>
-          <BS7671ZsLookupCalculator />
-        </CalculatorSurface>
+        <CalculatorWithEmailCapture calculatorName="Max Zs Lookup" calculatorPath="/guides/maximum-zs-values-bs-7671">
+          {(onResult) => (
+            <CalculatorSurface>
+              <BS7671ZsLookupCalculator onResult={onResult} />
+            </CalculatorSurface>
+          )}
+        </CalculatorWithEmailCapture>
       </>
     ),
   },

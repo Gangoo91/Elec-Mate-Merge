@@ -1,6 +1,7 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { CalculatorSurface } from '@/components/calculators/shared';
 import EarthFaultLoopCalculator from '@/components/apprentice/calculators/EarthFaultLoopCalculator';
+import { CalculatorWithEmailCapture } from '@/components/seo/CalculatorWithEmailCapture';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
@@ -319,7 +320,11 @@ const sections = [
           circuits are handled on the R<sub>A</sub> × I&Delta;n ≤ 50 V basis of Reg 411.5.3.
         </p>
         <CalculatorSurface>
-          <EarthFaultLoopCalculator />
+          <CalculatorWithEmailCapture calculatorName="Earth Fault Loop Impedance Calculator" calculatorPath="/loop-impedance-testing-guide">
+            {(onResult) => (
+              <EarthFaultLoopCalculator onResult={onResult} />
+            )}
+          </CalculatorWithEmailCapture>
         </CalculatorSurface>
       </>
     ),

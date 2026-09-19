@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet';
 import { RecentReviews } from '@/components/seo/RecentReviews';
 import { CalculatorSurface } from '@/components/calculators/shared';
 import TrunkingSizeCalculator from '@/components/apprentice/calculators/TrunkingSizeCalculator';
+import { CalculatorWithEmailCapture } from '@/components/seo/CalculatorWithEmailCapture';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
@@ -243,7 +244,13 @@ export default function TrunkingFillCalculatorPage() {
       {/* Live calculator — free, no signup, BS 7671:2018+A4:2026 compliant */}
       <section id="calculator" className="px-5 pb-12 scroll-mt-24">
         <div className="max-w-4xl mx-auto">
-          <CalculatorSurface><TrunkingSizeCalculator /></CalculatorSurface>
+          <CalculatorWithEmailCapture calculatorName="Trunking Fill Calculator" calculatorPath="/tools/trunking-fill-calculator">
+            {(onResult) => (
+              <CalculatorSurface>
+                <TrunkingSizeCalculator onResult={onResult} />
+              </CalculatorSurface>
+            )}
+          </CalculatorWithEmailCapture>
         </div>
       </section>
 

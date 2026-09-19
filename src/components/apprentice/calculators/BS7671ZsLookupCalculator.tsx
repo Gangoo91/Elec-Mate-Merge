@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import type { CalculatorResultReporter } from '@/lib/calculator-outcome';
 import type { CalcReport } from '@/lib/calculator-report';
 import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { Search, BookOpen, FileText, ChevronDown } from 'lucide-react';
@@ -40,7 +41,7 @@ interface CompliantDevice {
   tableRef: string;
 }
 
-const BS7671ZsLookupCalculator = () => {
+const BS7671ZsLookupCalculator = ({ onResult }: CalculatorResultReporter = {}) => {
   const isMobile = useIsMobile();
 
   const [activeTab, setActiveTab] = useState('results');
@@ -57,6 +58,63 @@ const BS7671ZsLookupCalculator = () => {
   const getZsData = () => {
     return disconnectionTime === '0.4' ? zsValues : zsValues5s;
   };
+
+  /*
+   * Publish the result upward.
+   *
+   * Derived from state in an effect rather than called inside `performLookup`
+   * because there are two result shapes (a device lookup and a measured-Zs
+   * compliance check) and a reset — three call sites to keep in step. One
+   * effect watching the state they all write is the version that cannot drift.
+   */
+  useEffect(() => {
+    if (!onResult) return;
+
+    if (complianceCheck) {
+      const best = complianceCheck.compliantDevices?.[0] as CompliantDevice | undefined;
+      onResult({
+        headline: best ? `${best.device} ${best.curve}${best.rating}` : 'No compliant device',
+        headlineLabel: `Measured Zs ${complianceCheck.measuredZs} \u03a9`,
+        inputs: [
+          { label: 'Measured Zs', value: `${complianceCheck.measuredZs} \u03a9` },
+          { label: 'Disconnection time', value: `${disconnectionTime} s` },
+        ],
+        outputs: best
+          ? [
+              { label: 'Largest compliant device', value: `${best.device} ${best.curve}${best.rating}` },
+              { label: 'Max Zs for that device', value: best.maxZs },
+              { label: 'Margin', value: best.margin },
+              { label: 'Compliant devices found', value: String(complianceCheck.compliantDevices.length) },
+            ]
+          : [{ label: 'Result', value: 'No device in the tables is compliant at this Zs' }],
+        basis: `BS 7671:2018+A4:2026 Tables 41.2\u201341.5 (${disconnectionTime} s)`,
+      });
+      return;
+    }
+
+    if (results.length > 0) {
+      const first = results[0] as CompliantDevice;
+      onResult({
+        headline: first.maxZs,
+        headlineLabel: `Max Zs \u2014 ${first.device} ${first.curve}${first.rating}`.replace('N/A', ''),
+        inputs: [
+          { label: 'Device', value: `${first.device} ${first.curve}${first.rating}`.replace('N/A', '') },
+          { label: 'Disconnection time', value: `${disconnectionTime} s` },
+        ],
+        outputs: [
+          { label: 'Maximum Zs', value: first.maxZs },
+          // The 80% figure is what actually gets compared on site at working
+          // temperature, so it belongs in the email beside the tabulated value.
+          { label: 'Test limit (80%)', value: first.testZs },
+          { label: 'Reference', value: first.tableRef },
+        ],
+        basis: `BS 7671:2018+A4:2026 ${first.tableRef} (${disconnectionTime} s)`,
+      });
+      return;
+    }
+
+    onResult(null);
+  }, [results, complianceCheck, disconnectionTime, onResult]);
 
   const performLookup = () => {
     if (searchType === 'device' && deviceType) {
