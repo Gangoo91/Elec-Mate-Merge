@@ -967,6 +967,11 @@
       "source": "/guides/electrician-insurance-business-uk",
       "destination": "/guides/electrician-insurance-uk",
       "statusCode": 301
+    },
+    {
+      "source": "/guides/how-to-size-cables",
+      "destination": "/how-to-size-cables",
+      "statusCode": 301
     }
   ],
   "rewrites": [
