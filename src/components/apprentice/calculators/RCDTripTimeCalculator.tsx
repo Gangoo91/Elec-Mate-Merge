@@ -1,7 +1,8 @@
 import { copyToClipboard } from '@/utils/clipboard';
 import type { CalcReport } from '@/lib/calculator-report';
 import { useProvideCalcReport } from '@/lib/calculator-report-context';
-import { useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
+import type { CalculatorResultReporter } from '@/lib/calculator-outcome';
 import { Copy, Check, CheckCircle, XCircle, AlertTriangle, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
@@ -80,7 +81,7 @@ const getTestDescription = (rating: string, current: string) => {
   return descriptions[rating]?.[current] || '';
 };
 
-const RCDTripTimeCalculator = () => {
+const RCDTripTimeCalculator = ({ onResult }: CalculatorResultReporter = {}) => {
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);
 
@@ -89,6 +90,38 @@ const RCDTripTimeCalculator = () => {
   const [testCurrent, setTestCurrent] = useState('');
   const [actualTripTime, setActualTripTime] = useState('');
   const [result, setResult] = useState<RCDResult | null>(null);
+
+  // Published for the "email me this" offer on the public pages.
+  useEffect(() => {
+    if (!onResult) return;
+    if (!result) return onResult(null);
+    onResult({
+      headline: `${result.maxTripTime} ms`,
+      headlineLabel: `Maximum trip time \u2014 ${result.testCurrent}`,
+      inputs: [
+        { label: 'RCD', value: result.rating },
+        { label: 'Test current', value: result.testCurrent },
+      ],
+      outputs: [
+        { label: 'Maximum trip time', value: `${result.maxTripTime} ms` },
+        { label: 'Test', value: result.testDescription },
+        ...(result.actualTripTime != null
+          ? [{ label: 'Measured', value: `${result.actualTripTime} ms` }]
+          : []),
+        ...(result.isCompliant != null
+          ? [
+              {
+                label: 'Verdict',
+                value: result.isCompliant ? 'Within the limit' : 'Exceeds the limit',
+              },
+            ]
+          : []),
+      ],
+      // Reg 643.7.1 only. A4:2026 DELETED Table 3A, so citing it would send
+      // the reader to a table that no longer exists in the edition named.
+      basis: 'BS 7671:2018+A4:2026 Reg 643.7.1 \u2014 300 ms general, 130\u2013500 ms Type S',
+    });
+  }, [result, onResult]);
 
   // Collapsibles
   const [showGuidance, setShowGuidance] = useState(false);

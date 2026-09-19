@@ -4,6 +4,7 @@ import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import { CalculatorSurface } from '@/components/calculators/shared';
 import RCDTripTimeCalculator from '@/components/apprentice/calculators/RCDTripTimeCalculator';
+import { CalculatorWithEmailCapture } from '@/components/seo/CalculatorWithEmailCapture';
 import {
   Zap,
   ShieldCheck,
@@ -164,11 +165,10 @@ const sections = [
         <p>
           A4:2026 introduced an important change to Regs 643.7.1 and 643.8: regardless of RCD type
           (AC, A, F, B etc.), an alternating current test at rated residual operating current (IΔn)
-          is used
-          to verify the effectiveness of the RCD. This means the 1x IΔn effectiveness test is always
-          performed as an AC sinusoidal test, even for Type A, F, or B devices. Where your MFT has a
-          type selector, select Type AC for the 1x IΔn effectiveness test; instruments without a
-          type selector can only perform Type AC tests and this remains compliant for the
+          is used to verify the effectiveness of the RCD. This means the 1x IΔn effectiveness test
+          is always performed as an AC sinusoidal test, even for Type A, F, or B devices. Where your
+          MFT has a type selector, select Type AC for the 1x IΔn effectiveness test; instruments
+          without a type selector can only perform Type AC tests and this remains compliant for the
           effectiveness verification.
         </p>
         <p>
@@ -188,8 +188,8 @@ const sections = [
     content: (
       <>
         <p>
-          Amendment 4 made this shorter than most electricians expect. Table 3A of Appendix 3 —
-          the time/current performance criteria table that drove the old half-rated, rated and
+          Amendment 4 made this shorter than most electricians expect. Table 3A of Appendix 3 — the
+          time/current performance criteria table that drove the old half-rated, rated and
           five-times routine — has been deleted. Regulations 643.7.1 and 643.8 now verify an RCD
           with a{' '}
           <strong>single alternating current test at the rated residual operating current</strong>,
@@ -252,8 +252,8 @@ const sections = [
     content: (
       <>
         <p>
-          The test applies the full rated residual operating current — 30 mA for a 30 mA device —
-          as an alternating current, on both the positive and negative half-cycles. A general
+          The test applies the full rated residual operating current — 30 mA for a 30 mA device — as
+          an alternating current, on both the positive and negative half-cycles. A general
           (non-delay) RCD must operate within 300 milliseconds. Since Amendment 4 this is the whole
           of the required verification, and it applies identically to Type AC, A, F and B devices.
         </p>
@@ -287,13 +287,18 @@ const sections = [
           it tells you whether the device passes.
         </p>
         <p>
-          Use the worst-case (longest) of your 0 degree and 180 degree readings, and check it at
-          IΔn — that is the value that goes on the certificate. The five-times option is kept for
+          Use the worst-case (longest) of your 0 degree and 180 degree readings, and check it at IΔn
+          — that is the value that goes on the certificate. The five-times option is kept for
           reference only, since Amendment 4 deleted Table 3A and that test is now a diagnostic
           rather than part of the required verification.
         </p>
         <CalculatorSurface>
-          <RCDTripTimeCalculator />
+          <CalculatorWithEmailCapture
+            calculatorName="RCD Trip Time Calculator"
+            calculatorPath="/guides/rcd-testing-procedure"
+          >
+            {(onResult) => <RCDTripTimeCalculator onResult={onResult} />}
+          </CalculatorWithEmailCapture>
         </CalculatorSurface>
       </>
     ),
@@ -304,10 +309,10 @@ const sections = [
     content: (
       <>
         <p>
-          These three tests used to be part of the routine. Amendment 4 deleted Table 3A of
-          Appendix 3, which is what required them, so they are no longer part of verifying an RCD.
-          They have not become useless — they have become diagnostic tools you reach for when
-          investigating something specific.
+          These three tests used to be part of the routine. Amendment 4 deleted Table 3A of Appendix
+          3, which is what required them, so they are no longer part of verifying an RCD. They have
+          not become useless — they have become diagnostic tools you reach for when investigating
+          something specific.
         </p>
         <p>
           <strong>Half-rated (0.5x IΔn — 15 mA on a 30 mA device).</strong> The device should not
@@ -316,9 +321,9 @@ const sections = [
           requires an RCD to operate between 50% and 100% of IΔn, and BS 7671 makes the same point
           in NOTE 2 to Regulation 531.3.3 — an RCD may operate at any value of residual current in
           excess of 50% of the rated residual current — so a device tripping below 15 mA is out of
-          specification. Bear in mind that existing leakage downstream — electronic
-          equipment, long runs, damp — adds to the test current, so a trip here is not automatically
-          the device's fault.
+          specification. Bear in mind that existing leakage downstream — electronic equipment, long
+          runs, damp — adds to the test current, so a trip here is not automatically the device's
+          fault.
         </p>
         <p>
           <strong>Five times (5x IΔn — 150 mA on a 30 mA device).</strong> The familiar 40 ms figure

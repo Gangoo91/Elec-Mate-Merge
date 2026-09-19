@@ -1,4 +1,5 @@
-import { useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
+import type { CalculatorResultReporter } from '@/lib/calculator-outcome';
 import { copyToClipboard } from '@/utils/clipboard';
 import type { CalcReport } from '@/lib/calculator-report';
 import { useProvideCalcReport } from '@/lib/calculator-report-context';
@@ -58,7 +59,7 @@ interface MotorResult {
   bs7671Compliant: boolean;
 }
 
-const MotorStartingCurrentCalculator = () => {
+const MotorStartingCurrentCalculator = ({ onResult }: CalculatorResultReporter = {}) => {
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);
 
@@ -86,6 +87,30 @@ const MotorStartingCurrentCalculator = () => {
   const [showGuidance, setShowGuidance] = useState(false);
   const [showReference, setShowReference] = useState(false);
   const [result, setResult] = useState<MotorResult | null>(null);
+
+  // Published for the "email me this" offer on the public pages.
+  useEffect(() => {
+    if (!onResult) return;
+    if (!result) return onResult(null);
+    onResult({
+      headline: `${result.startingCurrent.toFixed(0)} A`,
+      headlineLabel: `Starting current \u2014 ${result.startingMultiplier}\u00d7 FLC`,
+      inputs: [
+        { label: 'Full load current', value: `${result.fullLoadCurrent.toFixed(1)} A` },
+        { label: 'Starting multiplier', value: `${result.startingMultiplier}\u00d7` },
+        { label: 'Reference method', value: result.referenceMethodLabel },
+      ],
+      outputs: [
+        { label: 'Starting current', value: `${result.startingCurrent.toFixed(0)} A` },
+        { label: 'Starting kVA', value: `${result.startingKva.toFixed(1)} kVA` },
+        { label: 'Volt drop running', value: `${result.voltageDropRunning.toFixed(2)}%` },
+        { label: 'Volt drop starting', value: `${result.voltageDropStarting.toFixed(2)}%` },
+        { label: 'Recommended cable', value: result.recommendedCableSize },
+        { label: 'Compliance', value: result.complianceStatus },
+      ],
+      basis: `BS 7671:2018+A4:2026 Appendix 4; volt drop limit ${result.voltageDropLimit}%`,
+    });
+  }, [result, onResult]);
 
   const canCalculate = useMemo(() => parseFloat(power) > 0, [power]);
 

@@ -1,5 +1,6 @@
 import { copyToClipboard } from '@/utils/clipboard';
-import { useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
+import type { CalculatorResultReporter } from '@/lib/calculator-outcome';
 import type { CalcReport } from '@/lib/calculator-report';
 import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { Copy, Check, CheckCircle, AlertTriangle, ChevronDown } from 'lucide-react';
@@ -61,7 +62,7 @@ const parsePositive = (raw: string): number | null => {
   return Number.isFinite(n) && n > 0 ? n : null;
 };
 
-const PFCCalculator = () => {
+const PFCCalculator = ({ onResult }: CalculatorResultReporter = {}) => {
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);
 
@@ -71,6 +72,39 @@ const PFCCalculator = () => {
   const [r1r2Value, setR1r2Value] = useState('');
   const [zLineNeutral, setZLineNeutral] = useState('');
   const [result, setResult] = useState<PFCResult | null>(null);
+
+  // Published for the "email me this" offer on the public pages.
+  useEffect(() => {
+    if (!onResult) return;
+    if (!result) return onResult(null);
+    onResult({
+      headline: `${(result.pfcValue / 1000).toFixed(2)} kA`,
+      headlineLabel: `PFC \u2014 ${result.pfcBasis}`,
+      inputs: [{ label: 'Basis', value: result.pfcBasis }],
+      outputs: [
+        { label: 'Prospective fault current', value: `${(result.pfcValue / 1000).toFixed(2)} kA` },
+        {
+          label: 'Earth fault current',
+          value: `${(result.earthFaultCurrent / 1000).toFixed(2)} kA`,
+        },
+        { label: 'Short circuit L-N', value: `${(result.shortCircuitLN / 1000).toFixed(2)} kA` },
+        ...(result.shortCircuit3Ph != null
+          ? [
+              {
+                label: 'Short circuit 3-phase',
+                value: `${(result.shortCircuit3Ph / 1000).toFixed(2)} kA`,
+              },
+            ]
+          : []),
+        { label: 'Breaking capacity needed', value: result.breakingCapacity },
+      ],
+      // PFC is the GREATEST of the fault currents, so the email says which one
+      // it came from — quoting a figure without its basis is how the wrong
+      // breaking capacity gets specified.
+      basis:
+        'BS 7671:2018+A4:2026 Reg 434.5.1 \u2014 device breaking capacity vs prospective fault current',
+    });
+  }, [result, onResult]);
 
   // Collapsibles
   const [showGuidance, setShowGuidance] = useState(false);

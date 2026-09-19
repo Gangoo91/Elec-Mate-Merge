@@ -1,6 +1,7 @@
 import ToolTemplate from '@/pages/seo/templates/ToolTemplate';
 import { RecentReviews } from '@/components/seo/RecentReviews';
 import MotorStartingCurrentCalculator from '@/components/apprentice/calculators/MotorStartingCurrentCalculator';
+import { CalculatorWithEmailCapture } from '@/components/seo/CalculatorWithEmailCapture';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import {
@@ -52,7 +53,14 @@ export default function MotorStartingCurrentCalculatorPage() {
           Star-Delta, Soft Starter & VFD
         </>
       }
-      calculator={<MotorStartingCurrentCalculator />}
+      calculator={
+        <CalculatorWithEmailCapture
+          calculatorName="Motor Starting Current Calculator"
+          calculatorPath="/tools/motor-starting-current-calculator"
+        >
+          {(onResult) => <MotorStartingCurrentCalculator onResult={onResult} />}
+        </CalculatorWithEmailCapture>
+      }
       heroSubtitle="Enter the motor kW rating, full load current, and starting method. The calculator determines the starting current, the duration of the inrush, and the impact on supply voltage. Select the correct protective device and cable size for any motor installation."
       heroFeaturePills={[
         { icon: Gauge, label: 'Starting Current' },

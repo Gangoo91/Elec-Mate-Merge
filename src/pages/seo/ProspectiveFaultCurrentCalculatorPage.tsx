@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet';
 import { RecentReviews } from '@/components/seo/RecentReviews';
 import { CalculatorSurface } from '@/components/calculators/shared';
 import PFCCalculator from '@/components/apprentice/calculators/PFCCalculator';
+import { CalculatorWithEmailCapture } from '@/components/seo/CalculatorWithEmailCapture';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
@@ -253,7 +254,16 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
       {/* Live calculator — free, no signup, BS 7671:2018+A4:2026 compliant */}
       <section id="calculator" className="px-5 pb-12 scroll-mt-24">
         <div className="max-w-4xl mx-auto">
-          <CalculatorSurface><PFCCalculator /></CalculatorSurface>
+          <CalculatorWithEmailCapture
+            calculatorName="Prospective Fault Current Calculator"
+            calculatorPath="/tools/prospective-fault-current-calculator"
+          >
+            {(onResult) => (
+              <CalculatorSurface>
+                <PFCCalculator onResult={onResult} />
+              </CalculatorSurface>
+            )}
+          </CalculatorWithEmailCapture>
         </div>
       </section>
 
@@ -294,11 +304,11 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
               and prospective earth fault current are measured, calculated or determined by another
               method at the origin of every installation and at every other relevant point, with
               further guidance on determination given in Appendix&nbsp;14. Reg&nbsp;434.5.1
-              separately requires that the breaking capacity of
-              every protective device is not less than the prospective fault current at its point of
-              installation. Both measurements and device checks are mandatory parts of initial
-              verification and periodic inspection, and the values must be recorded on the
-              electrical installation certificate or condition report. Use the{' '}
+              separately requires that the breaking capacity of every protective device is not less
+              than the prospective fault current at its point of installation. Both measurements and
+              device checks are mandatory parts of initial verification and periodic inspection, and
+              the values must be recorded on the electrical installation certificate or condition
+              report. Use the{' '}
               <SEOInternalLink href="/tools/earth-loop-impedance-calculator">
                 earth fault loop impedance calculator
               </SEOInternalLink>{' '}
@@ -434,8 +444,8 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
                   tabulated Zs values in BS&nbsp;7671, the conductor resistance will be higher at
                   full operating temperature than when measured cold on site. Appendix&nbsp;3 of
                   BS&nbsp;7671 covers measurement of earth fault loop impedance, and the widely used
-                  industry rule of thumb (set out in IET Guidance Note&nbsp;3) is that the measured Zs
-                  satisfies:
+                  industry rule of thumb (set out in IET Guidance Note&nbsp;3) is that the measured
+                  Zs satisfies:
                 </p>
                 <p className="font-mono font-bold text-yellow-300">
                   Zs(measured) &le; 0.8 &times; Zs(table)

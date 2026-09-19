@@ -1,6 +1,7 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { CalculatorSurface } from '@/components/calculators/shared';
 import PFCCalculator from '@/components/apprentice/calculators/PFCCalculator';
+import { CalculatorWithEmailCapture } from '@/components/seo/CalculatorWithEmailCapture';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import {
@@ -102,7 +103,12 @@ const sections = [
           of the protective devices — free, no sign-up.
         </p>
         <CalculatorSurface>
-          <PFCCalculator />
+          <CalculatorWithEmailCapture
+            calculatorName="Prospective Fault Current Calculator"
+            calculatorPath="/guides/prospective-fault-current-explained"
+          >
+            {(onResult) => <PFCCalculator onResult={onResult} />}
+          </CalculatorWithEmailCapture>
         </CalculatorSurface>
       </>
     ),
@@ -436,7 +442,9 @@ const sections = [
           (line-to-neutral). The overall PFC recorded on the certificate should be the higher of the
           two values — typically the line-to-neutral short circuit current. The Ze is recorded
           separately in the supply characteristics section of the{' '}
-          <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">earthing arrangements</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">
+            earthing arrangements
+          </SEOInternalLink>{' '}
           data.
         </p>
         <SEOAppBridge
