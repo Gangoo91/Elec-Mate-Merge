@@ -8,15 +8,27 @@ const modified = '2026-05-18';
 
 export const JibPayScales2026Config: GeneratedGuideConfig = {
   pagePath: '/guides/jib-pay-scales-2026',
-  title: 'JIB Pay Scales 2026: What Electricians Earn',
-  description: 'JIB pay scales 2026: Electrician £18.38/hr, Approved Electrician £20.08, Site Technician £22.70 (Transport Provided), plus apprentice rates and allowances.',
+  // Every query this page ranks for says "rates", not "pay scales":
+  // jib rates 2026 / jib electrician rates 2026 / jib apprentice rates 2026
+  // / jib rates — 1,650 impressions between them at position 8–10.5, and
+  // the word they all use was absent from the title. "Apprentice" earns
+  // its place the same way (353 impressions on its own).
+  //
+  // The figures stay OUT of the title deliberately. On the Ze and max-Zs
+  // pages putting the number in the title answered the search outright
+  // and the click stopped happening; a pay page is the same shape of
+  // lookup. The numbers remain in the description, which is where they
+  // support relevance without finishing the job for the reader.
+  title: 'JIB Rates 2026: Electrician, Approved & Apprentice Pay Scales',
+  description:
+    'JIB rates 2026: Electrician £18.38/hr, Approved Electrician £20.08, Site Technician £22.70, Apprentice from £8.16 (Transport Provided). Every grade, plus travel, lodging and overtime allowances.',
   datePublished: published,
   dateModified: modified,
   readingTime: 11,
   badge: 'Career Path',
   badgeIcon: 'PoundSterling',
-  breadcrumbLabel: 'JIB Pay Scales 2026 — What Elect...',
-  heroPrefix: 'JIB Pay Scales 2026 — What Electricians Actually Earn:',
+  breadcrumbLabel: 'JIB Rates 2026',
+  heroPrefix: 'JIB Rates 2026 — What Electricians Actually Earn:',
   heroHighlight: 'Complete 2026 Guide',
   heroSuffix: '— For UK Electrical Trade',
   heroSubtitle:
@@ -109,62 +121,107 @@ export const JibPayScales2026Config: GeneratedGuideConfig = {
     },
   ],
   faqs: [
-    { question: 'Who is this guide for?', answer: 'This guide is written for qualified electricians, JIB members and apprentices benchmarking their pay. The advice is practical, UK-specific, and based on current 2026 regulations.' },
-    { question: 'How does Elec-Mate help with this?', answer: 'Elec-Mate covers every part of the UK electrical apprentice + electrician journey. Unit revision, AM2 mocks, OTJ tracking, quoting, certification, scheme paperwork. 7-day free trial.' },
-    { question: 'Is the content updated for 2026?', answer: 'Yes — every page reflects 2026 regulatory thresholds, scheme fees, and market rates as of May 2026. We update annually as rules change.' },
-    { question: 'What if I need specific advice for my situation?', answer: 'Speak to: your college tutor (apprentices), your scheme operator (NICEIC, NAPIT, ELECSA, Stroma for qualified electricians), your accountant (for business owners). Elec-Mate\u2019s AI specialist can also answer specific scenario questions instantly.' },
-    { question: 'How long does it take to act on this guide?', answer: 'Most actionable items can be completed within 1-12 weeks. Longer commitments (qualification, scheme membership) are noted explicitly in the text.' },
-    { question: 'Where can I find more guides like this?', answer: 'See our full apprentice + qualification hub at elec-mate.com/guides — every unit revision page, AM2 deep-dive, year-by-year plan, and business owner guide is indexed there.' },
+    {
+      question: 'Who is this guide for?',
+      answer:
+        'This guide is written for qualified electricians, JIB members and apprentices benchmarking their pay. The advice is practical, UK-specific, and based on current 2026 regulations.',
+    },
+    {
+      question: 'How does Elec-Mate help with this?',
+      answer:
+        'Elec-Mate covers every part of the UK electrical apprentice + electrician journey. Unit revision, AM2 mocks, OTJ tracking, quoting, certification, scheme paperwork. 7-day free trial.',
+    },
+    {
+      question: 'Is the content updated for 2026?',
+      answer:
+        'Yes — every page reflects 2026 regulatory thresholds, scheme fees, and market rates as of May 2026. We update annually as rules change.',
+    },
+    {
+      question: 'What if I need specific advice for my situation?',
+      answer:
+        'Speak to: your college tutor (apprentices), your scheme operator (NICEIC, NAPIT, ELECSA, Stroma for qualified electricians), your accountant (for business owners). Elec-Mate\u2019s AI specialist can also answer specific scenario questions instantly.',
+    },
+    {
+      question: 'How long does it take to act on this guide?',
+      answer:
+        'Most actionable items can be completed within 1-12 weeks. Longer commitments (qualification, scheme membership) are noted explicitly in the text.',
+    },
+    {
+      question: 'Where can I find more guides like this?',
+      answer:
+        'See our full apprentice + qualification hub at elec-mate.com/guides — every unit revision page, AM2 deep-dive, year-by-year plan, and business owner guide is indexed there.',
+    },
   ],
   howToHeading: 'Five-Step Action Plan',
   howToDescription: 'Based on the guide above.',
   howToSteps: [
-    { name: 'Read the full guide above', text: 'Get familiar with every section. Details matter — skim then read carefully.' },
-    { name: 'Identify your priority', text: 'Pick the single most important action for your situation today.' },
-    { name: 'Take a concrete step within 7 days', text: 'Inertia is the biggest barrier. Do ONE concrete thing this week.' },
-    { name: 'Track progress in Elec-Mate', text: 'Use the Elec-Mate dashboard for the relevant tier (apprentice, electrician, business owner).' },
-    { name: 'Review in 90 days', text: 'Most decisions need a 90-day review. Did it work? Adjust and try the next thing.' },
+    {
+      name: 'Read the full guide above',
+      text: 'Get familiar with every section. Details matter — skim then read carefully.',
+    },
+    {
+      name: 'Identify your priority',
+      text: 'Pick the single most important action for your situation today.',
+    },
+    {
+      name: 'Take a concrete step within 7 days',
+      text: 'Inertia is the biggest barrier. Do ONE concrete thing this week.',
+    },
+    {
+      name: 'Track progress in Elec-Mate',
+      text: 'Use the Elec-Mate dashboard for the relevant tier (apprentice, electrician, business owner).',
+    },
+    {
+      name: 'Review in 90 days',
+      text: 'Most decisions need a 90-day review. Did it work? Adjust and try the next thing.',
+    },
   ],
   relatedPages: [
     {
       href: '/guides/ecs-gold-card-requirements-2026',
       title: 'ECS Gold Card',
-      description: 'Related guide for qualified electricians, JIB members and apprentices benchmarking their pay.',
+      description:
+        'Related guide for qualified electricians, JIB members and apprentices benchmarking their pay.',
       icon: 'ShieldCheck',
       category: 'Guide',
     },
     {
       href: '/guides/electrician-salary-uk',
       title: 'Electrician Salary UK',
-      description: 'Related guide for qualified electricians, JIB members and apprentices benchmarking their pay.',
+      description:
+        'Related guide for qualified electricians, JIB members and apprentices benchmarking their pay.',
       icon: 'PoundSterling',
       category: 'Guide',
     },
     {
       href: '/guides/electrician-day-rates-uk',
       title: 'Electrician Day Rates UK',
-      description: 'Related guide for qualified electricians, JIB members and apprentices benchmarking their pay.',
+      description:
+        'Related guide for qualified electricians, JIB members and apprentices benchmarking their pay.',
       icon: 'PoundSterling',
       category: 'Guide',
     },
     {
       href: '/guides/electrician-employee-vs-self-employed-decision',
       title: 'Employee vs Self-Employed',
-      description: 'Related guide for qualified electricians, JIB members and apprentices benchmarking their pay.',
+      description:
+        'Related guide for qualified electricians, JIB members and apprentices benchmarking their pay.',
       icon: 'Briefcase',
       category: 'Guide',
     },
     {
       href: '/guides/electrical-business-pricing-strategy',
       title: 'Pricing Strategy',
-      description: 'Related guide for qualified electricians, JIB members and apprentices benchmarking their pay.',
+      description:
+        'Related guide for qualified electricians, JIB members and apprentices benchmarking their pay.',
       icon: 'PoundSterling',
       category: 'Guide',
     },
     {
       href: '/guides/cg-2365-vs-5357-vs-2366',
       title: 'Qualification Comparison',
-      description: 'Related guide for qualified electricians, JIB members and apprentices benchmarking their pay.',
+      description:
+        'Related guide for qualified electricians, JIB members and apprentices benchmarking their pay.',
       icon: 'GraduationCap',
       category: 'Guide',
     },
