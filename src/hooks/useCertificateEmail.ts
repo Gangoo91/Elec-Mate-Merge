@@ -9,6 +9,7 @@
 import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { readEdgeFunctionError } from '@/lib/edgeFunctionError';
 
 export interface CertificateEmailData {
   certificateType:
@@ -118,32 +119,15 @@ export const useCertificateEmail = (data: CertificateEmailData): UseCertificateE
         console.log('[CertificateEmail] Response:', result, 'Error:', fnError);
 
         if (fnError) {
-          // Parse error message - could be in various formats
-          let errorMessage = fnError.message || 'Unknown error';
-
-          // Check if error message is JSON
-          try {
-            const parsed = JSON.parse(fnError.message);
-            errorMessage = parsed.error || parsed.message || fnError.message;
-          } catch {
-            // Keep original message
-          }
-
-          // Check if there's error context with more details
-          if (fnError.context?.body) {
-            try {
-              const bodyError =
-                typeof fnError.context.body === 'string'
-                  ? JSON.parse(fnError.context.body)
-                  : fnError.context.body;
-              if (bodyError.error) {
-                errorMessage = bodyError.error;
-              }
-            } catch {
-              // Keep original message
-            }
-          }
-
+          /*
+           * ELE-1750 — the real message is on `error.context`, never on
+           * `fnError.message`, which is always the client's own fixed
+           * "Edge Function returned a non-2xx status code". The `context.body`
+           * fallback that sat here read a ReadableStream, not the body, so it
+           * never improved on it either.
+           */
+          const body = await readEdgeFunctionError(fnError);
+          const errorMessage = body?.error || body?.message || fnError.message || 'Unknown error';
           console.error('[CertificateEmail] Error details:', errorMessage, fnError);
           throw new Error(errorMessage);
         }

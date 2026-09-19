@@ -105,6 +105,105 @@ jobs:
       - name: Fire alarm course cites real BS 5839-1 clauses
         run: npm run check:fire-alarm-citations
 
+      # Green from the start, so enforced. BS 5839-1:2025 is a CODE OF PRACTICE:
+      # it uses "should" 923 times and "shall" zero times. That property catches
+      # fabricated quotes the citation guard cannot see, because the clause
+      # NUMBER in those blocks was always real — it was the quoted words that
+      # were invented. Five such blocks were found in the course, including an
+      # entire compensating-measures regime attributed to 44.2.4 (one sentence)
+      # and an MCP/staging rule that said close to the reverse of 18.2.6.
+      - name: Quoted BS 5839-1 text does not use "shall"
+        run: npm run check:fire-alarm-quotes
+
+      # Green from the start, so enforced. Annex G lets a certificate use any
+      # layout "provided that, as a minimum, the information and statements of
+      # conformity within the model certificates are present" — and none of the
+      # five carried them: no competent-person attribution, no "to the best of
+      # my/our knowledge and belief", the whole standard cited instead of the
+      # applicable Section/Clause, and no extent-of-liability limitation.
+      #
+      # Worse than the omissions were three claims Annex G does NOT make, each
+      # certifying more than the signatory can know — G7 had a modifier
+      # declaring "the entire system remains compliant and functional".
+      #
+      # The declaration is written twice, in the tab component and in the
+      # PDFMonkey template, with nothing joining them; G6's two halves had
+      # already drifted apart and neither was Annex G. CI can only reach the
+      # repo half, so that is what this holds still.
+      - name: Fire alarm certificates carry the Annex G statements of conformity
+        run: npm run check:fire-alarm-declarations
+
+      # Green from the start, so enforced. ELE-1703: a CIS reverse-charge sale
+      # carries zero VAT, so it took the same branch as a genuinely
+      # out-of-scope supply and posted to Xero as "No VAT" — under-reporting
+      # the org's box 6 outputs in a customer's own VAT return, where we would
+      # never see it. The correct TaxType is per-organisation and has to be
+      # read from their /TaxRates, so the guard is on the PICKER: it must take
+      # the income-side rate, never the expense one (which would claim VAT back
+      # rather than report it) and never an archived rate.
+      #
+      # Scoped to this one file deliberately. The other thirteen .test.ts files
+      # under _shared have never run in CI and two of them do not currently
+      # type-check; running the directory would make this step permanently red,
+      # which the header of this file explains is the same as having no guard.
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Xero reverse-charge tax type
+        run: npm run check:xero-drc
+
+      # Green from the start, so enforced. ELE-1750: Minor Works had no way to
+      # open the finished PDF at all — `CertShellFooter` offers Preview AND
+      # View PDF, and this certificate's own footer only ever had Preview, so
+      # the customer's document could not be seen from the form. Adding the
+      # button put FIVE `flex-1` actions on one row, which at 390px is 65px
+      # each with the labels clipped: a footer that fails nothing and cannot be
+      # used. tsc, eslint and the dev server are all silent on that.
+      #
+      # So the harness asserts GEOMETRY at real phone widths — every action
+      # present, none under 44px, nothing past the viewport edge — plus the
+      # `text-white` rule from CLAUDE.md, which no linter can see because
+      # `text-white/80` is a perfectly valid class. Both assertions were
+      # verified by injecting the regression and watching them fail.
+      #
+      # It needs the Setup Deno step's sibling: Playwright's browser. Chrome is
+      # already on the runner image, so `channel: 'chrome'` picks it up, and
+      # the check skips rather than fails if neither is available.
+      - name: Minor Works Sign off footer survives a phone
+        run: npm run check:mw-footer
+
+      # Green from the start, so enforced. The Elec-AI welcome screen has two
+      # states and the wrong one is invisible to every other tool. The one-line
+      # explanation and the four "Try asking" cards are onboarding — worth
+      # ~400px of a phone exactly once. For a returning user they are furniture
+      # between them and the composer, and they push that user's own
+      # conversations below the fold.
+      #
+      # The `loading` case is not padding: without the sessionsLoading gate the
+      # first-run layout draws while history is in flight, so a returning user
+      # watches four cards appear and vanish EVERY time they open Elec-AI.
+      # Nothing in tsc or eslint can tell you which layout rendered.
+      - name: Elec-AI welcome screen shows the right state
+        run: npm run check:elec-ai-welcome
+
+      # Green from the start, so enforced. ELE-1752: the Elec-AI message
+      # composer vanished whenever an announcement banner was live. Layout
+      # renders banners ABOVE the routed page, and `.h-app-shell` subtracted
+      # only the header — so a banner pushed an equal number of pixels off the
+      # bottom, where the composer sits, and the shell does not scroll. It was
+      # reported as an image-upload fault because the + button goes with the
+      # composer.
+      #
+      # A CSS calc that is one term short is invisible to tsc and eslint, and
+      # reasoning about the calc is what produced the bug. This measures the
+      # composer against the viewport at four banner heights; reverting the fix
+      # reproduces the original failure exactly, 84px of banner putting the
+      # composer 84px past the fold.
+      - name: App shell leaves room for the banners
+        run: npm run check:app-shell
+
       # Advisory ONLY because it is currently red: four general-upskilling mock
       # exam banks report CHANGED KEYS against HEAD (asbestos, first aid, MEWP,
       # PASMA). Those banks are graded against their keys, so this needs a

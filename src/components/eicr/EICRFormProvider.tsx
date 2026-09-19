@@ -1,3 +1,4 @@
+import { readCertificatePrefill } from '@/utils/certificatePrefill';
 import React, {
   createContext,
   useContext,
@@ -180,15 +181,16 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       // Certificate Details
       certificateNumber: '', // Will be generated asynchronously
 
-      // Client Details
-      clientName: '',
+      // Client Details — from the job or the diary when started there
+      // (?clientName=&address=, read by readCertificatePrefill), else blank.
+      clientName: readCertificatePrefill()?.clientName ?? '',
       clientPhone: '',
       clientEmail: '',
-      clientAddress: '',
+      clientAddress: readCertificatePrefill()?.address ?? '',
       // Default ON: domestic client address = installation address in the common
       // case, and the last-cert prefill can't fire until an address exists.
       sameAsClientAddress: 'true',
-      installationAddress: '',
+      installationAddress: readCertificatePrefill()?.address ?? '',
       description: '',
       // EICR is always an existing installation; the field is hidden in the UI
       // (ELE-1105) but defaulted so the PDF payload still carries a value.

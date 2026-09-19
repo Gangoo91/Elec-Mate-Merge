@@ -421,13 +421,23 @@ input::-webkit-caps-lock-indicator {
    * configured with Keyboard.resize: 'native', so the WebView itself shrinks —
    * but mobile web has no such help.
    */
+  /*
+   * ELE-1752 — `--banner-height` is not optional padding.
+   *
+   * Announcement and maintenance banners render ABOVE the routed page, so they
+   * push a viewport-sized shell down by their own height and an equal number
+   * of pixels fall off the bottom. On the Elec-AI assistant the bottom is the
+   * composer, and the shell does not scroll — so the input was simply gone
+   * while an announcement was live. It defaults to 0px, so a page with no
+   * banner is unchanged.
+   */
   .h-app-shell {
-    height: calc(100vh - var(--header-height, 56px));
+    height: calc(100vh - var(--header-height, 56px) - var(--banner-height, 0px));
   }
 
   @supports (height: 100dvh) {
     .h-app-shell {
-      height: calc(100dvh - var(--header-height, 56px));
+      height: calc(100dvh - var(--header-height, 56px) - var(--banner-height, 0px));
     }
   }
 
@@ -2730,7 +2740,6 @@ input::-webkit-caps-lock-indicator {
     contain: layout style;
   }
 
-
   .sot-row:nth-child(even) {
     /* Zebra — easier to track a row across a wide table */
     background: hsl(0 0% 12%);
@@ -3195,13 +3204,7 @@ html.lesson-print-html body {
   margin: 0 auto;
   padding: 10mm 8mm;
   font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   color: #111;
 }
 
@@ -3284,7 +3287,13 @@ html.lesson-print-html body {
    Geist replaces Inter, headings tighten, numbers go tabular. If the trial
    lands, these rules graduate to :root and the class comes off. */
 .theme-v2 {
-  font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family:
+    'Geist',
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
   font-feature-settings: 'tnum' 1;
 }
 .theme-v2 h1,
@@ -3342,10 +3351,13 @@ body.exam-active [data-sticky-cta-pad] {
    (staggered via inline animation-delay), miming the scanner reading the
    board module by module. Gated behind motion-safe at the call site. */
 @keyframes board-read {
-  0%, 14%, 100% {
+  0%,
+  14%,
+  100% {
     background-color: rgba(255, 255, 255, 0.1);
   }
-  5%, 9% {
+  5%,
+  9% {
     background-color: hsl(var(--elec-yellow));
   }
 }

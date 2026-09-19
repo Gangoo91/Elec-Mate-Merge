@@ -636,6 +636,37 @@ export const AIRoomBuilderDialog = ({
     reader.readAsDataURL(forUpload);
   };
 
+  /*
+   * How long the photo has been analysing, in seconds.
+   *
+   * A whole floor genuinely takes a while — a measured 25-room nursing-home
+   * wing came back in 46 seconds. Forty-six seconds of an unchanging spinner
+   * reads as "hung", and someone who kills it and retries is a good part of
+   * why this felt like it "randomly works". Saying what is happening, and that
+   * a big plan takes about a minute, costs nothing and is true.
+   */
+  const [analysingFor, setAnalysingFor] = useState(0);
+
+  useEffect(() => {
+    if (!photoGenerating) {
+      setAnalysingFor(0);
+      return;
+    }
+    const started = Date.now();
+    const id = window.setInterval(() => {
+      setAnalysingFor(Math.round((Date.now() - started) / 1000));
+    }, 1000);
+    return () => window.clearInterval(id);
+  }, [photoGenerating]);
+
+  /** What to say at this point in the wait. */
+  const analysingMessage =
+    analysingFor < 8
+      ? 'Reading the plan…'
+      : analysingFor < 25
+        ? 'Finding the rooms…'
+        : 'Laying out the electrics…';
+
   const handlePhotoGenerate = async () => {
     if (!photoPreview) return;
     setPhotoGenerating(true);
@@ -717,7 +748,7 @@ export const AIRoomBuilderDialog = ({
       icon: LayoutGrid,
       title: 'Room Templates',
       desc: 'Pick a room type, adjust dimensions',
-      color: 'bg-elec-yellow/10 text-elec-yellow',
+      color: 'bg-white/[0.06] text-elec-yellow',
     },
     {
       id: 'describe' as Mode,
@@ -813,7 +844,7 @@ export const AIRoomBuilderDialog = ({
                     setQuoteResult(null);
                     setSelectedAutoPlaceRoom(null);
                   }}
-                  className="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-white/10 touch-manipulation"
+                  className="h-11 w-11 sm:h-8 sm:w-8 flex items-center justify-center rounded-lg hover:bg-white/10 touch-manipulation"
                 >
                   <ArrowLeft className="h-4 w-4 text-white" />
                 </button>
@@ -945,7 +976,7 @@ export const AIRoomBuilderDialog = ({
                       <p className="text-sm text-white">
                         {speech.transcript}
                         {speech.interimTranscript && (
-                          <span className="text-white/50"> {speech.interimTranscript}</span>
+                          <span className="text-white"> {speech.interimTranscript}</span>
                         )}
                       </p>
                     </div>
@@ -957,7 +988,7 @@ export const AIRoomBuilderDialog = ({
                   placeholder="Or type your room description here..."
                   value={description || speech.transcript}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="min-h-[80px] bg-white/[0.04] border-white/10 text-white placeholder:text-white/50 text-sm touch-manipulation focus:border-elec-yellow/40 focus:ring-elec-yellow/20"
+                  className="min-h-[80px] bg-white/[0.04] border-white/10 text-white placeholder:text-white/25 text-sm touch-manipulation focus:border-elec-yellow/40 focus:ring-elec-yellow/20"
                   disabled={isGenerating}
                 />
 
@@ -1588,10 +1619,15 @@ export const AIRoomBuilderDialog = ({
                 {photoGenerating && (
                   <div className="flex flex-col items-center justify-center py-12">
                     <Loader2 className="h-8 w-8 text-pink-400 animate-spin mb-3" />
-                    <p className="text-sm font-medium text-white">Analysing photo...</p>
+                    <p className="text-sm font-medium text-white">{analysingMessage}</p>
                     <p className="text-xs text-white mt-1">
-                      AI is estimating dimensions and electrical layout
+                      {analysingFor >= 25
+                        ? 'A large plan can take a minute — it is still working.'
+                        : 'Every room on the plan, with a suggested electrical layout.'}
                     </p>
+                    {analysingFor >= 8 && (
+                      <p className="text-[11px] text-white mt-2 tabular-nums">{analysingFor}s</p>
+                    )}
                   </div>
                 )}
               </div>

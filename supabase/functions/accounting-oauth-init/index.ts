@@ -42,11 +42,41 @@ serve(async (req: Request) => {
           throw new ValidationError('Xero integration not configured');
         }
 
+        /*
+         * `accounting.settings.read` is what makes ELE-1744 and ELE-1703 work
+         * at all, and it was missing.
+         *
+         * Checked against Xero's own OpenAPI spec (XeroAPI/Xero-OpenAPI,
+         * xero_accounting.yaml). Every endpoint we touch and the scope it
+         * requires:
+         *
+         *   GET /Invoices  -> accounting.transactions[.read]   requested ✓
+         *   GET /Contacts  -> accounting.contacts[.read]       requested ✓
+         *   GET /Accounts  -> accounting.settings[.read]       MISSING ✗
+         *   GET /TaxRates  -> accounting.settings[.read]       MISSING ✗
+         *
+         * The first two are the ones that demonstrably work in production,
+         * which is what makes the reading trustworthy rather than a guess.
+         * The second two are the chart-of-accounts detection (ELE-1744) and
+         * the reverse-charge tax type (ELE-1703) — both of which swallow their
+         * own failures and fall back to a default, so neither has ever been
+         * able to announce that it could not read anything.
+         *
+         * `.read` and not the full `accounting.settings`: we only ever GET
+         * from both endpoints, and the write scope would let us create tax
+         * rates and accounts in a customer's books.
+         *
+         * Existing connections are untouched — a token keeps the scopes it was
+         * granted, so nobody is logged out and nothing changes for them until
+         * they next reconnect. Only new and reconnecting users pick this up.
+         */
         const params = new URLSearchParams({
           client_id: XERO_CLIENT_ID,
           redirect_uri: redirectUri,
           response_type: 'code',
-          scope: 'openid profile email accounting.transactions accounting.contacts offline_access',
+          scope:
+            'openid profile email accounting.transactions accounting.contacts ' +
+            'accounting.settings.read offline_access',
           state,
         });
 

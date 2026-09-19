@@ -47,10 +47,15 @@ writeFileSync(
   // useEICRValidation is a hook, but the only hook it uses is useMemo — so the
   // gate can be exercised directly without a renderer. If it ever gains
   // useState or useEffect this stub will throw rather than lie.
+  // `lazy` arrived via `src/utils/lazyWithRetry.ts`, which the EICR path now
+  // reaches through `importWithRetry` (ELE-1750). It is never CALLED here —
+  // nothing in the gate renders a component — so a passthrough is honest, and
+  // the build stops failing on a missing export.
   `export const useMemo = (fn: any) => fn();
+   export const lazy = (fn: any) => fn;
    export const useState = () => { throw new Error('useState in the gate — this stub is no longer safe'); };
    export const useEffect = () => { throw new Error('useEffect in the gate — this stub is no longer safe'); };
-   export default { useMemo, useState, useEffect };`
+   export default { useMemo, lazy, useState, useEffect };`
 );
 
 const stub = join(tmp, 'supabase-stub.ts');

@@ -21,9 +21,9 @@ const inlineChecks = [
   {
     id: 'fam3-s4-accessible',
     question:
-      'BS 5839-1:2025 clause 7 introduces a new requirement on the placement of fire alarm interfaces. What is it?',
+      'BS 5839-1:2025 clause 8.5 sets a requirement on the placement of fire alarm interfaces. What is it?',
     options: [
-      'Interfaces must be located so they are accessible for safe maintenance, per CDM 2015.',
+      'Interfaces should be located so they are accessible for maintenance (clause 8.5). Designers separately carry CDM 2015 duties that point the same way.',
       'Interfaces must be finished in red so they are identifiable as fire-system equipment.',
       'Interfaces must be housed inside the CIE enclosure so all wiring terminates in one place.',
       'Interfaces must always be mounted remotely from the CIE, away from the panel enclosure.',
@@ -80,14 +80,14 @@ const quizQuestions = [
     question:
       'Which BS 5839-1:2025 clause introduces the new accessibility requirement for fire alarm interfaces?',
     options: [
-      'Clause 7, requiring interfaces to be accessible for maintenance, per CDM 2015.',
+      'Clause 8.5, requiring interfaces to be accessible for maintenance purposes.',
       'Clause 13, which sets out the spacing and siting of automatic fire detectors.',
       'Clause 22, which covers planned disablement of parts of the system during servicing.',
-      'Clause 47, which deals with the documentation handed over on completion.',
+      'Clause 45.4, which deals with the certificate issued on completion on completion.',
     ],
     correctAnswer: 0,
     explanation:
-      "Clause 7 is a 2025 addition specifically for interface placement. It is a CDM-aligned requirement: design with maintenance in mind. The example in the clause (placement inside other equipment's enclosure) is one common scenario; the principle applies more broadly — any siting that creates a maintenance hazard or impracticality must be avoided.",
+      "Clause 8.5 is the requirement specifically for interface placement. It is a CDM-aligned requirement: design with maintenance in mind. The example in the clause (placement inside other equipment's enclosure) is one common scenario; the principle applies more broadly — any siting that creates a maintenance hazard or impracticality must be avoided.",
   },
   {
     id: 2,
@@ -174,7 +174,7 @@ const quizQuestions = [
   {
     id: 8,
     question:
-      'BS 5839-1:2025 clause 7 example states interfaces should NOT be sited inside an enclosure for other equipment if access requires what?',
+      'BS 5839-1:2025 clause 8.5 NOTE states interfaces should NOT be sited inside an enclosure for other equipment if access requires what?',
     options: [
       'Walking more than a set distance from the CIE to reach the interface during a service.',
       'Using a ladder or other access equipment to reach an interface mounted at high level.',
@@ -183,7 +183,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      "The 2025 clause aligns with CDM 2015. Designers think about maintenance, not just install. An interface that requires the building to be partially shut down for routine maintenance is a poor design — the maintenance will be deferred or skipped, and the interface will degrade out of compliance. The clause directs designers to plan for the system's maintenance lifecycle.",
+      "The clause is about maintenance access; CDM 2015 is separate legislation that points the same way, though BS 5839-1 does not itself cite it. Designers think about maintenance, not just install. An interface that requires the building to be partially shut down for routine maintenance is a poor design — the maintenance will be deferred or skipped, and the interface will degrade out of compliance. The clause directs designers to plan for the system's maintenance lifecycle.",
   },
   {
     id: 9,
@@ -220,7 +220,7 @@ const FireAlarmModule3Section4 = () => {
   useSEO({
     title: 'Interface design | Fire Alarm Module 3.4 | Elec-Mate',
     description:
-      'BS 5839-1:2025 interface design: clause 7 accessibility / CDM 2015, lift recall (EN 81-73), magnetic door holders, plant shutdown, BMS integration, access control, voice alarm, disabled refuge / EVC (BS 8893 — new 2025 normative reference), monitored vs unmonitored outputs.',
+      'BS 5839-1:2025 interface design: clause 8.5 accessibility, lift recall (EN 81-73), magnetic door holders, plant shutdown, BMS integration, access control, voice alarm, disabled refuge / EVC (BS 8893 — new 2025 normative reference), monitored vs unmonitored outputs.',
   });
 
   return (
@@ -228,15 +228,15 @@ const FireAlarmModule3Section4 = () => {
       <HubMasthead section="Module 3 · Section 4" title="Interface design" backTo=".." />
       <HubBody>
         <p className="max-w-3xl text-[13px] leading-relaxed text-white">
-          BS 5839-1:2025 clause 7: interfaces must be accessible for maintenance (CDM 2015
-          alignment). Plus lift recall (EN 81-73), magnetic door holders, plant shutdown, BMS
-          integration, access control, voice alarm (BS 5839-8 / EN 54-16/-24), and disabled refuge /
-          EVC (BS 8893 — new 2025 normative reference).
+          BS 5839-1:2025 clause 8.5: interfaces should be accessible for maintenance (CDM duties are
+          separate alignment). Plus lift recall (EN 81-73), magnetic door holders, plant shutdown,
+          BMS integration, access control, voice alarm (BS 5839-8 / EN 54-16/-24), and disabled
+          refuge / EVC (BS 8893 — new 2025 normative reference).
         </p>
 
         <TLDR
           points={[
-            "NEW in BS 5839-1:2025 (clause 7): interfaces must be located so they are ACCESSIBLE for maintenance — aligned with CDM 2015 to reduce risks to maintenance personnel. Don't hide interfaces inside other equipment's enclosures.",
+            "NEW in BS 5839-1:2025 (clause 8.5): interfaces should be located so they are ACCESSIBLE for maintenance. CDM 2015 imposes a separate designer duty to reduce risks to maintenance personnel; BS 5839-1 does not cite it. Don't hide interfaces inside other equipment's enclosures.",
             'Lift recall on fire alarm: monitored volt-free contact from CIE → lift controller; lift returns to recall floor and is taken out of service per BS EN 81-73.',
             'Magnetic door holders: electromagnets hold fire-resisting doors open under normal conditions; de-energise on fire alarm; doors close to restore compartmentation. Fail-safe by design.',
             'Plant shutdown: HVAC fans / fire dampers, gas isolation valves, fuel shut-offs, process emergency stops. Monitored outputs from CIE; documented in cause-and-effect matrix.',
@@ -251,7 +251,7 @@ const FireAlarmModule3Section4 = () => {
 
         <LearningOutcomes
           outcomes={[
-            'Apply BS 5839-1:2025 clause 7: place fire alarm interfaces so they are accessible for maintenance, aligned with CDM 2015',
+            'Apply BS 5839-1:2025 clause 8.5: place fire alarm interfaces so they are accessible for maintenance (clause 8.5); CDM 2015 duties apply separately',
             'Specify lift recall interfaces in line with BS EN 81-73 lift safety standard',
             'Design magnetic door holder circuits as fail-safe outputs that close fire-resisting doors on alarm to restore compartmentation',
             'Configure plant shutdown interfaces (HVAC, gas, fuel, process emergency stops) so smoke / fuel / hazard is removed from the affected area',
@@ -264,19 +264,19 @@ const FireAlarmModule3Section4 = () => {
 
         <SectionRule />
 
-        <ContentEyebrow>The 2025 accessibility requirement (clause 7)</ContentEyebrow>
+        <ContentEyebrow>The 2025 accessibility requirement (clause 8.5)</ContentEyebrow>
 
         <ConceptBlock
           title="Interfaces must be accessible for maintenance"
-          plainEnglish="Interfaces are devices that translate between the fire alarm system and other building systems — relays, contact outputs, signal modules. They are typically wall-mounted boxes containing the interface circuitry. Over the system's life, interfaces require maintenance: testing the contact operation, replacing failed components, updating wiring on system changes. BS 5839-1:2025 clause 7 introduces a new requirement: interfaces must be located so they are ACCESSIBLE for maintenance. This aligns with the Construction (Design and Management) Regulations 2015 obligation to reduce risks to maintenance personnel."
+          plainEnglish="Interfaces are devices that translate between the fire alarm system and other building systems — relays, contact outputs, signal modules. They are typically wall-mounted boxes containing the interface circuitry. Over the system's life, interfaces require maintenance: testing the contact operation, replacing failed components, updating wiring on system changes. BS 5839-1:2025 clause 8.5 requires interfaces to be located so they are ACCESSIBLE for maintenance. This aligns with the Construction (Design and Management) Regulations 2015 obligation to reduce risks to maintenance personnel."
           onSite="Before signing off an interface location, ask: 'Can a fire alarm engineer reach this interface during a normal working day, with normal access, without coordination with other trades?' If yes, the location is fine. If the answer involves shutting down switchgear, getting a permit, or scaffolding, the location is not fine — find another."
         >
           <p>The clause and its practical effect:</p>
           <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
             <li>
-              <strong>Clause 7 of BS 5839-1:2025</strong> — &quot;For all systems and categories,
-              the fire detection and fire alarm system interfaces should be located such that they
-              are accessible for maintenance purposes.&quot;
+              <strong>Clause 8.5 of BS 5839-1:2025</strong> — &quot;For all systems, the fire
+              detection and alarm system interfaces should be located such that they are accessible
+              for maintenance purposes.&quot;
             </li>
             <li>
               <strong>CDM 2015 alignment</strong> — designers have a legal duty to reduce risks
@@ -303,7 +303,7 @@ const FireAlarmModule3Section4 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 7 (Placement of interfaces)"
+          source="BS 5839-1:2025 · Clause 8.5 (Accessibility of interfaces)"
           clause={
             <>
               For all systems, and categories, the fire detection and fire alarm system interfaces
@@ -316,7 +316,7 @@ const FireAlarmModule3Section4 = () => {
               equipment.
             </>
           }
-          meaning="Three explicit alignments. (1) CDM 2015 is named — designers have legal duties under CDM that include planning for maintenance. (2) The 'enclosure for other equipment' example is illustrative — switchgear cabinets are the most common case but the principle applies more broadly. (3) The clause asks designers to think about who needs to access the interface and how, throughout the system's life, not just at install."
+          meaning="Two things the clause does, plus one it does not. (1) It requires interfaces to be accessible for maintenance. NOTE: BS 5839-1:2025 does NOT mention CDM 2015 anywhere — designers do carry CDM duties covering maintenance access, but that is separate legislation, not a cross-reference in this standard. (2) The 'enclosure for other equipment' example is illustrative — switchgear cabinets are the most common case but the principle applies more broadly. (3) The clause asks designers to think about who needs to access the interface and how, throughout the system's life, not just at install."
         />
 
         <InlineCheck
@@ -560,8 +560,7 @@ const FireAlarmModule3Section4 = () => {
               fontSize="10"
               fontWeight="bold"
             >
-              BS 5839-1:2025 clause 7: ALL interfaces accessible for maintenance (CDM 2015
-              alignment)
+              BS 5839-1:2025 clause 8.5: ALL interfaces accessible for maintenance ( alignment)
             </text>
             <text x="440" y="512" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="9">
               Do not bury interfaces inside switchgear cabinets · life-safety outputs MONITORED ·
@@ -856,7 +855,7 @@ const FireAlarmModule3Section4 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Normative references (BS 8893 added 2025)"
+          source="BS 5839-1:2025 · Normative references (BS 8893 added 2025) — in summary, not a verbatim quote"
           clause={
             <>
               BS 8893, Emergency voice communication (EVC) systems — Components — Specification, is
@@ -873,7 +872,7 @@ const FireAlarmModule3Section4 = () => {
           title="High-rise office tower — interfaces in a complex life-safety system"
           situation="A 25-storey commercial office tower is being designed. The fire engineering specifies phased evacuation, a voice alarm system covering the whole building, lift recall on all 8 passenger lifts (BS EN 81-73), a separate firefighting lift (BS EN 81-72), 12 disabled refuges (one on each upper floor stairway lobby) with EVC, magnetic door holders on cross-corridor fire doors, BMS integration for facilities management, plant shutdown (HVAC fans, gas valves on lower floors). The fire alarm designer must specify all interfaces."
           whatToDo="Map every interface against the cause-and-effect matrix. Each interface is a clause-7 conversation: where will this interface module physically live? Is it accessible for maintenance? On a 25-storey building, interfaces should typically be sited in service risers / plant rooms with proper access — not buried in ceilings or inside live switchgear cabinets. Lift recall interfaces: monitored volt-free contacts from CIE → lift controller in the lift motor room (accessed by lift maintenance); CIE indicates recall active; firefighting lift NOT recalled with passengers. Door holders: monitored outputs to each magnet circuit; cause-and-effect releases at the right stage in the phased evacuation. EVC: BS 8893-compliant system with handsets at each refuge, master panel at the fire warden control point on the ground floor; fire alarm signals fire status to EVC, EVC remains independent. Voice alarm: BS 5839-8 system, message zones aligned to floors / phased stages; pre-recorded messages with live announcement capability from the fire warden position. Plant shutdown: HVAC interfaces accessible at the AHU plant rooms; gas valve interface accessible at the gas meter cabinet (with appropriate signage and access management). BMS integration: BACnet over IP, fire alarm system signals one-way to BMS, BMS does not control fire alarm. Cyber security: BS 5839-1:2025 clause 43.4 — physical access control to the CIE cabinet, network segregation between fire alarm and corporate IT, authentication for any remote service. Document everything in the cause-and-effect matrix and the interface schedule. Issue a commissioning certificate and a system extension or modification certificate per clause 47."
-          whyItMatters="A 25-storey tower has perhaps 50-100 individual interfaces. Each is a single point that must work in a fire. Each is a single point that must be maintainable over the building's 50-year life. The 2025 clause 7 accessibility requirement is not pedantry — it is the difference between a system that is maintained and a system that is left to degrade. The cause-and-effect matrix coordinates everything; the interface schedule is the implementation."
+          whyItMatters="A 25-storey tower has perhaps 50-100 individual interfaces. Each is a single point that must work in a fire. Each is a single point that must be maintainable over the building's 50-year life. The 2025 clause 8.5 accessibility requirement is not pedantry — it is the difference between a system that is maintained and a system that is left to degrade. The cause-and-effect matrix coordinates everything; the interface schedule is the implementation."
         />
 
         <SectionRule />
@@ -936,7 +935,7 @@ const FireAlarmModule3Section4 = () => {
         <CommonMistake
           title="Siting a fire alarm interface inside a switchgear cabinet"
           whatHappens="A new commercial premises is designed with the fire alarm interface to a generator load-shed function sited inside the LV switchgear cabinet because it was the closest space at install time. Three years later, a service engineer arrives to test the load-shed interface during a 6-monthly service. They cannot access the cabinet without the building's HV electrician attending and isolating part of the LV switchgear. The service engineer reports the interface as inaccessible, the load-shed test is deferred, the service is incomplete."
-          doInstead="Per BS 5839-1:2025 clause 7, the interface should not be sited inside an enclosure for other equipment if access requires removing power to that other equipment OR attendance by other parties. Site the interface in an accessible location — adjacent to the switchgear in a separate small enclosure with its own access; in a service cupboard; in a plant room with proper access. The interface module itself is small (perhaps a pattress-sized box); the space requirement is modest; the savings from co-location are typically minimal. The new clause prevents this trade-off being made at install in a way that bites later."
+          doInstead="Per BS 5839-1:2025 clause 8.5 NOTE, the interface should not be sited inside an enclosure for other equipment if access requires removing power to that other equipment OR attendance by other parties. Site the interface in an accessible location — adjacent to the switchgear in a separate small enclosure with its own access; in a service cupboard; in a plant room with proper access. The interface module itself is small (perhaps a pattress-sized box); the space requirement is modest; the savings from co-location are typically minimal. The new clause prevents this trade-off being made at install in a way that bites later."
         />
 
         <CommonMistake
@@ -956,7 +955,7 @@ const FireAlarmModule3Section4 = () => {
         <KeyTakeaways
           title="What to remember on site"
           points={[
-            "NEW in BS 5839-1:2025 (clause 7): interfaces must be accessible for maintenance, aligned with CDM 2015. Don't bury them in switchgear cabinets.",
+            "NEW in BS 5839-1:2025 (clause 8.5): interfaces should be accessible for maintenance (clause 8.5). CDM duties apply separately. Don't bury them in switchgear cabinets.",
             'Lift recall (BS EN 81-73): monitored volt-free contact CIE → lift controller; lift returns to recall floor and goes out of service.',
             'Magnetic door holders: electromagnets hold fire doors open in normal conditions; de-energise on alarm to close doors. Fail-safe by design. Monitored output.',
             'Plant shutdown: HVAC, gas, fuel, process emergency stops via monitored outputs. Cause-and-effect matrix records each.',

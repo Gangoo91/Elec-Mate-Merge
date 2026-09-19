@@ -21,7 +21,7 @@ const inlineChecks = [
   {
     id: 'fam6-s3-noconceal',
     question:
-      'BS 5839-1:2025 introduces clause 23. What does it say about fault indications, and what is the practical implication for an engineer dealing with a recurrent fault that cannot be cleared today?',
+      'BS 5839-1:2025 introduces clause 44.2.4. What does it say about fault indications, and what is the practical implication for an engineer dealing with a recurrent fault that cannot be cleared today?',
     options: [
       'Fault indications must not be concealed; the fault stays visible until repaired, with logging, briefing and an interim measure if appropriate.',
       'A fault buzzer may be permanently silenced once the responsible person has been told, provided the visual LED indication is left active on the CIE.',
@@ -30,7 +30,7 @@ const inlineChecks = [
     ],
     correctIndex: 0,
     explanation:
-      'Clause 23 is one of the most directly enforceable clauses in BS 5839-1:2025. It addresses a specific historical bad practice: silencing or hiding fault indications because they were "annoying staff" or "ugly". The clause makes clear: a fault you cannot fix must remain visible. Logging, briefing the responsible person, and interim measures are how the risk is managed — not by hiding the warning.',
+      'Clause 44.2.4 is one of the most directly enforceable clauses in BS 5839-1:2025. It addresses a specific historical bad practice: silencing or hiding fault indications because they were "annoying staff" or "ugly". The clause makes clear: a fault you cannot fix must remain visible. Logging, briefing the responsible person, and interim measures are how the risk is managed — not by hiding the warning.',
   },
   {
     id: 'fam6-s3-method',
@@ -79,7 +79,7 @@ const quizQuestions = [
   {
     id: 1,
     question:
-      'BS 5839-1:2025 clause 23 (NEW) addresses what specific bad practice in fault management?',
+      'BS 5839-1:2025 clause 44.2.4 (NEW) addresses what specific bad practice in fault management?',
     options: [
       'Concealment or suppression of fault indications where an effective repair cannot be completed.',
       'The maximum permitted interval between routine servicing visits and the competencies the servicing organisation must hold to carry them out.',
@@ -88,7 +88,7 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      'Clause 23 prohibits concealment of fault indications. A historic bad practice — silencing the buzzer or covering the LED to keep staff happy — is now explicitly non-compliant. The fault remains visible, the responsible person is briefed, and interim risk measures are put in place if appropriate.',
+      'Clause 44.2.4 prohibits concealment of fault indications. A historic bad practice — silencing the buzzer or covering the LED to keep staff happy — is now explicitly non-compliant. The fault remains visible, the responsible person is briefed, and interim risk measures are put in place if appropriate.',
   },
   {
     id: 2,
@@ -200,7 +200,7 @@ const quizQuestions = [
   {
     id: 10,
     question:
-      'A recurrent fault has been reported by the user three times in two months on the same detector. The service organisation cannot reproduce it on site. Per BS 5839-1:2025 clause 23, the engineer must.',
+      'A recurrent fault has been reported by the user three times in two months on the same detector. The service organisation cannot reproduce it on site. Per BS 5839-1:2025 clause 44.2.4, the engineer must.',
     options: [
       'Not conceal the fault indication: keep it visible, continue investigating, and brief the responsible person on the open status.',
       'Suppress the fault indication on the CIE so the panel reads healthy, on the basis that the fault cannot be reproduced on site.',
@@ -209,7 +209,7 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      'Clause 23 — no concealment. A fault that cannot be reproduced is still a fault. Continue investigating: review the event log for time-of-day patterns, consider environmental factors (HVAC cycle, sunlight on the detector, occupant activity), install monitoring instrumentation if available, consult the manufacturer. The indication stays visible until rectified and interim measures may be put in place; the service organisation does not modify firmware or output behaviour to suppress it. Hiding the indication would be a clause 23 breach and likely a regulatory breach under RRO 2005.',
+      'Clause 44.2.4 — no concealment. A fault that cannot be reproduced is still a fault. Continue investigating: review the event log for time-of-day patterns, consider environmental factors (HVAC cycle, sunlight on the detector, occupant activity), install monitoring instrumentation if available, consult the manufacturer. The indication stays visible until rectified and interim measures may be put in place; the service organisation does not modify firmware or output behaviour to suppress it. Hiding the indication would be a clause 44.2.4 breach and likely a regulatory breach under RRO 2005.',
   },
 ];
 
@@ -219,7 +219,7 @@ const FireAlarmModule6Section3 = () => {
   useSEO({
     title: 'Fault finding techniques | Fire Alarm Module 6.3 | Elec-Mate',
     description:
-      'BS 5839-1:2025 fault finding — clause 23 prohibition on concealing fault indications, the panel-first diagnostic discipline, common faults (open / short / earth / comms / address conflict), test tools and device-aware testing, and the urgency framing for repair.',
+      'BS 5839-1:2025 fault finding — clause 44.2.4 prohibition on concealing fault indications, the panel-first diagnostic discipline, common faults (open / short / earth / comms / address conflict), test tools and device-aware testing, and the urgency framing for repair.',
   });
 
   return (
@@ -228,15 +228,15 @@ const FireAlarmModule6Section3 = () => {
       <HubBody>
         <p className="max-w-3xl text-[13px] leading-relaxed text-white">
           Fault finding starts with a discipline rule (read the panel first), is governed by a
-          regulatory rule (BS 5839-1:2025 clause 23 — no concealment of fault indications), and runs
-          on a small set of common-fault categories with predictable causes. The competent engineer
-          reads, narrows, isolates, repairs, and tests — and at every stage keeps the fault visible
-          to the responsible person until repaired.
+          regulatory rule (BS 5839-1:2025 clause 44.2.4 — no concealment of fault indications), and
+          runs on a small set of common-fault categories with predictable causes. The competent
+          engineer reads, narrows, isolates, repairs, and tests — and at every stage keeps the fault
+          visible to the responsible person until repaired.
         </p>
 
         <TLDR
           points={[
-            'NEW BS 5839-1:2025 clause 23 — fault indications must NOT be concealed or suppressed where the service organisation cannot complete an effective repair. The fault remains visible until repaired.',
+            'NEW BS 5839-1:2025 clause 44.2.4 — fault indications must NOT be concealed or suppressed where the service organisation cannot complete an effective repair. The fault remains visible until repaired.',
             'Diagnostic discipline: panel first, device second. The CIE event log and LCD message hold the most information; reading them first narrows the search by orders of magnitude.',
             'Common faults: open-circuit (broken conductor / loose terminal), short-circuit (water ingress / damaged cable / stuck MCP), earth fault (loop conductor leaking to earth), comms fault (loop break or addressable poll failure), device-address conflict (two devices same address).',
             'Tool kit: multifunction tester (continuity / IR / voltage), addressable loop tester, CIE service software, test smoke / heat, sounder / VAD test ammeter, as-installed documentation, cause-and-effect matrix.',
@@ -249,7 +249,7 @@ const FireAlarmModule6Section3 = () => {
 
         <LearningOutcomes
           outcomes={[
-            "Apply BS 5839-1:2025 clause 23 — keep fault indications visible until repaired; do not suppress, conceal, or modify the panel's output behaviour to hide a fault",
+            "Apply BS 5839-1:2025 clause 44.2.4 — keep fault indications visible until repaired; do not suppress, conceal, or modify the panel's output behaviour to hide a fault",
             'Apply the panel-first diagnostic discipline: read the LCD, read the event log, identify the affected device or zone, identify the fault type, then act',
             'Recognise and diagnose the common fault categories: open-circuit, short-circuit, earth fault, communications fault, device-address conflict',
             'Use a fault-finding decision tree to move efficiently from symptom to root cause',
@@ -262,11 +262,11 @@ const FireAlarmModule6Section3 = () => {
 
         <SectionRule />
 
-        <ContentEyebrow>The clause 23 rule — do not conceal</ContentEyebrow>
+        <ContentEyebrow>The clause 44.2.4 rule — do not conceal</ContentEyebrow>
 
         <ConceptBlock
-          title="What clause 23 actually says, and what it prohibits"
-          plainEnglish="BS 5839-1:2025 introduces clause 23 (Arrangements for repair of faults or damage). The clause addresses a specific historical bad practice: when a fault could not be repaired immediately, organisations would silence the buzzer, tape over the LED, modify firmware to ignore the input, or otherwise hide the fault indication so staff stopped complaining. The clause makes plain that this is not acceptable. Where the service organisation cannot complete an effective repair, fault indications should not be concealed (e.g. by suppressing the fault indication). The fault remains visible. The risk is managed by logging, briefing, and interim measures — not by hiding the warning."
+          title="What clause 44.2.4 actually says, and what it prohibits"
+          plainEnglish="BS 5839-1:2025 introduces clause 44.2.4 (Arrangements for repair of faults or damage). The clause addresses a specific historical bad practice: when a fault could not be repaired immediately, organisations would silence the buzzer, tape over the LED, modify firmware to ignore the input, or otherwise hide the fault indication so staff stopped complaining. The clause makes plain that this is not acceptable. Where the service organisation cannot complete an effective repair, fault indications should not be concealed (e.g. by suppressing the fault indication). The fault remains visible. The risk is managed by logging, briefing, and interim measures — not by hiding the warning."
           onSite="When the buzzer is annoying staff, the answer is to fix the fault, not to silence the buzzer. If the fault cannot be fixed today, the buzzer remains until it is. Brief premises management; agree the interim measure; record everything."
         >
           <p>The practical implications:</p>
@@ -274,20 +274,20 @@ const FireAlarmModule6Section3 = () => {
             <li>
               <strong>Buzzer suppression by firmware mod.</strong> Some panel firmware allows a
               "permanent silence" option for fault buzzers. Activating that option to keep staff
-              happy with an unresolved fault is a clause 23 breach. The buzzer can be silenced for
-              short periods (transient acknowledgement) but not concealed permanently.
+              happy with an unresolved fault is a clause 44.2.4 breach. The buzzer can be silenced
+              for short periods (transient acknowledgement) but not concealed permanently.
             </li>
             <li>
               <strong>Physical concealment.</strong> Tape over a fault LED, paper over the LCD, a
-              panel that is "always like that" — all clause 23 breaches. The fault must remain
+              panel that is "always like that" — all clause 44.2.4 breaches. The fault must remain
               visible to the next person who looks at the panel.
             </li>
             <li>
               <strong>Configuration suppression.</strong> Reconfiguring the CIE so a particular
               fault input is ignored, or de-programming the detector that keeps reporting, is a
-              clause 23 breach if the underlying fault is not actually repaired. The detector must
-              remain in service or be formally removed (which is a clause 7 modification — Section
-              6.5).
+              clause 44.2.4 breach if the underlying fault is not actually repaired. The detector
+              must remain in service or be formally removed (which is a clause 46 modification —
+              Section 6.5).
             </li>
             <li>
               <strong>The legitimate response.</strong> Log the fault. Brief the responsible person.
@@ -306,7 +306,7 @@ const FireAlarmModule6Section3 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 23 (Arrangements for repair of faults or damage)"
+          source="BS 5839-1:2025 · Clause 44.2.4 (Arrangements for repair of faults or damage)"
           clause={
             <>
               Where the user has reported a fault on the system to the service organization and the
@@ -582,7 +582,7 @@ const FireAlarmModule6Section3 = () => {
               6. Brief the responsible person · agree any monitoring
             </text>
 
-            {/* Clause 23 banner */}
+            {/* Clause 44.2.4 banner */}
             <rect
               x="40"
               y="488"
@@ -601,7 +601,7 @@ const FireAlarmModule6Section3 = () => {
               fontSize="11"
               fontWeight="bold"
             >
-              Clause 23 — fault indications must NOT be concealed
+              Clause 44.2.4 — fault indications must NOT be concealed
             </text>
             <text x="440" y="526" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="9.5">
               If repair cannot complete: log, brief, interim measure, fault remains visible until
@@ -873,8 +873,8 @@ const FireAlarmModule6Section3 = () => {
         <Scenario
           title="The unrepairable intermittent fault"
           situation="A school CIE has reported a comms fault on detector 92 (third-floor classroom, addressable optical smoke detector) on twelve occasions over six weeks. The fault clears on reset within 30 seconds each time. The panel event log shows the fault always appears between 14:15 and 15:45 on weekdays. The engineer has visited three times, found no fault on inspection, replaced the detector once, replaced the loop driver card once, and the pattern continues. Premises management is asking the engineer to silence the buzzer because it is disrupting afternoon classes."
-          whatToDo="Do not silence the buzzer — clause 23. Investigate the time-of-day pattern. Walk the loop on a weekday at 14:15 with a clamp-meter and noise-detection equipment. The likely cause is electromagnetic interference from a specific source that activates during school afternoon hours — possibly a science-block experiment, a contractor working on a different system, an HVAC component that energises only during certain occupancy patterns, or a fluorescent fitting near the detector with a failing ballast. Find the source. The fault is environmental, not the detector. Also brief premises management formally — the fault remains visible until rectified, the buzzer cannot be silenced, but the fault is being actively investigated. Provide a written progress update at the next service visit. The investigation may also justify temporary local supplementary detection (or a temporary fire watch in the affected zone during the affected hours) until root cause is found."
-          whyItMatters="Recurrent intermittent faults are the hardest class of fault to investigate and the most tempting to silence. Clause 23 explicitly forbids the silence-by-suppression shortcut. Time-of-day patterns are the engineer\'s best friend — they point to environmental causes that on-site inspection at 10am would never reveal."
+          whatToDo="Do not silence the buzzer — clause 44.2.4. Investigate the time-of-day pattern. Walk the loop on a weekday at 14:15 with a clamp-meter and noise-detection equipment. The likely cause is electromagnetic interference from a specific source that activates during school afternoon hours — possibly a science-block experiment, a contractor working on a different system, an HVAC component that energises only during certain occupancy patterns, or a fluorescent fitting near the detector with a failing ballast. Find the source. The fault is environmental, not the detector. Also brief premises management formally — the fault remains visible until rectified, the buzzer cannot be silenced, but the fault is being actively investigated. Provide a written progress update at the next service visit. The investigation may also justify temporary local supplementary detection (or a temporary fire watch in the affected zone during the affected hours) until root cause is found."
+          whyItMatters="Recurrent intermittent faults are the hardest class of fault to investigate and the most tempting to silence. Clause 44.2.4 explicitly forbids the silence-by-suppression shortcut. Time-of-day patterns are the engineer\'s best friend — they point to environmental causes that on-site inspection at 10am would never reveal."
         />
 
         <CommonMistake
@@ -894,7 +894,7 @@ const FireAlarmModule6Section3 = () => {
         <KeyTakeaways
           title="What to remember on site"
           points={[
-            'BS 5839-1:2025 clause 23 — fault indications must NOT be concealed or suppressed. The fault remains visible until repaired.',
+            'BS 5839-1:2025 clause 44.2.4 — fault indications must NOT be concealed or suppressed. The fault remains visible until repaired.',
             'Diagnostic discipline: panel first, device second. Read the LCD, read the event log, narrow the search.',
             'Five common faults: open-circuit, short-circuit, earth fault, communications fault, device-address conflict. Each has a predictable cause set.',
             'Contiguous loss on an addressable loop = single break. Repair at the panel-side end of the missing range. Isolator placement is also a design issue if many devices are lost.',
@@ -908,15 +908,15 @@ const FireAlarmModule6Section3 = () => {
         <FAQ
           items={[
             {
-              question: 'How does clause 23 differ from disablement under clause 22?',
+              question: 'How does clause 44.2.4 differ from disablement under clause 43.2.18?',
               answer:
-                'Clause 22 covers planned, time-bounded, recorded disablement during servicing or repair — premises management informed, interim measures, logbook entry. Clause 23 covers concealment — silently suppressing a fault indication so the fault appears not to exist. The two are different. Disablement is allowed when controlled and recorded; concealment is not allowed at all. A fault that cannot be repaired today is logged and remains visible (clause 23); a device that is disabled during testing is removed from service for a defined window with informed consent (clause 22).',
+                'Clause 43.2.18 covers planned, time-bounded, recorded disablement during servicing or repair — premises management informed, interim measures, logbook entry. Clause 44.2.4 covers concealment — silently suppressing a fault indication so the fault appears not to exist. The two are different. Disablement is allowed when controlled and recorded; concealment is not allowed at all. A fault that cannot be repaired today is logged and remains visible (clause 44.2.4); a device that is disabled during testing is removed from service for a defined window with informed consent (clause 43.2.18).',
             },
             {
               question:
                 'A user has reported a fault but the engineer cannot reproduce it on site. What is the correct disposition?',
               answer:
-                'Investigate further: review the panel event log for time-of-day patterns; install monitoring instrumentation if available; review environmental factors; consult the manufacturer. Brief the responsible person on the open status. The fault remains visible on the panel (clause 23) — even though the engineer cannot reproduce it, the user\'s report and the panel\'s prior indications are the evidence the fault is real. Continue to investigate at subsequent visits. Do not "close" the fault until root cause is identified and repaired.',
+                'Investigate further: review the panel event log for time-of-day patterns; install monitoring instrumentation if available; review environmental factors; consult the manufacturer. Brief the responsible person on the open status. The fault remains visible on the panel (clause 44.2.4) — even though the engineer cannot reproduce it, the user\'s report and the panel\'s prior indications are the evidence the fault is real. Continue to investigate at subsequent visits. Do not "close" the fault until root cause is identified and repaired.',
             },
             {
               question: 'What does an "addressable loop tester" do that the panel cannot?',

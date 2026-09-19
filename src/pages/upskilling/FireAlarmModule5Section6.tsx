@@ -997,7 +997,7 @@ const FireAlarmModule5Section6 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="Regulatory Reform (Fire Safety) Order 2005 · Articles 8-22 · Reflected in BS 5839-1:2025 documentation and handover requirements"
+          source="Regulatory Reform (Fire Safety) Order 2005 · Articles 8-22 · Reflected in BS 5839-1:2025 documentation and handover requirements — in summary, not a verbatim quote"
           clause={
             <>
               The Regulatory Reform (Fire Safety) Order 2005 imposes duties on the responsible
@@ -1013,9 +1013,9 @@ const FireAlarmModule5Section6 = () => {
 
         <Scenario
           title="Handover of a new system in a 4-storey hotel"
-          situation="A new 4-storey 80-bedroom hotel has a Cat L1 system commissioned. Sleeping rooms have smoke detectors (no heat per 2025 §14); MCPs at all required positions; sounders to 65 / 75 / +5 dB targets; ARC connection; multi-zone with zone plan posted at fire panel and at building entrance; full cause-and-effect verified. The system is ready for handover."
+          situation="A new 4-storey 80-bedroom hotel has a Cat L1 system commissioned. Sleeping rooms have smoke detectors (no heat per 2025 20.2 c) NOTE 3); MCPs at all required positions; sounders to 65 / 75 / +5 dB targets; ARC connection; multi-zone with zone plan posted at fire panel and at building entrance; full cause-and-effect verified. The system is ready for handover."
           whatToDo="Compile the documentation set: acceptance certificate (Annex G); operating manual; O&M manual; as-installed drawings (zone plan, device schedule, cable routes); cause-and-effect matrix (formal matrix for the 4-storey complex); logbook (Annex H 2025); variations record (any agreed variations from the design + any agreed at install / commissioning — all recorded); third-party scheme certification (FIA / BAFE SP203 / NSI / SSAIB depending on contractor). Identify the responsible person (typically the duty manager or operations director). Schedule a 2-hour handover briefing covering: documentation walk-through, panel operation demonstration, false-alarm-investigation procedure (NEW 2025 clause 29.6 — particularly relevant for a hotel given high false-alarm rate from cooking activities, occupant smoke detectors, etc.), RRO 2005 duties briefing, service-contract confirmation. Sign acceptance certificate and briefing record. Hand over the documentation bundle."
-          whyItMatters="Hotels are mid-risk premises with sleeping accommodation. The 2025 revision changes affect them disproportionately — smoke (not heat) in sleeping rooms (§14), zone plan mandatory (§6), false-alarm-investigation procedure briefing (clause 29.6). The handover briefing must address all of these. Hotels also have very high false-alarm rates from cooking smoke and occupant-induced events; the false-alarm-investigation procedure briefing is particularly important — the responsible person needs to know how to investigate, document, and learn from each false alarm."
+          whyItMatters="Hotels are mid-risk premises with sleeping accommodation. The 2025 revision changes affect them disproportionately — smoke (not heat) in sleeping rooms (20.2 c) NOTE 3), zone plan mandatory (§6), false-alarm-investigation procedure briefing (clause 29.6). The handover briefing must address all of these. Hotels also have very high false-alarm rates from cooking smoke and occupant-induced events; the false-alarm-investigation procedure briefing is particularly important — the responsible person needs to know how to investigate, document, and learn from each false alarm."
         />
 
         <SectionRule />

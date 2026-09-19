@@ -127,6 +127,16 @@ export const formatFireAlarmG7Json = (formData: Record<string, any>) => {
     additional_notes: get('additionalNotes'),
     has_additional_notes: !!get('additionalNotes')?.trim(),
 
+    /*
+     * Clause 6.4 — all variations are listed on the system certificate, and the
+     * Annex G statement of conformity carves out "the variations, if any,
+     * stated in this certificate". The template prints this section
+     * unconditionally: blank has to read as "none", not as silence, or the
+     * carve-out says nothing either way.
+     */
+    modification_variations: get('modificationVariations'),
+    has_modification_variations: !!get('modificationVariations')?.trim(),
+
     // Company
     company_name: get('companyName'),
     company_address: get('companyAddress'),

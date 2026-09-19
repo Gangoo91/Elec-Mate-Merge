@@ -34,10 +34,10 @@ const inlineChecks = [
   },
   {
     id: 'fam6-s5-firmware',
-    question: 'A firmware update is applied to a CIE. Per BS 5839-1:2025 clause 7, this is.',
+    question: 'A firmware update is applied to a CIE. Per BS 5839-1:2025 clause 46, this is.',
     options: [
       'Routine servicing, captured by the standard six-monthly service certificate alone.',
-      'A modification — an extension or modification certificate is required under clause 7.',
+      'A modification — an extension or modification certificate is required under clause 46.1.9.',
       'A configuration change recorded only in the panel event log, with no certificate needed.',
       "A change so significant that it always invalidates the system's original acceptance certificate.",
     ],
@@ -378,7 +378,7 @@ const FireAlarmModule6Section5 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Section 7 (Extensions and modifications)"
+          source="BS 5839-1:2025 · Section 7 (Extensions and modifications) — in summary, not a verbatim quote"
           clause={
             <>
               A new Section 7 Extensions and modifications has been added. This new section
@@ -831,13 +831,13 @@ const FireAlarmModule6Section5 = () => {
         <CommonMistake
           title="Treating a firmware update as routine without paperwork"
           whatHappens="A manufacturer field engineer applies a firmware update to a CIE during a regular service visit. The update is recorded as 'firmware updated' in the visit notes but no extension or modification certificate is produced. Six months later, an insurer audit asks for the certificate trail; the firmware update appears in the panel event log but has no certificate to support it. The audit flags the update as undocumented; the responsible person has to obtain a retrospective modification certificate from the manufacturer, which is uncomfortable for everyone."
-          doInstead="Per BS 5839-1:2025 clause 7, firmware updates are modifications. An extension or modification certificate is required at the time of the update. The certificate documents the pre-update version, the post-update version, the verification that cause-and-effect still performs, and the post-action operational state. The certificate is filed with the logbook and the modification is recorded with cross-reference. The cyber-security log entry (clause 43.4) is kept alongside if the update was applied remotely."
+          doInstead="Per BS 5839-1:2025 clause 46, firmware updates are modifications. An extension or modification certificate is required at the time of the update. The certificate documents the pre-update version, the post-update version, the verification that cause-and-effect still performs, and the post-action operational state. The certificate is filed with the logbook and the modification is recorded with cross-reference. The cyber-security log entry (clause 43.4) is kept alongside if the update was applied remotely."
         />
 
         <CommonMistake
           title="Continuing a 2017-agreed variation that 2025 declares unacceptable"
           whatHappens="A care home was commissioned in 2018 with an agreed variation: no ARC transmission (the management considered it unnecessary). The variation was recorded in the original acceptance certificate and re-confirmed at every six-monthly service. In 2026, the servicing organisation continues to record the variation as 'agreed and ongoing'. A safety inspector visiting a similar care home flags the variation as now unacceptable per BS 5839-1:2025 clause 6. The responsible person is required to remedy within a specified timeframe."
-          doInstead="At the next six-monthly visit after BS 5839-1:2025 publication, re-evaluate every existing variation against the new clause 6 wording. Variations that the new standard declares unacceptable cannot continue: the system must be remediated. For ARC absence in care homes / supported housing, the remediation is to install ARC alarm transmission to the appropriate signal-grade-4 standard. For zone plan absence in multi-zone sleeping premises, the remediation is to produce and post a zone plan. The remediation work is itself a modification (clause 7) and requires a certificate."
+          doInstead="At the next six-monthly visit after BS 5839-1:2025 publication, re-evaluate every existing variation against the new clause 6 wording. Variations that the new standard declares unacceptable cannot continue: the system must be remediated. For ARC absence in care homes / supported housing, the remediation is to install ARC alarm transmission to the appropriate signal-grade-4 standard. For zone plan absence in multi-zone sleeping premises, the remediation is to produce and post a zone plan. The remediation work is itself a modification (clause 46.1.9) and requires a certificate."
         />
 
         <SectionRule />
@@ -874,13 +874,13 @@ const FireAlarmModule6Section5 = () => {
               question:
                 'My CIE manufacturer is pushing a firmware update remotely. What paperwork do I need?',
               answer:
-                "Three documents. (1) Extension or modification certificate per clause 7 — produced by the engineer authorised to apply the update; documents pre-version, post-version, cause-and-effect verification, post-action state. (2) Cyber-security log entry per clause 43.4 — connection details, authentication, actions, post-action state. (3) Logbook entry per clause 48 — modification entry referencing the cert. The manufacturer's remote-update tool should support generating the certificate template; if not, the on-site competent engineer produces it after the update.",
+                "Three documents. (1) Extension or modification certificate per clause 46.1.9 — produced by the engineer authorised to apply the update; documents pre-version, post-version, cause-and-effect verification, post-action state. (2) Cyber-security log entry per clause 43.4 — connection details, authentication, actions, post-action state. (3) Logbook entry per clause 48 — modification entry referencing the cert. The manufacturer's remote-update tool should support generating the certificate template; if not, the on-site competent engineer produces it after the update.",
             },
             {
               question:
                 'A care home has agreed for years that ARC transmission is "not needed". What do I do at the next visit?',
               answer:
-                "Per BS 5839-1:2025 clause 6, ARC absence in residential care homes is now declared unacceptable. The variation cannot continue. Brief the responsible person at the visit; recommend remediation; provide a quote for installing ARC alarm transmission to the appropriate signal grade. Update the service report's conformity statement to reflect that the system is non-compliant pending remediation. The remediation is a modification under clause 7 and will require an extension or modification certificate when complete.",
+                "Per BS 5839-1:2025 clause 6, ARC absence in residential care homes is now declared unacceptable. The variation cannot continue. Brief the responsible person at the visit; recommend remediation; provide a quote for installing ARC alarm transmission to the appropriate signal grade. Update the service report's conformity statement to reflect that the system is non-compliant pending remediation. The remediation is a modification under clause 46.1.9 and will require an extension or modification certificate when complete.",
             },
             {
               question: 'What is the difference between BAFE SP203 and FIA membership?',

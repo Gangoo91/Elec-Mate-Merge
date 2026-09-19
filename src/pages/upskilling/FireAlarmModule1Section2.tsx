@@ -290,7 +290,7 @@ const FireAlarmModule1Section2 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Categories of system (clause 5)"
+          source="BS 5839-1:2025 · Categories of system (clause 5) — in summary, not a verbatim quote"
           clause={
             <>
               Category P systems are systems intended for the protection of property. They are
@@ -674,7 +674,7 @@ const FireAlarmModule1Section2 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Categories of system — P2 commentary"
+          source="BS 5839-1:2025 · Categories of system — P2 commentary — in summary, not a verbatim quote"
           clause={
             <>
               Category P2 systems provide automatic fire detection in those parts of the protected
@@ -768,7 +768,7 @@ const FireAlarmModule1Section2 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Categories of system — combined L/P commentary"
+          source="BS 5839-1:2025 · Categories of system — combined L/P commentary — in summary, not a verbatim quote"
           clause={
             <>
               A protected building may incorporate a combination of categories of system, for
@@ -988,9 +988,9 @@ const FireAlarmModule1Section2 = () => {
           <p>Practical implications:</p>
           <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
             <li>
-              <strong>Cable colour.</strong> BS 5839-1:2025 16 specifies that fire alarm cables AND
-              the low-voltage mains supply to the system should be of a single common colour, with
-              red preferred. This is a clarification from the 2017 edition.
+              <strong>Cable colour.</strong> BS 5839-1:2025 25.9 specifies that fire alarm cables
+              AND the low-voltage mains supply to the system should be of a single common colour,
+              with red preferred. This is a clarification from the 2017 edition.
             </li>
             <li>
               <strong>Functional earth identification.</strong> Pink or marked 'FE' (was cream under

@@ -389,6 +389,19 @@ export const formatFireAlarmG6Json = (formData: Record<string, any>) => {
     additional_notes: get('additionalNotes'),
     has_additional_notes: !!get('additionalNotes')?.trim(),
 
+    /*
+     * Clause 6.4 — all variations are listed on the system certificate, and the
+     * Annex G statement of conformity carves out "the variations, if any,
+     * stated in this certificate". The template prints this section
+     * unconditionally: blank has to read as "none", not as silence, or the
+     * carve-out says nothing either way.
+     *
+     * Distinct from `inspection_limitations` above: that is what could not be
+     * reached on the day, this is a departure from the recommendations.
+     */
+    inspection_variations: get('inspectionVariations'),
+    has_inspection_variations: !!get('inspectionVariations')?.trim(),
+
     // Photos
     photos,
     has_photos: photos.length > 0,

@@ -307,7 +307,7 @@ const FireAlarmModule1Section1 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Categories of system (clause 5)"
+          source="BS 5839-1:2025 · Categories of system (clause 5) — in summary, not a verbatim quote"
           clause={
             <>
               Category L systems are systems intended for the protection of life. They are
@@ -355,7 +355,7 @@ const FireAlarmModule1Section1 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Annex D (informative — areas not requiring detection)"
+          source="BS 5839-1:2025 · Annex D (informative — areas not requiring detection) — in summary, not a verbatim quote"
           clause={
             <>
               For Category L1 systems, automatic fire detection should be provided throughout the
@@ -819,7 +819,7 @@ const FireAlarmModule1Section1 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Section 14 (use of heat detectors) — guide commentary clause 14"
+          source="BS 5839-1:2025 · 20.2 c) NOTE 3 (use of heat detectors — sleeping rooms) — in summary, not a verbatim quote"
           clause={
             <>
               With the changes to category L2 systems now including early warning of fire to rooms
@@ -881,7 +881,7 @@ const FireAlarmModule1Section1 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Categories of system — L3 void-wall commentary"
+          source="BS 5839-1:2025 · Categories of system — L3 void-wall commentary — in summary, not a verbatim quote"
           clause={
             <>
               A subtle but important change has been made to the terminology around category L3
@@ -940,7 +940,7 @@ const FireAlarmModule1Section1 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Categories of system — L4 flue commentary"
+          source="BS 5839-1:2025 · Categories of system — L4 flue commentary — in summary, not a verbatim quote"
           clause={
             <>
               A significant change has been made to category L4 with flue-like structures. It is now
@@ -959,7 +959,7 @@ const FireAlarmModule1Section1 = () => {
         />
 
         <RegsCallout
-          source="BS 5839-1:2025 · Categories of system — stairway lobby commentary"
+          source="BS 5839-1:2025 · Categories of system — stairway lobby commentary — in summary, not a verbatim quote"
           clause={
             <>
               Stairway lobbies are now designated as areas requiring automatic detection, whereas
@@ -1131,9 +1131,8 @@ const FireAlarmModule1Section1 = () => {
             <li>
               <strong>Cable type.</strong> Fire-resisting cable specified for the fire-alarm
               circuits, conforming to the appropriate BS EN 50200 / BS 8434 / BS 8491 standard. BS
-              5839-1:2025 clause 16 (cabling, labelling and identification) clarifies that fire
-              alarm cables and the low-voltage mains supply should be of a single common colour,
-              with red preferred.
+              5839-1:2025 25.9 (cable colour) clarifies that fire alarm cables and the low-voltage
+              mains supply should be of a single common colour, with red preferred.
             </li>
             <li>
               <strong>Identification.</strong> The 2025 revision incorporates BS 7671 A2:2022 wiring

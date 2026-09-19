@@ -1,10 +1,5 @@
 import { useEffect, useState } from 'react';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { X } from 'lucide-react';
@@ -17,7 +12,12 @@ interface SaveRoomSheetProps {
   defaultName?: string;
 }
 
-export const SaveRoomSheet = ({ open, onOpenChange, onSave, defaultName = '' }: SaveRoomSheetProps) => {
+export const SaveRoomSheet = ({
+  open,
+  onOpenChange,
+  onSave,
+  defaultName = '',
+}: SaveRoomSheetProps) => {
   const [name, setName] = useState(defaultName);
   const haptic = useHaptic();
 

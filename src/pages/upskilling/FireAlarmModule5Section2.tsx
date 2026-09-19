@@ -106,7 +106,7 @@ const quizQuestions = [
   {
     id: 3,
     question:
-      'CIE battery installation — what does BS 5839-1:2025 §16 require to be marked on the batteries?',
+      'CIE battery installation — what does BS 5839-1:2025 24.3.3 require to be marked on the batteries?',
     options: [
       'A barcode encoding the manufacturer’s warranty terms and supply-chain details.',
       'The battery serial number only, recorded purely for stock-control purposes.',
@@ -115,7 +115,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'BS 5839-1:2025 §16 acknowledges the long-standing custom of marking batteries with the installation date. The date is the lifecycle datum that drives the replacement schedule (typically a 4-year design life for VRLA batteries, per manufacturer data). A permanent-marker date is sufficient; an applied label is preferred. Without it, replacement planning is guesswork.',
+      'BS 5839-1:2025 24.3.3 acknowledges the long-standing custom of marking batteries with the installation date. The date is the lifecycle datum that drives the replacement schedule (typically a 4-year design life for VRLA batteries, per manufacturer data). A permanent-marker date is sufficient; an applied label is preferred. Without it, replacement planning is guesswork.',
   },
   {
     id: 4,
@@ -171,7 +171,7 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      'BS 5839-1:2025 §19 (Power supplies) consolidates the previous split-clause guidance (2017 clauses 25 and 29) into a single clause: a clearly identified, dedicated isolating device — typically a lockable-off MCB or isolator labelled FIRE ALARM PANEL DO NOT SWITCH OFF, managed under permit-to-work. The maintenance use case drives the design — the device exists for the maintainer’s safety, not for occupant convenience.',
+      'BS 5839-1:2025 24 (Power supplies) consolidates the previous split-clause guidance (2017 clauses 25 and 29) into a single clause: a clearly identified, dedicated isolating device — typically a lockable-off MCB or isolator labelled FIRE ALARM PANEL DO NOT SWITCH OFF, managed under permit-to-work. The maintenance use case drives the design — the device exists for the maintainer’s safety, not for occupant convenience.',
   },
   {
     id: 8,
@@ -197,7 +197,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'Two distinct conductors: green-and-yellow protective earth (CPC) per BS 7671, and functional earth (a separate EMC / signal-reference conductor) identified PINK or marked "FE" per BS 7671 Amendment 2 and IEC 60445:2021, adopted in BS 5839-1:2025. Functional earth was previously identified by cream; the 2025 change aligns with the IEC standard.',
+      'Two distinct conductors: green-and-yellow protective earth (CPC) per BS 7671, and functional earth (a separate EMC / signal-reference conductor) identified PINK or marked "FE" per BS 7671:2018+A3, Table 51, adopted in BS 5839-1:2025. Functional earth was previously identified by cream; the 2025 change aligns with the IEC standard.',
   },
   {
     id: 10,
@@ -239,9 +239,9 @@ const FireAlarmModule5Section2 = () => {
           points={[
             'CIE siting per BS 5839-1:2025: accessible to the fire and rescue service on attendance — typically at the principal protected entrance, signed from outside, unobstructed, no keys needed.',
             'Mounting height: active display centreline 1.4 to 1.6 m so a standing operator can read every indicator and operate every control without aids.',
-            'Mains supply: dedicated, hard-wired, lockable-off final circuit, labelled "FIRE ALARM — DO NOT SWITCH OFF", fed from before any switching device that could be operated by occupants in error. Consolidated in 2025 §19 (was split between 2017 clauses 25 and 29).',
-            'Batteries: installed in CIE or in dedicated battery enclosure, dated per §16 (label or permanent marker), sized for the standby + alarm load over the required duration, secured against movement and short-circuit risk.',
-            "Earthing per BS 7671: protective earth (CPC) green-and-yellow, terminated to CIE earth bar. Functional earth (FE) PINK or marked 'FE' per BS 7671 A2 / IEC 60445:2021 (was cream).",
+            'Mains supply: dedicated, hard-wired, lockable-off final circuit, labelled "FIRE ALARM — DO NOT SWITCH OFF", fed from before any switching device that could be operated by occupants in error. Consolidated in 2025 24 (was split between 2017 clauses 25 and 29).',
+            'Batteries: installed in CIE or in dedicated battery enclosure, dated per 24.3.3 (label or permanent marker), sized for the standby + alarm load over the required duration, secured against movement and short-circuit risk.',
+            "Earthing per BS 7671: protective earth (CPC) green-and-yellow, terminated to CIE earth bar. Functional earth (FE) PINK or marked 'FE' per BS 7671:2018+A3, Table 51 (was cream).",
             'Cyber security (NEW in 2025 — clause 43.4): physical lock-off of comms cabinet, anti-tamper plugs on patch leads at CIE network port, authentication of remote-connection requests, risk assessment before remote service.',
             'False-alarm notice (NEW in 2025 — Figure 1 in FIA Guide): fixed on or adjacent to the CIE, stating the active ARC connection and the ARC contact telephone number. Pre-test reminder for premises management.',
             'Install hand-over to commissioning: mechanically complete, electrically connected, labelled panel with documented address mapping. Commissioning verifies, not finishes, the install.',
@@ -253,8 +253,8 @@ const FireAlarmModule5Section2 = () => {
             'Site the CIE per BS 5839-1:2025 to support fire and rescue service access on attendance, with appropriate signage and unobstructed approach',
             'Mount the CIE at a height that supports operation by a standing operator under stress (1.4-1.6 m display centreline)',
             'Terminate the CIE mains supply per BS 7671 from a dedicated, labelled, lockable-off final circuit accessible only to authorised personnel',
-            'Install and date-mark CIE batteries per §16, sized for the design standby and alarm load',
-            'Earth the CIE per BS 7671 with protective earth (CPC) green-and-yellow and the new pink / FE-marked functional earth per IEC 60445:2021',
+            'Install and date-mark CIE batteries per 24.3.3, sized for the design standby and alarm load',
+            'Earth the CIE per BS 7671 with protective earth (CPC) green-and-yellow and the new pink / FE-marked functional earth per BS 7671:2018+A3, Table 51',
             'Apply the BS 5839-1:2025 clause 43.4 cyber security physical and authentication controls — lock-off, anti-tamper plugs, authenticated remote-connection requests',
             'Fit the 2025 false-alarm notice near the CIE and brief the Responsible Person on the pre-test ARC call procedure',
             'Hand the installed CIE over to commissioning with mechanical completion, electrical connection, labelled mapping and documented configuration',
@@ -319,7 +319,7 @@ const FireAlarmModule5Section2 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 22 (Control and indicating equipment) — siting"
+          source="BS 5839-1:2025 · Clause 22 (Control and indicating equipment) — siting — in summary, not a verbatim quote"
           clause={
             <>
               The CIE should be sited so that it is accessible to the fire and rescue service on
@@ -609,7 +609,7 @@ const FireAlarmModule5Section2 = () => {
             </text>
             <line x1="450" y1="232" x2="630" y2="232" stroke="rgba(0,0,0,0.4)" strokeWidth="0.8" />
             <text x="540" y="246" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="9">
-              BS 5839-1:2025 §13 — Figure 1
+              BS 5839-1:2025 14.22 — Figure 5
             </text>
 
             <rect
@@ -760,16 +760,20 @@ const FireAlarmModule5Section2 = () => {
             <li>
               <strong>Dedicated final circuit.</strong> Its own MCB or RCBO at the distribution
               board. Sized per the CIE manufacturer’s nameplate (typically 6 A or 10 A) and BS 7671.
-              RCD protection per BS 7671 unless the CIE manufacturer’s instructions and the design
-              specifically dispense with it (rare).
+              Clause 24.1.10 reverses the usual instinct here: the circuit supplying the system
+              &ldquo;should NOT be protected by a residual current device unless this is necessary
+              to conform to BS 7671:2018+A3&rdquo;. Where an RCD IS necessary for electrical safety,
+              a fault on any other circuit or equipment in the building must not be capable of
+              isolating the supply to the fire alarm system — so it cannot sit on a shared RCD with
+              anything else.
             </li>
             <li>
               <strong>Cable.</strong> Fire-resisting cable to the same standard as the rest of the
               fire alarm system, terminated at the CIE’s mains-input gland and at the board.
             </li>
             <li>
-              <strong>Labelling.</strong> Distribution board: "FIRE ALARM PANEL — DO NOT SWITCH
-              OFF". CIE: cable identified at the gland with the originating circuit reference.
+              <strong>Labelling.</strong> Distribution board: "FIRE ALARM. DO NOT SWITCH OFF". CIE:
+              cable identified at the gland with the originating circuit reference.
             </li>
             <li>
               <strong>Lockable-off.</strong> The MCB or isolator accepts a lock-off device (padlock,
@@ -788,25 +792,27 @@ const FireAlarmModule5Section2 = () => {
             </li>
             <li>
               <strong>Earthing.</strong> CPC sized per BS 7671 Table 54.7 or adiabatic; terminated
-              to the CIE earth bar. Functional earth, where used, identified per IEC 60445:2021
-              (PINK or "FE" marked).
+              to the CIE earth bar. Functional earth, where used, identified per BS 7671:2018+A3,
+              Table 51 (PINK or "FE" marked).
             </li>
           </ul>
           <p>
-            The 2025 revision consolidates the mains-supply guidance into a single clause (§19); the
+            The 2025 revision consolidates the mains-supply guidance into a single clause (24); the
             2017 revision split it between clauses 25 and 29. The technical content is the same —
             the structure is clearer.
           </p>
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 19 (Power supplies) — mains supply"
+          source="BS 5839-1:2025 · Clause 24.1.3 (Mains supply — dedicated final circuit)"
           clause={
             <>
-              The fire detection and fire alarm system shall be supplied from a dedicated final
-              circuit at the LV distribution board, with a clearly identified isolating device,
-              accessible only to authorised persons, labelled in a manner that warns against
-              accidental switching off.
+              The mains supply final circuit(s) to all parts of the fire detection and fire alarm
+              system should be dedicated solely to the fire detection and fire alarm system, and
+              should serve no other systems or equipment. The circuit(s) should be derived from a
+              point in the building&rsquo;s electrical distribution system close to the main
+              isolating device for the building. The electricity supply should not be connected via
+              a card- or coin-operated meter or similar device.
             </>
           }
           meaning="Three load-bearing words. 'Dedicated' — its own circuit, no shared loads. 'Authorised persons' — occupants do not operate this device. 'Labelled' — visible warning that switching off disables the fire alarm. The 2025 revision pulls the previous split-clause guidance into a single clause; the maintainer and inspector now look in one place."
@@ -814,7 +820,7 @@ const FireAlarmModule5Section2 = () => {
 
         <ConceptBlock
           title="Batteries — sizing, installation, dating"
-          plainEnglish="The standby battery system keeps the CIE running through mains failure. Sizing follows the load-and-duration calculation; installation follows the manufacturer’s mechanical and electrical specification; dating per BS 5839-1:2025 §16 makes the lifecycle visible to the maintainer."
+          plainEnglish="The standby battery system keeps the CIE running through mains failure. Sizing follows the load-and-duration calculation; installation follows the manufacturer’s mechanical and electrical specification; dating per BS 5839-1:2025 24.3.3 makes the lifecycle visible to the maintainer."
         >
           <p>The battery checklist:</p>
           <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
@@ -842,7 +848,7 @@ const FireAlarmModule5Section2 = () => {
             </li>
             <li>
               <strong>Date marking.</strong> Date of installation labelled or written in permanent
-              marker on each battery. The 2025 revision §16 acknowledges the long-standing custom
+              marker on each battery. The 2025 revision 24.3.3 acknowledges the long-standing custom
               and makes it explicit.
             </li>
             <li>
@@ -949,7 +955,7 @@ const FireAlarmModule5Section2 = () => {
         <CommonMistake
           title="Mains supply on a shared circuit"
           whatHappens="A small refurbishment install times-out at second-fix; rather than wait for the dedicated MCB to be installed in the distribution board, the contractor spurs the CIE off the corridor lighting circuit to get the panel energised for commissioning. The corridor lighting is later switched off at the wall switch by a cleaner; the CIE drops to battery; the battery flat-discharges over the weekend; the CIE is offline by Monday morning. The Responsible Person inherits a system that has had its first incident before handover."
-          doInstead="The mains supply is dedicated and lockable per §19. No spurs off shared circuits, ever. If the dedicated MCB cannot be installed in time, the commissioning is held until it is. Energising the CIE from a non-compliant supply for convenience is a non-compliant install that creates incidents."
+          doInstead="The mains supply is dedicated and lockable per 24.1.4. No spurs off shared circuits, ever. If the dedicated MCB cannot be installed in time, the commissioning is held until it is. Energising the CIE from a non-compliant supply for convenience is a non-compliant install that creates incidents."
         />
 
         <InlineCheck
@@ -966,7 +972,7 @@ const FireAlarmModule5Section2 = () => {
 
         <ConceptBlock
           title="The 2025 false-alarm notice"
-          plainEnglish="A specific 2025 addition. With the FRS now operating call-challenging policies to reduce unnecessary attendance, BS 5839-1:2025 §13 recommends a false-alarm notice fixed near the CIE. The notice tells anyone about to operate or test the panel that the system has an active connection to the FRS via an ARC, and gives the ARC contact telephone number. Premises management calls the ARC to suspend despatch before any test; the ARC suspends; the test runs; the ARC despatch is restored. The notice is a procedural prompt that has driven a measurable reduction in unwanted FRS calls."
+          plainEnglish="A specific 2025 addition. With the FRS now operating call-challenging policies to reduce unnecessary attendance, BS 5839-1:2025 14.22 and Figure 5 recommends a false-alarm notice fixed near the CIE. The notice tells anyone about to operate or test the panel that the system has an active connection to the FRS via an ARC, and gives the ARC contact telephone number. Premises management calls the ARC to suspend despatch before any test; the ARC suspends; the test runs; the ARC despatch is restored. The notice is a procedural prompt that has driven a measurable reduction in unwanted FRS calls."
         >
           <p>The notice content (per FIA Guide Figure 1):</p>
           <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
@@ -1024,8 +1030,8 @@ const FireAlarmModule5Section2 = () => {
               distribution board.
             </li>
             <li>
-              <strong>Battery date.</strong> Per §16. Permanent marker on each battery or attached
-              label.
+              <strong>Battery date.</strong> Per 24.3.3. Permanent marker on each battery or
+              attached label.
             </li>
             <li>
               <strong>Comms cabinet lock-off identification.</strong> Per clause 43.4. Locked,
@@ -1036,8 +1042,8 @@ const FireAlarmModule5Section2 = () => {
               location for FRS arrival.
             </li>
             <li>
-              <strong>False-alarm notice.</strong> Per §13. Adjacent to CIE, visible at first
-              glance.
+              <strong>False-alarm notice.</strong> Per 14.22 and Figure 5. Adjacent to CIE, visible
+              at first glance.
             </li>
           </ul>
           <p>
@@ -1070,11 +1076,11 @@ const FireAlarmModule5Section2 = () => {
           points={[
             'CIE siting is FRS-first: principal protected entrance, signed from outside, unobstructed approach, no keys for FRS arrival.',
             'Mounting: active display centreline 1.4-1.6 m AFFL; controls within reach; clearance for door swing; cable entry from below preferred.',
-            'Mains supply (§19): dedicated, hard-wired, lockable-off, labelled "FIRE ALARM — DO NOT SWITCH OFF", accessible only to authorised persons. 2025 consolidates the 2017 split-clause guidance.',
-            'Batteries: sized for standby + alarm load × duration with ageing/temperature de-rating; secured; date-marked on each battery per §16.',
-            "Earthing: protective earth (CPC) green-and-yellow per BS 7671; functional earth (FE) PINK or 'FE' marked per BS 7671 A2 / IEC 60445:2021 (was cream).",
+            'Mains supply (24): dedicated, hard-wired, lockable-off, labelled "FIRE ALARM — DO NOT SWITCH OFF", accessible only to authorised persons. 2025 consolidates the 2017 split-clause guidance.',
+            'Batteries: sized for standby + alarm load × duration with ageing/temperature de-rating; secured; date-marked on each battery per 24.3.3.',
+            "Earthing: protective earth (CPC) green-and-yellow per BS 7671; functional earth (FE) PINK or 'FE' marked per BS 7671:2018+A3, Table 51 (was cream).",
             'Cyber security clause 43.4 (NEW 2025): physical lock-off of comms cabinet, anti-tamper plugs on patch leads, authentication of remote-connection requests, risk assessment before remote service, post-service operability check.',
-            'False-alarm notice (NEW 2025 §13 / FIA Figure 1): fixed near CIE, states active ARC connection, gives ARC telephone number, drives the pre-test ARC call procedure.',
+            'False-alarm notice (NEW 2025 14.22 and Figure 5 / FIA Figure 1): fixed near CIE, states active ARC connection, gives ARC telephone number, drives the pre-test ARC call procedure.',
             'Zone plan at CIE: required for multi-zone premises per §22.2.5; absence is NOT an acceptable variation under §6 in sleeping-risk multi-zone premises.',
             'Hand-over to commissioning: mechanically complete, electrically connected, labelled, with documented address mapping. Commissioning verifies the install — it does not finish it.',
           ]}
@@ -1090,7 +1096,7 @@ const FireAlarmModule5Section2 = () => {
             {
               question: 'Can the CIE be plugged in via a 13A socket?',
               answer:
-                'No. BS 5839-1:2025 §19 requires a dedicated final circuit, hard-wired, with a clearly identified isolating device accessible only to authorised persons. Plug-and-socket is non-compliant — anyone could unplug the panel. The mains supply is hard-wired from a labelled, lockable-off MCB / RCBO at the distribution board.',
+                'No. BS 5839-1:2025 24.1.4 requires a dedicated final circuit, hard-wired, with a clearly identified isolating device accessible only to authorised persons. Plug-and-socket is non-compliant — anyone could unplug the panel. The mains supply is hard-wired from a labelled, lockable-off MCB / RCBO at the distribution board.',
             },
             {
               question:
@@ -1107,13 +1113,13 @@ const FireAlarmModule5Section2 = () => {
             {
               question: 'How is functional earth different from protective earth?',
               answer:
-                'Protective earth (CPC) is the safety conductor required by BS 7671 for fault protection — green-and-yellow, sized per Table 54.7 or adiabatic. Functional earth (FE) is a separate conductor for EMC / signal-reference purposes — does NOT provide fault protection. Per BS 7671 Amendment 2 (2022) and IEC 60445:2021, functional earth is identified PINK or marked "FE"; previously identified by cream. BS 5839-1:2025 §16 reflects the change.',
+                'Protective earth (CPC) is the safety conductor required by BS 7671 for fault protection — green-and-yellow, sized per Table 54.7 or adiabatic. Functional earth (FE) is a separate conductor for EMC / signal-reference purposes — does NOT provide fault protection. Per BS 7671:2018+A3, Table 51, functional earth is identified PINK or marked "FE"; previously identified by cream. BS 5839-1:2025 28.2 reflects the change.',
             },
             {
               question:
                 'Do I need to date each battery individually, or just the install date for the system?',
               answer:
-                'Each battery individually. The §16 acknowledgement is of the long-standing custom of marking batteries with the installation date — typically permanent marker on each cell. The maintainer reads the date at every service visit; without it, replacement decisions are guesswork. A system-level install date does not survive battery replacement events; per-battery dating does.',
+                'Each battery individually. The 24.3.3 acknowledgement is of the long-standing custom of marking batteries with the installation date — typically permanent marker on each cell. The maintainer reads the date at every service visit; without it, replacement decisions are guesswork. A system-level install date does not survive battery replacement events; per-battery dating does.',
             },
             {
               question: 'How big should the false-alarm notice be?',

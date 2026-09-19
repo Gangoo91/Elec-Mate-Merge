@@ -21,21 +21,21 @@ const inlineChecks = [
   {
     id: 'fam2-s3-distance',
     question:
-      'BS 5839-1:2025 simplified the manual call point distance rules in clause 12. What are the maximum distances now, and what was simplified?',
+      'BS 5839-1:2025 19.5 simplified the manual call point distance rules. What are the maximum distances now, and what was simplified?',
     options: [
       'No change — the multiple premises-type distance categories from 2017 are retained.',
-      'Two maxima — 30 m straight-line and 45 m actual-travel — replacing the old risk categories.',
+      'Two figures — 30 m straight-line and 45 m actual-travel — replacing the old risk categories.',
       'A single 15 m maximum applied uniformly to every premises type.',
       'A single 60 m maximum travel distance with no straight-line limit.',
     ],
     correctIndex: 1,
     explanation:
-      'The 2025 edition collapses the previous premises-type distance categories into a single pair: 30 m straight-line distance to the nearest MCP AND 45 m actual-travel distance (along the route a person would walk, around obstructions and through doorways). Both are ceilings — the designer can specify shorter where the risk assessment demands. A typical office corridor with side rooms easily passes the 30 m straight-line test but may exceed the 45 m travel test if the route winds, so both must be checked. The change reduces ambiguity at design and audit.',
+      'The 2025 edition collapses the previous premises-type distance categories into a single pair: 45 m actual-travel distance to the nearest MCP once the layout is fixed, with 30 m straight-line distance applying only at the design stage, before the final layout is known. They are not two simultaneous permanent limits — 30 m is a design-stage proxy for 45 m, not a second live test on the finished building. The change reduces ambiguity at design and audit.',
   },
   {
     id: 'fam2-s3-height',
     question:
-      'Per BS 5839-1:2025 clause 12 (clarified mounting height rule), what is the permitted mounting height range for an MCP?',
+      'Per BS 5839-1:2025 clause 19.8 (mounting height), what is the permitted mounting height range for an MCP?',
     options: [
       'Exactly 1.4 m with no tolerance permitted in either direction.',
       '1.4 m nominal, +200/-300 mm tolerance, giving an absolute range of 1.1 m to 1.6 m.',
@@ -79,21 +79,21 @@ const quizQuestions = [
   {
     id: 1,
     question:
-      'What are the two maximum distances to the nearest manual call point per BS 5839-1:2025 clause 12?',
+      'What are the two distance figures for the nearest manual call point per BS 5839-1:2025 19.5?',
     options: [
       'A single 30 m straight-line distance applied everywhere.',
       'A single 45 m actual-travel distance applied everywhere.',
-      '30 m straight-line AND 45 m actual-travel distance.',
+      '30 m straight-line (design stage) and 45 m actual-travel (finished layout).',
       'A 60 m travel distance with no straight-line limit.',
     ],
     correctAnswer: 2,
     explanation:
-      'Both are maxima and both must be satisfied at every point in the protected area: 30 m straight-line and 45 m actual travel. The 2025 simplification replaced multiple risk-category distances with this single pair as the universal maximum. Tighter distances may still be specified by the designer; this just sets the worst-case ceiling.',
+      '45 m actual-travel is the maximum once the layout is finalised. 30 m straight-line applies only at the design stage, when the final layout is not yet known — it is not a second maximum that continues to apply once the building is fitted out. The 2025 simplification replaced multiple risk-category distances with this single pair. Tighter distances may still be specified by the designer; 45 m is just the worst-case ceiling on the finished building.',
   },
   {
     id: 2,
     question:
-      'Per clause 12, what is the nominal mounting height for an MCP and what tolerance applies?',
+      'Per clause 19.8, what is the nominal mounting height for an MCP and what tolerance applies?',
     options: [
       '1.4 m above floor level, tolerance +200 / -300 mm (range 1.1 m to 1.6 m).',
       '2.0 m above floor level, fixed, to keep the device out of casual reach.',
@@ -156,21 +156,21 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'Compliant but not generous. The 30 m / 45 m maxima are ceilings; tighter spacings are best practice and required where the risk assessment indicates. For high-occupancy corridors with moving people, MCPs every 20 m is a defensible specification.',
+      'Compliant but not generous, and only relevant at the design stage before the final layout is known — 45 m actual-travel is the figure that governs the finished corridor. Tighter spacings are best practice and required where the risk assessment indicates. For high-occupancy corridors with moving people, MCPs every 20 m is a defensible specification.',
   },
   {
     id: 7,
     question:
-      'Why does BS 5839-1:2025 specify a 45 m ACTUAL TRAVEL distance in addition to the 30 m straight-line distance?',
+      'Why does BS 5839-1:2025 19.5 use a 30 m straight-line figure alongside the 45 m actual-travel figure?',
     options: [
-      'Because straight-line distance can mislead in real building geometry.',
-      'Because the travel distance improves accessibility for wheelchair users.',
+      'Because straight-line distance is a usable proxy before the final layout is fixed.',
+      'Because the straight-line distance improves accessibility for wheelchair users.',
       'Because it is a historical figure carried over from older editions.',
       'Because it is needed for Ordnance Survey plan and mapping purposes.',
     ],
     correctAnswer: 0,
     explanation:
-      'A point 25 m straight-line from an MCP may be 50 m to walk, so the 45 m travel test closes the gap. Real building geometry rarely matches the simple geometric test. Walls, columns, service cores, locked doors and stairwells all extend the actual travel distance. The 45 m travel test forces the designer to consider the route a person would actually walk.',
+      '45 m actual-travel — measured along the route a person would walk, around walls, columns, service cores and other obstructions — is the figure that governs once the building is fitted out. At the design stage, before the final layout is known, actual-travel cannot yet be measured, so the standard gives 30 m straight-line as a workable proxy instead. It is a design-stage substitute, not a second permanent test that continues to apply once fit-out is complete.',
   },
   {
     id: 8,
@@ -221,7 +221,7 @@ const FireAlarmModule2Section3 = () => {
   useSEO({
     title: 'Manual call points | Fire Alarm Module 2.3 | Elec-Mate',
     description:
-      'BS 5839-1:2025 manual call point rules: 30 m straight-line / 45 m travel maxima (clause 12), 1.4 m nominal mounting height with +200/-300 tolerance, Type A vs Type B, transparent protective covers, and stairway zoning per clause 12.1a.',
+      'BS 5839-1:2025 manual call point rules: 45 m actual-travel maximum (19.5; 30 m straight-line applies only at design stage), 1.4 m nominal mounting height with +200/-300 tolerance, Type A vs Type B, transparent protective covers, and stairway zoning per clause 12.1a.',
   });
 
   return (
@@ -236,7 +236,7 @@ const FireAlarmModule2Section3 = () => {
 
         <TLDR
           points={[
-            'Distance maxima (clause 12) — 30 m STRAIGHT-LINE distance to nearest MCP AND 45 m ACTUAL TRAVEL distance. Simplified in 2025: previous edition had multiple risk-category distances; now a single pair.',
+            'Distance rule (19.5) — 45 m ACTUAL TRAVEL distance to the nearest MCP governs once the layout is finalised. 30 m STRAIGHT-LINE applies only at the design stage, before the final layout is known. Simplified in 2025: previous edition had multiple risk-category distances; now a single pair.',
             'Mounting height — 1.4 m nominal, +200 mm / -300 mm tolerance, absolute range 1.1-1.6 m. Clarified in 2025.',
             'Types — Type A single-action (default), Type B double-action with cover (malicious-activation hedge). Both BS EN 54-11.',
             'Protective covers — recommended TRANSPARENT in 2025 (was simply "covers" in 2017). Transparent preserves visibility of the device.',
@@ -248,7 +248,7 @@ const FireAlarmModule2Section3 = () => {
 
         <LearningOutcomes
           outcomes={[
-            'Apply the BS 5839-1:2025 clause 12 maximum distances: 30 m straight-line AND 45 m actual travel to the nearest MCP',
+            'Apply the BS 5839-1:2025 19.5 maximum distance: 45 m actual travel to the nearest MCP once the layout is finalised, with 30 m straight-line applying only at the design stage',
             'Apply the clarified mounting-height rule: 1.4 m nominal, +200/-300 tolerance, 1.1-1.6 m absolute range',
             'Distinguish BS EN 54-11 Type A (single-action) and Type B (double-action with cover) MCPs and select appropriately',
             'Apply the 2025 clarification on protective covers: transparent recommended where covers are fitted',
@@ -261,42 +261,42 @@ const FireAlarmModule2Section3 = () => {
 
         <SectionRule />
 
-        <ContentEyebrow>Distance — clause 12 simplified maxima</ContentEyebrow>
+        <ContentEyebrow>Distance — 19.5 simplified maxima</ContentEyebrow>
 
         <ConceptBlock
           title="The 30 m / 45 m rule"
-          plainEnglish="From any point in the protected area, a person should be able to reach the nearest manual call point within 30 m measured in a straight line AND within 45 m measured along the actual walking route. Both numbers are MAXIMA. The straight-line test catches geometric coverage gaps; the travel-distance test catches operational gaps caused by walls, columns, locked doors, service cores and other route impediments. Both must pass at every point. The 2025 edition simplified this from the 2017 framework, which used multiple distance values depending on premises type and risk."
-          onSite="Walk the building before final design sign-off. Stand in each occupied room, look toward the nearest MCP, walk to it. If your walk exceeds 45 m or your geometric distance exceeds 30 m, you need another MCP closer to where you started. The walk test catches errors that drawing measurements miss — particularly where rooms have multiple doors, or where escape routes change direction inside a service core."
+          plainEnglish="From any point in the protected area, a person should be able to reach the nearest manual call point within 45 m measured along the actual walking route — that is the figure that governs once the layout is finalised. The 30 m straight-line figure is a design-stage proxy only, used when the final layout is not yet known; it is superseded by the 45 m travel figure after fit-out. They are not two simultaneous permanent limits. The 2025 edition simplified this from the 2017 framework, which used multiple distance values depending on premises type and risk."
+          onSite="Walk the finished building before final sign-off. Stand in each occupied room, look toward the nearest MCP, walk to it. If your walk exceeds 45 m, you need another MCP closer to where you started — that is the binding test on the finished layout. Use the 30 m straight-line figure only earlier, at the design stage, when the final layout is not yet fixed."
         >
-          <p>The two distance tests:</p>
+          <p>The distance rule and its design-stage proxy:</p>
           <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
             <li>
-              <strong>Straight-line distance ≤ 30 m.</strong> Geometric distance from any point to
-              the nearest MCP, ignoring obstructions. Drawn as straight lines on the floor plan.
-              Catches coverage gaps where a large room has no MCP within ranges.
+              <strong>Actual travel distance ≤ 45 m — governs the finished building.</strong>{' '}
+              Distance along the route a person would walk — through doorways, around walls, past
+              columns. This is the maximum that applies once the layout is finalised.
             </li>
             <li>
-              <strong>Actual travel distance ≤ 45 m.</strong> Distance along the route a person
-              would walk — through doorways, around walls, past columns. Always equal to or longer
-              than the straight-line. Catches operational gaps where the geometry is good but the
-              route is long.
+              <strong>Straight-line distance ≤ 30 m — design stage only.</strong> Geometric distance
+              from any point to the nearest MCP, ignoring obstructions. Used only when the final
+              layout is not yet known; it does not continue to apply as a second limit once the
+              building is fitted out.
             </li>
             <li>
-              <strong>Both maxima are CEILINGS.</strong> Designers can specify tighter distances and
+              <strong>45 m is a CEILING.</strong> Designers can specify tighter distances and
               routinely should where the fire risk assessment identifies higher-risk areas (sleeping
               accommodation, public access, vulnerable occupants, fast-developing fire hazard).
             </li>
             <li>
               <strong>The 2025 simplification.</strong> The 2017 edition had multiple distance
-              categories tied to premises type. The 2025 edition collapses these to the single 30 m
-              / 45 m maximum pair. The change reduces design ambiguity and makes audit
-              straightforward.
+              categories tied to premises type. The 2025 edition collapses these to the single 19.5
+              figure (with the 30 m design-stage proxy). The change reduces design ambiguity and
+              makes audit straightforward.
             </li>
           </ul>
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 19.5 (manual call points — travel distance)"
+          source="BS 5839-1:2025 · Clause 19.5 (manual call points — travel distance) — in summary, not a verbatim quote"
           clause={
             <>
               The distances to find the nearest call points has been simplified to the 30 m straight
@@ -304,7 +304,7 @@ const FireAlarmModule2Section3 = () => {
               shorter if the designer deems it necessary.
             </>
           }
-          meaning="The 30 m / 45 m pair is now the universal maximum. Previous edition's risk-category distance variations are gone. Designers retain discretion to specify tighter — and should, in higher-risk areas — but the floor under the maximum is no longer prescribed by category. The simplification reduces ambiguity at audit."
+          meaning="45 m actual-travel is now the universal maximum once the layout is finalised, replacing the previous edition's risk-category distance variations. The 30 m straight-line figure is a design-stage proxy only, used before the final layout is known — not a second maximum that applies alongside 45 m on the finished building. Designers retain discretion to specify tighter than 45 m — and should, in higher-risk areas. The simplification reduces ambiguity at audit."
         />
 
         <ConceptBlock
@@ -355,13 +355,13 @@ const FireAlarmModule2Section3 = () => {
             Diagram
           </p>
           <h4 className="text-sm font-bold text-white mb-4">
-            MCP mounting height and distance rules — clause 12 (BS 5839-1:2025)
+            MCP mounting height and distance rules (BS 5839-1:2025)
           </h4>
           <svg
             viewBox="0 0 820 540"
             className="w-full h-auto"
             role="img"
-            aria-label="Diagram with two parts. Left: side elevation showing wall with manual call point at 1.4 m nominal mounting height, with +200 and -300 mm tolerance lines, and a person figure for scale. Right: plan view of corridor showing two MCPs with 30 m straight-line distance maximum and 45 m actual travel distance maximum overlaid on a sample geometry."
+            aria-label="Diagram with two parts. Left: side elevation showing wall with manual call point at 1.4 m nominal mounting height, with +200 and -300 mm tolerance lines, and a person figure for scale. Right: plan view of corridor showing two MCPs with the 45 m actual-travel distance maximum (the figure that governs the finished layout) overlaid on a sample geometry, with the 30 m straight-line design-stage proxy noted alongside."
           >
             {/* MOUNTING HEIGHT — left panel */}
             <g>
@@ -516,7 +516,7 @@ const FireAlarmModule2Section3 = () => {
                 Distance maxima
               </text>
               <text x="600" y="48" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="10">
-                30 m straight-line · 45 m actual travel · clause 12
+                45 m actual travel (finished layout) · 30 m straight-line (design stage only) · 19.5
               </text>
               {/* Corridor outline */}
               <rect
@@ -633,11 +633,11 @@ const FireAlarmModule2Section3 = () => {
               strokeWidth="1"
             />
             <text x="65" y="510" fill="#A855F7" fontSize="11" fontWeight="bold">
-              BOTH tests must pass at every point.
+              45 m actual-travel governs the finished building.
             </text>
             <text x="65" y="525" fill="rgba(255,255,255,0.7)" fontSize="9.5">
-              Walk the building before sign-off. The 45 m travel test catches operational gaps that
-              the 30 m geometric test misses.
+              Walk the building before sign-off. The 30 m straight-line figure is a design-stage
+              proxy only — use it before the final layout is known.
             </text>
           </svg>
         </div>
@@ -680,7 +680,7 @@ const FireAlarmModule2Section3 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 19 (manual call points — protective covers)"
+          source="BS 5839-1:2025 · Clause 19 (manual call points — protective covers) — in summary, not a verbatim quote"
           clause={
             <>
               The protective covers that were introduced as a recommendation in the 2017 edition are
@@ -786,7 +786,7 @@ const FireAlarmModule2Section3 = () => {
         <Scenario
           title="The school corridor — Type B with transparent cover"
           situation="A primary school has a 90 m main corridor with classrooms on both sides. Pupil traffic during change-over is high and chaotic. The previous BS 5839-1:2017 installation had Type A MCPs without covers; the school has experienced 11 malicious activations in the previous 18 months — pupils press the MCP as a prank. Each activation triggers FRS attendance under the school's monitoring regime. The school is upgrading to BS 5839-1:2025 standards as part of a refurbishment."
-          whatToDo="Specify Type B double-action MCPs WITH transparent covers throughout the corridor and stairway landings. The double-action requirement (lift cover, press) eliminates almost all casual or impulsive trigger scenarios while a pupil aware of genuine fire intent can still operate the device in under a second. The transparent cover preserves visibility of the MCP's red colour and label so the device remains identifiable at a glance. Document the choice under clause 12 and clause 33 (false-alarm management) — the design rationale is the FA history. Distance: confirm the 30 m / 45 m maxima are met across the corridor and classrooms; with classrooms on both sides, MCPs at approximately 25 m intervals along the corridor satisfy both tests with margin. Mounting height: 1.4 m nominal (within +200/-300 tolerance — for primary-school children specifically, mounting toward the lower end of the tolerance, around 1.2 m, may be considered to allow older pupils to reach if needed, while staff can still operate at 1.4-1.6 m comfortably)."
+          whatToDo="Specify Type B double-action MCPs WITH transparent covers throughout the corridor and stairway landings. The double-action requirement (lift cover, press) eliminates almost all casual or impulsive trigger scenarios while a pupil aware of genuine fire intent can still operate the device in under a second. The transparent cover preserves visibility of the MCP's red colour and label so the device remains identifiable at a glance. Document the choice under clause 12 and clause 33 (false-alarm management) — the design rationale is the FA history. Distance: confirm the 45 m actual-travel maximum is met across the corridor and classrooms; with classrooms on both sides, MCPs at approximately 25 m intervals along the corridor satisfy that with margin. Mounting height: 1.4 m nominal (within +200/-300 tolerance — for primary-school children specifically, mounting toward the lower end of the tolerance, around 1.2 m, may be considered to allow older pupils to reach if needed, while staff can still operate at 1.4-1.6 m comfortably)."
           whyItMatters="Schools are the canonical malicious-activation environment. Type A without covers in a school corridor is a known FA-source pattern. The 2025 edition's transparent-cover recommendation responds directly to this evidence. Switching to Type B with transparent covers — combined with the clause 33 FA-management framework — typically reduces malicious activation by 80 percent or more. The school's avoided FRS-attendance cost recovers the upgrade cost in months."
         />
 
@@ -888,8 +888,8 @@ const FireAlarmModule2Section3 = () => {
           <ol className="list-decimal pl-5 space-y-2 text-[14px]">
             <li>
               <strong>Painted-over or obstructed cover.</strong> The 2025 standard now recommends
-              that protective covers be transparent (clarification in clause 12). A painted, dirty
-              or obstructed cover defeats the purpose. Photograph, record, recommend replacement.
+              that protective covers be transparent (clause 19.2). A painted, dirty or obstructed
+              cover defeats the purpose. Photograph, record, recommend replacement.
             </li>
             <li>
               <strong>Mounting height drift.</strong> 1.4 m ±200 mm above / -300 mm below — i.e. 1.1
@@ -898,9 +898,10 @@ const FireAlarmModule2Section3 = () => {
               5839-1:2025 tolerance.
             </li>
             <li>
-              <strong>Travel distance exceeded.</strong> 30 m straight-line / 45 m travel. Partition
-              changes, plant relocation or new fire compartments routinely break this. The fix is
-              usually an additional MCP, not a tolerance argument.
+              <strong>Travel distance exceeded.</strong> 45 m actual-travel is the figure that
+              governs the finished building. Partition changes, plant relocation or new fire
+              compartments routinely break this. The fix is usually an additional MCP, not a
+              tolerance argument.
             </li>
             <li>
               <strong>Stairway zoning misalignment.</strong> 2025 clause 12.1 a) clarified that an
@@ -922,7 +923,7 @@ const FireAlarmModule2Section3 = () => {
         <KeyTakeaways
           title="What to remember on site"
           points={[
-            'Distance maxima — 30 m STRAIGHT-LINE AND 45 m ACTUAL TRAVEL (clause 12). Both must pass at every point. The 2025 simplification: previous edition had multiple risk-category distances; now a single pair.',
+            'Distance (19.5) — 45 m ACTUAL TRAVEL governs the finished building. 30 m STRAIGHT-LINE applies only at the design stage, before the final layout is known. The 2025 simplification: previous edition had multiple risk-category distances; now a single pair.',
             'Mounting height — 1.4 m nominal, +200 / -300 mm tolerance, absolute range 1.1-1.6 m. Clarified in 2025.',
             'Type A — single-action, default. Type B — double-action with cover, malicious-activation hedge. Both BS EN 54-11.',
             'Protective covers — TRANSPARENT recommended in 2025. Opaque covers obscure the device and defeat its purpose.',
@@ -930,7 +931,7 @@ const FireAlarmModule2Section3 = () => {
             'Position — conspicuous, on natural escape route, at corridor junctions, adjacent to final exits, at stairway landings. Not behind doors or in alcoves.',
             'Schools and public-access venues are FA hot-spots — specify Type B or Type A with transparent cover.',
             'Operation reset — replace frangible element (older) or key-reset (modern). Every operation logged in system logbook with cause analysis (clause 29 — see Section 5).',
-            'Visibility matters as much as distance — 30 m to a hidden MCP is operationally worse than 35 m to a conspicuous one (though both must satisfy the rule).',
+            'Visibility matters as much as distance — 30 m to a hidden MCP is operationally worse than 35 m to a conspicuous one (both still need to satisfy the 45 m actual-travel maximum).',
             'When upgrading existing systems, audit against the 2025 simplifications — distance, height tolerance, transparent covers, and stairway zoning — and plan modifications at next certificate.',
           ]}
         />
@@ -943,9 +944,9 @@ const FireAlarmModule2Section3 = () => {
                 'No. BS 5839-1:2025 requires manual call points in all categories of life-safety system (L1, L2, L3, L4, L5) and in M-category systems. The MCP is the human override — the device that allows a person who has detected a fire to raise the alarm immediately, without waiting for an automatic detector to respond. Detectors and MCPs are complementary; both are required.',
             },
             {
-              question: 'Does the 30 m / 45 m distance apply to all categories, or only L1?',
+              question: 'Does the 45 m actual-travel distance apply to all categories, or only L1?',
               answer:
-                'All categories. Clause 12 sets the maxima as universal across L1, L2, L3, L4, L5 and M systems. The category drives where MCPs are needed (e.g. M is manual-only — MCPs are the entire system) but the 30 m / 45 m maxima apply uniformly. Designers may specify tighter distances for any category where the risk assessment justifies — and routinely should for sleeping accommodation, public access, and high-traffic areas.',
+                'All categories. BS 5839-1:2025 19.5 sets the 45 m maximum as universal across L1, L2, L3, L4, L5 and M systems. The category drives where MCPs are needed (e.g. M is manual-only — MCPs are the entire system) but the 45 m maximum applies uniformly once the layout is finalised. Designers may specify tighter distances for any category where the risk assessment justifies — and routinely should for sleeping accommodation, public access, and high-traffic areas.',
             },
             {
               question: 'Are wireless MCPs permitted under BS 5839-1:2025?',
@@ -956,13 +957,13 @@ const FireAlarmModule2Section3 = () => {
               question:
                 'My fire risk assessment identifies a higher-risk area. Should I tighten the MCP distance there?',
               answer:
-                'Yes — that is exactly the discretion the 2025 edition preserves. The 30 m / 45 m maxima are ceilings; the FRA may identify areas where tighter distances are needed (sleeping accommodation, vulnerable occupants, fast-developing fire hazard, high occupancy with potential for crush). Specify shorter distances in those areas, document the rationale in the system design, and pass the rationale into the operating and maintenance manual under clause 38 documentation.',
+                'Yes — that is exactly the discretion the 2025 edition preserves. The 45 m actual-travel maximum is a ceiling; the FRA may identify areas where tighter distances are needed (sleeping accommodation, vulnerable occupants, fast-developing fire hazard, high occupancy with potential for crush). Specify shorter distances in those areas, document the rationale in the system design, and pass the rationale into the operating and maintenance manual under clause 38 documentation.',
             },
             {
               question:
-                'A 100 m corridor has MCPs at each end (50 m apart from ends to centre). The 30 m straight-line max is breached in the middle 40 m of the corridor. What do I do?',
+                'A 100 m corridor has MCPs at each end (50 m apart from ends to centre). The 45 m actual-travel max is breached in the middle of the corridor. What do I do?',
               answer:
-                'Add a third MCP in the middle of the corridor. The two-end approach satisfies the 30 m rule only for corridors up to 60 m long (with 30 m from each end to the centre). For a 100 m corridor, three MCPs at 25 m intervals (or four at 20 m intervals) are required to satisfy both the 30 m straight-line and 45 m travel maxima with margin. The geometric calculation is straightforward; walking the corridor confirms the travel-distance test.',
+                'Add a third MCP in the middle of the corridor. The two-end approach satisfies the 45 m actual-travel maximum only for corridors up to around 90 m long (45 m from each end to the centre). For a 100 m corridor, three MCPs at 25 m intervals (or four at 20 m intervals) are required to satisfy the 45 m actual-travel maximum with margin. Walking the corridor confirms the travel-distance test on the finished layout.',
             },
             {
               question: 'For an MCP next to a final exit, which side of the door should it be on?',

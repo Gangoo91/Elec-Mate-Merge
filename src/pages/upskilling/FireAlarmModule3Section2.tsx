@@ -169,7 +169,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'Class A loop topology + SCIs delivers the BS 5839-1 architectural principle that a single fault loses no more than one zone of detection. Class B radial topology cannot achieve this without subdividing into separate radial circuits per zone (i.e. effectively reverting to conventional architecture).',
+      'Class A loop topology plus short-circuit isolators is how designers satisfy BS 5839-1 clause 11.2.2, which limits what a single open- or short-circuit fault may disable: not more than 2 000 m2, and not more than one floor plus five devices on the floor above and five below. (Class A/B is BS EN 54-13 naming; 11.2.2 is the BS 5839-1 rule it serves.) Class B radial topology cannot achieve this without subdividing into separate radial circuits per zone (i.e. effectively reverting to conventional architecture).',
   },
   {
     id: 8,
@@ -341,7 +341,7 @@ const FireAlarmModule3Section2 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 12.3 b) (Search distance within a zone)"
+          source="BS 5839-1:2025 · Clause 12.3 b) (Search distance within a zone) — in summary, not a verbatim quote"
           clause={
             <>
               The distance any person may have to travel within a zone to determine the location of
@@ -930,8 +930,9 @@ const FireAlarmModule3Section2 = () => {
               (60 m relaxed)
             </text>
             <text x="440" y="544" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">
-              Class A loop is the BS 5839-1 default for life-safety; Class B used only in justified
-              cases
+              Class A loop is the usual UK choice for life-safety because it satisfies clause 11.2.2
+              most easily — BS 5839-1 does not itself mandate a topology; Class B used only in
+              justified cases
             </text>
           </svg>
         </div>
@@ -1001,15 +1002,21 @@ const FireAlarmModule3Section2 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS EN 54-13 (System compatibility) and BS 5839-1:2025 design considerations"
+          source="BS EN 54-13 (type compatibility) + BS 5839-1:2025 clause 11.2.2 (single-fault limit)"
           clause={
             <>
-              System components including detectors, control and indicating equipment, sounders, and
+              <strong>BS EN 54-13</strong> — a product standard, so it uses &ldquo;shall&rdquo;:
+              system components including detectors, control and indicating equipment, sounders and
               ancillary equipment shall be type-certified as compatible parts of an integrated
-              system in accordance with BS EN 54-13. The system architecture, including circuit
-              class (Class A or Class B per BS 5839-1) and short-circuit isolation, shall be
-              designed so that no single fault results in the loss of protection from more than one
-              zone or from an area greater than 2,000 m².
+              system. Class A / Class B circuit naming belongs to this standard, not to BS 5839-1.
+              <br />
+              <br />
+              <strong>BS 5839-1:2025 clause 11.2.2</strong> — a code of practice, so it uses
+              &ldquo;should&rdquo;, and it sets the limit by AREA and FLOOR rather than by zone: a
+              single open- or short-circuit fault on an automatic fire detector circuit should not
+              disable protection within an area of more than 2 000 m&sup2;, nor on more than one
+              floor plus a maximum of five devices on the floor immediately above and five on the
+              floor immediately below.
             </>
           }
           meaning="Two principles. First, system-level certification (BS EN 54-13) constrains the components — the addressable system is a vendor-tested combination of detectors, CIE, sounders. Mixing brands typically voids the certification (and may not work). Second, the architectural choice (Class A loop with SCIs) is the practical implementation of the BS 5839-1 single-fault rule. Class B sometimes meets the rule in trivial topologies but does not deliver the architectural fault-tolerance Class A provides."
@@ -1066,7 +1073,7 @@ const FireAlarmModule3Section2 = () => {
         />
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 47 (Section 7 — Extensions and modifications)"
+          source="BS 5839-1:2025 · Clause 45.4 (Section 7 — Extensions and modifications) — in summary, not a verbatim quote"
           clause={
             <>
               Where an existing fire detection and fire alarm system is extended, the new works
@@ -1124,20 +1131,24 @@ const FireAlarmModule3Section2 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 43.3.25 (12-month period — zone identification)"
+          source="BS 5839-1:2025 · Clause 43.3.25 (servicing) + Clause 47 NOTE 3 (user duty)"
           clause={
             <>
-              During the 12-month service visit, the zone identification reported on the CIE should
-              be verified that it is the same zone that has been tested and that it corresponds with
-              the zone plan. The verification of correct text descriptors on an addressable system
-              is not specifically recommended as an action for the servicing organization to carry
-              out during a routine service visit. It is deemed the responsibility of the premises
-              management of the system to inform the servicing organization of any changes that are
-              necessary. It might be prudent to confirm periodically (e.g. every 5 years) that the
-              text descriptors are correct.
+              <strong>43.3.25 — the servicing action:</strong> &ldquo;It should be verified that the
+              zone identification reported on the CIE matches the zone identification on the zone
+              plan.&rdquo;
+              <br />
+              <br />
+              <strong>Clause 47 NOTE 3 — a separate USER duty, not a servicing one:</strong> in an
+              addressable system the location descriptors allocated to devices may become
+              inappropriate through refurbishment, change of use or re-designation, and errors can
+              arise from transposition where addresses are set at the detector. It is the
+              responsibility of the USER to ensure descriptors are updated when use or layout
+              changes, and the user &ldquo;might also wish to confirm periodically (e.g. every 5
+              years) that all descriptors are appropriate&rdquo;.
             </>
           }
-          meaning="Three responsibilities clarified. (1) Zone identification verification at the 12-month visit — yes, routine. (2) Text descriptor verification at routine service — no, not the servicing organisation's default responsibility. (3) Change notification — premises management informs the servicing organisation. (4) Periodic check — every 5 years is the suggested cadence. This closes the long-standing ambiguity over text-descriptor maintenance."
+          meaning="Two clauses, two different duty-holders — which is the point. Zone identification is checked BY THE SERVICING ORGANIZATION under 43.3.25. Text descriptors are NOT a routine servicing action: Clause 47 puts that on the USER, with a suggested five-yearly confirmation. Collapsing the two — assuming the service company has checked descriptors, or billing a client as though it were part of the service — is where this goes wrong on site."
         />
 
         <InlineCheck

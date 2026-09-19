@@ -30,11 +30,25 @@
  * A deliberate reference to the superseded 2017 numbering is not a defect, so
  * lines that say so are skipped.
  */
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 
 const CLAUSE_FILE = 'scripts/data/bs5839-clauses.txt';
 const COURSE_DIR = 'src/pages/upskilling';
+
+/*
+ * The course pages are not the only place that cites this standard to a
+ * learner. The mock exam bank, the flashcards and the compliance data module
+ * all do too, and fireAlarmCompliance.ts previously had EVERY clause reference
+ * wrong (Clause 45 — Extensions — cited for all five service intervals).
+ */
+const EXTRA_FILES = [
+  'src/data/upskilling/fireAlarmMockExamData.ts',
+  'src/data/flashcards/fireAlarmSystems.ts',
+  'src/data/fireAlarmCompliance.ts',
+  'src/utils/fireAlarmLogBookJsonFormatter.ts',
+  'src/hooks/useFireAlarmLogBook.ts',
+];
 
 const real = new Set(
   readFileSync(CLAUSE_FILE, 'utf8')
@@ -48,9 +62,12 @@ const exists = (c) => real.has(c) || [...real].some((r) => r.startsWith(c + '.')
 
 const CITE = /\b(?:clause|clauses|§)\s*([0-9]{1,2}(?:\.[0-9]+){0,3})\b/gi;
 
-const files = readdirSync(COURSE_DIR)
-  .filter((f) => /^FireAlarmModule\d+Section\d+\.tsx$/.test(f))
-  .map((f) => join(COURSE_DIR, f));
+const files = [
+  ...readdirSync(COURSE_DIR)
+    .filter((f) => /^FireAlarmModule\d+Section\d+\.tsx$/.test(f))
+    .map((f) => join(COURSE_DIR, f)),
+  ...EXTRA_FILES.filter((f) => existsSync(f)),
+];
 
 const problems = [];
 let checked = 0;
@@ -76,7 +93,7 @@ for (const file of files) {
 
 if (problems.length === 0) {
   console.log(
-    `✔ ${checked} BS 5839-1 clause citations across ${files.length} course pages — all exist`
+    `✔ ${checked} BS 5839-1 clause citations across ${files.length} files — all exist`
   );
   process.exit(0);
 }

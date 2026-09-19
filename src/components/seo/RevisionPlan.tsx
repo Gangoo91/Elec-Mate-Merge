@@ -20,7 +20,10 @@
  * format that earns a normal click-through from search.
  */
 import { Link } from 'react-router-dom';
-import { getTopicsForExam } from '@/components/seo/mockExamTopicRegistry';
+// Summaries, NOT the registry — the registry statically imports 32 question
+// banks and this page only needs topic names and counts. See
+// mockExamTopicSummaries.ts for what that cost on mobile.
+import { getTopicsForExam } from '@/components/seo/mockExamTopicSummaries';
 
 interface RevisionPlanProps {
   /** Exam slugs to build a plan from, most relevant first. */
@@ -66,7 +69,8 @@ export const RevisionPlan = ({ examSlugs, examNames, heading, subject }: Revisio
               </Link>
             </div>
             <p className="mt-1 text-[13px] text-white">
-              {plan.topics.length} topics · {plan.topics.reduce((n, t) => n + t.qCount, 0)} questions
+              {plan.topics.length} topics · {plan.topics.reduce((n, t) => n + t.qCount, 0)}{' '}
+              questions
             </p>
             <ul className="mt-3 grid gap-x-6 gap-y-0.5 sm:grid-cols-2">
               {plan.topics.map((topic) => (

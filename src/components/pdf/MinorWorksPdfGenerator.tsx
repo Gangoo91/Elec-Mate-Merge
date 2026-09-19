@@ -12,6 +12,7 @@ import { Bell, Mail, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { readEdgeFunctionError } from '@/lib/edgeFunctionError';
 import { saveCertificatePdf } from '@/utils/certificate-pdf-storage';
 import { validateMinorWorksFormData } from '@/utils/minorWorksValidation';
 import { formatMinorWorksJson } from '@/utils/minorWorksJsonFormatter';
@@ -502,14 +503,19 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
       );
 
       if (fnError) {
-        let errorMessage = fnError.message;
-        try {
-          const parsed = JSON.parse(fnError.message);
-          errorMessage = parsed.error || parsed.message || fnError.message;
-        } catch {
-          // Keep original message
-        }
-        throw new Error(errorMessage);
+        /*
+         * ELE-1750 — "no error shown" was partly this.
+         *
+         * `functions.invoke` THROWS on a non-2xx, so `fnError.message` is
+         * always the client's own fixed string, "Edge Function returned a
+         * non-2xx status code". The real message the function wrote is on
+         * `error.context`. Parsing `fnError.message` as JSON therefore always
+         * threw, always fell into the catch, and always showed that fixed
+         * string — so whatever went wrong, the electrician read the same
+         * meaningless sentence and had nothing to act on.
+         */
+        const body = await readEdgeFunctionError(fnError);
+        throw new Error(body?.error || body?.message || fnError.message);
       }
 
       if (!result?.success) {

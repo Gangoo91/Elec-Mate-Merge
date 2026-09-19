@@ -69,15 +69,50 @@ export default function FAG3Declaration({ formData, onUpdate }: Props) {
 
   return (
     <div className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+      {/*
+        Clause 6.4 — "All variations should be listed in the relevant system
+        certificate". The Annex G statement below carves out "the variations, if
+        any, stated in this certificate", so there has to be somewhere to state
+        them or the carve-out points at nothing.
+      */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Variations from BS 5839-1" />
+        <div className="rounded-xl border border-amber-500/30 bg-white/[0.05] p-3">
+          <p className="text-[12px] leading-relaxed text-white/85">
+            Any variation from the recommendations of BS 5839-1:2025 must be listed here with its
+            justification. Left blank, the certificate states that there were none.
+          </p>
+        </div>
+        <Field label="Variations & justification">
+          <Textarea
+            value={formData.commissioningVariations || ''}
+            onChange={(e) => onUpdate('commissioningVariations', e.target.value)}
+            className={textareaCn}
+            placeholder="List any departures from the standard and explain why they are acceptable..."
+          />
+        </Field>
+      </div>
+
       {/* Commissioner declaration */}
       <div className={cn(cardCn, 'lg:col-span-2')}>
         <SectionHeader title="Commissioner declaration" />
         <div className="rounded-xl bg-white/[0.05] p-3.5">
           <p className="text-sm text-white/85 leading-relaxed">
-            I hereby certify that the fire detection and fire alarm system described in this
-            certificate has been commissioned in accordance with BS 5839-1:2025. All tests have been
-            carried out satisfactorily and the system is ready for use, subject to any observations
-            recorded.
+            I/we being the competent person(s) responsible (as indicated by my/our signature(s)
+            below) for the commissioning of the fire detection and fire alarm system, particulars of
+            which are set out in this certificate, CERTIFY that the said work for which I/we have
+            been responsible complies to the best of my/our knowledge and belief with the
+            recommendations of BS 5839-1:2025, Clause 37, except for the variations, if any, stated
+            in this certificate.
+          </p>
+          <p className="mt-2 text-[12px] leading-relaxed text-white/85">
+            All equipment operates correctly. Installation work is, as far as can reasonably be
+            ascertained, of an acceptable standard. The entire system has been inspected and tested
+            in accordance with the recommendations of BS 5839-1:2025, 37.4.
+          </p>
+          <p className="mt-2 text-[12px] italic leading-relaxed text-white/85">
+            The extent of liability of the signatory is limited to the system described in this
+            certificate.
           </p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">

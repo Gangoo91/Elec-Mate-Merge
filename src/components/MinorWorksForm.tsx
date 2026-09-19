@@ -1,3 +1,4 @@
+import { readCertificatePrefill } from '@/utils/certificatePrefill';
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 // Step transitions handled by the v3 shell (keyed animate-mw-step-in/back)
@@ -104,10 +105,11 @@ const MinorWorksForm = ({
     // Certificate Header
     certificateNumber: '',
 
-    // Client & Installation Details
-    propertyAddress: '',
+    // Client & Installation Details — from the job or the diary when started
+    // there (?clientName=&address=, read by readCertificatePrefill), else blank.
+    propertyAddress: readCertificatePrefill()?.address ?? '',
     postcode: '',
-    clientName: '',
+    clientName: readCertificatePrefill()?.clientName ?? '',
     clientPhone: '',
     clientEmail: '',
     workDate: '',
@@ -298,6 +300,31 @@ const MinorWorksForm = ({
     email: () => void;
     invoice: () => void;
   } | null>(null);
+
+  /**
+   * Run one of those actions, or say why it could not run.
+   *
+   * The ref is populated by `MinorWorksPdfGenerator` during its own render, so
+   * a null here means that component is not on screen. Nothing the user can do
+   * about it, but being told beats a button that swallows the tap.
+   */
+  const runPdfAction = React.useCallback(
+    (action: 'generate' | 'email' | 'invoice') => {
+      const actions = pdfActionsRef.current;
+      if (!actions) {
+        console.error(`[ELE-1750] Minor Works ${action} tapped with no PDF actions attached`);
+        toast({
+          title: 'Not ready yet',
+          description:
+            'The certificate actions have not finished loading. Give it a moment and try again.',
+          variant: 'destructive',
+        });
+        return;
+      }
+      actions[action]();
+    },
+    [toast]
+  );
 
   // Slide direction for the step transition — back navigation slides the other way.
   const prevTabIndexRef = React.useRef(currentTabIndex);
@@ -1382,19 +1409,26 @@ const MinorWorksForm = ({
         {!isLocked && (
           <MWStickyFooter
             /*
-             * ELE-1750 — without this, Preview showed the form's own HTML
-             * instead of the PDF. `CertShellFooter` gates on
-             * `canPreview = !!previewReportType && !!previewData`, and its own
-             * comment says to supply BOTH. Minor Works only ever supplied the
-             * data, so the button never rendered and the user fell through to
-             * the web layout — Craig Soper reported it as "not as a PDF like if
-             * I was doing an EICR". EICR passes previewReportType="eicr" and
-             * EIC passes "eic"; this was the one certificate passing neither.
+             * ELE-1750 — Craig Soper: "not as a PDF like if I was doing an
+             * EICR."
              *
-             * ReportPdfViewer already routes 'minor-works' to
-             * generate-minor-works-pdf, so nothing else was missing.
+             * An earlier pass at this added `previewReportType="minor-works"`
+             * here, reasoning from `CertShellFooter`'s
+             * `canPreview = !!previewReportType && !!previewData` gate. That
+             * was the wrong component. Minor Works has its OWN footer, and
+             * `MWStickyFooter` has never had a `previewReportType` prop — so
+             * the line was inert and the bug was untouched.
+             *
+             * The actual difference: `CertShellFooter` renders TWO buttons on
+             * the last step. Preview opens `CertPreviewSheet`, which by design
+             * shows the data rather than the document; View PDF opens
+             * `ReportPdfViewer`, which is the real certificate. EICR has both.
+             * Minor Works only ever had Preview, so the only thing Craig could
+             * open was the data layout. `MWStickyFooter` now takes
+             * `previewReportId` and offers View PDF exactly as the shared
+             * footer does.
              */
-            previewReportType="minor-works"
+            previewReportId={currentReportId}
             previewData={formData as unknown as Record<string, unknown>}
             currentTabIndex={currentTabIndex}
             totalTabs={totalTabs}
@@ -1433,9 +1467,21 @@ const MinorWorksForm = ({
               navigatePrevious();
               onTabChange?.();
             }}
-            onEmail={() => pdfActionsRef.current?.email()}
-            onInvoice={() => pdfActionsRef.current?.invoice()}
-            onGenerate={() => pdfActionsRef.current?.generate()}
+            /*
+             * ELE-1750 — `?.` on a ref is a silent no-op, which is the one
+             * thing this ticket is about.
+             *
+             * `MinorWorksPdfGenerator` fills this ref while it renders, and it
+             * only renders on the Sign off step. If it has not — an unmounted
+             * step, a render it did not reach — every one of these buttons
+             * does nothing at all and says nothing, which is exactly how Craig
+             * Soper described the Email button. Whether or not that was his
+             * cause, a button that can fail in complete silence should not
+             * exist on the last step of a job.
+             */
+            onEmail={() => runPdfAction('email')}
+            onInvoice={() => runPdfAction('invoice')}
+            onGenerate={() => runPdfAction('generate')}
           />
         )}
 

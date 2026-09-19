@@ -35,7 +35,7 @@ const inlineChecks = [
   {
     id: 'fam7-s3-mcp',
     question:
-      'BS 5839-1:2025 §13 (manual call points). What is the maximum distance from any point in the building to the nearest MCP, post-2025 revision?',
+      'BS 5839-1:2025 19.5 (manual call points). What is the maximum distance from any point in the building to the nearest MCP, post-2025 revision?',
     options: [
       '50 m straight line and 75 m actual travel distance to the nearest manual call point.',
       '20 m straight line and 30 m actual travel distance to the nearest manual call point.',
@@ -49,7 +49,7 @@ const inlineChecks = [
   {
     id: 'fam7-s3-cable',
     question:
-      'BS 5839-1:2025 §16 (cabling). What is the recommended cable colour for fire alarm cables, including the low-voltage mains supply, post-2025 revision?',
+      'BS 5839-1:2025 25.9 (cable colour). What is the recommended cable colour for fire alarm cables, including the low-voltage mains supply, post-2025 revision?',
     options: [
       'Any colour the installer chooses, since cable colour is not specified for fire alarm systems.',
       'Black for the power conductors and red for the signal conductors throughout.',
@@ -106,16 +106,17 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question: 'Another 2025 change: stairway lobbies. What does the standard now require?',
+    question:
+      'Where a stairway is approached through a lobby in a Category L3 system, where does clause 7.7 put the detectors?',
     options: [
-      'There is no change — stairway lobbies are treated exactly as in the 2017 edition.',
-      'Stairway lobbies now require manual call points (MCPs) only, with no automatic detection.',
-      'Stairway lobbies are now explicitly exempt from any detection requirement.',
-      'Stairway lobbies are now designated as areas requiring automatic detection (AFD).',
+      'In the lobby itself, which is now designated an area requiring automatic detection.',
+      'On the accommodation side of any door that opens onto the lobby.',
+      'Nowhere — lobbies are exempt from any detection requirement.',
+      'In the stairway only, with the lobby covered by the stairway detector.',
     ],
-    correctAnswer: 3,
+    correctAnswer: 1,
     explanation:
-      'Lobbies were previously excludable as "areas of low fire risk"; 2025 requires AFD because smoke accumulating in lobbies can impede stairway use and lobby detection gives earlier warning of stairway compromise. Combined with the L2 sleeping-room change, this materially extends detection scope in residential and mixed-use buildings.',
+      'Clause 7.7: "Where stairways are approached through lobbies, detectors should be installed on the accommodation side of any door that opens onto the lobby." The rule is about WHERE the detector goes relative to the door, not about designating the lobby as an AFD area. Note the related exclusion in the other direction: clause 7.9 b) says TOILET lobbies need not be protected in an L1 or P1 system where they are of low fire risk — so "lobby" alone does not settle whether detection is needed.',
   },
   {
     id: 4,
@@ -155,7 +156,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'Logbook = Annex H (was F). Acceptance cert = Annex G. Detector selection = Annex D (was E). The renumbering reflects the structural reorganisation and the new Section 7 (extensions and modifications). The logbook clause now requires ALL agreed variations to be recorded — a change from the 2017 "major" variations (with "major" undefined).',
+      'Logbook = Annex H (was F). Annex G holds the seven model certificates (G.1 Design, G.2 Installation, G.3 Commissioning, G.4 Acceptance, G.5 Verification, G.6 Inspection and servicing, G.7 Extensions or modifications) — the acceptance certificate is G.4, one of the seven, not the whole of Annex G. Detector selection = Annex D (was E). The renumbering reflects the structural reorganisation and the new Section 7 (extensions and modifications). The logbook clause now requires ALL agreed variations to be recorded — a change from the 2017 "major" variations (with "major" undefined).',
   },
   {
     id: 7,
@@ -221,7 +222,7 @@ const FireAlarmModule7Section3 = () => {
   useSEO({
     title: 'BS 5839-1 requirements | Fire Alarm Module 7.3 | Elec-Mate',
     description:
-      'BS 5839-1:2025 — non-domestic fire detection and alarm code of practice. Categories M / L1-L5 / P1-P2, the major 2025 changes (heat detectors in sleeping rooms, stairway lobbies, cause-and-effect, cyber security, alarm transmission timings, cable colour, MCP distances, mounting heights, service tolerance, unacceptable variations).',
+      'BS 5839-1:2025 — non-domestic fire detection and alarm code of practice. Categories M / L1-L5 / P1-P2, the major 2025 changes (heat detectors in sleeping rooms, lobby detector siting under 7.7, stairway lobbies, cause-and-effect, cyber security, alarm transmission timings, cable colour, MCP distances, mounting heights, service tolerance, unacceptable variations).',
   });
 
   return (
@@ -231,8 +232,8 @@ const FireAlarmModule7Section3 = () => {
         <p className="max-w-3xl text-[13px] leading-relaxed text-white">
           BS 5839-1:2025 (published 30 April 2025) is the code of practice for non-domestic fire
           detection and fire alarm systems. The first full revision since 2017. Categories M, L1-L5,
-          P1-P2. Major 2025 changes: heat detectors banned in sleeping rooms, stairway lobbies
-          require AFD, cause-and-effect mandatory at handover, cyber security clause, ARC
+          P1-P2. Major 2025 changes: heat detectors banned in sleeping rooms, lobby detector siting
+          (7.7) require AFD, cause-and-effect mandatory at handover, cyber security clause, ARC
           transmission timings, cable colour guidance, MCP distances simplified, service tolerance
           window, new unacceptable variations.
         </p>
@@ -242,7 +243,7 @@ const FireAlarmModule7Section3 = () => {
             'BS 5839-1:2025 — non-domestic code of practice. Published 30 April 2025. Replaces BS 5839-1:2017. Code of practice (not law) but referenced by ADB as the route to B1 compliance.',
             'Categories: M (manual only); L1-L5 (life protection, decreasing coverage); P1-P2 (property protection). /M suffix on L/P categories indicates MCPs additional.',
             '2025 KEY CHANGE 1 — heat detectors banned in rooms where people sleep (L2 / L3 new works). Smoke or multi-sensor required.',
-            '2025 KEY CHANGE 2 — stairway lobbies now require AFD (no longer permitted as low-risk exclusion).',
+            'Stairway lobbies (clause 7.7) — where a stairway is approached through a lobby in an L3 system, detectors go on the ACCOMMODATION SIDE of any door opening onto the lobby. Note 7.9 b) still allows toilet lobbies to be unprotected where low fire risk.',
             '2025 KEY CHANGE 3 — cause-and-effect matrix or text description mandatory at handover.',
             '2025 KEY CHANGE 4 — cyber security clause 43.4 (physical access + authenticated remote service + risk assessment).',
             '2025 KEY CHANGE 5 — alarm transmission timings: Cat L 90 s, Cat P 120 s; catastrophic-fail indication 3 min L, 31 min P.',
@@ -391,11 +392,11 @@ const FireAlarmModule7Section3 = () => {
               archives, museum collections, plant areas) — for property protection.
             </li>
             <li>
-              <strong>/M suffix.</strong> Any L or P category may have "/M" added to indicate that
-              MCPs are additionally provided throughout. e.g. L2/M means the L2 detection coverage
-              plus a complete MCP installation. The /M is operationally significant — without /M, an
-              L or P system has only the MCPs at the standard locations (final exits, stairway
-              landings); with /M, MCPs are throughout.
+              <strong>/M suffix.</strong> BS 5839-1:2025 4.4 restricts "/M" to Category P1, P2 and
+              L5 systems only — a combined P1/M, P2/M or L5/M system satisfies the recommendations
+              for both the Category M system and the P1, P2 or L5 system respectively. /M is never
+              added to L1, L2, L3 or L4: those categories already include manual call points by
+              default, so "L2/M" is not a valid category designation.
             </li>
           </ul>
           <p>
@@ -559,7 +560,7 @@ const FireAlarmModule7Section3 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · §38.1 (Documentation provided at handover) — cause-and-effect"
+          source="BS 5839-1:2025 · §38.1 (Documentation provided at handover) — cause-and-effect — in summary, not a verbatim quote"
           clause={
             <>
               A cause-and-effect matrix or text description of how the cause and effect operates
@@ -1150,7 +1151,7 @@ const FireAlarmModule7Section3 = () => {
         <Scenario
           title="The 36-bed care home — Cat L1, ARC, sprinklers"
           situation="A residential care home (36 bedrooms, single-storey corridor layout) is being refurbished. Existing system: Cat L3 (escape routes only). Existing detection: heat in resident rooms. No ARC connection. The fire risk assessment recommends Cat L1 with full coverage including residents' rooms; the building also has sprinklers due to the 2025 sprinkler regulations for new and altered care premises."
-          whatToDo="The residents' rooms must have smoke or multi-sensor detection — heat detectors are no longer permitted in sleeping rooms in 2025 new works (2025 §14). The sprinkler heads, if used to initiate fire condition on the CIE, must be zoned so that there can be no confusion between sprinkler operation area and detection zones; sprinkler zones must not overlap with more than one detection zone (2025 §14). ARC connection is now mandatory under the new unacceptable variations clause — its absence in a residential care home is an unacceptable variation. Cause-and-effect (smoke / multi-sensor → local sounder + remote sounder + ARC + sprinkler-zone-correlated indication) must be documented at handover (2025 §38.1). The cable colour: red preferred for FA and LV mains; FE pink (2025 §16). MCPs at exits, 30 m straight / 45 m travel maximum, mounted 1.1-1.6 m. Service interval thereafter 5-7 months from acceptance."
+          whatToDo="The residents' rooms must have smoke or multi-sensor detection — heat detectors are no longer permitted in sleeping rooms in 2025 new works (2025 20.2 c) NOTE 3). The sprinkler heads, if used to initiate fire condition on the CIE, must be zoned so that there can be no confusion between sprinkler operation area and detection zones; sprinkler zones must not overlap with more than one detection zone (2025 §14). ARC connection is now mandatory under the new unacceptable variations clause — its absence in a residential care home is an unacceptable variation. Cause-and-effect (smoke / multi-sensor → local sounder + remote sounder + ARC + sprinkler-zone-correlated indication) must be documented at handover (2025 §38.1). The cable colour: red preferred for FA and LV mains (2025 25.9); FE pink (2025 28.2). MCPs at exits, 45 m actual-travel maximum (30 m straight-line applies only at design stage), mounted 1.1-1.6 m. Service interval thereafter 5-7 months from acceptance."
           whyItMatters="Residential care premises are heavily regulated (CQC for the care; FRS for fire). The 2025 changes specifically aimed at sleeping-risk premises (heat ban, ARC unacceptable variation) bite hardest here. The contractor delivering a 2017-style system to a 2026 care home creates an immediate compliance deficit; the responsible person who accepts it is in default of RRO Art 13 / Art 17. Get 2025-aware from project start."
         />
 
@@ -1184,9 +1185,9 @@ const FireAlarmModule7Section3 = () => {
                 'Not retrospectively. The 2025 ban on heat detectors in sleeping rooms applies to new works (new install or upgrade). Existing systems remain compliant with the standard at the time of installation until they undergo new works. But — the FRA may already have flagged the heat detection in sleeping rooms as inadequate; if so, you have an FRA-level finding to address regardless of standard retrospection. Best practice: plan a phased replacement to smoke / multi-sensor in sleeping rooms over the next service cycles.',
             },
             {
-              question: 'What is the difference between Cat L2 with /M suffix and Cat L1?',
+              question: 'What is the difference between Cat L2 and Cat L1 detection coverage?',
               answer:
-                "L2 is escape routes plus high-risk areas. L2/M adds MCPs throughout the premises (not only at exits / stairways). L1 is escape routes plus all areas (excluding only specified low-risk locations). Coverage is the difference: L2/M still has automatic detection only in escape routes plus high-risk areas; L1 has automatic detection essentially everywhere. The /M suffix doesn't extend AFD; it extends manual call point provision. So L2/M < L1 in detection coverage.",
+                "L2 is escape routes plus high-risk areas. L1 is escape routes plus all areas (excluding only specified low-risk locations). L1 has automatic detection essentially everywhere; L2 has automatic detection only in escape routes plus high-risk areas — a smaller footprint. Note: there is no 'L2/M' designation — BS 5839-1:2025 4.4 restricts the /M suffix to Category P1, P2 and L5 systems only, because L1-L4 already include manual call points by default.",
             },
             {
               question: 'For Cat M (manual only) systems, do the 2025 changes affect me?',
@@ -1217,9 +1218,9 @@ const FireAlarmModule7Section3 = () => {
                 'No — the 2025 list is specific. Unacceptable variation 1: zone plan absence in multi-zone premises with sleeping risk. Unacceptable variation 2: ARC absence in (i) supported housing where Grade A is necessary, or (ii) residential care homes. A standard hotel is not in the unacceptable variation list (though the FRA is very likely to recommend ARC anyway). The unacceptable variations are calibrated to the highest-risk sleeping premises — supported housing and residential care, where occupants have limited self-evacuation capability.',
             },
             {
-              question: 'Where do I find Annex G (acceptance certificate) and is it new in 2025?',
+              question: 'Where do I find the acceptance certificate and is it new in 2025?',
               answer:
-                'Annex G is the acceptance certificate template — the document the commissioning organisation issues to confirm the system has been installed and tested in accordance with the recommendations of BS 5839-1. It existed in 2017 (Annex G was the same content) but the 2025 revision updated it to reflect the new clauses (cause-and-effect handover, cyber security, alarm transmission timings). Use the 2025 version for any system commissioned from 30 April 2025 onwards.',
+                'Annex G holds seven model certificates — G.1 Design, G.2 Installation, G.3 Commissioning, G.4 Acceptance, G.5 Verification, G.6 Inspection and servicing, G.7 Extensions or modifications. The acceptance certificate is G.4: the document the commissioning organisation issues to confirm the system has been installed and tested in accordance with the recommendations of BS 5839-1. It existed in 2017 (Annex G was the same content) but the 2025 revision updated it to reflect the new clauses (cause-and-effect handover, cyber security, alarm transmission timings). Use the 2025 version for any system commissioned from 30 April 2025 onwards.',
             },
           ]}
         />

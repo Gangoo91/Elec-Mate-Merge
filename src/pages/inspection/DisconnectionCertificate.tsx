@@ -28,6 +28,7 @@ import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/uti
 import { reportCloud } from '@/utils/reportCloud';
 import { formatDisconnectionCertificatePayload } from '@/utils/disconnection-certificate-formatter';
 import { scrollToTopForStepChange } from '@/utils/scroll';
+import { readEdgeFunctionError } from '@/lib/edgeFunctionError';
 
 const cardCn =
   '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
@@ -507,25 +508,19 @@ export default function DisconnectionCertificate() {
         { body: { reportId: existingReportId, recipientEmail: emailRecipient, formattedData } }
       );
       if (fnError) {
-        let errorMessage = fnError.message;
-        try {
-          const parsed = JSON.parse(fnError.message);
-          errorMessage = parsed.error || parsed.message || fnError.message;
-        } catch {
-          /* keep original message */
-        }
-        const context = (fnError as { context?: { body?: unknown } }).context;
-        if (context?.body) {
-          try {
-            const bodyError =
-              typeof context.body === 'string' ? JSON.parse(context.body) : context.body;
-            const errText = (bodyError as { error?: string }).error;
-            if (errText) errorMessage = errText;
-          } catch {
-            /* keep original message */
-          }
-        }
-        throw new Error(errorMessage);
+        /*
+         * ELE-1750 — the real message is on `error.context`, never on
+         * `fnError.message`.
+         *
+         * `functions.invoke` throws on a non-2xx, so `fnError.message` is
+         * always the client's own fixed "Edge Function returned a non-2xx
+         * status code". Parsing it as JSON could never succeed, and the
+         * `context.body` fallback beside it read a ReadableStream rather than
+         * the body — so whatever the function said, the user read that same
+         * fixed sentence and had nothing to act on.
+         */
+        const body = await readEdgeFunctionError(fnError);
+        throw new Error(body?.error || body?.message || fnError.message);
       }
       if (!result?.success) throw new Error(result?.error || 'Failed to send');
       toast.success(

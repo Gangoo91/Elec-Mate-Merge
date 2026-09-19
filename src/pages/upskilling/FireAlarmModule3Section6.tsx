@@ -109,12 +109,12 @@ const quizQuestions = [
     options: [
       'They are two names for the same single document issued at the end of the project.',
       'The commissioning certificate is issued by the installer and the acceptance certificate by the panel manufacturer.',
-      'The commissioning certificate certifies the system meets the design and standard; the acceptance certificate (Annex G) records the responsible person accepting custody.',
+      'The commissioning certificate certifies the system meets the design and standard; the acceptance certificate (Annex G.4) records the PURCHASER accepting the system — clauses 40.2 and 40.3 name the purchaser, not the RRO 2005 "responsible person".',
       'They differ only in which annex they appear in — Annex F versus Annex H of the standard.',
     ],
     correctAnswer: 2,
     explanation:
-      'The commissioning certificate is technical: the system meets the standard. The acceptance certificate is contractual / responsible: the responsible person takes ownership of the system and the duties it brings. Both certificates are filed in the documentation set; both are dated; both refer to the system as built at the date of acceptance.',
+      'The commissioning certificate is technical: the system meets the standard. The acceptance certificate is contractual: the PURCHASER takes ownership of the system and the duties it brings. Both certificates are filed in the documentation set; both are dated; both refer to the system as built at the date of acceptance.',
   },
   {
     id: 4,
@@ -163,7 +163,7 @@ const quizQuestions = [
       'Annex E, alongside the detector selection and configuration recording.',
       'Annex H, the same annex that holds the system logbook.',
       'Annex K, a new annex introduced for acceptance documentation in 2025.',
-      'Annex G, formalising the responsible person accepting the system into custody.',
+      'Annex G.4, formalising the PURCHASER accepting the system — 40.3 asks the handing-over organization to obtain the purchaser&rsquo;s signature.',
     ],
     correctAnswer: 3,
     explanation:
@@ -242,7 +242,7 @@ const FireAlarmModule3Section6 = () => {
             'Schematic: detailed electrical drawings — cable runs, terminations, device addresses.',
             'Riser diagram: cable runs through the building vertically.',
             'Cause-and-effect matrix: NEW mandatory at handover in BS 5839-1:2025. Even a one-line text description is acceptable for simple systems.',
-            'Acceptance certificate (Annex G): responsible person formally accepts the system. Issued after commissioning.',
+            'Acceptance certificate (Annex G.4): the PURCHASER formally accepts the system (clauses 40.2/40.3). Issued after commissioning. Do not confuse the purchaser with the RRO 2005 "responsible person", who carries the ongoing duties under Clause 47.',
             'Extension OR modification certificate (clause 47, was just "modification" in 2017): covers all extensions AND all modifications. Firmware updates of the CIE = modification (NEW explicit).',
             'Variations: ALL agreed variations now recorded in the logbook (was: "major" only in 2017, undefined). Some variations now UNACCEPTABLE entirely (zone plan absence, ARC absence in supported housing / care homes).',
             'Logbook = Annex H (was Annex F in 2017). Content updated to reflect 2025 requirements.',
@@ -317,7 +317,7 @@ const FireAlarmModule3Section6 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 38 (Documentation/handover)"
+          source="BS 5839-1:2025 · Clause 38 (Documentation/handover) — in summary, not a verbatim quote"
           clause={
             <>
               A new item that appears within the documentation clause of BS 5839-1:2025 is the
@@ -671,7 +671,7 @@ const FireAlarmModule3Section6 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 47 (Section 7 — Extensions and modifications)"
+          source="BS 5839-1:2025 · Clause 45.4 (Section 7 — Extensions and modifications)"
           clause={
             <>
               The certificate that should be issued after any extension or modification has been
@@ -740,7 +740,7 @@ const FireAlarmModule3Section6 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 6 (Variations) and Clause 48 (Logbook)"
+          source="BS 5839-1:2025 · Clause 6 (Variations) and Clause 48 (Logbook) — in summary, not a verbatim quote"
           clause={
             <>
               Whilst BS 5839-1:2025 is a code of practice, and variations against the
@@ -819,7 +819,7 @@ const FireAlarmModule3Section6 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 48 / Annex H (Logbook)"
+          source="BS 5839-1:2025 · Clause 48 / Annex H (Logbook) — in summary, not a verbatim quote"
           clause={
             <>
               A logbook should be provided and maintained at the premises in which the

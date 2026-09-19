@@ -141,10 +141,16 @@ export default function FAG1Declaration({ formData, onUpdate }: Props) {
         <SectionHeader title="Designer declaration" />
         <div className="rounded-xl bg-white/[0.05] p-3.5">
           <p className="text-[12px] text-white/85 leading-relaxed">
-            I hereby certify that the fire detection and fire alarm system design described in this
-            certificate has been carried out in accordance with BS 5839-1:2025 and is based on the
-            fire risk assessment referenced above. The design provides adequate detection and alarm
-            coverage for the identified fire risks, except for any variations stated.
+            I/we being the competent person(s) responsible (as indicated by my/our signature(s)
+            below) for the design of the fire detection and fire alarm system, particulars of which
+            are set out in this certificate, CERTIFY that the said design for which I/we have been
+            responsible complies to the best of my/our knowledge and belief with the recommendations
+            of BS 5839-1:2025, Section 2, for the system category stated in this certificate, except
+            for the variations, if any, stated in this certificate.
+          </p>
+          <p className="mt-2 text-[12px] italic leading-relaxed text-white/85">
+            The extent of liability of the signatory is limited to the system described in this
+            certificate.
           </p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">

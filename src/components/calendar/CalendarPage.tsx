@@ -22,10 +22,28 @@ import CalendarDayView from './CalendarDayView';
 import CalendarDaySheet from './CalendarDaySheet';
 import CalendarEventSheet, { type SaveExtras } from './CalendarEventSheet';
 import TellCustomerSheet, { type TellCustomerTarget } from './TellCustomerSheet';
-import CalendarEventDetail from './CalendarEventDetail';
+import CalendarEventDetail, { type EndJobMode, type StartJobDraft } from './CalendarEventDetail';
+import { ProjectDocumentSheet } from '@/components/project-management/ProjectDocumentSheet';
+import type { DocType } from '@/hooks/useProjectDocuments';
+import type { LinkableProject } from '@/hooks/useLinkableProjects';
+import {
+  completeJob,
+  createJobFromEvent,
+  linkEventToJob,
+  markJobActive,
+  reopenJob,
+  setEventCustomer,
+  startTimerForJob,
+  stopRunningSessionForJob,
+  formatElapsed,
+  type EventJob,
+  type StartOptions,
+} from '@/lib/eventJobActions';
 import CalendarSettingsSheet from './CalendarSettingsSheet';
 import CalendarAgendaStrip from './CalendarAgendaStrip';
 import CalendarSummaryStrip from './CalendarSummaryStrip';
+import CalendarTidyStrip from './CalendarTidyStrip';
+import { DIARY_TIDY_KEY } from './useDiaryTidy';
 import StartDateRequestsCard from '@/components/electrician/booking/StartDateRequestsCard';
 import { useStartDateRequests } from '@/hooks/useStartDateRequests';
 import { containerVariants, itemVariants } from './calendarStyles';
@@ -47,6 +65,13 @@ import { useCalendarPulse } from '@/hooks/useCalendarPulse';
 import { useGoogleCalendarSync } from '@/hooks/useGoogleCalendarSync';
 import { useOutlookCalendarSync } from '@/hooks/useOutlookCalendarSync';
 import { toast } from '@/hooks/use-toast';
+import {
+  trackCalendarCustomerAttached,
+  trackCalendarJobAction,
+  trackCalendarJobEnded,
+  trackCalendarJobLinked,
+  trackCalendarJobStarted,
+} from '@/lib/analytics-events';
 import { useHaptic } from '@/hooks/useHaptic';
 import { useQueryClient } from '@tanstack/react-query';
 import { useCalendarSettings } from '@/hooks/useCalendarSettings';
@@ -171,7 +196,11 @@ const CalendarPageContent = () => {
         return { dateFrom: ws.toISOString(), dateTo: we.toISOString() };
       }
       case 'day': {
-        const ds = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+        const ds = new Date(
+          currentDate.getFullYear(),
+          currentDate.getMonth(),
+          currentDate.getDate()
+        );
         const de = new Date(
           currentDate.getFullYear(),
           currentDate.getMonth(),
@@ -517,78 +546,64 @@ const CalendarPageContent = () => {
    * the tools. The row shape and the query keys match the hook exactly, and
    * its caches are invalidated so the tracker picks the session up.
    */
-  const handleStartJob = useCallback(
-    async (event: CalendarEvent) => {
-      if (!event.project_id) return;
-      const label = event.project?.title ?? event.title;
-      try {
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
-        if (!user) throw new Error('Not signed in');
+  /**
+   * ELE-1755 — every write the sheet makes touches the same caches, and the
+   * sheet stays open afterwards showing the result, so they are refreshed as
+   * one. `event-job` and `event-job-records` are the sheet's own queries.
+   */
+  const refreshJobCaches = useCallback(() => {
+    queryClient.invalidateQueries({ queryKey: ['calendar-events'] });
+    queryClient.invalidateQueries({ queryKey: ['event-job'] });
+    queryClient.invalidateQueries({ queryKey: ['event-job-records'] });
+    queryClient.invalidateQueries({ queryKey: ['time-session-active'] });
+    queryClient.invalidateQueries({ queryKey: ['time-sessions-recent'] });
+    queryClient.invalidateQueries({ queryKey: ['spark-projects'] });
+    queryClient.invalidateQueries({ queryKey: ['projects-for-calendar'] });
+    queryClient.invalidateQueries({ queryKey: ['linkable-projects'] });
+    queryClient.invalidateQueries({ queryKey: DIARY_TIDY_KEY });
+  }, [queryClient]);
 
+  const hourlyRate = companyProfile?.hourly_rate ?? 45;
+
+  const handleStartJob = useCallback(
+    async (event: CalendarEvent, job: EventJob, opts?: StartOptions) => {
+      try {
         // A finished job cannot be started; say so instead of timing against it.
-        const { data: project, error: projectError } = await supabase
-          .from('spark_projects')
-          .select('status')
-          .eq('id', event.project_id)
-          .eq('user_id', user.id)
-          .maybeSingle();
-        if (projectError) throw projectError;
-        const status = (project as { status?: string } | null)?.status;
-        if (!status) throw new Error('That job no longer exists');
-        if (status === 'completed' || status === 'cancelled') {
+        if (job.status === 'completed' || job.status === 'cancelled') {
           toast({
-            title: `That job is ${status}`,
-            description: 'Reopen it from the job page if the work is starting again.',
+            title: `That job is ${job.status}`,
+            description: 'Reopen it if the work is starting again.',
             variant: 'destructive',
           });
           return;
         }
-
         // Timer first: if this fails nothing else has changed.
-        const { data: running, error: runningError } = await supabase
-          .from('time_sessions')
-          .select('id, label, project_id')
-          .eq('user_id', user.id)
-          .is('ended_at', null)
-          .maybeSingle();
-        if (runningError) throw runningError;
-        const active = running as { id: string; label: string | null; project_id: string | null } | null;
-
-        let timerNote: string;
-        if (active && active.project_id === event.project_id) {
-          timerNote = 'The timer for this job is already running.';
-        } else if (active) {
-          timerNote = `A timer is already running${active.label ? ` for ${active.label}` : ''} — stop it on the job page to time this one instead.`;
-        } else {
-          const { error: startError } = await supabase.from('time_sessions').insert({
-            user_id: user.id,
-            label,
-            project_id: event.project_id,
-            started_at: new Date().toISOString(),
-            hourly_rate: companyProfile?.hourly_rate ?? 45,
-          } as never);
-          if (startError) throw startError;
-          timerNote = `Timer running for ${label}.`;
-        }
-        queryClient.invalidateQueries({ queryKey: ['time-session-active'] });
-        queryClient.invalidateQueries({ queryKey: ['time-sessions-recent'] });
-
-        if (status === 'open' || status === 'on_hold') {
-          const { error } = await supabase
-            .from('spark_projects')
-            .update({ status: 'active' } as never)
-            .eq('id', event.project_id)
-            .eq('user_id', user.id);
-          if (error) throw error;
-          queryClient.invalidateQueries({ queryKey: ['spark-projects'] });
-          queryClient.invalidateQueries({ queryKey: ['projects-for-calendar'] });
-        }
-
-        toast({ title: 'Job started', description: timerNote });
-        setDetailSheetOpen(false);
-        navigate(`/electrician/projects/${event.project_id}`);
+        const timer = await startTimerForJob({
+          jobId: job.id,
+          eventId: event.id,
+          label: job.title,
+          hourlyRate,
+          stopOther: opts?.stopOther,
+        });
+        await markJobActive(job.id);
+        refreshJobCaches();
+        haptic.success();
+        trackCalendarJobStarted({
+          source: 'existing',
+          synced: !!event.google_event_id,
+          switched: !!opts?.stopOther && timer.started,
+          with_customer: !!job.customerId,
+        });
+        /*
+         * ELE-1755: the sheet stays open. ELE-1680 sent him to the job page
+         * here; Andrew: "he needs to do it himself in the app from the
+         * calendar". The sheet now redraws as the running state, with the
+         * clock, photos and End on it.
+         */
+        toast({
+          title: timer.started ? 'Job started' : 'Job in progress',
+          description: timer.note,
+        });
       } catch (e) {
         toast({
           title: 'Could not start the job',
@@ -597,8 +612,219 @@ const CalendarPageContent = () => {
         });
       }
     },
-    [companyProfile?.hourly_rate, navigate, queryClient]
+    [hourlyRate, refreshJobCaches, haptic]
   );
+
+  /**
+   * ELE-1755 — a Google-synced booking becomes a job, linked both ways, with
+   * the clock running, without leaving the diary. This is Sean's and
+   * Gaynor's whole workflow: she books in Google, he opens the diary on site.
+   */
+  const handleStartAsJob = useCallback(
+    async (event: CalendarEvent, draft: StartJobDraft, opts?: StartOptions) => {
+      try {
+        const job = await createJobFromEvent(event, draft);
+        const timer = await startTimerForJob({
+          jobId: job.id,
+          eventId: event.id,
+          label: draft.title,
+          hourlyRate,
+          stopOther: opts?.stopOther,
+        });
+        await markJobActive(job.id);
+        refreshJobCaches();
+        haptic.success();
+        trackCalendarJobStarted({
+          source: 'new',
+          synced: !!event.google_event_id,
+          switched: !!opts?.stopOther && timer.started,
+          with_customer: !!draft.customerId,
+        });
+        toast({
+          title: job.jobNumber ? `${job.jobNumber} started` : 'Job started',
+          description: timer.note,
+        });
+      } catch (e) {
+        toast({
+          title: 'Could not start the job',
+          description: e instanceof Error ? e.message : 'Try again',
+          variant: 'destructive',
+        });
+        throw e;
+      }
+    },
+    [hourlyRate, refreshJobCaches, haptic]
+  );
+
+  const handleLinkJob = useCallback(
+    async (event: CalendarEvent, job: LinkableProject, via: 'suggested' | 'list' = 'list') => {
+      try {
+        await linkEventToJob(event, { id: job.id, customerId: job.customerId });
+        refreshJobCaches();
+        trackCalendarJobLinked({ via, synced: !!event.google_event_id });
+        toast({ title: 'Linked', description: `This booking is now a day of "${job.title}".` });
+      } catch (e) {
+        toast({
+          title: 'Could not link the job',
+          description: e instanceof Error ? e.message : 'Try again',
+          variant: 'destructive',
+        });
+        throw e;
+      }
+    },
+    [refreshJobCaches]
+  );
+
+  /**
+   * End is a question, not a button (Andrew, 19 Sep): "finished for today"
+   * stops the clock and leaves the job open for tomorrow; "job complete"
+   * stops the clock and closes it, and the sheet's primary action becomes
+   * the invoice.
+   */
+  const handleEndJob = useCallback(
+    async (event: CalendarEvent, job: EventJob, mode: EndJobMode) => {
+      try {
+        if (mode === 'complete') {
+          const timed = await completeJob(job.id);
+          refreshJobCaches();
+          haptic.success();
+          trackCalendarJobEnded({ mode: 'complete', seconds: timed ?? 0 });
+          toast({
+            title: 'Job complete',
+            description: 'The clock is stopped. Draft the invoice when you are ready.',
+          });
+          return;
+        }
+        // Ask the database, not the cache: the cache could be a minute stale
+        // and the clock is the thing being stopped.
+        const seconds = await stopRunningSessionForJob(job.id);
+        refreshJobCaches();
+        haptic.success();
+        trackCalendarJobEnded({ mode: 'day', seconds: seconds ?? 0 });
+        if (seconds === null) {
+          toast({ title: 'Nothing was running', description: 'The clock was already stopped.' });
+        } else {
+          toast({
+            title: 'Finished for today',
+            description: `${formatElapsed(seconds)} logged against ${job.title}.`,
+          });
+        }
+      } catch (e) {
+        toast({
+          title: 'Could not end the job',
+          description: e instanceof Error ? e.message : 'Try again',
+          variant: 'destructive',
+        });
+        throw e;
+      }
+    },
+    [refreshJobCaches, haptic]
+  );
+
+  const handleReopenJob = useCallback(
+    async (_event: CalendarEvent, job: EventJob) => {
+      try {
+        await reopenJob(job.id);
+        refreshJobCaches();
+        toast({ title: 'Job reopened' });
+      } catch (e) {
+        toast({
+          title: 'Could not reopen the job',
+          description: e instanceof Error ? e.message : 'Try again',
+          variant: 'destructive',
+        });
+        throw e;
+      }
+    },
+    [refreshJobCaches]
+  );
+
+  const handleUseCustomer = useCallback(
+    async (event: CalendarEvent, customerId: string, reason: 'postcode' | 'name' | 'picked' = 'picked') => {
+      try {
+        await setEventCustomer(event, customerId);
+        refreshJobCaches();
+        trackCalendarCustomerAttached({ reason });
+        /*
+         * The booking now has somebody to tell. A booking made in the app
+         * offers "Tell the customer" the moment it is saved; one that came
+         * from Google and has just been given its customer is the same
+         * moment, so it gets the same offer — for work still ahead. A past
+         * booking is a record, not something to confirm.
+         */
+        if (new Date(event.start_at) > new Date()) {
+          handleTellCustomer({ ...event, client_id: customerId });
+        }
+      } catch (e) {
+        toast({
+          title: 'Could not set the customer',
+          description: e instanceof Error ? e.message : 'Try again',
+          variant: 'destructive',
+        });
+        throw e;
+      }
+    },
+    [refreshJobCaches, handleTellCustomer]
+  );
+
+  /** Photos / documents straight onto the job from the sheet. */
+  const [docSheet, setDocSheet] = useState<{ job: EventJob; docType: DocType } | null>(null);
+  const handleAddPhotos = useCallback(
+    (job: EventJob) => setDocSheet({ job, docType: 'photo' }),
+    []
+  );
+  const handleAddDocs = useCallback(
+    (job: EventJob) => setDocSheet({ job, docType: 'document' }),
+    []
+  );
+
+  /**
+   * The invoice builder is a form, so it is the one place the diary hands
+   * off to — and it comes back here when it is done (`returnTo=calendar`),
+   * not to the job page.
+   */
+  const handleDraftInvoice = useCallback(
+    (job: EventJob) => {
+      setDetailSheetOpen(false);
+      navigate(`/electrician/invoice-builder/create?projectId=${job.id}&returnTo=calendar`);
+    },
+    [navigate]
+  );
+  const handleViewInvoice = useCallback(
+    (invoiceId: string) => {
+      setDetailSheetOpen(false);
+      navigate(`/electrician/invoices?highlight=${invoiceId}`);
+    },
+    [navigate]
+  );
+
+  /**
+   * A certificate for this job — the same prefilled route the job page's
+   * Certificates section uses, so customer and address arrive filled in.
+   */
+  const handleStartCertificate = useCallback(
+    (job: EventJob) => {
+      trackCalendarJobAction({ action: 'certificate', job_status: job.status });
+      setDetailSheetOpen(false);
+      const params = new URLSearchParams({
+        projectId: job.id,
+        clientName: job.customerName ?? '',
+        address: job.location ?? '',
+      });
+      navigate(`/electrician/inspection-testing/new?${params.toString()}`);
+    },
+    [navigate]
+  );
+
+  /**
+   * The sheet reads the LIVE row, not the snapshot that was tapped. Linking,
+   * starting and completing all change the event or what hangs off it, and
+   * the sheet stays open to show the result.
+   */
+  const viewingLive = useMemo(() => {
+    if (!viewingEvent) return null;
+    return allEvents.find((e) => e.id === viewingEvent.id) ?? viewingEvent;
+  }, [viewingEvent, allEvents]);
 
   const handleDelete = useCallback(
     (eventId: string) => {
@@ -841,6 +1067,10 @@ const CalendarPageContent = () => {
 
             if (made.length > 0) {
               toast({ title: `Booked in — ${made.join(' and ')} started too` });
+              // The booking now carries project_id (bookingSpawn links it
+              // back), so the grid must re-read it or the new job's actions
+              // stay hidden until the next refetch.
+              queryClient.invalidateQueries({ queryKey: ['calendar-events'] });
               queryClient.invalidateQueries({ queryKey: ['spark-projects'] });
               queryClient.invalidateQueries({ queryKey: ['projects-for-calendar'] });
               queryClient.invalidateQueries({ queryKey: ['site-visits-for-calendar'] });
@@ -873,7 +1103,7 @@ const CalendarPageContent = () => {
   );
 
   // Agenda target — the selected day in month view, the shown day otherwise.
-  const agendaDate = view === 'month' ? selectedDate ?? new Date() : currentDate;
+  const agendaDate = view === 'month' ? (selectedDate ?? new Date()) : currentDate;
 
   /** Remounts the view on every period change, which replays the slide-in. */
   const periodKey = `${view}-${format(currentDate, 'yyyy-MM-dd')}`;
@@ -903,6 +1133,22 @@ const CalendarPageContent = () => {
           animate="visible"
           className="space-y-4 px-4 py-4"
         >
+          {/* ELE-1755 — what the fortnight ahead still needs: bookings that
+              are not jobs yet, customers never told. Renders nothing when
+              there is nothing to do. */}
+          <motion.div variants={itemVariants}>
+            <CalendarTidyStrip
+              onOpenEvent={(ev) => {
+                // Jump the grid to that day first. The sheet reads the LIVE
+                // row from the grid's range, so a booking a fortnight out
+                // opened from here would otherwise never show what Start job
+                // or Link had just done to it.
+                setCurrentDate(new Date(ev.start_at));
+                handleEventTap(ev);
+              }}
+            />
+          </motion.div>
+
           <motion.div variants={itemVariants}>
             <CalendarSummaryStrip
               pulse={pulse}
@@ -1028,7 +1274,7 @@ const CalendarPageContent = () => {
       <CalendarEventDetail
         open={detailSheetOpen}
         onOpenChange={setDetailSheetOpen}
-        event={viewingEvent}
+        event={viewingLive}
         onEdit={handleEdit}
         onDelete={handleDelete}
         onTellCustomer={handleTellCustomer}
@@ -1041,7 +1287,33 @@ const CalendarPageContent = () => {
         }}
         onStartJob={handleStartJob}
         onHoldJob={handleHoldJob}
+        customers={customers}
+        onStartAsJob={handleStartAsJob}
+        onLinkJob={handleLinkJob}
+        onEndJob={handleEndJob}
+        onReopenJob={handleReopenJob}
+        onUseCustomer={handleUseCustomer}
+        onAddPhotos={handleAddPhotos}
+        onAddDocs={handleAddDocs}
+        onDraftInvoice={handleDraftInvoice}
+        onViewInvoice={handleViewInvoice}
+        onStartCertificate={handleStartCertificate}
       />
+
+      {/* ELE-1755 — photos and documents onto the job, over the top of the
+          event sheet, which stays open underneath showing the new count. */}
+      {docSheet && (
+        <ProjectDocumentSheet
+          isOpen
+          onClose={() => {
+            setDocSheet(null);
+            queryClient.invalidateQueries({ queryKey: ['event-job-records'] });
+          }}
+          docType={docSheet.docType}
+          projectId={docSheet.job.id}
+          projectName={docSheet.job.title}
+        />
+      )}
 
       <CalendarSettingsSheet
         open={settingsSheetOpen}

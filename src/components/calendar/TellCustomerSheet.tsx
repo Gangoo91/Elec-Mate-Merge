@@ -17,6 +17,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Check, Copy, Loader2, Mail, MessageCircle, MessageSquare } from 'lucide-react';
+import { Switch } from '@/components/ui/switch';
 import { cn } from '@/lib/utils';
 import { toast } from '@/hooks/use-toast';
 import { copyToClipboard } from '@/utils/clipboard';
@@ -68,6 +69,12 @@ const TellCustomerSheet = ({
 }: TellCustomerSheetProps) => {
   const { send, sending } = useSendBookingConfirmation();
   const [emailed, setEmailed] = useState(false);
+  /**
+   * Email them again the evening before. On by default: a customer who
+   * wanted the booking wants the reminder, and a no-show costs a day. Only
+   * email can be automated — WhatsApp and text leave the phone by hand.
+   */
+  const [remind, setRemind] = useState(true);
   const [emailError, setEmailError] = useState<string | null>(null);
 
   /*
@@ -93,6 +100,12 @@ const TellCustomerSheet = ({
   const preview = parts ? confirmationMessage(parts) : '';
   const hasPhone = !!customer?.phone?.trim();
   const hasEmail = !!customer?.email?.trim();
+  /**
+   * The reminder switch is offered only where the cron could act on it: a
+   * saved booking, an address to send to, and not a reschedule — a move keeps
+   * whatever was chosen the first time rather than silently switching it off.
+   */
+  const showRemind = !!eventId && hasEmail && !booking?.movedFrom;
 
   /** WhatsApp and SMS hand off to the phone; nothing is sent by the app. */
   const handOff = async (channel: 'whatsapp' | 'sms') => {
@@ -120,7 +133,11 @@ const TellCustomerSheet = ({
       onOpenChange(false);
       return;
     }
-    const result = await send(eventId, booking?.movedFrom ?? null);
+    const result = await send(
+      eventId,
+      booking?.movedFrom ?? null,
+      showRemind ? { remindDayBefore: remind } : undefined
+    );
     if (result.ok) {
       rememberChannel(customer?.id, 'email');
       setEmailed(true);
@@ -173,6 +190,20 @@ const TellCustomerSheet = ({
               <p className="rounded-xl border border-orange-500/30 bg-orange-500/10 px-3 py-2.5 text-[13px] text-orange-300">
                 {emailError}
               </p>
+            )}
+
+            {/* Only shown when there is a saved booking to remind against and
+                an address to send to — the cron emails, nothing else. */}
+            {showRemind && (
+              <label className="flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-2xl border border-white/[0.12] bg-white/[0.04] px-4 py-2.5">
+                <span className="min-w-0">
+                  <span className="block text-[14px] font-medium text-white">
+                    Remind them the evening before
+                  </span>
+                  <span className="block text-[12px] text-white">By email, the day before the job</span>
+                </span>
+                <Switch checked={remind} onCheckedChange={setRemind} disabled={emailed} />
+              </label>
             )}
 
             <div className="grid grid-cols-2 gap-2">

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
 import { CertPreviewSheet } from '@/components/inspection/shared/CertPreviewSheet';
+import { ReportPdfViewer } from '@/components/reports/ReportPdfViewer';
 
 interface MWStickyFooterProps {
   /**
@@ -10,6 +11,21 @@ interface MWStickyFooterProps {
    * here instead of inherited.
    */
   previewData?: Record<string, unknown>;
+  /**
+   * ELE-1750 — saved report id. When present a "View PDF" button appears
+   * beside Preview and opens the real certificate.
+   *
+   * This is the half Minor Works never had. `CertShellFooter` — which every
+   * other certificate on the shared shell uses — offers BOTH: Preview shows
+   * the data, View PDF renders the actual document through PDFMonkey. Minor
+   * Works has its own footer and only ever carried Preview, so the only thing
+   * a user could open was the data layout.
+   *
+   * That is exactly what Craig Soper reported: "not as a PDF like if I was
+   * doing an EICR." He was right, and it was never a rendering fault — the
+   * button that shows the PDF simply did not exist on this certificate.
+   */
+  previewReportId?: string | null;
   currentTabIndex: number;
   totalTabs: number;
   canNavigatePrevious: boolean;
@@ -58,6 +74,7 @@ const useTypingFocus = () => {
  * footer steps aside: the PDF/issue actions in the declaration tab take over.
  */
 const MWStickyFooter: React.FC<MWStickyFooterProps> = ({
+  previewReportId,
   currentTabIndex,
   totalTabs,
   canNavigatePrevious,
@@ -70,6 +87,10 @@ const MWStickyFooter: React.FC<MWStickyFooterProps> = ({
 }) => {
   const haptic = useHaptic();
   const [showPreview, setShowPreview] = React.useState(false);
+  const [showPdf, setShowPdf] = React.useState(false);
+  // A certificate that has never been saved has nothing to render, so the
+  // button stays away rather than opening a viewer with no document.
+  const canViewPdf = !!previewReportId;
   const typing = useTypingFocus();
   const isLastTab = currentTabIndex === totalTabs - 1;
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -82,6 +103,16 @@ const MWStickyFooter: React.FC<MWStickyFooterProps> = ({
           onOpenChange={setShowPreview}
           reportType="minor-works"
           data={previewData}
+          // Without this the preview cannot fetch observation photos or a QS
+          // countersignature, and silently shows the cert without them.
+          reportId={previewReportId}
+        />
+      )}
+      {canViewPdf && (
+        <ReportPdfViewer
+          reportId={previewReportId as string}
+          open={showPdf}
+          onOpenChange={setShowPdf}
         />
       )}
     <div
@@ -102,10 +133,18 @@ const MWStickyFooter: React.FC<MWStickyFooterProps> = ({
         /* Sign off — the issue actions live in the thumb zone (EV parity):
            Back · Email · Invoice on one row, Generate full width below. */
         <div className="flex flex-col gap-2 pointer-events-auto lg:max-w-[1600px] lg:flex-row lg:items-center">
-          <span className="hidden text-[11.5px] text-white/80 tabular-nums lg:block">
+          <span className="hidden text-[11.5px] text-white tabular-nums lg:block">
             {currentTabIndex + 1} of {totalTabs}
           </span>
-          <div className="flex gap-2 lg:ml-auto">
+          {/*
+            Five actions now share this row on the Sign off step — Back,
+            Preview, View PDF, Email, Invoice. At `flex-1` on a 375px phone
+            that leaves each about 65px and the longer labels get crushed, so
+            the row wraps instead: a minimum width forces a tidy second line
+            rather than five squeezed buttons. Desktop is unaffected — the
+            buttons are `lg:flex-none` there and sit on one line.
+          */}
+          <div className="flex flex-wrap gap-2 lg:flex-nowrap lg:ml-auto">
             {canNavigatePrevious && (
               <button
                 onClick={() => {
@@ -113,7 +152,7 @@ const MWStickyFooter: React.FC<MWStickyFooterProps> = ({
                   navigatePrevious();
                   scrollToTop();
                 }}
-                className="h-[52px] flex-1 rounded-xl bg-white/[0.09] border border-white/[0.14] text-sm font-semibold text-white touch-manipulation active:scale-[0.97] transition-transform lg:flex-none lg:px-5"
+                className="h-[52px] min-w-[96px] flex-1 rounded-xl bg-white/[0.09] border border-white/[0.14] text-sm font-semibold text-white touch-manipulation active:scale-[0.97] transition-transform lg:min-w-0 lg:flex-none lg:px-5"
               >
                 Back
               </button>
@@ -125,9 +164,21 @@ const MWStickyFooter: React.FC<MWStickyFooterProps> = ({
                   haptic.light();
                   setShowPreview(true);
                 }}
-                className="h-[52px] flex-1 rounded-xl bg-white/[0.09] border border-white/[0.14] text-sm font-semibold text-white touch-manipulation active:scale-[0.97] transition-transform lg:flex-none lg:px-5"
+                className="h-[52px] min-w-[96px] flex-1 rounded-xl bg-white/[0.09] border border-white/[0.14] text-sm font-semibold text-white touch-manipulation active:scale-[0.97] transition-transform lg:min-w-0 lg:flex-none lg:px-5"
               >
                 Preview
+              </button>
+            )}
+            {canViewPdf && (
+              <button
+                type="button"
+                onClick={() => {
+                  haptic.light();
+                  setShowPdf(true);
+                }}
+                className="h-[52px] min-w-[96px] flex-1 rounded-xl bg-white/[0.09] border border-white/[0.14] text-sm font-semibold text-white touch-manipulation active:scale-[0.97] transition-transform lg:min-w-0 lg:flex-none lg:px-5"
+              >
+                View PDF
               </button>
             )}
             {onEmail && (
@@ -136,7 +187,7 @@ const MWStickyFooter: React.FC<MWStickyFooterProps> = ({
                   haptic.light();
                   onEmail();
                 }}
-                className="h-[52px] flex-1 rounded-xl bg-white/[0.09] border border-white/[0.14] text-sm font-semibold text-white touch-manipulation active:scale-[0.97] transition-transform lg:flex-none lg:px-5"
+                className="h-[52px] min-w-[96px] flex-1 rounded-xl bg-white/[0.09] border border-white/[0.14] text-sm font-semibold text-white touch-manipulation active:scale-[0.97] transition-transform lg:min-w-0 lg:flex-none lg:px-5"
               >
                 Email
               </button>
@@ -147,7 +198,7 @@ const MWStickyFooter: React.FC<MWStickyFooterProps> = ({
                   haptic.light();
                   onInvoice();
                 }}
-                className="h-[52px] flex-1 rounded-xl bg-white/[0.09] border border-white/[0.14] text-sm font-semibold text-white touch-manipulation active:scale-[0.97] transition-transform lg:flex-none lg:px-5"
+                className="h-[52px] min-w-[96px] flex-1 rounded-xl bg-white/[0.09] border border-white/[0.14] text-sm font-semibold text-white touch-manipulation active:scale-[0.97] transition-transform lg:min-w-0 lg:flex-none lg:px-5"
               >
                 Invoice
               </button>
@@ -170,7 +221,7 @@ const MWStickyFooter: React.FC<MWStickyFooterProps> = ({
         </div>
       ) : (
         <div className="flex items-center gap-3 pointer-events-auto lg:max-w-[1600px]">
-          <span className="text-[11.5px] text-white/80 tabular-nums min-w-[46px]">
+          <span className="text-[11.5px] text-white tabular-nums min-w-[46px]">
             {currentTabIndex + 1} of {totalTabs}
           </span>
           {canNavigatePrevious && (
@@ -204,7 +255,7 @@ const MWStickyFooter: React.FC<MWStickyFooterProps> = ({
             </button>
           )}
           {isLastTab && (
-            <span className="flex-1 text-right text-[11.5px] text-white/80">
+            <span className="flex-1 text-right text-[11.5px] text-white">
               Complete the declaration above to issue
             </span>
           )}

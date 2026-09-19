@@ -178,14 +178,14 @@ const quizQuestions = [
     question:
       'In a hotel bedroom (Category L1 or L2 with sleeping risk), is a HEAT detector permitted under BS 5839-1:2025?',
     options: [
-      'No — clause 14 prohibits heat detection in sleeping rooms for new L1/L2/L3 work.',
+      'No — 20.2 c) NOTE 3 prohibits heat detection in sleeping rooms for new L1/L2/L3 work.',
       'Yes, in all cases — heat detection remains a free choice in any sleeping room.',
       'Yes, provided the heat detector is a rate-of-rise (R-suffix) type.',
       'Yes, provided it is paired with a smoke detector in the adjacent corridor.',
     ],
     correctAnswer: 0,
     explanation:
-      'Clause 14 makes clear that heat detectors are no longer permitted in rooms where people sleep in L1, L2 or L3 systems. Slow smouldering fires — a discarded cigarette in soft furnishings, a charging-cable fault — produce lethal smoke long before the heat threshold is reached, so smoke or multi-sensor detection is required. The change is not retrospective, but any new works (new build, refurbishment, extension, modification) must comply. This is one of the most consequential 2025 changes.',
+      '20.2 c) NOTE 3 makes clear that heat detectors are no longer permitted in rooms where people sleep in L1, L2 or L3 systems. Slow smouldering fires — a discarded cigarette in soft furnishings, a charging-cable fault — produce lethal smoke long before the heat threshold is reached, so smoke or multi-sensor detection is required. The change is not retrospective, but any new works (new build, refurbishment, extension, modification) must comply. This is one of the most consequential 2025 changes.',
   },
   {
     id: 9,
@@ -213,7 +213,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'The "most sensors wins" view is wrong. A three-element multi-sensor costs materially more per device than a basic optical or O+H detector, and its CO cell has a finite life (typically 5-10 years) that must be replaced, recorded and tested. The design benefit — very high false-alarm immunity and fast response across smouldering and flaming signatures — justifies the cost in critical applications (hotel corridors, healthcare wards, stand-alone kitchens) but not in low-risk offices. The choice and rationale are recorded under clause 14/20.11.',
+      'The "most sensors wins" view is wrong. A three-element multi-sensor costs materially more per device than a basic optical or O+H detector, and its CO cell has a finite life (typically 5-10 years) that must be replaced, recorded and tested. The design benefit — very high false-alarm immunity and fast response across smouldering and flaming signatures — justifies the cost in critical applications (hotel corridors, healthcare wards, stand-alone kitchens) but not in low-risk offices. The choice and rationale are recorded under 20.2 c) NOTE 3 / 20.11.',
   },
 ];
 
@@ -245,7 +245,7 @@ const FireAlarmModule2Section1 = () => {
             'BS EN 54-22 and BS EN 54-28 are NEW normative references in 2025 — formal recognition of resettable and non-resettable line-type heat cable.',
             'BS EN 54-26 CO fire detectors are NOT the same as BS EN 50291 domestic CO alarms — different products, different signals, different installations.',
             'Multi-sensor detectors are the modern preferred choice where point smoke detection is at risk of false alarms (clause 33). Operating mode (O, H, O+H, OR/AND/VOTE) must be recorded under clause 20.11.',
-            'Heat detectors are NO LONGER permitted in sleeping rooms for new L1/L2/L3 work (clause 14) — smoke or multi-sensor is required.',
+            'Heat detectors are NO LONGER permitted in sleeping rooms for new L1/L2/L3 work (20.2 c) NOTE 3) — smoke or multi-sensor is required.',
             'Aspirating smoke detection (ASD) is the high-sensitivity option for IT/data, high-airflow, and high-ceiling applications where point detection cannot perform.',
           ]}
         />
@@ -258,7 +258,7 @@ const FireAlarmModule2Section1 = () => {
             'Recognise BS EN 54-22 and BS EN 54-28 line-heat cable as NEW normative references in BS 5839-1:2025, and identify resettable vs non-resettable applications',
             'Distinguish BS EN 54-26 CO FIRE detectors (system-connected) from BS EN 50291 domestic CO alarms (stand-alone fuel-appliance safety) and avoid the procurement-error pattern',
             'Apply clause 20.11 documentation: record detector type AND operating mode (O, H, O+H, AND/OR/VOTE) at design and pass to commissioning',
-            'Apply clause 14: heat detection is NO LONGER permitted in sleeping rooms for new L1/L2/L3 work; specify smoke or multi-sensor instead',
+            'Apply 20.2 c) NOTE 3: heat detection is NO LONGER permitted in sleeping rooms for new L1/L2/L3 work; specify smoke or multi-sensor instead',
             'Identify when an aspirating smoke detection (ASD) system is the right tool: IT rooms, high-airflow, high-ceiling, very-early-warning applications',
             'Identify when a beam smoke detector is the right tool: large open volumes where point detection cannot be ceiling-mounted within range',
           ]}
@@ -854,7 +854,7 @@ const FireAlarmModule2Section1 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 14 (the use of heat detectors — sleeping rooms)"
+          source="BS 5839-1:2025 · 20.2 c) NOTE 3 (the use of heat detectors — sleeping rooms) — in summary, not a verbatim quote"
           clause={
             <>
               With the changes to category L2 systems now including early warning of fire to rooms
@@ -949,7 +949,7 @@ const FireAlarmModule2Section1 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 33 (measures to limit false alarms — multi-sensor preference)"
+          source="BS 5839-1:2025 · Clause 33 (measures to limit false alarms — multi-sensor preference) — in summary, not a verbatim quote"
           clause={
             <>
               Greater emphasis has been placed on the use of multi-sensor detectors. In situations
@@ -999,7 +999,7 @@ const FireAlarmModule2Section1 = () => {
         <Scenario
           title="The hotel corridor — choosing detection technology"
           situation="A 60-bedroom 4-star hotel has a long single-loaded corridor (140 m end to end) feeding into bedrooms on one side and a service core on the other. The corridor sits between the bedrooms and the housekeeping-cart bay. Corridor cleaning (vacuum dust) and aerosol use (room-freshener, laundry-aerosol) are routine. The kitchen-vent risers pass close to the corridor at one end. There have been three FRS-attendance false alarms in the previous 12 months on the existing optical-only detectors."
-          whatToDo="Specify multi-sensor detection (optical + heat) configured to AND logic for the corridor sections within 10 m of the kitchen-vent risers and the housekeeping-cart bay. Specify multi-sensor in WEIGHTED mode for the remaining corridor where speed-of-response matters more (it is escape-route geometry). Document the mode per detector under clause 20.11. The corridor near the kitchen no longer trips on aerosol and steam; the corridor near the rooms keeps fast response. Bedrooms themselves get smoke detection (NOT heat — clause 14 prohibits heat in sleeping rooms for new work). The combination delivers the FA reduction the hotel needs without compromising bedroom protection."
+          whatToDo="Specify multi-sensor detection (optical + heat) configured to AND logic for the corridor sections within 10 m of the kitchen-vent risers and the housekeeping-cart bay. Specify multi-sensor in WEIGHTED mode for the remaining corridor where speed-of-response matters more (it is escape-route geometry). Document the mode per detector under clause 20.11. The corridor near the kitchen no longer trips on aerosol and steam; the corridor near the rooms keeps fast response. Bedrooms themselves get smoke detection (NOT heat — 20.2 c) NOTE 3 prohibits heat in sleeping rooms for new work). The combination delivers the FA reduction the hotel needs without compromising bedroom protection."
           whyItMatters="The 'one detector type for everything' approach is what produced the three FAs in the first place. BS 5839-1:2025 expects designers to think per-area and document the choice. The mixed-mode approach — AND in FA-risk areas, weighted/OR in fast-response areas — is the response. The clause 20.11 record makes it auditable and maintainable; without it the next maintainer has no idea why kitchen-end detectors are slow and corridor-middle detectors are fast."
         />
 
@@ -1011,7 +1011,7 @@ const FireAlarmModule2Section1 = () => {
 
         <CommonMistake
           title="Specifying a heat detector in a new-build hotel bedroom"
-          whatHappens="A new-build hotel design pre-dates the BS 5839-1:2025 publication. The original spec used heat detectors in bedrooms (an A2R class) on the basis that smoke detectors trigger on aerosol and steam from the en-suite. Construction completes after the 2025 publication; commissioning identifies the heat-in-bedroom configuration as a new-work non-compliance under clause 14. The bedrooms must be re-fitted with smoke or multi-sensor detectors before the system can be certified. Cost: 60 detector heads, 60 base re-wires, 60 commissioning re-runs."
+          whatHappens="A new-build hotel design pre-dates the BS 5839-1:2025 publication. The original spec used heat detectors in bedrooms (an A2R class) on the basis that smoke detectors trigger on aerosol and steam from the en-suite. Construction completes after the 2025 publication; commissioning identifies the heat-in-bedroom configuration as a new-work non-compliance under 20.2 c) NOTE 3. The bedrooms must be re-fitted with smoke or multi-sensor detectors before the system can be certified. Cost: 60 detector heads, 60 base re-wires, 60 commissioning re-runs."
           doInstead="Treat the BS 5839-1:2025 sleeping-room heat-detector prohibition as a hard rule for any new work. Specify smoke or optical+heat multi-sensor for new bedrooms. Steam and aerosol concerns are addressed by the AND-logic of multi-sensor (steam alone does not trigger; smoke + heat together does). The cost increase per device is a fraction of a re-fit. The historical 'heat in bedrooms because smoke trips' justification is no longer available."
         />
 
@@ -1064,7 +1064,7 @@ const FireAlarmModule2Section1 = () => {
             </li>
             <li>
               <strong>Identify sleeping-risk constraint.</strong> Any new work in a sleeping room
-              (L1/L2/L3) → heat is OFF the table (clause 14). Specify smoke or multi-sensor.
+              (L1/L2/L3) → heat is OFF the table (20.2 c) NOTE 3). Specify smoke or multi-sensor.
             </li>
             <li>
               <strong>Record under clause 20.11.</strong> Type, mode, sensitivity, rationale. Annex
@@ -1075,7 +1075,7 @@ const FireAlarmModule2Section1 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 17 (ceiling heights — multi-sensor implication)"
+          source="BS 5839-1:2025 · Clause 17 (ceiling heights — multi-sensor implication) — in summary, not a verbatim quote"
           clause={
             <>
               With the use of multi-sensors becoming more common the limits of ceiling height for
@@ -1099,7 +1099,7 @@ const FireAlarmModule2Section1 = () => {
             'BS EN 54-22 (resettable) and BS EN 54-28 (non-resettable) line-type heat cable are NEW normative references in 2025.',
             'BS EN 54-26 CO FIRE detector ≠ BS EN 50291 domestic CO ALARM. Different products, different standards, different signals. Specify explicitly.',
             'Multi-sensor (optical + heat, sometimes + CO) is the modern preferred technology where FA risk is identified (clause 33). MODE is everything — record it under clause 20.11.',
-            'Heat detection is NO LONGER permitted in sleeping rooms for NEW L1/L2/L3 work (clause 14). Specify smoke or multi-sensor. Existing systems grandfathered until new work.',
+            'Heat detection is NO LONGER permitted in sleeping rooms for NEW L1/L2/L3 work (20.2 c) NOTE 3). Specify smoke or multi-sensor. Existing systems grandfathered until new work.',
             'A multi-sensor in AND logic forces ceiling-height limit to the HEAT-detector value, not smoke (clause 17 / Table 3). Mode and height interact.',
             'Aspirating (ASD, BS EN 54-20) is the high-sensitivity choice for IT/data, high-airflow and high-ceiling applications.',
           ]}
@@ -1111,7 +1111,7 @@ const FireAlarmModule2Section1 = () => {
               question:
                 'I have heat detectors in hotel bedrooms in an existing system. Do I have to replace them now BS 5839-1:2025 is in force?',
               answer:
-                'Not yet. Clause 14 is NOT retrospective. Existing heat-only sleeping-room installations remain compliant against the 2017 edition under which they were installed. The 2025 prohibition kicks in at the point of "new work" — new build, refurbishment, extension, or modification that triggers a new certificate. At that point the affected bedrooms must be re-fitted with smoke or multi-sensor detection. Plan for the change at next major works rather than treating it as an immediate retrofit.',
+                'Not yet. 20.2 c) NOTE 3 is NOT retrospective. Existing heat-only sleeping-room installations remain compliant against the 2017 edition under which they were installed. The 2025 prohibition kicks in at the point of "new work" — new build, refurbishment, extension, or modification that triggers a new certificate. At that point the affected bedrooms must be re-fitted with smoke or multi-sensor detection. Plan for the change at next major works rather than treating it as an immediate retrofit.',
             },
             {
               question: 'Are ionisation detectors banned by BS 5839-1:2025?',
@@ -1127,7 +1127,7 @@ const FireAlarmModule2Section1 = () => {
             {
               question: 'Do I need a CO fire detector in every bedroom of an HMO?',
               answer:
-                'No — that is a BS EN 50291 (domestic CO alarm) question, not a BS 5839-1 question. BS EN 50291 CO alarms are required where there is a fuel-burning appliance. BS EN 54-26 CO FIRE detectors are an OPTIONAL element of a BS 5839-1 multi-sensor specification — typically used in O+H+C multi-sensors in corridors where smouldering-fire risk is elevated. The two are different products with different drivers. For a typical HMO: smoke detection on the BS 5839-1 system in escape routes and bedrooms (clause 14 prohibits heat in bedrooms for new work), separate BS EN 50291 alarms next to fuel-burning appliances. Both are needed; neither replaces the other.',
+                'No — that is a BS EN 50291 (domestic CO alarm) question, not a BS 5839-1 question. BS EN 50291 CO alarms are required where there is a fuel-burning appliance. BS EN 54-26 CO FIRE detectors are an OPTIONAL element of a BS 5839-1 multi-sensor specification — typically used in O+H+C multi-sensors in corridors where smouldering-fire risk is elevated. The two are different products with different drivers. For a typical HMO: smoke detection on the BS 5839-1 system in escape routes and bedrooms (20.2 c) NOTE 3 prohibits heat in bedrooms for new work), separate BS EN 50291 alarms next to fuel-burning appliances. Both are needed; neither replaces the other.',
             },
             {
               question: 'What is the difference between an ASD system and a beam detector?',
@@ -1143,7 +1143,7 @@ const FireAlarmModule2Section1 = () => {
               question:
                 'Why does the 2017 edition let me put heat detectors in bedrooms but the 2025 edition does not?',
               answer:
-                'The 2017 edition was based on the historical assumption that smoke detection in bedrooms produced unacceptable false alarm rates from cooking aerosol, steam from en-suites, and aerosol products. The 2025 edition recognises (a) that multi-sensor detection has effectively eliminated those false-alarm sources via AND-logic, and (b) that bedroom fires are characteristically smouldering low-temperature events whose victims succumb to smoke before any heat threshold is reached. The evidence base — coroner inquest data, FRS fatality statistics — supports the change. Clause 14 closes a known fatal gap.',
+                'The 2017 edition was based on the historical assumption that smoke detection in bedrooms produced unacceptable false alarm rates from cooking aerosol, steam from en-suites, and aerosol products. The 2025 edition recognises (a) that multi-sensor detection has effectively eliminated those false-alarm sources via AND-logic, and (b) that bedroom fires are characteristically smouldering low-temperature events whose victims succumb to smoke before any heat threshold is reached. The evidence base — coroner inquest data, FRS fatality statistics — supports the change. 20.2 c) NOTE 3 closes a known fatal gap.',
             },
             {
               question: 'How do I know what detector technology was used in an existing system?',

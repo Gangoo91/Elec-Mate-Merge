@@ -1,17 +1,10 @@
 import { useState } from 'react';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { useHaptic } from '@/hooks/useHaptic';
 import type { CanvasObject } from '@/pages/electrician-tools/ai-tools/DiagramBuilderPage';
 import { cn } from '@/lib/utils';
 import { SCALE, SNAP_STEP } from './constants';
-
-
 
 interface WallDef {
   label: string;
@@ -208,10 +201,18 @@ function wallsToPoints(walls: WallDef[], lengths: (number | string)[]): { x: num
   for (let i = 0; i < walls.length - 1; i++) {
     const len = resolveLength(lengths[i], walls[i].defaultLength);
     switch (walls[i].direction) {
-      case 'right': cx += len; break;
-      case 'down': cy += len; break;
-      case 'left': cx -= len; break;
-      case 'up': cy -= len; break;
+      case 'right':
+        cx += len;
+        break;
+      case 'down':
+        cy += len;
+        break;
+      case 'left':
+        cx -= len;
+        break;
+      case 'up':
+        cy -= len;
+        break;
     }
     points.push({ x: cx, y: cy });
   }
@@ -261,7 +262,10 @@ function checkClosure(walls: WallDef[], lengths: (number | string)[]): ClosureCh
   const axis = closingIsVertical ? ['right', 'left'] : ['down', 'up'];
   let blameIndex = -1;
   for (let i = walls.length - 2; i >= 0; i--) {
-    if (axis.includes(walls[i].direction)) { blameIndex = i; break; }
+    if (axis.includes(walls[i].direction)) {
+      blameIndex = i;
+      break;
+    }
   }
   if (blameIndex === -1) {
     return { ok: false, derivedLabel: closing.label, derivedLength };
@@ -270,7 +274,8 @@ function checkClosure(walls: WallDef[], lengths: (number | string)[]): ClosureCh
   const current = resolveLength(lengths[blameIndex], walls[blameIndex].defaultLength);
   // Moving this wall further along its own direction closes the gap; whether
   // that means adding or subtracting depends on which way it points.
-  const sign = walls[blameIndex].direction === 'right' || walls[blameIndex].direction === 'down' ? 1 : -1;
+  const sign =
+    walls[blameIndex].direction === 'right' || walls[blameIndex].direction === 'down' ? 1 : -1;
   const requiredLength = current - residual * sign;
 
   return {
@@ -290,20 +295,29 @@ interface RoomShapePickerProps {
   getPlacementCenter?: () => { x: number; y: number } | null;
 }
 
-export function RoomShapePicker({ open, onOpenChange, onShapePlaced, getPlacementCenter }: RoomShapePickerProps) {
+export function RoomShapePicker({
+  open,
+  onOpenChange,
+  onShapePlaced,
+  getPlacementCenter,
+}: RoomShapePickerProps) {
   const [selectedShapeId, setSelectedShapeId] = useState<string | null>(null);
   const [wallLengths, setWallLengths] = useState<(number | string)[]>([]);
   const haptic = useHaptic();
 
   const selectedShape = roomShapes.find((s) => s.id === selectedShapeId);
   const closure =
-    selectedShape && wallLengths.length > 0
-      ? checkClosure(selectedShape.walls, wallLengths)
-      : null;
+    selectedShape && wallLengths.length > 0 ? checkClosure(selectedShape.walls, wallLengths) : null;
 
   /** Set the offending wall to the value that closes the room. */
   const applyClosureFix = () => {
-    if (!closure || closure.ok || closure.blameIndex === undefined || closure.requiredLength === undefined) return;
+    if (
+      !closure ||
+      closure.ok ||
+      closure.blameIndex === undefined ||
+      closure.requiredLength === undefined
+    )
+      return;
     haptic.light();
     const updated = [...wallLengths];
     updated[closure.blameIndex] = Math.round(closure.requiredLength * 100) / 100;
@@ -385,7 +399,10 @@ export function RoomShapePicker({ open, onOpenChange, onShapePlaced, getPlacemen
         type: 'wall',
         x: x1,
         y: y1,
-        points: [{ x: x1, y: y1 }, { x: x2, y: y2 }],
+        points: [
+          { x: x1, y: y1 },
+          { x: x2, y: y2 },
+        ],
       });
     }
 
@@ -417,14 +434,28 @@ export function RoomShapePicker({ open, onOpenChange, onShapePlaced, getPlacemen
                   className={cn(
                     'flex aspect-[4/3] flex-col items-center justify-center gap-2 rounded-2xl p-3 transition-colors touch-manipulation active:scale-[0.97] border',
                     isSelected
-                      ? 'border-elec-yellow bg-elec-yellow/10'
+                      ? 'border-elec-yellow bg-white/[0.06]'
                       : 'border-white/[0.12] bg-white/[0.04] hover:bg-white/[0.07]'
                   )}
                 >
-                  <svg viewBox="0 0 60 60" className="w-12 h-12" fill="none" stroke={isSelected ? '#EAB308' : 'white'} strokeWidth="2" strokeLinejoin="round">
+                  <svg
+                    viewBox="0 0 60 60"
+                    className="w-12 h-12"
+                    fill="none"
+                    stroke={isSelected ? '#EAB308' : 'white'}
+                    strokeWidth="2"
+                    strokeLinejoin="round"
+                  >
                     <path d={shape.previewPath} />
                   </svg>
-                  <span className={cn('text-[11px] font-medium leading-none', isSelected ? 'text-elec-yellow' : 'text-white')}>{shape.name}</span>
+                  <span
+                    className={cn(
+                      'text-[11px] font-medium leading-none',
+                      isSelected ? 'text-elec-yellow' : 'text-white'
+                    )}
+                  >
+                    {shape.name}
+                  </span>
                 </button>
               );
             })}
@@ -433,7 +464,9 @@ export function RoomShapePicker({ open, onOpenChange, onShapePlaced, getPlacemen
           {/* Per-wall dimension inputs */}
           {selectedShape && (
             <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10 space-y-3">
-              <p className="text-[10px] font-medium text-white uppercase tracking-wider">Wall lengths</p>
+              <p className="text-[10px] font-medium text-white uppercase tracking-wider">
+                Wall lengths
+              </p>
               <div className="space-y-2">
                 {selectedShape.walls.map((wall, i) => {
                   // The final wall is always computed from the others — it has
@@ -477,21 +510,27 @@ export function RoomShapePicker({ open, onOpenChange, onShapePlaced, getPlacemen
 
               {closure && !closure.ok && (
                 <div className="rounded-lg border border-orange-500/30 bg-orange-500/10 p-3 space-y-2">
-                  <p className="text-xs text-orange-300 font-medium">These lengths don't close the room</p>
+                  <p className="text-xs text-orange-300 font-medium">
+                    These lengths don't close the room
+                  </p>
                   <p className="text-[11px] text-white">
-                    {closure.blameLabel && closure.requiredLength !== undefined && closure.requiredLength > 0
+                    {closure.blameLabel &&
+                    closure.requiredLength !== undefined &&
+                    closure.requiredLength > 0
                       ? `Set "${closure.blameLabel}" to ${closure.requiredLength.toFixed(2)}m, or adjust the others to match.`
                       : 'Adjust the wall lengths so opposite sides balance.'}
                   </p>
-                  {closure.blameLabel && closure.requiredLength !== undefined && closure.requiredLength > 0 && (
-                    <button
-                      type="button"
-                      onClick={applyClosureFix}
-                      className="h-11 sm:h-9 px-3 rounded-lg bg-orange-500/20 border border-orange-500/40 text-orange-200 text-xs font-semibold touch-manipulation active:scale-95"
-                    >
-                      Set it to {closure.requiredLength.toFixed(2)}m
-                    </button>
-                  )}
+                  {closure.blameLabel &&
+                    closure.requiredLength !== undefined &&
+                    closure.requiredLength > 0 && (
+                      <button
+                        type="button"
+                        onClick={applyClosureFix}
+                        className="h-11 sm:h-9 px-3 rounded-lg bg-orange-500/20 border border-orange-500/40 text-orange-200 text-xs font-semibold touch-manipulation active:scale-95"
+                      >
+                        Set it to {closure.requiredLength.toFixed(2)}m
+                      </button>
+                    )}
                 </div>
               )}
             </div>
@@ -504,9 +543,11 @@ export function RoomShapePicker({ open, onOpenChange, onShapePlaced, getPlacemen
             <Button
               onClick={handlePlaceShape}
               disabled={!!closure && !closure.ok}
-              className="w-full h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-sm touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
+              className="w-full h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-sm touch-manipulation disabled:bg-white/[0.08] disabled:text-white"
             >
-              {closure && !closure.ok ? 'Fix wall lengths to continue' : `Place ${selectedShape.name}`}
+              {closure && !closure.ok
+                ? 'Fix wall lengths to continue'
+                : `Place ${selectedShape.name}`}
             </Button>
           ) : (
             <Button

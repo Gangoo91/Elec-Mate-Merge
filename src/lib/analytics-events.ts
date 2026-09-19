@@ -133,6 +133,56 @@ export function trackInvoicePaid(props: { invoice_id?: string; amount_pence?: nu
   sendVercel('invoice_paid');
 }
 
+// ─── Calendar → job (ELE-1755) ─────────────────────────────────────
+//
+// Only 14 of 47 calendar users had ever linked a booking to a job and 20 of
+// 133 invoices were linked to one when the event sheet became the job's
+// working surface. These say whether that moved.
+
+/** A job started from the diary — created here, or one that already existed. */
+export function trackCalendarJobStarted(props: {
+  source: 'new' | 'existing';
+  /** The booking came in from Google Calendar (no job, no customer). */
+  synced: boolean;
+  /** Another timer was running and was stopped to start this one. */
+  switched: boolean;
+  with_customer: boolean;
+}): void {
+  send('calendar_job_started', props);
+  sendVercel('calendar_job_started', { source: props.source, synced: props.synced });
+}
+
+export function trackCalendarJobLinked(props: {
+  /** 'suggested' = the day-two chip; 'list' = picked from the open jobs. */
+  via: 'suggested' | 'list';
+  synced: boolean;
+}): void {
+  send('calendar_job_linked', props);
+  sendVercel('calendar_job_linked', { via: props.via });
+}
+
+export function trackCalendarJobEnded(props: {
+  mode: 'day' | 'complete';
+  seconds: number;
+}): void {
+  send('calendar_job_ended', props);
+  sendVercel('calendar_job_ended', { mode: props.mode });
+}
+
+export function trackCalendarCustomerAttached(props: { reason: 'postcode' | 'name' | 'picked' }): void {
+  send('calendar_customer_attached', props);
+  sendVercel('calendar_customer_attached', { reason: props.reason });
+}
+
+/** Photos, docs, invoice or certificate opened from the event sheet. */
+export function trackCalendarJobAction(props: {
+  action: 'photos' | 'docs' | 'invoice' | 'certificate' | 'open_job';
+  job_status: string;
+}): void {
+  send('calendar_job_action', props);
+  sendVercel('calendar_job_action', { action: props.action });
+}
+
 // ─── Subscription lifecycle ────────────────────────────────────────
 /**
  * 🔴 DO NOT CALL FROM THE CLIENT.

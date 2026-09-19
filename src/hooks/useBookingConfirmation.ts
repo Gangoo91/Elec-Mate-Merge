@@ -58,13 +58,20 @@ export function useSendBookingConfirmation() {
   const send = useCallback(
     async (
       eventId: string,
-      movedFrom?: { start: Date; end: Date; allDay: boolean } | null
+      movedFrom?: { start: Date; end: Date; allDay: boolean } | null,
+      options?: {
+        /** Email them again the evening before (send-booking-reminders). */
+        remindDayBefore?: boolean;
+      }
     ): Promise<SendConfirmationResult> => {
       setSending(true);
       try {
         const { data, error } = await supabase.functions.invoke('send-booking-confirmation', {
           body: {
             eventId,
+            // Undefined when the sheet did not offer the switch (a move, or
+            // no email), so the function leaves the existing choice alone.
+            remindDayBefore: options?.remindDayBefore,
             movedFrom: movedFrom
               ? {
                   startIso: movedFrom.start.toISOString(),

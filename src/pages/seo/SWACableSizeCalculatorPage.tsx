@@ -18,7 +18,7 @@ import {
 export default function SWACableSizeCalculatorPage() {
   return (
     <ToolTemplate
-      title="SWA Cable Size Calculator: Submains & Sheds"
+      title="SWA Cable Size Calculator: Free Armoured Sizing"
       description="Free SWA cable size calculator for garden offices, garages and submains. Steel wire armoured sizing with voltage drop and burial guidance to BS 7671."
       datePublished="2026-07-02"
       dateModified="2026-07-02"
@@ -84,8 +84,8 @@ export default function SWACableSizeCalculatorPage() {
               </p>
               <p>
                 The calculator above includes SWA cable types with their tabulated ratings — select
-                the armoured option and the installation method (buried, in duct, clipped, on
-                tray) to size from the correct table.
+                the armoured option and the installation method (buried, in duct, clipped, on tray)
+                to size from the correct table.
               </p>
             </>
           ),
@@ -147,10 +147,10 @@ export default function SWACableSizeCalculatorPage() {
               </div>
               <p>
                 The common thread is exposure: outdoors, underground, or anywhere twin and earth
-                would be vulnerable. BS 7671 requires that a cable buried in the ground
-                incorporates an earthed armour or metal sheath suitable for use as a protective
-                conductor — or is installed in a conduit or duct that provides equivalent
-                protection against mechanical damage. SWA is the simplest way to meet that.
+                would be vulnerable. BS 7671 requires that a cable buried in the ground incorporates
+                an earthed armour or metal sheath suitable for use as a protective conductor — or is
+                installed in a conduit or duct that provides equivalent protection against
+                mechanical damage. SWA is the simplest way to meet that.
               </p>
             </>
           ),
@@ -189,8 +189,8 @@ export default function SWACableSizeCalculatorPage() {
                 </li>
               </ul>
               <p>
-                A useful habit for submains: size for voltage drop first, then confirm capacity.
-                The calculator runs both checks together and tells you which one governed.
+                A useful habit for submains: size for voltage drop first, then confirm capacity. The
+                calculator runs both checks together and tells you which one governed.
               </p>
             </>
           ),
@@ -213,8 +213,8 @@ export default function SWACableSizeCalculatorPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
                 <ol className="space-y-3 text-white text-sm list-decimal pl-5">
                   <li>
-                    <strong className="text-yellow-400">Design current:</strong> I = P / V = 10000
-                    / 230 = <strong>43.5A</strong> → a 45A or 50A protective device at the origin
+                    <strong className="text-yellow-400">Design current:</strong> I = P / V = 10000 /
+                    230 = <strong>43.5A</strong> → a 45A or 50A protective device at the origin
                   </li>
                   <li>
                     <strong className="text-yellow-400">First-pass size:</strong> on current alone,
@@ -223,8 +223,8 @@ export default function SWACableSizeCalculatorPage() {
                   </li>
                   <li>
                     <strong className="text-yellow-400">Voltage drop at 10mm²:</strong> using the
-                    published figure of approximately 4.4 mV/A/m for 10mm² copper: 43.5A x 40m x
-                    4.4 mV/A/m = 7,656mV = <strong>7.66V</strong>. As a percentage: 7.66 / 230 ={' '}
+                    published figure of approximately 4.4 mV/A/m for 10mm² copper: 43.5A x 40m x 4.4
+                    mV/A/m = 7,656mV = <strong>7.66V</strong>. As a percentage: 7.66 / 230 ={' '}
                     <strong>3.3%</strong>
                   </li>
                   <li>
@@ -250,11 +250,11 @@ export default function SWACableSizeCalculatorPage() {
           content: (
             <>
               <p>
-                BS 7671 sets the principles for buried cables: the cable must incorporate an
-                earthed armour or metal sheath suitable for use as a protective conductor (or be in
-                a duct with equivalent mechanical protection), the route must be marked by cable
-                covers or suitable marker tape, and the cable must be buried at a depth sufficient
-                to avoid damage from any reasonably foreseeable disturbance of the ground.
+                BS 7671 sets the principles for buried cables: the cable must incorporate an earthed
+                armour or metal sheath suitable for use as a protective conductor (or be in a duct
+                with equivalent mechanical protection), the route must be marked by cable covers or
+                suitable marker tape, and the cable must be buried at a depth sufficient to avoid
+                damage from any reasonably foreseeable disturbance of the ground.
               </p>
               <p>
                 BS 7671 deliberately does not state a fixed depth — "sufficient" depends on what
@@ -286,12 +286,12 @@ export default function SWACableSizeCalculatorPage() {
                 </ul>
               </div>
               <p>
-                Ducting is worth serious consideration even where direct burial is permitted: a
-                duct with a draw cord makes the inevitable future upgrade — a bigger outbuilding
-                load, an EV charger, three-phase — a pull-through rather than a re-dig. Note that
-                cables in ducts have lower tabulated ratings than direct-buried cables of the same
-                size, so re-check the capacity if you switch from direct burial to duct. The
-                calculator covers both methods.
+                Ducting is worth serious consideration even where direct burial is permitted: a duct
+                with a draw cord makes the inevitable future upgrade — a bigger outbuilding load, an
+                EV charger, three-phase — a pull-through rather than a re-dig. Note that cables in
+                ducts have lower tabulated ratings than direct-buried cables of the same size, so
+                re-check the capacity if you switch from direct burial to duct. The calculator
+                covers both methods.
               </p>
             </>
           ),
@@ -313,10 +313,10 @@ export default function SWACableSizeCalculatorPage() {
                   to the earthing arrangement at the supply end as a minimum.
                 </li>
                 <li>
-                  <strong>Armour as CPC</strong> — BS 7671 recognises the earthed armour of a
-                  buried cable as suitable for use as a protective conductor. Whether it is
-                  adequate on its own depends on its conductance for the size and length of the
-                  run, verified against the adiabatic requirement — use the{' '}
+                  <strong>Armour as CPC</strong> — BS 7671 recognises the earthed armour of a buried
+                  cable as suitable for use as a protective conductor. Whether it is adequate on its
+                  own depends on its conductance for the size and length of the run, verified
+                  against the adiabatic requirement — use the{' '}
                   <SEOInternalLink href="/tools/adiabatic-equation-calculator">
                     adiabatic equation calculator
                   </SEOInternalLink>{' '}
@@ -329,8 +329,8 @@ export default function SWACableSizeCalculatorPage() {
                 <li>
                   <strong>Earthing at the outbuilding</strong> — decide deliberately whether the
                   outbuilding takes the origin's earthing arrangement or a local TT electrode; on
-                  PME supplies this decision needs particular care for outdoor and
-                  water-associated equipment.
+                  PME supplies this decision needs particular care for outdoor and water-associated
+                  equipment.
                 </li>
               </ul>
             </>
@@ -445,8 +445,7 @@ export default function SWACableSizeCalculatorPage() {
         {
           href: '/tools/garage-supply-calculator',
           title: 'Garage Supply Calculator',
-          description:
-            'Assess the outbuilding load with diversity before sizing the SWA submain.',
+          description: 'Assess the outbuilding load with diversity before sizing the SWA submain.',
           icon: Warehouse,
           category: 'Calculators',
         },
@@ -467,7 +466,8 @@ export default function SWACableSizeCalculatorPage() {
         {
           href: '/tools/adiabatic-equation-calculator',
           title: 'Adiabatic Equation Calculator',
-          description: 'Verify the armour or CPC size against fault current and disconnection time.',
+          description:
+            'Verify the armour or CPC size against fault current and disconnection time.',
           icon: Zap,
           category: 'Calculators',
         },

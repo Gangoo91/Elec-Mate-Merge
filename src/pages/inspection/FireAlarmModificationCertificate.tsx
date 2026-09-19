@@ -45,6 +45,7 @@ import { generateCertificateNumber } from '@/utils/certificateNumbering';
 import { formatFireAlarmG7Json } from '@/utils/fireAlarmG7JsonFormatter';
 import { createInvoiceFromCertificate } from '@/utils/certificateToQuote';
 import { scrollToTopForStepChange } from '@/utils/scroll';
+import { readEdgeFunctionError } from '@/lib/edgeFunctionError';
 
 const REPORT_TYPE = 'fire-alarm-modification' as const;
 
@@ -322,25 +323,19 @@ const {
         }
       );
       if (fnError) {
-        let errorMessage = fnError.message;
-        try {
-          const parsed = JSON.parse(fnError.message);
-          errorMessage = parsed.error || parsed.message || fnError.message;
-        } catch {
-          /* keep */
-        }
-        if (fnError.context?.body) {
-          try {
-            const bodyError =
-              typeof fnError.context.body === 'string'
-                ? JSON.parse(fnError.context.body)
-                : fnError.context.body;
-            if (bodyError.error) errorMessage = bodyError.error;
-          } catch {
-            /* keep */
-          }
-        }
-        throw new Error(errorMessage);
+        /*
+         * ELE-1750 — the real message is on `error.context`, never on
+         * `fnError.message`.
+         *
+         * `functions.invoke` throws on a non-2xx, so `fnError.message` is
+         * always the client's own fixed "Edge Function returned a non-2xx
+         * status code". Parsing it as JSON could never succeed, and the
+         * `context.body` fallback beside it read a ReadableStream rather than
+         * the body — so whatever the function said, the user read that same
+         * fixed sentence and had nothing to act on.
+         */
+        const body = await readEdgeFunctionError(fnError);
+        throw new Error(body?.error || body?.message || fnError.message);
       }
       if (!result?.success) throw new Error(result?.error || 'Failed to send');
       toast.success(

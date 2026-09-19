@@ -30,7 +30,7 @@ const inlineChecks = [
     ],
     correctIndex: 0,
     explanation:
-      'BS 5839-1:2025 clause 19 (Power supplies — consolidated 2025) is unambiguous. The primary supply is a DEDICATED final circuit taken from the origin and serving the fire alarm alone. Sharing the circuit with any other load — even another life-safety system — exposes the fire alarm to operations that have nothing to do with it.',
+      'BS 5839-1:2025 clause 24 (Power supplies) is unambiguous. The primary supply is a DEDICATED final circuit taken from the origin and serving the fire alarm alone. Sharing the circuit with any other load — even another life-safety system — exposes the fire alarm to operations that have nothing to do with it.',
   },
   {
     id: 'fam4-s1-isolator',
@@ -39,7 +39,7 @@ const inlineChecks = [
     options: [
       '"Fire alarm supply — isolate with care", reminding maintenance staff to take precautions before operating the device for any reason.',
       '"230 V AC life-safety supply — authorised persons only", restricting operation of the isolator to competent maintenance personnel.',
-      '"FIRE ALARM SYSTEM — DO NOT SWITCH OFF", on a permanent, legible, visible label fitted to the lockable means of isolation.',
+      'Clause 24.1.7 gives THREE labels, chosen by device type: "FIRE ALARM" for a protective device serving only the fire alarm circuit with no switch; "FIRE ALARM. DO NOT SWITCH OFF" for a switch serving only that circuit; and "WARNING, THIS SWITCH ALSO CONTROLS THE SUPPLY TO THE FIRE ALARM SYSTEM" where the switch also serves other circuits.',
       '"Mains isolator — fire detection circuit", naming the system so that an electrician can trace the supply back from the control panel.',
     ],
     correctIndex: 2,
@@ -72,7 +72,7 @@ const inlineChecks = [
     ],
     correctIndex: 0,
     explanation:
-      'BS 5839-1:2025 clause 16 (Cabling, labelling and identification per the FIA Guide) makes the position explicit. A common red colour from the consumer unit through to every detection / sounder / interface circuit means a future electrician opening a void or trace cannot confuse fire alarm wiring with general low-voltage cabling. The previous edition was ambiguous about the mains feed colour; the 2025 standard removes the ambiguity.',
+      'BS 5839-1:2025 clause 25.9 (cable colour — a single common colour, red preferred) makes the position explicit. A common red colour from the consumer unit through to every detection / sounder / interface circuit means a future electrician opening a void or trace cannot confuse fire alarm wiring with general low-voltage cabling. The previous edition was ambiguous about the mains feed colour; the 2025 standard removes the ambiguity.',
   },
 ];
 
@@ -89,7 +89,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'BS 5839-1:2025 clause 19 sets out the dedicated final circuit, lockable isolation, prescribed labelling, and origin-point connection. All four elements are non-negotiable for a compliant primary supply.',
+      'BS 5839-1:2025 clause 24.1 sets out the dedicated final circuit, lockable isolation, prescribed labelling, and origin-point connection. All four elements are non-negotiable for a compliant primary supply.',
   },
   {
     id: 2,
@@ -197,7 +197,7 @@ const quizQuestions = [
       'A padlock fitted to the consumer-unit door, preventing access to all the circuit-breakers inside including the dedicated fire alarm device.',
       'A keyswitch on the front of the control panel, so that the supply can only be interrupted by a competent person holding the key.',
       'Any switch in the circuit fitted with a permanent warning label identifying it as the fire alarm supply and instructing that it not be operated.',
-      'A device that can be secured in the OFF position by a lock — a lockable circuit-breaker, lockable isolator, or MCB with a proprietary lock-off accessory.',
+      'Clause 24.1.4: it should be possible to lock the facilities in BOTH the normal and the isolate positions — locking OFF stops inadvertent re-energisation during work, and locking ON stops unauthorised isolation. A lockable circuit-breaker, lockable isolator, or MCB with a proprietary locking accessory.',
     ],
     correctAnswer: 3,
     explanation:
@@ -225,7 +225,7 @@ const FireAlarmModule4Section1 = () => {
   useSEO({
     title: 'Primary power supplies | Fire Alarm Module 4.1 | Elec-Mate',
     description:
-      'BS 5839-1:2025 clause 19 — dedicated 230 V AC final circuit, lockable isolation labelled "FIRE ALARM SYSTEM — DO NOT SWITCH OFF", origin-point connection, BS 7671 Section 560 cross-reference, 2025 cable colour rule (red preferred end-to-end), pink + "FE" functional earth (IEC 60445:2021 / BS 7671 A2:2022).',
+      'BS 5839-1:2025 clause 24.1 — dedicated 230 V AC final circuit, lockable isolation labelled per clause 24.1.7 (three variants by device type), origin-point connection, BS 7671 Section 560 cross-reference, 2025 cable colour rule (red preferred end-to-end), pink + "FE" functional earth (IEC 60445:2021 / BS 7671 A2:2022).',
   });
 
   return (
@@ -233,7 +233,7 @@ const FireAlarmModule4Section1 = () => {
       <HubMasthead section="Module 4 · Section 1" title="Primary power supplies" backTo=".." />
       <HubBody>
         <p className="max-w-3xl text-[13px] leading-relaxed text-white">
-          BS 5839-1:2025 clause 19 — the dedicated 230 V AC final circuit, lockable isolation
+          BS 5839-1:2025 clause 24.1 — the dedicated 230 V AC final circuit, lockable isolation
           labelled to prescription, BS 7671:2018+A4:2026 Section 560 framework, the 2025
           single-colour cable rule, and the new pink + FE functional-earth identification.
         </p>
@@ -243,7 +243,7 @@ const FireAlarmModule4Section1 = () => {
             'Primary supply is a DEDICATED 230 V AC final circuit. No other loads — no sockets, no lighting, no auxiliaries. Sharing the circuit defeats the architecture.',
             "Connection point: as close as practicable to the ORIGIN of the consumer's installation (the main switch / consumer unit). Origin-point connection minimises the upstream chain that can isolate the supply.",
             'Protective device: per the CIE MANUFACTURER\'s specification — typically a small MCB (6 A or 10 A). Do not "uprate for margin"; that defeats coordination with the CIE\'s internal protection.',
-            'Lockable means of isolation at the consumer unit, labelled exactly: "FIRE ALARM SYSTEM — DO NOT SWITCH OFF". Permanent, legible, visible.',
+            'Lockable means of isolation at the consumer unit, labelled per clause 24.1.7 — "FIRE ALARM. DO NOT SWITCH OFF" for a switch serving only the fire alarm circuit. Permanent, legible, visible.',
             'BS 5839-1:2025 cross-references BS 7671:2018+A4:2026 Section 560 (safety services) — fire alarm circuits sit inside the BS 7671 safety-services framework.',
             '2025 cable colour: SINGLE COMMON COLOUR for all fire alarm cabling AND the LV mains feed, with RED preferred. Applies end-to-end, including the dedicated mains circuit.',
             'Functional earth (IEC 60445:2021 / BS 7671 A2:2022): identified by PINK + alphanumeric mark "FE". Replaces the previous cream identification. Reflected in BS 5839-1:2025.',
@@ -254,7 +254,7 @@ const FireAlarmModule4Section1 = () => {
         <LearningOutcomes
           outcomes={[
             'Specify the BS 5839-1:2025 primary supply as a dedicated 230 V AC final circuit taken from the origin of the installation, with no other loads',
-            'Apply the BS 5839-1:2025 prescribed labelling for the lockable means of isolation: "FIRE ALARM SYSTEM — DO NOT SWITCH OFF"',
+            'Apply the clause 24.1.7 label that matches the device: "FIRE ALARM" (protective device, no switch), "FIRE ALARM. DO NOT SWITCH OFF" (switch serving only this circuit), or "WARNING, THIS SWITCH ALSO CONTROLS THE SUPPLY TO THE FIRE ALARM SYSTEM" (shared switch)',
             "Coordinate the consumer-unit protective device with the CIE manufacturer's specification, and explain why uprating for margin defeats internal coordination",
             'Cross-reference BS 7671:2018+A4:2026 Section 560 (safety services) and place the BS 5839-1 fire alarm primary supply inside that framework',
             'Apply the BS 5839-1:2025 single-colour cable rule (red preferred) end-to-end, including the dedicated LV mains supply',
@@ -290,9 +290,10 @@ const FireAlarmModule4Section1 = () => {
             <li>
               <strong>Lockable means of isolation.</strong> The MCB itself is a lockable device, or
               is fitted with a proprietary lock-off accessory. Lockable means: the device can be
-              secured in the OFF position by a lock to prevent inadvertent re-energisation during
-              fault repair on the fire alarm. The lock applies to the device, not to the
-              consumer-unit door — a padlock on a hinged cover does not satisfy the requirement.
+              locked in BOTH the normal and the isolate positions (24.1.4) — preventing both
+              inadvertent re-energisation during fault repair on the fire alarm. The lock applies to
+              the device, not to the consumer-unit door — a padlock on a hinged cover does not
+              satisfy the requirement.
             </li>
             <li>
               <strong>Prescribed labelling.</strong> The exact wording is "FIRE ALARM SYSTEM — DO
@@ -310,7 +311,7 @@ const FireAlarmModule4Section1 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 19 (Power supplies) — consolidated from 2017 clauses 25 and 29"
+          source="BS 5839-1:2025 · Clause 24.1 (Mains power supply) — in summary, not a verbatim quote"
           clause={
             <>
               The mains power supply to the fire detection and fire alarm system should be derived
@@ -318,9 +319,9 @@ const FireAlarmModule4Section1 = () => {
               origin of the consumer&apos;s low-voltage installation. The circuit should be
               protected by an overcurrent protective device, the rating of which should be in
               accordance with the recommendations of the equipment manufacturer. A means of
-              isolation, capable of being secured in the OFF position by a lock, should be provided
-              and labelled to indicate that the circuit serves the fire detection and fire alarm
-              system and that it should not be switched off.
+              isolation, capable of being locked in both the normal and isolate positions, should be
+              provided and labelled to indicate that the circuit serves the fire detection and fire
+              alarm system and that it should not be switched off.
             </>
           }
           meaning="Five engineering rules in one paragraph: (1) dedicated final circuit, (2) origin connection, (3) overcurrent protection per manufacturer, (4) lockable isolation, (5) prescribed labelling. The 2025 consolidation puts what used to be split across clauses 25 and 29 of the 2017 edition into a single, definitive statement."
@@ -643,14 +644,16 @@ const FireAlarmModule4Section1 = () => {
 
         <ConceptBlock
           title="Why labelling discipline is a life-safety control"
-          plainEnglish="The single most common cause of fire alarm power loss in service is not equipment failure — it is human action. Someone, doing something else, switches off the wrong MCB. The reason for the prescribed label wording is to remove the ambiguity that produces those mistakes. A label that says 'fire alarm — caution' invites a maintenance electrician to interpret 'caution' as 'be careful while you operate it'. A label that says 'FIRE ALARM SYSTEM — DO NOT SWITCH OFF' removes the interpretation entirely. The label is the engineering control."
+          plainEnglish="The single most common cause of fire alarm power loss in service is not equipment failure — it is human action. Someone, doing something else, switches off the wrong MCB. The reason for the prescribed label wording is to remove the ambiguity that produces those mistakes. A label that says 'fire alarm — caution' invites a maintenance electrician to interpret 'caution' as 'be careful while you operate it'. A label that says 'FIRE ALARM. DO NOT SWITCH OFF' removes the interpretation entirely. The label is the engineering control."
         >
           <p>What the label has to be:</p>
           <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
             <li>
-              <strong>Exact wording.</strong> "FIRE ALARM SYSTEM — DO NOT SWITCH OFF". Not "Caution:
-              fire alarm". Not "Do not isolate". Not "Life safety supply". The exact wording is what
-              BS 5839-1:2025 prescribes; departing from it weakens the engineering control.
+              <strong>Exact wording.</strong> Clause 24.1.7 prescribes three, by device type. For a
+              switch serving only the fire alarm circuit it is "FIRE ALARM. DO NOT SWITCH OFF" —
+              note there is no word "SYSTEM" and it is a full stop, not a dash. Not "Caution: fire
+              alarm". Not "Do not isolate". Not "Life safety supply". The exact wording is what BS
+              5839-1:2025 prescribes; departing from it weakens the engineering control.
             </li>
             <li>
               <strong>Permanent.</strong> Engraved Traffolyte, printed onto a durable substrate with
@@ -678,21 +681,21 @@ const FireAlarmModule4Section1 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 19 (Lockable means of isolation)"
+          source="BS 5839-1:2025 · Clause 24.1.4 (Lockable means of isolation) — in summary, not a verbatim quote"
           clause={
             <>
-              A means of isolation that can be secured in the OFF position by a lock should be
-              provided in the dedicated final circuit. The means of isolation should be permanently
-              labelled to indicate that the circuit serves the fire detection and fire alarm system,
-              and that it should not be switched off. The label should be clearly visible adjacent
-              to the means of isolation.
+              A means of isolation that can be locked in both the normal and isolate positions
+              should be provided in the dedicated final circuit. The means of isolation should be
+              permanently labelled to indicate that the circuit serves the fire detection and fire
+              alarm system, and that it should not be switched off. The label should be clearly
+              visible adjacent to the means of isolation.
             </>
           }
           meaning="Two separate engineering controls: the lockable function (physical inability to re-energise during repair), and the labelled function (informational deterrent against accidental isolation). Both are required. Either alone is insufficient."
         />
 
         <ConceptBlock
-          title="Lockable in the OFF position — what does that actually mean"
+          title="Lockable in BOTH positions — what clause 24.1.4 actually requires"
           plainEnglish="A lockable means of isolation is a device that has a built-in mechanism — or accepts a proprietary accessory — by which the device can be physically prevented from being moved out of the OFF position by means of a padlock. It is NOT a padlock on the consumer unit door. It is a lock on the device itself."
         >
           <p>The recognised forms:</p>
@@ -848,7 +851,7 @@ const FireAlarmModule4Section1 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 16 (Cabling, labelling and identification) per FIA Guide"
+          source="BS 5839-1:2025 · Clause 25.9 (Cable colour identification) per FIA Guide"
           clause={
             <>
               All fire alarm cables, and the low-voltage mains supply to the fire detection and fire
@@ -1024,7 +1027,7 @@ const FireAlarmModule4Section1 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 19 (Overcurrent protective device rating)"
+          source="BS 5839-1:2025 · Clause 24.1 (Mains supply and protective devices) — in summary, not a verbatim quote"
           clause={
             <>
               The dedicated final circuit serving the fire detection and fire alarm system should be
@@ -1064,7 +1067,7 @@ const FireAlarmModule4Section1 = () => {
             "Connection point: at the ORIGIN of the consumer's installation (main switch / consumer unit). Origin connection minimises the upstream chain.",
             'Protective device rating: per the CIE manufacturer specification. Do NOT uprate "for margin" — that defeats internal protection coordination.',
             'Lockable means of isolation: a device that can be SECURED IN OFF by a lock. Padlock on the consumer-unit door does not count.',
-            'Prescribed label: "FIRE ALARM SYSTEM — DO NOT SWITCH OFF". Permanent, legible, visible. Not "fire alarm — caution"; not handwritten on tape.',
+            'Prescribed labels (24.1.7): "FIRE ALARM" / "FIRE ALARM. DO NOT SWITCH OFF" / "WARNING, THIS SWITCH ALSO CONTROLS THE SUPPLY TO THE FIRE ALARM SYSTEM", by device type. Permanent, legible, visible. Not "fire alarm — caution"; not handwritten on tape.',
             'BS 7671:2018+A4:2026 Section 560 (safety services) is the wiring-regulations envelope. BS 5839-1 sits inside it; both apply.',
             '2025 cable colour: SINGLE common colour, end-to-end, RED preferred. Includes the dedicated mains feed — not just the detection / sounder circuits.',
             'Functional earth: PINK + alphanumeric "FE" (IEC 60445:2021 / BS 7671 A2:2022). Distinct from PE green-and-yellow. Never linked to PE at the CIE end.',
@@ -1089,7 +1092,7 @@ const FireAlarmModule4Section1 = () => {
             },
             {
               question:
-                'The exact label wording — "FIRE ALARM SYSTEM — DO NOT SWITCH OFF" — feels prescriptive. Can I use a near-equivalent like "Caution: fire alarm — do not isolate"?',
+                'The exact label wording — e.g. "FIRE ALARM. DO NOT SWITCH OFF" — feels prescriptive. Can I use a near-equivalent like "Caution: fire alarm — do not isolate"?',
               answer:
                 'Use the exact wording. The standard is prescriptive because departures from the wording weaken the engineering control. "Caution: fire alarm" invites interpretation as a warning to be careful, not as an instruction not to switch off. The "DO NOT SWITCH OFF" wording removes the interpretation. Stick to the prescription.',
             },

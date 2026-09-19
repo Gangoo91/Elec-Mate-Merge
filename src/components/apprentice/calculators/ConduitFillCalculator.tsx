@@ -85,7 +85,13 @@ const ConduitFillCalculator = ({ onResult }: CalculatorResultReporter = {}) => {
         { label: 'Grouping factor', value: String(result.groupingFactor) },
         { label: 'Min bend radius', value: `${result.bendRadius} mm` },
       ],
-      basis: 'BS 7671 Reg 522.8 and Appendix 4 grouping; 40% conduit space factor',
+      // 🔴 The fill percentages are US NEC Chapter 9 Table 1 — this file records
+      // that no BS 7671, GN3 or On-Site Guide source states them, and that a
+      // grep of the printed standard finds no 'space factor' text at all.
+      // Calling them BS 7671 in an email would put a British Standard's name
+      // on an American table.
+      basis:
+        'Fill percentages follow US NEC Chapter 9 Table 1 \u2014 BS 7671 publishes no conduit space factor. Grouping factors: BS 7671 Appendix 4.',
     });
   }, [result, onResult]);
 

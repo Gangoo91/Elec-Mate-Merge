@@ -854,9 +854,15 @@ const FireAlarmModule7Section2 = () => {
               wall area at 15 cd.
             </li>
             <li>
-              <strong>Specification in BS 5839-1.</strong> §16 covers VAD design. Coverage must
-              ensure that, in the area of intended use, illuminance from a VAD reaches 0.4 lumen /
-              m² at all points likely to be observed.
+              <strong>Specification in BS 5839-1.</strong> Clause 16 covers VAD design, and it sets
+              NO numeric illuminance figure. Clause 16.4 says only that the intensity of output
+              &ldquo;should be sufficient to attract attention, but not so high as to cause
+              difficulty with vision due to glare&rdquo;, with a NOTE pointing to LPCB/FIA guidance
+              for devices conforming to BS EN 54-29. The 0.4 lm/m&sup2; coverage figure quoted on
+              site comes from the device standard and that guidance — not from BS 5839-1. Clause
+              16.1 is what triggers VADs at all: ambient noise above 90 dB(A), or areas where
+              hearing protection is normally worn. 16.2 requires them to be readily visible from all
+              normally accessible locations; 16.3 requires white or red, used consistently.
             </li>
           </ul>
           <p>Refuge two-way comms — the technical route:</p>

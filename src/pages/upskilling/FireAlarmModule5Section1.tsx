@@ -30,7 +30,7 @@ const inlineChecks = [
     ],
     correctIndex: 0,
     explanation:
-      'BS 5839-1:2025 clause 7 (Placement of interfaces) and CDM 2015 both expect designs to reflect site reality. A void measured at 280 mm cannot accept containment designed for 600 mm. The professional response is a written TQ/RFI with photographic evidence; the contract administrator coordinates the design change. Forcing the original spec creates non-compliant work and personal liability.',
+      'BS 5839-1:2025 8.5 (Placement of interfaces) and CDM 2015 both expect designs to reflect site reality. A void measured at 280 mm cannot accept containment designed for 600 mm. The professional response is a written TQ/RFI with photographic evidence; the contract administrator coordinates the design change. Forcing the original spec creates non-compliant work and personal liability.',
   },
   {
     id: 'fam5-s1-rams',
@@ -49,7 +49,7 @@ const inlineChecks = [
   {
     id: 'fam5-s1-interface',
     question:
-      'BS 5839-1:2025 clause 7 says interfaces (e.g. ancillary relay units that drive door retainers, AOV interfaces, lift homing interfaces) should be located such that they are accessible for maintenance. Which of these placements is NON-COMPLIANT?',
+      'BS 5839-1:2025 8.5 says interfaces (e.g. ancillary relay units that drive door retainers, AOV interfaces, lift homing interfaces) should be located such that they are accessible for maintenance. Which of these placements is NON-COMPLIANT?',
     options: [
       'Surface-mounted in a riser cupboard with full hinged door access for the maintainer.',
       'Above a permanent walkway with a fixed ladder providing safe routine access.',
@@ -58,7 +58,7 @@ const inlineChecks = [
     ],
     correctIndex: 3,
     explanation:
-      'Clause 7 (new for 2025) explicitly aligns interface placement with CDM 2015 maintenance access. Locating an interface inside an HV switchgear cabinet that needs another contractor in attendance breaches both the clause and the broader CDM duty.',
+      '8.5 (new for 2025) explicitly aligns interface placement with CDM 2015 maintenance access. Locating an interface inside an HV switchgear cabinet that needs another contractor in attendance breaches both the clause and the broader CDM duty.',
   },
   {
     id: 'fam5-s1-phased',
@@ -94,7 +94,7 @@ const quizQuestions = [
   {
     id: 2,
     question:
-      'BS 5839-1:2025 clause 7 (placement of interfaces) is new emphasis aligned with which other UK regulation?',
+      'BS 5839-1:2025 8.5 (placement of interfaces) is new emphasis aligned with which other UK regulation?',
     options: [
       'The Building Regulations Approved Document M, covering access to and use of buildings.',
       'The Provision and Use of Work Equipment Regulations (PUWER 1998) for site plant.',
@@ -103,7 +103,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'Clause 7 in the 2025 revision pulls the placement of interfaces into alignment with CDM 2015. The intent is the same — maintenance safety. The interface is a long-life component; the maintainer needs to reach it for years to come.',
+      '8.5 in the 2025 revision pulls the placement of interfaces into alignment with CDM 2015. The intent is the same — maintenance safety. The interface is a long-life component; the maintainer needs to reach it for years to come.',
   },
   {
     id: 3,
@@ -198,7 +198,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'BS 5839-1:2025 §14 and §15 (use and selection of detectors) reclassify sleeping rooms as high-risk. Heat detectors are not permitted in sleeping rooms in new L2/L3 work. Existing installations are not retrospective. Survey rooms by use, not by name on the drawing.',
+      'BS 5839-1:2025 20.2 c) NOTE 3 (use and selection of detectors) reclassify sleeping rooms as high-risk. Heat detectors are not permitted in sleeping rooms in new L2/L3 work. Existing installations are not retrospective. Survey rooms by use, not by name on the drawing.',
   },
   {
     id: 10,
@@ -221,7 +221,7 @@ const FireAlarmModule5Section1 = () => {
   useSEO({
     title: 'Pre-installation planning | Fire Alarm Module 5.1 | Elec-Mate',
     description:
-      'BS 5839-1:2025 pre-installation planning: site survey, coordination with structural / MEP / finishes / access control, material take-off, lead-time planning, RAMS under CDM 2015, interface accessibility (clause 7) and phased installation in occupied premises.',
+      'BS 5839-1:2025 pre-installation planning: site survey, coordination with structural / MEP / finishes / access control, material take-off, lead-time planning, RAMS under CDM 2015, interface accessibility (8.5) and phased installation in occupied premises.',
   });
 
   return (
@@ -237,11 +237,11 @@ const FireAlarmModule5Section1 = () => {
         <TLDR
           points={[
             'The pre-install survey compares architect / M&E drawings against site reality — measured void depths, ceiling heights, existing services, fire compartments, structural beams. Drawings are the intent; the survey verifies what can actually be built.',
-            'BS 5839-1:2025 clause 7 (Placement of interfaces) is new emphasis: interfaces must be located so they are accessible for maintenance, aligned with CDM 2015. No interfaces buried inside HV panels or third-party enclosures.',
+            'BS 5839-1:2025 8.5 (Placement of interfaces) is new emphasis: interfaces must be located so they are accessible for maintenance, aligned with CDM 2015. No interfaces buried inside HV panels or third-party enclosures.',
             'Coordination is multi-trade: structural (beam depths drive detector spacing under 21.2), MEP (containment routing), finishes (first-fix detector bases before ceiling tiles), access control (door retainers, magnetic holds, AOV interfaces, lift homing).',
             'Material take-off (MTO) is produced from drawings + specification + verified survey, never from drawings alone. Feeds procurement and the lead-time list.',
             'RAMS under CDM 2015: the contractor is the duty-holder for their own Risk Assessment and Method Statement. PC reviews and accepts; the contractor authors and signs.',
-            'BS 5839-1:2025 §14/§15 exclude heat detectors from sleeping rooms in new L2/L3 work. Survey rooms by use, not by drawing label.',
+            'BS 5839-1:2025 20.2 c) NOTE 3 exclude heat detectors from sleeping rooms in new L2/L3 work. Survey rooms by use, not by drawing label.',
             'Phased installation in occupied premises: the existing detection must remain operational. The Responsible Person (RRO 2005) duty is continuous; cut-over runs under a permit-to-work with both systems live until the new is verified.',
           ]}
         />
@@ -249,7 +249,7 @@ const FireAlarmModule5Section1 = () => {
         <LearningOutcomes
           outcomes={[
             'Conduct a pre-installation site survey that compares design drawings against site reality and produces a measured, photographed, marked-up survey report',
-            'Apply BS 5839-1:2025 clause 7 (Placement of interfaces) and align interface placement with CDM 2015 maintenance-access duties',
+            'Apply BS 5839-1:2025 8.5 (Placement of interfaces) and align interface placement with CDM 2015 maintenance-access duties',
             'Coordinate fire alarm installation with structural, MEP, finishes and access control teams — identifying programme dependencies at survey, not at first-fix',
             'Produce a material take-off (MTO) and a lead-time list that drive procurement and the construction programme',
             'Author a Risk Assessment and Method Statement (RAMS) addressing the specific hazards of the work — working at height, drilling, hot works, lone working, asbestos awareness, working near existing live detection',
@@ -319,7 +319,7 @@ const FireAlarmModule5Section1 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 7 (Placement of interfaces)"
+          source="BS 5839-1:2025 · 8.5 (Placement of interfaces) — in summary, not a verbatim quote"
           clause={
             <>
               For all systems and categories, the fire detection and fire alarm system interfaces
@@ -932,8 +932,8 @@ const FireAlarmModule5Section1 = () => {
               data cabling all compete for void space. Fire alarm cables prefer their own tray or
               basket where practical (segregation from LV power per BS 7671); in shared containment,
               segregation is by separation distance or barrier. Interface enclosure placement
-              coordinated under clause 7 — accessible for maintenance, not inside another
-              contractor’s panel.
+              coordinated under 8.5 — accessible for maintenance, not inside another contractor’s
+              panel.
             </li>
             <li>
               <strong>Finishes (ceilings, walls, floors).</strong> First-fix detector bases must be
@@ -945,9 +945,9 @@ const FireAlarmModule5Section1 = () => {
             <li>
               <strong>Access control, AOV, lift, plant shutdown.</strong> Each downstream system
               takes a fire signal as input; the fire alarm is the upstream provider. Cause-and-
-              effect matrix is jointly developed. Interfaces are scheduled, addressed, sited per
-              clause 7 and tested back-to-back at commissioning. The cause-and-effect output is
-              handed over (mandatory under BS 5839-1:2025 §21 documentation).
+              effect matrix is jointly developed. Interfaces are scheduled, addressed, sited per 8.5
+              and tested back-to-back at commissioning. The cause-and-effect output is handed over
+              (mandatory under BS 5839-1:2025 40.2 h) 5) documentation).
             </li>
           </ul>
           <p>
@@ -969,7 +969,7 @@ const FireAlarmModule5Section1 = () => {
               workplace.
             </>
           }
-          meaning="Note 'maintaining or cleaning' alongside 'carrying out construction work'. The duty extends to the maintenance phase. Interface placement that needs an unrelated power-down to access fails the maintenance limb of this duty even if it works fine for installation. BS 5839-1:2025 clause 7 codifies the duty for fire alarm interfaces specifically."
+          meaning="Note 'maintaining or cleaning' alongside 'carrying out construction work'. The duty extends to the maintenance phase. Interface placement that needs an unrelated power-down to access fails the maintenance limb of this duty even if it works fine for installation. BS 5839-1:2025 8.5 codifies the duty for fire alarm interfaces specifically."
         />
 
         <CommonMistake
@@ -1024,7 +1024,7 @@ const FireAlarmModule5Section1 = () => {
             <li>
               <strong>Interfaces.</strong> Ancillary relay units, AOV interfaces, lift homing
               interfaces, plant shutdown interfaces. Quantity from the cause-and-effect matrix.
-              Enclosures per the clause 7 placement schedule.
+              Enclosures per the 8.5 placement schedule.
             </li>
             <li>
               <strong>Cable.</strong> Fire-resisting cable to the standard category (typically
@@ -1060,7 +1060,7 @@ const FireAlarmModule5Section1 = () => {
 
         <Scenario
           title="The four-week panel lead time"
-          situation="A contractor has won a fire alarm refurbishment on an eight-week programme. Survey is complete on week one. Procurement starts on week two. The CIE specified is a non-stocked addressable platform with a manufacturer lead time of four weeks. By week six the panel arrives; first-fix containment is largely done but second-fix and commissioning are now compressed into two weeks for an install that needs three. Commissioning is rushed; the cause-and-effect matrix is not fully verified at handover; a category L2 system is signed off without documented evidence of the full cause-and-effect matrix that BS 5839-1:2025 §21 makes mandatory at handover."
+          situation="A contractor has won a fire alarm refurbishment on an eight-week programme. Survey is complete on week one. Procurement starts on week two. The CIE specified is a non-stocked addressable platform with a manufacturer lead time of four weeks. By week six the panel arrives; first-fix containment is largely done but second-fix and commissioning are now compressed into two weeks for an install that needs three. Commissioning is rushed; the cause-and-effect matrix is not fully verified at handover; a category L2 system is signed off without documented evidence of the full cause-and-effect matrix that BS 5839-1:2025 40.2 h) 5) makes mandatory at handover."
           whatToDo="Run the lead-time list at survey, not at procurement. The CIE is identified at survey as a four-week lead item. The PO for the panel is issued on day one of week one (or pre-survey, if the design is contractually fixed). The programme is built around the panel arrival, not the other way around. Containment, cable, standard detectors and MCPs are stocked items with short lead times and can be procured second."
           whyItMatters="A rushed commissioning is a non-compliant handover. BS 5839-1:2025 mandates the cause-and-effect matrix as a handover document; rushing risks signing off a system that has not been fully verified. The Responsible Person inherits a partial system; the contractor inherits a defects liability that cannot be discharged because the original commissioning was incomplete."
         />
@@ -1174,8 +1174,8 @@ const FireAlarmModule5Section1 = () => {
           <p>The planning-stage 2025 changes:</p>
           <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
             <li>
-              <strong>Heat detectors not in sleeping rooms (new L2/L3 work).</strong> §14 use of
-              heat detectors and §15 selection and application of fire detectors recategorise
+              <strong>Heat detectors not in sleeping rooms (new L2/L3 work).</strong> 20.2 c) NOTE 3
+              use of heat detectors and §15 selection and application of fire detectors recategorise
               sleeping rooms as high-risk. Heat detectors are not permitted in sleeping rooms in new
               L2 / L3 systems. Existing systems are not retrospective. Survey must record room use
               and chosen detector type.
@@ -1196,13 +1196,14 @@ const FireAlarmModule5Section1 = () => {
               be met. Survey records both.
             </li>
             <li>
-              <strong>Interface placement under clause 7.</strong> Aligned with CDM 2015. Survey
-              output includes an interface placement schedule that accounts for maintenance access.
+              <strong>Interface placement under 8.5.</strong> Aligned with CDM 2015. Survey output
+              includes an interface placement schedule that accounts for maintenance access.
             </li>
             <li>
-              <strong>Cause-and-effect matrix mandatory at handover (§21).</strong> The matrix is
-              authored at design, programmed at commissioning, verified at acceptance and handed
-              over. Planning must allocate time for cause-and-effect verification — not optional.
+              <strong>Cause-and-effect matrix mandatory at handover (40.2 h) 5)).</strong> The
+              matrix is authored at design, programmed at commissioning, verified at acceptance and
+              handed over. Planning must allocate time for cause-and-effect verification — not
+              optional.
             </li>
             <li>
               <strong>Variations require justification.</strong> §6 — the absence of a zone plan in
@@ -1212,14 +1213,14 @@ const FireAlarmModule5Section1 = () => {
               justification log.
             </li>
             <li>
-              <strong>Cable colour preference.</strong> §16 — fire alarm cable AND the LV mains
+              <strong>Cable colour preference.</strong> 25.9 — fire alarm cable AND the LV mains
               supply preferred to be a single, common colour, RED. Take-off colour matches.
-              Functional earth conductor is now PINK (was cream) per BS 7671 Amendment 2 / IEC
-              60445:2021.
+              Functional earth conductor is PINK or marked "FE" (was cream) per BS 7671:2018+A3,
+              Table 51.
             </li>
             <li>
-              <strong>False alarm notice.</strong> §13 alarm transmission — a false alarm notice
-              near the CIE is recommended. Take-off includes the label.
+              <strong>False alarm notice.</strong> 14.22 and Figure 5 alarm transmission — a false
+              alarm notice near the CIE is recommended. Take-off includes the label.
             </li>
           </ul>
           <p>
@@ -1231,8 +1232,8 @@ const FireAlarmModule5Section1 = () => {
 
         <CommonMistake
           title="Specifying heat detectors in sleeping rooms on a new L2 install"
-          whatHappens="The designer carries forward a 2017-era detail that placed heat detectors in bedrooms in an L2 system. The survey takes the layout at face value. First-fix follows the layout. At the design review with the FRA team it is flagged that BS 5839-1:2025 §14 / §15 do not permit heat detectors in sleeping rooms in new L2 / L3 work. The bases are already fitted; the heads are wrong; the design must be re-issued; the bases relocated or the heads swapped to multi-sensor; the cause-and-effect matrix updated; the detector schedule re-issued. Re-work cost runs into the thousands; programme slips by a week."
-          doInstead="Survey records every sleeping room and confirms detector type against §14 / §15. Where the design carries 2017 thinking forward into a 2025 install, raise a TQ to the design team before procurement. Heat detectors specified for sleeping rooms in a new install are flagged at survey, corrected at design, and never reach first-fix."
+          whatHappens="The designer carries forward a 2017-era detail that placed heat detectors in bedrooms in an L2 system. The survey takes the layout at face value. First-fix follows the layout. At the design review with the FRA team it is flagged that BS 5839-1:2025 20.2 c) NOTE 3 do not permit heat detectors in sleeping rooms in new L2 / L3 work. The bases are already fitted; the heads are wrong; the design must be re-issued; the bases relocated or the heads swapped to multi-sensor; the cause-and-effect matrix updated; the detector schedule re-issued. Re-work cost runs into the thousands; programme slips by a week."
+          doInstead="Survey records every sleeping room and confirms detector type against 20.2 c) NOTE 3. Where the design carries 2017 thinking forward into a 2025 install, raise a TQ to the design team before procurement. Heat detectors specified for sleeping rooms in a new install are flagged at survey, corrected at design, and never reach first-fix."
         />
 
         <SectionRule />
@@ -1241,15 +1242,15 @@ const FireAlarmModule5Section1 = () => {
           title="What to remember on site"
           points={[
             'Survey before procurement. Drawings are the design intent; the survey verifies what can actually be built. Voids, ceiling heights, services, fire compartments, structural beams — all measured and photographed.',
-            'BS 5839-1:2025 clause 7 (Placement of interfaces) aligns interface placement with CDM 2015 — accessible for maintenance, not buried inside another contractor’s panel.',
+            'BS 5839-1:2025 8.5 (Placement of interfaces) aligns interface placement with CDM 2015 — accessible for maintenance, not buried inside another contractor’s panel.',
             'Coordination is multi-trade: structural (beam depths drive detector spacing), MEP (containment routing), finishes (first-fix bases before tile fit), access control (cause-and-effect interfaces).',
             'Material take-off (MTO) and lead-time list are produced from the verified survey, not from drawings alone. Long-lead items (CIE, voice alarm amplifiers, beam detectors, aspirating systems) drive the critical path.',
             'RAMS under CDM 2015 is risk-driven and site-specific. Working at height, drilling and dust (asbestos awareness), hot works, working live, lone working, manual handling, public / occupant interface — all addressed with controls and signed back by operatives.',
-            'BS 5839-1:2025 §14 / §15: heat detectors NOT in sleeping rooms in new L2 / L3 work. Existing systems are not retrospective. Survey records room use, not just room name.',
+            'BS 5839-1:2025 20.2 c) NOTE 3: heat detectors NOT in sleeping rooms in new L2 / L3 work. Existing systems are not retrospective. Survey records room use, not just room name.',
             'Phased install in occupied premises: existing detection stays live, new system commissioned and verified before cut-over, both systems run in parallel during the cut-over window. Responsible Person duty (RRO 2005) is continuous.',
             'BS 5839-1:2025 §6: zone plan in multi-zone premises and ARC transmission in supported housing / care homes are NOT acceptable variations. Other variations require written justification recorded in the logbook.',
-            'BS 5839-1:2025 §16: fire alarm cable AND LV mains preferred RED, single common colour. Functional earth PINK per IEC 60445:2021.',
-            'Cause-and-effect matrix is mandatory at handover under §21. Allocate time for verification at planning — not optional, not a paperwork afterthought.',
+            'BS 5839-1:2025 25.9: fire alarm cable AND LV mains preferred RED, single common colour. Functional earth PINK per BS 7671:2018+A3, Table 51.',
+            'Cause-and-effect matrix is mandatory at handover under 40.2 h) 5). Allocate time for verification at planning — not optional, not a paperwork afterthought.',
           ]}
         />
 
@@ -1259,7 +1260,7 @@ const FireAlarmModule5Section1 = () => {
               question:
                 'Is a pre-installation site survey contractually required, or just good practice?',
               answer:
-                'Both. Most fire alarm contracts (NEC, JCT) place implied or express obligations on the contractor to verify the design is buildable; failure to survey is a risk that sits with the contractor at first-fix. BS 5839-1:2025 implicitly requires survey-level information for clause 7 (interface placement) and for §21 documentation (as-built drawings cannot be produced without survey input). Skipping the survey is a contractual and regulatory risk, not just a "nice to have".',
+                'Both. Most fire alarm contracts (NEC, JCT) place implied or express obligations on the contractor to verify the design is buildable; failure to survey is a risk that sits with the contractor at first-fix. BS 5839-1:2025 implicitly requires survey-level information for 8.5 (interface placement) and for 40.2 h) 5) documentation (as-built drawings cannot be produced without survey input). Skipping the survey is a contractual and regulatory risk, not just a "nice to have".',
             },
             {
               question: 'Who pays for the survey when there are findings that change the design?',
@@ -1267,9 +1268,9 @@ const FireAlarmModule5Section1 = () => {
                 'Depends on contract. Lump-sum fixed-price contracts typically include the survey within the contractor’s price; design changes arising from findings are dealt with as Variations (compensation events under NEC, change orders under JCT). If the design as issued was unbuildable, the contractor has a strong claim for the variation cost. The survey report is the evidence base for the claim — which is why it must be photographically documented and dated.',
             },
             {
-              question: 'How is BS 5839-1:2025 clause 7 (interface placement) different from 2017?',
+              question: 'How is BS 5839-1:2025 8.5 (interface placement) different from 2017?',
               answer:
-                'The 2017 revision did not have an explicit clause requiring interface accessibility for maintenance; 2025 introduces clause 7 specifically aligning interface placement with CDM 2015. The intent is the same — interfaces should be reachable for maintenance — but the explicit clause makes the design and installation duty clear. Inspectors and assessors now look for an interface placement schedule in the handover pack.',
+                'The 2017 revision did not have an explicit clause requiring interface accessibility for maintenance; 2025 introduces 8.5 specifically aligning interface placement with CDM 2015. The intent is the same — interfaces should be reachable for maintenance — but the explicit clause makes the design and installation duty clear. Inspectors and assessors now look for an interface placement schedule in the handover pack.',
             },
             {
               question: 'Do heat detectors removed from sleeping rooms apply to existing systems?',
@@ -1295,7 +1296,7 @@ const FireAlarmModule5Section1 = () => {
             {
               question: 'What is the role of the cause-and-effect matrix at planning stage?',
               answer:
-                'At planning stage the cause-and-effect matrix is authored by the designer and agreed with the Responsible Person and any downstream-system stakeholders (access control, AOV, lift, plant). The survey verifies that the interfaces called up in the matrix can be sited per clause 7. Procurement orders the interface count. The matrix is then programmed at commissioning, verified at acceptance and handed over (mandatory under §21 in the 2025 revision).',
+                'At planning stage the cause-and-effect matrix is authored by the designer and agreed with the Responsible Person and any downstream-system stakeholders (access control, AOV, lift, plant). The survey verifies that the interfaces called up in the matrix can be sited per 8.5. Procurement orders the interface count. The matrix is then programmed at commissioning, verified at acceptance and handed over (mandatory under 40.2 h) 5) in the 2025 revision).',
             },
           ]}
         />

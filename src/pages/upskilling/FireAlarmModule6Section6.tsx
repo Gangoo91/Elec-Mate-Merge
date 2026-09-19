@@ -57,7 +57,7 @@ const inlineChecks = [
     ],
     correctIndex: 1,
     explanation:
-      'The pack is comprehensive: acceptance certificate (Annex G), as-installed drawings, zone plan (per clause 22.2.5 — now unconditional in multi-zone sleeping premises per clause 6), cause-and-effect matrix or text (NEW 2025 explicit per clause 47), O&M manuals, a fully populated asset register, logbook template (Annex H), training records, ARC details, manufacturer cyber-security guidance, and servicing-organisation contacts.',
+      'The pack is comprehensive: acceptance certificate (Annex G), as-installed drawings, zone plan (per clause 22.2.5 — now unconditional in multi-zone sleeping premises per clause 6), cause-and-effect matrix or text (NEW 2025 explicit per clause 38.1 d)), O&M manuals, a fully populated asset register, logbook template (Annex H), training records, ARC details, manufacturer cyber-security guidance, and servicing-organisation contacts.',
   },
   {
     id: 'fam6-s6-cyber',
@@ -92,7 +92,7 @@ const quizQuestions = [
   {
     id: 2,
     question:
-      'Per BS 5839-1:2025 clause 47, what is now explicitly required to be included in the documentation pack at handover?',
+      'Per BS 5839-1:2025 clause 38.1 d), what is now explicitly required to be included in the documentation pack at handover?',
     options: [
       "A signed copy of the responsible person's fire risk assessment, cross-referenced to each detection zone.",
       'A photographic survey of every device location, time-stamped and indexed to the zone plan layout.',
@@ -101,7 +101,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'Clause 47 makes the cause-and-effect document an explicit handover requirement (NEW 2025). It can be as simple as "this system operates as simultaneous evacuation" for a basic system, or a comprehensive matrix for complex strategies. The standard does not dictate the format, only that the document is produced and included.',
+      'Clause 38.1 d) makes the cause-and-effect document an explicit handover requirement (NEW 2025). It can be as simple as "this system operates as simultaneous evacuation" for a basic system, or a comprehensive matrix for complex strategies. The standard does not dictate the format, only that the document is produced and included.',
   },
   {
     id: 3,
@@ -221,7 +221,7 @@ const FireAlarmModule6Section6 = () => {
   useSEO({
     title: 'Handover and client training | Fire Alarm Module 6.6 | Elec-Mate',
     description:
-      'BS 5839-1:2025 handover and client training — the responsible person under RRO 2005, structured handover training (weekly test, alarm response, fault response, false-alarm categorisation), the documentation pack including the new clause 47 cause-and-effect requirement, periodic re-training, and user-level cyber-security training under clause 43.4.',
+      'BS 5839-1:2025 handover and client training — the responsible person under RRO 2005, structured handover training (weekly test, alarm response, fault response, false-alarm categorisation), the documentation pack including the new clause 38.1 d) cause-and-effect requirement, periodic re-training, and user-level cyber-security training under clause 43.4.',
   });
 
   return (
@@ -236,7 +236,7 @@ const FireAlarmModule6Section6 = () => {
           Handover is where the system passes from the commissioning organisation to the responsible
           person under RRO 2005 — and where the practical conditions for ongoing safe operation are
           set. BS 5839-1:2025 reinforces the handover obligation with new explicit content (the
-          cause-and-effect document under clause 47, the user-level false-alarm training, the
+          cause-and-effect document under clause 38.1 d), the user-level false-alarm training, the
           cyber-security expectations under clause 43.4) and places the duty firmly on the
           commissioning / handover organisation to deliver structured training, comprehensive
           documentation, and ongoing support.
@@ -245,8 +245,8 @@ const FireAlarmModule6Section6 = () => {
         <TLDR
           points={[
             'Responsible person under RRO 2005 Article 3 owns the duty to maintain fire safety provisions; BS 5839-1:2025 is the practical implementation. Delegation of execution does not transfer the duty.',
-            'Handover training (structured session, recorded, signed) covers: weekly user test, real-alarm response, fault response (no concealment per clause 23), false-alarm categorisation (NEW 2025 explicit), documentation, cyber-security basics.',
-            'Documentation pack: acceptance certificate (Annex G), as-installed drawings, zone plan, cause-and-effect document (NEW 2025 explicit per clause 47), O&M manuals, asset register, logbook template (Annex H), training records, ARC details, cyber-security guidance, contacts.',
+            'Handover training (structured session, recorded, signed) covers: weekly user test, real-alarm response, fault response (no concealment per clause 44.2.4), false-alarm categorisation (NEW 2025 explicit), documentation, cyber-security basics.',
+            'Documentation pack: acceptance certificate (Annex G), as-installed drawings, zone plan, cause-and-effect document (NEW 2025 explicit per clause 38.1 d)), O&M manuals, asset register, logbook template (Annex H), training records, ARC details, cyber-security guidance, contacts.',
             'Cause-and-effect document NEW 2025 — could be a simple statement ("simultaneous evacuation") or a complex matrix; format flexible, production mandatory.',
             'Periodic re-training of the designated weekly-test user — triggered by user change, system modification, or planned cycle. Records updated; logbook signed.',
             'False-alarm investigation by user (clause 29.6) recommended; commissioning organisation advises user on how at handover.',
@@ -259,7 +259,7 @@ const FireAlarmModule6Section6 = () => {
           outcomes={[
             'Identify the responsible person under RRO 2005 Article 3 and apply the maintenance duty under Article 17 through the BS 5839-1:2025 testing regime',
             'Deliver structured handover training covering weekly test, real-alarm response, fault response, false-alarm categorisation, documentation, and cyber-security basics',
-            'Produce a comprehensive documentation pack including the new BS 5839-1:2025 clause 47 cause-and-effect requirement (matrix or text description)',
+            'Produce a comprehensive documentation pack including the new BS 5839-1:2025 clause 38.1 d) cause-and-effect requirement (matrix or text description)',
             'Apply BS 5839-1:2025 clause 29.6 — user investigation of false alarms with commissioning-organisation guidance on how',
             'Manage periodic re-training of designated users when staff change, system is modified, or as planned cycle',
             'Apply BS 5839-1:2025 clause 43.4 user-level cyber-security training: untrusted devices, credentials, physical access, recognising social-engineering attempts',
@@ -368,14 +368,17 @@ const FireAlarmModule6Section6 = () => {
             </li>
             <li>
               <strong>Fault response.</strong> What happens when the panel shows a fault — do not
-              silence (clause 23), log the fault, contact the servicing organisation, institute
+              silence (clause 44.2.4), log the fault, contact the servicing organisation, institute
               interim measure if the fault affects detection / alarm in a significant area.
             </li>
             <li>
               <strong>False-alarm categorisation</strong> (NEW 2025 explicit). Train the user on the
-              four categories (unwanted from cooking / dust / steam / environmental; equipment
-              fault; malicious; system fault). Provide guidance on assigning category at the time of
-              the event. Cover the user investigation expectation under clause 29.6.
+              four categories of the Commentary on Clause 30 — unwanted alarms (cooking, dust, steam
+              and other environmental influences, plus accidental damage and inappropriate human
+              action); equipment false alarms; malicious; and false alarms with GOOD INTENT. There
+              is no separate &ldquo;system fault&rdquo; category — that is the equipment one.
+              Provide guidance on assigning category at the time of the event. Cover the user
+              investigation expectation under clause 29.6.
             </li>
             <li>
               <strong>Documentation walkthrough.</strong> Show every document in the pack —
@@ -466,7 +469,7 @@ const FireAlarmModule6Section6 = () => {
               },
               {
                 n: '4',
-                t: 'Fault response (clause 23)',
+                t: 'Fault response (clause 44.2.4)',
                 d: 'No concealment · log · contact servicer · interim measure',
                 c: '#A855F7',
                 m: '8 min',
@@ -638,12 +641,12 @@ const FireAlarmModule6Section6 = () => {
         <SectionRule />
 
         <ContentEyebrow>
-          The documentation pack — clause 47 + the new cause-and-effect requirement
+          The documentation pack — clause 38.1 d) + the new cause-and-effect requirement
         </ContentEyebrow>
 
         <ConceptBlock
           title="What goes in the pack"
-          plainEnglish="The documentation pack is the responsible person\'s tool kit for the system\'s entire life. It must be comprehensive, up to date, and accessible. BS 5839-1:2025 clause 47 spells out the documentation expectations including a new explicit requirement for a cause-and-effect document. The 2025 wording is permissive on format — the cause-and-effect can be as simple as a one-line statement ('this system operates as simultaneous evacuation') or as comprehensive as a multi-page matrix document, depending on system complexity. What matters is that the document exists and is included."
+          plainEnglish="The documentation pack is the responsible person\'s tool kit for the system\'s entire life. It must be comprehensive, up to date, and accessible. BS 5839-1:2025 clause 38.1 d) spells out the documentation expectations including a new explicit requirement for a cause-and-effect document. The 2025 wording is permissive on format — the cause-and-effect can be as simple as a one-line statement ('this system operates as simultaneous evacuation') or as comprehensive as a multi-page matrix document, depending on system complexity. What matters is that the document exists and is included."
         >
           <p>The pack contents:</p>
           <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
@@ -663,7 +666,7 @@ const FireAlarmModule6Section6 = () => {
               Recommended in all systems. Posted at the CIE for FRS attendance.
             </li>
             <li>
-              <strong>Cause-and-effect document</strong> (NEW 2025 explicit per clause 47).
+              <strong>Cause-and-effect document</strong> (NEW 2025 explicit per clause 38.1 d)).
               Describes the programmed behaviour of the system in response to events. Format
               appropriate to system complexity.
             </li>
@@ -711,7 +714,7 @@ const FireAlarmModule6Section6 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 47 (Documentation / handover)"
+          source="BS 5839-1:2025 · Clauses 38.1 d) and 38.2 (Documentation / handover) — in summary, not a verbatim quote"
           clause={
             <>
               A new item that appears within the documentation clause of BS 5839-1:2025 is the
@@ -844,7 +847,7 @@ const FireAlarmModule6Section6 = () => {
         <CommonMistake
           title="Handover that is just a key and a phone number"
           whatHappens="A small office\'s fire alarm is commissioned. The installer hands the receptionist a test key, says 'just operate one of the call points each week and let us know if there\'s a problem', and leaves. No documentation pack. No training record. No cause-and-effect document. No zone plan. Eighteen months later, a new receptionist has joined; the previous receptionist (who never received any structured training) has left and not handed over. A real fire occurs; the receptionist does not know what to do; the evacuation is delayed; the system\'s cause-and-effect is unknown."
-          doInstead="Structured handover training for every system, regardless of size. Even a single-zone Category L4 office system warrants a 30-minute training session with the responsible person, a documentation pack including the cause-and-effect (a one-line statement is fine for a simple system), a logbook with system identification populated, and a signed acknowledgement. The marginal cost is small; the long-term value is high. The 2025 standard\'s clause 47 makes this explicit — the cause-and-effect document is now formally required regardless of system complexity."
+          doInstead="Structured handover training for every system, regardless of size. Even a single-zone Category L4 office system warrants a 30-minute training session with the responsible person, a documentation pack including the cause-and-effect (a one-line statement is fine for a simple system), a logbook with system identification populated, and a signed acknowledgement. The marginal cost is small; the long-term value is high. The 2025 standard\'s clause 38.1 d) makes this explicit — the cause-and-effect document is now formally required regardless of system complexity."
         />
 
         <CommonMistake
@@ -861,7 +864,7 @@ const FireAlarmModule6Section6 = () => {
             'Responsible person under RRO 2005 Article 3 owns the duty; BS 5839-1:2025 implements it. Delegation does not transfer the duty.',
             'Handover training is structured, recorded, signed. Covers test, alarm, fault, false-alarm categorisation, documentation, cyber-security basics.',
             'Documentation pack: acceptance cert, drawings, zone plan, cause-and-effect (NEW 2025), O&M, asset register, logbook, training records, ARC details, cyber guidance, contacts.',
-            'Cause-and-effect document NEW 2025 — clause 47 explicit. Format flexible (text or matrix) but production mandatory.',
+            'Cause-and-effect document NEW 2025 — clause 38.1 d) explicit. Format flexible (text or matrix) but production mandatory.',
             'False-alarm investigation by user (clause 29.6) — commissioning organisation advises user on how at handover.',
             'Periodic re-training triggered by user change, system modification, significant premises change, or planned cycle.',
             'User-level cyber-security training: untrusted devices, credentials, physical access, social-engineering recognition, attack reporting.',
@@ -897,7 +900,7 @@ const FireAlarmModule6Section6 = () => {
             {
               question: 'How does the false-alarm-categorisation user training work in practice?',
               answer:
-                'The trainer walks the user through the four categories (unwanted from cooking / dust / steam / environmental; equipment fault; malicious; system fault) with examples appropriate to the premises type. The user is given a logbook template that prompts category assignment at the time of every false-alarm entry. Worked examples — "if the kitchen detector activates while toast burns, that is unwanted from cooking; if the panel reports fault on a detector and an alarm follows, that is equipment fault" — make the categories memorable. The 2025 standard\'s explicit user-training requirement is a response to inconsistent assignment in past practice.',
+                'The trainer walks the user through the four categories of the Commentary on Clause 30 (unwanted alarms — cooking, dust, steam and other environmental influences, accidental damage, inappropriate human action; equipment false alarms; malicious; false alarms with good intent — there is no separate "system fault" category, that is the equipment one fault) with examples appropriate to the premises type. The user is given a logbook template that prompts category assignment at the time of every false-alarm entry. Worked examples — "if the kitchen detector activates while toast burns, that is unwanted from cooking; if the panel reports fault on a detector and an alarm follows, that is equipment fault" — make the categories memorable. The 2025 standard\'s explicit user-training requirement is a response to inconsistent assignment in past practice.',
             },
             {
               question: 'When and how should I update the documentation pack after a modification?',

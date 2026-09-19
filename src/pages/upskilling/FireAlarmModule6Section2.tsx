@@ -49,7 +49,7 @@ const inlineChecks = [
   {
     id: 'fam6-s2-disablement',
     question:
-      'During servicing, an engineer disables a zone to prevent false alarms while testing. BS 5839-1:2025 clause 22 expectations.',
+      'During servicing, an engineer disables a zone to prevent false alarms while testing. BS 5839-1:2025 clause 43.2.18 expectations.',
     options: [
       'No specific requirement applies to disablement carried out during routine servicing.',
       'Keep it to a practicable minimum, inform premises management of the areas affected, and log the start and end times.',
@@ -58,7 +58,7 @@ const inlineChecks = [
     ],
     correctIndex: 1,
     explanation:
-      'Three load-bearing rules from clause 22: minimum scope, premises informed, logged. Disablement is a temporary erosion of life safety — the standard requires it to be visible, time-bounded, and supported by interim measures where the affected area is significant.',
+      'Three load-bearing rules from clause 43.2.18: minimum scope, premises informed, logged. Disablement is a temporary erosion of life safety — the standard requires it to be visible, time-bounded, and supported by interim measures where the affected area is significant.',
   },
   {
     id: 'fam6-s2-cyber',
@@ -108,7 +108,7 @@ const quizQuestions = [
   {
     id: 3,
     question:
-      'During servicing, which of the following actions specifically requires informing premises management per clause 22 of BS 5839-1:2025?',
+      'During servicing, which of the following actions specifically requires informing premises management per clause 43.2.18 of BS 5839-1:2025?',
     options: [
       'Disabling any part of the system that removes detection or alarm from a significant area, including sounders or visual alarms.',
       'Operating a single manual call point to confirm it raises a general alarm, since the alarm itself alerts management to the test.',
@@ -117,7 +117,7 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      'Clause 22 — disablement is a deliberate, time-bounded erosion of life safety and must be communicated and managed. It should be kept to a practicable minimum, premises management informed of the areas affected, and the times logged. Where the affected area is significant or the period extended, premises management institutes proportionate interim measures (fire watch / roving alarm). Reading logs and operating a call point during a planned test are not disablement events.',
+      'Clause 43.2.18 — disablement is a deliberate, time-bounded erosion of life safety and must be communicated and managed. It should be kept to a practicable minimum, premises management informed of the areas affected, and the times logged. Where the affected area is significant or the period extended, premises management institutes proportionate interim measures (fire watch / roving alarm). Reading logs and operating a call point during a planned test are not disablement events.',
   },
   {
     id: 4,
@@ -159,7 +159,7 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      'Clause 43.4 cyber-security path + clause 7 modification certificate path, both 2025 additions. The risk assessment evaluates the potential impact on the CIE, the request is authenticated, physical access is confirmed, and the CIE is confirmed fully operational at the end. The firmware upload is also classed as a modification under clause 7, requiring an extension or modification certificate. Casual remote firmware uploads — common pre-2025 — are no longer compliant.',
+      'Clause 43.4 cyber-security path + clause 46.1.9 modification certificate path, both 2025 additions. The risk assessment evaluates the potential impact on the CIE, the request is authenticated, physical access is confirmed, and the CIE is confirmed fully operational at the end. The firmware upload is also classed as a modification under clause 46.1.9, requiring an extension or modification certificate. Casual remote firmware uploads — common pre-2025 — are no longer compliant.',
   },
   {
     id: 7,
@@ -225,7 +225,7 @@ const FireAlarmModule6Section2 = () => {
   useSEO({
     title: 'Servicing and maintenance | Fire Alarm Module 6.2 | Elec-Mate',
     description:
-      'BS 5839-1:2025 servicing and maintenance — the competent-person definition, the new five-to-seven-month tolerance, six-monthly deliverables (visual, function-test sample, battery, ARC, defects, briefing), disablement under clause 22, and the new clause 43.4 cyber-security expectations for remote services.',
+      'BS 5839-1:2025 servicing and maintenance — the competent-person definition, the new five-to-seven-month tolerance, six-monthly deliverables (visual, function-test sample, battery, ARC, defects, briefing), disablement under clause 43.2.18, and the new clause 43.4 cyber-security expectations for remote services.',
   });
 
   return (
@@ -237,8 +237,8 @@ const FireAlarmModule6Section2 = () => {
           competent person (clause 3.13), how often they must visit (clause 43.2.1, with a new
           five-to-seven-month tolerance), and what they must deliver (visual inspection,
           function-test sample, battery service, ARC verification, defect reporting, conformity
-          statement). Clause 22 governs disablement, clause 43.4 introduces formal cyber-security
-          expectations for remote services.
+          statement). Clause 43.2.18 governs disablement, clause 43.4 introduces formal
+          cyber-security expectations for remote services.
         </p>
 
         <TLDR
@@ -248,7 +248,7 @@ const FireAlarmModule6Section2 = () => {
             'Visit deliverables: written report, asset-register update with test data, battery service evidence, fault list, recommendations, conformity statement, signed logbook entry.',
             'Battery service every six months: visual + float voltage + load-test evidence. Date label now formally recognised. Replace at design life — typically four years.',
             'Detector cleaning and sensitivity verification per manufacturer procedure. Some addressable detectors require chamber test; some require physical clean; some require replacement at sensitivity-drift threshold.',
-            'Disablement (clause 22): minimum scope, premises management informed, logged with start / end times. Interim measures proportionate to the affected area.',
+            'Disablement (clause 43.2.18): minimum scope, premises management informed, logged with start / end times. Interim measures proportionate to the affected area.',
             'NEW clause 43.4 — remote services and cyber security: physical access controls, authentication of remote-access requests, risk assessment before remote read / control / write, post-action operational confirmation. Firmware updates classed as modifications (cert required, see Section 6.5).',
             'Time / date clock checked and adjusted at every service visit — load-bearing for day / night sensitivity settings and event-log timestamps.',
           ]}
@@ -261,7 +261,7 @@ const FireAlarmModule6Section2 = () => {
             'Plan and deliver the six-monthly inspection and service: visual inspection, panel event log review, sample functional test, battery service, ARC transmission verification, defect reporting, briefing',
             'Perform a battery service: visual condition, float voltage, load-test evidence, installation-date label confirmation, replacement decision against design life',
             'Manage detector cleaning and sensitivity verification per manufacturer procedure and trend the results in the asset register',
-            'Apply BS 5839-1:2025 clause 22 disablement principles: minimum scope, premises management informed, time-bounded, with interim measures where appropriate',
+            'Apply BS 5839-1:2025 clause 43.2.18 disablement principles: minimum scope, premises management informed, time-bounded, with interim measures where appropriate',
             'Apply BS 5839-1:2025 clause 43.4 remote-services / cyber-security recommendations to all servicing involving connected CIEs',
             'Produce a service report with the appropriate conformity statement honestly reflecting any open defects or unmet recommendations',
           ]}
@@ -628,7 +628,7 @@ const FireAlarmModule6Section2 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 22 (Disablement of system)"
+          source="BS 5839-1:2025 · Clause 43.2.18 (Disablement of system)"
           clause={
             <>
               When servicing a system involves the disablement of protection in significant parts of
@@ -788,10 +788,10 @@ const FireAlarmModule6Section2 = () => {
             </li>
           </ul>
           <p>
-            Firmware updates are explicitly classed as modifications under clause 7 (NEW 2025) and
-            require an extension or modification certificate (Section 6.5). A casual remote firmware
-            push by a manufacturer's field engineer — common pre-2025 — is no longer compliant; it
-            requires the same paperwork as a physical site visit modification.
+            Firmware updates are explicitly classed as modifications under clause 46.1.9 (NEW 2025)
+            and require an extension or modification certificate (Section 6.5). A casual remote
+            firmware push by a manufacturer's field engineer — common pre-2025 — is no longer
+            compliant; it requires the same paperwork as a physical site visit modification.
           </p>
         </ConceptBlock>
 
@@ -850,7 +850,7 @@ const FireAlarmModule6Section2 = () => {
             'Eight visit deliverables: arrival, logbook + event review, panel visual, sample functional test, battery service, ARC test, defect report, briefing.',
             'Battery service: visual + float voltage + load-test evidence + date label. Replace at design life — typically four years.',
             'Detector cleaning and sensitivity verification per manufacturer procedure. Trend contamination across visits in the asset register.',
-            'Disablement (clause 22): minimum scope, premises informed, logged. Interim measures proportionate.',
+            'Disablement (clause 43.2.18): minimum scope, premises informed, logged. Interim measures proportionate.',
             'Cyber security (clause 43.4 NEW): physical access + authentication + risk assessment + post-action verification + logging. Firmware updates = modifications (cert required).',
             'Clock check at every visit — load-bearing for day / night sensitivity logic and event-log timestamps.',
           ]}
@@ -897,7 +897,7 @@ const FireAlarmModule6Section2 = () => {
               question:
                 'Is firmware update on a CIE always a modification requiring a certificate?',
               answer:
-                'Yes per BS 5839-1:2025 clause 7 (NEW). Firmware updates change the operating behaviour of a life-safety device and are explicitly classed as modifications. An extension or modification certificate must be issued (Section 6.5). The certification path applies to remote firmware updates as well as physical-site firmware updates. The clause closes a long-standing gap where remote firmware pushes were treated as informal updates without paperwork.',
+                'Yes per BS 5839-1:2025 clause 46 (NEW). Firmware updates change the operating behaviour of a life-safety device and are explicitly classed as modifications. An extension or modification certificate must be issued (Section 6.5). The certification path applies to remote firmware updates as well as physical-site firmware updates. The clause closes a long-standing gap where remote firmware pushes were treated as informal updates without paperwork.',
             },
             {
               question: 'How do I evidence that the panel time clock was checked at the visit?',

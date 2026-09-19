@@ -299,7 +299,7 @@ const FireAlarmModule3Section3 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Documentation/handover clause"
+          source="BS 5839-1:2025 · Documentation/handover clause — in summary, not a verbatim quote"
           clause={
             <>
               A new item that appears within the documentation clause of BS 5839-1:2025 is the
@@ -1117,7 +1117,7 @@ const FireAlarmModule3Section3 = () => {
               zone — overrides phased delay.
             </text>
             <text x="60" y="386" fill="#FBBF24" fontSize="10" fontWeight="bold">
-              NEW in BS 5839-1:2025 (clause 38.1b): the matrix is MANDATORY in handover
+              NEW in BS 5839-1:2025 (clause 38.1 d)): the matrix is MANDATORY in handover
               documentation — even a one-line text description.
             </text>
             <text x="60" y="408" fill="rgba(255,255,255,0.6)" fontSize="9">
@@ -1229,15 +1229,20 @@ const FireAlarmModule3Section3 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 22 (Cause and effect) and BS 9999 (general fire engineering)"
+          source="BS 5839-1:2025 · Clause 38.1 d) (matrix in the handover pack) + 18.2.6 (call points and staging)"
           clause={
             <>
-              The cause-and-effect matrix should reflect the fire safety strategy of the building as
-              established by the fire risk assessment and any fire engineering analysis. Where
-              staged evacuation is provided (whether two-stage alert/evacuate, phased, or other),
-              the staging shall be clearly recorded in the matrix and programmed at the CIE
-              accordingly. Manual call points shall, in general, trigger immediate full evacuation
-              regardless of any staging applied to detector inputs.
+              <strong>38.1 d)</strong> makes the documentation explicit: the handover pack should
+              include &ldquo;a cause-and-effect matrix or text description of how the cause and
+              effect operates&rdquo;.
+              <br />
+              <br />
+              <strong>18.2.6</strong> governs how a manual call point interacts with staging: since
+              operating a manual call point &ldquo;should not normally result in a staff
+              alarm&rdquo;, it &ldquo;should normally also be possible for those responding to a
+              staff alarm signal to change the stage of the alarm by operation of a manual call
+              point&rdquo;. So the call point ESCALATES a staged alarm rather than being subject to
+              the staging.
             </>
           }
           meaning="Three principles. (1) The matrix follows the fire engineering — not the other way round. The architect / fire engineer decides the strategy; the matrix encodes it. (2) Staging is documented, not implicit. The CIE's programming reflects the documented staging. (3) Manual call points override staging — a person seeing a fire is the highest-confidence fire signal and warrants immediate full-evacuation response."
@@ -1325,7 +1330,7 @@ const FireAlarmModule3Section3 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 43.2.10 (periodic visit — controls, indicators, timeclock)"
+          source="BS 5839-1:2025 · Clause 43.2.10 (periodic visit — controls, indicators, timeclock) — in summary, not a verbatim quote"
           clause={
             <>
               At every service visit, any time clock of the CIE should be checked and adjusted as

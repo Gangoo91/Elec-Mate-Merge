@@ -116,7 +116,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'The 65 / 75 / +5 dB figures are the audibility benchmarks: 65 at all accessible points is the floor; 75 at the bed-head is louder for sleeping occupants; +5 above any background lasting 30 seconds or more ensures sounders are heard over equivalent-noise environments. Verified at commissioning with a calibrated sound level meter at every accessible point; failure triggers re-positioning, additional or higher-output devices.',
+      'The 65 / 75 / +5 dB figures are the audibility benchmarks: 65 at all accessible points is the floor; 75 at the bed-head is louder for sleeping occupants; +5 above background exceeding 60 dB(A) ensures sounders are heard over equivalent-noise environments (background lasting under 30 s may be disregarded). Verified at commissioning with a calibrated sound level meter at every accessible point; failure triggers re-positioning, additional or higher-output devices.',
   },
   {
     id: 4,
@@ -242,7 +242,7 @@ const FireAlarmModule5Section5 = () => {
           points={[
             'Commissioning sequence: visual → continuity → IR (devices off) → polarity / address → first power-up → cause-and-effect → device-by-device functional → sound level → battery autonomy → ARC / interface → false-alarm-investigation procedure handover.',
             'Cause-and-effect matrix or text description: NEW 2025 mandatory documentation, verified at commissioning, handed over with the system.',
-            'Sound level survey: 65 dB(A) at all accessible points / 75 dB(A) at bed-head / ≥5 dB above 30s+ sustained background. Walked with calibrated meter, recorded.',
+            'Sound level survey: 65 dB(A) at all accessible points / 75 dB(A) at bed-head / ≥5 dB above background exceeding 60 dB(A). Walked with calibrated meter, recorded.',
             'VAD coverage where VAD is primary signal: BS EN 54-23 — defined coverage volume and luminous flux. Verified by manufacturer table or calculation.',
             'Battery autonomy: design quiescent period (typically 24 h or 72 h) + alarm period at end. Tested by calculation + load test at commissioning, full-duration repeated annually.',
             'ARC alarm transmission (NEW 2025 clauses 14.17 / 14.18): Category L ≤90 s alarm + ≤3 min catastrophic; Category P ≤120 s alarm + ≤31 min catastrophic.',
@@ -977,7 +977,7 @@ const FireAlarmModule5Section5 = () => {
 
         <ConceptBlock
           title="The 65 / 75 / +5 dB(A) targets"
-          plainEnglish="The fire alarm sounders must be loud enough to alert occupants throughout the protected area. BS 5839-1:2025 sets three audibility benchmarks: 65 dB(A) at all accessible points (the floor — anywhere a person might be); 75 dB(A) at bed-head positions (sleeping occupants need higher levels to be roused); at least 5 dB above any sustained background noise of 30 seconds or more (sounders must be heard over equivalent-noise environments — kitchens, plant rooms, factory floors). The targets are verified at commissioning by walking with a calibrated sound level meter and recording the level at every accessible point."
+          plainEnglish="The fire alarm sounders must be loud enough to alert occupants throughout the protected area. BS 5839-1:2025 sets three audibility benchmarks: 65 dB(A) at all accessible points (the floor — anywhere a person might be); 75 dB(A) at bed-head positions (sleeping occupants need higher levels to be roused); at least 5 dB above background noise exceeding 60 dB(A) (sounders must be heard over equivalent-noise environments — kitchens, plant rooms, factory floors; background lasting under 30 s may be disregarded). The targets are verified at commissioning by walking with a calibrated sound level meter and recording the level at every accessible point."
           onSite="Calibrated sound level meter (Class 2 minimum, Class 1 preferred for high-spec work). Walk the building with the matrix of accessible points marked on the floor plan. At each point, take a 1-2 second average reading with sounders activated. Record the value. Targets met = move to next point. Target NOT met = note the deficiency, investigate, rectify (reposition / add / upsize sounders), re-survey. The acceptance is at every point, not on average — a 70 dB(A) average with one 60 dB(A) deficiency is non-compliant."
         >
           <p>The targets in detail:</p>
@@ -994,10 +994,11 @@ const FireAlarmModule5Section5 = () => {
               occupant.
             </li>
             <li>
-              <strong>≥5 dB above 30s+ sustained background.</strong> In areas where ambient noise
-              is sustained at 30 seconds or more (kitchens during prep, plant rooms, factory floors,
-              machine workshops), sounders must be at least 5 dB above the sustained background.
-              Measured ambient first, then sounder + ambient, derive differential.
+              <strong>≥5 dB above background exceeding 60 dB(A).</strong> In areas where ambient
+              noise exceeds 60 dB(A) (kitchens during prep, plant rooms, factory floors, machine
+              workshops), sounders must be at least 5 dB above the ambient background. Noise lasting
+              under 30 s may be disregarded. Measured ambient first, then sounder + ambient, derive
+              differential.
             </li>
             <li>
               <strong>Calibrated meter.</strong> Class 2 minimum (general purpose), Class 1
@@ -1168,9 +1169,9 @@ const FireAlarmModule5Section5 = () => {
 
         <Scenario
           title="Commissioning a Cat L2 system in a residential care home"
-          situation="A 60-bed residential care home has a new Cat L2 system with sleeping-room smoke detection (no heat detectors per 2025 §14), MCPs, sounders, VADs in deaf-suitable rooms, and ARC connection (mandatory under 2025 §6 — variation absent ARC = unacceptable). System wired, devices fitted, panel awaiting power-up."
+          situation="A 60-bed residential care home has a new Cat L2 system with sleeping-room smoke detection (no heat detectors per 2025 20.2 c) NOTE 3), MCPs, sounders, VADs in deaf-suitable rooms, and ARC connection (mandatory under 2025 §6 — variation absent ARC = unacceptable). System wired, devices fitted, panel awaiting power-up."
           whatToDo="Run the full sequence in order. Visual: confirm dust caps off, heads fitted, MCPs in place. Continuity: loop end-to-end, sounder zones, mains, FE. IR: 500 V dc, devices removed, ≥1 MΩ. Polarity / address: walk every base. First power-up: panel reports normal, addresses match schedule, isolators online. Cause-and-effect: every smoke detector, every MCP, every interface input, observed effects (sounder zones, VADs in deaf-suitable rooms, plant interface, ARC signal). Sound level: 65 / 75 / +5 dB walked in service conditions (doors closed, ambient running). VAD: BS EN 54-23 verification in deaf-suitable rooms. Battery: impedance + load + 30 min runtime + alarm at end. ARC: 120 s alarm to ARC verified (Cat L = 90 s — but 14.17 is L; this is L2 so L applies 90 s); catastrophic failure ≤3 min via primary-path simulated failure. Acceptance certificate signed. False-alarm-investigation procedure briefed (clause 29.6) — manager understands what false alarm investigation means and what the home is responsible for."
-          whyItMatters="Residential care is the area most affected by 2025 changes. Heat detectors banned in sleeping rooms (§14); ARC connection mandatory (§6 — absence is unacceptable variation); zone plan mandatory (§6 — absence is unacceptable variation); false-alarm-investigation briefing mandatory (clause 29.6). Commissioning a Cat L2 in residential care must address all of these, not just the legacy commissioning checks. Court-aware: failures of these new requirements are recorded breaches of BS 5839-1:2025 specifically called out in the standard."
+          whyItMatters="Residential care is the area most affected by 2025 changes. Heat detectors banned in sleeping rooms (20.2 c) NOTE 3); ARC connection mandatory (§6 — absence is unacceptable variation); zone plan mandatory (§6 — absence is unacceptable variation); false-alarm-investigation briefing mandatory (clause 29.6). Commissioning a Cat L2 in residential care must address all of these, not just the legacy commissioning checks. Court-aware: failures of these new requirements are recorded breaches of BS 5839-1:2025 specifically called out in the standard."
         />
 
         <SectionRule />
@@ -1288,7 +1289,7 @@ const FireAlarmModule5Section5 = () => {
           points={[
             'Commissioning sequence: visual → continuity → IR (devices off) → polarity / address → first power-up → cause-and-effect → device functional → sound level → battery → ARC → fault sim → acceptance → false-alarm advice → docs.',
             'Cause-and-effect verification: every cause triggered, every effect observed. NEW 2025 mandatory documentation — matrix or text description handed over with system.',
-            'Sound level: 65 dB(A) at all accessible points / 75 dB(A) at bed-head / ≥5 dB above 30s+ background. Calibrated meter, walked in service conditions, recorded.',
+            'Sound level: 65 dB(A) at all accessible points / 75 dB(A) at bed-head / ≥5 dB above background exceeding 60 dB(A). Calibrated meter, walked in service conditions, recorded.',
             'VAD per BS EN 54-23 where VAD is primary signal: device category, coverage volume, luminous flux. Manuf. table or calc.',
             'Battery autonomy: design quiescent + alarm at end. Commissioning by load test + calculation; full-duration repeated annually.',
             'NEW 2025 clause 14.17 (Cat L): alarm to ARC ≤90 s; catastrophic failure ≤3 min at ARC and CIE.',

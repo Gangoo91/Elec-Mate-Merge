@@ -17,10 +17,12 @@
  * did not take.
  */
 import { supabase } from '@/integrations/supabase/client';
-import type { CalendarEvent } from '@/types/calendar';
+import { EVENT_COLOURS, type CalendarEvent } from '@/types/calendar';
 
 export interface SpawnResult {
   projectId?: string;
+  /** The per-user reference (JOB-015) the DB trigger assigned — for the toast. */
+  jobNumber?: string | null;
   siteVisitId?: string;
   /** Human-readable failures, for a toast. Empty when everything landed. */
   failures: string[];
@@ -32,6 +34,28 @@ interface SpawnOptions {
   customerName?: string;
   customerPhone?: string;
   customerEmail?: string;
+  /**
+   * ELE-1755 — overrides for a job started from the event sheet. A Google
+   * event's title is whatever the office typed ("ACT-050947-SC544 - PC-BB7
+   * 9JT"), so the electrician gets to fix the title, pick the customer and
+   * confirm the address before the job exists. Absent = take the booking's.
+   */
+  title?: string;
+  customerId?: string | null;
+  location?: string | null;
+}
+
+/**
+ * A booking that has become a job should look like one on the grid.
+ *
+ * Google-synced events arrive as grey "general" and stayed grey after
+ * getting a job, so the week view could not tell a job from a dentist's
+ * appointment. Only a general booking is recoloured — an EICR booked as an
+ * inspection keeps its own type. The sync's update path never touches
+ * event_type or colour, so a later edit in Google will not undo this.
+ */
+export function jobLookFor(event: Pick<CalendarEvent, 'event_type'>) {
+  return event.event_type === 'general' ? { event_type: 'job', colour: EVENT_COLOURS.job } : {};
 }
 
 export async function spawnFromBooking(
@@ -59,10 +83,15 @@ export async function spawnFromBooking(
       .from('spark_projects')
       .insert({
         user_id: user.id,
-        title: event.title,
+        title: (options.title ?? event.title).trim() || event.title,
         description: event.description || null,
-        customer_id: event.client_id || null,
-        location: event.location || null,
+        // A chosen customer wins; "none chosen" never erases one the booking
+        // already knows about.
+        customer_id: options.customerId ?? event.client_id ?? null,
+        location:
+          options.location !== undefined
+            ? options.location?.trim() || null
+            : event.location || null,
         // The booked day is when the work starts. No due date is invented —
         // guessing one would put a deadline on the calendar nobody agreed to.
         start_date: localDate,
@@ -81,11 +110,43 @@ export async function spawnFromBooking(
         source: 'app',
         calendar_event_id: event.id,
       } as never)
-      .select('id')
+      .select('id, job_number')
       .single();
 
     if (error) result.failures.push(`job (${error.message})`);
-    else result.projectId = (data as { id: string }).id;
+    else {
+      const created = data as { id: string; job_number: string | null };
+      result.projectId = created.id;
+      result.jobNumber = created.job_number ?? null;
+      /*
+       * Link the booking BACK to the job. ELE-1755.
+       *
+       * Only the job knew about the booking (`calendar_event_id` above); the
+       * booking never learnt about the job. Every action on the event sheet —
+       * Start job, Open job, Put on hold — is gated on `project_id`, so the one
+       * booking a job was created FROM was the one booking it could never be
+       * started from. 74 jobs had been spawned this way by 15 users and 62 of
+       * their bookings still showed no job when this was found; those were
+       * backfilled on 19 Sep 2026.
+       *
+       * A failure here is reported, not thrown: the job exists and the booking
+       * exists, and the edit sheet can still link them by hand.
+       */
+      // A customer chosen for the job is the booking's customer too — it is
+      // what "Tell the customer" and the invoice both read.
+      const customerForEvent =
+        options.customerId && !event.client_id ? { client_id: options.customerId } : {};
+      const { error: linkError } = await supabase
+        .from('calendar_events')
+        .update({
+          project_id: result.projectId,
+          ...customerForEvent,
+          ...jobLookFor(event),
+        } as never)
+        .eq('id', event.id)
+        .eq('user_id', user.id);
+      if (linkError) result.failures.push(`link to the job (${linkError.message})`);
+    }
   }
 
   if (options.createSiteVisit) {

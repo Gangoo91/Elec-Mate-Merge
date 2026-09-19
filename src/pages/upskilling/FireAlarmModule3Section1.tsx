@@ -746,11 +746,11 @@ const FireAlarmModule3Section1 = () => {
           clause={
             <>
               If the total floor area of the building is greater than 300 m², each zone should be
-              restricted to a single storey. Where the total floor area is 300 m² or less, a zone may
-              cover more than a single storey. A storey is part of a building comprising all the
+              restricted to a single storey. Where the total floor area is 300 m² or less, a zone
+              may cover more than a single storey. A storey is part of a building comprising all the
               accessible areas on the same level, including any gallery having an area of more than
-              half that of the space into which it projects, and a roof, unless it is accessible only
-              for maintenance or repair.
+              half that of the space into which it projects, and a roof, unless it is accessible
+              only for maintenance or repair.
             </>
           }
           meaning="Two specific 2025 alignments. First, the storey definition is now lifted from BS 4422:2024 verbatim — no more building-by-building debate over whether a mezzanine is a storey. Second, the gallery >50% rule is explicit. A gallery at exactly 50% is a borderline case the designer documents in the design rationale; >50% is a separate storey, <50% is not."
@@ -950,7 +950,17 @@ const FireAlarmModule3Section1 = () => {
           title="What the zone plan must show"
           plainEnglish="The zone plan is a diagrammatic representation of the protected premises with each zone clearly labelled and bounded. It is mounted at the CIE so that anyone reading a zone indication can immediately translate it to a physical location. Clause 22.2.5 specifies the placement; the variations clause makes its absence in multi-zone sleeping premises non-conforming."
         >
-          <p>Minimum content per BS 5839-1:2025 clause 22.2.5:</p>
+          <p>
+            What clause 22.2.5 actually requires is short: a diagrammatic representation of the
+            building showing{' '}
+            <strong>
+              at least the building entrances, the main circulation areas and the division into
+              zones
+            </strong>
+            , sited on or adjacent to the indicating equipment. Everything past the first three
+            bullets below is sound practice that most specifiers add — worth doing, but do not quote
+            it to a client as a clause requirement:
+          </p>
           <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
             <li>
               <strong>Plan view of each storey</strong> at sufficient resolution to identify rooms /
@@ -1076,7 +1086,7 @@ const FireAlarmModule3Section1 = () => {
               question:
                 'Is a 2,000 m² zone limit strict, or can I exceed it for a small percentage with a variation?',
               answer:
-                'Strict. BS 5839-1:2025 clause 13.2 expresses the limit as "should not exceed 2,000 m²". As a should-clause, variations are conceptually possible — but the variations clause (clause 6) does not list zone area exceedance as one of the unacceptable variations explicitly. However, the spirit of BS 5839-1:2025 — and the broader life-safety rationale — make any exceedance a serious departure. Best practice is to treat the 2,000 m² limit as firm and not pursue area-based variations.',
+                'Strict. BS 5839-1:2025 clause 12.3 a) expresses the limit as "should not exceed 2,000 m²". As a should-clause, variations are conceptually possible — but the variations clause (clause 6) does not list zone area exceedance as one of the unacceptable variations explicitly. However, the spirit of BS 5839-1:2025 — and the broader life-safety rationale — make any exceedance a serious departure. Best practice is to treat the 2,000 m² limit as firm and not pursue area-based variations.',
             },
             {
               question:

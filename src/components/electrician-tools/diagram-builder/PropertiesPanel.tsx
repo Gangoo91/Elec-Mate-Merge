@@ -6,12 +6,7 @@ import { Separator } from '@/components/ui/separator';
 import { symbolRegistry } from './symbols/symbolRegistry';
 import { SCALE, SNAP_STEP } from './constants';
 import { useHaptic } from '@/hooks/useHaptic';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 
 interface PropertiesPanelProps {
   selectedObject: any;
@@ -20,7 +15,12 @@ interface PropertiesPanelProps {
   onClose: () => void;
 }
 
-export const PropertiesPanel = ({ selectedObject, onUpdate, onDelete, onClose }: PropertiesPanelProps) => {
+export const PropertiesPanel = ({
+  selectedObject,
+  onUpdate,
+  onDelete,
+  onClose,
+}: PropertiesPanelProps) => {
   const haptic = useHaptic();
   if (!selectedObject) return null;
 
@@ -46,7 +46,12 @@ export const PropertiesPanel = ({ selectedObject, onUpdate, onDelete, onClose }:
   };
 
   return (
-    <Sheet open={!!selectedObject} onOpenChange={(open) => { if (!open) onClose(); }}>
+    <Sheet
+      open={!!selectedObject}
+      onOpenChange={(open) => {
+        if (!open) onClose();
+      }}
+    >
       <SheetContent
         side="bottom"
         className="h-[85vh] lg:h-auto lg:max-h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-elec-card border-white/10 flex flex-col"
@@ -80,15 +85,20 @@ export const PropertiesPanel = ({ selectedObject, onUpdate, onDelete, onClose }:
               className="h-11 touch-manipulation accent-elec-yellow"
             />
             <div className="flex items-center justify-between">
-              <span className="text-xs text-white">{Math.round(selectedObject.rotation || 0)}deg</span>
+              <span className="text-xs text-white">
+                {Math.round(selectedObject.rotation || 0)}deg
+              </span>
               <div className="flex gap-1">
                 {[0, 90, 180, 270].map((angle) => (
                   <Button
                     key={angle}
                     variant="outline"
                     size="sm"
-                    onClick={() => { haptic.light(); onUpdate({ rotation: angle }); }}
-                    className="h-8 px-2 text-xs border-white/10 text-white hover:bg-white/10 touch-manipulation"
+                    onClick={() => {
+                      haptic.light();
+                      onUpdate({ rotation: angle });
+                    }}
+                    className="h-11 sm:h-8 px-2 text-xs border-white/10 text-white hover:bg-white/10 touch-manipulation"
                   >
                     {angle}
                   </Button>
@@ -105,7 +115,7 @@ export const PropertiesPanel = ({ selectedObject, onUpdate, onDelete, onClose }:
                 variant="outline"
                 size="sm"
                 onClick={() => nudge(0, -1)}
-                className="h-9 border-white/10 text-white hover:bg-white/10 touch-manipulation"
+                className="h-11 sm:h-9 border-white/10 text-white hover:bg-white/10 touch-manipulation"
               >
                 Up
               </Button>
@@ -114,7 +124,7 @@ export const PropertiesPanel = ({ selectedObject, onUpdate, onDelete, onClose }:
                 variant="outline"
                 size="sm"
                 onClick={() => nudge(-1, 0)}
-                className="h-9 border-white/10 text-white hover:bg-white/10 touch-manipulation"
+                className="h-11 sm:h-9 border-white/10 text-white hover:bg-white/10 touch-manipulation"
               >
                 Left
               </Button>
@@ -122,7 +132,7 @@ export const PropertiesPanel = ({ selectedObject, onUpdate, onDelete, onClose }:
                 variant="outline"
                 size="sm"
                 onClick={() => nudge(0, 1)}
-                className="h-9 border-white/10 text-white hover:bg-white/10 touch-manipulation"
+                className="h-11 sm:h-9 border-white/10 text-white hover:bg-white/10 touch-manipulation"
               >
                 Down
               </Button>
@@ -130,7 +140,7 @@ export const PropertiesPanel = ({ selectedObject, onUpdate, onDelete, onClose }:
                 variant="outline"
                 size="sm"
                 onClick={() => nudge(1, 0)}
-                className="h-9 border-white/10 text-white hover:bg-white/10 touch-manipulation"
+                className="h-11 sm:h-9 border-white/10 text-white hover:bg-white/10 touch-manipulation"
               >
                 Right
               </Button>

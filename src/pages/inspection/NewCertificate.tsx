@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { certificatePrefillQuery } from '@/utils/certificatePrefill';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Zap, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -120,11 +121,14 @@ export default function NewCertificate() {
     [...certs].sort((a, b) => (b.id === defaultCertId ? 1 : 0) - (a.id === defaultCertId ? 1 : 0));
 
   const handleClick = (cert: CertDef) => {
+    // Started from a job or the diary? Carry who and where on to the form —
+    // this picker used to drop them here (ELE-1755).
+    const prefill = certificatePrefillQuery();
     // Core certs use section-based routing
     if (['eicr', 'eic', 'minor-works'].includes(cert.id)) {
-      navigate(`/electrician/inspection-testing?section=${cert.id}`);
+      navigate(`/electrician/inspection-testing?section=${cert.id}${prefill ? `&${prefill}` : ''}`);
     } else {
-      navigate(`/electrician/inspection-testing/${cert.id}/new`);
+      navigate(`/electrician/inspection-testing/${cert.id}/new${prefill ? `?${prefill}` : ''}`);
     }
   };
 

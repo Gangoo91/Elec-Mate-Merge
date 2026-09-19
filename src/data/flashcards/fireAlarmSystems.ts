@@ -131,7 +131,7 @@ export const fireAlarmSystems: FlashcardData[] = [
     id: 'fa15',
     question: 'Why must fire alarm cables be segregated from other electrical circuits?',
     answer:
-      'Segregation prevents electrical interference, cross-faults, and fire damage from other circuits affecting the fire alarm system. BS 5839-1:2025 requires fire alarm cables to be segregated from all cables that are not fire alarm cables. They should run in separate trunking, conduit, or tray compartments, or maintain a minimum separation distance of 300 mm from other power cables where they run in parallel.',
+      'Segregation prevents electromagnetic interference, cross-faults, and fire damage from other circuits affecting the fire alarm system. BS 5839-1:2025 sets NO fixed separation distance: clause 35.8 says any separation the fire alarm equipment manufacturer recommends between fire alarm cables and the cables of other services should be followed. Clause 35.9 adds that fire alarm cables carrying more than ELV should be segregated from ELV fire alarm circuits, that the mains supply to control, indicating or power supply equipment should not share a cable entry with ELV cables, and that LV and ELV should be kept separate inside the equipment. (The 300 mm figure in clause 11.2.13 is a different rule — it is the separation between DUPLICATED supply cables running from a separate power supply enclosure to the CIE, so one fault cannot take out both.)',
     category: 'Wiring',
     difficulty: 'medium',
   },

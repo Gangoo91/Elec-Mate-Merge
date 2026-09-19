@@ -250,7 +250,7 @@ const FireAlarmModule4Section2 = () => {
             'I1 = standby current (CIE quiescent + interfaces); I2 = alarm current (CIE + sounders + visual alarms + interfaces in alarm).',
             'Battery requirements moved to ANNEXE E in the 2025 revision — engineering unchanged, location changed.',
             'Power supply equipment standards: BS EN 54-4 (long-standing) OR — NEW IN 2025 — BS EN 50131-6 Grade 4 acceptable for alarm transmission equipment PSU.',
-            'BS 5839-1:2025 clause 16 — every installed battery should carry a permanent label showing the installation date. Datum for the 4-year replacement cycle.',
+            'BS 5839-1:2025 clause 24.3.3 — every installed battery should carry a permanent label showing the installation date. Datum for the 4-year replacement cycle.',
           ]}
         />
 
@@ -315,7 +315,7 @@ const FireAlarmModule4Section2 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Annexe E (Standby battery sizing — relocated from main body)"
+          source="BS 5839-1:2025 · Annexe E (Standby battery sizing — relocated from main body) — in summary, not a verbatim quote"
           clause={
             <>
               The minimum required battery capacity Cmin (Ah, at the 20 h discharge rate) for the
@@ -327,9 +327,13 @@ const FireAlarmModule4Section2 = () => {
               <br />
               where 1.25 is the ageing factor for a four-year design replacement cycle; T1 is the
               standby duration in hours; I1 is the standby current; T2 is the alarm duration in
-              hours; I2 is the alarm current; and D = 1.75 is the de-rating factor applied to the
-              alarm capacity to allow for the high-discharge capacity loss of sealed lead-acid
-              batteries.
+              hours; I2 is the alarm current; and D is the de-rating factor applied to the alarm
+              capacity to allow for the high-discharge capacity loss of sealed lead-acid batteries.
+              D is CONDITIONAL, not a constant (Annex E.1.2): where Cmin/20 is equal to or greater
+              than I2 then D = 1; only where Cmin/20 is LESS than I2 is D taken from the battery
+              manufacturer&rsquo;s data, or 1.75 in the absence of it. A small system with a heavy
+              sounder load usually lands on 1.75; a large battery with a modest alarm current does
+              not de-rate at all.
             </>
           }
           meaning="The four engineering factors are encoded in the formula. The 2025 standard has relocated this calculation to Annexe E from its previous position in the main body — designers must update their reference habits accordingly. The engineering is unchanged; only the location has changed."
@@ -401,14 +405,14 @@ const FireAlarmModule4Section2 = () => {
           </p>
           <p>
             The selected battery is fitted with a permanent installation-date label per BS
-            5839-1:2025 clause 16, and the system logbook is updated with the install date and the
-            calculated 4-year replacement target. The battery date and replacement target are also
-            recorded on the design records and made available to future maintainers.
+            5839-1:2025 clause 24.3.3, and the system logbook is updated with the install date and
+            the calculated 4-year replacement target. The battery date and replacement target are
+            also recorded on the design records and made available to future maintainers.
           </p>
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 16 (Battery installation labelling)"
+          source="BS 5839-1:2025 · Clause 24.3.3 (Battery date of installation) — in summary, not a verbatim quote"
           clause={
             <>
               Standby batteries should be fitted with a label showing the date of installation. The
@@ -720,7 +724,7 @@ const FireAlarmModule4Section2 = () => {
               SELECT next available size ≥ 7.75 Ah → 12 Ah SLA pair
             </text>
             <text x="440" y="500" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="10">
-              Fit installation-date label per BS 5839-1:2025 clause 16 — replace at 4 years
+              Fit installation-date label per BS 5839-1:2025 clause 24.3.3 — replace at 4 years
             </text>
           </svg>
         </div>
@@ -826,7 +830,7 @@ const FireAlarmModule4Section2 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 19 / Alarm transmission power supply"
+          source="BS 5839-1:2025 · Clause 14.16 (Power supply where fire signals are routed via other equipment) — in summary, not a verbatim quote"
           clause={
             <>
               Where a separate power supply unit is used to power alarm transmission equipment, the
@@ -925,7 +929,7 @@ const FireAlarmModule4Section2 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 16 (Cabling, labelling and identification — battery date)"
+          source="BS 5839-1:2025 · Clause 24.3.3 (Battery date of installation — battery date) — in summary, not a verbatim quote"
           clause={
             <>
               Batteries should have a label fixed to them showing the date of installation. The
@@ -992,11 +996,11 @@ const FireAlarmModule4Section2 = () => {
             '1.25 = four-year ageing factor — books in 25% capacity loss to end-of-life. Applies to the WHOLE bracket, not just the standby term.',
             'T1 = 24 h default. Reducible to 6 h ONLY where automatic standby generation is reliable, periodically tested, and connected to the fire alarm primary supply.',
             'T2 = 0.5 h alarm duration. Standard half-hour figure built into the formula.',
-            'D = 1.75 alarm de-rating — accounts for SLA high-discharge capacity loss at sounder-load currents. Apply always; never skip.',
+            'D alarm de-rating (Annex E.1.2) — CONDITIONAL, not a constant. If Cmin/20 >= I2 then D = 1. Only if Cmin/20 < I2 do you use the manufacturer figure, or 1.75 in its absence. Check the condition; never apply 1.75 blindly.',
             'I1 = standby current = CIE quiescent + always-energised interfaces. I2 = alarm current = CIE + sounders + VADs + interfaces in alarm.',
             'Battery requirements relocated to ANNEXE E in BS 5839-1:2025. Engineering unchanged; reference location changed.',
             'PSU standards: BS EN 54-4 (long-standing) OR — NEW IN 2025 — BS EN 50131-6 Grade 4 acceptable for alarm transmission equipment.',
-            'Battery date labels (BS 5839-1:2025 clause 16): permanent, legible, on every installed battery. Datum for the 4-year replacement cycle.',
+            'Battery date labels (BS 5839-1:2025 clause 24.3.3): permanent, legible, on every installed battery. Datum for the 4-year replacement cycle.',
             'Replace batteries in matched pairs / sets. Never mix ages within a single standby bank.',
           ]}
         />

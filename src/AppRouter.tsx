@@ -370,6 +370,8 @@ const EmployerPortalView = lazyWithRetry(() => import('@/pages/public/EmployerPo
 const CollegeJoinPage = lazyWithRetry(() => import('@/pages/college/CollegeJoinPage'));
 const CohortComparePage = lazyWithRetry(() => import('@/pages/college/CohortComparePage'));
 const ElectricianHubRoutes = lazyWithRetry(() => import('@/routes/ElectricianHubRoutes'));
+// The running-job clock on every Electrical Hub page (ELE-1755).
+const OnSitePill = lazyWithRetry(() => import('@/components/electrician/OnSitePill'));
 const ElectricianRoutes = lazyWithRetry(() => import('@/routes/ElectricianRoutes'));
 const InspectionRoutes = lazyWithRetry(() => import('@/routes/InspectionRoutes'));
 const StudyCentreRoutes = lazyWithRetry(() => import('@/routes/StudyCentreRoutes'));
@@ -2083,6 +2085,9 @@ const AppRouter = () => {
                   <LazyRoute>
                     <ElectricianHubRoutes />
                   </LazyRoute>
+                  <LazyRoute>
+                    <OnSitePill />
+                  </LazyRoute>
                 </SentryErrorBoundary>
               }
             />
@@ -2096,6 +2101,11 @@ const AppRouter = () => {
                 <SentryErrorBoundary section="Inspection & Testing">
                   <LazyRoute>
                     <InspectionRoutes />
+                  </LazyRoute>
+                  {/* Certificates are where he goes mid-job; the clock must
+                      follow him here or he forgets to End it. */}
+                  <LazyRoute>
+                    <OnSitePill />
                   </LazyRoute>
                 </SentryErrorBoundary>
               }

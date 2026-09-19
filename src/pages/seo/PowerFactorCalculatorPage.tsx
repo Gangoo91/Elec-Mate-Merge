@@ -149,7 +149,9 @@ const howToSchema = {
 
 export default function PowerFactorCalculatorPage() {
   useSEO({
-    title: 'Power Factor Calculator: kW, kVA & kVAr (Free)',
+    // CTR baseline before this change: 3,579 imp / 28 clicks / 0.78% CTR / pos 10.1 (28d to 2026-09-16).
+    // The title stated the answer; it now promises the tool.
+    title: 'Power Factor Calculator: Free kW to kVA Tool',
     description:
       'Free UK power factor calculator: convert between kW, kVA and kVAr, calculate cos φ, size capacitor banks for PF correction. Instant results, no signup.',
   });
@@ -216,7 +218,9 @@ export default function PowerFactorCalculatorPage() {
       {/* Live calculator — free, no signup, BS 7671:2018+A4:2026 compliant */}
       <section id="calculator" className="px-5 pb-12 scroll-mt-24">
         <div className="max-w-4xl mx-auto">
-          <CalculatorSurface><PowerFactorCalculator /></CalculatorSurface>
+          <CalculatorSurface>
+            <PowerFactorCalculator />
+          </CalculatorSurface>
         </div>
       </section>
 
@@ -654,9 +658,9 @@ export default function PowerFactorCalculatorPage() {
       <section className="px-5 pb-2">
         <div className="max-w-4xl mx-auto">
           <p className="text-xs text-white text-center">
-            Reviewed by <strong className="text-white">Andrew Moore</strong>, founder of
-            Elec-Mate — a qualified electrician (18th Edition, C&amp;G 2391 inspection and testing)
-            · Last reviewed May 2026 · All calculations verified against BS 7671:2018+A4:2026
+            Reviewed by <strong className="text-white">Andrew Moore</strong>, founder of Elec-Mate —
+            a qualified electrician (18th Edition, C&amp;G 2391 inspection and testing) · Last
+            reviewed May 2026 · All calculations verified against BS 7671:2018+A4:2026
           </p>
         </div>
       </section>

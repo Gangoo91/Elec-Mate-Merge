@@ -54,6 +54,12 @@ export interface BookingConfirmationData {
    * to an attachment called something else is worse than saying nothing.
    */
   icsFilename?: string;
+  /**
+   * `reminder` — the evening-before nudge sent by `send-booking-reminders`.
+   * Same details block, different subject and greeting: the customer already
+   * has this in their diary; this is "we're with you tomorrow".
+   */
+  variant?: 'confirmation' | 'reminder';
 }
 
 export interface BookingConfirmationEmail {
@@ -249,10 +255,17 @@ export function buildBookingConfirmationEmail(
       ? `${timeShort(data.startIso)} – ${timeShort(data.endIso)}`
       : `from ${timeShort(data.startIso)}`;
 
-  const subject = moved ? `Your appointment has moved — ${when}` : `You're booked in — ${when}`;
-  const preheader = moved
-    ? `Now ${when}. The calendar file attached will update your diary.`
-    : `${when}. The calendar file attached adds it to your diary.`;
+  const reminder = data.variant === 'reminder';
+  const subject = reminder
+    ? `Reminder: ${company} is with you tomorrow — ${when}`
+    : moved
+      ? `Your appointment has moved — ${when}`
+      : `You're booked in — ${when}`;
+  const preheader = reminder
+    ? `${when}. If anything has changed, just reply to this email.`
+    : moved
+      ? `Now ${when}. The calendar file attached will update your diary.`
+      : `${when}. The calendar file attached adds it to your diary.`;
 
   const details = [
     detailRow('What', data.title || 'Electrical work'),
@@ -360,11 +373,15 @@ export function buildBookingConfirmationEmail(
                 firstName
               )},</p>
               <p style="margin: 0 0 24px; font-size: 15px; color: ${MUTED}; line-height: 1.62;">${
-                moved
-                  ? `We've had to move your appointment. Everything else is unchanged — the new time is above, and the calendar file attached will update your diary.`
-                  : `You're booked in with ${escape(
+                reminder
+                  ? `A quick reminder that ${escape(
                       company
-                    )}. The details are below, and the calendar file attached will put it straight in your diary.`
+                    )} is with you tomorrow. The details are below — if anything has changed, just reply to this email.`
+                  : moved
+                    ? `We've had to move your appointment. Everything else is unchanged — the new time is above, and the calendar file attached will update your diary.`
+                    : `You're booked in with ${escape(
+                        company
+                      )}. The details are below, and the calendar file attached will put it straight in your diary.`
               }</p>
             </td>
           </tr>

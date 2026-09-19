@@ -109,7 +109,13 @@ const TrunkingSizeCalculator = ({ onResult }: CalculatorResultReporter = {}) => 
         { label: 'Total cable area', value: `${result.totalCableArea.toFixed(1)} mm\u00b2` },
         { label: 'Grouping factor', value: String(result.groupingFactor) },
       ],
-      basis: 'BS 7671 Appendix 4 grouping; 45% trunking / 40% conduit space factor',
+      // 🔴 The 45% is NOT a BS 7671 figure. This file says so at the top:
+      // there is no trunking space factor anywhere in the standard — 45% is
+      // IET On-Site Guide / long-standing industry guidance. Only the grouping
+      // factors come from BS 7671. An emailed figure carries its attribution
+      // away from the page, so the attribution has to be right.
+      basis:
+        '45% space factor \u2014 IET On-Site Guide / industry guidance, not a BS 7671 requirement. Grouping factors: BS 7671 Appendix 4.',
     });
   }, [result, containmentType, onResult]);
 
@@ -261,9 +267,7 @@ const TrunkingSizeCalculator = ({ onResult }: CalculatorResultReporter = {}) => 
           verdict:
             result.status === 'fail' ? 'fail' : result.status === 'warning' ? 'warn' : 'pass',
         },
-        ...(isTrunking
-          ? [{ label: 'Fill', value: result.fillPercent.toFixed(1), unit: '%' }]
-          : []),
+        ...(isTrunking ? [{ label: 'Fill', value: result.fillPercent.toFixed(1), unit: '%' }] : []),
       ],
       sections: [
         {

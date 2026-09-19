@@ -3,12 +3,7 @@ import { symbolRegistry, categories, type SymbolCategory } from './symbols/symbo
 import { loadSymbolSvg, getSymbolSvgSync } from './symbols/svgLoader';
 import { Input } from '@/components/ui/input';
 import { Search, Minus, Plus } from 'lucide-react';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
 
@@ -17,10 +12,50 @@ import { useHaptic } from '@/hooks/useHaptic';
  * stable identity across renders and can be looked up by label.
  */
 const QUICK_PACKS: { label: string; symbols: string[] }[] = [
-  { label: 'Kitchen', symbols: ['socket-double-13a', 'socket-cooker-45a', 'socket-fused-spur', 'light-ceiling', 'switch-1way', 'extractor-fan', 'socket-switched-fused-spur'] },
-  { label: 'Bedroom', symbols: ['socket-double-13a', 'light-ceiling', 'switch-2way', 'smoke-detector', 'socket-usb', 'socket-tv-aerial'] },
-  { label: 'Bathroom', symbols: ['light-downlight', 'switch-pull-cord', 'socket-shaver', 'extractor-fan', 'light-bulkhead'] },
-  { label: 'Living Room', symbols: ['socket-double-13a', 'light-ceiling', 'switch-dimmer', 'socket-tv-aerial', 'socket-data', 'smoke-detector'] },
+  {
+    label: 'Kitchen',
+    symbols: [
+      'socket-double-13a',
+      'socket-cooker-45a',
+      'socket-fused-spur',
+      'light-ceiling',
+      'switch-1way',
+      'extractor-fan',
+      'socket-switched-fused-spur',
+    ],
+  },
+  {
+    label: 'Bedroom',
+    symbols: [
+      'socket-double-13a',
+      'light-ceiling',
+      'switch-2way',
+      'smoke-detector',
+      'socket-usb',
+      'socket-tv-aerial',
+    ],
+  },
+  {
+    label: 'Bathroom',
+    symbols: [
+      'light-downlight',
+      'switch-pull-cord',
+      'socket-shaver',
+      'extractor-fan',
+      'light-bulkhead',
+    ],
+  },
+  {
+    label: 'Living Room',
+    symbols: [
+      'socket-double-13a',
+      'light-ceiling',
+      'switch-dimmer',
+      'socket-tv-aerial',
+      'socket-data',
+      'smoke-detector',
+    ],
+  },
   { label: 'Hallway', symbols: ['light-ceiling', 'switch-2way', 'smoke-detector', 'co-detector'] },
 ];
 
@@ -45,16 +80,9 @@ const SymbolPreview = ({ symbolId }: { symbolId: string }) => {
 
   // The SVG loader replaces currentColor with #000000 for canvas rendering.
   // For the preview on dark background, swap to yellow (#EAB308).
-  const previewHtml = svgHtml
-    .replace(/#000000/g, '#EAB308')
-    .replace(/currentColor/g, '#EAB308');
+  const previewHtml = svgHtml.replace(/#000000/g, '#EAB308').replace(/currentColor/g, '#EAB308');
 
-  return (
-    <div
-      className="w-10 h-10"
-      dangerouslySetInnerHTML={{ __html: previewHtml }}
-    />
-  );
+  return <div className="w-10 h-10" dangerouslySetInnerHTML={{ __html: previewHtml }} />;
 };
 
 export const SymbolLibrary = ({
@@ -89,7 +117,7 @@ export const SymbolLibrary = ({
   }, [open]);
 
   const activePackSymbols = activePack
-    ? QUICK_PACKS.find((p) => p.label === activePack)?.symbols ?? null
+    ? (QUICK_PACKS.find((p) => p.label === activePack)?.symbols ?? null)
     : null;
 
   const filteredSymbols = symbolRegistry.filter((symbol) => {
@@ -104,7 +132,9 @@ export const SymbolLibrary = ({
     return matchesSearch && matchesCategory;
   });
 
-  const pendingSymbol = pendingSymbolId ? symbolRegistry.find((s) => s.id === pendingSymbolId) : null;
+  const pendingSymbol = pendingSymbolId
+    ? symbolRegistry.find((s) => s.id === pendingSymbolId)
+    : null;
 
   const handleSymbolTap = (symbolId: string) => {
     haptic.selection();
@@ -199,7 +229,7 @@ export const SymbolLibrary = ({
                     'flex-shrink-0 h-11 sm:h-8 px-3 rounded-full text-[11px] font-medium touch-manipulation active:scale-95 whitespace-nowrap border',
                     isActive
                       ? 'bg-elec-yellow border-elec-yellow text-black font-semibold'
-                      : 'bg-elec-yellow/10 border-elec-yellow/20 text-elec-yellow'
+                      : 'bg-white/[0.06] border-elec-yellow/20 text-elec-yellow'
                   )}
                 >
                   {pack.label}
@@ -212,7 +242,10 @@ export const SymbolLibrary = ({
         {/* Category pills — horizontal scroll */}
         <div className="flex gap-1.5 overflow-x-auto w-full max-w-5xl mx-auto px-4 pb-3 scrollbar-hide">
           <button
-            onClick={() => { setActiveCategory('all'); setActivePack(null); }}
+            onClick={() => {
+              setActiveCategory('all');
+              setActivePack(null);
+            }}
             className={cn(
               'flex-shrink-0 px-3 rounded-full text-xs font-medium transition-all touch-manipulation h-11 sm:h-8',
               activeCategory === 'all' && !activePack
@@ -225,7 +258,10 @@ export const SymbolLibrary = ({
           {categories.map((cat) => (
             <button
               key={cat.id}
-              onClick={() => { setActiveCategory(cat.id); setActivePack(null); }}
+              onClick={() => {
+                setActiveCategory(cat.id);
+                setActivePack(null);
+              }}
               className={cn(
                 'flex-shrink-0 px-3 rounded-full text-xs font-medium transition-all touch-manipulation whitespace-nowrap h-11 sm:h-8',
                 activeCategory === cat.id && !activePack
@@ -248,7 +284,7 @@ export const SymbolLibrary = ({
                 className={cn(
                   'flex flex-col items-center justify-center gap-1.5 p-3 rounded-lg border transition-all touch-manipulation min-h-[80px]',
                   pendingSymbolId === symbol.id
-                    ? 'border-elec-yellow bg-elec-yellow/10'
+                    ? 'border-elec-yellow bg-white/[0.06]'
                     : 'border-white/10 bg-white/5 active:bg-white/10'
                 )}
               >
@@ -261,9 +297,7 @@ export const SymbolLibrary = ({
           </div>
 
           {filteredSymbols.length === 0 && (
-            <div className="text-center text-white py-8 text-sm">
-              No symbols found
-            </div>
+            <div className="text-center text-white py-8 text-sm">No symbols found</div>
           )}
         </div>
 
@@ -272,12 +306,17 @@ export const SymbolLibrary = ({
           <div className="w-full max-w-5xl mx-auto px-4 py-3 border-t border-white/10 bg-elec-dark flex items-center gap-3">
             <div className="flex items-center gap-1">
               <SymbolPreview symbolId={pendingSymbol.id} />
-              <span className="text-white text-xs font-medium ml-1 max-w-[100px] truncate">{pendingSymbol.name}</span>
+              <span className="text-white text-xs font-medium ml-1 max-w-[100px] truncate">
+                {pendingSymbol.name}
+              </span>
             </div>
             <div className="flex items-center gap-0 ml-auto">
               <button
                 type="button"
-                onClick={() => { haptic.selection(); setQuantity(Math.max(1, quantity - 1)); }}
+                onClick={() => {
+                  haptic.selection();
+                  setQuantity(Math.max(1, quantity - 1));
+                }}
                 className="h-11 w-11 rounded-l-lg bg-white/10 flex items-center justify-center touch-manipulation active:bg-white/20"
               >
                 <Minus className="h-4 w-4 text-white" />
@@ -287,7 +326,10 @@ export const SymbolLibrary = ({
               </div>
               <button
                 type="button"
-                onClick={() => { haptic.selection(); setQuantity(Math.min(20, quantity + 1)); }}
+                onClick={() => {
+                  haptic.selection();
+                  setQuantity(Math.min(20, quantity + 1));
+                }}
                 className="h-11 w-11 rounded-r-lg bg-white/10 flex items-center justify-center touch-manipulation active:bg-white/20"
               >
                 <Plus className="h-4 w-4 text-white" />

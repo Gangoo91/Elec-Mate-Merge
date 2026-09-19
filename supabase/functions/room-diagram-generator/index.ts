@@ -1,7 +1,149 @@
 import { serve, corsHeaders } from '../_shared/deps.ts';
 import { captureException } from '../_shared/sentry.ts';
+import { AIProviderError } from '../_shared/ai-providers.ts';
 
-const VERSION = 'v1.0.0';
+const VERSION = 'v1.1.0';
+
+/**
+ * The vision model for reading a plan.
+ *
+ * ⚠️ Kept on Flash deliberately. Reading a hand-drawn plan is spatial work that
+ * a Pro-tier model would very likely do better, and that is worth revisiting —
+ * but `gemini-3.5-pro` returns 404 on this API version, and the rest of the
+ * codebase runs Flash in 45 places. Changing this needs the available model
+ * list checked against the live key first, not a guess at a name.
+ */
+const PHOTO_MODEL = 'gemini-3.5-flash';
+
+/**
+ * Headroom for a whole floor.
+ *
+ * Measured: a six-room plan returns ~1,500 tokens. A care-home floor of 25-30
+ * rooms lands near 7,500, which the previous 8,000 ceiling would clip.
+ */
+const PHOTO_MAX_OUTPUT_TOKENS = 32000;
+
+/**
+ * Raised when the model's answer was cut short by the token ceiling.
+ *
+ * Deliberately an `AIProviderError` with `retryable: false` — `withRetry` only
+ * skips a retry for that type, and retrying here is pure waste: the same plan
+ * overflows every time, so three attempts just make the user wait longer for
+ * the same answer.
+ */
+const planTooLargeError = () =>
+  new AIProviderError(
+    'That plan has more on it than we can read in one go. Try photographing one floor at a time, or crop to the area you are working on.',
+    'gemini',
+    undefined,
+    false
+  );
+
+/**
+ * The shape the model must return.
+ *
+ * Supplying a schema constrains decoding rather than merely requesting JSON, so
+ * the model cannot omit `rooms`, rename a key or stop half way through an
+ * object. That is the failure the markdown-stripping and JSON-repair code
+ * downstream exists to survive; with this it should not arise.
+ */
+const FLOOR_PLAN_SCHEMA = {
+  type: 'object',
+  properties: {
+    rooms: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          room: {
+            type: 'object',
+            properties: {
+              name: { type: 'string' },
+              dimensions: {
+                type: 'object',
+                properties: {
+                  width: { type: 'number' },
+                  height: { type: 'number' },
+                  unit: { type: 'string' },
+                },
+                required: ['width', 'height'],
+              },
+              origin: {
+                type: 'object',
+                properties: { x: { type: 'number' }, y: { type: 'number' } },
+                required: ['x', 'y'],
+              },
+            },
+            required: ['name', 'dimensions', 'origin'],
+          },
+          walls: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                id: { type: 'string', enum: ['north', 'east', 'south', 'west'] },
+                length: { type: 'number' },
+                features: {
+                  type: 'array',
+                  items: {
+                    type: 'object',
+                    properties: {
+                      type: { type: 'string' },
+                      position: { type: 'string' },
+                      width: { type: 'number' },
+                    },
+                    required: ['type'],
+                  },
+                },
+              },
+              required: ['id', 'length'],
+            },
+          },
+          symbols: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                type: {
+                  type: 'string',
+                  description: 'One of the listed symbol IDs, exactly as given, with no suffix.',
+                },
+                wall: {
+                  type: 'string',
+                  enum: ['north', 'east', 'south', 'west'],
+                  description:
+                    'The wall this accessory is mounted on. Omit for ceiling-mounted items.',
+                },
+                /*
+                 * Described precisely, because a bare `type: string` is not
+                 * enough guidance.
+                 *
+                 * Left undescribed, the model began returning coordinate pairs
+                 * ("0.8, 1.4"). Those are not wrong in themselves, but they
+                 * lift sockets and switches off the walls they belong on and
+                 * scatter them across the room — a worse drawing than the
+                 * along-the-wall placement this asks for.
+                 */
+                position: {
+                  type: 'string',
+                  description:
+                    'Either the single number of metres along the named wall, measured from its start, for example "2.4" — or the word "center" for a ceiling-mounted item. Never a coordinate pair, and never two numbers.',
+                },
+                heightFromFloor: {
+                  type: 'number',
+                  description: 'Metres above finished floor level.',
+                },
+              },
+              required: ['type', 'position'],
+            },
+          },
+        },
+        required: ['room', 'walls', 'symbols'],
+      },
+    },
+  },
+  required: ['rooms'],
+};
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -90,10 +232,18 @@ GARAGE/WORKSHOP:
 - Fluorescent or high-bay lighting (light-fluorescent or light-high-bay)
 - RCD protection on all circuits
 
-HALLWAY/LANDING:
+HALLWAY/LANDING/CORRIDOR:
 - 2-way switching (switch-2way) for lights (switch at each end / top and bottom of stairs)
 - Smoke detector required (smoke-detector)
 - Emergency lighting if commercial (light-emergency)
+
+LONG ROOMS AND CORRIDORS — SPACE THE LIGHTING OUT:
+- A single fitting at the centre of a long room leaves most of it dark. Any room
+  longer than 5m gets multiple lighting points spread along its length, each with
+  its own "position" in metres, roughly one every 3-4m.
+- The same applies to emergency lighting and detection on an escape route: space
+  them along the corridor rather than placing one in the middle.
+- A 20m corridor should have around 5-6 lighting points, not one.
 
 ALL ROOMS:
 - Smoke detector required in habitable rooms and escape routes
@@ -183,13 +333,34 @@ CRITICAL: Return ONLY the JSON object, no markdown, no explanations, no code blo
             },
             generationConfig: {
               temperature: 0.3,
-              maxOutputTokens: 8000,
+              /*
+               * A whole floor needs far more room than one room did.
+               *
+               * The six-room test plan came back at ~1,500 tokens. A care home
+               * floor of 25-30 rooms lands around 6,000-7,500 — right on the
+               * old 8,000 ceiling. Going over does not fail cleanly: the JSON
+               * is cut off mid-object, `JSON.parse` throws, all three retries
+               * burn, and the user sees a generic error for what is really
+               * "your plan is bigger than we allowed for". Which is exactly the
+               * complaint this whole ticket started from.
+               */
+              maxOutputTokens: PHOTO_MAX_OUTPUT_TOKENS,
               responseMimeType: 'application/json',
+              /*
+               * A schema, not just "please return JSON".
+               *
+               * `responseMimeType` alone asks politely; a `responseSchema`
+               * constrains decoding, so the model cannot omit `rooms`, invent a
+               * key or emit a half-formed object. That removes the class of
+               * failure the markdown-stripping and JSON-repair code below was
+               * written to paper over.
+               */
+              responseSchema: FLOOR_PLAN_SCHEMA,
             },
           };
 
           const visionRes = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${geminiKey}`,
+            `https://generativelanguage.googleapis.com/v1beta/models/${PHOTO_MODEL}:generateContent?key=${geminiKey}`,
             { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(visionBody) }
           );
 
@@ -199,7 +370,21 @@ CRITICAL: Return ONLY the JSON object, no markdown, no explanations, no code blo
           }
 
           const visionData = await visionRes.json();
-          const content = visionData?.candidates?.[0]?.content?.parts?.[0]?.text;
+          const candidate = visionData?.candidates?.[0];
+
+          /*
+           * Say so when the plan was too big, rather than failing as bad JSON.
+           *
+           * `MAX_TOKENS` means the answer was cut off. Retrying is pointless —
+           * the same plan will overflow again — so this throws a message the
+           * user can act on instead of spending three attempts to say
+           * "something went wrong".
+           */
+          if (candidate?.finishReason === 'MAX_TOKENS') {
+            throw planTooLargeError();
+          }
+
+          const content = candidate?.content?.parts?.[0]?.text;
           if (!content) throw new Error('No response from Gemini vision');
           response = { content };
         } else {

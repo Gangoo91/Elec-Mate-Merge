@@ -1,3 +1,4 @@
+import { readCertificatePrefill } from '@/utils/certificatePrefill';
 import React, {
   createContext,
   useContext,
@@ -159,11 +160,13 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
      */
     _clientCertId: crypto.randomUUID(),
     certificateNumber: '',
-    clientName: '',
-    clientAddress: '',
+    // From the job or the diary when started there (?clientName=&address=,
+    // read by readCertificatePrefill), else blank.
+    clientName: readCertificatePrefill()?.clientName ?? '',
+    clientAddress: readCertificatePrefill()?.address ?? '',
     clientPhone: '',
     clientEmail: '',
-    installationAddress: '',
+    installationAddress: readCertificatePrefill()?.address ?? '',
     installationDate: '',
     testDate: '',
     installationType: 'domestic',

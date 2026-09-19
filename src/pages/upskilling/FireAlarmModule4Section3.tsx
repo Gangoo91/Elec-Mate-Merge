@@ -21,10 +21,10 @@ const inlineChecks = [
   {
     id: 'fam4-s3-ph30',
     question:
-      'Standard fire-resistant cables for fire detection and fire alarm systems are tested to PH30 per BS EN 50200 Annex E. What does PH30 actually mean?',
+      'Standard fire-resistant cables for fire detection and fire alarm systems are tested to PH30 per BS EN 50200:2015 Annex D. What does PH30 actually mean?',
     options: [
       'A 30 V maximum test voltage applied to the cable during its type-test.',
-      'Circuit integrity maintained for 30 minutes under simultaneous fire (842 °C), water spray and shock.',
+      'Circuit integrity maintained for 30 minutes under simultaneous fire (930 °C), water spray and shock.',
       'A 30 mm minimum bending-radius limit for the installed fire-resistant cable.',
       'A 30 °C continuous-temperature rating for the cable sheath in service.',
     ],
@@ -80,11 +80,11 @@ const quizQuestions = [
   {
     id: 1,
     question:
-      'PH30 fire-resistant cable to BS EN 50200 Annex E maintains circuit integrity under what test conditions?',
+      'PH30 fire-resistant cable to BS EN 50200:2015 Annex D maintains circuit integrity under what test conditions?',
     options: [
-      'Fire only, at 842 °C, for 30 minutes — the flame applied without water spray or impact.',
+      'Fire only, at 930 °C, for 30 minutes — the flame applied without water spray or impact.',
       'Mechanical shock only, with repeated impacts for 30 minutes to simulate falling debris.',
-      'Fire (842 °C) + water spray + mechanical shock together for 30 minutes, carrying signal throughout.',
+      'Fire (930 °C) + water spray + mechanical shock together for 30 minutes, carrying signal throughout.',
       'Fire only, for 120 minutes, representing the longer enhanced-cable survival duration.',
     ],
     correctAnswer: 2,
@@ -121,16 +121,16 @@ const quizQuestions = [
   {
     id: 4,
     question:
-      'BS EN 50200 Annex E is referenced for fire-resistant cable testing in fire alarm applications. What is the test method?',
+      'BS EN 50200:2015 Annex D is referenced for fire-resistant cable testing in fire alarm applications. What is the test method?',
     options: [
-      'A 842 °C gas flame with periodic water spray and mechanical impact together, while the cable carries signal.',
+      'A 930 °C gas flame with periodic water spray and mechanical impact together, while the cable carries signal.',
       'A static heat-soak in an oven at a fixed temperature, with the cable energised but not impacted or sprayed.',
       'A pure mechanical pull test measuring the tensile force the cable withstands before the conductors part.',
       'An insulation-resistance (megger) test at elevated temperature to confirm the dielectric survives heat.',
     ],
     correctAnswer: 0,
     explanation:
-      'The Annex E test combines fire, water and mechanical shock — a realistic representation of conditions a fire alarm cable would face during a real building fire with active fire-fighting. The PH classification is the survival time under these combined stresses.',
+      'The BS EN 50200 test combines fire, water and mechanical shock — a realistic representation of conditions a fire alarm cable would face during a real building fire with active fire-fighting. The PH classification is the survival time under these combined stresses.',
   },
   {
     id: 5,
@@ -224,7 +224,7 @@ const FireAlarmModule4Section3 = () => {
   useSEO({
     title: 'Cable types and fire resistance | Fire Alarm Module 4.3 | Elec-Mate',
     description:
-      'BS 5839-1:2025 cable categories — Standard PH30 (BS EN 50200 Annex E) for routine circuits, Enhanced PH120 (with BS 8434-2) for voice alarm / phased evacuation / life-critical interfaces, BS 8519 cable system code, and the major cable types (FP200 Gold, FP PLUS, MICC).',
+      'BS 5839-1:2025 cable categories — Standard PH30 (BS EN 50200:2015 Annex D) for routine circuits, Enhanced PH120 (with BS 8434-2) for voice alarm / phased evacuation / life-critical interfaces, BS 8519 cable system code, and the major cable types (FP200 Gold, FP PLUS, MICC).',
   });
 
   return (
@@ -236,7 +236,7 @@ const FireAlarmModule4Section3 = () => {
       />
       <HubBody>
         <p className="max-w-3xl text-[13px] leading-relaxed text-white">
-          BS 5839-1:2025 cable categories — Standard PH30 to BS EN 50200 Annex E for routine
+          BS 5839-1:2025 cable categories — Standard PH30 to BS EN 50200:2015 Annex D for routine
           circuits, Enhanced PH120 with BS 8434-2 for voice alarm / phased evacuation /
           life-critical interfaces, the BS 8519 code of practice, and the major cable families used
           in UK fire alarm work.
@@ -245,7 +245,7 @@ const FireAlarmModule4Section3 = () => {
         <TLDR
           points={[
             'Two BS 5839-1:2025 cable categories: STANDARD (PH30) for most circuits, ENHANCED (PH120) for life-critical / phased-evacuation / extended-evacuation duty.',
-            'PH30: 30 minutes of circuit integrity under combined fire (842 °C) + water spray + mechanical shock per BS EN 50200 Annex E.',
+            'PH30: 30 minutes of circuit integrity under combined fire (930 °C) + water spray + mechanical shock per BS EN 50200:2015 Annex D.',
             'PH120: 120 minutes of circuit integrity under the same combined stresses, additionally tested per BS 8434-2 for the longer survival.',
             'Selection is DESIGN-DRIVEN by evacuation strategy and fire engineering — building height, evacuation type (simultaneous vs phased vs extended), and life-critical interface presence.',
             'BS 8519 is the code of practice for fire-resistant power and control cable SYSTEMS in life-safety applications — the engineering-practice companion to BS 5839-1.',
@@ -258,7 +258,7 @@ const FireAlarmModule4Section3 = () => {
         <LearningOutcomes
           outcomes={[
             'Distinguish Standard (PH30) from Enhanced (PH120) cable categories per BS 5839-1:2025 and select the correct category for a given application',
-            'Explain the BS EN 50200 Annex E test (combined fire / water / mechanical shock) and the BS 8434-2 supplementary test for enhanced cables',
+            'Explain the BS EN 50200:2015 Annex D test (combined fire / water / mechanical shock) and the BS 8434-2 supplementary test for enhanced cables',
             'Apply BS 8519 as the code of practice for fire-resistant cable system selection and installation',
             'Identify the major UK fire alarm cable types (FP200 Gold, FP PLUS, MICC / Pyro) and the application envelope of each',
             'Justify cable selection in design records by reference to evacuation strategy, building height, and life-critical interface presence',
@@ -273,13 +273,13 @@ const FireAlarmModule4Section3 = () => {
 
         <ConceptBlock
           title="Standard (PH30) — the default for most circuits"
-          plainEnglish="A PH30 cable is one that has been tested under the BS EN 50200 Annex E procedure — a defined gas flame at 842 °C, periodic water spray representing fire-fighting water hitting the cable, and periodic mechanical impact representing falling debris — and continued to carry signal or power for at least 30 minutes. The PH classification is the time of circuit integrity under those combined stresses. Standard PH30 cable is the default selection for routine fire alarm circuits in most buildings: detection loops, sounder circuits, interface circuits in non-extended-evacuation buildings."
+          plainEnglish="A PH30 cable is one that has been tested under the BS EN 50200:2015 Annex D procedure — a defined gas flame at 930 °C, periodic water spray representing fire-fighting water hitting the cable, and periodic mechanical impact representing falling debris — and continued to carry signal or power for at least 30 minutes. The PH classification is the time of circuit integrity under those combined stresses. Standard PH30 cable is the default selection for routine fire alarm circuits in most buildings: detection loops, sounder circuits, interface circuits in non-extended-evacuation buildings."
           onSite="When you pick up a coil of FP200 Gold or equivalent on the van, you are picking up a PH30 cable. It is the workhorse of UK fire alarm installation. It survives the standard test — fire + water + shock for 30 minutes — and it terminates with relatively conventional methods (gland and termination, no specialised tooling beyond standard cable preparation)."
         >
           <p>What PH30 testing actually involves:</p>
           <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
             <li>
-              <strong>Fire.</strong> A defined gas flame at 842 °C is applied to the cable along a
+              <strong>Fire.</strong> A defined gas flame at 930 °C is applied to the cable along a
               specified length. The temperature represents a fully developed cellulosic fire — the
               standard reference fire condition for building-fire testing.
             </li>
@@ -309,19 +309,21 @@ const FireAlarmModule4Section3 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS EN 50200:2015 Annex E (Method of test for resistance to fire of unprotected small cables for use in emergency circuits)"
+          source="BS EN 50200:2015 Annex D (Method of test for resistance to fire of unprotected small cables for use in emergency circuits)"
           clause={
             <>
               The test method described in this Annex evaluates the ability of small cables to
-              maintain circuit integrity when exposed simultaneously to fire (gas flame at 842 °C),
-              water spray (at specified intervals representing fire-fighting water application), and
-              mechanical shock (at specified intervals representing falling debris). The
-              classification PHnn indicates the duration in minutes for which the cable maintained
-              circuit integrity under the combined exposure. PH30 is the minimum duration commonly
-              applied to fire detection and fire alarm cables.
+              maintain circuit integrity when exposed to fire and water spray. Note the 930 °C flame
+              figure quoted by BS 5839-1 belongs to BS 8434-2 — the test used for ENHANCED cable —
+              not to the base PH 30 classification (gas flame, water spray (at specified intervals
+              representing fire-fighting water application), and mechanical shock (at specified
+              intervals representing falling debris). The classification PHnn indicates the duration
+              in minutes for which the cable maintained circuit integrity under the combined
+              exposure. PH30 is the minimum duration commonly applied to fire detection and fire
+              alarm cables.
             </>
           }
-          meaning="The Annex E procedure is the test that distinguishes a fire-resistant cable from one that is merely fire-retardant. The combined stress — fire + water + shock simultaneously — is the realistic representation of a building fire with active fire-fighting. The PH classification is what the designer relies on for fire-survival assurance."
+          meaning="The Annex D classification is the test that distinguishes a fire-resistant cable from one that is merely fire-retardant. The combined stress — fire + water + shock simultaneously — is the realistic representation of a building fire with active fire-fighting. The PH classification is what the designer relies on for fire-survival assurance."
         />
 
         <InlineCheck
@@ -334,7 +336,7 @@ const FireAlarmModule4Section3 = () => {
 
         <ConceptBlock
           title="Enhanced (PH120) — for the longer-survival applications"
-          plainEnglish="Enhanced cable is PH120 — 120 minutes of circuit integrity under the same BS EN 50200 Annex E combined-stress test, with additional verification per BS 8434-2 for the longer duration. Enhanced cable is selected where the design analysis identifies a fire-survival requirement greater than 30 minutes. The driver is the building's evacuation strategy and fire engineering, not a generic preference for 'better' cable."
+          plainEnglish="Enhanced cable is PH120 — 120 minutes of circuit integrity under the same BS EN 50200:2015 Annex D combined-stress test, with additional verification per BS 8434-2 for the longer duration. Enhanced cable is selected where the design analysis identifies a fire-survival requirement greater than 30 minutes. The driver is the building's evacuation strategy and fire engineering, not a generic preference for 'better' cable."
         >
           <p>The applications where Enhanced cable is mandated:</p>
           <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
@@ -387,10 +389,10 @@ const FireAlarmModule4Section3 = () => {
             <>
               Where the evacuation strategy or fire-engineering design requires fire-resistant cable
               survival in excess of the standard 30 minutes, ENHANCED cable should be specified.
-              Enhanced cable is classified PH120 to BS EN 50200 Annex E supplemented by BS 8434-2
-              (which extends the test methodology for the longer duration and higher-temperature
-              variant). Enhanced cable applications include: voice alarm systems serving phased
-              evacuation; extended-evacuation buildings; life-critical interfaces to
+              Enhanced cable is classified PH120 to BS EN 50200:2015 Annex D supplemented by BS
+              8434-2 (which extends the test methodology for the longer duration and
+              higher-temperature variant). Enhanced cable applications include: voice alarm systems
+              serving phased evacuation; extended-evacuation buildings; life-critical interfaces to
               fire-suppression, AOV, lift-control, smoke-control plant; and any installation where
               the design analysis identifies a cable survival requirement greater than PH30
               provides.
@@ -448,7 +450,8 @@ const FireAlarmModule4Section3 = () => {
             <li>
               <strong>Segregation.</strong> Spatial separation from non-life-safety circuits to
               prevent a fault on a non-safety circuit from compromising a safety circuit.
-              Coordinates with BS 7671 528 (segregation) and with BS 5839-1 clause 26.
+              Coordinates with BS 7671 Reg 528 (segregation) and with BS 5839-1 clauses 35.8 and
+              35.9.
             </li>
             <li>
               <strong>Routing.</strong> Avoidance of high-risk fire-source areas where practicable,
@@ -712,8 +715,8 @@ const FireAlarmModule4Section3 = () => {
               Selection driven by evacuation strategy + fire engineering — not "more is better"
             </text>
             <text x="440" y="368" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="9">
-              BS 5839-1:2025 categories · BS EN 50200 Annex E · BS 8434-2 · BS 8519 installation
-              practice
+              BS 5839-1:2025 categories · BS EN 50200:2015 Annex D · BS 8434-2 · BS 8519
+              installation practice
             </text>
           </svg>
         </div>
@@ -735,8 +738,8 @@ const FireAlarmModule4Section3 = () => {
               circuit topologies.
             </li>
             <li>
-              <strong>Fire performance.</strong> PH30 to BS EN 50200 Annex E. Continuous circuit
-              integrity for 30 minutes under combined fire / water / shock.
+              <strong>Fire performance.</strong> PH30 to BS EN 50200:2015 Annex D. Continuous
+              circuit integrity for 30 minutes under combined fire / water / shock.
             </li>
             <li>
               <strong>Smoke / toxicity.</strong> LSZH (Low Smoke Zero Halogen) — produces limited
@@ -767,8 +770,8 @@ const FireAlarmModule4Section3 = () => {
               properties.
             </li>
             <li>
-              <strong>Fire performance.</strong> PH120 to BS EN 50200 Annex E supplemented by BS
-              8434-2. Continuous circuit integrity for 120 minutes under combined fire / water /
+              <strong>Fire performance.</strong> PH120 to BS EN 50200:2015 Annex D supplemented by
+              BS 8434-2. Continuous circuit integrity for 120 minutes under combined fire / water /
               shock.
             </li>
             <li>
@@ -890,7 +893,7 @@ const FireAlarmModule4Section3 = () => {
           title="What to remember on site"
           points={[
             'Two BS 5839-1:2025 cable categories: STANDARD (PH30) for routine circuits, ENHANCED (PH120) for life-critical / phased-evacuation / extended-evacuation duty.',
-            'PH30 = 30 minutes circuit integrity under combined fire (842 °C) + water spray + mechanical shock per BS EN 50200 Annex E.',
+            'PH30 = 30 minutes circuit integrity under combined fire (930 °C) + water spray + mechanical shock per BS EN 50200:2015 Annex D.',
             'PH120 = 120 minutes under the same combined stresses, additionally tested per BS 8434-2.',
             'Enhanced cable selection is DESIGN-DRIVEN — evacuation strategy, building height, life-critical interfaces. Document the rationale in design records.',
             'BS 8519 is the code of practice for the cable SYSTEM (cable + supports + fixings + terminations + segregation). Engineering practice companion to BS 5839-1.',
@@ -911,7 +914,7 @@ const FireAlarmModule4Section3 = () => {
             },
             {
               question:
-                'Why does the BS EN 50200 Annex E test apply fire, water spray AND mechanical shock together?',
+                'Why does the BS EN 50200:2015 Annex D test apply fire, water spray AND mechanical shock together?',
               answer:
                 'Because that is what real building fires look like. A fire alarm cable in a real fire is exposed to flame, to water from fire-fighting operations, AND to mechanical impact from falling debris or ceiling collapse — all simultaneously. Testing only one stress at a time would not predict performance under combined stresses, which are typically more demanding than any single stress alone. The combined test is realistic engineering.',
             },

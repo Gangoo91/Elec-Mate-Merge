@@ -321,7 +321,7 @@ const FireAlarmModule7Section4 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-6:2019+A1:2020 · Foreword (Status and use)"
+          source="BS 5839-6:2019+A1:2020 · Foreword (Status and use) — in summary, not a verbatim quote"
           clause={
             <>
               This British Standard is intended to provide a code of practice for the fire detection

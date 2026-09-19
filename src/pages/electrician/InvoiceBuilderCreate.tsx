@@ -40,6 +40,17 @@ const InvoiceBuilderCreate = () => {
 
   // Read projectId and timeSessionId from URL
   const projectId = new URLSearchParams(location.search).get('projectId') || undefined;
+  /**
+   * ELE-1755 — drafted from the diary's event sheet, so go back to the diary
+   * when done, not to the job page. The job page is still where a draft
+   * started there returns to.
+   */
+  const returnTo =
+    new URLSearchParams(location.search).get('returnTo') === 'calendar'
+      ? '/electrician/business/calendar'
+      : projectId
+        ? `/electrician/projects/${projectId}`
+        : '/electrician/invoices';
   const timeSessionId = new URLSearchParams(location.search).get('timeSessionId') || undefined;
 
   // Load quote data or certificate data from sessionStorage
@@ -87,40 +98,45 @@ const InvoiceBuilderCreate = () => {
           const {
             data: { user: rateUser },
           } = await supabase.auth.getUser();
-          const [{ data: project }, { data: sessions }, { data: gotMaterials }, { data: costEntries }, { data: rateProfile }] =
-            await Promise.all([
-              supabase
-                .from('spark_projects')
-                .select(
-                  'title, description, location, customer_id, customers(name, email, phone, address)'
-                )
-                .eq('id', projectId)
-                .single(),
-              (supabase as any)
-                .from('time_sessions')
-                .select('id, duration_seconds, hourly_rate')
-                .eq('project_id', projectId)
-                .is('invoice_id', null),
-              (supabase as any)
-                .from('job_materials')
-                .select('id, name, quantity, unit, unit_price')
-                .eq('project_id', projectId)
-                .is('invoice_id', null)
-                .in('status', ['got', 'fitted']),
-              (supabase as any)
-                .from('job_cost_entries')
-                .select('id, entry_date, category, description, hours, quantity, unit_cost, total')
-                .eq('project_id', projectId)
-                .is('invoice_id', null)
-                .order('entry_date', { ascending: true }),
-              // The user's own rates — labour bills at whatever is configured
-              // here (hourly and/or day rate), not a hardcoded number.
-              (supabase as any)
-                .from('company_profiles')
-                .select('hourly_rate, day_rate')
-                .eq('user_id', rateUser?.id ?? '')
-                .maybeSingle(),
-            ]);
+          const [
+            { data: project },
+            { data: sessions },
+            { data: gotMaterials },
+            { data: costEntries },
+            { data: rateProfile },
+          ] = await Promise.all([
+            supabase
+              .from('spark_projects')
+              .select(
+                'title, description, location, customer_id, customers(name, email, phone, address)'
+              )
+              .eq('id', projectId)
+              .single(),
+            (supabase as any)
+              .from('time_sessions')
+              .select('id, duration_seconds, hourly_rate')
+              .eq('project_id', projectId)
+              .is('invoice_id', null),
+            (supabase as any)
+              .from('job_materials')
+              .select('id, name, quantity, unit, unit_price')
+              .eq('project_id', projectId)
+              .is('invoice_id', null)
+              .in('status', ['got', 'fitted']),
+            (supabase as any)
+              .from('job_cost_entries')
+              .select('id, entry_date, category, description, hours, quantity, unit_cost, total')
+              .eq('project_id', projectId)
+              .is('invoice_id', null)
+              .order('entry_date', { ascending: true }),
+            // The user's own rates — labour bills at whatever is configured
+            // here (hourly and/or day rate), not a hardcoded number.
+            (supabase as any)
+              .from('company_profiles')
+              .select('hourly_rate, day_rate')
+              .eq('user_id', rateUser?.id ?? '')
+              .maybeSingle(),
+          ]);
 
           // Compose line items from the job's actuals (ELE-1357).
           //
@@ -144,8 +160,7 @@ const InvoiceBuilderCreate = () => {
             if (secs <= 0) continue;
             const rate = Number(s.hourly_rate) > 0 ? Number(s.hourly_rate) : profileHourly;
             const day = String(s.started_at || '').slice(0, 10) || 'unknown';
-            const cur =
-              byDay.get(day) || { secs: 0, ids: [], hourlyTotal: 0, byRate: new Map() };
+            const cur = byDay.get(day) || { secs: 0, ids: [], hourlyTotal: 0, byRate: new Map() };
             cur.secs += secs;
             cur.ids.push(s.id);
             cur.hourlyTotal += (secs / 3600) * rate;
@@ -303,16 +318,14 @@ const InvoiceBuilderCreate = () => {
         .from('time_sessions')
         .update({ invoice_id: invoiceId })
         .in('id', composedSessionIds);
-      if (error)
-        toast({ title: 'Could not mark time as billed', variant: 'destructive' });
+      if (error) toast({ title: 'Could not mark time as billed', variant: 'destructive' });
     }
     if (composedMaterialIds.length > 0 && invoiceId) {
       const { error } = await (supabase as any)
         .from('job_materials')
         .update({ invoice_id: invoiceId })
         .in('id', composedMaterialIds);
-      if (error)
-        toast({ title: 'Could not mark materials as billed', variant: 'destructive' });
+      if (error) toast({ title: 'Could not mark materials as billed', variant: 'destructive' });
     }
     if (composedCostEntryIds.length > 0 && invoiceId) {
       const { error } = await (supabase as any)
@@ -320,14 +333,9 @@ const InvoiceBuilderCreate = () => {
         .update({ invoice_id: invoiceId, invoiced_at: new Date().toISOString() })
         .in('id', composedCostEntryIds)
         .is('invoice_id', null);
-      if (error)
-        toast({ title: 'Could not mark job costs as billed', variant: 'destructive' });
+      if (error) toast({ title: 'Could not mark job costs as billed', variant: 'destructive' });
     }
-    if (projectId) {
-      navigate(`/electrician/projects/${projectId}`);
-    } else {
-      navigate('/electrician/invoices');
-    }
+    navigate(returnTo);
   };
 
   const handleBack = () => {
@@ -335,11 +343,7 @@ const InvoiceBuilderCreate = () => {
   };
 
   const confirmExit = () => {
-    if (projectId) {
-      navigate(`/electrician/projects/${projectId}`);
-    } else {
-      navigate('/electrician/invoices');
-    }
+    navigate(returnTo);
   };
 
   // Voice navigation handler
@@ -366,7 +370,10 @@ const InvoiceBuilderCreate = () => {
       <div className="min-h-screen bg-background animate-fade-in">
         <Helmet>
           <title>Create Invoice | Elec-Mate</title>
-          <meta name="description" content="Create professional invoices with our guided invoice builder." />
+          <meta
+            name="description"
+            content="Create professional invoices with our guided invoice builder."
+          />
           <link rel="canonical" href={canonical} />
         </Helmet>
 

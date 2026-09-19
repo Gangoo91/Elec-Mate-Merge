@@ -56,7 +56,12 @@ interface Props {
 
 export default function FADeclarations({ formData, onUpdate, savedReportId }: Props) {
   const { id } = useParams<{ id: string }>();
-  const { photos: uploadedPhotos, isUploading, uploadPhoto, deletePhoto } = useInspectionPhotos({
+  const {
+    photos: uploadedPhotos,
+    isUploading,
+    uploadPhoto,
+    deletePhoto,
+  } = useInspectionPhotos({
     reportId: savedReportId || id || 'new',
     reportType: 'fire-alarm',
     itemId: 'general-photos',
@@ -182,7 +187,6 @@ export default function FADeclarations({ formData, onUpdate, savedReportId }: Pr
     [previousCertData, onUpdate]
   );
 
-
   return (
     <div className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
       {/* Third-party certification */}
@@ -240,10 +244,22 @@ export default function FADeclarations({ formData, onUpdate, savedReportId }: Pr
         <SectionHeader title="Installer declaration" />
         <div className="rounded-xl bg-white/[0.05] p-4">
           <p className="text-[12px] leading-relaxed text-white/85">
-            I hereby certify that the fire detection and fire alarm system installation described in
-            this certificate has been carried out in accordance with BS 5839-1:2025 and the design
-            specification referenced above, except for any variations stated. The installation is
-            complete and ready for commissioning.
+            I/we being the competent person(s) responsible (as indicated by my/our signature(s)
+            below) for the installation of the fire detection and fire alarm system, particulars of
+            which are set out in this certificate, CERTIFY that the said installation for which I/we
+            have been responsible complies to the best of my/our knowledge and belief with the
+            specification described in this certificate and with the recommendations of BS
+            5839-1:2025, Section 4, except for the variations, if any, stated in this certificate.
+          </p>
+          <p className="mt-2 text-[12px] leading-relaxed text-white/85">
+            Wiring has been tested in accordance with the recommendations of BS 5839-1:2025, Clause
+            36, and the results of those tests are recorded in this certificate. Unless supplied by
+            others, as-fitted drawings have been supplied to the person responsible for
+            commissioning the system.
+          </p>
+          <p className="mt-2 text-[12px] italic leading-relaxed text-white/85">
+            The extent of liability of the signatory is limited to the system described in this
+            certificate.
           </p>
         </div>
         {(formData.installerName || formData.installerCompany) && (
@@ -328,7 +344,12 @@ export default function FADeclarations({ formData, onUpdate, savedReportId }: Pr
       {/* Photos */}
       <div className={cn(cardCn, 'lg:col-span-2')}>
         <SectionHeader title="Photos" />
-        <InspectionPhotoUpload onPhotoCapture={async (file) => { await uploadPhoto(file); }} isUploading={isUploading} />
+        <InspectionPhotoUpload
+          onPhotoCapture={async (file) => {
+            await uploadPhoto(file);
+          }}
+          isUploading={isUploading}
+        />
         {uploadedPhotos.length > 0 && (
           <div className="grid grid-cols-3 gap-2">
             {uploadedPhotos.map((p) => (

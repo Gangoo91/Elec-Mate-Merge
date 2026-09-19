@@ -46,6 +46,22 @@ interface WelcomeScreenProps {
       without opening the history drawer. */
   recentSessions?: RecentSession[];
   onResumeSession?: (id: string) => void;
+  /**
+   * Still fetching history. Load-bearing: without it this screen renders the
+   * first-run layout for a moment and then swaps, so a returning user watches
+   * four example cards appear and vanish every single time they open Elec-AI.
+   * A flash of the wrong state reads as a bug, so nothing below the masthead
+   * is drawn until we know which user this is.
+   */
+  sessionsLoading?: boolean;
+  /**
+   * ELE-1753 — offer to resume a previous conversation?
+   *
+   * False immediately after the user presses New. Opening Elec-AI and pressing
+   * New land on the same empty screen but mean opposite things: on open the
+   * offer is help, straight after New it contradicts what was just asked for.
+   */
+  showResume?: boolean;
 }
 
 interface ExampleQuery {
@@ -133,13 +149,15 @@ export function WelcomeScreen({
   onSelectQuery,
   recentSessions = [],
   onResumeSession,
+  sessionsLoading = false,
+  showResume = true,
 }: WelcomeScreenProps) {
   // Stable per mount — re-renders must not reshuffle the cards.
   const examples = useMemo(pickExamples, []);
   // Dedupe by title: the pre-fix session-fork bug left twin rows in history,
   // and two identical "pick up" cards reads as a glitch.
   const resumable = useMemo(() => {
-    if (!onResumeSession) return [] as RecentSession[];
+    if (!onResumeSession || !showResume) return [] as RecentSession[];
     const seen = new Set<string>();
     return recentSessions
       .filter((s) => {
@@ -148,24 +166,47 @@ export function WelcomeScreen({
         seen.add(key);
         return true;
       })
-      .slice(0, 2);
-  }, [recentSessions, onResumeSession]);
+      .slice(0, 4);
+  }, [recentSessions, onResumeSession, showResume]);
+
+  /*
+   * Has this person used Elec-AI before?
+   *
+   * The examples and the sentence above them are ONBOARDING. They teach what
+   * the tool answers and what an answer looks like, which is worth roughly
+   * 400px of screen exactly once. After that they are furniture between a
+   * returning user and the composer they came to use — and they push that
+   * user's own conversations below the fold on a phone.
+   *
+   * So the screen has two states, not one: a first run that explains itself,
+   * and a return that gets out of the way and leads with your own work.
+   *
+   * `recentSessions` is the signal because it is server-backed, so it is right
+   * across devices — a localStorage flag would call a user "new" every time
+   * they picked up a different phone.
+   */
+  const isReturning = recentSessions.length > 0;
 
   return (
     <div className="mx-auto w-full max-w-[1400px] px-1 py-6 sm:px-4 sm:py-8 lg:px-8">
       {/* One line, not a hero. What is worth saying here is the thing that
           separates this from a generic chatbot — the citations are checked —
-          and that fits in a sentence. */}
-      <motion.p
-        initial={{ opacity: 0, y: -4 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-        className="max-w-2xl text-[13.5px] leading-relaxed text-white sm:text-[14px]"
-      >
-        Ask anything on <span className="font-semibold">BS 7671:2018+A4:2026</span> — regs,
-        calculations, test procedures. Every answer is cited to the exact regulation, and every
-        citation is checked against the standard before you see it.
-      </motion.p>
+          and that fits in a sentence.
+
+          First run only. It is the answer to "what is this?", and someone with
+          six conversations behind them has stopped asking. */}
+      {!isReturning && !sessionsLoading && (
+        <motion.p
+          initial={{ opacity: 0, y: -4 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+          className="max-w-2xl text-[13.5px] leading-relaxed text-white sm:text-[14px]"
+        >
+          Ask anything on <span className="font-semibold">BS 7671:2018+A4:2026</span> — regs,
+          calculations, test procedures. Every answer is cited to the exact regulation, and every
+          citation is checked against the standard before you see it.
+        </motion.p>
+      )}
 
       {/* Pick up where you left off — only when there is something to resume */}
       {resumable.length > 0 && (
@@ -173,12 +214,16 @@ export function WelcomeScreen({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.1 }}
-          className="mt-7"
+          className={isReturning ? 'mt-1' : 'mt-7'}
         >
           <h2 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
             Pick up where you left off
           </h2>
-          <div className="mt-3 flex flex-col gap-2.5 sm:flex-row sm:gap-3">
+          {/* A column, not a row. These used to sit side by side, which is
+              right for two but turns four into unreadable slivers on a phone —
+              and for a returning user this is the main content of the screen,
+              not a footnote above the examples. */}
+          <div className="mt-3 flex flex-col gap-2.5">
             {resumable.map((s) => (
               <button
                 key={s.id}
@@ -194,7 +239,16 @@ export function WelcomeScreen({
                 )}
               >
                 <Clock className="h-[18px] w-[18px] shrink-0 text-elec-yellow" aria-hidden />
-                <span className="min-w-0 flex-1 truncate text-[14.5px] font-medium text-white">
+                {/*
+                  Two lines, not one. A session title is the question that
+                  started it, and at 390px `truncate` cut them mid-phrase —
+                  "Max Zs for a 32A Type B on a TN-C-S …" and "Does a shower in
+                  a bathroom need RC…". Four of those are hard to tell apart,
+                  which defeats the point of offering them. The row grew from
+                  two side-by-side to a column of four when this became the
+                  returning user's main content, so the width is there to use.
+                */}
+                <span className="min-w-0 flex-1 text-[14.5px] font-medium leading-snug text-white line-clamp-2">
                   {s.title || 'Previous conversation'}
                 </span>
                 <ArrowRight className="h-4 w-4 shrink-0 text-white transition-transform group-hover:translate-x-0.5" />
@@ -204,66 +258,76 @@ export function WelcomeScreen({
         </motion.div>
       )}
 
-      <motion.h2
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.14 }}
-        className="mt-8 text-[15px] font-semibold tracking-tight text-elec-yellow"
-      >
-        Try asking
-      </motion.h2>
+      {/*
+        Everything below is first-run only — see `isReturning`.
 
-      {/* Two-up on phones, matching every other card grid in the app. These
+        Also gated on the fetch finishing, so a returning user never sees these
+        cards flash in and disappear.
+      */}
+      {!isReturning && !sessionsLoading && (
+        <>
+          <motion.h2
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.14 }}
+            className="mt-8 text-[15px] font-semibold tracking-tight text-elec-yellow"
+          >
+            Try asking
+          </motion.h2>
+
+          {/* Two-up on phones, matching every other card grid in the app. These
           were one column of 150–168px cards, so four examples ran to most of a
           screen on their own. */}
-      <div className="mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3">
-        {examples.map((item, idx) => (
-          <motion.button
-            key={item.query}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.18 + idx * 0.05 }}
-            onClick={() => onSelectQuery(item.query)}
-            className={cn(
-              CARD_BASE,
-              CARD_NEUTRAL,
-              'relative min-h-[170px] overflow-hidden p-5 sm:p-6 lg:hover:-translate-y-0.5'
-            )}
-          >
-            {/* Same volt hairline the hub cards carry, so a card here reads as
+          <div className="mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3">
+            {examples.map((item, idx) => (
+              <motion.button
+                key={item.query}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: 0.18 + idx * 0.05 }}
+                onClick={() => onSelectQuery(item.query)}
+                className={cn(
+                  CARD_BASE,
+                  CARD_NEUTRAL,
+                  'relative min-h-[170px] overflow-hidden p-5 sm:p-6 lg:hover:-translate-y-0.5'
+                )}
+              >
+                {/* Same volt hairline the hub cards carry, so a card here reads as
                 the same object as a card there. */}
-            <span
-              aria-hidden
-              className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/55 to-elec-yellow/0"
-            />
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/55 to-elec-yellow/0"
+                />
 
-            <span className="flex items-center justify-between gap-3">
-              <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
-                {item.category}
-              </span>
-              <span className="shrink-0 text-[13px] font-semibold text-elec-yellow transition-transform group-hover:translate-x-0.5">
-                Ask →
-              </span>
-            </span>
+                <span className="flex items-center justify-between gap-3">
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+                    {item.category}
+                  </span>
+                  <span className="shrink-0 text-[13px] font-semibold text-elec-yellow transition-transform group-hover:translate-x-0.5">
+                    Ask →
+                  </span>
+                </span>
 
-            <span className="mt-3 text-[17px] font-semibold leading-snug tracking-tight text-white transition-colors group-hover:text-elec-yellow sm:text-[18px]">
-              {item.query}
-            </span>
+                <span className="mt-3 text-[17px] font-semibold leading-snug tracking-tight text-white transition-colors group-hover:text-elec-yellow sm:text-[18px]">
+                  {item.query}
+                </span>
 
-            {/* What you get back. Sets the expectation of a figure + a citation
+                {/* What you get back. Sets the expectation of a figure + a citation
                 rather than an essay — and it's the honest differentiator against
                 asking a generic chatbot the same question. */}
-            <span className="flex-grow" />
-            {/* A rule, then the payoff. At this card width the question is one
+                <span className="flex-grow" />
+                {/* A rule, then the payoff. At this card width the question is one
                 or two lines and the rest was dead space; the divider gives the
                 "what you get back" line somewhere to sit instead of floating
                 at the bottom of a hole. */}
-            <span className="mt-5 border-t border-white/[0.10] pt-3 text-[12.5px] font-medium text-white">
-              {item.yields}
-            </span>
-          </motion.button>
-        ))}
-      </div>
+                <span className="mt-5 border-t border-white/[0.10] pt-3 text-[12.5px] font-medium text-white">
+                  {item.yields}
+                </span>
+              </motion.button>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 }

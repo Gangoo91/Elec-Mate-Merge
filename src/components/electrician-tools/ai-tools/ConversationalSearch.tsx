@@ -25,7 +25,7 @@ import {
 } from './chat';
 import { AddToEicrSheet } from './chat/AddToEicrSheet';
 import { SourcesRail } from './chat/SourcesRail';
-import { ArrowDown, FileText, X } from 'lucide-react';
+import { ArrowDown, FileText, Plus, X } from 'lucide-react';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -125,24 +125,43 @@ function extractCitedRegulations(text: string): string[] {
 export default function ConversationalSearch() {
   const navigate = useNavigate();
   const chatHistory = useAIChatHistory();
-  const [messages, setMessages] = useState<Message[]>(() => chatHistory.loadFromLocalStorage());
-  const [hasRestoredSession, setHasRestoredSession] = useState(false);
-
-  // ELE-584: cross-device resume. The local cache only exists on the device
-  // that held the chat — on a fresh device (or after an iOS storage purge)
-  // pick up the latest server session so the conversation follows the user.
-  const attemptedResumeRef = useRef(false);
-  useEffect(() => {
-    if (attemptedResumeRef.current) return;
-    attemptedResumeRef.current = true;
-    if (messages.length > 0) return; // device already has the conversation
-    chatHistory.resumeLatestSession().then((resumed) => {
-      if (resumed.length === 0) return;
-      // Never clobber anything the user started typing/streaming meanwhile.
-      setMessages((prev) => (prev.length === 0 ? resumed : prev));
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  /*
+   * ELE-1753 — Elec-AI opens on a BLANK conversation.
+   *
+   * It used to seed from the local cache and, failing that, pull the latest
+   * server session (ELE-584), so opening the tool dropped you back into
+   * whatever you last asked. Two people described the same friction from
+   * opposite ends:
+   *
+   *   Andrew: "I have to click the new conversation constantly."
+   *   Ben Parkin: "when I press new it gives me 5 topics to pick from which
+   *   are irrelevant, then when I work my way round to getting a new chat
+   *   started... was stressing me out."
+   *
+   * Ben's is the sharper one. Landing on a screen of cards reads as a menu you
+   * have to choose from, not a screen you can ignore — so he clicked options
+   * at random to get to the thing that was already there. An assistant should
+   * open the way a notepad opens: empty, with the cursor ready.
+   *
+   * 🔴 ELE-584 IS NOT UNDONE. Its point was that a conversation follows you to
+   * another device, and it still does — `recentSessions` on the welcome screen
+   * and the History drawer are both server-backed, so the same chats are one
+   * tap away on any device. What changed is that resuming is now something you
+   * CHOOSE rather than something that happens to you.
+   */
+  const [messages, setMessages] = useState<Message[]>([]);
+  /*
+   * ELE-1753 — did the user just ask for a new chat?
+   *
+   * Opening Elec-AI and pressing New both land on the same empty screen, but
+   * they are different intentions. On open, offering "pick up where you left
+   * off" is help. Immediately after New it is the opposite: you have just said
+   * you want a clean slate and the app answers with a list of old chats. That
+   * is the loop Ben got stuck in.
+   *
+   * Cleared as soon as a question is asked, so the offer returns next time.
+   */
+  const [startedFreshChat, setStartedFreshChat] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
   const [input, setInput] = useState('');
   const [isStreaming, setIsStreaming] = useState(false);
@@ -220,18 +239,9 @@ export default function ConversationalSearch() {
     }
   }, []);
 
-  useEffect(() => {
-    if (messages.length > 0 && !hasRestoredSession) {
-      setHasRestoredSession(true);
-      const timeoutId = setTimeout(() => {
-        toast.success('Previous conversation restored', {
-          description: 'Your chat history has been recovered',
-          duration: 3000,
-        });
-      }, 500);
-      return () => clearTimeout(timeoutId);
-    }
-  }, []); // mount only
+  // The "Previous conversation restored" toast that sat here went with the
+  // auto-restore above. Nothing is restored on open any more, so announcing it
+  // would be a lie.
 
   useEffect(() => {
     if (!isStreaming && messages.length > 0) {
@@ -277,10 +287,7 @@ export default function ConversationalSearch() {
   useEffect(() => {
     recomputeAwayFromLatest(scrollContainerRef.current);
     if (!isStreaming) return;
-    const id = window.setInterval(
-      () => recomputeAwayFromLatest(scrollContainerRef.current),
-      300
-    );
+    const id = window.setInterval(() => recomputeAwayFromLatest(scrollContainerRef.current), 300);
     return () => window.clearInterval(id);
   }, [isStreaming, messages.length, recomputeAwayFromLatest]);
 
@@ -434,7 +441,9 @@ export default function ConversationalSearch() {
           });
         }
         if (usable.length > room) {
-          toast.message(`Only the first ${room} added — ${MAX_DOCUMENTS_PER_MESSAGE} max per question`);
+          toast.message(
+            `Only the first ${room} added — ${MAX_DOCUMENTS_PER_MESSAGE} max per question`
+          );
         }
         if (accepted.length === 0) return prev;
         return [...prev, ...accepted];
@@ -613,6 +622,9 @@ export default function ConversationalSearch() {
 
       if (!isRegenerate) {
         setMessages((prev) => [...prev, userMessage]);
+        // The clean slate has been used — resume offers are welcome again next
+        // time the screen is empty.
+        setStartedFreshChat(false);
       }
       setInput('');
       setIsUploading(false);
@@ -864,8 +876,12 @@ export default function ConversationalSearch() {
   const handleNewChat = useCallback(() => {
     chatHistory.startNewSession();
     setMessages([]);
+    setStartedFreshChat(true);
     haptic.selection();
-    toast.success('New chat started');
+    // Focus the composer rather than toasting. The toast said a new chat had
+    // started; the cursor SHOWS it, and it answers the "where do I type"
+    // question the toast left open.
+    setTimeout(() => inputRef.current?.focus(), 50);
   }, [chatHistory, haptic]);
 
   // ChatGPT-style stop. Aborts the in-flight fetch — the streaming
@@ -885,7 +901,9 @@ export default function ConversationalSearch() {
     async (id: string) => {
       const loadedMessages = await chatHistory.loadSession(id);
       setMessages(loadedMessages);
-      setHasRestoredSession(true);
+      // `setHasRestoredSession` went with the auto-restore toast (ELE-1753).
+      // Loading a session deliberately needs no announcement — the
+      // conversation appearing IS the confirmation.
     },
     [chatHistory]
   );
@@ -1034,9 +1052,7 @@ export default function ConversationalSearch() {
         console.warn('[feedback] insert failed:', err);
         // Un-light the thumb — a lit vote over a failed write would be a lie,
         // and reverting lets the user simply tap again.
-        setMessages((prev) =>
-          prev.map((m, i) => (i === idx ? { ...m, feedback: undefined } : m))
-        );
+        setMessages((prev) => prev.map((m, i) => (i === idx ? { ...m, feedback: undefined } : m)));
         toast.error("Couldn't save your rating", { description: 'Tap to try again.' });
       }
     },
@@ -1163,7 +1179,8 @@ export default function ConversationalSearch() {
             <FileText className="h-8 w-8 text-elec-yellow" />
             <p className="mt-3 text-[15px] font-semibold text-white">Drop it here</p>
             <p className="mt-1 text-[12.5px] text-white">
-              PDF or photo &middot; up to {MAX_DOCUMENTS_PER_MESSAGE} documents, {mb(MAX_DOCUMENT_BYTES)} each
+              PDF or photo &middot; up to {MAX_DOCUMENTS_PER_MESSAGE} documents,{' '}
+              {mb(MAX_DOCUMENT_BYTES)} each
             </p>
           </motion.div>
         )}
@@ -1198,12 +1215,28 @@ export default function ConversationalSearch() {
                 History
               </button>
               {messages.length > 0 && (
+                /*
+                 * ELE-1753 — "no clear fresh-start button".
+                 *
+                 * This was the bare word "New" in volt, the same size and
+                 * weight as "History" beside it, so the one destructive-ish
+                 * action on the screen looked like a second label rather than
+                 * a control. Ben went looking for a way to start over and
+                 * ended up tapping example cards instead.
+                 *
+                 * A bordered pill and a + read as a button at a glance without
+                 * shouting — the same neutral recipe the rest of the app uses
+                 * for a secondary action. `gap-1.5` and the icon also widen the
+                 * target well past the 44px minimum, which a two-word text link
+                 * at 12.5px was only just clearing.
+                 */
                 <button
                   onClick={handleNewChat}
-                  className="flex h-11 items-center px-2 font-semibold text-elec-yellow transition-colors touch-manipulation [-webkit-tap-highlight-color:transparent]"
-                  aria-label="New chat"
+                  className="ml-1 flex h-11 items-center gap-1.5 rounded-full border border-elec-yellow/40 bg-elec-yellow/[0.08] px-3.5 font-semibold text-elec-yellow transition-colors hover:bg-elec-yellow/[0.14] active:scale-[0.97] touch-manipulation [-webkit-tap-highlight-color:transparent]"
+                  aria-label="Start a new chat"
                 >
-                  New
+                  <Plus className="h-3.5 w-3.5" aria-hidden />
+                  New chat
                 </button>
               )}
             </div>
@@ -1251,6 +1284,12 @@ export default function ConversationalSearch() {
             onSelectQuery={handleGuardedSelectQuery}
             recentSessions={chatHistory.sessions}
             onResumeSession={handleLoadSession}
+            // Without this the welcome screen renders its first-run layout
+            // while history is still in flight, so a returning user watches
+            // the example cards appear and vanish on every open.
+            sessionsLoading={chatHistory.isLoadingSessions}
+            // Suppressed immediately after New — see `startedFreshChat`.
+            showResume={!startedFreshChat}
           />
         </ChatMessagesArea>
       )}
@@ -1268,187 +1307,187 @@ export default function ConversationalSearch() {
               to cap at 4xl/7xl and float in dead space on wide monitors. */}
           <div className="mx-auto flex w-full max-w-[1400px] gap-0 py-4 sm:py-6">
             <div className="min-w-0 flex-1 space-y-6 sm:space-y-8 lg:pr-6 xl:pr-8">
-            <AnimatePresence mode="popLayout">
-              {messages.map((message, idx) => {
-                const isCurrentlyStreaming =
-                  isStreaming && idx === messages.length - 1 && message.role === 'assistant';
-                return (
-                  <motion.div
-                    key={`${idx}-${message.role}`}
-                    initial={isCurrentlyStreaming ? false : { opacity: 0, y: 6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -6 }}
-                    transition={{ duration: 0.18 }}
-                    layout={!isCurrentlyStreaming}
-                    className="transform-gpu"
-                  >
-                    {message.role === 'user' ? (
-                      <div
-                        className="flex flex-col items-end min-w-0 scroll-mt-3"
-                        data-msg-anchor={`user-${idx}`}
-                      >
-                        <div className="max-w-[92%] sm:max-w-[75%] min-w-0 space-y-2">
-                          {(() => {
-                            // Prefer the new array; fall back to legacy single.
-                            // Stored refs are paths (new) or full URLs (legacy);
-                            // both resolve through useStorageUrls above.
-                            const stored = (
-                              message.imageUrls && message.imageUrls.length > 0
-                                ? message.imageUrls
-                                : message.imageUrl
-                                  ? [message.imageUrl]
-                                  : []
-                            ) as string[];
-                            const urls = stored
-                              .map((s) => ({ stored: s, url: resolvedImageUrls[s] }))
-                              .filter((x): x is { stored: string; url: string } => !!x.url);
-                            if (urls.length === 0) return null;
-                            if (urls.length === 1) {
-                              return (
-                                <div className="rounded-2xl overflow-hidden ml-auto max-w-[220px] border border-white/[0.06]">
-                                  <img
-                                    src={urls[0].url}
-                                    alt="Attached"
-                                    className="w-full h-auto object-cover"
-                                  />
-                                </div>
-                              );
-                            }
-                            return (
-                              <div className="ml-auto flex flex-wrap justify-end gap-1.5 max-w-[260px]">
-                                {urls.map(({ stored: key, url }, i) => (
-                                  <div
-                                    key={key}
-                                    className="rounded-xl overflow-hidden border border-white/[0.06] w-[80px] h-[80px]"
-                                  >
+              <AnimatePresence mode="popLayout">
+                {messages.map((message, idx) => {
+                  const isCurrentlyStreaming =
+                    isStreaming && idx === messages.length - 1 && message.role === 'assistant';
+                  return (
+                    <motion.div
+                      key={`${idx}-${message.role}`}
+                      initial={isCurrentlyStreaming ? false : { opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -6 }}
+                      transition={{ duration: 0.18 }}
+                      layout={!isCurrentlyStreaming}
+                      className="transform-gpu"
+                    >
+                      {message.role === 'user' ? (
+                        <div
+                          className="flex flex-col items-end min-w-0 scroll-mt-3"
+                          data-msg-anchor={`user-${idx}`}
+                        >
+                          <div className="max-w-[92%] sm:max-w-[75%] min-w-0 space-y-2">
+                            {(() => {
+                              // Prefer the new array; fall back to legacy single.
+                              // Stored refs are paths (new) or full URLs (legacy);
+                              // both resolve through useStorageUrls above.
+                              const stored = (
+                                message.imageUrls && message.imageUrls.length > 0
+                                  ? message.imageUrls
+                                  : message.imageUrl
+                                    ? [message.imageUrl]
+                                    : []
+                              ) as string[];
+                              const urls = stored
+                                .map((s) => ({ stored: s, url: resolvedImageUrls[s] }))
+                                .filter((x): x is { stored: string; url: string } => !!x.url);
+                              if (urls.length === 0) return null;
+                              if (urls.length === 1) {
+                                return (
+                                  <div className="rounded-2xl overflow-hidden ml-auto max-w-[220px] border border-white/[0.06]">
                                     <img
-                                      src={url}
-                                      alt={`Attached ${i + 1}`}
-                                      className="w-full h-full object-cover"
+                                      src={urls[0].url}
+                                      alt="Attached"
+                                      className="w-full h-auto object-cover"
                                     />
                                   </div>
-                                ))}
-                              </div>
-                            );
-                          })()}
-                          {/* Attached PDFs stay visible in the transcript. Without
+                                );
+                              }
+                              return (
+                                <div className="ml-auto flex flex-wrap justify-end gap-1.5 max-w-[260px]">
+                                  {urls.map(({ stored: key, url }, i) => (
+                                    <div
+                                      key={key}
+                                      className="rounded-xl overflow-hidden border border-white/[0.06] w-[80px] h-[80px]"
+                                    >
+                                      <img
+                                        src={url}
+                                        alt={`Attached ${i + 1}`}
+                                        className="w-full h-full object-cover"
+                                      />
+                                    </div>
+                                  ))}
+                                </div>
+                              );
+                            })()}
+                            {/* Attached PDFs stay visible in the transcript. Without
                               this the question reads as though nothing was
                               attached, which makes the answer look unfounded on
                               a reload or when scrolling back. */}
-                          {message.documentNames && message.documentNames.length > 0 && (
-                            <div className="flex flex-col items-end gap-1.5">
-                              {message.documentNames.map((name, i) => (
-                                <span
-                                  key={`${name}-${i}`}
-                                  className="inline-flex max-w-full items-center gap-2 rounded-xl border border-white/[0.16] bg-white/[0.08] px-3 py-2"
-                                >
-                                  <FileText className="h-3.5 w-3.5 shrink-0 text-white" />
-                                  <span className="min-w-0 truncate text-[12.5px] font-medium text-white">
-                                    {name}
+                            {message.documentNames && message.documentNames.length > 0 && (
+                              <div className="flex flex-col items-end gap-1.5">
+                                {message.documentNames.map((name, i) => (
+                                  <span
+                                    key={`${name}-${i}`}
+                                    className="inline-flex max-w-full items-center gap-2 rounded-xl border border-white/[0.16] bg-white/[0.08] px-3 py-2"
+                                  >
+                                    <FileText className="h-3.5 w-3.5 shrink-0 text-white" />
+                                    <span className="min-w-0 truncate text-[12.5px] font-medium text-white">
+                                      {name}
+                                    </span>
                                   </span>
-                                </span>
-                              ))}
-                            </div>
-                          )}
-                          <div className="rounded-2xl px-3.5 py-3 sm:px-4 border border-white/[0.16] bg-gradient-to-br from-white/[0.14] via-white/[0.09] to-white/[0.06] text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.10),0_2px_8px_-3px_rgba(0,0,0,0.75)]">
-                            <div
-                              className="whitespace-pre-wrap text-[14.5px] leading-relaxed"
-                              style={{ overflowWrap: 'anywhere', wordBreak: 'break-word' }}
-                            >
-                              {message.content}
+                                ))}
+                              </div>
+                            )}
+                            <div className="rounded-2xl px-3.5 py-3 sm:px-4 border border-white/[0.16] bg-gradient-to-br from-white/[0.14] via-white/[0.09] to-white/[0.06] text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.10),0_2px_8px_-3px_rgba(0,0,0,0.75)]">
+                              <div
+                                className="whitespace-pre-wrap text-[14.5px] leading-relaxed"
+                                style={{ overflowWrap: 'anywhere', wordBreak: 'break-word' }}
+                              >
+                                {message.content}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        {message.timestamp && (
-                          <p className="mt-1 text-[11px] text-white text-right">
-                            {formatRelativeTime(message.timestamp)}
-                          </p>
-                        )}
-                      </div>
-                    ) : (
-                      <div className="flex flex-col items-start">
-                        <div className="w-full space-y-3">
-                          <InspectorMessage
-                            message={{
-                              role: 'assistant',
-                              content: isCurrentlyStreaming
-                                ? streaming.displayedText
-                                : message.content,
-                              agentName: 'Elec-AI',
-                              isError: message.isError,
-                            }}
-                            isStreaming={isCurrentlyStreaming}
-                            onSaveToJob={
-                              !isCurrentlyStreaming && !message.isError
-                                ? () => handleOpenSaveSheet(message)
-                                : undefined
-                            }
-                            onOpenSources={
-                              !isCurrentlyStreaming && message.citedRegulations?.length
-                                ? () => handleOpenSources(message)
-                                : undefined
-                            }
-                            onRegenerate={
-                              !isCurrentlyStreaming &&
-                              idx === messages.length - 1 &&
-                              messages.some((m) => m.role === 'user')
-                                ? handleRegenerate
-                                : undefined
-                            }
-                            onAddToEicr={
-                              // Contextual: only when the answer commits to a
-                              // classification code.
-                              !isCurrentlyStreaming &&
-                              !message.isError &&
-                              /\b(C1|C2|C3|FI)\b/.test(message.content)
-                                ? () => handleOpenEicrSheet(message)
-                                : undefined
-                            }
-                            onRegClick={handleInlineRegClick}
-                            onFeedback={
-                              !isCurrentlyStreaming
-                                ? (rating) => handleFeedback(idx, rating)
-                                : undefined
-                            }
-                            feedback={message.feedback}
-                            onFeedbackReason={
-                              // Only while the vote's row id is known (same
-                              // session) and no reason has landed yet.
-                              !message.feedbackReasonGiven && feedbackRows[idx]
-                                ? (reason) => handleFeedbackReason(idx, reason)
-                                : undefined
-                            }
-                          />
-
-                          {/* Streaming machinery line — quiet, human, alive */}
-                          {isCurrentlyStreaming && streamStatus && (
-                            <div className="flex items-center gap-2 text-[12.5px] text-white">
-                              <span className="relative flex h-1.5 w-1.5">
-                                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-elec-yellow/70" />
-                                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-elec-yellow" />
-                              </span>
-                              {streamStatus}
-                            </div>
+                          {message.timestamp && (
+                            <p className="mt-1 text-[11px] text-white text-right">
+                              {formatRelativeTime(message.timestamp)}
+                            </p>
                           )}
+                        </div>
+                      ) : (
+                        <div className="flex flex-col items-start">
+                          <div className="w-full space-y-3">
+                            <InspectorMessage
+                              message={{
+                                role: 'assistant',
+                                content: isCurrentlyStreaming
+                                  ? streaming.displayedText
+                                  : message.content,
+                                agentName: 'Elec-AI',
+                                isError: message.isError,
+                              }}
+                              isStreaming={isCurrentlyStreaming}
+                              onSaveToJob={
+                                !isCurrentlyStreaming && !message.isError
+                                  ? () => handleOpenSaveSheet(message)
+                                  : undefined
+                              }
+                              onOpenSources={
+                                !isCurrentlyStreaming && message.citedRegulations?.length
+                                  ? () => handleOpenSources(message)
+                                  : undefined
+                              }
+                              onRegenerate={
+                                !isCurrentlyStreaming &&
+                                idx === messages.length - 1 &&
+                                messages.some((m) => m.role === 'user')
+                                  ? handleRegenerate
+                                  : undefined
+                              }
+                              onAddToEicr={
+                                // Contextual: only when the answer commits to a
+                                // classification code.
+                                !isCurrentlyStreaming &&
+                                !message.isError &&
+                                /\b(C1|C2|C3|FI)\b/.test(message.content)
+                                  ? () => handleOpenEicrSheet(message)
+                                  : undefined
+                              }
+                              onRegClick={handleInlineRegClick}
+                              onFeedback={
+                                !isCurrentlyStreaming
+                                  ? (rating) => handleFeedback(idx, rating)
+                                  : undefined
+                              }
+                              feedback={message.feedback}
+                              onFeedbackReason={
+                                // Only while the vote's row id is known (same
+                                // session) and no reason has landed yet.
+                                !message.feedbackReasonGiven && feedbackRows[idx]
+                                  ? (reason) => handleFeedbackReason(idx, reason)
+                                  : undefined
+                              }
+                            />
 
-                          {!isCurrentlyStreaming &&
-                            message.followUpQuestions &&
-                            message.followUpQuestions.length > 0 && (
-                              <FollowUpChips
-                                questions={message.followUpQuestions}
-                                onSelect={handleFollowUpSelect}
-                              />
+                            {/* Streaming machinery line — quiet, human, alive */}
+                            {isCurrentlyStreaming && streamStatus && (
+                              <div className="flex items-center gap-2 text-[12.5px] text-white">
+                                <span className="relative flex h-1.5 w-1.5">
+                                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-elec-yellow/70" />
+                                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-elec-yellow" />
+                                </span>
+                                {streamStatus}
+                              </div>
                             )}
-                          {/* No assistant timestamp: the question above it
+
+                            {!isCurrentlyStreaming &&
+                              message.followUpQuestions &&
+                              message.followUpQuestions.length > 0 && (
+                                <FollowUpChips
+                                  questions={message.followUpQuestions}
+                                  onSelect={handleFollowUpSelect}
+                                />
+                              )}
+                            {/* No assistant timestamp: the question above it
                               already carries one, and a second grey-reading
                               line under every answer was pure noise. */}
+                          </div>
                         </div>
-                      </div>
-                    )}
-                  </motion.div>
-                );
-              })}
-            </AnimatePresence>
+                      )}
+                    </motion.div>
+                  );
+                })}
+              </AnimatePresence>
 
               <AnimatePresence>{isSearching && <SearchingSkeleton />}</AnimatePresence>
             </div>
@@ -1464,7 +1503,9 @@ export default function ConversationalSearch() {
                       .find((m) => m.role === 'assistant' && m.citedRegulations?.length)
                       ?.citedRegulations ?? [])
               }
-              onOpenReg={(regNumber) => setRegulationSheet({ open: true, regulationNumber: regNumber })}
+              onOpenReg={(regNumber) =>
+                setRegulationSheet({ open: true, regulationNumber: regNumber })
+              }
               isStreaming={isStreaming}
             />
           </div>

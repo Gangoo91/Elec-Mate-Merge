@@ -22,7 +22,10 @@ import { SEOMockExam, type SEOMockExamQuestion } from '@/components/seo/SEOMockE
 import useSEO from '@/hooks/useSEO';
 import { Link } from 'react-router-dom';
 import { getRelatedMockExams, MOCK_EXAM_CATALOG } from '@/components/seo/mockExamCatalog';
-import { getTopicsForExam } from '@/components/seo/mockExamTopicRegistry';
+// Summaries, NOT the registry — the registry statically imports 32 question
+// banks and this page only needs topic names and counts. See
+// mockExamTopicSummaries.ts for what that cost on mobile.
+import { getTopicsForExam } from '@/components/seo/mockExamTopicSummaries';
 import { SEOStickyMobileCTA } from '@/components/seo/SEOStickyMobileCTA';
 import { PANEL, LABEL } from '@/components/seo/seoSurface';
 import { useCallback, useMemo, useState } from 'react';
@@ -263,7 +266,6 @@ export function PublicMockExamPage({
 
   return (
     <PublicPageLayout>
-
       <article className="px-4 sm:px-6 lg:px-8 py-6 sm:py-10 lg:py-14">
         <div className="max-w-6xl mx-auto">
           {/* Breadcrumb back link — goes to parent exam on topic pages,
@@ -351,88 +353,87 @@ export function PublicMockExamPage({
               exam is the only thing on screen. Restored on submit. */}
           {!examActive && (
             <>
-            {topics.length > 0 && (
-              <nav aria-labelledby="topic-heading" className="mt-14">
-                <h2 id="topic-heading" className={`${LABEL} mb-3 text-white`}>
-                  Practice by topic
+              {topics.length > 0 && (
+                <nav aria-labelledby="topic-heading" className="mt-14">
+                  <h2 id="topic-heading" className={`${LABEL} mb-3 text-white`}>
+                    Practice by topic
+                  </h2>
+                  <p className="mb-4 max-w-[60ch] text-[14px] leading-relaxed text-white">
+                    Drill a single topic from this exam — same bank, filtered to one area.
+                  </p>
+                  <ul className={`${PANEL} divide-y divide-white/[0.08]`}>
+                    {topics.map((t) => (
+                      <li key={t.slug}>
+                        <Link
+                          to={`/mock-exams/${baseExamSlug}/${t.slug}`}
+                          className="flex min-h-[52px] touch-manipulation items-center justify-between gap-4 px-4 py-3 text-white transition-colors hover:bg-white/[0.04] sm:px-5"
+                        >
+                          <span className="text-[15px] font-medium">{t.category}</span>
+                          <span className="shrink-0 text-[13px] tabular-nums text-white">
+                            {t.qCount}
+                          </span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+              )}
+
+              {/* Compact FAQ — 3 Qs in a native accordion. Schema above
+                already emits FAQPage so we get the rich-result eligibility
+                without the page bloat. */}
+              <section aria-labelledby="faq-heading" className="mt-14">
+                <h2 id="faq-heading" className={`${LABEL} mb-3 text-white`}>
+                  Common questions
                 </h2>
-                <p className="mb-4 max-w-[60ch] text-[14px] leading-relaxed text-white">
-                  Drill a single topic from this exam — same bank, filtered to one area.
-                </p>
-                <ul className={`${PANEL} divide-y divide-white/[0.08]`}>
-                  {topics.map((t) => (
-                    <li key={t.slug}>
-                      <Link
-                        to={`/mock-exams/${baseExamSlug}/${t.slug}`}
-                        className="flex min-h-[52px] touch-manipulation items-center justify-between gap-4 px-4 py-3 text-white transition-colors hover:bg-white/[0.04] sm:px-5"
-                      >
-                        <span className="text-[15px] font-medium">{t.category}</span>
-                        <span className="shrink-0 text-[13px] tabular-nums text-white">
-                          {t.qCount}
+                <div className={`${PANEL} divide-y divide-white/[0.08]`}>
+                  {faq.map((f, i) => (
+                    <details key={i} className="group">
+                      <summary className="flex min-h-[52px] cursor-pointer list-none touch-manipulation items-center justify-between gap-4 px-4 py-3.5 sm:px-5">
+                        <span className="flex-1 text-[15px] font-medium leading-snug text-white">
+                          {f.q}
                         </span>
+                        <span
+                          aria-hidden
+                          className="h-[7px] w-[7px] shrink-0 rotate-45 border-b border-r border-white transition-transform group-open:-rotate-[135deg]"
+                        />
+                      </summary>
+                      <p className="max-w-[62ch] px-4 pb-4 text-[14px] leading-relaxed text-white sm:px-5">
+                        {f.a}
+                      </p>
+                    </details>
+                  ))}
+                </div>
+              </section>
+
+              {/* Related strip — internal linking without the section sprawl */}
+              <nav aria-labelledby="related-heading" className="mt-14">
+                <h2 id="related-heading" className={`${LABEL} mb-3 text-white`}>
+                  More free mock exams
+                </h2>
+                <ul className={`${PANEL} divide-y divide-white/[0.08]`}>
+                  {getRelatedMockExams(slug, 4).map((m) => (
+                    <li key={m.slug}>
+                      <Link
+                        to={`/mock-exams/${m.slug}`}
+                        className="flex min-h-[52px] touch-manipulation items-center px-4 py-3 text-[15px] font-medium text-white transition-colors hover:bg-white/[0.04] sm:px-5"
+                      >
+                        {m.title}
                       </Link>
                     </li>
                   ))}
-                </ul>
-              </nav>
-            )}
-
-            {/* Compact FAQ — 3 Qs in a native accordion. Schema above
-                already emits FAQPage so we get the rich-result eligibility
-                without the page bloat. */}
-            <section aria-labelledby="faq-heading" className="mt-14">
-              <h2 id="faq-heading" className={`${LABEL} mb-3 text-white`}>
-                Common questions
-              </h2>
-              <div className={`${PANEL} divide-y divide-white/[0.08]`}>
-                {faq.map((f, i) => (
-                  <details key={i} className="group">
-                    <summary className="flex min-h-[52px] cursor-pointer list-none touch-manipulation items-center justify-between gap-4 px-4 py-3.5 sm:px-5">
-                      <span className="flex-1 text-[15px] font-medium leading-snug text-white">
-                        {f.q}
-                      </span>
-                      <span
-                        aria-hidden
-                        className="h-[7px] w-[7px] shrink-0 rotate-45 border-b border-r border-white transition-transform group-open:-rotate-[135deg]"
-                      />
-                    </summary>
-                    <p className="max-w-[62ch] px-4 pb-4 text-[14px] leading-relaxed text-white sm:px-5">
-                      {f.a}
-                    </p>
-                  </details>
-                ))}
-              </div>
-            </section>
-
-            {/* Related strip — internal linking without the section sprawl */}
-            <nav aria-labelledby="related-heading" className="mt-14">
-              <h2 id="related-heading" className={`${LABEL} mb-3 text-white`}>
-                More free mock exams
-              </h2>
-              <ul className={`${PANEL} divide-y divide-white/[0.08]`}>
-                {getRelatedMockExams(slug, 4).map((m) => (
-                  <li key={m.slug}>
+                  <li>
                     <Link
-                      to={`/mock-exams/${m.slug}`}
-                      className="flex min-h-[52px] touch-manipulation items-center px-4 py-3 text-[15px] font-medium text-white transition-colors hover:bg-white/[0.04] sm:px-5"
+                      to="/mock-exams"
+                      className="flex min-h-[52px] touch-manipulation items-center px-4 py-3 text-[15px] font-semibold text-elec-yellow transition-colors hover:bg-white/[0.04] sm:px-5"
                     >
-                      {m.title}
+                      See every free mock exam
                     </Link>
                   </li>
-                ))}
-                <li>
-                  <Link
-                    to="/mock-exams"
-                    className="flex min-h-[52px] touch-manipulation items-center px-4 py-3 text-[15px] font-semibold text-elec-yellow transition-colors hover:bg-white/[0.04] sm:px-5"
-                  >
-                    See every free mock exam
-                  </Link>
-                </li>
-              </ul>
-            </nav>
+                </ul>
+              </nav>
             </>
           )}
-
         </div>
       </article>
     </PublicPageLayout>

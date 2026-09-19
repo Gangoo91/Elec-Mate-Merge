@@ -49,7 +49,7 @@ const inlineChecks = [
   {
     id: 'fam4-s4-segregation',
     question:
-      'BS 5839-1:2025 clause 26 cross-references BS 7671 528 for SEGREGATION of fire alarm cables from non-fire-alarm wiring. What is the principle and what does it require in practice?',
+      'BS 5839-1:2025 clauses 35.8 and 35.9 govern SEGREGATION of fire alarm cables from non-fire-alarm wiring. What is the principle and what does it require in practice?',
     options: [
       'No segregation is needed; fire alarm and general wiring may freely share the same trunking.',
       'Segregation applies to detection circuits only, not to sounder, interface or mains circuits.',
@@ -63,7 +63,7 @@ const inlineChecks = [
   {
     id: 'fam4-s4-class-a',
     question:
-      'On Class A vs Class B fire alarm circuits, which statement correctly captures the BS EN 54-13 / BS 5839-1 distinction in practical operation?',
+      'On Class A vs Class B fire alarm circuits, which statement correctly captures the BS EN 54-13 distinction in practical operation?',
     options: [
       'Class A is a loop reached from both directions, so a fault leaves it working as two spurs.',
       'Class A and Class B are functionally identical topologies given two different trade names.',
@@ -108,7 +108,7 @@ const quizQuestions = [
   {
     id: 3,
     question:
-      'BS 5839-1:2025 clause 26 (Cabling) and BS 7671 528.1 (Segregation) together govern the relationship between fire alarm cables and other wiring. What is the principle?',
+      'BS 5839-1:2025 clauses 35.8/35.9 (Cabling) and BS 7671 Reg 528.1 (Band I / Band II segregation) together govern the relationship between fire alarm cables and other wiring. What is the principle?',
     options: [
       'There is no relationship; the two standards address entirely unrelated categories of wiring.',
       'Fire alarm cables may freely share routes and containment with any other building circuit.',
@@ -131,7 +131,7 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      'The fault tolerance distinction is the engineering reason for Class A. Most BS 5839-1 systems use Class A for the loop topology so that a single wiring fault does not compromise protection.',
+      'The fault tolerance distinction is the engineering reason for Class A. Most UK fire alarm systems use Class A for the loop topology so that a single wiring fault does not compromise protection.',
   },
   {
     id: 5,
@@ -238,8 +238,8 @@ const FireAlarmModule4Section4 = () => {
         <p className="max-w-3xl text-[13px] leading-relaxed text-white">
           BS 5839-1:2025 / BS 8519 — fire-rated supports at appropriate intervals, metal
           containment, the prohibition on plastic clips for fire-rated systems, segregation per BS
-          7671 528 and BS 5839-1 clause 26, Class A vs Class B circuit topologies, the engineering
-          hierarchy for joints, and the rules for void wiring.
+          7671 Reg 528 and BS 5839-1 cl 35.8/35.9, Class A vs Class B circuit topologies, the
+          engineering hierarchy for joints, and the rules for void wiring.
         </p>
 
         <TLDR
@@ -248,7 +248,7 @@ const FireAlarmModule4Section4 = () => {
             'Cable supports at appropriate intervals — typically 1 metre on vertical runs for FP200-type cables; closer where direction changes or fire-resisting construction is crossed.',
             "Plastic clips are NOT acceptable for fire-rated systems. Fire-rated metal clips, cleats or saddles required, matched to the cable's PH category.",
             'Metal containment (trunking, basket, tray) is fire-rated and supported on fire-rated brackets where it carries fire alarm cables.',
-            'Segregation per BS 7671 528.1 and BS 5839-1 clause 26 — fire alarm cables separated from non-fire-alarm wiring by route, by trunking compartment, by tray, or by fire-rated barrier within shared containment.',
+            'Segregation per BS 7671 Reg 528.1 and BS 5839-1 clauses 35.8/35.9 — fire alarm cables separated from non-fire-alarm wiring by route, by trunking compartment, by tray, or by fire-rated barrier within shared containment.',
             'Joint boxes AVOIDED where reasonably practicable; if unavoidable, fire-rated, accessible, identified, logged.',
             'Class A loop topology = single fault REPORTED but no protection lost. Class B radial = single fault loses devices beyond the fault. Most BS 5839-1 designs use Class A.',
             'Cable in voids follows the same engineering rules as visible cable — fire-rated supports and containment, with detector-access provisions designed in.',
@@ -260,7 +260,7 @@ const FireAlarmModule4Section4 = () => {
           outcomes={[
             'Apply BS 5839-1:2025 / BS 8519 cable-system thinking — match cable, supports, fixings, containment and terminations to the specified PH category',
             'Specify fire-rated metal clips, cleats and saddles at appropriate intervals; reject plastic clips on fire-rated systems',
-            'Apply segregation per BS 7671 528 and BS 5839-1 clause 26 — by separate route, separate compartment, separate tray, or fire-rated barrier within shared containment',
+            'Apply segregation per BS 7671 Reg 528 and BS 5839-1 clauses 35.8/35.9 — by separate route, separate compartment, separate tray, or fire-rated barrier within shared containment',
             'Distinguish Class A loop from Class B radial topologies and select the correct circuit type for the application',
             'Apply the engineering hierarchy for joints — avoid where practicable; if unavoidable, fire-rate and document; treat joints as a tolerated necessity, not a routine choice',
             'Continue wiring methods into voids with fire-rated supports and containment; design detector-access provisions where void detection is provided',
@@ -577,7 +577,7 @@ const FireAlarmModule4Section4 = () => {
               fontSize="10"
               fontWeight="bold"
             >
-              SEGREGATION — BS 7671 528 + BS 5839-1 clause 26
+              SEGREGATION — BS 7671 Reg 528 + BS 5839-1 cl 35.8/35.9
             </text>
             <text x="500" y="442" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
               separate compartments OR fire-rated barrier OR separate routes
@@ -642,7 +642,7 @@ const FireAlarmModule4Section4 = () => {
 
         <SectionRule />
 
-        <ContentEyebrow>Segregation — BS 7671 528 + BS 5839-1 clause 26</ContentEyebrow>
+        <ContentEyebrow>Segregation — BS 7671 Reg 528 + BS 5839-1 cl 35.8/35.9</ContentEyebrow>
 
         <ConceptBlock
           title="Why segregation is non-negotiable for fire alarm wiring"
@@ -678,7 +678,8 @@ const FireAlarmModule4Section4 = () => {
               <strong>Distance separation.</strong> Where separation is by distance only (no
               physical barrier), the distance is sufficient to prevent thermal / mechanical /
               electromagnetic interaction. BS 7671 528 specifies minimum distances for various
-              circuit categories; BS 5839-1 clause 26 reinforces the principle for fire alarm.
+              circuit categories; BS 5839-1 clauses 35.8/35.9 reinforce the principle for fire
+              alarm.
             </li>
           </ul>
           <p>
@@ -720,7 +721,7 @@ const FireAlarmModule4Section4 = () => {
 
         <ConceptBlock
           title="Two architectures for the loop / radial circuit"
-          plainEnglish="Fire alarm circuit topology is governed by BS EN 54-13 (compatibility and connectability of system components) and BS 5839-1. Two classes are recognised: Class A (loop with bidirectional CIE communication) and Class B (radial / spur with unidirectional communication). The class is a fault-tolerance property of the circuit: how does the circuit behave when a single wiring fault (open or short) occurs?"
+          plainEnglish="Fire alarm circuit topology is governed by BS EN 54-13 (compatibility and connectability of system components). Two classes are recognised: Class A (loop with bidirectional CIE communication) and Class B (radial / spur with unidirectional communication). IMPORTANT: BS 5839-1:2025 does NOT use the Class A / Class B labels for circuit topology — in BS 5839-1 those letters denote DETECTOR SENSITIVITY classes (heat detector classes A1, A2, B to G; aspirating classes A, B, C). BS 5839-1 expresses fault tolerance differently, in clause 11.2.2: a single open- or short-circuit fault should not disable protection over more than 2 000 m2, nor on more than one floor plus five devices on the floor above and five below. Cite 11.2.2 when you mean the BS 5839-1 rule, and BS EN 54-13 when you mean the Class A/B naming. The class is a fault-tolerance property of the circuit: how does the circuit behave when a single wiring fault (open or short) occurs?"
         >
           <p>Class A — loop / bidirectional:</p>
           <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
@@ -888,7 +889,7 @@ const FireAlarmModule4Section4 = () => {
             'Cable supports at appropriate intervals — typically 1 metre on vertical FP200-type runs; closer on horizontals, at bends, at penetrations.',
             'Plastic clips NOT acceptable on fire-rated systems. Metal fire-rated clips, cleats, saddles required.',
             'Containment fire-rated and supported on fire-rated brackets. Plastic trunking / brackets fail early in fire.',
-            'Segregation per BS 7671 528 + BS 5839-1 clause 26 — separate route, separate compartment, separate tray, or fire-rated barrier within shared containment.',
+            'Segregation per BS 7671 Reg 528 + BS 5839-1 cl 35.8/35.9 — separate route, separate compartment, separate tray, or fire-rated barrier within shared containment.',
             'Class A = bidirectional loop with fault tolerance (single fault reported, no protection lost). Class B = radial / spur (single fault loses devices beyond it). Most BS 5839-1 designs use Class A.',
             'Joints: AVOID where reasonably practicable. If unavoidable: FIRE-RATE, ACCESSIBLE, IDENTIFIED, LOGGED.',
             'Penetrations through fire-resisting construction must be FIRE-STOPPED with a tested-system product matched to the construction rating.',

@@ -300,7 +300,7 @@ const FireAlarmModule2Section4 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 15 (sound pressure levels)"
+          source="BS 5839-1:2025 · Clause 15 (sound pressure levels) — in summary, not a verbatim quote"
           clause={
             <>
               The minimum sound pressure level produced by fire alarm sounders should be: 65 dB(A)
@@ -1319,7 +1319,7 @@ const FireAlarmModule2Section4 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 24.3.5 (standby battery capacity) — sizing principles"
+          source="BS 5839-1:2025 · Clause 24.3.5 (standby battery capacity) — sizing principles — in summary, not a verbatim quote"
           clause={
             <>
               The standby battery should have sufficient capacity to maintain the system in the

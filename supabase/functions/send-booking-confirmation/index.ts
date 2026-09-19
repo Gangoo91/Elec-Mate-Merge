@@ -32,6 +32,11 @@ interface Body {
   eventId: string;
   /** Present when the booking moved — switches the email to "was / now". */
   movedFrom?: { startIso: string; endIso: string; allDay: boolean } | null;
+  /**
+   * Email them again the evening before. Stamped on the booking with the
+   * confirmation so `send-booking-reminders` knows which bookings asked for it.
+   */
+  remindDayBefore?: boolean;
 }
 
 const json = (payload: unknown, status = 200) =>
@@ -70,7 +75,7 @@ serve(async (req) => {
     const { data: event, error: eventError } = await supabase
       .from('calendar_events')
       .select(
-        'id, user_id, title, description, start_at, end_at, all_day, location, client_id, updated_at, parent_event_id'
+        'id, user_id, title, description, start_at, end_at, all_day, location, client_id, project_id, updated_at, parent_event_id'
       )
       .eq('id', body.eventId)
       .eq('user_id', user.id)
@@ -197,7 +202,28 @@ serve(async (req) => {
 
     const companyName = company?.company_name || profile?.full_name || 'Your electrician';
 
-    const icsFilename = bookingIcsFilename(event.title, event.start_at);
+    /*
+     * ELE-1755 — the customer sees the JOB's name, not the office's reference.
+     *
+     * Bookings that sync in from Google are titled however the office types
+     * them ("ACT-050947-SC544 - PC-BB7 9JT"). Once the electrician has started
+     * that booking as a job he has given it a title fit for a customer
+     * ("Zappi install"), and that is what should head the email and the
+     * calendar file. The booking's own title stays as the office wrote it.
+     */
+    let bookingTitle = event.title;
+    if (event.project_id) {
+      const { data: job } = await supabase
+        .from('spark_projects')
+        .select('title')
+        .eq('id', event.project_id)
+        .eq('user_id', user.id)
+        .maybeSingle();
+      const jobTitle = (job?.title ?? '').trim();
+      if (jobTitle) bookingTitle = jobTitle;
+    }
+
+    const icsFilename = bookingIcsFilename(bookingTitle, event.start_at);
 
     const email = buildBookingConfirmationEmail({
       company: {
@@ -209,7 +235,7 @@ serve(async (req) => {
         website: company?.company_website ?? null,
       },
       clientName: customer?.name || '',
-      title: event.title,
+      title: bookingTitle,
       startIso: event.start_at,
       endIso: event.end_at,
       allDay: !!event.all_day,
@@ -225,7 +251,7 @@ serve(async (req) => {
       // The event id IS the UID, so a reschedule updates the customer's diary
       // entry instead of adding a second one.
       uid: `booking-${event.id}@elec-mate.com`,
-      title: event.title,
+      title: bookingTitle,
       startIso: event.start_at,
       endIso: event.end_at,
       allDay: !!event.all_day,
@@ -307,7 +333,17 @@ serve(async (req) => {
     try {
       await supabase
         .from('calendar_events')
-        .update({ confirmation_sent_at: new Date().toISOString(), confirmation_sent_to: to })
+        .update({
+          confirmation_sent_at: new Date().toISOString(),
+          confirmation_sent_to: to,
+          // Only when the sheet offered the switch. A "moved" email sends no
+          // choice, and must not turn off a reminder that was asked for.
+          ...(typeof body.remindDayBefore === 'boolean'
+            ? { customer_reminder_opt_in: body.remindDayBefore }
+            : {}),
+          // A booking that moved needs reminding again about its NEW date.
+          ...(body.movedFrom ? { customer_reminder_sent_at: null } : {}),
+        })
         .eq('id', event.id)
         .eq('user_id', user.id);
     } catch (stampErr) {

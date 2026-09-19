@@ -87,7 +87,7 @@ const faqs = [
   {
     question: 'Can I use the Elec-Mate calculator for three-phase motor circuits?',
     answer:
-      'Yes. The calculator takes both the running current and the starting current so you can look at the steady-state drop and the transient dip separately. BS 7671 recognises the distinction: Regulation 525.203 allows a greater voltage drop than Appendix 4, Section 6.4 during motor starting periods and for other equipment with high inrush currents, provided it is verified that the voltage variations stay within the limits in the relevant product standard, or the manufacturer\'s recommendations where there is no product standard. Table 4Ab carries the same allowance as a note. That proviso matters — the starting drop is not simply exempt. Excessive drop during starting can stop the motor getting away, drop out contactors, and disturb other equipment on the same supply, so it is worth checking even where the steady-state figure passes comfortably.',
+      "Yes. The calculator takes both the running current and the starting current so you can look at the steady-state drop and the transient dip separately. BS 7671 recognises the distinction: Regulation 525.203 allows a greater voltage drop than Appendix 4, Section 6.4 during motor starting periods and for other equipment with high inrush currents, provided it is verified that the voltage variations stay within the limits in the relevant product standard, or the manufacturer's recommendations where there is no product standard. Table 4Ab carries the same allowance as a note. That proviso matters — the starting drop is not simply exempt. Excessive drop during starting can stop the motor getting away, drop out contactors, and disturb other equipment on the same supply, so it is worth checking even where the steady-state figure passes comfortably.",
   },
 ];
 
@@ -276,10 +276,11 @@ const sections = [
         <p>
           Where the load power factor is worth taking into account, Section 6.2 gives the design
           value as cos&nbsp;&phi;&nbsp;&times;&nbsp;(mV/A/m)<sub>r</sub> +
-          sin&nbsp;&phi;&nbsp;&times;&nbsp;(mV/A/m)<sub>x</sub>. This is the same relationship as the
-          first-principles form &radic;3&nbsp;&times;&nbsp;I&nbsp;&times;&nbsp;L&nbsp;&times;&nbsp;(R
-          cos&nbsp;&phi; + X sin&nbsp;&phi;), with the &radic;3 and the per-metre resistance folded
-          into the tabulated values. It matters most on{' '}
+          sin&nbsp;&phi;&nbsp;&times;&nbsp;(mV/A/m)<sub>x</sub>. This is the same relationship as
+          the first-principles form
+          &radic;3&nbsp;&times;&nbsp;I&nbsp;&times;&nbsp;L&nbsp;&times;&nbsp;(R cos&nbsp;&phi; + X
+          sin&nbsp;&phi;), with the &radic;3 and the per-metre resistance folded into the tabulated
+          values. It matters most on{' '}
           <SEOInternalLink href="/tools/three-phase-power-calculator">
             three-phase motor circuits
           </SEOInternalLink>
@@ -383,8 +384,8 @@ const sections = [
           standard, or the manufacturer&rsquo;s recommendations where no product standard exists.
         </p>
         <p>
-          <strong>Harmonics.</strong> Appendix 4, Section 6.4 states that the calculated voltage drop
-          should include any effects due to harmonic currents. On a board full of switched-mode
+          <strong>Harmonics.</strong> Appendix 4, Section 6.4 states that the calculated voltage
+          drop should include any effects due to harmonic currents. On a board full of switched-mode
           supplies that is not a formality.
         </p>
         <p>
@@ -405,10 +406,10 @@ const sections = [
     content: (
       <>
         <p>
-          The square root of 3, about 1.732, runs through three-phase calculations. It comes from the
-          geometry of three sinusoids displaced by 120 degrees: in a star-connected system the line
-          voltage is root 3 times the phase voltage, which is where 230 V &times; 1.732 = 400 V comes
-          from.
+          The square root of 3, about 1.732, runs through three-phase calculations. It comes from
+          the geometry of three sinusoids displaced by 120 degrees: in a star-connected system the
+          line voltage is root 3 times the phase voltage, which is where 230 V &times; 1.732 = 400 V
+          comes from.
         </p>
         <p>
           The question that brings most people to this page is whether they need to apply it
@@ -475,8 +476,8 @@ const sections = [
       <>
         <p>
           A balanced load draws equal current on all three phases at the same power factor —
-          three-phase motors, three-phase heaters with equal elements, 22 kW EV chargers. Because the
-          tabulated three-phase values assume exactly this, one calculation covers the circuit.
+          three-phase motors, three-phase heaters with equal elements, 22 kW EV chargers. Because
+          the tabulated three-phase values assume exactly this, one calculation covers the circuit.
         </p>
         <p>
           An unbalanced load draws different currents on each phase. That is the normal state of a
@@ -514,15 +515,15 @@ const sections = [
             Third harmonic and neutral current (Appendix 4, Sections 5.5 and 5.6)
           </h4>
           <p className="text-sm leading-relaxed text-white">
-            Where a three-phase circuit supplies a high proportion of switched-mode power supplies or
-            LED drivers, the third harmonic currents from each phase add in the neutral instead of
-            cancelling. Appendix 4, Section 5.6 notes that the rating factors in Section 5.5 take
+            Where a three-phase circuit supplies a high proportion of switched-mode power supplies
+            or LED drivers, the third harmonic currents from each phase add in the neutral instead
+            of cancelling. Appendix 4, Section 5.6 notes that the rating factors in Section 5.5 take
             account of the heating effect of the third harmonic in the neutral as well as in each
             line conductor. The neutral can end up carrying more current than any line conductor,
             which affects conductor sizing and the drop along the neutral, and the balanced /
-            unbalanced framing above does not capture it. Where third harmonic content is high enough
-            that the neutral becomes the basis of sizing, Regulation 431.2.3 also requires overcurrent
-            detection for the neutral conductor.
+            unbalanced framing above does not capture it. Where third harmonic content is high
+            enough that the neutral becomes the basis of sizing, Regulation 431.2.3 also requires
+            overcurrent detection for the neutral conductor.
           </p>
         </div>
       </>
@@ -575,9 +576,9 @@ const sections = [
                 <strong className="text-elec-yellow">12.77 V</strong> (3.19% of 400 V)
               </p>
               <p>
-                <strong className="text-green-400">Pass</strong> against the 20 V steady-state limit.
-                If this motor sits downstream of a sub-main, add that drop too. The starting dip is a
-                separate check under Regulation 525.203.
+                <strong className="text-green-400">Pass</strong> against the 20 V steady-state
+                limit. If this motor sits downstream of a sub-main, add that drop too. The starting
+                dip is a separate check under Regulation 525.203.
               </p>
             </div>
           </div>
@@ -610,12 +611,14 @@ const sections = [
             </h4>
             <div className="space-y-2 text-sm leading-relaxed text-white">
               <p>
-                A three-phase sub-main of 35 mm&sup2; SWA runs 40 m at 100 A with a three-phase value
-                of 1.05 mV/A/m. A final circuit from that board &mdash; 6 mm&sup2; singles in
+                A three-phase sub-main of 35 mm&sup2; SWA runs 40 m at 100 A with a three-phase
+                value of 1.05 mV/A/m. A final circuit from that board &mdash; 6 mm&sup2; singles in
                 trunking, 25 m, 28 A, three-phase value 6.4 mV/A/m &mdash; serves a three-phase
                 heater.
               </p>
-              <p className="font-mono text-white">Sub-main: 1.05 &times; 100 &times; 40 / 1000 = 4.20 V</p>
+              <p className="font-mono text-white">
+                Sub-main: 1.05 &times; 100 &times; 40 / 1000 = 4.20 V
+              </p>
               <p className="font-mono text-white">
                 Final circuit: 6.4 &times; 28 &times; 25 / 1000 = 4.48 V
               </p>
@@ -668,7 +671,9 @@ const sections = [
                 <tr
                   key={row.size}
                   className={
-                    i % 2 === 0 ? 'bg-gradient-to-b from-white/[0.08] to-white/[0.04]' : 'bg-white/[0.02]'
+                    i % 2 === 0
+                      ? 'bg-gradient-to-b from-white/[0.08] to-white/[0.04]'
+                      : 'bg-white/[0.02]'
                   }
                 >
                   <td className={`${tdCn} font-medium`}>{row.size}</td>
@@ -711,7 +716,7 @@ const sections = [
 export default function CableVoltDropThreePhasePage() {
   return (
     <ToolTemplate
-      title="3-Phase Voltage Drop Formula: mV/A/m×Ib×L/1000"
+      title="3-Phase Voltage Drop Calculator: Free BS 7671 Check"
       description="VD = mV/A/m (3-phase) × Ib × L ÷ 1000. The √3 is already inside the BS 7671 mV/A/m values, so never multiply again. Free calculator, 20 V / 12 V limits."
       datePublished="2025-06-15"
       dateModified="2026-08-07"
@@ -738,8 +743,8 @@ export default function CableVoltDropThreePhasePage() {
         <p className="mt-4 text-sm leading-relaxed text-white">
           Set the supply to 400 V (three phase) and the result is checked against the Table 4Ab
           limits &mdash; 12 V for lighting, 20 V for other uses. The tool applies the two-core
-          mV/A/m value, which over-states the drop by roughly 15%, so a pass here is a genuine
-          pass. For a final design, take the three-phase figure from the{' '}
+          mV/A/m value, which over-states the drop by roughly 15%, so a pass here is a genuine pass.
+          For a final design, take the three-phase figure from the{' '}
           <a
             href="#common-cables"
             className="touch-manipulation text-yellow-400 underline decoration-yellow-400/40 underline-offset-2 transition-colors hover:text-yellow-300"

@@ -161,9 +161,9 @@ export const ExportReviewSheet = ({
       return fresh.map((f) => {
         const was = edited.get(f.circuitRef);
         return was
-          // Point count and review flags come from the drawing; the three
-          // fields the user can type keep their edits.
-          ? { ...f, cableSize: was.cableSize, protection: was.protection, rcd: was.rcd }
+          ? // Point count and review flags come from the drawing; the three
+            // fields the user can type keep their edits.
+            { ...f, cableSize: was.cableSize, protection: was.protection, rcd: was.rcd }
           : f;
       });
     });
@@ -231,11 +231,14 @@ export const ExportReviewSheet = ({
   const totalItems = schedule.reduce((sum, s) => sum + s.count, 0);
 
   // Group schedule by category
-  const grouped = schedule.reduce<Record<string, { name: string; count: number }[]>>((acc, item) => {
-    if (!acc[item.category]) acc[item.category] = [];
-    acc[item.category].push({ name: item.name, count: item.count });
-    return acc;
-  }, {});
+  const grouped = schedule.reduce<Record<string, { name: string; count: number }[]>>(
+    (acc, item) => {
+      if (!acc[item.category]) acc[item.category] = [];
+      acc[item.category].push({ name: item.name, count: item.count });
+      return acc;
+    },
+    {}
+  );
 
   const categoryOrder = Object.keys(grouped).sort();
 
@@ -285,8 +288,11 @@ export const ExportReviewSheet = ({
           <div className="w-full max-w-3xl mx-auto px-4 pt-4 pb-3 border-b border-white/10">
             <h2 className="text-lg font-semibold text-white">Export Floor Plans</h2>
             <p className="text-xs text-white mt-0.5">
-              {includedRooms.length} room{includedRooms.length !== 1 ? 's' : ''} &middot; {totalItems} item{totalItems !== 1 ? 's' : ''}
-              {excluded.size > 0 && <span className="text-white/60"> &middot; {excluded.size} excluded</span>}
+              {includedRooms.length} room{includedRooms.length !== 1 ? 's' : ''} &middot;{' '}
+              {totalItems} item{totalItems !== 1 ? 's' : ''}
+              {excluded.size > 0 && (
+                <span className="text-white"> &middot; {excluded.size} excluded</span>
+              )}
             </p>
           </div>
 
@@ -294,7 +300,9 @@ export const ExportReviewSheet = ({
           <div className="flex-1 overflow-y-auto w-full max-w-3xl mx-auto px-4 py-4 space-y-5">
             {/* Project Details */}
             <section className="space-y-3">
-              <h3 className="text-[15px] font-semibold tracking-tight text-white">Project details</h3>
+              <h3 className="text-[15px] font-semibold tracking-tight text-white">
+                Project details
+              </h3>
               <div className="space-y-4">
                 <Field
                   id="export-property"
@@ -322,7 +330,10 @@ export const ExportReviewSheet = ({
                   placeholder="Your name"
                 />
                 <div>
-                  <Label htmlFor="export-date" className="text-[12px] font-medium text-white mb-1 block">
+                  <Label
+                    htmlFor="export-date"
+                    className="text-[12px] font-medium text-white mb-1 block"
+                  >
                     Date
                   </Label>
                   <input
@@ -340,7 +351,9 @@ export const ExportReviewSheet = ({
                 revision box. Both were hardcoded, so every drawing this app
                 has ever produced was "EL-001 Rev A / Initial Issue". */}
             <section className="space-y-3">
-              <h3 className="text-[15px] font-semibold tracking-tight text-white">Drawing control</h3>
+              <h3 className="text-[15px] font-semibold tracking-tight text-white">
+                Drawing control
+              </h3>
               <div className="grid grid-cols-2 gap-3">
                 <Field
                   id="export-dwg-no"
@@ -372,7 +385,7 @@ export const ExportReviewSheet = ({
             <section className="space-y-3">
               <div className="flex items-baseline justify-between gap-3">
                 <h3 className="text-[15px] font-semibold tracking-tight text-white">Rooms</h3>
-                <span className="text-[11px] text-white/70">Tap to include or leave out</span>
+                <span className="text-[11px] text-white">Tap to include or leave out</span>
               </div>
 
               {/* Each room is a row so it can be excluded and reordered. Sheet
@@ -385,7 +398,9 @@ export const ExportReviewSheet = ({
                       key={room.id}
                       className={cn(
                         'flex items-center gap-3 rounded-xl border p-2 transition-colors',
-                        isIn ? 'border-white/[0.14] bg-white/[0.05]' : 'border-white/[0.08] bg-transparent opacity-55'
+                        isIn
+                          ? 'border-white/[0.14] bg-white/[0.05]'
+                          : 'border-white/[0.08] bg-transparent opacity-55'
                       )}
                     >
                       <button
@@ -398,23 +413,32 @@ export const ExportReviewSheet = ({
                         <span
                           className={cn(
                             'flex h-5 w-5 shrink-0 items-center justify-center rounded-md border',
-                            isIn ? 'border-elec-yellow bg-elec-yellow text-black' : 'border-white/30'
+                            isIn
+                              ? 'border-elec-yellow bg-elec-yellow text-black'
+                              : 'border-white/30'
                           )}
                         >
                           {isIn && <Check className="h-3.5 w-3.5" strokeWidth={3} />}
                         </span>
                         <span className="h-[42px] w-[56px] shrink-0 overflow-hidden rounded-lg border border-white/10 bg-white">
                           {room.thumbnail ? (
-                            <img src={room.thumbnail} alt="" className="h-full w-full object-cover" />
+                            <img
+                              src={room.thumbnail}
+                              alt=""
+                              className="h-full w-full object-cover"
+                            />
                           ) : (
                             <span className="block h-full w-full bg-white/5" />
                           )}
                         </span>
                         <span className="min-w-0">
-                          <span className="block truncate text-sm font-medium text-white">{room.name}</span>
-                          <span className="block text-[11px] text-white/70">
+                          <span className="block truncate text-sm font-medium text-white">
+                            {room.name}
+                          </span>
+                          <span className="block text-[11px] text-white">
                             {room.symbolIds.length} item{room.symbolIds.length !== 1 ? 's' : ''}
-                            {isIn && ` · page ${includedRooms.findIndex((r) => r.id === room.id) + 2}`}
+                            {isIn &&
+                              ` · page ${includedRooms.findIndex((r) => r.id === room.id) + 2}`}
                           </span>
                         </span>
                       </button>
@@ -425,7 +449,7 @@ export const ExportReviewSheet = ({
                           onClick={() => moveRoom(room.id, -1)}
                           disabled={idx === 0}
                           aria-label={`Move ${room.name} earlier`}
-                          className="flex h-6 w-9 items-center justify-center rounded text-white/80 touch-manipulation hover:bg-white/10 disabled:opacity-25"
+                          className="flex h-6 w-9 items-center justify-center rounded text-white touch-manipulation hover:bg-white/10 disabled:opacity-25"
                         >
                           <ChevronUp className="h-4 w-4" />
                         </button>
@@ -434,7 +458,7 @@ export const ExportReviewSheet = ({
                           onClick={() => moveRoom(room.id, 1)}
                           disabled={idx === orderedRooms.length - 1}
                           aria-label={`Move ${room.name} later`}
-                          className="flex h-6 w-9 items-center justify-center rounded text-white/80 touch-manipulation hover:bg-white/10 disabled:opacity-25"
+                          className="flex h-6 w-9 items-center justify-center rounded text-white touch-manipulation hover:bg-white/10 disabled:opacity-25"
                         >
                           <ChevronDown className="h-4 w-4" />
                         </button>
@@ -454,20 +478,21 @@ export const ExportReviewSheet = ({
             {/* Materials Schedule */}
             {schedule.length > 0 && (
               <section className="space-y-3">
-                <h3 className="text-[15px] font-semibold tracking-tight text-white">Materials schedule</h3>
+                <h3 className="text-[15px] font-semibold tracking-tight text-white">
+                  Materials schedule
+                </h3>
                 <div className="space-y-2">
                   {categoryOrder.map((cat, idx) => (
-                    <div
-                      key={cat}
-                      className={idx > 0 ? 'border-t border-white/10 pt-2' : ''}
-                    >
+                    <div key={cat} className={idx > 0 ? 'border-t border-white/10 pt-2' : ''}>
                       <p className="text-elec-yellow text-[10px] uppercase font-semibold tracking-wide mb-1">
                         {cat}
                       </p>
                       {grouped[cat].map((item) => (
                         <div key={item.name} className="flex items-center justify-between py-0.5">
                           <span className="text-white text-xs">{item.name}</span>
-                          <span className="text-white text-xs font-medium tabular-nums">{item.count}</span>
+                          <span className="text-white text-xs font-medium tabular-nums">
+                            {item.count}
+                          </span>
                         </div>
                       ))}
                     </div>
@@ -488,7 +513,9 @@ export const ExportReviewSheet = ({
             {circuits.length > 0 && (
               <section className="space-y-3">
                 <div className="flex items-center justify-between gap-3">
-                  <h3 className="text-[15px] font-semibold tracking-tight text-white">Circuit schedule</h3>
+                  <h3 className="text-[15px] font-semibold tracking-tight text-white">
+                    Circuit schedule
+                  </h3>
                   <button
                     type="button"
                     onClick={() => setCircuitsOpen((v) => !v)}
@@ -500,10 +527,12 @@ export const ExportReviewSheet = ({
                 </div>
 
                 <div className="rounded-lg border border-orange-500/30 bg-orange-500/10 p-3">
-                  <p className="text-[11px] text-orange-300 font-medium">Indicative — check before issuing</p>
+                  <p className="text-[11px] text-orange-300 font-medium">
+                    Indicative — check before issuing
+                  </p>
                   <p className="text-[11px] text-white mt-1">
-                    Suggested defaults for a typical domestic installation. Cable sizing, volt drop and Zs
-                    must be verified for the actual installation.
+                    Suggested defaults for a typical domestic installation. Cable sizing, volt drop
+                    and Zs must be verified for the actual installation.
                   </p>
                 </div>
 
@@ -569,7 +598,7 @@ export const ExportReviewSheet = ({
             <Button
               onClick={handleGenerate}
               disabled={isGenerating || includedRooms.length === 0}
-              className="w-full h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
+              className="w-full h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white"
             >
               {isGenerating ? (
                 <>

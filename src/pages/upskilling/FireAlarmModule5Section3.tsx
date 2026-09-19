@@ -35,7 +35,7 @@ const inlineChecks = [
   {
     id: 'fam5-s3-heat-sleeping',
     question:
-      'Under BS 5839-1:2025 §14, where should heat detectors NOT be installed in new L2 / L3 systems?',
+      'Under BS 5839-1:2025 20.2 c) NOTE 3, where should heat detectors NOT be installed in new L2 / L3 systems?',
     options: [
       'In plant rooms and boiler rooms, where high ambient temperatures cause false heat alarms.',
       'In rooms in which people sleep — use smoke or a smoke-element multi-sensor instead.',
@@ -103,7 +103,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'Smoke or smoke-mode multi-sensor in sleeping rooms in new L2 / L3 work. The 2025 revision §14 / §15 excludes heat detectors from sleeping rooms — sleeping rooms are now classed as high-risk and smoke detection gives earlier warning for someone asleep. Heat is excluded regardless of a kitchen below; the exclusion has no use-based exception. Existing systems continue; new work follows the rule.',
+      'Smoke or smoke-mode multi-sensor in sleeping rooms in new L2 / L3 work. The 2025 revision 20.2 c) NOTE 3 excludes heat detectors from sleeping rooms — sleeping rooms are now classed as high-risk and smoke detection gives earlier warning for someone asleep. Heat is excluded regardless of a kitchen below; the exclusion has no use-based exception. Existing systems continue; new work follows the rule.',
   },
   {
     id: 3,
@@ -144,7 +144,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      '65 dB(A) at all accessible points / 75 dB(A) at the bed-head / at least 5 dB above any background noise lasting 30 seconds or longer. The figures are calibrated to wake a sleeping occupant (bed-head is the HIGHER level, not lower) and overcome plausible background (5 dB margin). Verified by sound-level survey at handover and at every periodic service.',
+      '65 dB(A) at all accessible points / 75 dB(A) at the bed-head / at least 5 dB above background noise exceeding 60 dB(A) (background lasting under 30 s may be disregarded). The figures are calibrated to wake a sleeping occupant (bed-head is the HIGHER level, not lower) and overcome plausible background (5 dB margin). Verified by sound-level survey at handover and at every periodic service.',
   },
   {
     id: 6,
@@ -223,7 +223,7 @@ const FireAlarmModule5Section3 = () => {
   useSEO({
     title: 'Device installation | Fire Alarm Module 5.3 | Elec-Mate',
     description:
-      'BS 5839-1:2025 device installation: detector mounting per 21.2.4, the new restriction on heat detectors in sleeping rooms (§14/§15), MCP mounting at 1.4 m with +200/-300 tolerance, beam detector alignment, sounder/VAD positioning for 65/75 dB(A) coverage, linear heat cable per BS EN 54-22 / BS EN 54-28, and documentation per §15/§20.',
+      'BS 5839-1:2025 device installation: detector mounting per 21.2.4, the new restriction on heat detectors in sleeping rooms (20.2 c) NOTE 3), MCP mounting at 1.4 m with +200/-300 tolerance, beam detector alignment, sounder/VAD positioning for 65/75 dB(A) coverage, linear heat cable per BS EN 54-22 / BS EN 54-28, and documentation per §15/§20.',
   });
 
   return (
@@ -239,11 +239,11 @@ const FireAlarmModule5Section3 = () => {
         <TLDR
           points={[
             'Point detector positioning (BS 5839-1:2025 21.2.4): smoke 25 mm to 600 mm below ceiling; heat 25 mm to 150 mm below ceiling. Numbers unchanged from 2017; only the clause re-numbers in 2025.',
-            'Heat detectors NOT in sleeping rooms in new L2 / L3 work (NEW 2025 §14 / §15). Sleeping rooms reclassified as high-risk; use smoke or multi-sensor with smoke element. Existing systems not retrospective.',
+            'Heat detectors NOT in sleeping rooms in new L2 / L3 work (NEW 2025 20.2 c) NOTE 3). Sleeping rooms reclassified as high-risk; use smoke or multi-sensor with smoke element. Existing systems not retrospective.',
             'MCP mounting: 1.4 m to operating element with tolerance +200 mm / -300 mm. Acceptable range 1.1 m to 1.6 m. Tolerance made explicit in 2025.',
             'MCPs: protective covers now recommended to be transparent (was opaque in 2017). Stairway-landing wording removed in 2025 — use 12.1 a clause for landing MCPs.',
             'Beam detectors: precise alignment per manufacturer instruction; clear beam path; documented as-installed setting. Misalignment is the dominant in-service failure mode.',
-            'Sounder coverage: 65 dB(A) at all accessible points / 75 dB(A) bed-head / at least 5 dB above sustained background (30s+).',
+            'Sounder coverage: 65 dB(A) at all accessible points / 75 dB(A) bed-head / at least 5 dB above background noise exceeding 60 dB(A).',
             'VAD coverage where VAD is primary signal: BS EN 54-23 — defined coverage volume and light intensity; design verified by calculation or manufacturer table.',
             'Linear heat cable: NEW 2025 normative references — BS EN 54-22 (resettable) and BS EN 54-28 (non-resettable). Selection per application.',
             'Detector documentation per §15 / §20: address, location, type, configuration recorded at install and made available to commissioning and to the O&M manual.',
@@ -254,7 +254,7 @@ const FireAlarmModule5Section3 = () => {
         <LearningOutcomes
           outcomes={[
             'Position point smoke and heat detectors per BS 5839-1:2025 21.2.4 (25-600 mm smoke / 25-150 mm heat below ceiling)',
-            'Apply the 2025 §14 / §15 rule excluding heat detectors from sleeping rooms in new L2 / L3 systems and select smoke or smoke-mode multi-sensor in their place',
+            'Apply the 2025 20.2 c) NOTE 3 rule excluding heat detectors from sleeping rooms in new L2 / L3 systems and select smoke or smoke-mode multi-sensor in their place',
             'Mount manual call points at 1.4 m with the explicit 2025 tolerance of +200 mm / -300 mm (range 1.1-1.6 m), with transparent protective covers per the 2025 recommendation',
             'Set up beam detectors with precise alignment per manufacturer instruction, documented as-installed beam path and signal strength',
             'Position sounders, VADs and combined units to achieve 65 dB(A) general / 75 dB(A) bed-head / 5 dB above sustained background, verified at commissioning',
@@ -373,7 +373,7 @@ const FireAlarmModule5Section3 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 14 (Use of heat detectors)"
+          source="BS 5839-1:2025 · Clause 14 (Use of heat detectors) — in summary, not a verbatim quote"
           clause={
             <>
               With the changes to category L2 systems now including early warning of fire to rooms
@@ -658,7 +658,7 @@ const FireAlarmModule5Section3 = () => {
                 fontSize="11"
                 fontWeight="bold"
               >
-                Sleeping room — NEW 2025 §14/§15
+                Sleeping room — NEW 2025 20.2 c) NOTE 3
               </text>
 
               <line x1="40" y1="330" x2="380" y2="330" stroke="#fff" strokeWidth="2" />
@@ -998,10 +998,10 @@ const FireAlarmModule5Section3 = () => {
               in its normal sleeping condition (commonly closed).
             </li>
             <li>
-              <strong>5 dB above sustained background.</strong> Where the background noise lasts 30
-              seconds or longer (machinery, plant, music in licensed premises), the alarm must
-              exceed it by 5 dB. Locations with high background may need additional sounders or
-              higher-output devices.
+              <strong>5 dB above sustained background.</strong> Where background noise exceeds 60
+              dB(A) (machinery, plant, music in licensed premises), the alarm must exceed it by 5
+              dB. Background noise lasting under 30 s may be disregarded. Locations with high
+              background may need additional sounders or higher-output devices.
             </li>
             <li>
               <strong>Frequency content.</strong> Sounders should produce a tone or modulated tone
@@ -1045,17 +1045,24 @@ const FireAlarmModule5Section3 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 15.1.1 (Audible alarm signals) — sound levels"
+          source="BS 5839-1:2025 · Clause 15.1.1 (absolute levels) + 15.1.3 (background noise)"
           clause={
             <>
-              The audible alarm signal should produce a sound pressure level of at least 65 dB(A) at
-              all accessible points in the area protected by the system, increasing to 75 dB(A) at
-              the bed-head in sleeping accommodation. Where ambient noise of duration greater than
-              30 seconds is likely to be present, the alarm signal should be at least 5 dB above the
-              ambient noise level.
+              <strong>15.1.1 — absolute levels:</strong> not less than 65 dB(A) throughout all
+              accessible areas, with 60 dB(A) permitted in stairways, enclosures of not more than
+              approximately 60 m&sup2; and specific points of limited extent; not less than 75 dB(A)
+              at the bedhead where the system is intended to rouse people from sleep; and not
+              greater than 120 dB(A) at any normally accessible point.
+              <br />
+              <br />
+              <strong>15.1.3 — background noise:</strong> where the sound pressure level of
+              background noise is greater than 60 dB(A), the fire alarm signal should be 5 dB(A)
+              above it. NOTE 1 adds that background noise unlikely to persist longer than 30 s may
+              be ignored — that is an exemption from what counts as background, not the trigger for
+              the rule.
             </>
           }
-          meaning="Three thresholds: 65 dB(A) general, 75 dB(A) bed-head, 5 dB above sustained background. Verified at commissioning by sound-level survey at every accessible point. Failures usually indicate too-few sounders or sounders too-far-apart; remedy is additional or higher-output devices."
+          meaning="Two clauses doing different jobs. 15.1.1 sets the absolute floor and ceiling. 15.1.3 only engages ONCE background exceeds 60 dB(A) — below that the flat 65 dB(A) governs and there is nothing to add 5 dB to. Verified at commissioning by sound-level survey at every accessible point. Failures usually indicate too-few sounders or sounders too-far-apart; remedy is additional or higher-output devices."
         />
 
         <ConceptBlock
@@ -1109,9 +1116,9 @@ const FireAlarmModule5Section3 = () => {
 
         <Scenario
           title="The bedroom heat detector that came back to bite"
-          situation="A two-storey HMO is being upgraded from a Grade D LD2 system to a Category L2 BS 5839-1:2025 addressable system. The designer carries a 2017-era detail that places heat detectors in bedrooms because they are above a kitchen on the ground floor. First-fix detector bases are installed per the design. At pre-commissioning review the third-party scheme assessor flags that BS 5839-1:2025 §14 explicitly excludes heat detectors from sleeping rooms in new L2 / L3 work. The contractor argues the heat detector is justifiable on the kitchen-below ground; the assessor responds that the standard makes no exception — heat is excluded from new work in sleeping rooms regardless of ground-floor use."
+          situation="A two-storey HMO is being upgraded from a Grade D LD2 system to a Category L2 BS 5839-1:2025 addressable system. The designer carries a 2017-era detail that places heat detectors in bedrooms because they are above a kitchen on the ground floor. First-fix detector bases are installed per the design. At pre-commissioning review the third-party scheme assessor flags that BS 5839-1:2025 20.2 c) NOTE 3 explicitly excludes heat detectors from sleeping rooms in new L2 / L3 work. The contractor argues the heat detector is justifiable on the kitchen-below ground; the assessor responds that the standard makes no exception — heat is excluded from new work in sleeping rooms regardless of ground-floor use."
           whatToDo="Replace the bedroom heat detectors with smoke or smoke-mode multi-sensor detectors. Update the cause-and-effect matrix to handle the new detector type. Re-issue the as-built detector schedule recording address, location, type and configuration per §20.11. Brief the Responsible Person that the kitchen below remains protected by its own detector(s) per the design — the bedroom detector is for bedroom protection and must give early warning. The variation log records the change and the justification."
-          whyItMatters="The 2025 §14 / §15 change is explicit and not retrospective. Carrying 2017 thinking into a new install is one of the most common 2025-era findings. Catching it at survey is cheap; catching it at first-fix is expensive; catching it at the scheme assessment is reputational damage. The standard is a code of practice; departures need written justification under §6 and may not be acceptable at all."
+          whyItMatters="The 2025 20.2 c) NOTE 3 change is explicit and not retrospective. Carrying 2017 thinking into a new install is one of the most common 2025-era findings. Catching it at survey is cheap; catching it at first-fix is expensive; catching it at the scheme assessment is reputational damage. The standard is a code of practice; departures need written justification under §6 and may not be acceptable at all."
         />
 
         <CommonMistake
@@ -1183,7 +1190,7 @@ const FireAlarmModule5Section3 = () => {
           title="What to remember on site"
           points={[
             'Point detector below-ceiling rule (BS 5839-1:2025 21.2.4): smoke 25-600 mm, heat 25-150 mm. Numbers unchanged from 2017; only the clause re-numbers.',
-            'Heat detectors NOT in sleeping rooms in new L2 / L3 work (NEW 2025 §14 / §15). Use smoke or smoke-mode multi-sensor. Existing systems not retrospective.',
+            'Heat detectors NOT in sleeping rooms in new L2 / L3 work (NEW 2025 20.2 c) NOTE 3). Use smoke or smoke-mode multi-sensor. Existing systems not retrospective.',
             'MCP mounting: 1.4 m to operating element, tolerance +200 mm / -300 mm (range 1.1-1.6 m). 2025 tolerance now explicit.',
             'MCP protective covers recommended TRANSPARENT (was opaque) in 2025. Stairway-landing MCP per 12.1 a — zoned with adjacent accommodation, not the stairway.',
             'Distance to nearest MCP: 30 m straight-line, 45 m actual travel — single pair of figures in 2025 (was category-dependent in 2017).',
@@ -1208,7 +1215,7 @@ const FireAlarmModule5Section3 = () => {
               question:
                 'My existing system has heat detectors in bedrooms. Do I have to replace them?',
               answer:
-                'No. The 2025 §14 / §15 change is explicit not retrospective. Existing systems continue. At service-replacement (e.g. a heat detector fails and must be replaced) the like-for-like replacement remains acceptable in the existing system. Only when the system is upgraded, extended or replaced does the new rule apply.',
+                'No. The 2025 20.2 c) NOTE 3 change is explicit not retrospective. Existing systems continue. At service-replacement (e.g. a heat detector fails and must be replaced) the like-for-like replacement remains acceptable in the existing system. Only when the system is upgraded, extended or replaced does the new rule apply.',
             },
             {
               question: 'Do I need a tape measure to verify the 25-600 mm / 25-150 mm rule?',

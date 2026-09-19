@@ -21,7 +21,7 @@ const inlineChecks = [
   {
     id: 'fam5-s4-colour',
     question:
-      'BS 5839-1:2025 §16 (Cabling, labelling and identification) clarifies what colour the fire alarm cable AND the LV mains supply to the panel should be. What does it say?',
+      'BS 5839-1:2025 25.9 (Cabling, labelling and identification) clarifies what colour the fire alarm cable AND the LV mains supply to the panel should be. What does it say?',
     options: [
       'Any colour at all, provided every core is individually labelled at termination.',
       'A single common colour for the cables AND the LV mains feed, with red preferred.',
@@ -30,12 +30,12 @@ const inlineChecks = [
     ],
     correctIndex: 1,
     explanation:
-      'The 2025 §16 clarification: a single common colour (red preferred) for fire alarm cables AND the LV mains supply to the fire alarm system. The 2017 revision required fire-resistant cable but did not specify a colour, prompting recurring helpline queries. This recognises the mains feed as part of the integrated fire installation. The "preferred" wording allows existing schemes in other colours where rip-and-replace would be disproportionate, but new work should be red.',
+      'The 2025 25.9 clarification: a single common colour (red preferred) for fire alarm cables AND the LV mains supply to the fire alarm system. The 2017 revision required fire-resistant cable but did not specify a colour, prompting recurring helpline queries. This recognises the mains feed as part of the integrated fire installation. The "preferred" wording allows existing schemes in other colours where rip-and-replace would be disproportionate, but new work should be red.',
   },
   {
     id: 'fam5-s4-fe-pink',
     question:
-      'Per BS 7671 A2:2022 (IEC 60445:2021) and reflected in BS 5839-1:2025 §16, what is the identification of the FUNCTIONAL EARTH (FE) conductor?',
+      'Per BS 7671:2018+A3, Table 51, and reflected in BS 5839-1:2025 28.2, what is the identification of the FUNCTIONAL EARTH (FE) conductor?',
     options: [
       'Cream, the previous IEC 60445 / BS 7671 designation, marked "FE" at terminations.',
       'PINK in colour, or marked with the alphanumeric designation "FE" at terminations.',
@@ -44,7 +44,7 @@ const inlineChecks = [
     ],
     correctIndex: 1,
     explanation:
-      'IEC 60445:2021 / BS 7671 Amendment 2:2022 changed FE identification from cream to pink, and BS 5839-1:2025 §16 explicitly references this. Cream caused confusion with bare-copper or beige sleeving; pink is unambiguous. Important on fire alarm work because addressable loop screens are typically functional earths (one-end termination), not protective earths — they need the new pink ID, not cream and not green-and-yellow.',
+      'BS 7671:2018+A3, Table 51 sets FE identification as pink, and BS 5839-1:2025 28.2 explicitly references this. Cream caused confusion with bare-copper or beige sleeving; pink is unambiguous. Important on fire alarm work because addressable loop screens are typically functional earths (one-end termination), not protective earths — they need the new pink ID, not cream and not green-and-yellow.',
   },
   {
     id: 'fam5-s4-screen-end',
@@ -58,7 +58,7 @@ const inlineChecks = [
     ],
     correctIndex: 1,
     explanation:
-      'Single-end screen termination is the dominant convention for addressable fire alarm loops. Terminating both ends creates a circulating-current path between the two earth references, injecting noise rather than draining it; floating loses the noise-drain function. The screen terminates to the panel functional earth (PINK conductor under BS 7671 A2:2022) at one end, isolated and cut back at the other. Manufacturer guidance is the controlling document, and the termination is recorded on the as-installed drawing.',
+      'Single-end screen termination is the dominant convention for addressable fire alarm loops. Terminating both ends creates a circulating-current path between the two earth references, injecting noise rather than draining it; floating loses the noise-drain function. The screen terminates to the panel functional earth (PINK conductor under BS 7671:2018+A3, Table 51) at one end, isolated and cut back at the other. Manufacturer guidance is the controlling document, and the termination is recorded on the as-installed drawing.',
   },
   {
     id: 'fam5-s4-ir-disconnect',
@@ -80,7 +80,7 @@ const quizQuestions = [
   {
     id: 1,
     question:
-      'Per BS 5839-1:2025 §16, what is the recommended colour convention for fire alarm cables and the LV mains supply to the panel?',
+      'Per BS 5839-1:2025 25.9, what is the recommended colour convention for fire alarm cables and the LV mains supply to the panel?',
     options: [
       'A single common colour, red preferred, for the cables AND the LV mains supply.',
       'Red for the fire alarm cables and grey for the dedicated mains feed to the panel.',
@@ -89,12 +89,12 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      'Red is now the preferred single common colour for the fire alarm cables AND the dedicated LV mains feed to the CIE under BS 5839-1:2025 §16. The 2017 revision specified fire-resistant cable but was silent on colour, prompting recurring helpline queries; the mains feed is now treated as part of the fire alarm installation. New work should be red throughout.',
+      'Red is now the preferred single common colour for the fire alarm cables AND the dedicated LV mains feed to the CIE under BS 5839-1:2025 25.9. The 2017 revision specified fire-resistant cable but was silent on colour, prompting recurring helpline queries; the mains feed is now treated as part of the fire alarm installation. New work should be red throughout.',
   },
   {
     id: 2,
     question:
-      'Under IEC 60445:2021 / BS 7671 A2:2022, the functional earth conductor is now identified by which colour?',
+      'Under BS 7671:2018+A3, Table 51, the functional earth conductor is identified by which colour?',
     options: [
       'Cream, the previous IEC 60445 designation, retained for functional earths.',
       'Green-and-yellow, identical to the protective earth used across the installation.',
@@ -103,7 +103,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'Pink is the new FE colour under IEC 60445:2021, adopted by BS 7671 A2:2022 and referenced in BS 5839-1:2025 §16. Pink is unambiguous, whereas cream was confused with bare copper, beige sleeving and natural insulation tones. Loop screens (functional earths in fire alarm work) and any FE conductors at the panel must use pink (or the "FE" mark) — not cream, not green-and-yellow.',
+      'Pink is the FE colour under BS 7671:2018+A3, Table 51, and referenced in BS 5839-1:2025 28.2. Pink is unambiguous, whereas cream was confused with bare copper, beige sleeving and natural insulation tones. Loop screens (functional earths in fire alarm work) and any FE conductors at the panel must use pink (or the "FE" mark) — not cream, not green-and-yellow.',
   },
   {
     id: 3,
@@ -177,7 +177,7 @@ const quizQuestions = [
   {
     id: 8,
     question:
-      'BS 5839-1:2025 §19 brings the recommendations for ISOLATION of mains power to the fire alarm system into a single clause. Which best describes that requirement?',
+      'BS 5839-1:2025 24.1.4 brings the recommendations for ISOLATION of mains power to the fire alarm system into a single clause. Which best describes that requirement?',
     options: [
       'The mains may be supplied via a 13 A plug and socket so any occupant can isolate it.',
       'No isolator is required at all, because a fire alarm system stays permanently energised.',
@@ -186,12 +186,12 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'The 2025 revision consolidates the mains isolation recommendations from two 2017 clauses (25 and 29) into a single §19 clause: a dedicated, clearly labelled isolator accessible to authorised persons (typically with a lock or tag), used under controlled conditions for service and maintenance. Routine occupant access is explicitly NOT the design intent.',
+      'The 2025 revision consolidates the mains isolation recommendations from two 2017 clauses (25 and 29) into a single 24.1.4 / 24.1.7 clause: a dedicated, clearly labelled isolator accessible to authorised persons (typically with a lock or tag), used under controlled conditions for service and maintenance. Routine occupant access is explicitly NOT the design intent.',
   },
   {
     id: 9,
     question:
-      'A fire alarm panel battery has been installed during second-fix. What labelling does BS 5839-1:2025 §16 acknowledge as long-standing custom and practice?',
+      'A fire alarm panel battery has been installed during second-fix. What labelling does BS 5839-1:2025 24.3.3 acknowledge as long-standing custom and practice?',
     options: [
       'A label showing only the battery manufacturer and model, for re-ordering at end of life.',
       'A label on the battery showing the DATE OF INSTALLATION, written in permanent marker.',
@@ -200,7 +200,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'Date-of-installation marking on the battery is now explicitly acknowledged in BS 5839-1:2025 §16. Permanent marker is sufficient. Batteries are replaced at end of service life and the install date drives the replacement schedule; the label is present at every service visit, so service personnel do not depend on retrieving original installation paperwork.',
+      'Date-of-installation marking on the battery is now explicitly acknowledged in BS 5839-1:2025 24.3.3. Permanent marker is sufficient. Batteries are replaced at end of service life and the install date drives the replacement schedule; the label is present at every service visit, so service personnel do not depend on retrieving original installation paperwork.',
   },
   {
     id: 10,
@@ -224,7 +224,7 @@ const FireAlarmModule5Section4 = () => {
   useSEO({
     title: 'Wiring and terminations | Fire Alarm Module 5.4 | Elec-Mate',
     description:
-      'BS 5839-1:2025 §16, §19 and supporting clauses on fire alarm wiring: cable colour (red preferred for cables AND LV mains), FE pink per IEC 60445:2021 / BS 7671 A2:2022, single-end screen termination, Class A vs Class B topology, support intervals, joint boxes, voids, pre-energisation IR with devices removed, and battery labelling.',
+      'BS 5839-1:2025 25.9 / 28.2 / 24.3.3, 24 and supporting clauses on fire alarm wiring: cable colour (red preferred for cables AND LV mains), FE pink per BS 7671:2018+A3, Table 51, single-end screen termination, Class A vs Class B topology, support intervals, joint boxes, voids, pre-energisation IR with devices removed, and battery labelling.',
   });
 
   return (
@@ -234,51 +234,52 @@ const FireAlarmModule5Section4 = () => {
         <p className="max-w-3xl text-[13px] leading-relaxed text-white">
           Cable colour, FE identification, screen termination, loop topology, supports, joint boxes,
           voids, batteries and the pre-energisation IR test. The 2025 revision settles colour
-          ambiguity (red preferred), aligns FE with BS 7671 A2:2022 (pink), consolidates mains
-          isolation into §19, and tightens documentation around variations and as-installed records.
+          ambiguity (red preferred), aligns FE with BS 7671:2018+A3, Table 51 (pink), consolidates
+          mains isolation into 24, and tightens documentation around variations and as-installed
+          records.
         </p>
 
         <TLDR
           points={[
-            'BS 5839-1:2025 §16 — fire alarm cables AND the LV mains supply to the fire alarm system are a single, common colour with RED preferred. New from 2025 — settles 2017 ambiguity.',
-            'Functional Earth (FE) conductor identified PINK (or marked "FE") under IEC 60445:2021 / BS 7671 A2:2022 — was cream, changed in 2022 and reflected in BS 5839-1:2025.',
+            'BS 5839-1:2025 25.9 — fire alarm cables AND the LV mains supply to the fire alarm system are a single, common colour with RED preferred. New from 2025 — settles 2017 ambiguity.',
+            'Functional Earth (FE) conductor identified PINK (or marked "FE") under BS 7671:2018+A3, Table 51 — was cream, changed in 2022 and reflected in BS 5839-1:2025.',
             'Loop screen termination: ONE end only (typically at the panel functional earth). Both ends creates a ground loop; floating loses the noise-drain function.',
             'Class A loop = closed loop with isolators, single-fault tolerant. Class B = open-ended spurs, no fault tolerance. L1 / L2 typically use Class A.',
             'Support intervals: vertical runs typically ≤1 m fixings + support at floor penetrations. Fixings must match cable fire rating — plastic saddles defeat fire-rated cable.',
             'Joint boxes AVOIDED where possible; if used, fire-rated, accessible, labelled, recorded on as-installed drawing.',
             'Voids: cable containment continues into the void, detectors mounted per the 2025 void-depth Figure (1.25 m / 1.5 m / >1.5 m bands).',
-            'Batteries: date-of-installation label per §16 (acknowledged custom and practice), earthing per BS 7671:2018+A4:2026 §560.',
-            'Pre-energisation IR: devices DISCONNECTED, 500 V dc cable test, ≥1 MΩ acceptance per BS 7671 (cable). Never IR with devices in place — destroys electronics.',
-            'Mains isolation per §19 (NEW consolidated clause 2025 — replaces split 2017 clauses 25 and 29): dedicated, labelled, accessible to authorised persons, lockable or tagged.',
+            'Batteries: date-of-installation label per 24.3.3 (acknowledged custom and practice), earthing per BS 7671:2018+A4:2026 §560.',
+            'Pre-energisation IR: devices DISCONNECTED, 500 V dc cable test, ≥2 MΩ acceptance per BS 5839-1 cl 36.1 (cable). Never IR with devices in place — destroys electronics.',
+            'Mains isolation per 24 (NEW consolidated clause 2025 — replaces split 2017 clauses 25 and 29): dedicated, labelled, accessible to authorised persons, lockable or tagged.',
             'ALL variations from the standard must be recorded (NEW 2025 — was "major variations only" in 2017). Some variations now declared UNACCEPTABLE — see §6 of this module.',
           ]}
         />
 
         <LearningOutcomes
           outcomes={[
-            'Apply BS 5839-1:2025 §16 cable colour: single common colour with red preferred for fire alarm cables AND the LV mains supply',
-            'Identify the functional earth conductor by pink colour (or "FE" mark) per IEC 60445:2021 / BS 7671 A2:2022',
+            'Apply BS 5839-1:2025 25.9 cable colour: single common colour with red preferred for fire alarm cables AND the LV mains supply',
+            'Identify the functional earth conductor by pink colour (or "FE" mark) per BS 7671:2018+A3, Table 51',
             'Terminate the loop screen at ONE end only (typically panel FE) and document the screen termination on the as-installed drawing',
             'Select Class A (closed loop with isolators, fault-tolerant) versus Class B (open-ended spurs) circuit topology per the design specification and category',
             'Apply support intervals appropriate to vertical, horizontal and ceiling-void runs, with fixings matched to the cable fire rating',
             'Avoid joint boxes where possible; where unavoidable, use fire-rated, accessible, labelled and as-installed-drawing-recorded JBs',
-            'Carry out a pre-energisation insulation resistance test at 500 V dc with loop devices DISCONNECTED, accept ≥1 MΩ cable IR per BS 7671',
-            'Install standby batteries with the §16-recognised date-of-installation label and earth them per BS 7671:2018+A4:2026 §560',
-            'Provide the mains isolation arrangement per the §19 consolidated 2025 clause — dedicated, labelled, accessible to authorised persons',
+            'Carry out a pre-energisation insulation resistance test at 500 V dc with loop devices DISCONNECTED, accept ≥2 MΩ cable IR per BS 5839-1 cl 36.1',
+            'Install standby batteries with the 24.3.3-recognised date-of-installation label and earth them per BS 7671:2018+A4:2026 §560',
+            'Provide the mains isolation arrangement per the 24 consolidated 2025 clause — dedicated, labelled, accessible to authorised persons',
             'Record ALL variations (NEW 2025 — not just "major" as in 2017) on the system documentation, including the colour scheme used if not red',
           ]}
         />
 
         <SectionRule />
 
-        <ContentEyebrow>Cable colour, identification and the 2025 §16 changes</ContentEyebrow>
+        <ContentEyebrow>Cable colour, identification and the 2025 25.9 changes</ContentEyebrow>
 
         <ConceptBlock
           title="Red preferred — fire alarm cables AND the LV mains supply"
           plainEnglish="One of the most-asked questions on the FIA technical helpline under the 2017 revision was: what colour should the mains cable to the fire alarm panel be? The 2017 revision required fire-resistant cable but said nothing about colour. The 2025 revision settles it. All fire alarm cables AND the LV mains supply to the fire alarm system should be a single, common colour, with RED preferred. The mains feed to the CIE is treated as part of the integrated fire installation — not as a general-circuit feed that happens to terminate at a fire panel."
           onSite="Spec writers and contractors, take note. New work: red throughout — fire alarm wiring, sounder circuits, MCP wiring AND the dedicated mains feed from the building distribution to the CIE. The phrase 'red preferred' allows existing schemes in other colours to remain (rip-and-replace would be disproportionate), but new installations should be red."
         >
-          <p>The §16 wording — paraphrased:</p>
+          <p>The 25.9 wording — paraphrased:</p>
           <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
             <li>
               <strong>Single common colour.</strong> The fire alarm wiring is identified as a family
@@ -311,7 +312,7 @@ const FireAlarmModule5Section4 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 26.2 / §16 of the FIA Guide (Cabling, labelling and identification)"
+          source="BS 5839-1:2025 · Clause 25.9 (cable colour) with §16 of the FIA Guide — a separate document"
           clause={
             <>
               All fire alarm cables, and the low voltage mains supply to the fire detection and fire
@@ -325,7 +326,7 @@ const FireAlarmModule5Section4 = () => {
 
         <ConceptBlock
           title="Functional Earth — pink, not cream"
-          plainEnglish="The functional earth (FE) conductor is the one that drains noise to a reference (panel, screen, instrument chassis) without being a fault-current path. It is NOT the protective earth (the green-and-yellow CPC). Until BS 7671 Amendment 2:2022, the IEC 60445 designation for FE was CREAM. From IEC 60445:2021, the designation changed to PINK, or alphanumeric designation 'FE'. BS 7671 A2:2022 adopted pink. BS 5839-1:2025 §16 reflects the new identification."
+          plainEnglish="The functional earth (FE) conductor is the one that drains noise to a reference (panel, screen, instrument chassis) without being a fault-current path. It is NOT the protective earth (the green-and-yellow CPC). Previously, FE was identified by the colour CREAM. BS 7671:2018+A3, Table 51, now identifies FE by the colour PINK, or alphanumeric designation 'FE'. BS 5839-1:2025 28.2 reflects the new identification."
           onSite="On a fire alarm job in 2026 onwards: any FE conductor — panel reference, screen drain at the loop end, instrument earth — is identified PINK (or 'FE' mark). Cream is the OLD designation. Confusing FE with PE (green-and-yellow) is a serious error — PE is for fault current, FE is for noise drainage; the two have entirely different roles."
         >
           <p>The identification matrix on a fire alarm job:</p>
@@ -337,8 +338,8 @@ const FireAlarmModule5Section4 = () => {
             </li>
             <li>
               <strong>Functional Earth (FE).</strong> PINK (or alphanumeric &quot;FE&quot;) per IEC
-              60445:2021. Reflected in BS 5839-1:2025 §16. The noise-drain reference. On addressable
-              loop screens at the panel end. NOT a fault-current path.
+              60445:2021. Reflected in BS 5839-1:2025 28.2. The noise-drain reference. On
+              addressable loop screens at the panel end. NOT a fault-current path.
             </li>
             <li>
               <strong>Live conductors.</strong> Brown (line), blue (neutral) per BS 7671 §514 / IEC
@@ -353,25 +354,25 @@ const FireAlarmModule5Section4 = () => {
             </li>
           </ul>
           <p>
-            The cream → pink change is one of the under-publicised effects of BS 7671 A2:2022. It
-            catches inspectors looking for cream FE who do not find it (and conclude wrongly that no
-            FE is provided) and contractors using leftover cream stock who do not realise it is now
-            non-compliant on new work. The 2025 BS 5839-1 reference makes the change explicit on
-            fire alarm work.
+            The cream → pink change is one of the under-publicised effects of BS 7671:2018+A3, Table
+            51. It catches inspectors looking for cream FE who do not find it (and conclude wrongly
+            that no FE is provided) and contractors using leftover cream stock who do not realise it
+            is now non-compliant on new work. The 2025 BS 5839-1 reference makes the change explicit
+            on fire alarm work.
           </p>
         </ConceptBlock>
 
         <RegsCallout
-          source="IEC 60445:2021 · BS 7671 Amendment 2:2022 · Reflected in BS 5839-1:2025 §16"
+          source="BS 7671:2018+A3, Table 51 · Reflected in BS 5839-1:2025 28.2"
           clause={
             <>
               The functional earth conductor should be identified by the colour pink, or marked with
-              the alphanumeric designation &quot;FE&quot;. In previous editions of BS 7671 and IEC
-              60445, the functional earth conductor was identified by the colour cream. This change
-              is now reflected in BS 5839-1:2025.
+              the alphanumeric designation &quot;FE&quot;. Previously, the functional earth
+              conductor was identified by the colour cream. This change is now reflected in BS
+              5839-1:2025.
             </>
           }
-          meaning="The cream → pink change came in 2022 (BS 7671 A2). BS 5839-1:2025 §16 adopts the new identification on fire alarm work. Cream is now the OLD designation; pink (or 'FE' mark) is the new. Loop screens at the panel functional earth — pink. Cream stock should be used up only on existing work matching existing identification, never on new installations."
+          meaning="BS 7671:2018+A3, Table 51 sets pink (or the 'FE' mark) as the current identification. BS 5839-1:2025 28.2 adopts the new identification on fire alarm work. Cream is now the OLD designation; pink (or 'FE' mark) is the new. Loop screens at the panel functional earth — pink. Cream stock should be used up only on existing work matching existing identification, never on new installations."
         />
 
         <InlineCheck
@@ -778,7 +779,7 @@ const FireAlarmModule5Section4 = () => {
         <ConceptBlock
           title="Why one end, not two — and not floating"
           plainEnglish="Addressable loop cables typically include an overall braid or foil screen surrounding the two loop conductors. The screen drains induced electromagnetic noise (mains hum, RF interference, ground-fault transients) to a low-impedance reference. The reference is the panel functional earth. Termination at one end (the panel) drains noise without creating an earth loop. Termination at both ends creates a circulating current path between the panel functional earth and the device-end functional earth — any potential difference between the two pumps current through the screen, injecting noise instead of draining it. Floating (no termination at either end) gives no drain at all."
-          onSite="Standard practice: terminate the screen at the PANEL end to the panel functional earth (PINK conductor under BS 7671 A2:2022). At the FAR end, cut the screen back, sleeve it, and isolate it from any conductive part. Document on the as-installed drawing: 'Loop X screen: panel FE one-end termination' so the next service engineer knows the convention. Some panel manufacturers prescribe a different scheme (very rare); the manual is the controlling document."
+          onSite="Standard practice: terminate the screen at the PANEL end to the panel functional earth (PINK conductor under BS 7671:2018+A3, Table 51). At the FAR end, cut the screen back, sleeve it, and isolate it from any conductive part. Document on the as-installed drawing: 'Loop X screen: panel FE one-end termination' so the next service engineer knows the convention. Some panel manufacturers prescribe a different scheme (very rare); the manual is the controlling document."
         >
           <p>The reasoning step-by-step:</p>
           <ol className="list-decimal pl-5 space-y-1.5 text-[14px]">
@@ -1295,15 +1296,15 @@ const FireAlarmModule5Section4 = () => {
             </li>
             <li>
               <strong>IR conductor-to-earth.</strong> 500 V dc between (+) loop conductor and earth.
-              Read; ≥1 MΩ acceptance per BS 7671 §643.3. Repeat for (−) loop conductor to earth.
+              Read; ≥2 MΩ acceptance per BS 5839-1 cl 36.1. Repeat for (−) loop conductor to earth.
             </li>
             <li>
               <strong>IR conductor-to-conductor.</strong> 500 V dc between (+) and (−) loop
-              conductors. Read; ≥1 MΩ acceptance.
+              conductors. Read; ≥2 MΩ acceptance.
             </li>
             <li>
               <strong>IR screen-to-earth.</strong> 500 V dc between the screen and earth (with
-              screen disconnected from FE for the test). Read; ≥1 MΩ acceptance. Re-terminate screen
+              screen disconnected from FE for the test). Read; ≥2 MΩ acceptance. Re-terminate screen
               to FE after the test.
             </li>
             <li>
@@ -1331,32 +1332,35 @@ const FireAlarmModule5Section4 = () => {
         />
 
         <RegsCallout
-          source="BS 7671:2018+A4:2026 · §643.3 (Insulation resistance) · Applied to fire alarm wiring per BS 5839-1:2025"
+          source="BS 5839-1:2025 · Clause 36.1 (Inspection and testing of wiring — insulation resistance)"
           clause={
             <>
-              The insulation resistance between live conductors, and between live conductors and the
-              protective conductor connected to the earthing arrangement, shall be measured at a
-              test voltage of 500 V dc. The minimum acceptable value is 1 MΩ. For the purpose of
-              this test, electronic devices connected to the circuit should be disconnected.
+              For all installed cables with a manufacturer&rsquo;s voltage rating suitable for mains
+              use, when tested at 500 V DC, the insulation resistance between conductors, between
+              each conductor and earth, and between each conductor and any screen, should be at
+              least 2 MΩ. Cables should be disconnected from all equipment that could be damaged by
+              the test.
             </>
           }
-          meaning="The 500 V / 1 MΩ rule from BS 7671 §643.3 applies to fire alarm cable. Critically, the same clause specifies that electronic devices connected to the circuit should be disconnected for the test. The rule is in BS 7671; it applies on every LV circuit including fire alarm loops. Devices in place + 500 V dc = destroyed devices."
+          meaning="BS 5839-1 sets its OWN acceptance value for fire alarm wiring — 2 MΩ at 500 V DC — which is HIGHER than the 1 MΩ general minimum in BS 7671. Clause 36.1&rsquo;s NOTE explains why: control and indicating equipment may have earth-fault sensing set at around 1 MΩ, so wiring built only to 1 MΩ sits on the panel&rsquo;s own fault threshold and will nuisance-trip. Critically, the same clause specifies that electronic devices connected to the circuit should be disconnected for the test. The rule is in BS 7671; it applies on every LV circuit including fire alarm loops. Devices in place + 500 V dc = destroyed devices."
         />
 
         <SectionRule />
 
-        <ContentEyebrow>Batteries, mains isolation and the §16 / §19 clarifications</ContentEyebrow>
+        <ContentEyebrow>
+          Batteries, mains isolation and the 24.3.3 / 24 clarifications
+        </ContentEyebrow>
 
         <ConceptBlock
           title="Standby batteries — date label, earthing, and care during install"
-          plainEnglish="The fire alarm panel's standby batteries provide power during mains failure, sized to support the system in quiescent state for the design autonomy period (typically 24 h or 72 h depending on the system) plus a defined alarm period at the end. Batteries are sealed lead-acid (most common) or lithium-iron-phosphate (newer panels). They are installed during second-fix, connected to the panel under panel-supervised charge regime, and labelled with the date of installation. The 2025 §16 wording acknowledges the long-standing custom-and-practice of labelling the battery with the install date by permanent marker — this is now explicit in the standard."
+          plainEnglish="The fire alarm panel's standby batteries provide power during mains failure, sized to support the system in quiescent state for the design autonomy period (typically 24 h or 72 h depending on the system) plus a defined alarm period at the end. Batteries are sealed lead-acid (most common) or lithium-iron-phosphate (newer panels). They are installed during second-fix, connected to the panel under panel-supervised charge regime, and labelled with the date of installation. The 2025 24.3.3 wording acknowledges the long-standing custom-and-practice of labelling the battery with the install date by permanent marker — this is now explicit in the standard."
           onSite="When you install batteries: (1) date-of-install label by permanent marker on each battery, (2) connect under panel charge supervision (panel detects under-voltage or open circuit and reports as a battery fault), (3) earthing per BS 7671:2018+A4:2026 §560 — life-safety circuit earthing, (4) verify the panel reads the correct battery voltage during commissioning, (5) record the battery type, capacity, install date and location in the O&M manual. The label drives the replacement schedule — typically 4-5 years for sealed lead-acid."
         >
           <p>The battery rules:</p>
           <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
             <li>
               <strong>Date of installation label.</strong> Permanent marker on each battery showing
-              the install date. Acknowledged in BS 5839-1:2025 §16 as long-standing
+              the install date. Acknowledged in BS 5839-1:2025 24.3.3 as long-standing
               custom-and-practice. The label survives the service intervals; loose paperwork does
               not.
             </li>
@@ -1390,11 +1394,11 @@ const FireAlarmModule5Section4 = () => {
         </ConceptBlock>
 
         <ConceptBlock
-          title="Mains isolation — the §19 consolidated clause"
-          plainEnglish="The 2017 revision of BS 5839-1 had recommendations for isolation of the mains power to the fire alarm system split between two clauses (25 and 29). The 2025 revision consolidates these into a single new §19. The recommendation: a dedicated mains isolator for the fire alarm system, clearly labelled, accessible to authorised persons, used under controlled conditions for service. Routine occupant access is NOT the design intent — the isolator is for service / maintenance staff under documented procedure."
+          title="Mains isolation — the 24 consolidated clause"
+          plainEnglish="The 2017 revision of BS 5839-1 had recommendations for isolation of the mains power to the fire alarm system split between two clauses (25 and 29). The 2025 revision consolidates these into a single new 24. The recommendation: a dedicated mains isolator for the fire alarm system, clearly labelled, accessible to authorised persons, used under controlled conditions for service. Routine occupant access is NOT the design intent — the isolator is for service / maintenance staff under documented procedure."
           onSite="Provide a labelled, dedicated mains isolator for the fire alarm system on the dedicated supply. Label: 'FIRE ALARM SYSTEM — MAINS ISOLATOR — DO NOT SWITCH OFF'. Lockable or tagged. Accessible to authorised persons only. Position: at the LV distribution serving the panel, OR at the panel itself, depending on the design. Document the position on the as-installed drawing and in the O&M manual."
         >
-          <p>The §19 requirements — paraphrased:</p>
+          <p>The 24 requirements — paraphrased:</p>
           <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
             <li>
               <strong>Dedicated.</strong> A mains isolator specific to the fire alarm system, NOT
@@ -1421,7 +1425,7 @@ const FireAlarmModule5Section4 = () => {
             </li>
           </ul>
           <p>
-            The 2025 consolidation of the two 2017 clauses into a single §19 is a structural
+            The 2025 consolidation of the two 2017 clauses into a single 24 is a structural
             improvement, not a substantive change. The same recommendations apply, in one place,
             with clearer language.
           </p>
@@ -1446,17 +1450,17 @@ const FireAlarmModule5Section4 = () => {
         <KeyTakeaways
           title="What to remember on site"
           points={[
-            'BS 5839-1:2025 §16 — fire alarm cables AND the LV mains supply: single common colour, RED preferred (NEW from 2025 — settles 2017 ambiguity).',
-            'Functional Earth (FE) is PINK or marked "FE" per IEC 60445:2021 / BS 7671 A2:2022. Not cream. Not green-and-yellow.',
+            'BS 5839-1:2025 25.9 — fire alarm cables AND the LV mains supply: single common colour, RED preferred (NEW from 2025 — settles 2017 ambiguity).',
+            'Functional Earth (FE) is PINK or marked "FE" per BS 7671:2018+A3, Table 51. Not cream. Not green-and-yellow.',
             'Loop screen termination: ONE end (panel FE), cut back and isolated at the far end. Both ends = ground loop. Floating = no drain.',
             'Class A loop = closed loop with isolators, single-fault tolerant. Class B = open-ended spur, no fault tolerance. Most addressable systems are Class A.',
             'Support intervals: vertical ≤1 m + supports at floor penetrations. Fixings fire-rated to match cable rating.',
             'Joint boxes AVOIDED. If used: fire-rated, accessible, labelled, recorded on as-installed drawing.',
             'Voids: containment continues into void; detectors mounted per the 2025 Figure (≤1.25 m / 1.25-1.5 m / >1.5 m bands).',
             'Polarity maintained at every base, every MCP, every sounder. (+) IN to (+) OUT, (−) IN to (−) OUT. Walk the loop pre-energisation.',
-            'Pre-energisation IR: devices DISCONNECTED, 500 V dc, ≥1 MΩ acceptance per BS 7671 §643.3. Never IR with devices in place.',
-            'Batteries: date-of-install label by permanent marker (BS 5839-1:2025 §16 acknowledged custom and practice). Earthing per BS 7671:2018+A4:2026 §560.',
-            'Mains isolation per §19 (NEW consolidated 2025 clause): dedicated, labelled, accessible to authorised persons, lockable / tagged.',
+            'Pre-energisation IR: devices DISCONNECTED, 500 V dc, ≥2 MΩ acceptance per BS 5839-1 cl 36.1. Never IR with devices in place.',
+            'Batteries: date-of-install label by permanent marker (BS 5839-1:2025 24.3.3 acknowledged custom and practice). Earthing per BS 7671:2018+A4:2026 §560.',
+            'Mains isolation per 24 (NEW consolidated 2025 clause): dedicated, labelled, accessible to authorised persons, lockable / tagged.',
             'ALL variations recorded (NEW 2025 — was "major" only in 2017). Cable colour deviation from red, JB use, screen scheme deviation — all recorded.',
           ]}
         />
@@ -1472,7 +1476,7 @@ const FireAlarmModule5Section4 = () => {
             {
               question: 'Cream FE conductor on a 2018 install — is it now non-compliant?',
               answer:
-                'Not retrospectively non-compliant. The cream → pink change came in BS 7671 A2:2022; existing installations to the previous identification remain in service. New work, additions and modifications use the new pink identification. If the cream FE is still in service, do not touch it; if you are modifying, the new conductor is pink. Document the legacy cream FE in the as-installed drawing for the next service engineer.',
+                'Not retrospectively non-compliant. BS 7671:2018+A3, Table 51 sets the pink identification; existing installations to the previous identification remain in service. New work, additions and modifications use the new pink identification. If the cream FE is still in service, do not touch it; if you are modifying, the new conductor is pink. Document the legacy cream FE in the as-installed drawing for the next service engineer.',
             },
             {
               question: 'Why is the loop screen terminated at one end only and not at both?',
@@ -1492,13 +1496,13 @@ const FireAlarmModule5Section4 = () => {
             {
               question: 'Pre-energisation IR test — at what voltage and what acceptance?',
               answer:
-                '500 V dc, ≥1 MΩ acceptance per BS 7671 §643.3 (the rule for any LV wiring). Loop devices DISCONNECTED before the test — 500 V dc through addressable electronics destroys them. Test conductor-to-earth, conductor-to-conductor, screen-to-earth. Re-fit devices only after IR passes.',
+                '500 V dc, ≥2 MΩ acceptance per BS 5839-1 cl 36.1 (the rule for any LV wiring). Loop devices DISCONNECTED before the test — 500 V dc through addressable electronics destroys them. Test conductor-to-earth, conductor-to-conductor, screen-to-earth. Re-fit devices only after IR passes.',
             },
             {
               question:
                 'Battery date label — is the FIA Guide saying I must use a printed sticker or is permanent marker acceptable?',
               answer:
-                'Permanent marker is acknowledged as long-standing custom and practice in BS 5839-1:2025 §16. Format is not specified beyond "label fixed to the battery showing the date of installation". A permanent-marker entry directly on the battery casing is acceptable; a printed adhesive label is also acceptable. The label must survive the service intervals (4-5 years lead-acid typical), so the marker / label must be non-fading and adhere to the casing surface.',
+                'Permanent marker is acknowledged as long-standing custom and practice in BS 5839-1:2025 24.3.3. Format is not specified beyond "label fixed to the battery showing the date of installation". A permanent-marker entry directly on the battery casing is acceptable; a printed adhesive label is also acceptable. The label must survive the service intervals (4-5 years lead-acid typical), so the marker / label must be non-fading and adhere to the casing surface.',
             },
             {
               question: 'Joint box on a fire alarm cable — when is it acceptable?',

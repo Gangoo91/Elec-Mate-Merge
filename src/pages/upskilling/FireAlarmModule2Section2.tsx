@@ -251,7 +251,7 @@ const FireAlarmModule2Section2 = () => {
             'Beams ≤ 250 mm depth — detectors must be no closer to the beam than 2× its depth. Beams with > 300 mm gap above are not treated as obstacles at all.',
             'Closely-spaced beams — NEW 2025 definition: beams approximately 1 m or less centre-to-centre form a cellular ceiling, treated separately from a flat ceiling with obstructions.',
             'Ceiling-height limits (Table 3) follow detector type. Multi-sensor in AND-logic falls back to the HEAT-detector height limit (clause 17), not the smoke limit.',
-            'Heat detection is NO LONGER permitted in sleeping rooms for NEW L1/L2/L3 work (clause 14, see Section 1).',
+            'Heat detection is NO LONGER permitted in sleeping rooms for NEW L1/L2/L3 work (20.2 c) NOTE 3, see Section 1).',
           ]}
         />
 
@@ -333,7 +333,7 @@ const FireAlarmModule2Section2 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 21.2 (siting and spacing of point detectors)"
+          source="BS 5839-1:2025 · Clause 21.2 (siting and spacing of point detectors) — in summary, not a verbatim quote"
           clause={
             <>
               Point fire detectors should be sited such that the horizontal distance from any point
@@ -655,7 +655,7 @@ const FireAlarmModule2Section2 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 21.2.7 (detectors in voids)"
+          source="BS 5839-1:2025 · Clause 21.2.7 (detectors in voids) — in summary, not a verbatim quote"
           clause={
             <>
               The placement of detectors in voids has been made clearer with the use of a new figure
@@ -842,7 +842,7 @@ const FireAlarmModule2Section2 = () => {
         <CommonMistake
           title="Spacing heat detectors as if they were smoke detectors"
           whatHappens="A small commercial site with cooking fumes substitutes heat detectors for smoke (the easy-feeling fix for cooking false alarms). The designer reuses the original 7.5 m smoke grid for the heat detectors. The detector count is the same, but coverage is significantly thinner — each heat detector now needs to cover a 7.5 m × 7.5 m area when its effective radius is only 3.7 m. Large gaps in coverage. A real fire occurs in a corner of the floor; the heat detectors do not respond until the fire is well-developed and smoke has begun to flow into the corridor. The investigation finds that the detectors were spaced as smoke; non-compliance and (more importantly) life-safety failure."
-          doInstead="When substituting detector type, RECALCULATE the grid. Heat-detector spacing 5.3 m / 3.7 m is roughly half the area of smoke spacing 7.5 m / 5.3 m. A heat-detector design has approximately double the device count of an equivalent smoke design. The 2025 clause 14 prohibition on heat in sleeping rooms — combined with the cost-multiplier effect of tighter spacing — means the typical answer to a 'cooking false alarm' problem is multi-sensor (smoke + heat AND-logic), not heat-only. Multi-sensor uses the smoke-detector spacing (7.5 m / 5.3 m) where the smoke element is the primary trigger, recovering the detector count."
+          doInstead="When substituting detector type, RECALCULATE the grid. Heat-detector spacing 5.3 m / 3.7 m is roughly half the area of smoke spacing 7.5 m / 5.3 m. A heat-detector design has approximately double the device count of an equivalent smoke design. The 2025 20.2 c) NOTE 3 prohibition on heat in sleeping rooms — combined with the cost-multiplier effect of tighter spacing — means the typical answer to a 'cooking false alarm' problem is multi-sensor (smoke + heat AND-logic), not heat-only. Multi-sensor uses the smoke-detector spacing (7.5 m / 5.3 m) where the smoke element is the primary trigger, recovering the detector count."
         />
 
         <CommonMistake

@@ -49,7 +49,10 @@ export const SavedRoomsStrip = ({
                 tabIndex={0}
                 aria-pressed={isActive}
                 aria-label={`Open room ${room.name}`}
-                onClick={() => { haptic.selection(); onRoomSelect(room.id); }}
+                onClick={() => {
+                  haptic.selection();
+                  onRoomSelect(room.id);
+                }}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
@@ -61,7 +64,7 @@ export const SavedRoomsStrip = ({
                   'relative flex-shrink-0 flex flex-col items-center touch-manipulation rounded-lg transition-all cursor-pointer',
                   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow',
                   isActive
-                    ? 'ring-2 ring-elec-yellow bg-elec-yellow/10'
+                    ? 'ring-2 ring-elec-yellow bg-white/[0.06]'
                     : 'ring-1 ring-white/15 hover:ring-white/30'
                 )}
               >
@@ -101,9 +104,15 @@ export const SavedRoomsStrip = ({
                     setPendingDelete(room);
                   }}
                   aria-label={`Delete room ${room.name}`}
-                  className="absolute -top-2 -right-2 h-7 w-7 rounded-full bg-red-500 flex items-center justify-center touch-manipulation active:scale-90 transition-transform shadow-md ring-2 ring-background"
+                  /* The red dot stays small so it does not cover the thumbnail,
+                     but the tappable area is padded out to 44px. A 28px target
+                     is below the minimum anywhere in this app, and this one
+                     DELETES a saved room — the worst place to make someone aim. */
+                  className="absolute -top-3 -right-3 h-11 w-11 flex items-center justify-center touch-manipulation active:scale-90 transition-transform"
                 >
-                  <X className="h-3.5 w-3.5 text-white" strokeWidth={2.5} />
+                  <span className="h-7 w-7 rounded-full bg-red-500 flex items-center justify-center shadow-md ring-2 ring-background">
+                    <X className="h-3.5 w-3.5 text-white" strokeWidth={2.5} />
+                  </span>
                 </button>
               </div>
             );
@@ -111,11 +120,14 @@ export const SavedRoomsStrip = ({
 
           {/* New room button */}
           <button
-            onClick={() => { haptic.light(); onNewRoom(); }}
+            onClick={() => {
+              haptic.light();
+              onNewRoom();
+            }}
             aria-label="Create new room"
             className="flex-shrink-0 w-[80px] h-[83px] rounded-lg border border-dashed border-white/30 flex items-center justify-center touch-manipulation hover:border-elec-yellow/50 active:scale-95 transition-all"
           >
-            <Plus className="h-5 w-5 text-white/60" />
+            <Plus className="h-5 w-5 text-white" />
           </button>
         </div>
       </div>
@@ -126,8 +138,8 @@ export const SavedRoomsStrip = ({
             <AlertDialogTitle className="text-white">Delete room?</AlertDialogTitle>
             <AlertDialogDescription className="text-white">
               "{pendingDelete?.name}" — {pendingDelete?.symbolIds.length ?? 0} item
-              {pendingDelete && pendingDelete.symbolIds.length !== 1 ? 's' : ''}. This
-              can't be undone.
+              {pendingDelete && pendingDelete.symbolIds.length !== 1 ? 's' : ''}. This can't be
+              undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

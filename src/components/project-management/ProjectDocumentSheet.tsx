@@ -121,10 +121,18 @@ export function ProjectDocumentSheet({
 
   return (
     <>
-      <Drawer.Root shouldScaleBackground={false} noBodyStyles open={isOpen} onOpenChange={(open) => !open && onClose()}>
+      <Drawer.Root
+        shouldScaleBackground={false}
+        noBodyStyles
+        open={isOpen}
+        onOpenChange={(open) => !open && onClose()}
+      >
         <Drawer.Portal>
-          <Drawer.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" />
-          <Drawer.Content className="fixed bottom-0 left-0 right-0 z-50 flex flex-col rounded-t-3xl bg-background max-h-[85dvh] outline-none">
+          {/* z-[110], not z-50: SheetContent sits at z-[100], and from the
+              diary this drawer opens ON TOP of the event sheet (ELE-1755).
+              At z-50 it rendered behind it — invisible, and untappable. */}
+          <Drawer.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[110]" />
+          <Drawer.Content className="fixed bottom-0 left-0 right-0 z-[110] flex flex-col rounded-t-3xl bg-background max-h-[85dvh] outline-none">
             {/* Drag handle */}
             <div className="flex justify-center pt-3 pb-1 flex-shrink-0">
               <div className="w-10 h-1 rounded-full bg-white/20" />

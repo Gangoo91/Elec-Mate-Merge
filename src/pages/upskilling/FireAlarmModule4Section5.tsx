@@ -63,7 +63,7 @@ const inlineChecks = [
   {
     id: 'fam4-s5-conceal',
     question:
-      'BS 5839-1:2025 clause 23 has clarified the rule on suppression / concealment of fault indications. What does it require?',
+      'BS 5839-1:2025 clause 44.2.4 has clarified the rule on suppression / concealment of fault indications. What does it require?',
     options: [
       'Faults can be silenced indefinitely once the buzzer has been acknowledged by a user.',
       'Fault indications must NOT be concealed or suppressed — they stay visible until repair is complete.',
@@ -131,7 +131,7 @@ const quizQuestions = [
   {
     id: 5,
     question:
-      'BS 5839-1:2025 clause 23 (Arrangements for repair of faults or damage) clarifies a rule about fault indications. What is it?',
+      'BS 5839-1:2025 clause 44.2 (Arrangements for repair of faults or damage) clarifies a rule about fault indications. What is it?',
     options: [
       'Fault indications may be suppressed during business hours.',
       'Fault indications clear automatically after 7 days.',
@@ -196,7 +196,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'Repeatedly acknowledging without repair is a form of fault suppression; clause 23 requires faults to be repaired with reasonable promptness. Where repair is delayed, the management plan must identify compensating measures such as a fire watch.',
+      'Repeatedly acknowledging without repair is a form of fault suppression; clause 44.2.4 requires faults to be repaired with reasonable promptness. Where repair is delayed, the management plan must identify compensating measures such as a fire watch.',
   },
   {
     id: 10,
@@ -220,7 +220,7 @@ const FireAlarmModule4Section5 = () => {
   useSEO({
     title: 'Earth fault monitoring | Fire Alarm Module 4.5 | Elec-Mate',
     description:
-      'BS 5839-1:2025 earth fault monitoring — 100 s reporting requirement, Class A vs Class B fault behaviour, loop ground monitoring on addressable systems, IR test with electronic devices, BS 5839-1:2025 clause 23 prohibition on concealing fault indications.',
+      'BS 5839-1:2025 earth fault monitoring — 100 s reporting requirement, Class A vs Class B fault behaviour, loop ground monitoring on addressable systems, IR test with electronic devices, BS 5839-1:2025 clause 44.2.4 prohibition on concealing fault indications.',
   });
 
   return (
@@ -230,8 +230,8 @@ const FireAlarmModule4Section5 = () => {
         <p className="max-w-3xl text-[13px] leading-relaxed text-white">
           BS 5839-1:2025 — earth fault reporting within 100 seconds, Class A vs Class B fault
           behaviour, loop ground monitoring on addressable systems, the IR test problem with
-          electronic devices in circuit, and BS 5839-1:2025 clause 23 — fault indications must NOT
-          be concealed or suppressed.
+          electronic devices in circuit, and BS 5839-1:2025 clause 44.2.4 — fault indications must
+          NOT be concealed or suppressed.
         </p>
 
         <TLDR
@@ -241,7 +241,7 @@ const FireAlarmModule4Section5 = () => {
             'Class B radial: single earth fault REPORTED but devices BEYOND the fault are LOST — no longer report, no longer respond. Protection lost until repair.',
             'Loop earth-fault monitoring on addressable systems: continuous impedance measurement against functional-earth (FE) reference. Detects partial faults before they become circuit-affecting.',
             'IR testing with addressable devices in circuit: 500 V DC will DAMAGE electronics. Disconnect devices, OR use CIE built-in diagnostics, OR use a low-voltage method for live electronics.',
-            'BS 5839-1:2025 clause 23: fault indications must NOT be concealed or suppressed. Covering LEDs, programming silent fault states, indefinite acknowledgment without repair — all non-compliant.',
+            'BS 5839-1:2025 clause 44.2.4: fault indications must NOT be concealed or suppressed. Covering LEDs, programming silent fault states, indefinite acknowledgment without repair — all non-compliant.',
             'Functional-earth termination is part of the earth-fault monitoring system. Verify FE first when diagnosing apparent loop faults.',
             'Fault repair urgency: faults are repaired with reasonable promptness; where delayed, compensating measures (e.g. fire watch) are documented in the management plan.',
           ]}
@@ -253,7 +253,7 @@ const FireAlarmModule4Section5 = () => {
             'Distinguish Class A loop and Class B radial fault response — Class A preserves protection; Class B loses devices beyond the fault',
             'Describe addressable loop earth-fault monitoring as a continuous impedance measurement against the functional-earth reference',
             'Apply correct IR test methodology where electronic devices are in circuit — disconnect, use CIE diagnostics, or use live-electronics methods',
-            'Apply BS 5839-1:2025 clause 23 prohibition on concealing or suppressing fault indications, and recognise the failure modes of fault suppression',
+            'Apply BS 5839-1:2025 clause 44.2.4 prohibition on concealing or suppressing fault indications, and recognise the failure modes of fault suppression',
             'Verify functional-earth termination as the first diagnostic step for apparent loop earth-fault problems',
             'Distinguish acknowledgment from repair, and apply repair urgency rules including compensating measures during delayed repair',
           ]}
@@ -808,7 +808,7 @@ const FireAlarmModule4Section5 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 (Insulation testing of fire alarm circuits) and CIE manufacturer-specific guidance"
+          source="BS 5839-1:2025 (Insulation testing of fire alarm circuits) and CIE manufacturer-specific guidance — in summary, not a verbatim quote"
           clause={
             <>
               Insulation resistance testing of fire alarm circuits should not be performed at test
@@ -834,14 +834,14 @@ const FireAlarmModule4Section5 = () => {
         <SectionRule />
 
         <ContentEyebrow>
-          Fault indications must not be concealed — BS 5839-1:2025 clause 23
+          Fault indications must not be concealed — BS 5839-1:2025 clause 44.2.4
         </ContentEyebrow>
 
         <ConceptBlock
           title="The 2025 clarification — no concealment, no suppression"
           plainEnglish="A pattern has emerged on some sites of suppressing fault indications because they are inconvenient. Tape over the yellow LED. Programming silent fault states so the buzzer does not sound. Daily acknowledgment by the receptionist without ever calling for repair. The 2025 standard clarifies what was already implicit: this is not acceptable. Fault indications exist to inform the user that the system is not fully operational; suppressing them keeps the user uninformed and the fire risk hidden. Where a fault cannot be repaired immediately, the indication remains visible until repair is complete; compensating measures (e.g. fire watch in the affected area) are documented and implemented; the audit trail shows the decision."
         >
-          <p>What clause 23 prohibits in practice:</p>
+          <p>What clause 44.2.4 prohibits in practice:</p>
           <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
             <li>
               <strong>Physical concealment.</strong> Tape over LED indicators; covers fitted over
@@ -884,16 +884,12 @@ const FireAlarmModule4Section5 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 23 (Arrangements for repair of faults or damage) — clarified per FIA Guide"
+          source="BS 5839-1:2025 · Clause 44.2.4 (Arrangements for repair of faults or damage)"
           clause={
             <>
-              Where the user has reported a fault on the system to the service organisation and the
-              service organisation cannot complete an effective repair, fault indications shall not
-              be concealed (e.g. by suppressing the fault indication). The fault indication shall
-              remain visible and active until the underlying fault is repaired. Where repair cannot
-              be completed promptly, compensating measures appropriate to the affected portion of
-              the system shall be implemented and documented in the management plan; the user shall
-              be informed of the compensating measures and the expected repair completion.
+              Where any defect cannot be rectified during the attendance of the servicing
+              organization, any fault indications should not be concealed (e.g. by suppressing the
+              fault indication).
             </>
           }
           meaning="The 2025 clarification is plain language: do not hide faults. Where repair is delayed, document the delay and put compensating measures in place. The fault indication continues to communicate the system state to the user throughout the delay."
@@ -928,7 +924,7 @@ const FireAlarmModule4Section5 = () => {
         <CommonMistake
           title="Acknowledging a recurring fault every morning instead of repairing it"
           whatHappens="The CIE has been reporting an intermittent earth fault on Loop 1 for three weeks. The site receptionist acknowledges the fault buzzer each morning when arriving on site; the visual indication remains active throughout the day. Nobody has called the maintenance contractor because 'the fault always comes and goes anyway'. After a month, the underlying condition develops into a permanent earth fault that affects loop communication; protection on Loop 1 is materially degraded. The fire risk assessor on a routine visit identifies the unaddressed fault state and the system is rated as non-compliant."
-          doInstead="Apply BS 5839-1:2025 clause 23. Acknowledgment is not repair. A reported fault is investigated; a maintenance call is logged with the contractor; a repair date is scheduled; compensating measures (fire watch in the affected area) are put in place if the repair is delayed; the management plan documents the situation. The fault indication remains visible throughout. The audit trail shows the system is being managed responsibly even when repair is delayed; daily-acknowledgment-without-action is not such an audit trail."
+          doInstead="Apply BS 5839-1:2025 clause 44.2.4. Acknowledgment is not repair. A reported fault is investigated; a maintenance call is logged with the contractor; a repair date is scheduled; compensating measures (fire watch in the affected area) are put in place if the repair is delayed; the management plan documents the situation. The fault indication remains visible throughout. The audit trail shows the system is being managed responsibly even when repair is delayed; daily-acknowledgment-without-action is not such an audit trail."
         />
 
         <CommonMistake
@@ -952,7 +948,7 @@ const FireAlarmModule4Section5 = () => {
             'Class A loop: single fault REPORTED, protection PRESERVED. Class B radial: single fault REPORTED, protection LOST beyond fault.',
             'Loop earth-fault monitoring on addressable systems = continuous impedance measurement against the FE reference. Verify FE termination first when diagnosing apparent loop faults.',
             'Do NOT apply 500 V DC IR test with addressable devices in circuit — devices will be damaged. Disconnect, OR use CIE diagnostics, OR use a live-electronics method.',
-            'BS 5839-1:2025 clause 23: fault indications must NOT be concealed or suppressed. No tape over LEDs, no silent-fault programming, no daily-acknowledgment-without-repair.',
+            'BS 5839-1:2025 clause 44.2.4: fault indications must NOT be concealed or suppressed. No tape over LEDs, no silent-fault programming, no daily-acknowledgment-without-repair.',
             'Acknowledgment is NOT repair. A reported fault is investigated, scheduled for repair, with compensating measures during any delay. The fault indication remains visible throughout.',
             'Diagnostic order: verify FE → isolate by halves → localise to segment → identify device → replace / repair → monitor. Document method and outcome.',
             'Use the CIE built-in diagnostics (loop earth-fault impedance, loop voltage / current, comms error counters) as part of every routine inspection — early-warning trend data.',

@@ -65,7 +65,7 @@ const inlineChecks = [
     question:
       'New in BS 5839-1:2025: at the twelve-monthly service visit, what additional functional test is now expected for any smoke detectors mounted in air-handling ductwork?',
     options: [
-      'Functional testing of the duct-mounted smoke detectors must now be carried out at the twelve-monthly visit (clause 43.2.1 list).',
+      'Functional testing of the duct-mounted smoke detectors is part of the 12-month programme: clause 43.3.14 — smoke detectors in ventilation ducts should be functionally inspected and tested in accordance with the manufacturer&rsquo;s instructions. (43.2.1 is the ~6-monthly visit interval, a different clause.)',
       'No specific requirement — duct detectors remain outside the routine functional-test regime.',
       'A visual inspection of the duct detector through the access hatch, with no functional test required.',
       'A continuity test on the duct detector cabling only, leaving the head itself untested.',
@@ -172,7 +172,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'The weekly test is a finding mechanism, not a formality, and a failed weekly test is a real failure. Reset the system if safe and possible, log the event in detail (date, time, MCP location, observed behaviour), and notify the servicing organisation immediately. Pending repair, premises management institutes an interim measure (e.g. fire wardens, manual roving alarm) appropriate to the risk and recorded in writing. The fault must not be concealed or its indication suppressed (clause 23, BS 5839-1:2025).',
+      'The weekly test is a finding mechanism, not a formality, and a failed weekly test is a real failure. Reset the system if safe and possible, log the event in detail (date, time, MCP location, observed behaviour), and notify the servicing organisation immediately. Pending repair, premises management institutes an interim measure (e.g. fire wardens, manual roving alarm) appropriate to the risk and recorded in writing. The fault must not be concealed or its indication suppressed (clause 44.2.4, BS 5839-1:2025).',
   },
   {
     id: 8,
@@ -252,7 +252,7 @@ const FireAlarmModule6Section1 = () => {
             'Annual full coverage = 100% of detectors / MCPs / sounders / VADs / interfaces, split across the two six-monthly visits. The asset register is the audit trail.',
             'Twelve-monthly visit additions in 2025: smoke detectors in ventilation ducts must be functionally tested; CIE zone identification verified against the zone plan; ARC alarm signal transmission verified per signal type.',
             'Battery service every six months: visual + float voltage + load-test evidence. Installation-date label now formally recommended. Replacement at design life — typically four years.',
-            'Fault indications must NOT be concealed or suppressed (clause 23). Failed weekly tests are real failures requiring interim risk management until repair.',
+            'Fault indications must NOT be concealed or suppressed (clause 44.2.4). Failed weekly tests are real failures requiring interim risk management until repair.',
           ]}
         />
 
@@ -374,7 +374,7 @@ const FireAlarmModule6Section1 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="Regulatory Reform (Fire Safety) Order 2005 · Article 17 (Maintenance) — implemented in BS 5839-1:2025"
+          source="Regulatory Reform (Fire Safety) Order 2005 · Article 17 (Maintenance) — implemented in BS 5839-1:2025 — in summary, not a verbatim quote"
           clause={
             <>
               Where necessary in order to safeguard the safety of relevant persons the responsible
@@ -742,7 +742,7 @@ const FireAlarmModule6Section1 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 43.2.1 (Inspection and servicing — actions)"
+          source="BS 5839-1:2025 · Clauses 43.2.11 (ARC signal check) & 43.3.14 / 43.3.25 (duct detector test and zone-ID verification — both 12-monthly, not 43.2) — in summary, not a verbatim quote"
           clause={
             <>
               At every service visit, systems that incorporate automatic signalling to an ARC should
@@ -886,8 +886,8 @@ const FireAlarmModule6Section1 = () => {
         <ContentEyebrow>When weekly tests fail — interim risk management</ContentEyebrow>
 
         <ConceptBlock
-          title="The clause 23 principle: do not conceal"
-          plainEnglish="A failed weekly test is a real failure of the alarm system. BS 5839-1:2025 clause 23 (new in this revision) makes explicit that fault indications must not be concealed or suppressed — including the practical case of a panel buzzer being permanently muted because it is annoying staff. The user's job is to log the failure in detail, notify the servicing organisation, and put a clearly-recorded interim measure in place until the system is repaired. The interim measure is proportional to the risk."
+          title="The clause 44.2.4 principle: do not conceal"
+          plainEnglish="A failed weekly test is a real failure of the alarm system. BS 5839-1:2025 clause 44.2.4 (new in this revision) makes explicit that, where a defect cannot be rectified during the servicing organisation's attendance, fault indications must not be concealed or suppressed — including the practical case of a panel buzzer being permanently muted because it is annoying staff. The user's job is to log the failure in detail, notify the servicing organisation, and put a clearly-recorded interim measure in place until the system is repaired. The interim measure is proportional to the risk."
         >
           <p>The interim measures hierarchy:</p>
           <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
@@ -935,7 +935,7 @@ const FireAlarmModule6Section1 = () => {
             'Annual = 100% device coverage across the two visits combined. Asset register is the audit trail.',
             'NEW in 2025 at the twelve-monthly visit: duct-mounted smoke detectors functionally tested; CIE zone identification verified against zone plan.',
             'Battery: visual + float voltage + load-test evidence at every visit. Date label. End of design life — typically four years. Plan replacement, do not wait for failure.',
-            'Fault must NOT be concealed (clause 23). A failed weekly test triggers logging, notification, and proportionate interim risk management.',
+            'Fault must NOT be concealed (clause 44.2.4). A failed weekly test triggers logging, notification, and proportionate interim risk management.',
             'A service visit produces a written report linking asset register, test outcomes, fault list, disablement record, recommendations, and conformity status — the audit trail to the AHJ / insurer.',
           ]}
         />
@@ -985,7 +985,7 @@ const FireAlarmModule6Section1 = () => {
               question:
                 'A weekly test fails because the sounder closest to the panel does not operate. What is the right interim measure?',
               answer:
-                'A single sounder failure is a localised failure, not a system failure. Log it in detail. Notify the servicing organisation for repair. Pending repair, ensure adjacent sounders provide adequate audibility coverage (BS 5839-1 audibility requirements may still be met without one sounder); if not, institute local supplemental warning (e.g. hand-bell rota in the area, increased patrolling). Do not silence or disable the panel as a workaround — the failure must remain indicated until repaired (clause 23). Record the start time of the interim measure and end time at repair.',
+                'A single sounder failure is a localised failure, not a system failure. Log it in detail. Notify the servicing organisation for repair. Pending repair, ensure adjacent sounders provide adequate audibility coverage (BS 5839-1 audibility requirements may still be met without one sounder); if not, institute local supplemental warning (e.g. hand-bell rota in the area, increased patrolling). Do not silence or disable the panel as a workaround — the failure must remain indicated until repaired (clause 44.2.4). Record the start time of the interim measure and end time at repair.',
             },
           ]}
         />

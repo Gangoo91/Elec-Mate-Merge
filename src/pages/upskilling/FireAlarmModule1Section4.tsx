@@ -767,7 +767,7 @@ const FireAlarmModule1Section4 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · 21 (documentation/handover)"
+          source="BS 5839-1:2025 · 21 (documentation/handover) — in summary, not a verbatim quote"
           clause={
             <>
               A new item that appears within the documentation clause of BS 5839-1:2025 is the
@@ -1003,7 +1003,7 @@ const FireAlarmModule1Section4 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · 24 (extensions and modifications)"
+          source="BS 5839-1:2025 · 24 (extensions and modifications) — in summary, not a verbatim quote"
           clause={
             <>
               The certificate that should be issued after any extension or modification has been

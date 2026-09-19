@@ -1163,7 +1163,30 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
 
             let sx = offsetX + 20;
             let sy = offsetY + 20;
-            if (symbol.position === 'center') {
+
+            /*
+             * `position` arrives in three shapes, and all three are useful:
+             *   "center"     — middle of the room
+             *   "2.4"        — metres along the named wall
+             *   "0.8, 1.4"   — an exact x,y in metres inside the room
+             *
+             * The pair is the model's own idea, and a good one: it places
+             * ceiling items where they actually go instead of piling every
+             * downlight on the centre point. It appeared once the response
+             * schema was introduced, so it must be handled rather than
+             * half-parsed — `parseFloat("0.8, 1.4")` quietly yields 0.8 and
+             * throws the second number away.
+             */
+            const posText = typeof symbol.position === 'string' ? symbol.position : '';
+            const pair = posText.split(',');
+            const pairX = Number.parseFloat(pair[0]);
+            const pairY = pair.length > 1 ? Number.parseFloat(pair[1]) : NaN;
+            const isCoordinatePair = Number.isFinite(pairX) && Number.isFinite(pairY);
+
+            if (isCoordinatePair) {
+              sx = offsetX + pairX * SCALE;
+              sy = offsetY + pairY * SCALE;
+            } else if (symbol.position === 'center') {
               /*
                * Ceiling items all ask for "center", so a room with a light and
                * a detector stacks them on one point — a real kitchen response
@@ -1180,9 +1203,36 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
               const slotKey = `${symbol.wall}:${symbol.position}`;
               const repeat = usedSlots.get(slotKey) ?? 0;
               usedSlots.set(slotKey, repeat + 1);
-              const along =
-                (typeof symbol.position === 'number' ? symbol.position : 0) * SCALE +
-                repeat * SYMBOL_SPREAD;
+              /*
+               * `position` arrives as a number or as a numeric string.
+               *
+               * The generator now constrains its output with a schema, and that
+               * schema types this field as a string — so "1.5" is as likely as
+               * 1.5. The old `typeof === 'number'` test silently turned every
+               * string into 0 and stacked the whole room's accessories in the
+               * corner. Parse, and fall back to 0 only when it really is not a
+               * number.
+               */
+              const rawPos = symbol.position;
+              const parsedPos =
+                typeof rawPos === 'number' ? rawPos : Number.parseFloat(String(rawPos ?? ''));
+              const rawMetres = Number.isFinite(parsedPos) ? parsedPos : 0;
+
+              /*
+               * Clamp to the wall it is actually on.
+               *
+               * The model can give a distance measured along the ROOM when the
+               * accessory is on a short end wall. A real 21m x 3.4m corridor
+               * came back with a two-way switch on the east wall at 20.5m — a
+               * wall only 3.4m long — which drew the switch far outside the
+               * building. Whatever the model meant, a symbol belonging to a
+               * room must never render outside it, so the distance is held
+               * inside the wall's own length.
+               */
+              const wallRunMetres =
+                symbol.wall === 'north' || symbol.wall === 'south' ? widthM : heightM;
+              const alongMetres = Math.min(Math.max(rawMetres, 0), wallRunMetres);
+              const along = alongMetres * SCALE + repeat * SYMBOL_SPREAD;
               if (symbol.wall === 'north') {
                 sx = offsetX + along;
                 sy = offsetY + WALL_THICKNESS + SYMBOL_INSET;
@@ -1196,6 +1246,18 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
                 sx = offsetX + WALL_THICKNESS + SYMBOL_INSET;
                 sy = offsetY + along;
               }
+            }
+
+            /*
+             * Last-ditch spread. Anything that reached here without a wall, a
+             * centre or a coordinate pair would otherwise sit on the same
+             * default corner as every other such symbol — which is how three
+             * bathroom downlights ended up as one.
+             */
+            if (!isCoordinatePair && symbol.position !== 'center' && !symbol.wall) {
+              const fallbackRepeat = usedSlots.get('fallback') ?? 0;
+              usedSlots.set('fallback', fallbackRepeat + 1);
+              sx += fallbackRepeat * SYMBOL_SPREAD;
             }
 
             next.push({

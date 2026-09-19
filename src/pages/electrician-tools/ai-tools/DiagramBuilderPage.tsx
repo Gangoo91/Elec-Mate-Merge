@@ -73,7 +73,8 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 
-export type DrawingTool = 'select' | 'line' | 'rectangle' | 'wall' | 'text' | 'symbol' | 'dimension' | 'eraser' | 'cable';
+export type DrawingTool =
+  'select' | 'line' | 'rectangle' | 'wall' | 'text' | 'symbol' | 'dimension' | 'eraser' | 'cable';
 
 export interface CanvasObject {
   id: string;
@@ -91,8 +92,10 @@ export interface CanvasObject {
 
 // Circuit colour map for visual identification
 export const CIRCUIT_COLOURS: Record<string, string> = {
-  L1: '#3B82F6', L2: '#60A5FA', // Lighting — blue
-  S1: '#EF4444', S2: '#F87171', // Ring finals — red
+  L1: '#3B82F6',
+  L2: '#60A5FA', // Lighting — blue
+  S1: '#EF4444',
+  S2: '#F87171', // Ring finals — red
   C1: '#F59E0B', // Cooker — amber
   EV1: '#10B981', // EV — green
   FA1: '#EC4899', // Fire alarm — pink
@@ -102,9 +105,36 @@ export const CIRCUIT_COLOURS: Record<string, string> = {
 
 /** Quick circuit ref lookup for a single symbol */
 function getCircuitRefForSymbol(symbolId: string): string | undefined {
-  const LIGHTING = ['light-ceiling','light-wall','light-downlight','light-emergency','light-fluorescent','light-pendant','light-bulkhead','light-pir','light-outside','light-led-strip','light-exit-sign','light-twin-emergency','light-high-bay'];
-  const SOCKETS = ['socket-single-13a','socket-double-13a','socket-usb','socket-data','socket-telephone','socket-tv-aerial','socket-floor','socket-outdoor','socket-shaver','socket-fused-spur','socket-switched-fused-spur','socket-unswitched-spur'];
-  const FIRE = ['smoke-detector','co-detector','heat-detector'];
+  const LIGHTING = [
+    'light-ceiling',
+    'light-wall',
+    'light-downlight',
+    'light-emergency',
+    'light-fluorescent',
+    'light-pendant',
+    'light-bulkhead',
+    'light-pir',
+    'light-outside',
+    'light-led-strip',
+    'light-exit-sign',
+    'light-twin-emergency',
+    'light-high-bay',
+  ];
+  const SOCKETS = [
+    'socket-single-13a',
+    'socket-double-13a',
+    'socket-usb',
+    'socket-data',
+    'socket-telephone',
+    'socket-tv-aerial',
+    'socket-floor',
+    'socket-outdoor',
+    'socket-shaver',
+    'socket-fused-spur',
+    'socket-switched-fused-spur',
+    'socket-unswitched-spur',
+  ];
+  const FIRE = ['smoke-detector', 'co-detector', 'heat-detector'];
 
   if (LIGHTING.includes(symbolId)) return 'L1';
   if (SOCKETS.includes(symbolId)) return 'S1';
@@ -163,7 +193,10 @@ const getObjectBounds = (items: CanvasObject[]) => {
   };
 };
 
-const applyCanvasObjectUpdates = (obj: CanvasObject, updates: Partial<CanvasObject>): CanvasObject => {
+const applyCanvasObjectUpdates = (
+  obj: CanvasObject,
+  updates: Partial<CanvasObject>
+): CanvasObject => {
   if (!obj.points || obj.points.length === 0) {
     return { ...obj, ...updates };
   }
@@ -249,7 +282,9 @@ const renderCenteredRoomImage = (
   // put them straight back, so the export is the drawing alone.
   const gridLines = (fabricCanvas.getObjects?.() ?? []).filter((o) => o.isGridLine);
   const gridWasVisible = gridLines.map((o) => o.visible !== false);
-  gridLines.forEach((o) => { o.visible = false; });
+  gridLines.forEach((o) => {
+    o.visible = false;
+  });
 
   // Capture at identity viewport.
   //
@@ -276,7 +311,9 @@ const renderCenteredRoomImage = (
     return outputCanvas.toDataURL('image/png', quality);
   } finally {
     if (savedVpt && canResetViewport) fabricCanvas.setViewportTransform!(savedVpt);
-    gridLines.forEach((o, i) => { o.visible = gridWasVisible[i]; });
+    gridLines.forEach((o, i) => {
+      o.visible = gridWasVisible[i];
+    });
     fabricCanvas.renderAll?.();
   }
 
@@ -334,12 +371,8 @@ const DiagramBuilderPage = () => {
   // Drawings saved before the wall-snap rotation fix carry symbols that are
   // 90° out and standing off the wall, so every existing plan would have gone
   // on looking wrong. Re-seating on load fixes them wherever the user goes.
-  const restoredResnap = useRef(
-    resnapWallSymbols(restoredProject?.objects ?? [])
-  ).current;
-  const [canvasObjects, setCanvasObjects] = useState<CanvasObject[]>(
-    () => restoredResnap.objects
-  );
+  const restoredResnap = useRef(resnapWallSymbols(restoredProject?.objects ?? [])).current;
+  const [canvasObjects, setCanvasObjects] = useState<CanvasObject[]>(() => restoredResnap.objects);
   const [gridEnabled, setGridEnabled] = useState<boolean>(
     () => restoredProject?.settings?.gridEnabled ?? true
   );
@@ -367,14 +400,23 @@ const DiagramBuilderPage = () => {
   // Captured at the moment the user taps "Save Room" — before the sheet
   // covers the canvas — so the thumbnail is always generated from a clean,
   // fully-rendered fabric canvas.
-  const [pendingSave, setPendingSave] = useState<{ thumbnail: string; fullImage: string } | null>(null);
+  const [pendingSave, setPendingSave] = useState<{ thumbnail: string; fullImage: string } | null>(
+    null
+  );
   const [activeRoomId, setActiveRoomId] = useState<string | null>(restoredRoom?.id ?? null);
   const [exportReviewOpen, setExportReviewOpen] = useState(false);
   const [myPlansOpen, setMyPlansOpen] = useState(false);
   const [viewportWidth, setViewportWidth] = useState(() => window.innerWidth);
   const [mobileUiOffset, setMobileUiOffset] = useState(0);
-  const { rooms, saveRoom, deleteRoom, updateRoom, clearAllRooms, persistFailed, didLastWriteFail } =
-    useFloorPlanRooms();
+  const {
+    rooms,
+    saveRoom,
+    deleteRoom,
+    updateRoom,
+    clearAllRooms,
+    persistFailed,
+    didLastWriteFail,
+  } = useFloorPlanRooms();
   const { saveToCloud, loadFromCloud } = useFloorPlanCloud();
   const canvasRef = useRef<any>(null);
   const [searchParams] = useSearchParams();
@@ -389,9 +431,12 @@ const DiagramBuilderPage = () => {
   // When a deep-linked plan would clobber unsaved local rooms, the cloud
   // payload is parked here and an AlertDialog asks the user to confirm
   // the replace. Without this, the load would silently destroy local work.
-  const [pendingCloudPlan, setPendingCloudPlan] = useState<
-    { id: string; name: string; rooms: SavedRoom[]; localRoomCount: number } | null
-  >(null);
+  const [pendingCloudPlan, setPendingCloudPlan] = useState<{
+    id: string;
+    name: string;
+    rooms: SavedRoom[];
+    localRoomCount: number;
+  } | null>(null);
   const [projectLocation, setProjectLocation] = useState<string | null>(null);
   const [projectClientName, setProjectClientName] = useState<string | null>(null);
   const [electricianName, setElectricianName] = useState<string | null>(null);
@@ -399,7 +444,11 @@ const DiagramBuilderPage = () => {
   // installer's logo and accent colour; the floor plan was the only client-
   // facing document going out unbranded.
   const [companyBrand, setCompanyBrand] = useState<{
-    name: string; logo: string; accent: string; phone: string; email: string;
+    name: string;
+    logo: string;
+    accent: string;
+    phone: string;
+    email: string;
   } | null>(null);
   // Short label for the "Linked to report" pill + cloud plan name (e.g. the
   // installation address or certificate number of the attached report).
@@ -476,7 +525,10 @@ const DiagramBuilderPage = () => {
     const updated = canvasObjects.map((obj) => {
       if (obj.type === 'symbol' && obj.symbolId && !obj.circuitRef) {
         const ref = getCircuitRefForSymbol(obj.symbolId);
-        if (ref) { needsUpdate = true; return { ...obj, circuitRef: ref }; }
+        if (ref) {
+          needsUpdate = true;
+          return { ...obj, circuitRef: ref };
+        }
       }
       return obj;
     });
@@ -485,7 +537,10 @@ const DiagramBuilderPage = () => {
 
   // Circuit summary for the circuit panel
   const circuitSummary = useMemo(() => {
-    const circuits = new Map<string, { ref: string; name: string; count: number; colour: string }>();
+    const circuits = new Map<
+      string,
+      { ref: string; name: string; count: number; colour: string }
+    >();
     for (const obj of canvasObjects) {
       if (obj.circuitRef) {
         const existing = circuits.get(obj.circuitRef);
@@ -493,8 +548,15 @@ const DiagramBuilderPage = () => {
           existing.count++;
         } else {
           const names: Record<string, string> = {
-            L1: 'Lighting 1', L2: 'Lighting 2', S1: 'Ring Final 1', S2: 'Ring Final 2',
-            C1: 'Cooker', EV1: 'EV Charger', FA1: 'Fire Alarm', IH1: 'Immersion', AC1: 'A/C',
+            L1: 'Lighting 1',
+            L2: 'Lighting 2',
+            S1: 'Ring Final 1',
+            S2: 'Ring Final 2',
+            C1: 'Cooker',
+            EV1: 'EV Charger',
+            FA1: 'Fire Alarm',
+            IH1: 'Immersion',
+            AC1: 'A/C',
           };
           circuits.set(obj.circuitRef, {
             ref: obj.circuitRef,
@@ -511,9 +573,11 @@ const DiagramBuilderPage = () => {
   // Live symbol counts for the floating panel
   const symbolCounts = useMemo(() => {
     const counts = new Map<string, number>();
-    canvasObjects.filter((o) => o.type === 'symbol' && o.symbolId).forEach((o) => {
-      counts.set(o.symbolId!, (counts.get(o.symbolId!) || 0) + 1);
-    });
+    canvasObjects
+      .filter((o) => o.type === 'symbol' && o.symbolId)
+      .forEach((o) => {
+        counts.set(o.symbolId!, (counts.get(o.symbolId!) || 0) + 1);
+      });
     return Array.from(counts.entries()).map(([id, count]) => {
       const sym = symbolRegistry.find((s) => s.id === id);
       return { id, name: sym?.name || id, category: sym?.category || 'other', count };
@@ -555,7 +619,10 @@ const DiagramBuilderPage = () => {
     if (!viewport) return;
 
     const updateViewportOffset = () => {
-      const keyboardOverlap = Math.max(0, window.innerHeight - viewport.height - viewport.offsetTop);
+      const keyboardOverlap = Math.max(
+        0,
+        window.innerHeight - viewport.height - viewport.offsetTop
+      );
       setMobileUiOffset(keyboardOverlap > 80 ? keyboardOverlap + 12 : 0);
     };
 
@@ -607,7 +674,8 @@ const DiagramBuilderPage = () => {
           hapticRef.current.error();
           toast({
             title: 'Autosave stopped — device storage is full',
-            description: 'Export this plan or delete a saved one. Changes are only in memory until then.',
+            description:
+              'Export this plan or delete a saved one. Changes are only in memory until then.',
             variant: 'destructive',
           });
         }
@@ -653,7 +721,9 @@ const DiagramBuilderPage = () => {
 
       const { data: company } = await supabase
         .from('company_profiles')
-        .select('company_name, company_phone, company_email, logo_data_url, logo_url, accent_color, primary_color')
+        .select(
+          'company_name, company_phone, company_email, logo_data_url, logo_url, accent_color, primary_color'
+        )
         .eq('user_id', authData.user.id)
         .maybeSingle();
       if (!cancelled && company) {
@@ -725,7 +795,8 @@ const DiagramBuilderPage = () => {
         setReportLabel(label);
         reportNameRef.current = label;
         // Prefill export fields only if a project hasn't already supplied them.
-        if (report.installation_address) setProjectLocation((prev) => prev ?? report.installation_address);
+        if (report.installation_address)
+          setProjectLocation((prev) => prev ?? report.installation_address);
         if (report.client_name) setProjectClientName((prev) => prev ?? report.client_name);
         if (report.inspector_name) setElectricianName((prev) => prev ?? report.inspector_name);
       } catch {
@@ -867,23 +938,48 @@ const DiagramBuilderPage = () => {
       const meta = e.ctrlKey || e.metaKey;
       const k = e.key.toLowerCase();
 
-      if (meta && k === 's') { e.preventDefault(); shortcutsRef.current.save(); return; }
-      if (meta && k === 'z') {
+      if (meta && k === 's') {
         e.preventDefault();
-        if (e.shiftKey) shortcutsRef.current.redo(); else shortcutsRef.current.undo();
+        shortcutsRef.current.save();
         return;
       }
-      if (meta && k === 'y') { e.preventDefault(); shortcutsRef.current.redo(); return; }
+      if (meta && k === 'z') {
+        e.preventDefault();
+        if (e.shiftKey) shortcutsRef.current.redo();
+        else shortcutsRef.current.undo();
+        return;
+      }
+      if (meta && k === 'y') {
+        e.preventDefault();
+        shortcutsRef.current.redo();
+        return;
+      }
 
       if (e.shiftKey || e.altKey || meta) return;
       switch (k) {
-        case 'v': setActiveTool('select'); setSelectedSymbolId(null); setPlacingSymbolName(null); break;
-        case 'w': setActiveTool('wall'); break;
-        case 'r': setShapesSheetOpen(true); break;
-        case 'a': setSymbolSheetOpen(true); break;
-        case 'c': setActiveTool('cable'); break;
-        case 'e': setActiveTool('eraser'); break;
-        case 'd': setActiveTool('dimension'); break;
+        case 'v':
+          setActiveTool('select');
+          setSelectedSymbolId(null);
+          setPlacingSymbolName(null);
+          break;
+        case 'w':
+          setActiveTool('wall');
+          break;
+        case 'r':
+          setShapesSheetOpen(true);
+          break;
+        case 'a':
+          setSymbolSheetOpen(true);
+          break;
+        case 'c':
+          setActiveTool('cable');
+          break;
+        case 'e':
+          setActiveTool('eraser');
+          break;
+        case 'd':
+          setActiveTool('dimension');
+          break;
         case 'escape':
           setSelectedObject(null);
           setActiveTool('select');
@@ -979,7 +1075,13 @@ const DiagramBuilderPage = () => {
     if (canvasObjects.length > 0 && fabricCanvas) {
       fabricCanvas.renderAll?.();
       const bounds = getObjectBounds(canvasObjects);
-      dataUrl = renderCenteredRoomImage(fabricCanvas, bounds, ROOM_EXPORT_SIZE, ROOM_IMAGE_PADDING, 1);
+      dataUrl = renderCenteredRoomImage(
+        fabricCanvas,
+        bounds,
+        ROOM_EXPORT_SIZE,
+        ROOM_IMAGE_PADDING,
+        1
+      );
     } else {
       const room = rooms.find((r) => r.id === activeRoomId) ?? rooms[0];
       dataUrl = room?.fullImage || room?.thumbnail || '';
@@ -991,11 +1093,12 @@ const DiagramBuilderPage = () => {
     haptic.light();
     try {
       const { saveOrShareImage } = await import('@/utils/image-export');
-      const base = (projectName || activeRoom?.name || 'room-plan')
-        .replace(/[^\w\s-]/g, '')
-        .trim()
-        .replace(/\s+/g, '-')
-        .toLowerCase() || 'room-plan';
+      const base =
+        (projectName || activeRoom?.name || 'room-plan')
+          .replace(/[^\w\s-]/g, '')
+          .trim()
+          .replace(/\s+/g, '-')
+          .toLowerCase() || 'room-plan';
       await saveOrShareImage(dataUrl, `${base}-${Date.now()}.png`);
       haptic.success();
       toast({ title: 'Image saved', variant: 'success' });
@@ -1046,7 +1149,10 @@ const DiagramBuilderPage = () => {
     const bounds = getObjectBounds(canvasObjects);
     const placementCentre = canvasRef.current?.getPlacementCenter?.();
     const centreX = bounds?.centreX ?? placementCentre?.x ?? window.innerWidth / 2;
-    const centreY = bounds?.centreY ?? placementCentre?.y ?? (window.innerHeight - HEADER_HEIGHT - TOOLBAR_HEIGHT) / 2;
+    const centreY =
+      bounds?.centreY ??
+      placementCentre?.y ??
+      (window.innerHeight - HEADER_HEIGHT - TOOLBAR_HEIGHT) / 2;
 
     const rotated = canvasObjects.map((obj) => {
       // Rotate position around centre
@@ -1161,7 +1267,13 @@ const DiagramBuilderPage = () => {
       if (fabricCanvas) {
         fabricCanvas.renderAll?.();
         const bounds = getObjectBounds(canvasObjects);
-        fullImage = renderCenteredRoomImage(fabricCanvas, bounds, ROOM_EXPORT_SIZE, ROOM_IMAGE_PADDING, 1);
+        fullImage = renderCenteredRoomImage(
+          fabricCanvas,
+          bounds,
+          ROOM_EXPORT_SIZE,
+          ROOM_IMAGE_PADDING,
+          1
+        );
         thumbnail = renderCenteredRoomImage(fabricCanvas, bounds, ROOM_THUMBNAIL_SIZE, 18, 0.8);
       }
     }
@@ -1185,9 +1297,7 @@ const DiagramBuilderPage = () => {
     // through to a fresh save keeps the user's work.
     if (activeRoomId && rooms.some((r) => r.id === activeRoomId)) {
       updateRoom(activeRoomId, roomPayload);
-      nextRooms = rooms.map((r) =>
-        r.id === activeRoomId ? { ...r, ...roomPayload } : r
-      );
+      nextRooms = rooms.map((r) => (r.id === activeRoomId ? { ...r, ...roomPayload } : r));
     } else {
       const newRoom = saveRoom(roomPayload);
       setActiveRoomId(newRoom.id);
@@ -1269,7 +1379,9 @@ const DiagramBuilderPage = () => {
         } else {
           setTimeout(() => canvasRef.current?.zoomToFit?.(), 220);
         }
-      } catch { /* ignore parse errors */ }
+      } catch {
+        /* ignore parse errors */
+      }
     }
   };
 
@@ -1517,14 +1629,18 @@ const DiagramBuilderPage = () => {
             size="icon"
             className="h-11 w-11 sm:h-9 sm:w-9 text-white hover:text-white hover:bg-white/10 touch-manipulation"
             aria-label={projectId ? 'Back to project' : 'Back'}
-            onClick={() => navigate(projectId ? `/electrician/projects/${projectId}` : '/electrician/business')}
+            onClick={() =>
+              navigate(projectId ? `/electrician/projects/${projectId}` : '/electrician/business')
+            }
           >
             <ArrowLeft className="h-4 w-4" />
           </Button>
-          <h1 className="hidden sm:block text-sm font-semibold text-white truncate">Room Planner</h1>
+          <h1 className="hidden sm:block text-sm font-semibold text-white truncate">
+            Room Planner
+          </h1>
           {projectId && (
             <span
-              className="flex items-center gap-1.5 text-[11px] text-elec-yellow px-2 py-1 rounded-md bg-elec-yellow/10 border border-elec-yellow/20 max-w-[140px] sm:max-w-[200px]"
+              className="flex items-center gap-1.5 text-[11px] text-elec-yellow px-2 py-1 rounded-md bg-white/[0.06] border border-elec-yellow/20 max-w-[140px] sm:max-w-[200px]"
               title={projectName ? `Linked to ${projectName}` : 'Linked to project'}
             >
               <FolderOpen className="h-3 w-3 shrink-0" />
@@ -1533,7 +1649,7 @@ const DiagramBuilderPage = () => {
           )}
           {reportId && !projectId && (
             <span
-              className="flex items-center gap-1.5 text-[11px] text-elec-yellow px-2 py-1 rounded-md bg-elec-yellow/10 border border-elec-yellow/20 max-w-[140px] sm:max-w-[200px]"
+              className="flex items-center gap-1.5 text-[11px] text-elec-yellow px-2 py-1 rounded-md bg-white/[0.06] border border-elec-yellow/20 max-w-[140px] sm:max-w-[200px]"
               title={reportLabel ? `Linked to report — ${reportLabel}` : 'Linked to report'}
             >
               <FileText className="h-3 w-3 shrink-0" />
@@ -1574,7 +1690,7 @@ const DiagramBuilderPage = () => {
             void savedAgoTick;
             return (
               <span
-                className="flex items-center gap-1.5 text-[11px] text-white/70 px-2 py-1 rounded-md bg-white/5"
+                className="flex items-center gap-1.5 text-[11px] text-white px-2 py-1 rounded-md bg-white/5"
                 title={label}
               >
                 <span className={`h-1.5 w-1.5 rounded-full ${dotColour}`} />
@@ -1589,7 +1705,10 @@ const DiagramBuilderPage = () => {
         <div className="flex items-center gap-1.5 shrink-0">
           {/* My Plans — primary discoverable entry to multi-room plan library */}
           <Button
-            onClick={() => { haptic.light(); setMyPlansOpen(true); }}
+            onClick={() => {
+              haptic.light();
+              setMyPlansOpen(true);
+            }}
             aria-label="My Plans"
             variant="ghost"
             className="h-11 sm:h-9 px-3 text-white hover:bg-white/10 text-xs font-medium touch-manipulation rounded-lg border border-white/10"
@@ -1602,7 +1721,10 @@ const DiagramBuilderPage = () => {
           <Button
             onClick={() => {
               if (canvasObjects.length === 0) {
-                toast({ title: 'Nothing to save', description: 'Draw a room or place symbols first' });
+                toast({
+                  title: 'Nothing to save',
+                  description: 'Draw a room or place symbols first',
+                });
                 return;
               }
               haptic.light();
@@ -1617,10 +1739,18 @@ const DiagramBuilderPage = () => {
                 fabricCanvas.renderAll?.();
                 const bounds = getObjectBounds(canvasObjects);
                 const fullImage = renderCenteredRoomImage(
-                  fabricCanvas, bounds, ROOM_EXPORT_SIZE, ROOM_IMAGE_PADDING, 1,
+                  fabricCanvas,
+                  bounds,
+                  ROOM_EXPORT_SIZE,
+                  ROOM_IMAGE_PADDING,
+                  1
                 );
                 const thumbnail = renderCenteredRoomImage(
-                  fabricCanvas, bounds, ROOM_THUMBNAIL_SIZE, 18, 0.8,
+                  fabricCanvas,
+                  bounds,
+                  ROOM_THUMBNAIL_SIZE,
+                  18,
+                  0.8
                 );
                 setPendingSave({ thumbnail, fullImage });
               }
@@ -1641,11 +1771,17 @@ const DiagramBuilderPage = () => {
           <Button
             onClick={() => {
               if (rooms.length === 0 && canvasObjects.length === 0) {
-                toast({ title: 'Nothing to export', description: 'Draw a room or place symbols first' });
+                toast({
+                  title: 'Nothing to export',
+                  description: 'Draw a room or place symbols first',
+                });
                 return;
               }
               if (canvasObjects.length > 0 && !rooms.find((r) => r.id === activeRoomId)) {
-                toast({ title: 'Save this room first', description: 'Tap Save Room before exporting' });
+                toast({
+                  title: 'Save this room first',
+                  description: 'Tap Save Room before exporting',
+                });
                 return;
               }
               // The PDF is built from each room's SAVED image. Editing a room
@@ -1693,14 +1829,20 @@ const DiagramBuilderPage = () => {
               </DropdownMenuItem>
               <DropdownMenuSeparator className="bg-white/10" />
               <DropdownMenuItem
-                onClick={() => { canvasRef.current?.handleRotate?.(); haptic.light(); }}
+                onClick={() => {
+                  canvasRef.current?.handleRotate?.();
+                  haptic.light();
+                }}
                 className="text-white hover:bg-white/10 touch-manipulation"
               >
                 <RotateCw className="h-4 w-4 mr-2" />
                 Rotate Selected
               </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={() => { canvasRef.current?.deleteSelected?.(); haptic.heavy(); }}
+                onClick={() => {
+                  canvasRef.current?.deleteSelected?.();
+                  haptic.heavy();
+                }}
                 className="text-white hover:bg-white/10 touch-manipulation"
               >
                 <Trash2 className="h-4 w-4 mr-2" />
@@ -1710,28 +1852,40 @@ const DiagramBuilderPage = () => {
 
               {/* Advanced drawing tools */}
               <DropdownMenuItem
-                onClick={() => { setActiveTool('line'); haptic.light(); }}
+                onClick={() => {
+                  setActiveTool('line');
+                  haptic.light();
+                }}
                 className="text-white hover:bg-white/10 touch-manipulation"
               >
                 <Minus className="h-4 w-4 mr-2" />
                 Draw Line
               </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={() => { setActiveTool('rectangle'); haptic.light(); }}
+                onClick={() => {
+                  setActiveTool('rectangle');
+                  haptic.light();
+                }}
                 className="text-white hover:bg-white/10 touch-manipulation"
               >
                 <Square className="h-4 w-4 mr-2" />
                 Draw Box
               </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={() => { setActiveTool('text'); haptic.light(); }}
+                onClick={() => {
+                  setActiveTool('text');
+                  haptic.light();
+                }}
                 className="text-white hover:bg-white/10 touch-manipulation"
               >
                 <Type className="h-4 w-4 mr-2" />
                 Add Label
               </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={() => { setActiveTool('dimension'); haptic.light(); }}
+                onClick={() => {
+                  setActiveTool('dimension');
+                  haptic.light();
+                }}
                 className="text-white hover:bg-white/10 touch-manipulation"
               >
                 <Ruler className="h-4 w-4 mr-2" />
@@ -1882,9 +2036,7 @@ const DiagramBuilderPage = () => {
                     title={tool.key ? `${tool.label} (${tool.key})` : tool.label}
                     className={cn(
                       'group flex h-11 w-[150px] items-center gap-2.5 rounded-xl px-2.5 text-left transition-colors touch-manipulation',
-                      active
-                        ? 'bg-elec-yellow text-black'
-                        : 'text-white hover:bg-white/10'
+                      active ? 'bg-elec-yellow text-black' : 'text-white hover:bg-white/10'
                     )}
                   >
                     <Icon className="h-[18px] w-[18px] shrink-0" />
@@ -1913,35 +2065,59 @@ const DiagramBuilderPage = () => {
           <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
             <div className="text-center pointer-events-auto px-6 w-[min(26rem,calc(100vw-2rem))] rounded-3xl bg-[#141414]/95 backdrop-blur-xl border border-white/[0.12] shadow-[0_24px_70px_-12px_rgba(0,0,0,0.9)] py-7">
               <h2 className="text-white text-lg font-bold mb-1">Start Your First Room</h2>
-              <p className="text-white text-xs mb-5">Pick a starting point — or open one you've already saved.</p>
+              <p className="text-white text-xs mb-5">
+                Pick a starting point — or open one you've already saved.
+              </p>
               <div className="space-y-2">
-                <button onClick={() => { haptic.light(); setMyPlansOpen(true); }} className="w-full p-3.5 bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.12] rounded-2xl touch-manipulation active:scale-[0.98] transition-colors text-left flex items-center gap-3">
+                <button
+                  onClick={() => {
+                    haptic.light();
+                    setMyPlansOpen(true);
+                  }}
+                  className="w-full p-3.5 bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.12] rounded-2xl touch-manipulation active:scale-[0.98] transition-colors text-left flex items-center gap-3"
+                >
                   <FolderOpen className="h-5 w-5 text-blue-400 shrink-0" />
                   <div>
                     <p className="text-sm font-semibold text-white">Open a Saved Plan</p>
-                    <p className="text-[11px] text-white/90">Pick up where you left off on a previous job.</p>
+                    <p className="text-[11px] text-white">
+                      Pick up where you left off on a previous job.
+                    </p>
                   </div>
                 </button>
-                <button onClick={() => setShapesSheetOpen(true)} className="w-full p-3.5 bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.12] rounded-2xl touch-manipulation active:scale-[0.98] transition-colors text-left flex items-center gap-3">
+                <button
+                  onClick={() => setShapesSheetOpen(true)}
+                  className="w-full p-3.5 bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.12] rounded-2xl touch-manipulation active:scale-[0.98] transition-colors text-left flex items-center gap-3"
+                >
                   <LayoutGrid className="h-5 w-5 text-elec-yellow shrink-0" />
                   <div>
                     <p className="text-sm font-semibold text-white">Use a Room Shape</p>
-                    <p className="text-[11px] text-white/90">Start with a rectangle, L-shape, T-shape, or corridor.</p>
+                    <p className="text-[11px] text-white">
+                      Start with a rectangle, L-shape, T-shape, or corridor.
+                    </p>
                   </div>
                 </button>
-                <button onClick={() => setAiDialogOpen(true)} className="w-full p-3.5 bg-elec-yellow/[0.12] hover:bg-elec-yellow/20 border border-elec-yellow/30 rounded-2xl touch-manipulation active:scale-[0.98] transition-colors text-left flex items-center gap-3">
+                <button
+                  onClick={() => setAiDialogOpen(true)}
+                  className="w-full p-3.5 bg-white/[0.06] hover:bg-white/[0.1] border border-elec-yellow/35 rounded-2xl touch-manipulation active:scale-[0.98] transition-colors text-left flex items-center gap-3"
+                >
                   <Sparkles className="h-5 w-5 text-elec-yellow shrink-0" />
                   <div>
                     <p className="text-sm font-semibold text-elec-yellow">Use AI Help</p>
-                    <p className="text-[11px] text-elec-yellow/80">Generate from a template, voice description, or photo.</p>
+                    <p className="text-[11px] text-elec-yellow/80">
+                      Generate from a template, voice description, or photo.
+                    </p>
                   </div>
                 </button>
               </div>
-              <p className="text-white/80 text-[11px] mt-5">
+              <p className="text-white text-[11px] mt-5">
                 {/* The toolbar is below on phones and to the left on desktop —
                     the copy has to follow the layout it is describing. */}
-                <span className="lg:hidden">You can also draw walls manually from the toolbar below.</span>
-                <span className="hidden lg:inline">You can also draw walls manually — the tools are on the left.</span>
+                <span className="lg:hidden">
+                  You can also draw walls manually from the toolbar below.
+                </span>
+                <span className="hidden lg:inline">
+                  You can also draw walls manually — the tools are on the left.
+                </span>
               </p>
             </div>
           </div>
@@ -1969,7 +2145,10 @@ const DiagramBuilderPage = () => {
                 return (
                   <Fragment key={tool.id}>
                     {showDivider && (
-                      <span aria-hidden className="self-center h-7 w-px shrink-0 bg-white/10 mx-0.5" />
+                      <span
+                        aria-hidden
+                        className="self-center h-7 w-px shrink-0 bg-white/10 mx-0.5"
+                      />
                     )}
                     <button
                       onClick={() => handleToolTap(tool.id)}
@@ -1979,7 +2158,7 @@ const DiagramBuilderPage = () => {
                         'flex h-12 min-w-[48px] shrink-0 items-center justify-center rounded-xl px-2.5 touch-manipulation transition-colors duration-200 active:scale-90',
                         active
                           ? 'bg-elec-yellow text-black'
-                          : 'text-white/90 hover:bg-white/5 active:bg-white/10'
+                          : 'text-white hover:bg-white/5 active:bg-white/10'
                       )}
                     >
                       <Icon className="h-5 w-5 shrink-0" />
@@ -2014,7 +2193,7 @@ const DiagramBuilderPage = () => {
                   key={tool.id}
                   onClick={() => handleToolTap(tool.id)}
                   aria-label={tool.label}
-                  className="flex h-12 min-w-[48px] shrink-0 items-center justify-center rounded-xl text-white/90 touch-manipulation transition-colors duration-200 active:scale-90 hover:bg-white/5 active:bg-white/10"
+                  className="flex h-12 min-w-[48px] shrink-0 items-center justify-center rounded-xl text-white touch-manipulation transition-colors duration-200 active:scale-90 hover:bg-white/5 active:bg-white/10"
                 >
                   <Icon className="h-5 w-5 shrink-0" />
                 </button>
@@ -2105,7 +2284,8 @@ const DiagramBuilderPage = () => {
             const fabricCanvas = canvasRef.current?.getFabricCanvas?.();
             const placementCentre = canvasRef.current?.getPlacementCenter?.();
             let centreX = placementCentre?.x ?? window.innerWidth / 2;
-            let centreY = placementCentre?.y ?? (window.innerHeight - HEADER_HEIGHT - TOOLBAR_HEIGHT) / 2;
+            let centreY =
+              placementCentre?.y ?? (window.innerHeight - HEADER_HEIGHT - TOOLBAR_HEIGHT) / 2;
             if (!placementCentre && fabricCanvas) {
               const vpt = fabricCanvas.viewportTransform;
               const zoom = fabricCanvas.getZoom();
@@ -2237,11 +2417,11 @@ const DiagramBuilderPage = () => {
             <AlertDialogTitle className="text-white">Open this saved plan?</AlertDialogTitle>
             <AlertDialogDescription className="text-white">
               You already have {pendingCloudPlan?.localRoomCount ?? 0} room
-              {pendingCloudPlan && pendingCloudPlan.localRoomCount !== 1 ? 's' : ''} on this
-              device. Opening "{pendingCloudPlan?.name}" replaces them with{' '}
+              {pendingCloudPlan && pendingCloudPlan.localRoomCount !== 1 ? 's' : ''} on this device.
+              Opening "{pendingCloudPlan?.name}" replaces them with{' '}
               {pendingCloudPlan?.rooms.length ?? 0} cloud room
-              {pendingCloudPlan && pendingCloudPlan.rooms.length !== 1 ? 's' : ''}. This
-              can't be undone.
+              {pendingCloudPlan && pendingCloudPlan.rooms.length !== 1 ? 's' : ''}. This can't be
+              undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -2255,7 +2435,8 @@ const DiagramBuilderPage = () => {
                 setLinkedFloorPlanId(null);
                 toast({
                   title: 'Kept your local rooms',
-                  description: 'Save Room will create a new plan instead of opening the linked one.',
+                  description:
+                    'Save Room will create a new plan instead of opening the linked one.',
                 });
               }}
             >
@@ -2280,12 +2461,16 @@ const DiagramBuilderPage = () => {
           a new one replaces every room held on this device. */}
       <AlertDialog
         open={!!pendingPlanAction}
-        onOpenChange={(open) => { if (!open) setPendingPlanAction(null); }}
+        onOpenChange={(open) => {
+          if (!open) setPendingPlanAction(null);
+        }}
       >
         <AlertDialogContent className="bg-elec-gray border-white/10">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-white">
-              {pendingPlanAction?.kind === 'load' ? 'Replace your current rooms?' : 'Start a new plan?'}
+              {pendingPlanAction?.kind === 'load'
+                ? 'Replace your current rooms?'
+                : 'Start a new plan?'}
             </AlertDialogTitle>
             <AlertDialogDescription className="text-white">
               You have {rooms.length} room{rooms.length !== 1 ? 's' : ''} on this device.{' '}
@@ -2323,7 +2508,10 @@ const DiagramBuilderPage = () => {
         defaultElectrician={electricianName ?? undefined}
         onGeneratePdf={async (data) => {
           haptic.light();
-          const loadingToast = toast({ title: 'Generating PDF...', description: 'This may take a moment' });
+          const loadingToast = toast({
+            title: 'Generating PDF...',
+            description: 'This may take a moment',
+          });
 
           try {
             // Build room data with canvas images
@@ -2343,11 +2531,14 @@ const DiagramBuilderPage = () => {
 
             // Group materials by category
             const materialsByCategory = Object.entries(
-              data.materialsSchedule.reduce<Record<string, { name: string; count: number }[]>>((acc, item) => {
-                if (!acc[item.category]) acc[item.category] = [];
-                acc[item.category].push({ name: item.name, count: item.count });
-                return acc;
-              }, {})
+              data.materialsSchedule.reduce<Record<string, { name: string; count: number }[]>>(
+                (acc, item) => {
+                  if (!acc[item.category]) acc[item.category] = [];
+                  acc[item.category].push({ name: item.name, count: item.count });
+                  return acc;
+                },
+                {}
+              )
             ).map(([name, items]) => ({ name, items }));
 
             // Symbol legend — only the symbols this drawing actually uses.
@@ -2359,9 +2550,8 @@ const DiagramBuilderPage = () => {
             // A legend of what's on the drawing is also what the electrician
             // actually wants in front of a client.
             const usedSymbolIds = new Set(data.rooms.flatMap((room) => room.symbolIds));
-            const { loadSymbolSvg } = await import(
-              '@/components/electrician-tools/diagram-builder/symbols/svgLoader'
-            );
+            const { loadSymbolSvg } =
+              await import('@/components/electrician-tools/diagram-builder/symbols/svgLoader');
             const allSymbolsLegend = await Promise.all(
               symbolRegistry
                 .filter((sym) => usedSymbolIds.has(sym.id))
@@ -2396,43 +2586,46 @@ const DiagramBuilderPage = () => {
               by: data.electrician,
             };
 
-            const { data: result, error } = await supabase.functions.invoke('generate-floor-plan-pdf', {
-              body: {
-                // Without this the function's writeback is skipped entirely, so
-                // `pdf_url` / `status: 'exported'` were never set on the row and
-                // a linked project or report never showed its drawing.
-                floor_plan_id: linkedFloorPlanIdRef.current ?? undefined,
-                property_address: data.property,
-                client_name: data.client,
-                electrician_name: data.electrician,
-                date: data.date,
-                drawing_number: data.drawingNumber,
-                notes: data.notes,
-                rooms: roomsPayload,
-                materials_by_category: materialsByCategory,
-                total_items: data.totalItems,
-                all_symbols: allSymbolsLegend,
-                circuit_schedule: circuitSchedule,
-                consumer_unit: {
-                  ways: cu.ways,
-                  way_count: cu.wayCount,
-                  total_connected_load_kw: cu.totalConnectedLoadKw,
+            const { data: result, error } = await supabase.functions.invoke(
+              'generate-floor-plan-pdf',
+              {
+                body: {
+                  // Without this the function's writeback is skipped entirely, so
+                  // `pdf_url` / `status: 'exported'` were never set on the row and
+                  // a linked project or report never showed its drawing.
+                  floor_plan_id: linkedFloorPlanIdRef.current ?? undefined,
+                  property_address: data.property,
+                  client_name: data.client,
+                  electrician_name: data.electrician,
+                  date: data.date,
+                  drawing_number: data.drawingNumber,
+                  notes: data.notes,
+                  rooms: roomsPayload,
+                  materials_by_category: materialsByCategory,
+                  total_items: data.totalItems,
+                  all_symbols: allSymbolsLegend,
+                  circuit_schedule: circuitSchedule,
+                  consumer_unit: {
+                    ways: cu.ways,
+                    way_count: cu.wayCount,
+                    total_connected_load_kw: cu.totalConnectedLoadKw,
+                  },
+                  standard_notes: STANDARD_NOTES,
+                  revision,
+                  // Branding — the floor plan was the only client-facing document
+                  // in the app going out with no company identity on it.
+                  company_name: companyBrand?.name ?? '',
+                  company_logo: companyBrand?.logo ?? '',
+                  company_accent_color: companyBrand?.accent ?? '',
+                  company_phone: companyBrand?.phone ?? '',
+                  company_email: companyBrand?.email ?? '',
+                  // The drawing is dimensioned in metres but rasterised to fit the
+                  // page, so it is not reproduced at a fixed printed ratio. Say so
+                  // honestly rather than the old blanket "Not to scale".
+                  scale_note: 'Dimensions in metres — not reproduced to printed scale',
                 },
-                standard_notes: STANDARD_NOTES,
-                revision,
-                // Branding — the floor plan was the only client-facing document
-                // in the app going out with no company identity on it.
-                company_name: companyBrand?.name ?? '',
-                company_logo: companyBrand?.logo ?? '',
-                company_accent_color: companyBrand?.accent ?? '',
-                company_phone: companyBrand?.phone ?? '',
-                company_email: companyBrand?.email ?? '',
-                // The drawing is dimensioned in metres but rasterised to fit the
-                // page, so it is not reproduced at a fixed printed ratio. Say so
-                // honestly rather than the old blanket "Not to scale".
-                scale_note: 'Dimensions in metres — not reproduced to printed scale',
-              },
-            });
+              }
+            );
 
             if (error) throw error;
 
@@ -2445,13 +2638,20 @@ const DiagramBuilderPage = () => {
               await openOrDownloadPdf(result.pdf_url, `floor-plan-${Date.now()}.pdf`);
               setExportReviewOpen(false);
             } else if (result?.status === 'processing') {
-              toast({ title: 'PDF generating', description: 'Check back in a moment — the PDF is still being created.' });
+              toast({
+                title: 'PDF generating',
+                description: 'Check back in a moment — the PDF is still being created.',
+              });
             } else {
               throw new Error(result?.error || 'PDF generation failed');
             }
           } catch (err) {
             haptic.error();
-            toast({ title: 'PDF failed', description: err instanceof Error ? err.message : 'Could not generate PDF', variant: 'destructive' });
+            toast({
+              title: 'PDF failed',
+              description: err instanceof Error ? err.message : 'Could not generate PDF',
+              variant: 'destructive',
+            });
           }
         }}
       />
@@ -2489,7 +2689,9 @@ const DiagramBuilderPage = () => {
           <div className="flex items-center justify-between gap-3 max-w-md mx-auto">
             <div className="flex-1">
               <p className="text-xs text-white mb-1.5 font-medium">Wall length</p>
-              <p className="text-[11px] text-white mb-2">Drag the end handles on the wall or enter an exact length.</p>
+              <p className="text-[11px] text-white mb-2">
+                Drag the end handles on the wall or enter an exact length.
+              </p>
               <div className="flex items-center gap-2">
                 <input
                   type="number"

@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { stopRunningSessionForJob } from '@/lib/eventJobActions';
 import type { SparkTask, TaskPriority, TaskStatus } from '@/hooks/useSparkTasks';
 
 export interface ProjectData {
@@ -130,59 +131,71 @@ export function useProjectEntities(projectId: string | undefined) {
 
       if (error || !proj) throw error || new Error('Project not found');
 
-      const [tasksRes, quotesRes, invoicesRes, certsRes, ramsRes, visitsRes, circuitRes, costRes, floorPlanRes, quoteInvoicesRes] =
-        await Promise.all([
-          s()
-            .from('spark_tasks')
-            .select('*, customers(name)')
-            .eq('project_id', projectId)
-            .neq('status', 'cancelled')
-            .order('due_at', { ascending: true }),
-          s()
-            .from('quotes')
-            .select(
-              'id, status, acceptance_status, booked_slot_start, total, quote_number, client_data, created_at'
-            )
-            .eq('project_id', projectId)
-            .eq('invoice_raised', false),
-          s()
-            .from('invoices')
-            .select('id, quote_id, deposit_for_quote, status, total, invoice_number, client_data, created_at')
-            .eq('project_id', projectId),
-          s()
-            .from('reports')
-            .select('id, report_id, report_type, status, client_name, created_at')
-            .eq('project_id', projectId),
-          s()
-            .from('rams_generation_jobs')
-            .select('id, status, job_description, created_at')
-            .eq('project_id', projectId),
-          s()
-            .from('site_visits')
-            .select('id, status, property_address, property_postcode, created_at')
-            .eq('project_id', projectId)
-            .order('created_at', { ascending: false }),
-          s()
-            .from('circuit_design_jobs')
-            .select('id, status, job_inputs, created_at')
-            .eq('project_id', projectId)
-            .eq('status', 'complete'),
-          s()
-            .from('cost_engineer_jobs')
-            .select('id, status, query, created_at')
-            .eq('project_id', projectId)
-            .eq('status', 'complete'),
-          s()
-            .from('floor_plans')
-            .select('id, name, status, total_items, created_at')
-            .eq('project_id', projectId),
-          // The app's real invoices are quotes rows with invoice_raised (audit P0-2)
-          s()
-            .from('quotes')
-            .select('id, invoice_status, total, invoice_number, client_data, created_at')
-            .eq('project_id', projectId)
-            .eq('invoice_raised', true),
-        ]);
+      const [
+        tasksRes,
+        quotesRes,
+        invoicesRes,
+        certsRes,
+        ramsRes,
+        visitsRes,
+        circuitRes,
+        costRes,
+        floorPlanRes,
+        quoteInvoicesRes,
+      ] = await Promise.all([
+        s()
+          .from('spark_tasks')
+          .select('*, customers(name)')
+          .eq('project_id', projectId)
+          .neq('status', 'cancelled')
+          .order('due_at', { ascending: true }),
+        s()
+          .from('quotes')
+          .select(
+            'id, status, acceptance_status, booked_slot_start, total, quote_number, client_data, created_at'
+          )
+          .eq('project_id', projectId)
+          .eq('invoice_raised', false),
+        s()
+          .from('invoices')
+          .select(
+            'id, quote_id, deposit_for_quote, status, total, invoice_number, client_data, created_at'
+          )
+          .eq('project_id', projectId),
+        s()
+          .from('reports')
+          .select('id, report_id, report_type, status, client_name, created_at')
+          .eq('project_id', projectId),
+        s()
+          .from('rams_generation_jobs')
+          .select('id, status, job_description, created_at')
+          .eq('project_id', projectId),
+        s()
+          .from('site_visits')
+          .select('id, status, property_address, property_postcode, created_at')
+          .eq('project_id', projectId)
+          .order('created_at', { ascending: false }),
+        s()
+          .from('circuit_design_jobs')
+          .select('id, status, job_inputs, created_at')
+          .eq('project_id', projectId)
+          .eq('status', 'complete'),
+        s()
+          .from('cost_engineer_jobs')
+          .select('id, status, query, created_at')
+          .eq('project_id', projectId)
+          .eq('status', 'complete'),
+        s()
+          .from('floor_plans')
+          .select('id, name, status, total_items, created_at')
+          .eq('project_id', projectId),
+        // The app's real invoices are quotes rows with invoice_raised (audit P0-2)
+        s()
+          .from('quotes')
+          .select('id, invoice_status, total, invoice_number, client_data, created_at')
+          .eq('project_id', projectId)
+          .eq('invoice_raised', true),
+      ]);
 
       setProject({
         id: proj.id,
@@ -428,9 +441,7 @@ export function useProjectEntities(projectId: string | undefined) {
       }) => ({
         id: r.id,
         label: r.invoice_number || 'Invoice',
-        sublabel: [r.client_data?.name, r.invoice_status || 'draft']
-          .filter(Boolean)
-          .join(' · '),
+        sublabel: [r.client_data?.name, r.invoice_status || 'draft'].filter(Boolean).join(' · '),
       })
     );
   }
@@ -492,9 +503,7 @@ export function useProjectEntities(projectId: string | undefined) {
         created_at?: string;
       }) => {
         const detail =
-          r.job_inputs?.project_name ||
-          r.job_inputs?.description ||
-          r.job_inputs?.query;
+          r.job_inputs?.project_name || r.job_inputs?.description || r.job_inputs?.query;
         const when = r.created_at
           ? new Date(r.created_at).toLocaleDateString('en-GB', {
               day: 'numeric',
@@ -544,6 +553,12 @@ export function useProjectEntities(projectId: string | undefined) {
   async function completeProject() {
     if (!projectId) return;
     try {
+      /*
+       * ELE-1755 — stop the clock first. Completing only flipped the status,
+       * so a job started from the diary and completed here went on timing
+       * hours nobody worked, and they would have landed on the invoice.
+       */
+      await stopRunningSessionForJob(projectId);
       const { error } = await s()
         .from('spark_projects')
         .update({ status: 'completed', completed_at: new Date().toISOString() })
@@ -564,10 +579,7 @@ export function useProjectEntities(projectId: string | undefined) {
     if (!projectId) return false;
     try {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { error } = await (s() as any)
-        .from('spark_projects')
-        .delete()
-        .eq('id', projectId);
+      const { error } = await (s() as any).from('spark_projects').delete().eq('id', projectId);
       if (error) throw error;
       toast({ title: 'Project deleted', description: 'Project has been permanently removed.' });
       return true;

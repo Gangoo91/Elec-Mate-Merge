@@ -1,0 +1,1102 @@
+{
+  "18th-edition-bs-7671": [
+    {
+      "category": "Inspection & Testing",
+      "slug": "inspection-and-testing",
+      "qCount": 139
+    },
+    {
+      "category": "Protection & Devices",
+      "slug": "protection-and-devices",
+      "qCount": 35
+    },
+    {
+      "category": "Certification & Reporting",
+      "slug": "certification-and-reporting",
+      "qCount": 25
+    },
+    {
+      "category": "Special Locations",
+      "slug": "special-locations",
+      "qCount": 18
+    },
+    {
+      "category": "Design & Selection",
+      "slug": "design-and-selection",
+      "qCount": 17
+    },
+    {
+      "category": "Earthing & Bonding",
+      "slug": "earthing-and-bonding",
+      "qCount": 16
+    },
+    {
+      "category": "EV & Renewables",
+      "slug": "ev-and-renewables",
+      "qCount": 12
+    },
+    {
+      "category": "Cables & Containment",
+      "slug": "cables-and-containment",
+      "qCount": 11
+    },
+    {
+      "category": "Safe Isolation",
+      "slug": "safe-isolation",
+      "qCount": 10
+    }
+  ],
+  "am2-online-knowledge-test": [
+    {
+      "category": "BS 7671 Inspection & Testing",
+      "slug": "bs-7671-inspection-and-testing",
+      "qCount": 119
+    },
+    {
+      "category": "Health & Safety",
+      "slug": "health-and-safety",
+      "qCount": 60
+    },
+    {
+      "category": "BS 7671 Selection & Erection",
+      "slug": "bs-7671-selection-and-erection",
+      "qCount": 48
+    },
+    {
+      "category": "Building Regulations",
+      "slug": "building-regulations",
+      "qCount": 47
+    },
+    {
+      "category": "BS 7671 Fundamentals",
+      "slug": "bs-7671-fundamentals",
+      "qCount": 37
+    },
+    {
+      "category": "Safe Isolation",
+      "slug": "safe-isolation",
+      "qCount": 25
+    },
+    {
+      "category": "Fault Finding",
+      "slug": "fault-finding",
+      "qCount": 20
+    }
+  ],
+  "2391-inspection-testing": [
+    {
+      "category": "Introduction & Fundamentals",
+      "slug": "introduction-and-fundamentals",
+      "qCount": 81
+    },
+    {
+      "category": "Visual Inspection & Documentation",
+      "slug": "visual-inspection-and-documentation",
+      "qCount": 77
+    },
+    {
+      "category": "Earth Fault Loop Impedance",
+      "slug": "earth-fault-loop-impedance",
+      "qCount": 54
+    },
+    {
+      "category": "Continuity Testing",
+      "slug": "continuity-testing",
+      "qCount": 53
+    },
+    {
+      "category": "RCD Testing",
+      "slug": "rcd-testing",
+      "qCount": 37
+    },
+    {
+      "category": "Safe Isolation",
+      "slug": "safe-isolation",
+      "qCount": 35
+    },
+    {
+      "category": "Insulation Resistance",
+      "slug": "insulation-resistance",
+      "qCount": 34
+    },
+    {
+      "category": "Polarity & Functional Testing",
+      "slug": "polarity-and-functional-testing",
+      "qCount": 25
+    }
+  ],
+  "pat-testing": [
+    {
+      "category": "Testing Procedures",
+      "slug": "testing-procedures",
+      "qCount": 41
+    },
+    {
+      "category": "Visual Inspection",
+      "slug": "visual-inspection",
+      "qCount": 39
+    },
+    {
+      "category": "Documentation",
+      "slug": "documentation",
+      "qCount": 39
+    },
+    {
+      "category": "Regulations",
+      "slug": "regulations",
+      "qCount": 26
+    },
+    {
+      "category": "Equipment Classification",
+      "slug": "equipment-classification",
+      "qCount": 25
+    }
+  ],
+  "asbestos-awareness": [
+    {
+      "category": "Legislation & Duty to Manage",
+      "slug": "legislation-and-duty-to-manage",
+      "qCount": 64
+    },
+    {
+      "category": "Safe Working & PPE",
+      "slug": "safe-working-and-ppe",
+      "qCount": 53
+    },
+    {
+      "category": "Identification & Surveys",
+      "slug": "identification-and-surveys",
+      "qCount": 52
+    },
+    {
+      "category": "Emergency Procedures",
+      "slug": "emergency-procedures",
+      "qCount": 44
+    },
+    {
+      "category": "Asbestos Types & Properties",
+      "slug": "asbestos-types-and-properties",
+      "qCount": 43
+    }
+  ],
+  "confined-spaces": [
+    {
+      "category": "Legislation & Risk Assessment",
+      "slug": "legislation-and-risk-assessment",
+      "qCount": 54
+    },
+    {
+      "category": "Emergency & Rescue Procedures",
+      "slug": "emergency-and-rescue-procedures",
+      "qCount": 54
+    },
+    {
+      "category": "Safe Entry & Working Procedures",
+      "slug": "safe-entry-and-working-procedures",
+      "qCount": 52
+    },
+    {
+      "category": "Hazards & Atmospheric Monitoring",
+      "slug": "hazards-and-atmospheric-monitoring",
+      "qCount": 50
+    },
+    {
+      "category": "Understanding Confined Spaces",
+      "slug": "understanding-confined-spaces",
+      "qCount": 40
+    }
+  ],
+  "coshh": [
+    {
+      "category": "Control Measures & PPE",
+      "slug": "control-measures-and-ppe",
+      "qCount": 62
+    },
+    {
+      "category": "Legislation & Risk Assessment",
+      "slug": "legislation-and-risk-assessment",
+      "qCount": 52
+    },
+    {
+      "category": "Monitoring, Surveillance & Emergencies",
+      "slug": "monitoring-surveillance-and-emergencies",
+      "qCount": 51
+    },
+    {
+      "category": "Hazardous Substances on Site",
+      "slug": "hazardous-substances-on-site",
+      "qCount": 45
+    },
+    {
+      "category": "Understanding COSHH",
+      "slug": "understanding-coshh",
+      "qCount": 40
+    }
+  ],
+  "cscs-card": [
+    {
+      "category": "Introduction to CSCS & the HS&E Test",
+      "slug": "introduction-to-cscs-and-the-hsande-test",
+      "qCount": 50
+    },
+    {
+      "category": "General Health & Safety",
+      "slug": "general-health-and-safety",
+      "qCount": 50
+    },
+    {
+      "category": "Working at Height & Manual Handling",
+      "slug": "working-at-height-and-manual-handling",
+      "qCount": 50
+    },
+    {
+      "category": "Hazardous Substances & Environmental",
+      "slug": "hazardous-substances-and-environmental",
+      "qCount": 50
+    },
+    {
+      "category": "Specialist Knowledge & Site Safety",
+      "slug": "specialist-knowledge-and-site-safety",
+      "qCount": 50
+    }
+  ],
+  "fire-safety": [
+    {
+      "category": "Fire Prevention & Detection",
+      "slug": "fire-prevention-and-detection",
+      "qCount": 90
+    },
+    {
+      "category": "Understanding Fire",
+      "slug": "understanding-fire",
+      "qCount": 40
+    },
+    {
+      "category": "Fire Safety Legislation",
+      "slug": "fire-safety-legislation",
+      "qCount": 40
+    },
+    {
+      "category": "Fire Marshal Duties & Evacuation",
+      "slug": "fire-marshal-duties-and-evacuation",
+      "qCount": 40
+    },
+    {
+      "category": "Firefighting Equipment & Incident Response",
+      "slug": "firefighting-equipment-and-incident-response",
+      "qCount": 40
+    }
+  ],
+  "first-aid": [
+    {
+      "category": "CPR, AED & Airway",
+      "slug": "cpr-aed-and-airway",
+      "qCount": 50
+    },
+    {
+      "category": "Bleeding, Burns & Shock",
+      "slug": "bleeding-burns-and-shock",
+      "qCount": 50
+    },
+    {
+      "category": "Medical Emergencies",
+      "slug": "medical-emergencies",
+      "qCount": 50
+    },
+    {
+      "category": "Injuries & Specific Conditions",
+      "slug": "injuries-and-specific-conditions",
+      "qCount": 50
+    },
+    {
+      "category": "Legislation, Kit & Protocol",
+      "slug": "legislation-kit-and-protocol",
+      "qCount": 50
+    }
+  ],
+  "ipaf": [
+    {
+      "category": "Legislation",
+      "slug": "legislation",
+      "qCount": 40
+    },
+    {
+      "category": "Tower Types",
+      "slug": "tower-types",
+      "qCount": 40
+    },
+    {
+      "category": "Assembly",
+      "slug": "assembly",
+      "qCount": 40
+    },
+    {
+      "category": "Inspection",
+      "slug": "inspection",
+      "qCount": 40
+    },
+    {
+      "category": "Hazards",
+      "slug": "hazards",
+      "qCount": 40
+    }
+  ],
+  "manual-handling": [
+    {
+      "category": "Risk Assessment & Reduction",
+      "slug": "risk-assessment-and-reduction",
+      "qCount": 60
+    },
+    {
+      "category": "Principles of Safe Lifting",
+      "slug": "principles-of-safe-lifting",
+      "qCount": 51
+    },
+    {
+      "category": "Workplace-Specific Handling",
+      "slug": "workplace-specific-handling",
+      "qCount": 50
+    },
+    {
+      "category": "Health, Welfare & Responsibilities",
+      "slug": "health-welfare-and-responsibilities",
+      "qCount": 49
+    },
+    {
+      "category": "Understanding Manual Handling",
+      "slug": "understanding-manual-handling",
+      "qCount": 40
+    }
+  ],
+  "pasma": [
+    {
+      "category": "Assembly",
+      "slug": "assembly",
+      "qCount": 47
+    },
+    {
+      "category": "Safety",
+      "slug": "safety",
+      "qCount": 45
+    },
+    {
+      "category": "Legislation",
+      "slug": "legislation",
+      "qCount": 43
+    },
+    {
+      "category": "Inspection",
+      "slug": "inspection",
+      "qCount": 36
+    },
+    {
+      "category": "Hazards",
+      "slug": "hazards",
+      "qCount": 29
+    },
+    {
+      "category": "Tower Types",
+      "slug": "tower-types",
+      "qCount": 28
+    },
+    {
+      "category": "Dismantling",
+      "slug": "dismantling",
+      "qCount": 28
+    }
+  ],
+  "working-at-height": [
+    {
+      "category": "Safe Systems of Work",
+      "slug": "safe-systems-of-work",
+      "qCount": 54
+    },
+    {
+      "category": "Fall Protection & Prevention",
+      "slug": "fall-protection-and-prevention",
+      "qCount": 52
+    },
+    {
+      "category": "Access Equipment & Selection",
+      "slug": "access-equipment-and-selection",
+      "qCount": 51
+    },
+    {
+      "category": "Understanding Working at Height",
+      "slug": "understanding-working-at-height",
+      "qCount": 47
+    },
+    {
+      "category": "Incident Response & Responsibilities",
+      "slug": "incident-response-and-responsibilities",
+      "qCount": 46
+    }
+  ],
+  "level-2-communications-career": [
+    {
+      "category": "Individuals reporting",
+      "slug": "individuals-reporting",
+      "qCount": 31
+    },
+    {
+      "category": "Workplace information",
+      "slug": "workplace-information",
+      "qCount": 31
+    },
+    {
+      "category": "Customer information",
+      "slug": "customer-information",
+      "qCount": 31
+    },
+    {
+      "category": "Communication methods",
+      "slug": "communication-methods",
+      "qCount": 31
+    },
+    {
+      "category": "Site management team & roles",
+      "slug": "site-management-team-and-roles",
+      "qCount": 30
+    },
+    {
+      "category": "Site visitors",
+      "slug": "site-visitors",
+      "qCount": 30
+    },
+    {
+      "category": "Company policies & procedures",
+      "slug": "company-policies-and-procedures",
+      "qCount": 30
+    },
+    {
+      "category": "Conflict",
+      "slug": "conflict",
+      "qCount": 30
+    },
+    {
+      "category": "Effects of poor communication",
+      "slug": "effects-of-poor-communication",
+      "qCount": 30
+    },
+    {
+      "category": "Statutory legislation",
+      "slug": "statutory-legislation",
+      "qCount": 29
+    },
+    {
+      "category": "Accessible communication",
+      "slug": "accessible-communication",
+      "qCount": 28
+    }
+  ],
+  "level-3-electrical-health-safety": [
+    {
+      "category": "Risk Assessment",
+      "slug": "risk-assessment",
+      "qCount": 52
+    },
+    {
+      "category": "HASAWA 1974",
+      "slug": "hasawa-1974",
+      "qCount": 49
+    },
+    {
+      "category": "Emergency Procedures",
+      "slug": "emergency-procedures",
+      "qCount": 48
+    },
+    {
+      "category": "COSHH",
+      "slug": "coshh",
+      "qCount": 44
+    },
+    {
+      "category": "EAWR 1989",
+      "slug": "eawr-1989",
+      "qCount": 40
+    },
+    {
+      "category": "RIDDOR",
+      "slug": "riddor",
+      "qCount": 39
+    },
+    {
+      "category": "PPE & Safe Systems",
+      "slug": "ppe-and-safe-systems",
+      "qCount": 38
+    },
+    {
+      "category": "Method Statements",
+      "slug": "method-statements",
+      "qCount": 30
+    },
+    {
+      "category": "Asbestos and CDM 2015",
+      "slug": "asbestos-and-cdm-2015",
+      "qCount": 29
+    },
+    {
+      "category": "Supervisor Responsibilities",
+      "slug": "supervisor-responsibilities",
+      "qCount": 27
+    }
+  ],
+  "level-3-environmental-technologies": [
+    {
+      "category": "BS 7671 Special Locations",
+      "slug": "bs-7671-special-locations",
+      "qCount": 55
+    },
+    {
+      "category": "Sustainability",
+      "slug": "sustainability",
+      "qCount": 51
+    },
+    {
+      "category": "EPCs & Compliance",
+      "slug": "epcs-and-compliance",
+      "qCount": 47
+    },
+    {
+      "category": "Renewable Technologies",
+      "slug": "renewable-technologies",
+      "qCount": 46
+    },
+    {
+      "category": "Building Regulations Part L",
+      "slug": "building-regulations-part-l",
+      "qCount": 44
+    },
+    {
+      "category": "Smart Building Systems",
+      "slug": "smart-building-systems",
+      "qCount": 42
+    },
+    {
+      "category": "Energy Efficiency",
+      "slug": "energy-efficiency",
+      "qCount": 35
+    },
+    {
+      "category": "Future Technologies",
+      "slug": "future-technologies",
+      "qCount": 30
+    },
+    {
+      "category": "F-Gas, WEEE and Sustainable Working",
+      "slug": "f-gas-weee-and-sustainable-working",
+      "qCount": 25
+    }
+  ],
+  "level-3-electrical-science": [
+    {
+      "category": "Resistivity & Circuit Calculations",
+      "slug": "resistivity-and-circuit-calculations",
+      "qCount": 72
+    },
+    {
+      "category": "AC Theory",
+      "slug": "ac-theory",
+      "qCount": 59
+    },
+    {
+      "category": "Motors & Generators",
+      "slug": "motors-and-generators",
+      "qCount": 55
+    },
+    {
+      "category": "Three-Phase Systems",
+      "slug": "three-phase-systems",
+      "qCount": 47
+    },
+    {
+      "category": "Ohm's Law & Power",
+      "slug": "ohms-law-and-power",
+      "qCount": 44
+    },
+    {
+      "category": "Power Factor",
+      "slug": "power-factor",
+      "qCount": 44
+    },
+    {
+      "category": "Transformers",
+      "slug": "transformers",
+      "qCount": 40
+    },
+    {
+      "category": "Advanced Calculations",
+      "slug": "advanced-calculations",
+      "qCount": 29
+    }
+  ],
+  "level-3-fault-diagnosis": [
+    {
+      "category": "Common Faults",
+      "slug": "common-faults",
+      "qCount": 77
+    },
+    {
+      "category": "Real-World Fault Scenarios",
+      "slug": "real-world-fault-scenarios",
+      "qCount": 50
+    },
+    {
+      "category": "Test Equipment",
+      "slug": "test-equipment",
+      "qCount": 49
+    },
+    {
+      "category": "Safe Isolation",
+      "slug": "safe-isolation",
+      "qCount": 49
+    },
+    {
+      "category": "Diagnosis Methods",
+      "slug": "diagnosis-methods",
+      "qCount": 47
+    },
+    {
+      "category": "Documentation",
+      "slug": "documentation",
+      "qCount": 38
+    },
+    {
+      "category": "Fault Types",
+      "slug": "fault-types",
+      "qCount": 36
+    },
+    {
+      "category": "Repair Procedures",
+      "slug": "repair-procedures",
+      "qCount": 34
+    }
+  ],
+  "level-3-systems-design": [
+    {
+      "category": "Cable Selection",
+      "slug": "cable-selection",
+      "qCount": 65
+    },
+    {
+      "category": "Design Principles",
+      "slug": "design-principles",
+      "qCount": 60
+    },
+    {
+      "category": "Load Calculations",
+      "slug": "load-calculations",
+      "qCount": 48
+    },
+    {
+      "category": "Earthing & Bonding",
+      "slug": "earthing-and-bonding",
+      "qCount": 48
+    },
+    {
+      "category": "Protection Coordination",
+      "slug": "protection-coordination",
+      "qCount": 44
+    },
+    {
+      "category": "Special Locations",
+      "slug": "special-locations",
+      "qCount": 33
+    },
+    {
+      "category": "Design Documentation",
+      "slug": "design-documentation",
+      "qCount": 22
+    }
+  ],
+  "level-3-career-development": [
+    {
+      "category": "Career Pathways",
+      "slug": "career-pathways",
+      "qCount": 76
+    },
+    {
+      "category": "Qualifications",
+      "slug": "qualifications",
+      "qCount": 56
+    },
+    {
+      "category": "Professional Bodies",
+      "slug": "professional-bodies",
+      "qCount": 51
+    },
+    {
+      "category": "Business Skills",
+      "slug": "business-skills",
+      "qCount": 44
+    },
+    {
+      "category": "Industry Roles",
+      "slug": "industry-roles",
+      "qCount": 39
+    },
+    {
+      "category": "JIB Grading",
+      "slug": "jib-grading",
+      "qCount": 36
+    },
+    {
+      "category": "CPD Requirements",
+      "slug": "cpd-requirements",
+      "qCount": 32
+    }
+  ],
+  "emergency-lighting": [
+    {
+      "category": "Compliance",
+      "slug": "compliance",
+      "qCount": 69
+    },
+    {
+      "category": "Design",
+      "slug": "design",
+      "qCount": 62
+    },
+    {
+      "category": "Cabling & Batteries",
+      "slug": "cabling-and-batteries",
+      "qCount": 60
+    },
+    {
+      "category": "System Types",
+      "slug": "system-types",
+      "qCount": 57
+    },
+    {
+      "category": "Testing & Maintenance",
+      "slug": "testing-and-maintenance",
+      "qCount": 52
+    },
+    {
+      "category": "Introduction",
+      "slug": "introduction",
+      "qCount": 50
+    }
+  ],
+  "fire-alarm": [
+    {
+      "category": "Design & Zoning",
+      "slug": "design-and-zoning",
+      "qCount": 46
+    },
+    {
+      "category": "Testing & Maintenance",
+      "slug": "testing-and-maintenance",
+      "qCount": 38
+    },
+    {
+      "category": "Installation",
+      "slug": "installation",
+      "qCount": 26
+    },
+    {
+      "category": "Detectors & Devices",
+      "slug": "detectors-and-devices",
+      "qCount": 25
+    },
+    {
+      "category": "Compliance",
+      "slug": "compliance",
+      "qCount": 25
+    },
+    {
+      "category": "System Categories",
+      "slug": "system-categories",
+      "qCount": 20
+    },
+    {
+      "category": "Power & Cabling",
+      "slug": "power-and-cabling",
+      "qCount": 20
+    }
+  ],
+  "ev-charging": [
+    {
+      "category": "Electrical Design",
+      "slug": "electrical-design",
+      "qCount": 46
+    },
+    {
+      "category": "Smart Charging",
+      "slug": "smart-charging",
+      "qCount": 34
+    },
+    {
+      "category": "Earthing & Protection",
+      "slug": "earthing-and-protection",
+      "qCount": 31
+    },
+    {
+      "category": "EVSE Types",
+      "slug": "evse-types",
+      "qCount": 31
+    },
+    {
+      "category": "Testing",
+      "slug": "testing",
+      "qCount": 23
+    },
+    {
+      "category": "Compliance",
+      "slug": "compliance",
+      "qCount": 18
+    },
+    {
+      "category": "Introduction",
+      "slug": "introduction",
+      "qCount": 17
+    }
+  ],
+  "data-cabling": [
+    {
+      "category": "Installation Techniques",
+      "slug": "installation-techniques",
+      "qCount": 43
+    },
+    {
+      "category": "Cable Types & Specifications",
+      "slug": "cable-types-and-specifications",
+      "qCount": 35
+    },
+    {
+      "category": "Testing & Certification",
+      "slug": "testing-and-certification",
+      "qCount": 34
+    },
+    {
+      "category": "Standards & Documentation",
+      "slug": "standards-and-documentation",
+      "qCount": 31
+    },
+    {
+      "category": "Network Applications & PoE",
+      "slug": "network-applications-and-poe",
+      "qCount": 30
+    },
+    {
+      "category": "Fundamentals & Infrastructure",
+      "slug": "fundamentals-and-infrastructure",
+      "qCount": 27
+    }
+  ],
+  "renewable-energy": [
+    {
+      "category": "Energy Storage",
+      "slug": "energy-storage",
+      "qCount": 42
+    },
+    {
+      "category": "Solar PV",
+      "slug": "solar-pv",
+      "qCount": 37
+    },
+    {
+      "category": "System Design",
+      "slug": "system-design",
+      "qCount": 33
+    },
+    {
+      "category": "Installation & Safety",
+      "slug": "installation-and-safety",
+      "qCount": 33
+    },
+    {
+      "category": "Wind Energy",
+      "slug": "wind-energy",
+      "qCount": 27
+    },
+    {
+      "category": "Grid Connection",
+      "slug": "grid-connection",
+      "qCount": 22
+    },
+    {
+      "category": "Introduction",
+      "slug": "introduction",
+      "qCount": 20
+    },
+    {
+      "category": "Testing & Commissioning",
+      "slug": "testing-and-commissioning",
+      "qCount": 12
+    },
+    {
+      "category": "Maintenance",
+      "slug": "maintenance",
+      "qCount": 12
+    },
+    {
+      "category": "Financial",
+      "slug": "financial",
+      "qCount": 11
+    }
+  ],
+  "smart-home": [
+    {
+      "category": "Installation",
+      "slug": "installation",
+      "qCount": 49
+    },
+    {
+      "category": "Protocols",
+      "slug": "protocols",
+      "qCount": 42
+    },
+    {
+      "category": "Lighting",
+      "slug": "lighting",
+      "qCount": 31
+    },
+    {
+      "category": "Security",
+      "slug": "security",
+      "qCount": 30
+    },
+    {
+      "category": "HVAC",
+      "slug": "hvac",
+      "qCount": 29
+    },
+    {
+      "category": "Maintenance",
+      "slug": "maintenance",
+      "qCount": 28
+    },
+    {
+      "category": "Fundamentals",
+      "slug": "fundamentals",
+      "qCount": 18
+    },
+    {
+      "category": "Voice Assistants",
+      "slug": "voice-assistants",
+      "qCount": 12
+    },
+    {
+      "category": "Hubs",
+      "slug": "hubs",
+      "qCount": 11
+    }
+  ],
+  "industrial-electrical": [
+    {
+      "category": "Motors & Control",
+      "slug": "motors-and-control",
+      "qCount": 35
+    },
+    {
+      "category": "Safety & Isolation",
+      "slug": "safety-and-isolation",
+      "qCount": 29
+    },
+    {
+      "category": "Distribution Systems",
+      "slug": "distribution-systems",
+      "qCount": 24
+    },
+    {
+      "category": "Cables & Containment",
+      "slug": "cables-and-containment",
+      "qCount": 22
+    },
+    {
+      "category": "Panel Assembly",
+      "slug": "panel-assembly",
+      "qCount": 15
+    },
+    {
+      "category": "PLC & Automation",
+      "slug": "plc-and-automation",
+      "qCount": 15
+    },
+    {
+      "category": "Fault Finding",
+      "slug": "fault-finding",
+      "qCount": 15
+    },
+    {
+      "category": "Power Quality",
+      "slug": "power-quality",
+      "qCount": 15
+    }
+  ],
+  "instrumentation": [
+    {
+      "category": "Sensors & Transmitters",
+      "slug": "sensors-and-transmitters",
+      "qCount": 41
+    },
+    {
+      "category": "Calibration & Testing",
+      "slug": "calibration-and-testing",
+      "qCount": 33
+    },
+    {
+      "category": "Control Systems",
+      "slug": "control-systems",
+      "qCount": 28
+    },
+    {
+      "category": "Wiring & Installation",
+      "slug": "wiring-and-installation",
+      "qCount": 28
+    },
+    {
+      "category": "Signal Conditioning",
+      "slug": "signal-conditioning",
+      "qCount": 18
+    },
+    {
+      "category": "Advanced Topics",
+      "slug": "advanced-topics",
+      "qCount": 14
+    },
+    {
+      "category": "Fault Finding",
+      "slug": "fault-finding",
+      "qCount": 10
+    }
+  ],
+  "fibre-optics": [
+    {
+      "category": "Standards and Design",
+      "slug": "standards-and-design",
+      "qCount": 68
+    },
+    {
+      "category": "Fault Finding",
+      "slug": "fault-finding",
+      "qCount": 54
+    },
+    {
+      "category": "Connectors and Splicing",
+      "slug": "connectors-and-splicing",
+      "qCount": 52
+    },
+    {
+      "category": "Installation",
+      "slug": "installation",
+      "qCount": 41
+    },
+    {
+      "category": "Fibre Types",
+      "slug": "fibre-types",
+      "qCount": 30
+    },
+    {
+      "category": "Cable Construction",
+      "slug": "cable-construction",
+      "qCount": 29
+    },
+    {
+      "category": "Fundamentals",
+      "slug": "fundamentals",
+      "qCount": 26
+    }
+  ]
+}

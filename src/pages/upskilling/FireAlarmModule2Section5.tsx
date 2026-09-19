@@ -24,13 +24,13 @@ const inlineChecks = [
       'BS 5839-1:2025 (clause 30 commentary) recognises four categories of false alarm. What are they, and why does the categorisation matter?',
     options: [
       'Only one category, covering every false-alarm event under a single heading.',
-      'Four — equipment, environmental, malicious and unwanted — each with its own remediation.',
+      'Four — unwanted, equipment, malicious and good intent — each with its own remediation.',
       'Two categories, splitting events only into equipment faults and environmental triggers.',
       'There are no defined categories; all false alarms are treated identically.',
     ],
     correctIndex: 1,
     explanation:
-      'The four categories: (1) equipment — detector/panel faults, ageing, drift (fixed by service/replacement); (2) environmental — steam, aerosol, dust, cooking fumes triggering legitimate sensitivity (fixed by relocation, AND-logic mode change or environmental control); (3) malicious — deliberate MCP operation without fire (fixed by Type B / transparent covers / engagement); (4) unwanted — system operated correctly but in an unwanted scenario like legitimate cooking or unnotified hot work (fixed by procedures and siting review). Each has a different remediation, which is why categorisation matters. The 2025 edition moves them into the clause 30 commentary and asks the commissioner to explain them to the user.',
+      'The four, in the Commentary on Clause 30: (1) UNWANTED ALARMS — the system worked correctly but there was no fire. This is the big one, and it has three sub-types: a fire-like phenomenon or environmental influence (bonfire smoke, dust, insects, rapid air flow); accidental damage; and inappropriate human action such as testing without warning the occupants or the ARC. Fixed by siting, detector selection, mode changes and procedures. (2) EQUIPMENT FALSE ALARMS — a fault in the system (fixed by service or replacement). (3) MALICIOUS — someone operates a call point knowing there is no fire (fixed by Type B covers, siting, engagement). (4) FALSE ALARMS WITH GOOD INTENT — someone genuinely believes there is a fire when there is not; the standard notes little can be done to prevent these. Two traps: "environmental" is NOT a category of its own, it is a sub-type of unwanted alarms; and the standard says explicitly that it is a common misconception that most false alarms come from equipment faults — most are unwanted alarms.',
   },
   {
     id: 'fam2-s5-trigger',
@@ -82,14 +82,14 @@ const quizQuestions = [
     question:
       'How many categories of false alarm does BS 5839-1:2025 recognise (clause 30 commentary)?',
     options: [
-      'Four — equipment, environmental, malicious and unwanted — each with its own remediation.',
+      'Four — unwanted, equipment, malicious and good intent — each with its own remediation.',
       'Two categories — equipment faults and environmental triggers.',
       'Three categories — equipment, environmental and malicious.',
       'Six categories, splitting unwanted signals by hot work, cooking and contractor cause.',
     ],
     correctAnswer: 0,
     explanation:
-      'The four categories are equipment (detector/panel fault, drift), environmental (steam, aerosol, dust, cooking fumes), malicious (deliberate MCP operation without fire) and unwanted (system operated correctly in a non-fire scenario the user did not want). Each has a specific remediation pathway. The 2025 edition moved them from the terms section into the clause 30 commentary and asks the commissioning organisation to explain them at handover so the user can categorise each event at the time of recording.',
+      'The four categories are UNWANTED ALARMS (the system worked but there was no fire — covering fire-like phenomena and environmental influences such as steam, aerosol, dust and cooking fumes, plus accidental damage and inappropriate human action), EQUIPMENT false alarms (a fault in the system), MALICIOUS (deliberate operation knowing there is no fire) and FALSE ALARMS WITH GOOD INTENT (someone genuinely believed there was a fire). Environmental is a sub-type of unwanted, not a category of its own. Each has a specific remediation pathway. The 2025 edition moved them from the terms section into the clause 30 commentary and asks the commissioning organisation to explain them at handover so the user can categorise each event at the time of recording.',
   },
   {
     id: 2,
@@ -225,7 +225,7 @@ const FireAlarmModule2Section5 = () => {
   useSEO({
     title: 'False alarm management | Fire Alarm Module 2.5 | Elec-Mate',
     description:
-      'BS 5839-1:2025 false-alarm management: four categories (equipment / environmental / malicious / unwanted), clause 29.6 every-event investigation, clause 31 thresholds (4/100 preliminary, 5/100 in-depth >40 detectors), clause 33 multi-sensor preference, ARC notification and the new false-alarm-notice label.',
+      'BS 5839-1:2025 false-alarm management: four categories (unwanted / equipment / malicious / good intent), clause 29.6 every-event investigation, clause 31 thresholds (4/100 preliminary, 5/100 in-depth >40 detectors), clause 33 multi-sensor preference, ARC notification and the new false-alarm-notice label.',
   });
 
   return (
@@ -247,7 +247,7 @@ const FireAlarmModule2Section5 = () => {
             'Clause 33 — greater emphasis on MULTI-SENSOR detectors where point smoke FA risk identified. Annex D (was Annex E) gives selection guidance.',
             'NEW false-alarm-notice label recommended at/adjacent to the CIE: "ACTIVE CONNECTION to the FRS via the ARC — Contact: [ARC tel]" — reminds contractors to NOTIFY the ARC before any test.',
             'Alarm transmission to ARC should now (where practicable) carry premises type, triggering device nature, and presence of coincidence filtering — supports FRS call-challenging and prioritisation.',
-            'Heat detectors NO LONGER permitted in sleeping rooms for new L1/L2/L3 work (clause 14, see Section 1) — closes a known FA / fatality gap.',
+            'Heat detectors NO LONGER permitted in sleeping rooms for new L1/L2/L3 work (20.2 c) NOTE 3, see Section 1) — closes a known FA / fatality gap.',
           ]}
         />
 
@@ -316,7 +316,7 @@ const FireAlarmModule2Section5 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 30 commentary (categories of false alarms)"
+          source="BS 5839-1:2025 · Clause 30 commentary (categories of false alarms) — in summary, not a verbatim quote"
           clause={
             <>
               The categories of false alarms have been moved from the terms and definitions to the
@@ -396,7 +396,7 @@ const FireAlarmModule2Section5 = () => {
             viewBox="0 0 820 580"
             className="w-full h-auto"
             role="img"
-            aria-label="Decision flowchart starting with a false alarm event, branching into the four categories (equipment, environmental, malicious, unwanted), each with associated remediation actions, and feeding into the clause 31 quantitative thresholds (4 per 100 preliminary, 5 per 100 in-depth) and the system logbook record."
+            aria-label="Decision flowchart starting with a false alarm event, branching into the four categories (unwanted, equipment, malicious, good intent), each with associated remediation actions, and feeding into the clause 31 quantitative thresholds (4 per 100 preliminary, 5 per 100 in-depth) and the system logbook record."
           >
             {/* Root: FA event */}
             <rect
@@ -886,11 +886,14 @@ const FireAlarmModule2Section5 = () => {
               covers), or zone re-design.
             </li>
             <li>
-              <strong>Sub-40-detector systems.</strong> The in-depth size threshold (&gt; 40
-              detectors) means small systems do not formally trigger in-depth investigation under
-              clause 31, even at high FA rates. The preliminary trigger (4/100) still applies.
-              Small-system FA management is typically handled by service organisations directly
-              without formal in-depth processes.
+              <strong>Systems with fewer than 41 detectors.</strong> These DO trigger an in-depth
+              investigation — the test is simply a different one. Clause 31.4 applies a RATE to
+              systems with more than 40 automatic fire detectors: an average exceeding five false
+              alarms per 100 detectors per annum. Clause 31.5 applies a COUNT to systems with fewer
+              than 41: more than two false alarms in any rolling 12-month period, whatever the rate
+              works out at. A rate is meaningless on a ten-detector system, which is exactly why the
+              standard switches test. Assuming a small system is exempt is how a site runs for years
+              on repeated false alarms with no investigation.
             </li>
             <li>
               <strong>The annual calculation.</strong> At every annual service visit, calculate the
@@ -980,7 +983,7 @@ const FireAlarmModule2Section5 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 33 (measures to limit false alarms — multi-sensor preference)"
+          source="BS 5839-1:2025 · Clause 33 (measures to limit false alarms — multi-sensor preference) — in summary, not a verbatim quote"
           clause={
             <>
               Greater emphasis has been placed on the use of multi-sensor detectors. In situations
@@ -1027,7 +1030,7 @@ const FireAlarmModule2Section5 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 14.17 / 14.18 commentary (alarm transmission and false-alarm notice)"
+          source="BS 5839-1:2025 · Clause 14.17 / 14.18 commentary (alarm transmission and false-alarm notice) — in summary, not a verbatim quote"
           clause={
             <>
               To aid the reduction in false alarms caused by not informing the Alarm Receiving
@@ -1062,7 +1065,7 @@ const FireAlarmModule2Section5 = () => {
         <CommonMistake
           title="Treating every false alarm as 'equipment fault' and replacing detectors"
           whatHappens="A retail chain's facilities manager records every false alarm as 'detector fault' and demands the maintenance contractor replace the detector. Over 18 months, 47 detectors are replaced. The false alarm rate does not change — the new detectors trigger on the same environmental sources (cooking aerosol from in-store food stalls). The replacement cost (approximately £45 per detector × 47 = £2,100 plus labour) buys nothing. The actual category was environmental, requiring multi-sensor + AND logic, not equipment-replacement."
-          doInstead="Categorise correctly per clause 30. Equipment events are caused by detector or panel faults — drift, contamination, water ingress, physical damage. Environmental events are caused by external smoke-like phenomena reaching a working detector. Misdiagnosing environmental as equipment leads to expensive non-fix replacements. The 2025 commissioning org duty (clause 30) to explain the four categories to the user is exactly aimed at this pattern. At the next service visit, properly recategorise the recurring events; pivot the remediation to multi-sensor (clause 33) and detector-relocation; track the FA rate through the next 12-month cycle."
+          doInstead="Categorise correctly per clause 30. Equipment false alarms are caused by a fault in the system — drift, contamination, water ingress, physical damage. Environmental influences are a SUB-TYPE of unwanted alarms: external smoke-like phenomena reaching a working detector. Misdiagnosing an unwanted alarm as an equipment fault leads to expensive non-fix replacements. The 2025 commissioning org duty (clause 30) to explain the four categories to the user is exactly aimed at this pattern. At the next service visit, properly recategorise the recurring events; pivot the remediation to multi-sensor (clause 33) and detector-relocation; track the FA rate through the next 12-month cycle."
         />
 
         <CommonMistake
@@ -1091,13 +1094,13 @@ const FireAlarmModule2Section5 = () => {
           title="What to remember on site"
           points={[
             'Section 3 of BS 5839-1:2025 is REORGANISED — clauses 29 (responsibility), 30 (categories), 31 (investigation), 32 (design), 33 (measures). Same content, clearer structure.',
-            'FOUR categories — equipment, environmental, malicious, unwanted (clause 30 commentary). Commissioning org EXPLAINS them to the user at handover.',
+            'FOUR categories — unwanted (incl. environmental influences, accidental damage, inappropriate human action), equipment, malicious, good intent (clause 30 commentary). Commissioning org EXPLAINS them to the user at handover.',
             'NEW clause 29.6 — investigate EVERY false alarm. Was threshold-only in 2017; now event-by-event with categorisation.',
             'Clause 31 thresholds (UNCHANGED) — preliminary > 4/100/year, in-depth > 5/100/year AND > 40 detectors. Calculate at every annual service.',
             'Clause 33 — emphasise MULTI-SENSOR in AND logic for known FA-risk areas. Document mode under clause 20.11. Annex D for selection guidance.',
             'NEW false-alarm-notice label at the CIE with ARC contact number — addresses unnotified contractor tests, the most common preventable unwanted-signal cause.',
             'Alarm transmission to ARC — premises type, triggering device nature, coincidence-filter status — supports FRS call-challenging.',
-            'Heat detectors NO LONGER permitted in sleeping rooms for new L1/L2/L3 work (clause 14, see Section 1) — closes a known FA / fatality gap.',
+            'Heat detectors NO LONGER permitted in sleeping rooms for new L1/L2/L3 work (20.2 c) NOTE 3, see Section 1) — closes a known FA / fatality gap.',
             'Logbook (Annex H) — every event recorded with category and action; ALL variations recorded (2025 — was "major variations" only in 2017).',
             "False-alarm management is auditable, not anecdotal. The 2025 framework converts 'we have a lot of false alarms' into a categorised, threshold-tracked, remediation-plan-backed dataset that the FRS, the FRA, and the user can all work with.",
           ]}

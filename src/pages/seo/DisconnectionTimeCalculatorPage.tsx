@@ -17,7 +17,7 @@ import {
 export default function DisconnectionTimeCalculatorPage() {
   return (
     <ToolTemplate
-      title="Max Disconnection Times: TN 0.4s, TT 0.2s, 5s"
+      title="Disconnection Time Calculator: Free Zs Pass/Fail"
       description="BS 7671 Table 41.1 max disconnection times: 0.4s for TN final circuits up to 63A, 0.2s for TT, 5s for distribution circuits. Free Zs pass/fail check."
       datePublished="2026-01-20"
       dateModified="2026-06-10"
@@ -77,8 +77,10 @@ export default function DisconnectionTimeCalculatorPage() {
               <p>
                 BS 7671:2018+A4:2026 sets specific disconnection time limits based on the type of
                 circuit and the{' '}
-                <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">earthing system</SEOInternalLink> in
-                use. The fundamental requirement comes from Regulation 411.3.2, which states that
+                <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">
+                  earthing system
+                </SEOInternalLink>{' '}
+                in use. The fundamental requirement comes from Regulation 411.3.2, which states that
                 protective devices must disconnect the supply within the times specified in Table
                 41.1. These times are derived from the IEC body current curves — the relationship
                 between current magnitude, duration, and the likelihood of ventricular fibrillation.

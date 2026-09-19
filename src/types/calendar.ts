@@ -57,6 +57,10 @@ export interface CalendarEvent {
    */
   confirmation_sent_at?: string;
   confirmation_sent_to?: string;
+  /** The electrician asked for the customer to be emailed the evening before. */
+  customer_reminder_opt_in?: boolean;
+  /** When `send-booking-reminders` emailed that reminder. */
+  customer_reminder_sent_at?: string;
   reminder_minutes: number;
   created_at: string;
   updated_at: string;

@@ -52,7 +52,7 @@ const inlineChecks = [
     options: [
       'Mandatory end-to-end encryption of every signal on the network, with no other measures.',
       'A requirement to change the CIE engineer password every day the system stays networked.',
-      'Physical lock-off, anti-tamper plugs, authentication, and a risk assessment before remote work.',
+      'Suitable physical means of preventing unauthorised access (lock-off and anti-tamper plugs are common ways of achieving it), plus authentication of any remote-connection request.',
       'A blanket prohibition on any remote access to a CIE, requiring all service to be on site.',
     ],
     correctIndex: 2,
@@ -161,7 +161,8 @@ const quizQuestions = [
   },
   {
     id: 7,
-    question: 'What is an "anti-tamper plug" on a network patch lead and why is it now expected?',
+    question:
+      'What is an "anti-tamper plug" on a network patch lead, and what does clause 43.4.1 a) actually require?',
     options: [
       'A device locking a patch lead to its socket so it cannot be unplugged without a key or tool.',
       'A coloured cap fitted to a patch lead so installers can identify fire-system cabling at a glance.',
@@ -249,7 +250,7 @@ const FireAlarmModule3Section5 = () => {
             'BS EN 54-13 governs system compatibility — the panel + network combination must be a vendor-certified system.',
             'Distributed CIE: each panel has full CIE function locally; status replicated across network; no single point of failure.',
             'Centralised CIE: one master, others slave; simpler config, but master is critical.',
-            'NEW BS 5839-1:2025 clause 43.4 — cyber security: physical lock-off of CIE cabinet, anti-tamper plugs on patch leads, authentication for remote service, risk assessment before remote read / control / write operations, verified system state on completion.',
+            'BS 5839-1:2025 clause 43.4 — cyber security. Note 43.4.1 opens "Not all systems or applications require cybersecurity, but if it is required...", so it is conditional. It then asks for (a) suitable PHYSICAL MEANS of preventing unauthorised access to the system, access points and network pathways — cabinet lock-off and anti-tamper plugs are common implementations, not named requirements — and (b) authentication of a remote-connection request before access is allowed. Risk assessment before remote read / control / write operations, verified system state on completion.',
             'Network monitoring catches not just hard failures but degraded performance — cable error rates, panel reboots, intermittent faults — giving advance warning.',
             'The cause-and-effect matrix spans the whole network — a cause on one panel can drive effects on another panel via the network signalling.',
           ]}
@@ -262,7 +263,7 @@ const FireAlarmModule3Section5 = () => {
             'Apply BS EN 54-13 system compatibility — networked panels and infrastructure must be a vendor-certified compatible system',
             'Distinguish distributed vs centralised CIE architectures and match to the resilience and operational requirements',
             'Implement network monitoring beyond simple fault detection — degraded-performance signals, panel reboots, communication-quality trends',
-            'Apply BS 5839-1:2025 clause 43.4 cyber security: physical security (lock-off, anti-tamper), authentication, risk assessment per remote operation, verified system state on completion',
+            'Apply BS 5839-1:2025 clause 43.4 where cyber security is required: suitable physical means of preventing unauthorised access (lock-off and anti-tamper are ways of doing it), authentication of remote-connection requests, risk assessment per remote operation, verified system state on completion',
             'Design the cause-and-effect matrix to span the whole network — events on one panel driving effects on another via network signalling',
             'Plan the system-level fire risk assessment for a multi-panel network: architecture, cyber-security posture, integration with other systems',
           ]}
@@ -305,22 +306,24 @@ const FireAlarmModule3Section5 = () => {
           <p>
             Multi-panel networks add complexity: more panels to commission, more interfaces to
             cable, more failure modes to consider. The 2025 standard\&apos;s emphasis on
-            accessibility (clause 7), cyber security (clause 43.4), and mandatory cause-and-effect
+            accessibility (clause 8.5), cyber security (clause 43.4), and mandatory cause-and-effect
             documentation all apply across the whole network.
           </p>
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Multi-panel network design (read with BS EN 54-13)"
+          source="BS 5839-1:2025 · Clause 23 (Networked systems) — 23.2, 23.3 and 23.4"
           clause={
             <>
-              Where a fire detection and fire alarm system comprises more than one control and
-              indicating equipment, the system as a whole shall be designed so that the failure of
-              any single component (including network communication infrastructure) does not
-              compromise the protection of more than one fire detection zone. The network
-              architecture and any associated cabling shall be specified to maintain communication
-              and indication during fire conditions, with cable types per BS EN 50200 / BS 8519 as
-              appropriate to the building risk profile.
+              <strong>23.3:</strong> &ldquo;A fault on the communications link between sub-panels
+              should not affect the operation of any sub-panel.&rdquo;
+              <br />
+              <br />
+              <strong>23.2</strong> requires that link to be monitored in accordance with 11.1, and
+              <strong>23.4</strong> that where the link forms a critical signal path the cable
+              installation should conform to Clause 25. The separate limit on what a single circuit
+              fault may disable is <strong>11.2.2</strong> — not more than 2 000 m&sup2;, and not
+              more than one floor plus five devices above and five below.
             </>
           }
           meaning="The single-fault rule scales to the network. A single panel failure must not lose protection from more than one zone — the network communication maintains coverage of devices on the failed panel via continued operation of the remaining panels (or, more commonly, within the failed panel maintaining detection while losing only its network indication function). The cable specification follows the same risk-based logic as any other fire alarm cable."
@@ -629,8 +632,8 @@ const FireAlarmModule3Section5 = () => {
               certification
             </text>
             <text x="60" y="452" fill="#EF4444" fontSize="10" fontWeight="bold">
-              NEW BS 5839-1:2025 clause 43.4 — cyber security: physical lock-off + anti-tamper plugs
-              + authentication
+              BS 5839-1:2025 clause 43.4 — cyber security (conditional): suitable physical means +
+              authentication
             </text>
           </svg>
         </div>
@@ -652,27 +655,32 @@ const FireAlarmModule3Section5 = () => {
               buildings of low-to-moderate fire risk.
             </li>
             <li>
-              <strong>BS EN 50200 PH-60 / PH-90</strong> — extended grade for more demanding
-              applications.
+              <strong>BS 5839-1 defines only TWO grades</strong> — there is no PH-60 or PH-90 tier
+              in this standard. Intermediate PH classes exist within BS EN 50200 itself, but BS
+              5839-1 selects between standard and enhanced only.
             </li>
             <li>
-              <strong>BS EN 50200 PH-120</strong> / <strong>BS 8519 enhanced</strong> — highest
-              grade, 120 minutes circuit integrity. Used for buildings of higher fire risk profile:
-              buildings over 18 m, sleeping premises with vulnerable occupants (hospitals, care
-              homes), large public buildings, and any premises where the fire risk assessment / fire
-              engineering requires it.
+              <strong>Enhanced — BS EN 50200 PH 120</strong>, 120 minutes duration of survival
+              (clause 25.6, tested to BS EN 50200:2015 and BS 8434-2). Clause 25.4 says enhanced
+              cable should generally be used in: <em>unsprinklered</em> buildings evacuated in FOUR
+              OR MORE phases; <em>unsprinklered</em> buildings greater than <strong>30 m</strong> in
+              height; and unsprinklered premises where a fire in one area could affect critical
+              signal paths serving remote areas still occupied during the fire. Every driver is
+              conditioned on the building being unsprinklered — a sprinklered building of the same
+              height does not attract the rule.
             </li>
             <li>
-              <strong>Selection criteria</strong> — BS 8519 / BS 9999 / BS 9991 fire engineering
-              determine the grade for the building. Network cables are typically specified to the
-              same grade as the rest of the fire alarm cabling — there is no benefit in using a
-              lower grade for the network when the device cables are higher.
+              <strong>Selection criteria</strong> — BS 9999 / BS 9991 fire engineering determine the
+              grade for the building. Network cables are typically specified to the same grade as
+              the rest of the fire alarm cabling — there is no benefit in using a lower grade for
+              the network when the device cables are higher.
             </li>
           </ul>
           <p>
-            Cable installation must follow BS 5839-1 and BS 8519: protected against mechanical
-            damage; supported at appropriate intervals; segregated from other services where
-            required; installed in fire-resistant containment where applicable.
+            Cable installation follows BS 5839-1 (clauses 25 and 35); BS 8519 is a separate
+            companion code many designers also work to, though BS 5839-1 does not cite it. Protected
+            against mechanical damage; supported at appropriate intervals; segregated from other
+            services where required; installed in fire-resistant containment where applicable.
           </p>
         </ConceptBlock>
 
@@ -687,7 +695,7 @@ const FireAlarmModule3Section5 = () => {
               segregation from other services as required, and clear identification per BS 5839-1.
             </>
           }
-          meaning="The cable specification framework: BS EN 50200 sets the test categories; BS 8519 gives the building-specific selection guidance; BS 5839-1:2025 confirms the application to fire alarm circuits including networks. Standard data cables are excluded by this framework. Network cabling between panels is not a cable-savings opportunity — it is a life-safety circuit and is specified accordingly."
+          meaning="Know which document does what. BS EN 50200 sets the test categories (PH 30, PH 60, PH 90, PH 120). BS 5839-1:2025 selects between just TWO of them — standard (PH 30, cl 25.5) and enhanced (PH 120, cl 25.6) — and sets its own triggers in 25.4. BS 8519 is a separate BSI code for fire-resistant power and control cable systems; it is widely used and useful, but BS 5839-1:2025 does not reference it, so do not quote it as a BS 5839-1 requirement. The application to fire alarm circuits including networks. Standard data cables are excluded by this framework. Network cabling between panels is not a cable-savings opportunity — it is a life-safety circuit and is specified accordingly."
         />
 
         <InlineCheck
@@ -813,7 +821,7 @@ const FireAlarmModule3Section5 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 43.4 (Remote services and cyber security)"
+          source="BS 5839-1:2025 · Clause 43.4 (Remote services and cyber security) — in summary, not a verbatim quote"
           clause={
             <>
               With the rise of all-IP networks and the connected CIE, remote services and cyber
@@ -959,7 +967,7 @@ const FireAlarmModule3Section5 = () => {
               question:
                 'Is it acceptable to put the fire alarm network on the same physical cable as other low-voltage services?',
               answer:
-                'Generally no. BS 5839-1 / BS 8519 require segregation of fire alarm cabling from other services. Some level of physical co-routing in containment may be acceptable per BS 8519 guidance with appropriate separation distances and protection, but mixing fire alarm signal cores with other services in a single cable is not. The reasoning: a fault on the other service should not propagate to the fire alarm; mechanical / fire damage to the shared cable affects both.',
+                'Generally no. BS 5839-1 clauses 35.8 and 35.9 deal with segregation — 35.8 defers to whatever separation the equipment manufacturer recommends, rather than fixing a distance. Some level of physical co-routing in containment may be acceptable per BS 8519 guidance with appropriate separation distances and protection, but mixing fire alarm signal cores with other services in a single cable is not. The reasoning: a fault on the other service should not propagate to the fire alarm; mechanical / fire damage to the shared cable affects both.',
             },
             {
               question:
@@ -969,9 +977,9 @@ const FireAlarmModule3Section5 = () => {
             },
             {
               question:
-                'For a networked system in a building over 18 m, what cable grade should I specify?',
+                'For a networked system in an unsprinklered building over 30 m, what cable grade should I specify?',
               answer:
-                'Typically BS EN 50200 PH-120 / BS 8519 enhanced grade, per BS 8519 / BS 9999 / BS 9991 guidance for higher-risk buildings. Buildings over 18 m have additional fire engineering considerations (longer evacuation times, more complex compartmentation, stairway pressurisation possibly relevant). The cable specification follows the same logic as for any other life-safety circuit: enhanced grade where the building demands it. The fire engineering specification document is the source of truth.',
+                'Enhanced grade — BS EN 50200 PH 120 (clause 25.6). Clause 25.4 b) names unsprinklered buildings greater than 30 m in height. BS 9999 / BS 9991 give the wider fire-engineering context; BS 5839-1 cites both and does NOT cite BS 8519. Taller buildings have additional fire engineering considerations (longer evacuation times, more complex compartmentation, stairway pressurisation possibly relevant). The cable specification follows the same logic as for any other life-safety circuit: enhanced grade where the building demands it. The fire engineering specification document is the source of truth.',
             },
           ]}
         />

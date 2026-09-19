@@ -6,12 +6,13 @@
 import { corsHeaders } from '../_shared/cors.ts';
 import { recordXeroPayment } from '../_shared/xero-invoice-status.ts';
 import { recordQuickBooksPayment } from '../_shared/quickbooks-invoice-status.ts';
-import { captureException } from '../_shared/sentry.ts';
+import { captureException, captureMessage } from '../_shared/sentry.ts';
 import { createClient } from '../_shared/deps.ts';
 import { handleError, ValidationError, ExternalAPIError } from '../_shared/errors.ts';
 import { decryptToken, encryptToken } from '../_shared/encryption.ts';
 import {
   resolveXeroSalesAccountCode,
+  resolveXeroReverseChargeTaxType,
   isInvalidAccountCodeError,
 } from '../_shared/xero-accounts.ts';
 import { withRetry, RetryPresets } from '../_shared/retry.ts';
@@ -172,6 +173,12 @@ Deno.serve(async (req: Request) => {
 
     // Decrypt tokens - this is likely where it fails
     let accessToken: string;
+    /*
+     * ELE-1703 — hoisted so the ELE-1744 re-detect retry below can pass the
+     * same value. Resolving it inside the switch case only would mean the
+     * retry silently posted a reverse-charge invoice as 'NONE'.
+     */
+    let xeroReverseChargeTaxType: string | null = null;
     let refreshToken: string | undefined;
 
     console.log('=== STEP: Token decryption ===');
@@ -456,11 +463,64 @@ Deno.serve(async (req: Request) => {
             (await resolveXeroSalesAccountCode(supabase, user.id, accessToken, tenantId)) ??
             XERO_DEFAULT_SALES_ACCOUNT_CODE;
           console.log('Xero sales account code:', configuredSalesCode);
+
+          /*
+           * ELE-1703 — only look the DRC rate up when the invoice needs it.
+           *
+           * Reverse-charge invoices are a minority, so resolving on every sync
+           * would spend a Xero call on the 90-odd per cent that will never use
+           * the answer. Once resolved it is cached on the connection, so a
+           * DRC-using electrician pays for the lookup once.
+           */
+          if (invoiceData.reverseCharge) {
+            const drc = await resolveXeroReverseChargeTaxType(
+              supabase,
+              user.id,
+              accessToken,
+              tenantId
+            );
+            xeroReverseChargeTaxType = drc.taxType;
+            console.log(`Xero reverse-charge tax type: ${drc.taxType ?? 'none'} (${drc.reason})`);
+
+            /*
+             * The point of this ticket is that the error lands in a customer's
+             * VAT return and nowhere we can see. If the rate cannot be found we
+             * still post — refusing the sync would be worse — but we are no
+             * longer blind to it.
+             *
+             * The two reasons need different responses and are tagged apart so
+             * Sentry can separate them. 'not-offered' is the customer's to fix
+             * in Xero. 'lookup-failed' is ours, and for now it is the EXPECTED
+             * answer: /TaxRates needs `accounting.settings.read`, which the app
+             * did not request until 19 Sep 2026, so all twelve connections
+             * that predate it will report this until they are re-made. Expect
+             * this warning to be common at first and to stop as people
+             * reconnect — if it does not, the scope change did not take.
+             */
+            if (drc.taxType === null) {
+              await captureMessage(
+                `Xero reverse-charge invoice posted without a DRC tax type (${drc.reason})`,
+                'warning',
+                {
+                  functionName: 'accounting-sync-invoice',
+                  userId: user.id,
+                  tags: { provider: 'xero', issue: 'ELE-1703', drcReason: drc.reason },
+                  extra: {
+                    invoiceId: invoice.id,
+                    invoiceNumber: invoiceData.invoiceNumber,
+                    detail: drc.detail,
+                  },
+                }
+              );
+            }
+          }
+
           const xeroResult = await syncToXero(
             accessToken,
             tenantId,
             invoiceData,
-            configuredSalesCode
+            configuredSalesCode,
+            xeroReverseChargeTaxType
           );
           externalInvoiceId = xeroResult.invoiceId;
           externalInvoiceUrl = xeroResult.invoiceUrl;
@@ -603,7 +663,8 @@ Deno.serve(async (req: Request) => {
                         accessToken,
                         tenantId,
                         invoiceData,
-                        freshCode
+                        freshCode,
+                        xeroReverseChargeTaxType
                       );
                       // Succeeded on the second attempt. Fall through to the
                       // normal success path by recording the result and
@@ -1148,7 +1209,8 @@ async function syncToXero(
   accessToken: string,
   tenantId: string,
   invoice: InvoiceData,
-  salesAccountCode: string = XERO_DEFAULT_SALES_ACCOUNT_CODE
+  salesAccountCode: string = XERO_DEFAULT_SALES_ACCOUNT_CODE,
+  reverseChargeTaxType: string | null = null
 ): Promise<SyncResult> {
   // First, find or create the contact
   const contactId = await findOrCreateXeroContact(accessToken, tenantId, invoice.client);
@@ -1175,7 +1237,45 @@ async function syncToXero(
   assertLinesReconcile(netLines, salesNetTarget, 'Xero');
   assertLinesAreSelfConsistent(netLines, 'Xero');
 
-  const salesTaxType = invoice.vatAmount > 0 ? 'OUTPUT2' : 'NONE'; // 20% VAT or no VAT
+  /*
+   * ELE-1703 — the CIS domestic reverse charge needs its OWN tax type.
+   *
+   * On a DRC invoice the electrician charges no VAT; the contractor accounts
+   * for it. The app already knows this (`invoice.reverseCharge`) and correctly
+   * sends a zero VAT amount — but zero VAT alone used to land on `'NONE'`,
+   * which tells Xero the supply is outside the scope of VAT entirely. It is
+   * not. A reverse-charge sale still belongs in box 6 of the VAT return, and
+   * coding it NONE under-reports the org's net outputs.
+   *
+   * The right code cannot be hardcoded: the TaxType string behind "Domestic
+   * Reverse Charge @ 20%" is per-organisation. It is read from the org's own
+   * /TaxRates (see `resolveXeroReverseChargeTaxType`) and cached.
+   *
+   * If that lookup found nothing — the org has no DRC rate, the call failed,
+   * the connection is not UK — `reverseChargeTaxType` is null and we post
+   * exactly what we post today. A missing rate must never block a sync.
+   *
+   * The `vatAmount === 0` guard is not redundant. Both builders zero the VAT
+   * when reverse charge is on (`employerMoney.ts`, `quote-calculations.ts`),
+   * so the two agreeing is the only state that should ever reach here. If they
+   * ever disagree, the invoice in front of the customer is the one with VAT on
+   * it, and posting a 0% DRC rate against it would leave Xero holding a total
+   * the customer was never shown. Flag it and post the old way.
+   */
+  const isReverseChargeSale = invoice.reverseCharge === true && invoice.vatAmount === 0;
+  if (invoice.reverseCharge === true && invoice.vatAmount > 0) {
+    console.warn(
+      `[ELE-1703] invoice ${invoice.invoiceNumber} is flagged reverse charge but carries ` +
+        `VAT of ${invoice.vatAmount} — posting as standard-rated, not DRC.`
+    );
+  }
+
+  const salesTaxType =
+    isReverseChargeSale && reverseChargeTaxType
+      ? reverseChargeTaxType
+      : invoice.vatAmount > 0
+        ? 'OUTPUT2'
+        : 'NONE'; // 20% VAT or no VAT
 
   // LineAmount is sent explicitly. Xero derives it from Quantity × UnitAmount
   // when it is absent, which reintroduces 2dp rounding drift across lines and

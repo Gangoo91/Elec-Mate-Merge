@@ -49,8 +49,27 @@ interface Props {
   onUpdate: (field: string, value: any) => void;
 }
 
+/*
+ * BS 5839-1:2025 Clause 45 covers extensions, Clause 46 modifications. The
+ * model certificate at G.7 prints both and says "respectively"; where the work
+ * type is known there is no reason to make the signatory certify against a
+ * clause they did not work to, so only the applicable one is named. The
+ * fallback keeps the model's own wording for a record saved before the type
+ * was captured.
+ *
+ * This MUST stay in step with the Liquid in the live G7 PDFMonkey template
+ * (5ECD2939-5CE2-4E98-8E47-32F25975C352) — the wording someone signs on screen
+ * and the wording that reaches the certificate have to be the same sentence.
+ */
+function annexGWork(modificationType?: string): { work: string; clause: string } {
+  if (modificationType === 'extension') return { work: 'extension', clause: 'Clause 45' };
+  if (modificationType) return { work: 'modification', clause: 'Clause 46' };
+  return { work: 'extension or modification', clause: 'Clause 45 or Clause 46 respectively' };
+}
+
 export default function FAG7Declaration({ formData, onUpdate }: Props) {
   const { loadInstallerDetails, hasDefaultProfile } = useFireAlarmSmartForm();
+  const { work, clause } = annexGWork(formData.modificationType);
 
   const handleUseMyDetails = () => {
     const details = loadInstallerDetails();
@@ -69,6 +88,30 @@ export default function FAG7Declaration({ formData, onUpdate }: Props) {
 
   return (
     <div className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+      {/*
+        Clause 6.4 — "All variations should be listed in the relevant system
+        certificate". The Annex G statement below carves out "the variations, if
+        any, stated in this certificate", so there has to be somewhere to state
+        them or the carve-out points at nothing.
+      */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Variations from BS 5839-1" />
+        <div className="rounded-xl border border-amber-500/30 bg-white/[0.05] p-3">
+          <p className="text-[12px] leading-relaxed text-white/85">
+            Any variation from the recommendations of BS 5839-1:2025 must be listed here with its
+            justification. Left blank, the certificate states that there were none.
+          </p>
+        </div>
+        <Field label="Variations & justification">
+          <Textarea
+            value={formData.modificationVariations || ''}
+            onChange={(e) => onUpdate('modificationVariations', e.target.value)}
+            className={textareaCn}
+            placeholder="List any departures from the standard and explain why they are acceptable..."
+          />
+        </Field>
+      </div>
+
       {/* Modifier declaration */}
       <div className={cn(cardCn, 'lg:col-span-2')}>
         <SectionHeader title="Modifier declaration" />
@@ -83,10 +126,16 @@ export default function FAG7Declaration({ formData, onUpdate }: Props) {
         )}
         <div className="rounded-xl bg-white/[0.05] px-3.5 py-3">
           <p className="text-[12px] text-white/85 leading-relaxed">
-            I hereby certify that the modification to the fire detection and fire alarm system
-            described in this certificate has been carried out in accordance with BS 5839-1:2025.
-            The modified sections have been tested and the entire system remains compliant and
-            functional.
+            I/we being the competent person(s) responsible (as indicated by my/our signature(s)
+            below) for the {work} of the fire detection and fire alarm system, particulars of which
+            are set out in this certificate, CERTIFY that the said {work} work for which I/we have
+            been responsible has to the best of my/our knowledge and belief been carried out in
+            accordance with the recommendations of BS 5839-1:2025, {clause}, except for the
+            variations, if any, stated in this certificate.
+          </p>
+          <p className="mt-2 text-[12px] italic leading-relaxed text-white/85">
+            The extent of liability of the signatory is limited to the system described in this
+            certificate.
           </p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">

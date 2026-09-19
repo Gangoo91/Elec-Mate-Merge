@@ -167,7 +167,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'Disablement entries must bracket the affected period: start time, end time, area, reason, authoriser, premises-informed (per clause 22), interim measure and restoration confirmation. The bracketed entry is what allows future investigators to verify protection coverage at any historical moment.',
+      'Disablement entries must bracket the affected period: start time, end time, area, reason, authoriser, premises-informed (per clause 43.2.18), interim measure and restoration confirmation. The bracketed entry is what allows future investigators to verify protection coverage at any historical moment.',
   },
   {
     id: 8,
@@ -181,7 +181,7 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      'A firmware update is treated as a modification under clause 7, so the logbook entry records date, person, the firmware versions before and after, the post-action verification, and a reference to the modification certificate. It also brackets the clause 43.4 cyber-security entry where the update was applied remotely — three trails converge: what was done, who did it, under what authority.',
+      'A firmware update is treated as a modification under clause 46.1.6 d), so the logbook entry records date, person, the firmware versions before and after, the post-action verification, and a reference to the modification certificate. It also brackets the clause 43.4 cyber-security entry where the update was applied remotely — three trails converge: what was done, who did it, under what authority.',
   },
   {
     id: 9,
@@ -208,7 +208,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'Logbook review is diagnostic, read before any other work. The engineer looks for patterns and gaps — recurring faults at one device or zone, repeated false alarms in one area, disablements not properly closed, missed weekly tests, modifications done without certificates (a clause 7 breach), unusual cyber-security entries, and variations agreed but not recorded. Those trends drive the technical investigation during the visit.',
+      'Logbook review is diagnostic, read before any other work. The engineer looks for patterns and gaps — recurring faults at one device or zone, repeated false alarms in one area, disablements not properly closed, missed weekly tests, modifications done without certificates (a clause 46.1.9 breach), unusual cyber-security entries, and variations agreed but not recorded. Those trends drive the technical investigation during the visit.',
   },
 ];
 
@@ -304,7 +304,7 @@ const FireAlarmModule6Section4 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 48 (Logbook) and Annex H (Logbook template)"
+          source="BS 5839-1:2025 · Clause 48 (Logbook) and Annex H (Logbook template) — in summary, not a verbatim quote"
           clause={
             <>
               The logbook clause has been updated to include the recommendation for recording all
@@ -359,22 +359,22 @@ const FireAlarmModule6Section4 = () => {
               description, investigation, root cause, repair, post-repair test, resolution date.
             </li>
             <li>
-              <strong>Faults open / unresolved.</strong> Per clause 23 — faults that cannot be
+              <strong>Faults open / unresolved.</strong> Per clause 44.2.4 — faults that cannot be
               repaired immediately are logged with their open status, agreed interim measures, and
               target repair date. They remain open in the logbook until repaired.
             </li>
             <li>
-              <strong>Modifications and extensions.</strong> Per clause 7 — every modification
+              <strong>Modifications and extensions.</strong> Per clause 46 — every modification
               (including firmware updates) is logged with reference to the extension or modification
               certificate.
             </li>
             <li>
-              <strong>Disablements.</strong> Per clause 22 — date, start / end time, area, reason,
-              authoriser, premises-informed, interim measure, restoration.
+              <strong>Disablements.</strong> Per clause 43.2.18 — date, start / end time, area,
+              reason, authoriser, premises-informed, interim measure, restoration.
             </li>
             <li>
-              <strong>Software / firmware updates.</strong> Per clause 7 + 43.4 — date, person,
-              versions, post-action verification, certificate reference.
+              <strong>Software / firmware updates.</strong> Per clause 46.1.6 d) + 43.4 — date,
+              person, versions, post-action verification, certificate reference.
             </li>
             <li>
               <strong>Remote-access events.</strong> Per clause 43.4 — connection, authentication
@@ -523,8 +523,8 @@ const FireAlarmModule6Section4 = () => {
                 'Faults (resolved + open)',
                 'observation · cause · repair · retest · OR open status',
               ],
-              ['Modifications + firmware', 'clause 7 · cert reference · pre/post versions'],
-              ['Disablements (clause 22)', 'start/end · area · reason · authoriser · interim'],
+              ['Modifications + firmware', 'clause 46 · cert reference · pre/post versions'],
+              ['Disablements (clause 43.2.18)', 'start/end · area · reason · authoriser · interim'],
               ['Remote access (clause 43.4 NEW)', 'who · when · auth · actions · post-state'],
               ['Variations (clause 6 — ALL 2025)', 'agreed parties · justification · scope'],
             ].map((row, i) => {
@@ -610,7 +610,7 @@ const FireAlarmModule6Section4 = () => {
             </li>
             <li>
               <strong>Cross-references.</strong> Modification certificate reference if a firmware
-              update was applied (clause 7); risk-assessment reference if a write action was
+              update was applied (clause 46.1.9); risk-assessment reference if a write action was
               performed.
             </li>
           </ul>
@@ -661,6 +661,11 @@ const FireAlarmModule6Section4 = () => {
               detectors, when the rate exceeds five false alarms per 100 detectors per annum. A
               formal investigation including environmental survey, detector-technology review,
               cause-and-effect review.
+            </li>
+            <li>
+              <strong>In-depth investigation — fewer than 41 detectors (clause 31.5).</strong> The
+              rate-based trigger does not work on a small system, so the threshold is a count, not a
+              rate: more than two false alarms in any rolling 12-month period.
             </li>
           </ul>
           <p>
@@ -812,7 +817,7 @@ const FireAlarmModule6Section4 = () => {
               question:
                 "What if a remote-access event was carried out by a manufacturer's field engineer rather than the contracted servicing organisation?",
               answer:
-                "The clause 43.4 logging expectation applies regardless of who connected. The CIE / gateway records the event automatically (assuming the manufacturer's remote-access platform integrates with logging). The contracted servicing organisation reviews these entries at the next visit to confirm they were authorised, that any write actions had risk assessments, and that any firmware updates have certificates per clause 7. The logbook entry should cross-reference the manufacturer event log if the manufacturer maintains a separate platform.",
+                "The clause 43.4 logging expectation applies regardless of who connected. The CIE / gateway records the event automatically (assuming the manufacturer's remote-access platform integrates with logging). The contracted servicing organisation reviews these entries at the next visit to confirm they were authorised, that any write actions had risk assessments, and that any firmware updates have certificates per clause 46.1.9. The logbook entry should cross-reference the manufacturer event log if the manufacturer maintains a separate platform.",
             },
             {
               question: 'Are weekly user-test entries reviewed at every six-monthly service visit?',

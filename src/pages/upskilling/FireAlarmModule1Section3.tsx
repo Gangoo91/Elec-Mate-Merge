@@ -43,7 +43,7 @@ const inlineChecks = [
     ],
     correctIndex: 1,
     explanation:
-      'BS 5839-1:2025 simplified the distance rules to a clear pair: 30 m straight-line, 45 m actual-travel. These are maximums, not targets — designers can specify shorter distances where the FRA, the building geometry or the occupant profile justify it (process areas with high ignition risk, premises with restricted-mobility occupants). The figures are unchanged from custom and practice. MCPs in stairway landings (other than the final exit level) are now incorporated within the zone serving the adjacent accommodation per 12.1 a).',
+      'BS 5839-1:2025 19.5 sets 45 m actual-travel as the governing maximum once the final layout is known. The 30 m straight-line figure applies only at the design stage, when the final layout is not yet fixed — it is not a second permanent limit that applies alongside 45 m after fit-out. These are maximums, not targets — designers can specify shorter distances where the FRA, the building geometry or the occupant profile justify it (process areas with high ignition risk, premises with restricted-mobility occupants). MCPs in stairway landings (other than the final exit level) are now incorporated within the zone serving the adjacent accommodation per 12.1 a).',
   },
   {
     id: 'fam1-s3-height',
@@ -114,7 +114,7 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      'BS 5839-1:2025 distance limits: 30 m straight-line / 45 m actual-travel. Both apply — the MCP must satisfy each. These are maximum limits; designers can specify shorter distances where building geometry, occupant profile or risk demands it. The 2025 simplification removed earlier conditional wording while retaining the figures. Where straight-line distance is short but actual-travel is long (winding corridors, staircases), the actual-travel figure is the binding constraint.',
+      'BS 5839-1:2025 19.5 distance limits: 45 m actual-travel governs the finished layout. The 30 m straight-line figure applies only at the design stage, before the final layout is known — it is not a second limit that continues to apply alongside 45 m after fit-out. These are maximum limits; designers can specify shorter distances where building geometry, occupant profile or risk demands it. The 2025 simplification removed earlier conditional wording while retaining the figures.',
   },
   {
     id: 4,
@@ -242,7 +242,7 @@ const FireAlarmModule1Section3 = () => {
           points={[
             'M = manual. Manual call points only, no automatic detection. The simplest BS 5839-1:2025 category.',
             'Selection of M is FRA-driven and limited — typically very small premises, fully attended areas with high alertness, places where the FRA concludes automatic detection adds no material benefit.',
-            'BS 5839-1:2025 simplified MCP distance rules: 30 m straight-line distance, 45 m actual-travel distance. Both must be met.',
+            'BS 5839-1:2025 19.5 MCP distance rule: 45 m actual-travel is the maximum once the layout is finalised; 30 m straight-line applies only at design stage, before the final layout is known.',
             'BS 5839-1:2025 12 quantifies the MCP mounting-height tolerance: +200 mm and -300 mm relative to 1.4 m. Acceptable window is 1.1 m to 1.6 m.',
             'BS 5839-1:2025 firms up protective covers — transparent covers are now recommended (not opaque). Transparency preserves operational clarity in emergencies.',
             'Stairway landing MCPs (except final-exit level) are now incorporated in the zone serving the adjacent accommodation per 12.1 a) — a 2025 wording clarification.',
@@ -328,7 +328,7 @@ const FireAlarmModule1Section3 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Categories of system (clause 5)"
+          source="BS 5839-1:2025 · Categories of system (clause 5) — in summary, not a verbatim quote"
           clause={
             <>
               Category M systems are manual fire alarm systems. They have no automatic fire
@@ -351,7 +351,7 @@ const FireAlarmModule1Section3 = () => {
             viewBox="0 0 820 420"
             className="w-full h-auto"
             role="img"
-            aria-label="Category M manual-only fire alarm system layout. Shows MCPs sited around the protected area subject to 30 m straight-line and 45 m actual-travel distance limits. No automatic detectors. Sounders provide warning; the panel is centrally located."
+            aria-label="Category M manual-only fire alarm system layout. Shows MCPs sited around the protected area subject to the 45 m actual-travel distance limit (30 m straight-line applies only at the design stage, before the final layout is known). No automatic detectors. Sounders provide warning; the panel is centrally located."
           >
             {/* Title */}
             <text
@@ -425,7 +425,7 @@ const FireAlarmModule1Section3 = () => {
             </text>
 
             {/* MCP locations — square red boxes with M label */}
-            {/* Each MCP placement satisfies 30 m straight-line / 45 m actual travel */}
+            {/* Each MCP placement satisfies 45 m actual travel (30 m straight-line at design stage only) */}
             <g>
               <rect
                 x="100"
@@ -708,14 +708,16 @@ const FireAlarmModule1Section3 = () => {
 
         <ConceptBlock
           title="The 30 m / 45 m rule"
-          plainEnglish="BS 5839-1:2025 simplified the manual-call-point distance rules into a clear pair: 30 m straight-line distance and 45 m actual-travel distance from any point in the protected area to the nearest MCP. Both must be satisfied. The figures themselves are unchanged from custom and practice; the 2025 simplification removed earlier conditional wording."
-          onSite="Walk the protected area with the drawing. From any point you can stand, you must be no more than 30 m straight-line and 45 m actual-travel from an MCP. Where the building geometry (winding corridors, multi-room layouts, staircases) extends actual-travel beyond straight-line, the actual-travel figure is the binding constraint. In a long narrow corridor with no obstructions, the two figures are similar; in a labyrinthine layout, actual-travel can be much higher and is the limit."
+          plainEnglish="BS 5839-1:2025 19.5 sets 45 m actual-travel distance as the maximum from any point in the protected area to the nearest MCP once the final layout is known. The 30 m straight-line figure is a design-stage proxy only — used where the final layout is not yet known — and is superseded by the 45 m travel figure once the premises is fitted out. The figures themselves are unchanged from custom and practice; the 2025 simplification removed earlier conditional wording."
+          onSite="Walk the protected area with the drawing. From any point you can stand, you must be no more than 45 m actual-travel from an MCP — that is the governing figure once the layout is fixed. At the design stage, before the final layout is known, use the 30 m straight-line figure as a proxy check instead. In a long narrow corridor with no obstructions, the two figures behave similarly; in a labyrinthine layout, actual-travel can be much higher, which is why the 45 m travel test is the one that governs the finished building."
         >
           <p>Designer considerations:</p>
           <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
             <li>
-              <strong>Both limits apply.</strong> The MCP must be reachable within both 30 m
-              straight-line and 45 m actual-travel. Either limit alone is incomplete.
+              <strong>45 m travel governs the finished layout.</strong> The MCP must be reachable
+              within 45 m actual-travel once the layout is fixed. The 30 m straight-line figure only
+              applies at the design stage, before the final layout is known — it is not a second
+              limit that continues to apply once the building is fitted out.
             </li>
             <li>
               <strong>Maximums, not targets.</strong> Designers can specify shorter distances where
@@ -801,7 +803,7 @@ const FireAlarmModule1Section3 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · 12 (call point mounting height)"
+          source="BS 5839-1:2025 · 12 (call point mounting height) — in summary, not a verbatim quote"
           clause={
             <>
               The call point mounting height has been clarified, with the tolerance on the mounting
@@ -860,7 +862,7 @@ const FireAlarmModule1Section3 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · 12 (protective covers)"
+          source="BS 5839-1:2025 · 12 (protective covers) — in summary, not a verbatim quote"
           clause={
             <>
               The protective covers that were introduced as a recommendation in the 2017 edition are
@@ -978,7 +980,7 @@ const FireAlarmModule1Section3 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · 12 (remote indicators)"
+          source="BS 5839-1:2025 · 12 (remote indicators) — in summary, not a verbatim quote"
           clause={
             <>
               It has been clarified that for all remote indicators, the visual indication provided
@@ -1002,7 +1004,7 @@ const FireAlarmModule1Section3 = () => {
 
         <ConceptBlock
           title="Single-colour cabling and IEC 60445 functional-earth identification"
-          plainEnglish="BS 5839-1:2025 16 (cabling, labelling and identification) addresses long-standing questions about cable colour. Whilst fire alarm cables have always been required to be fire-resisting (to BS EN 50200, BS 8434 or BS 8491 grades depending on application), the colour was not previously specified clearly. The 2025 revision clarifies that all fire alarm cables AND the low-voltage mains supply to the system should be of a single, common colour, with red preferred. The 2025 revision also incorporates the BS 7671 A2:2022 / IEC 60445 conventions on conductor identification: the functional earth conductor is identified by the colour pink or marked with the alphanumeric designation 'FE'. Earlier editions used cream for functional earth; cream is no longer the convention. Batteries should have a label fixed to them showing the date of installation."
+          plainEnglish="BS 5839-1:2025 25.9 (cable colour) addresses long-standing questions about cable colour. Whilst fire alarm cables have always been required to be fire-resisting (to BS EN 50200, BS 8434 or BS 8491 grades depending on application), the colour was not previously specified clearly. The 2025 revision clarifies that all fire alarm cables AND the low-voltage mains supply to the system should be of a single, common colour, with red preferred. Separately, BS 5839-1:2025 28.2 (functional earthing) incorporates the BS 7671 A2:2022 / IEC 60445 conventions on conductor identification: the functional earth conductor is identified by the colour pink or marked with the alphanumeric designation 'FE'. Earlier editions used cream for functional earth; cream is no longer the convention. Batteries should have a label fixed to them showing the date of installation."
           onSite="On commissioning a 2025-design system, verify cable colour throughout — fire alarm circuits and the LV mains supply both on a single common colour, red preferred. Verify functional-earth identification — pink or marked 'FE', not cream. Verify battery labelling — date of installation visible on every battery (custom and practice now formally acknowledged in the standard, with permanent marker an accepted method). Older systems with cream functional earth or mixed cable colours are not retrospectively non-compliant, but on the next material works should be brought into 2025 standard."
         >
           <p>Cabling and identification points:</p>
@@ -1042,7 +1044,7 @@ const FireAlarmModule1Section3 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · 16 (cabling, labelling and identification)"
+          source="BS 5839-1:2025 · 25.9 (cable colour) — in summary, not a verbatim quote"
           clause={
             <>
               One of the common questions asked on the FIA technical helpline was, what colour
@@ -1093,14 +1095,14 @@ const FireAlarmModule1Section3 = () => {
           points={[
             'M = manual. Manual call points only, no automatic detection. Sounders, MCPs and a panel; no detector heads.',
             'Selection of M is FRA-driven and limited to specific circumstances. Not appropriate for sleeping use, complex geometry, high ignition load or low-alertness premises.',
-            'BS 5839-1:2025 12 — MCP distance limits: 30 m straight-line and 45 m actual-travel from any point in the protected area. Both apply.',
+            'BS 5839-1:2025 19.5 — MCP distance limit: 45 m actual-travel from any point in the protected area once the layout is finalised. 30 m straight-line applies only at the design stage, before the final layout is known.',
             'BS 5839-1:2025 12 — MCP mounting height: 1.4 m datum with +200 mm and -300 mm tolerance. Acceptable window is 1.1 m to 1.6 m.',
             'BS 5839-1:2025 12 — Protective covers should be TRANSPARENT (strengthened from the 2017 cover recommendation).',
             'BS 5839-1:2025 12.1 a) — Stairway landing MCPs (except final exit level) belong to the zone serving the adjacent accommodation, not the stairway zone.',
             'BS 5839-1:2025 12 — Remote indicators must be RED. Annual service must verify they are unobstructed and operating.',
             'BS 5839-1:2025 15.1.12 — Sounder use for non-fire signals (school class-change, lockdown) is permitted with conditions; class-change duration limited to 10 s.',
-            'BS 5839-1:2025 16 — Single common cable colour for fire alarm circuits AND LV mains supply, red preferred. Functional-earth identification: pink or marked "FE" (per IEC 60445); was cream.',
-            'BS 5839-1:2025 16 — Battery labelling: date of installation visible on each battery (permanent marker accepted).',
+            'BS 5839-1:2025 25.9 — Single common cable colour for fire alarm circuits AND LV mains supply, red preferred. BS 5839-1:2025 28.2 — functional-earth identification: pink or marked "FE" (per IEC 60445); was cream.',
+            'BS 5839-1:2025 — Battery labelling: date of installation visible on each battery (permanent marker accepted).',
             'BS 7671 Section 560 (safety services) and A4:2026 AFDD provisions apply to M-system installations.',
           ]}
         />
@@ -1120,9 +1122,9 @@ const FireAlarmModule1Section3 = () => {
             },
             {
               question:
-                'Both 30 m straight-line and 45 m actual-travel apply to MCP siting — which is the binding constraint?',
+                'A 30 m straight-line figure and a 45 m actual-travel figure both appear in the standard for MCP siting — do both apply at once?',
               answer:
-                'Both must be satisfied. In simple geometries (straight corridors, open-plan spaces), the two figures are similar and either can be the binding constraint. In complex geometries (winding corridors, multi-room layouts, staircases), the actual-travel figure typically extends further than the straight-line figure, so actual-travel becomes the binding constraint. Check both and meet both.',
+                'No. BS 5839-1:2025 19.5 makes 45 m actual-travel the governing maximum once the layout is finalised. The 30 m straight-line figure only applies at the design stage, before the final layout is known, as a proxy for actual-travel — it is superseded by the 45 m travel figure after fit-out. Check the 45 m travel distance on the finished building; use the 30 m straight-line figure only when the layout is not yet fixed.',
             },
             {
               question:
