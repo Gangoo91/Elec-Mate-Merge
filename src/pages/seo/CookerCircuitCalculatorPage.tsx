@@ -1,5 +1,6 @@
 import ToolTemplate from '@/pages/seo/templates/ToolTemplate';
 import MaximumDemandCalculator from '@/components/apprentice/calculators/MaximumDemandCalculator';
+import { CalculatorWithEmailCapture } from '@/components/seo/CalculatorWithEmailCapture';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import {
   Calculator,
@@ -46,7 +47,14 @@ export default function CookerCircuitCalculatorPage() {
           Size, and MCB Rating for Cooking Appliances
         </>
       }
-      calculator={<MaximumDemandCalculator />}
+      calculator={
+        <CalculatorWithEmailCapture
+          calculatorName="Cooker Circuit Calculator"
+          calculatorPath="/tools/cooker-circuit-calculator"
+        >
+          {(onResult) => <MaximumDemandCalculator onResult={onResult} />}
+        </CalculatorWithEmailCapture>
+      }
       heroSubtitle="Enter the cooker rating and the calculator applies the standard household cooking-appliance diversity allowance — first 10A in full, 30% of the remainder, plus 5A if the control unit has a socket — then shows the assessed current for sizing the circuit. Add the rest of the installation's loads to see the whole-board picture."
       heroFeaturePills={[
         { icon: Flame, label: 'Cooker Diversity' },
@@ -56,8 +64,8 @@ export default function CookerCircuitCalculatorPage() {
       ]}
       readingTime={10}
       keyTakeaways={[
-        'A cooker\'s full-load current overstates what the circuit really carries — thermostats cycle and rings are rarely all on at once, which is why a diversity allowance applies to household cooking appliances.',
-        'The standard diversity allowance is: the first 10A of the cooker\'s rated current in full, plus 30% of the remainder, plus 5A if the cooker control unit incorporates a socket outlet.',
+        "A cooker's full-load current overstates what the circuit really carries — thermostats cycle and rings are rarely all on at once, which is why a diversity allowance applies to household cooking appliances.",
+        "The standard diversity allowance is: the first 10A of the cooker's rated current in full, plus 30% of the remainder, plus 5A if the cooker control unit incorporates a socket outlet.",
         'A 14.4kW freestanding cooker has a full-load current of 62.6A, but assesses to just 30.8A after diversity — which is why a 32A circuit in 6mm² cable is the typical answer for most domestic cookers.',
         'The diversity allowance applies to household cookers — commercial catering equipment is assessed differently and usually with little or no diversity.',
         'Very large range cookers can exceed a 32A circuit even after diversity — always run the numbers rather than assuming, which is exactly what the calculator is for.',
@@ -76,11 +84,11 @@ export default function CookerCircuitCalculatorPage() {
                 circuits have run happily on 30A and 32A protective devices for decades.
               </p>
               <p>
-                The reason is how cooking appliances actually behave. Every ring, oven, and grill
-                is thermostatically controlled: elements heat up at full power, then cycle on and
-                off to hold temperature. And it is rare for every element to be on together even at
-                the peak of cooking a family meal. The sustained current the circuit really sees is
-                far below the appliance's rated maximum.
+                The reason is how cooking appliances actually behave. Every ring, oven, and grill is
+                thermostatically controlled: elements heat up at full power, then cycle on and off
+                to hold temperature. And it is rare for every element to be on together even at the
+                peak of cooking a family meal. The sustained current the circuit really sees is far
+                below the appliance's rated maximum.
               </p>
               <p>
                 Circuit design recognises this with a diversity allowance for household cooking
@@ -126,16 +134,16 @@ export default function CookerCircuitCalculatorPage() {
                 </ul>
               </div>
               <p>
-                Two important boundaries. First, this is a household allowance — commercial
-                kitchens and catering equipment are assessed on their actual duty, usually with
-                little or no diversity. Second, the allowance is for cooking appliances fed from
-                the circuit: where a hob and oven share one cooker circuit, the diversity applies
-                to their combined rated current.
+                Two important boundaries. First, this is a household allowance — commercial kitchens
+                and catering equipment are assessed on their actual duty, usually with little or no
+                diversity. Second, the allowance is for cooking appliances fed from the circuit:
+                where a hob and oven share one cooker circuit, the diversity applies to their
+                combined rated current.
               </p>
               <p>
-                Diversity for the cooker is one part of assessing the whole installation — the
-                same exercise covers sockets, water heating, and showers (which get{' '}
-                <em>no</em> diversity). The{' '}
+                Diversity for the cooker is one part of assessing the whole installation — the same
+                exercise covers sockets, water heating, and showers (which get <em>no</em>{' '}
+                diversity). The{' '}
                 <SEOInternalLink href="/tools/diversity-factor-calculator">
                   diversity factor calculator
                 </SEOInternalLink>{' '}
@@ -192,8 +200,8 @@ export default function CookerCircuitCalculatorPage() {
               </p>
               <p>
                 The same cooker without a socket on the control unit assesses to 25.8A, and a
-                smaller 10kW cooker (43.5A full load) with a socket assesses to 10 + 0.30 x 33.5 +
-                5 = 25.1A. Run your own appliance through the calculator above.
+                smaller 10kW cooker (43.5A full load) with a socket assesses to 10 + 0.30 x 33.5 + 5
+                = 25.1A. Run your own appliance through the calculator above.
               </p>
             </>
           ),
@@ -217,8 +225,8 @@ export default function CookerCircuitCalculatorPage() {
                   </li>
                   <li>
                     <strong className="text-yellow-400">Assessed 32-40A</strong> (large range
-                    cookers, or hob + oven combinations on one circuit): 40A device with 10mm²
-                    cable as the typical pairing
+                    cookers, or hob + oven combinations on one circuit): 40A device with 10mm² cable
+                    as the typical pairing
                   </li>
                   <li>
                     <strong className="text-yellow-400">Long kitchen runs:</strong> check voltage
@@ -251,13 +259,13 @@ export default function CookerCircuitCalculatorPage() {
               <ul className="list-disc pl-6 space-y-2 text-white">
                 <li>
                   <strong>A means of isolation</strong> — accepted practice is a double-pole cooker
-                  switch or control unit within easy reach of the appliance but not directly above
-                  a hob, so it can be operated in an emergency without reaching over hot pans.
+                  switch or control unit within easy reach of the appliance but not directly above a
+                  hob, so it can be operated in an emergency without reaching over hot pans.
                 </li>
                 <li>
-                  <strong>The socket on the control unit</strong> — older cooker control units
-                  often include a 13A socket. If it is there, the diversity assessment adds 5A for
-                  it. Modern installations frequently use a plain double-pole switch instead, with
+                  <strong>The socket on the control unit</strong> — older cooker control units often
+                  include a 13A socket. If it is there, the diversity assessment adds 5A for it.
+                  Modern installations frequently use a plain double-pole switch instead, with
                   kitchen sockets on their own circuits.
                 </li>
                 <li>
@@ -286,15 +294,15 @@ export default function CookerCircuitCalculatorPage() {
               </p>
               <ul className="list-disc pl-6 space-y-2 text-white">
                 <li>
-                  <strong>Induction hobs</strong> — ratings of 7.4kW are common. Many models
-                  offer power management that caps total draw, but the circuit should be designed
-                  for the appliance's connected rating unless it is configured and documented
-                  otherwise. Follow the manufacturer's instructions on the required supply.
+                  <strong>Induction hobs</strong> — ratings of 7.4kW are common. Many models offer
+                  power management that caps total draw, but the circuit should be designed for the
+                  appliance's connected rating unless it is configured and documented otherwise.
+                  Follow the manufacturer's instructions on the required supply.
                 </li>
                 <li>
                   <strong>Single built-in ovens</strong> — many are under 3kW and designed for
-                  connection to a 13A supply; check the manufacturer's instructions. Larger
-                  double ovens need their own dedicated circuit.
+                  connection to a 13A supply; check the manufacturer's instructions. Larger double
+                  ovens need their own dedicated circuit.
                 </li>
                 <li>
                   <strong>Hob and oven on one cooker circuit</strong> — a long-standing accepted
@@ -314,9 +322,7 @@ export default function CookerCircuitCalculatorPage() {
                   maximum demand calculator
                 </SEOInternalLink>{' '}
                 before adding other large loads like a{' '}
-                <SEOInternalLink href="/tools/shower-cable-size-calculator">
-                  shower
-                </SEOInternalLink>{' '}
+                <SEOInternalLink href="/tools/shower-cable-size-calculator">shower</SEOInternalLink>{' '}
                 or an{' '}
                 <SEOInternalLink href="/tools/ev-charger-cable-size-calculator">
                   EV charger
@@ -346,7 +352,7 @@ export default function CookerCircuitCalculatorPage() {
         },
         {
           name: 'Check the whole board',
-          text: 'Add the cooker\'s assessed demand to the installation\'s maximum demand to confirm the main switch and supply can take it alongside showers, EV chargers, and other large loads.',
+          text: "Add the cooker's assessed demand to the installation's maximum demand to confirm the main switch and supply can take it alongside showers, EV chargers, and other large loads.",
         },
       ]}
       howToHeading="How to Size a Cooker Circuit"
@@ -400,17 +406,17 @@ export default function CookerCircuitCalculatorPage() {
         {
           question: 'How does cooker diversity work?',
           answer:
-            'The standard diversity allowance used for household cooking appliances takes the first 10A of the appliance\'s rated current in full, adds 30% of the remainder, and adds 5A if the cooker control unit incorporates a socket outlet. For example, a 10kW cooker has a full-load current of 43.5A (10000 / 230); with a socketed control unit it assesses to 10 + 0.30 x 33.5 + 5 = 25.1A. The allowance reflects how thermostatic cycling and normal cooking behaviour keep the real sustained current far below the rated maximum. It applies to household cookers, not commercial catering equipment.',
+            "The standard diversity allowance used for household cooking appliances takes the first 10A of the appliance's rated current in full, adds 30% of the remainder, and adds 5A if the cooker control unit incorporates a socket outlet. For example, a 10kW cooker has a full-load current of 43.5A (10000 / 230); with a socketed control unit it assesses to 10 + 0.30 x 33.5 + 5 = 25.1A. The allowance reflects how thermostatic cycling and normal cooking behaviour keep the real sustained current far below the rated maximum. It applies to household cookers, not commercial catering equipment.",
         },
         {
           question: 'Can a 14.4kW range cooker really run on a 32A circuit?',
           answer:
-            'Usually, yes. A 14.4kW cooker has a nominal full-load current of 62.6A, but the standard diversity allowance assesses it at 10 + 0.30 x 52.6 + 5 = 30.8A (with a socketed control unit) — inside a 32A device. The physics behind the allowance is thermostatic cycling: elements only draw full power while heating up. That said, always check the manufacturer\'s installation instructions, and if a particular appliance specifies a larger supply, follow it.',
+            "Usually, yes. A 14.4kW cooker has a nominal full-load current of 62.6A, but the standard diversity allowance assesses it at 10 + 0.30 x 52.6 + 5 = 30.8A (with a socketed control unit) — inside a 32A device. The physics behind the allowance is thermostatic cycling: elements only draw full power while heating up. That said, always check the manufacturer's installation instructions, and if a particular appliance specifies a larger supply, follow it.",
         },
         {
           question: 'Do a hob and oven need separate circuits?',
           answer:
-            'Not necessarily. A hob and oven in the same kitchen can share one suitably sized cooker circuit — the diversity allowance is applied to their combined rated current, and each connects via an appropriate outlet. Separate circuits are the cleaner modern approach where board space allows, and some appliances\' instructions require a dedicated supply. Note that many single built-in ovens under 3kW are designed for a 13A connection and do not need a cooker circuit at all — check the manufacturer\'s instructions.',
+            "Not necessarily. A hob and oven in the same kitchen can share one suitably sized cooker circuit — the diversity allowance is applied to their combined rated current, and each connects via an appropriate outlet. Separate circuits are the cleaner modern approach where board space allows, and some appliances' instructions require a dedicated supply. Note that many single built-in ovens under 3kW are designed for a 13A connection and do not need a cooker circuit at all — check the manufacturer's instructions.",
         },
         {
           question: 'Does a cooker circuit need RCD protection?',
@@ -445,8 +451,7 @@ export default function CookerCircuitCalculatorPage() {
         {
           href: '/tools/shower-cable-size-calculator',
           title: 'Shower Cable Size Calculator',
-          description:
-            'The other big kitchen-adjacent load — showers get no diversity at all.',
+          description: 'The other big kitchen-adjacent load — showers get no diversity at all.',
           icon: ShowerHead,
           category: 'Calculators',
         },

@@ -1,6 +1,7 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { CalculatorSurface } from '@/components/calculators/shared';
 import MaximumDemandCalculator from '@/components/apprentice/calculators/MaximumDemandCalculator';
+import { CalculatorWithEmailCapture } from '@/components/seo/CalculatorWithEmailCapture';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
@@ -319,7 +320,12 @@ const sections = [
           your design records.
         </p>
         <CalculatorSurface>
-          <MaximumDemandCalculator />
+          <CalculatorWithEmailCapture
+            calculatorName="Maximum Demand Calculator"
+            calculatorPath="/guides/max-demand-calculation-guide"
+          >
+            {(onResult) => <MaximumDemandCalculator onResult={onResult} />}
+          </CalculatorWithEmailCapture>
         </CalculatorSurface>
       </>
     ),

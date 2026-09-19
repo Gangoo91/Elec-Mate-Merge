@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet';
 import { RecentReviews } from '@/components/seo/RecentReviews';
 import { CalculatorSurface } from '@/components/calculators/shared';
 import MaximumDemandCalculator from '@/components/apprentice/calculators/MaximumDemandCalculator';
+import { CalculatorWithEmailCapture } from '@/components/seo/CalculatorWithEmailCapture';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
@@ -220,7 +221,16 @@ export default function MaxDemandCalculatorPage() {
       {/* Live calculator — free, no signup, BS 7671:2018+A4:2026 compliant */}
       <section id="calculator" className="px-5 pb-12 scroll-mt-24">
         <div className="max-w-4xl mx-auto">
-          <CalculatorSurface><MaximumDemandCalculator /></CalculatorSurface>
+          <CalculatorWithEmailCapture
+            calculatorName="Maximum Demand Calculator"
+            calculatorPath="/tools/max-demand-calculator"
+          >
+            {(onResult) => (
+              <CalculatorSurface>
+                <MaximumDemandCalculator onResult={onResult} />
+              </CalculatorSurface>
+            )}
+          </CalculatorWithEmailCapture>
         </div>
       </section>
 
@@ -390,7 +400,9 @@ export default function MaxDemandCalculatorPage() {
 
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-6">
             <div className="grid grid-cols-4 gap-px bg-white/10">
-              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">Circuit</div>
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+                Circuit
+              </div>
               <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                 Connected Load
               </div>

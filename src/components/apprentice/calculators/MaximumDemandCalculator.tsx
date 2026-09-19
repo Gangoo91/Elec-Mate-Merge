@@ -8,7 +8,8 @@ import {
   CheckCircle2,
   Plus,
 } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import type { CalculatorResultReporter } from '@/lib/calculator-outcome';
 import type { CalcReport } from '@/lib/calculator-report';
 import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import {
@@ -78,7 +79,7 @@ const mapToEngineType = (loadType: string): CircuitLoad['type'] => {
   return mapping[loadType] || 'small-power';
 };
 
-const MaximumDemandCalculator = () => {
+const MaximumDemandCalculator = ({ onResult }: CalculatorResultReporter = {}) => {
   const [loads, setLoads] = useState<Load[]>([
     {
       id: 1,
@@ -98,6 +99,37 @@ const MaximumDemandCalculator = () => {
     },
   ]);
   const [result, setResult] = useState<DiversityResult | null>(null);
+
+  // Published for the "email me this" offer on the public pages. Effect on
+  // `result` so clearing the form clears the offer too.
+  useEffect(() => {
+    if (!onResult) return;
+    if (!result) return onResult(null);
+    onResult({
+      headline: `${result.diversifiedCurrent.toFixed(1)} A`,
+      headlineLabel: 'Maximum demand after diversity',
+      inputs: [
+        { label: 'Connected load', value: `${result.totalInstalledLoad.toFixed(2)} kW` },
+        {
+          label: 'Design current before diversity',
+          value: `${result.totalDesignCurrent.toFixed(1)} A`,
+        },
+        { label: 'Circuit groups', value: String(result.breakdownByType.length) },
+      ],
+      outputs: [
+        { label: 'Diversified load', value: `${result.diversifiedLoad.toFixed(2)} kW` },
+        { label: 'Diversified current', value: `${result.diversifiedCurrent.toFixed(1)} A` },
+        {
+          label: 'Overall diversity factor',
+          value: result.overallDiversityFactor.toFixed(2),
+        },
+      ],
+      // Diversity is guidance, not a regulation — saying so in the email keeps
+      // the figure from being quoted as if BS 7671 mandated it.
+      basis:
+        'On-Site Guide Appendix A diversity allowances (guidance, not a requirement of BS 7671)',
+    });
+  }, [result, onResult]);
   const [errors, setErrors] = useState<{ [key: number]: string }>({});
   const [showGuidance, setShowGuidance] = useState(false);
   const [showBsRegs, setShowBsRegs] = useState(false);
