@@ -480,7 +480,7 @@ serve(withSentry('portfolio-capture-stream', async (req: Request) => {
       searchFacets(supabase, {
         query: ragQuery,
         matchCount: 8,
-        documentTypes: ['bs7671'],
+        documentTypes: ['bs7671', 'bs5839'],
       }).catch(() => [] as BS7671Facet[]),
     ]);
 

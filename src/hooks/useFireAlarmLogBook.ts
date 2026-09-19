@@ -214,7 +214,9 @@ export interface LogBookStatus {
   /** Annex F: false alarms per 100 automatic detectors over the last 12 months. */
   falseAlarmRate: number | null;
   falseAlarms12mo: number;
-  /** >4 per 100 detectors/yr triggers a preliminary investigation (Annex F). */
+  /** Clause 31.4 (>40 AFDs: rate over 5/100/yr) or 31.5 (<41 AFDs: more than 2). */
+  falseAlarmTriggerBasis: 'rate' | 'count' | null;
+  /** True when clause 31.4 or 31.5 advises an in-depth investigation. */
   falseAlarmInvestigationDue: boolean;
   /** Call point rotation: how many of the listed call points were tested in the last 12 months. */
   callPointsCovered12mo: number;
@@ -307,7 +309,35 @@ export function computeStatus(
     testedThisWeek: weeklyRecord[7],
     falseAlarmRate,
     falseAlarms12mo,
-    falseAlarmInvestigationDue: falseAlarmRate !== null && falseAlarmRate > 4,
+    /*
+     * BS 5839-1:2025 clause 31.4 / 31.5. The trigger for advising an IN-DEPTH
+     * investigation depends on system size, and on a small system it is a
+     * COUNT, not a rate:
+     *
+     *   31.4  more than 40 automatic fire detectors — the average rate
+     *         EXCEEDS five false alarms per 100 detectors per annum;
+     *   31.5  fewer than 41 automatic fire detectors — more than TWO false
+     *         alarms in any rolling 12-month period, whatever the rate.
+     *
+     * Annex F supplies only the formula for the rate; the thresholds are
+     * Clause 31. This was `rate > 4`, which is neither figure and ignored the
+     * small-system rule entirely — a 40-detector system with two false alarms
+     * scores exactly 5.0 and was flagged, though 31.5 needs MORE than two. It
+     * raised investigations that were not due, on an issued document.
+     *
+     * With no detector count recorded we cannot tell which rule applies, so
+     * nothing is asserted.
+     */
+    falseAlarmInvestigationDue: !book.detector_count
+      ? false
+      : book.detector_count > 40
+        ? falseAlarmRate !== null && falseAlarmRate > 5
+        : falseAlarms12mo > 2,
+    falseAlarmTriggerBasis: !book.detector_count
+      ? null
+      : book.detector_count > 40
+        ? ('rate' as const)
+        : ('count' as const),
     callPointsCovered12mo,
   };
 }

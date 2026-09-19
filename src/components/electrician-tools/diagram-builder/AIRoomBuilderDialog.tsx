@@ -3,9 +3,22 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import {
-  Sparkles, Loader2, ArrowLeft, Mic, ChevronRight, Camera,
-  LayoutGrid, Shield, Zap, Lightbulb, FileText, PoundSterling,
-  AlertTriangle, Info, CheckCircle2,
+  Sparkles,
+  Loader2,
+  ArrowLeft,
+  Mic,
+  ChevronRight,
+  Camera,
+  Image as ImageIcon,
+  LayoutGrid,
+  Shield,
+  Zap,
+  Lightbulb,
+  FileText,
+  PoundSterling,
+  AlertTriangle,
+  Info,
+  CheckCircle2,
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
@@ -14,8 +27,25 @@ import { useSpeechToText } from '@/hooks/useSpeechToText';
 import { cn } from '@/lib/utils';
 import type { CanvasObject } from '@/pages/electrician-tools/ai-tools/DiagramBuilderPage';
 import { symbolRegistry } from '@/components/electrician-tools/diagram-builder/symbols/symbolRegistry';
+import { compressImageForUpload, validateImageSize } from '@/utils/imageUploadUtils';
+import { nativePickPhoto } from '@/utils/pickPhotos';
 
-type Mode = 'hub' | 'templates' | 'describe' | 'review' | 'autoplace' | 'suggestions' | 'spec' | 'quote' | 'photo';
+/**
+ * A floor plan only needs enough resolution to read walls and labels. 1 MB
+ * keeps the vision call fast enough that iOS does not abandon the request.
+ */
+const PLAN_PHOTO_TARGET_KB = 1024;
+
+type Mode =
+  | 'hub'
+  | 'templates'
+  | 'describe'
+  | 'review'
+  | 'autoplace'
+  | 'suggestions'
+  | 'spec'
+  | 'quote'
+  | 'photo';
 
 const QUICK_TEMPLATES = [
   {
@@ -217,7 +247,7 @@ const modeSubtitle: Record<Mode, string> = {
   describe: 'Tell us about the room in your own words',
   review: 'Check your drawing against BS 7671',
   autoplace: 'Quick-add typical symbols for a room type',
-  suggestions: 'AI finds what\'s missing or could be better',
+  suggestions: "AI finds what's missing or could be better",
   spec: 'AI generates professional electrical specification',
   quote: 'Price the job from your floor plan',
   photo: 'Take a photo and AI generates the floor plan',
@@ -244,7 +274,9 @@ export const AIRoomBuilderDialog = ({
   const [isGenerating, setIsGenerating] = useState(false);
   const [mode, setMode] = useState<Mode>('hub');
   const [isListening, setIsListening] = useState(false);
-  const [reviewResults, setReviewResults] = useState<{ type: 'warning' | 'info' | 'pass'; message: string }[] | null>(null);
+  const [reviewResults, setReviewResults] = useState<
+    { type: 'warning' | 'info' | 'pass'; message: string }[] | null
+  >(null);
   const [selectedAutoPlaceRoom, setSelectedAutoPlaceRoom] = useState<string | null>(null);
   const [suggestionsResult, setSuggestionsResult] = useState<any>(null);
   const [suggestionsLoading, setSuggestionsLoading] = useState(false);
@@ -330,20 +362,20 @@ export const AIRoomBuilderDialog = ({
   // Combine current canvas symbols + all saved rooms' symbols for full analysis
   const getAllSymbolIds = (): string[] => {
     const canvasSymbols = (canvasObjects || [])
-      .filter(o => o.type === 'symbol' && o.symbolId)
-      .map(o => o.symbolId!);
-    const savedSymbols = (savedRooms || []).flatMap(r => r.symbolIds || []);
+      .filter((o) => o.type === 'symbol' && o.symbolId)
+      .map((o) => o.symbolId!);
+    const savedSymbols = (savedRooms || []).flatMap((r) => r.symbolIds || []);
     return [...canvasSymbols, ...savedSymbols];
   };
 
   const getAllSymbolCounts = () => {
     const allIds = getAllSymbolIds();
     const counts = new Map<string, { id: string; name: string; count: number }>();
-    allIds.forEach(id => {
+    allIds.forEach((id) => {
       const existing = counts.get(id);
       if (existing) existing.count++;
       else {
-        const sym = symbolRegistry.find(s => s.id === id);
+        const sym = symbolRegistry.find((s) => s.id === id);
         counts.set(id, { id, name: sym?.name || id, count: 1 });
       }
     });
@@ -351,13 +383,13 @@ export const AIRoomBuilderDialog = ({
   };
 
   const getRoomNames = (): string[] => {
-    return (savedRooms || []).map(r => r.name);
+    return (savedRooms || []).map((r) => r.name);
   };
 
   // --- Review (client-side) ---
   const reviewFloorPlan = () => {
     const symbolIds = getAllSymbolIds();
-    const symbols = symbolIds.map(id => ({ symbolId: id, type: 'symbol' as const }));
+    const symbols = symbolIds.map((id) => ({ symbolId: id, type: 'symbol' as const }));
     const items: { type: 'warning' | 'info' | 'pass'; message: string }[] = [];
 
     if (symbols.length === 0) {
@@ -366,43 +398,85 @@ export const AIRoomBuilderDialog = ({
       return;
     }
 
-    const has = (pattern: string) => symbolIds.some(id => id.includes(pattern));
-    const count = (pattern: string) => symbolIds.filter(id => id.includes(pattern)).length;
+    const has = (pattern: string) => symbolIds.some((id) => id.includes(pattern));
+    const count = (pattern: string) => symbolIds.filter((id) => id.includes(pattern)).length;
 
     // Smoke/CO
-    if (!has('smoke')) items.push({ type: 'warning', message: 'No smoke detector — Building Regs Part B requires detection in habitable rooms and escape routes' });
+    if (!has('smoke'))
+      items.push({
+        type: 'warning',
+        message:
+          'No smoke detector — Building Regs Part B requires detection in habitable rooms and escape routes',
+      });
     else items.push({ type: 'pass', message: `Smoke detector present (×${count('smoke')})` });
 
     // Lights + switches
-    if (count('light-') > 0 && count('switch-') === 0) items.push({ type: 'warning', message: 'Lights without switches — add switches to control the lighting' });
-    if (count('light-') > 12) items.push({ type: 'info', message: `${count('light-')} lighting points — consider splitting into two circuits (L1 + L2)` });
+    if (count('light-') > 0 && count('switch-') === 0)
+      items.push({
+        type: 'warning',
+        message: 'Lights without switches — add switches to control the lighting',
+      });
+    if (count('light-') > 12)
+      items.push({
+        type: 'info',
+        message: `${count('light-')} lighting points — consider splitting into two circuits (L1 + L2)`,
+      });
 
     // Sockets
     const socketCount = count('socket-') - count('fused') - count('shaver');
-    if (socketCount > 10) items.push({ type: 'info', message: `${socketCount} sockets — consider splitting across two ring finals` });
+    if (socketCount > 10)
+      items.push({
+        type: 'info',
+        message: `${socketCount} sockets — consider splitting across two ring finals`,
+      });
 
     // Bathroom checks
     if (has('shaver') || has('pull-cord')) {
       if (has('switch-1way') || has('switch-2way') || has('switch-dimmer')) {
-        items.push({ type: 'warning', message: 'Bathroom detected with plate switches — BS 7671 Section 701 requires pull-cord or switches outside the room' });
+        items.push({
+          type: 'warning',
+          message:
+            'Bathroom detected with plate switches — BS 7671 Section 701 requires pull-cord or switches outside the room',
+        });
       }
-      if (!has('extractor')) items.push({ type: 'info', message: 'Bathroom without extractor fan — Building Regs Part F requires mechanical ventilation' });
+      if (!has('extractor'))
+        items.push({
+          type: 'info',
+          message:
+            'Bathroom without extractor fan — Building Regs Part F requires mechanical ventilation',
+        });
     }
 
     // Cooker
-    if (has('cooker')) items.push({ type: 'pass', message: 'Cooker circuit identified — dedicated 32A/45A circuit' });
+    if (has('cooker'))
+      items.push({
+        type: 'pass',
+        message: 'Cooker circuit identified — dedicated 32A/45A circuit',
+      });
 
     // EV
-    if (has('ev-charger')) items.push({ type: 'pass', message: 'EV charger — dedicated circuit with Type B RCBO recommended' });
+    if (has('ev-charger'))
+      items.push({
+        type: 'pass',
+        message: 'EV charger — dedicated circuit with Type B RCBO recommended',
+      });
 
     // CO
     if (has('co-detector')) items.push({ type: 'pass', message: 'CO detector present' });
-    else items.push({ type: 'info', message: 'No CO detector — required where combustion appliances are present' });
+    else
+      items.push({
+        type: 'info',
+        message: 'No CO detector — required where combustion appliances are present',
+      });
 
     // SPD
-    if (!has('spd')) items.push({ type: 'info', message: 'No SPD specified — now required for most new installations per BS 7671 AMD2' });
+    if (!has('spd'))
+      items.push({
+        type: 'info',
+        message: 'No SPD specified — now required for most new installations per BS 7671 AMD2',
+      });
 
-    if (items.filter(i => i.type === 'warning').length === 0) {
+    if (items.filter((i) => i.type === 'warning').length === 0) {
       items.unshift({ type: 'pass', message: 'No critical issues found' });
     }
 
@@ -412,11 +486,11 @@ export const AIRoomBuilderDialog = ({
   // --- Build symbol summary from canvas ---
   const buildSymbolSummary = () => {
     const symbolCounts = new Map<string, { id: string; name: string; count: number }>();
-    getAllSymbolIds().forEach(id => {
+    getAllSymbolIds().forEach((id) => {
       const existing = symbolCounts.get(id);
       if (existing) existing.count++;
       else {
-        const sym = symbolRegistry.find(s => s.id === id);
+        const sym = symbolRegistry.find((s) => s.id === id);
         symbolCounts.set(id, { id, name: sym?.name || id, count: 1 });
       }
     });
@@ -496,15 +570,70 @@ export const AIRoomBuilderDialog = ({
   };
 
   // --- Photo to Plan ---
-  const handlePhotoCapture = (e: React.ChangeEvent<HTMLInputElement>) => {
+  /*
+   * The photo is compressed BEFORE it becomes a data URL, and that fixes two
+   * separate causes of Patrick's "it randomly works" (ELE-1745).
+   *
+   * 1. SIZE. This used to read the camera file straight to base64. A current
+   *    phone photo is 4-8 MB, and base64 inflates it by a third — so a 5-11 MB
+   *    body went to an edge function that then does slow vision analysis. On
+   *    iOS/WKWebView that combination is exactly what gets the fetch killed.
+   *
+   * 2. FORMAT. iPhones shoot HEIC by default, and the function hardcoded
+   *    `mimeType: 'image/jpeg'` when handing the bytes to Gemini. A HEIC or PNG
+   *    photo was therefore announced as something it was not. `compressImage-
+   *    ForUpload` re-encodes through a canvas, so what leaves here really is a
+   *    JPEG.
+   *
+   * Compression failing must not block the user — a photo that cannot be
+   * re-encoded is still worth a try at the original size.
+   */
+  /**
+   * Choose a plan photo.
+   *
+   * `source: 'library'` is the important one. Patrick's plan already existed as
+   * a photo — "I have taken a picture of a floorplan" — and the only control
+   * here was a file input marked `capture="environment"`, which on iOS pushes
+   * the camera rather than the camera roll. Hence "I can't on the app".
+   *
+   * The app already has a native picker used by the survey and test-sheet
+   * scanners; the planner simply never used it. On web this returns null and we
+   * fall through to the file input, which is what works there.
+   */
+  const choosePlanPhoto = async (source: 'camera' | 'library') => {
+    const nativeFile = await nativePickPhoto(source);
+    if (nativeFile) {
+      await acceptPlanPhoto(nativeFile);
+      return;
+    }
+    photoInputRef.current?.click();
+  };
+
+  const handlePhotoCapture = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    await acceptPlanPhoto(file);
+  };
+
+  const acceptPlanPhoto = async (file: File) => {
+    const sizeCheck = validateImageSize(file);
+    if (!sizeCheck.valid) {
+      toast.error(sizeCheck.error ?? 'That image is too large');
+      return;
+    }
+
+    let forUpload = file;
+    try {
+      forUpload = await compressImageForUpload(file, PLAN_PHOTO_TARGET_KB);
+    } catch {
+      // Keep the original; the upload may still succeed.
+    }
 
     const reader = new FileReader();
     reader.onload = () => {
       setPhotoPreview(reader.result as string);
     };
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(forUpload);
   };
 
   const handlePhotoGenerate = async () => {
@@ -539,13 +668,18 @@ export const AIRoomBuilderDialog = ({
     if (!pack || !onSymbolsAutoPlaced) return;
 
     // Detect room wall bounding box from canvasObjects
-    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    let minX = Infinity,
+      minY = Infinity,
+      maxX = -Infinity,
+      maxY = -Infinity;
     const walls = (canvasObjects || []).filter((o) => o.type === 'wall');
     for (const w of walls) {
       if (w.points) {
         for (const p of w.points) {
-          minX = Math.min(minX, p.x); minY = Math.min(minY, p.y);
-          maxX = Math.max(maxX, p.x); maxY = Math.max(maxY, p.y);
+          minX = Math.min(minX, p.x);
+          minY = Math.min(minY, p.y);
+          maxX = Math.max(maxX, p.x);
+          maxY = Math.max(maxY, p.y);
         }
       }
     }
@@ -555,8 +689,8 @@ export const AIRoomBuilderDialog = ({
     const pad = 30;
     const areaX = hasRoom ? minX + pad : 80;
     const areaY = hasRoom ? minY + pad : 80;
-    const areaW = hasRoom ? (maxX - minX) - pad * 2 : 300;
-    const areaH = hasRoom ? (maxY - minY) - pad * 2 : 300;
+    const areaW = hasRoom ? maxX - minX - pad * 2 : 300;
+    const areaH = hasRoom ? maxY - minY - pad * 2 : 300;
 
     const cols = Math.min(pack.length, Math.max(3, Math.floor(areaW / 55)));
     const spacingX = Math.min(55, areaW / cols);
@@ -578,33 +712,87 @@ export const AIRoomBuilderDialog = ({
   };
 
   const hubToolsQuickStart = [
-    { id: 'templates' as Mode, icon: LayoutGrid, title: 'Room Templates', desc: 'Pick a room type, adjust dimensions', color: 'bg-elec-yellow/10 text-elec-yellow' },
-    { id: 'describe' as Mode, icon: Mic, title: 'Describe Room', desc: 'Tell us about it — we draw it', color: 'bg-blue-500/10 text-blue-400' },
-    { id: 'photo' as Mode, icon: Camera, title: 'Photo to Plan', desc: 'Snap a photo, AI generates the plan', color: 'bg-pink-500/10 text-pink-400' },
+    {
+      id: 'templates' as Mode,
+      icon: LayoutGrid,
+      title: 'Room Templates',
+      desc: 'Pick a room type, adjust dimensions',
+      color: 'bg-elec-yellow/10 text-elec-yellow',
+    },
+    {
+      id: 'describe' as Mode,
+      icon: Mic,
+      title: 'Describe Room',
+      desc: 'Tell us about it — we draw it',
+      color: 'bg-blue-500/10 text-blue-400',
+    },
+    {
+      id: 'photo' as Mode,
+      icon: Camera,
+      title: 'Photo to Plan',
+      desc: 'Snap a photo, AI generates the plan',
+      color: 'bg-pink-500/10 text-pink-400',
+    },
   ];
   const hubToolsDesign = [
-    { id: 'autoplace' as Mode, icon: Zap, title: 'Auto-Place Symbols', desc: 'Quick-add sockets, lights, switches', color: 'bg-green-500/10 text-green-400' },
-    { id: 'review' as Mode, icon: Shield, title: 'Compliance Check', desc: 'Verify against BS 7671 regulations', color: 'bg-orange-500/10 text-orange-400' },
-    { id: 'suggestions' as Mode, icon: Lightbulb, title: 'Smart Suggestions', desc: 'Find missing sockets, lights, or safety items', color: 'bg-purple-500/10 text-purple-400' },
+    {
+      id: 'autoplace' as Mode,
+      icon: Zap,
+      title: 'Auto-Place Symbols',
+      desc: 'Quick-add sockets, lights, switches',
+      color: 'bg-green-500/10 text-green-400',
+    },
+    {
+      id: 'review' as Mode,
+      icon: Shield,
+      title: 'Compliance Check',
+      desc: 'Verify against BS 7671 regulations',
+      color: 'bg-orange-500/10 text-orange-400',
+    },
+    {
+      id: 'suggestions' as Mode,
+      icon: Lightbulb,
+      title: 'Smart Suggestions',
+      desc: 'Find missing sockets, lights, or safety items',
+      color: 'bg-purple-500/10 text-purple-400',
+    },
   ];
   const hubToolsOutput = [
-    { id: 'spec' as Mode, icon: FileText, title: 'Write Specification', desc: 'Generate a client spec sheet', color: 'bg-cyan-500/10 text-cyan-400' },
-    { id: 'quote' as Mode, icon: PoundSterling, title: 'Price This Job', desc: 'Labour + materials cost estimate', color: 'bg-emerald-500/10 text-emerald-400' },
+    {
+      id: 'spec' as Mode,
+      icon: FileText,
+      title: 'Write Specification',
+      desc: 'Generate a client spec sheet',
+      color: 'bg-cyan-500/10 text-cyan-400',
+    },
+    {
+      id: 'quote' as Mode,
+      icon: PoundSterling,
+      title: 'Price This Job',
+      desc: 'Labour + materials cost estimate',
+      color: 'bg-emerald-500/10 text-emerald-400',
+    },
   ];
 
   const reviewItemIcon = (type: 'warning' | 'info' | 'pass') => {
     switch (type) {
-      case 'warning': return <AlertTriangle className="h-4 w-4 text-orange-400 shrink-0 mt-0.5" />;
-      case 'info': return <Info className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />;
-      case 'pass': return <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />;
+      case 'warning':
+        return <AlertTriangle className="h-4 w-4 text-orange-400 shrink-0 mt-0.5" />;
+      case 'info':
+        return <Info className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />;
+      case 'pass':
+        return <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />;
     }
   };
 
   const reviewItemBg = (type: 'warning' | 'info' | 'pass') => {
     switch (type) {
-      case 'warning': return 'bg-orange-500/10 border-orange-500/20';
-      case 'info': return 'bg-blue-500/10 border-blue-500/20';
-      case 'pass': return 'bg-green-500/10 border-green-500/20';
+      case 'warning':
+        return 'bg-orange-500/10 border-orange-500/20';
+      case 'info':
+        return 'bg-blue-500/10 border-blue-500/20';
+      case 'pass':
+        return 'bg-green-500/10 border-green-500/20';
     }
   };
 
@@ -649,7 +837,9 @@ export const AIRoomBuilderDialog = ({
                   { label: 'Output', tools: hubToolsOutput },
                 ].map((section) => (
                   <div key={section.label}>
-                    <p className="text-[10px] font-bold text-white uppercase tracking-wider mb-2">{section.label}</p>
+                    <p className="text-[10px] font-bold text-white uppercase tracking-wider mb-2">
+                      {section.label}
+                    </p>
                     <div className="space-y-2">
                       {section.tools.map((tool) => (
                         <button
@@ -657,7 +847,12 @@ export const AIRoomBuilderDialog = ({
                           onClick={() => setMode(tool.id)}
                           className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:scale-[0.98] transition-all"
                         >
-                          <div className={cn('h-10 w-10 rounded-xl flex items-center justify-center shrink-0', tool.color)}>
+                          <div
+                            className={cn(
+                              'h-10 w-10 rounded-xl flex items-center justify-center shrink-0',
+                              tool.color
+                            )}
+                          >
                             <tool.icon className="h-5 w-5" />
                           </div>
                           <div className="flex-1 text-left">
@@ -738,7 +933,9 @@ export const AIRoomBuilderDialog = ({
                           : 'bg-elec-yellow shadow-lg shadow-elec-yellow/20'
                       )}
                     >
-                      <Mic className={cn('h-7 w-7', speech.isListening ? 'text-white' : 'text-black')} />
+                      <Mic
+                        className={cn('h-7 w-7', speech.isListening ? 'text-white' : 'text-black')}
+                      />
                     </button>
                   </div>
 
@@ -802,11 +999,15 @@ export const AIRoomBuilderDialog = ({
                       <Shield className="h-10 w-10 text-orange-400 mx-auto mb-3" />
                       <p className="text-sm font-semibold text-white mb-1">Compliance Review</p>
                       <p className="text-xs text-white">
-                        Checks your placed symbols against BS 7671, Building Regs Part B/F, and common installation standards.
+                        Checks your placed symbols against BS 7671, Building Regs Part B/F, and
+                        common installation standards.
                       </p>
                     </div>
                     <Button
-                      onClick={() => { haptic.light(); reviewFloorPlan(); }}
+                      onClick={() => {
+                        haptic.light();
+                        reviewFloorPlan();
+                      }}
                       className="w-full h-12 bg-orange-500 text-white hover:bg-orange-600 font-semibold text-sm touch-manipulation"
                     >
                       <Shield className="h-4 w-4 mr-2" />
@@ -817,7 +1018,13 @@ export const AIRoomBuilderDialog = ({
                   <>
                     <div className="space-y-2">
                       {reviewResults.map((item, idx) => (
-                        <div key={idx} className={cn('flex items-start gap-3 p-3 rounded-xl border', reviewItemBg(item.type))}>
+                        <div
+                          key={idx}
+                          className={cn(
+                            'flex items-start gap-3 p-3 rounded-xl border',
+                            reviewItemBg(item.type)
+                          )}
+                        >
                           {reviewItemIcon(item.type)}
                           <p className="text-sm text-white">{item.message}</p>
                         </div>
@@ -825,7 +1032,10 @@ export const AIRoomBuilderDialog = ({
                     </div>
                     <div className="flex gap-2">
                       <Button
-                        onClick={() => { setReviewResults(null); reviewFloorPlan(); }}
+                        onClick={() => {
+                          setReviewResults(null);
+                          reviewFloorPlan();
+                        }}
                         variant="outline"
                         className="flex-1 h-11 touch-manipulation border-white/10 text-white hover:bg-white/10"
                       >
@@ -846,11 +1056,17 @@ export const AIRoomBuilderDialog = ({
             {/* ==================== AUTO-PLACE ==================== */}
             {mode === 'autoplace' && (
               <div className="p-4 space-y-3">
-                <p className="text-xs text-white mb-2">Select a room type to auto-place its typical symbols onto the canvas.</p>
+                <p className="text-xs text-white mb-2">
+                  Select a room type to auto-place its typical symbols onto the canvas.
+                </p>
                 {Object.entries(ROOM_SYMBOL_PACKS).map(([roomType, pack]) => (
                   <div key={roomType}>
                     <button
-                      onClick={() => setSelectedAutoPlaceRoom(selectedAutoPlaceRoom === roomType ? null : roomType)}
+                      onClick={() =>
+                        setSelectedAutoPlaceRoom(
+                          selectedAutoPlaceRoom === roomType ? null : roomType
+                        )
+                      }
                       className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:scale-[0.98] transition-all"
                     >
                       <div className="flex items-center gap-3">
@@ -862,13 +1078,21 @@ export const AIRoomBuilderDialog = ({
                           <p className="text-xs text-white">{pack.length} symbols</p>
                         </div>
                       </div>
-                      <ChevronRight className={cn('h-4 w-4 text-white shrink-0 transition-transform', selectedAutoPlaceRoom === roomType && 'rotate-90')} />
+                      <ChevronRight
+                        className={cn(
+                          'h-4 w-4 text-white shrink-0 transition-transform',
+                          selectedAutoPlaceRoom === roomType && 'rotate-90'
+                        )}
+                      />
                     </button>
                     {selectedAutoPlaceRoom === roomType && (
                       <div className="mt-2 ml-4 space-y-2">
                         <div className="flex flex-wrap gap-1.5">
                           {pack.map((item, idx) => (
-                            <span key={idx} className="text-[11px] text-white bg-white/[0.06] px-2 py-1 rounded-lg">
+                            <span
+                              key={idx}
+                              className="text-[11px] text-white bg-white/[0.06] px-2 py-1 rounded-lg"
+                            >
                               {item.name}
                             </span>
                           ))}
@@ -897,11 +1121,15 @@ export const AIRoomBuilderDialog = ({
                       <Lightbulb className="h-10 w-10 text-purple-400 mx-auto mb-3" />
                       <p className="text-sm font-semibold text-white mb-1">Smart Suggestions</p>
                       <p className="text-xs text-white">
-                        AI analyses your floor plan and suggests missing items, compliance issues, and improvements.
+                        AI analyses your floor plan and suggests missing items, compliance issues,
+                        and improvements.
                       </p>
                     </div>
                     <Button
-                      onClick={() => { haptic.light(); runSuggestions(); }}
+                      onClick={() => {
+                        haptic.light();
+                        runSuggestions();
+                      }}
                       className="w-full h-12 bg-purple-600 text-white hover:bg-purple-700 font-semibold text-sm touch-manipulation"
                     >
                       <Lightbulb className="h-4 w-4 mr-2" />
@@ -921,15 +1149,24 @@ export const AIRoomBuilderDialog = ({
                     <div className="space-y-3">
                       {suggestionsResult.summary && (
                         <div className="p-3 rounded-xl bg-purple-500/20 border border-purple-500/30">
-                          <p className="text-sm font-semibold text-white">{suggestionsResult.summary}</p>
+                          <p className="text-sm font-semibold text-white">
+                            {suggestionsResult.summary}
+                          </p>
                         </div>
                       )}
                       {suggestionsResult.missing?.length > 0 && (
                         <div>
-                          <p className="text-xs font-semibold text-orange-400 uppercase mb-1.5">Missing Items</p>
+                          <p className="text-xs font-semibold text-orange-400 uppercase mb-1.5">
+                            Missing Items
+                          </p>
                           {suggestionsResult.missing.map((item: any, idx: number) => (
-                            <div key={idx} className="p-2.5 rounded-lg bg-orange-500/10 border border-orange-500/20 mb-1.5">
-                              <p className="text-sm font-medium text-white">{item.name || item.symbol}</p>
+                            <div
+                              key={idx}
+                              className="p-2.5 rounded-lg bg-orange-500/10 border border-orange-500/20 mb-1.5"
+                            >
+                              <p className="text-sm font-medium text-white">
+                                {item.name || item.symbol}
+                              </p>
                               <p className="text-xs text-white mt-0.5">{item.reason}</p>
                             </div>
                           ))}
@@ -937,20 +1174,32 @@ export const AIRoomBuilderDialog = ({
                       )}
                       {suggestionsResult.compliance?.length > 0 && (
                         <div>
-                          <p className="text-xs font-semibold text-red-400 uppercase mb-1.5">Compliance Issues</p>
+                          <p className="text-xs font-semibold text-red-400 uppercase mb-1.5">
+                            Compliance Issues
+                          </p>
                           {suggestionsResult.compliance.map((item: any, idx: number) => (
-                            <div key={idx} className="p-2.5 rounded-lg bg-red-500/10 border border-red-500/20 mb-1.5">
+                            <div
+                              key={idx}
+                              className="p-2.5 rounded-lg bg-red-500/10 border border-red-500/20 mb-1.5"
+                            >
                               <p className="text-sm font-medium text-white">{item.issue}</p>
-                              <p className="text-xs text-white mt-0.5">{item.regulation} — {item.severity}</p>
+                              <p className="text-xs text-white mt-0.5">
+                                {item.regulation} — {item.severity}
+                              </p>
                             </div>
                           ))}
                         </div>
                       )}
                       {suggestionsResult.improvements?.length > 0 && (
                         <div>
-                          <p className="text-xs font-semibold text-blue-400 uppercase mb-1.5">Improvements</p>
+                          <p className="text-xs font-semibold text-blue-400 uppercase mb-1.5">
+                            Improvements
+                          </p>
                           {suggestionsResult.improvements.map((item: any, idx: number) => (
-                            <div key={idx} className="p-2.5 rounded-lg bg-blue-500/10 border border-blue-500/20 mb-1.5">
+                            <div
+                              key={idx}
+                              className="p-2.5 rounded-lg bg-blue-500/10 border border-blue-500/20 mb-1.5"
+                            >
                               <p className="text-sm font-medium text-white">{item.suggestion}</p>
                               <p className="text-xs text-white mt-0.5">{item.benefit}</p>
                             </div>
@@ -960,7 +1209,10 @@ export const AIRoomBuilderDialog = ({
                     </div>
                     <div className="flex gap-2">
                       <Button
-                        onClick={() => { setSuggestionsResult(null); runSuggestions(); }}
+                        onClick={() => {
+                          setSuggestionsResult(null);
+                          runSuggestions();
+                        }}
                         variant="outline"
                         className="flex-1 h-11 touch-manipulation border-white/10 text-white hover:bg-white/10"
                       >
@@ -987,11 +1239,15 @@ export const AIRoomBuilderDialog = ({
                       <FileText className="h-10 w-10 text-cyan-400 mx-auto mb-3" />
                       <p className="text-sm font-semibold text-white mb-1">Specification Writer</p>
                       <p className="text-xs text-white">
-                        Generates a professional electrical specification from your floor plan symbols.
+                        Generates a professional electrical specification from your floor plan
+                        symbols.
                       </p>
                     </div>
                     <Button
-                      onClick={() => { haptic.light(); runSpec(); }}
+                      onClick={() => {
+                        haptic.light();
+                        runSpec();
+                      }}
                       className="w-full h-12 bg-cyan-600 text-white hover:bg-cyan-700 font-semibold text-sm touch-manipulation"
                     >
                       <FileText className="h-4 w-4 mr-2" />
@@ -1015,12 +1271,29 @@ export const AIRoomBuilderDialog = ({
                       {specResult.items?.length > 0 && (
                         <div className="space-y-2">
                           {specResult.items.map((item: any, idx: number) => (
-                            <div key={idx} className="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20">
-                              <p className="text-sm text-white font-semibold mb-1">{item.number || idx + 1}. {item.description}</p>
+                            <div
+                              key={idx}
+                              className="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20"
+                            >
+                              <p className="text-sm text-white font-semibold mb-1">
+                                {item.number || idx + 1}. {item.description}
+                              </p>
                               <div className="flex flex-wrap gap-2 mt-1.5">
-                                {item.circuit && <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded text-white">{item.circuit}</span>}
-                                {item.cable && <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded text-white">{item.cable}</span>}
-                                {item.protection && <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded text-white">{item.protection}</span>}
+                                {item.circuit && (
+                                  <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded text-white">
+                                    {item.circuit}
+                                  </span>
+                                )}
+                                {item.cable && (
+                                  <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded text-white">
+                                    {item.cable}
+                                  </span>
+                                )}
+                                {item.protection && (
+                                  <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded text-white">
+                                    {item.protection}
+                                  </span>
+                                )}
                               </div>
                             </div>
                           ))}
@@ -1028,21 +1301,31 @@ export const AIRoomBuilderDialog = ({
                       )}
                       {specResult.generalNotes && (
                         <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-                          <p className="text-xs font-semibold text-cyan-400 uppercase mb-1">General Notes</p>
+                          <p className="text-xs font-semibold text-cyan-400 uppercase mb-1">
+                            General Notes
+                          </p>
                           <p className="text-sm text-white">{specResult.generalNotes}</p>
                         </div>
                       )}
                       {specResult.regulations?.length > 0 && (
                         <div className="flex flex-wrap gap-1.5">
                           {specResult.regulations.map((reg: string, idx: number) => (
-                            <span key={idx} className="text-[10px] bg-cyan-500/10 border border-cyan-500/20 px-2 py-0.5 rounded text-cyan-400">{reg}</span>
+                            <span
+                              key={idx}
+                              className="text-[10px] bg-cyan-500/10 border border-cyan-500/20 px-2 py-0.5 rounded text-cyan-400"
+                            >
+                              {reg}
+                            </span>
                           ))}
                         </div>
                       )}
                     </div>
                     <div className="flex gap-2">
                       <Button
-                        onClick={() => { setSpecResult(null); runSpec(); }}
+                        onClick={() => {
+                          setSpecResult(null);
+                          runSpec();
+                        }}
                         variant="outline"
                         className="flex-1 h-11 touch-manipulation border-white/10 text-white hover:bg-white/10"
                       >
@@ -1069,11 +1352,15 @@ export const AIRoomBuilderDialog = ({
                       <PoundSterling className="h-10 w-10 text-emerald-400 mx-auto mb-3" />
                       <p className="text-sm font-semibold text-white mb-1">Quote Generator</p>
                       <p className="text-xs text-white">
-                        Generates a quote breakdown with materials, labour, and total from your floor plan.
+                        Generates a quote breakdown with materials, labour, and total from your
+                        floor plan.
                       </p>
                     </div>
                     <Button
-                      onClick={() => { haptic.light(); runQuote(); }}
+                      onClick={() => {
+                        haptic.light();
+                        runQuote();
+                      }}
                       className="w-full h-12 bg-emerald-600 text-white hover:bg-emerald-700 font-semibold text-sm touch-manipulation"
                     >
                       <PoundSterling className="h-4 w-4 mr-2" />
@@ -1093,16 +1380,26 @@ export const AIRoomBuilderDialog = ({
                     {quoteResult.materials ? (
                       <div className="space-y-3">
                         {quoteResult.quoteRef && (
-                          <p className="text-xs text-white font-medium">Ref: {quoteResult.quoteRef}</p>
+                          <p className="text-xs text-white font-medium">
+                            Ref: {quoteResult.quoteRef}
+                          </p>
                         )}
                         <div>
                           <p className="text-xs font-semibold text-white mb-2">Materials</p>
                           <div className="space-y-1.5">
-                            {(Array.isArray(quoteResult.materials) ? quoteResult.materials : []).map((item: any, idx: number) => (
-                              <div key={idx} className="flex items-center justify-between p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+                            {(Array.isArray(quoteResult.materials)
+                              ? quoteResult.materials
+                              : []
+                            ).map((item: any, idx: number) => (
+                              <div
+                                key={idx}
+                                className="flex items-center justify-between p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20"
+                              >
                                 <div className="flex-1 mr-2">
                                   <p className="text-sm text-white">{item.item || item.name}</p>
-                                  {item.qty && <p className="text-xs text-white">Qty: {item.qty}</p>}
+                                  {item.qty && (
+                                    <p className="text-xs text-white">Qty: {item.qty}</p>
+                                  )}
                                 </div>
                                 <p className="text-sm font-semibold text-emerald-400 shrink-0">
                                   {item.total != null ? `£${Number(item.total).toFixed(2)}` : ''}
@@ -1114,60 +1411,91 @@ export const AIRoomBuilderDialog = ({
                         {quoteResult.materialsSubtotal != null && (
                           <div className="flex items-center justify-between px-3 py-1.5">
                             <p className="text-xs text-white">Materials subtotal</p>
-                            <p className="text-sm font-semibold text-white">£{Number(quoteResult.materialsSubtotal).toFixed(2)}</p>
+                            <p className="text-sm font-semibold text-white">
+                              £{Number(quoteResult.materialsSubtotal).toFixed(2)}
+                            </p>
                           </div>
                         )}
                         {quoteResult.labour && (
                           <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
                             <div>
                               <p className="text-sm font-semibold text-white">Labour</p>
-                              {quoteResult.labour.hours && <p className="text-xs text-white">{quoteResult.labour.hours}hrs @ £{quoteResult.labour.rate}/hr</p>}
+                              {quoteResult.labour.hours && (
+                                <p className="text-xs text-white">
+                                  {quoteResult.labour.hours}hrs @ £{quoteResult.labour.rate}/hr
+                                </p>
+                              )}
                             </div>
-                            <p className="text-sm font-semibold text-white">£{Number(quoteResult.labour.total || 0).toFixed(2)}</p>
+                            <p className="text-sm font-semibold text-white">
+                              £{Number(quoteResult.labour.total || 0).toFixed(2)}
+                            </p>
                           </div>
                         )}
                         {quoteResult.sundries && (
                           <div className="flex items-center justify-between px-3 py-1.5">
-                            <p className="text-xs text-white">{quoteResult.sundries.description || 'Sundries'}</p>
-                            <p className="text-sm text-white">£{Number(quoteResult.sundries.total || 0).toFixed(2)}</p>
+                            <p className="text-xs text-white">
+                              {quoteResult.sundries.description || 'Sundries'}
+                            </p>
+                            <p className="text-sm text-white">
+                              £{Number(quoteResult.sundries.total || 0).toFixed(2)}
+                            </p>
                           </div>
                         )}
                         {quoteResult.certification && (
                           <div className="flex items-center justify-between px-3 py-1.5">
-                            <p className="text-xs text-white">{quoteResult.certification.description || 'Certification'}</p>
-                            <p className="text-sm text-white">£{Number(quoteResult.certification.total || 0).toFixed(2)}</p>
+                            <p className="text-xs text-white">
+                              {quoteResult.certification.description || 'Certification'}
+                            </p>
+                            <p className="text-sm text-white">
+                              £{Number(quoteResult.certification.total || 0).toFixed(2)}
+                            </p>
                           </div>
                         )}
                         {quoteResult.subtotalExVat != null && (
                           <div className="flex items-center justify-between px-3 py-1.5 border-t border-white/10">
                             <p className="text-sm text-white">Subtotal (ex VAT)</p>
-                            <p className="text-sm font-semibold text-white">£{Number(quoteResult.subtotalExVat).toFixed(2)}</p>
+                            <p className="text-sm font-semibold text-white">
+                              £{Number(quoteResult.subtotalExVat).toFixed(2)}
+                            </p>
                           </div>
                         )}
                         {quoteResult.vat != null && (
                           <div className="flex items-center justify-between px-3 py-1.5">
                             <p className="text-xs text-white">VAT (20%)</p>
-                            <p className="text-sm text-white">£{Number(quoteResult.vat).toFixed(2)}</p>
+                            <p className="text-sm text-white">
+                              £{Number(quoteResult.vat).toFixed(2)}
+                            </p>
                           </div>
                         )}
                         {(quoteResult.totalIncVat != null || quoteResult.total != null) && (
                           <div className="flex items-center justify-between p-3 rounded-xl bg-emerald-500/20 border border-emerald-500/30">
                             <p className="text-base font-bold text-white">Total (inc VAT)</p>
-                            <p className="text-base font-bold text-emerald-400">£{Number(quoteResult.totalIncVat || quoteResult.total).toFixed(2)}</p>
+                            <p className="text-base font-bold text-emerald-400">
+                              £{Number(quoteResult.totalIncVat || quoteResult.total).toFixed(2)}
+                            </p>
                           </div>
                         )}
                         {quoteResult.estimatedDuration && (
-                          <p className="text-xs text-white">Estimated duration: {quoteResult.estimatedDuration}</p>
+                          <p className="text-xs text-white">
+                            Estimated duration: {quoteResult.estimatedDuration}
+                          </p>
                         )}
                       </div>
                     ) : (
                       <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-                        <p className="text-sm text-white whitespace-pre-wrap">{typeof quoteResult === 'string' ? quoteResult : JSON.stringify(quoteResult, null, 2)}</p>
+                        <p className="text-sm text-white whitespace-pre-wrap">
+                          {typeof quoteResult === 'string'
+                            ? quoteResult
+                            : JSON.stringify(quoteResult, null, 2)}
+                        </p>
                       </div>
                     )}
                     <div className="flex gap-2">
                       <Button
-                        onClick={() => { setQuoteResult(null); runQuote(); }}
+                        onClick={() => {
+                          setQuoteResult(null);
+                          runQuote();
+                        }}
                         variant="outline"
                         className="flex-1 h-11 touch-manipulation border-white/10 text-white hover:bg-white/10"
                       >
@@ -1191,7 +1519,6 @@ export const AIRoomBuilderDialog = ({
                   ref={photoInputRef}
                   type="file"
                   accept="image/*"
-                  capture="environment"
                   onChange={handlePhotoCapture}
                   className="hidden"
                 />
@@ -1202,15 +1529,27 @@ export const AIRoomBuilderDialog = ({
                       <Camera className="h-10 w-10 text-pink-400 mx-auto mb-3" />
                       <p className="text-sm font-semibold text-white mb-1">Photo to Floor Plan</p>
                       <p className="text-xs text-white">
-                        Take a photo of a room and AI will estimate dimensions and suggest an electrical layout.
+                        Photograph a floor plan — hand-drawn is fine — and every room on it is laid
+                        out with a suggested electrical layout.
                       </p>
                     </div>
+                    {/* Library first: a plan is nearly always a photo you already
+                        took, and offering only the camera is what made this
+                        unusable in the app (ELE-1745). */}
                     <Button
-                      onClick={() => photoInputRef.current?.click()}
+                      onClick={() => choosePlanPhoto('library')}
                       className="w-full h-12 bg-pink-600 text-white hover:bg-pink-700 font-semibold text-sm touch-manipulation"
                     >
+                      <ImageIcon className="h-4 w-4 mr-2" />
+                      Choose a plan photo
+                    </Button>
+                    <Button
+                      onClick={() => choosePlanPhoto('camera')}
+                      variant="outline"
+                      className="w-full h-11 border-white/10 text-white hover:bg-white/10 font-semibold text-sm touch-manipulation"
+                    >
                       <Camera className="h-4 w-4 mr-2" />
-                      Take Photo
+                      Take a photo now
                     </Button>
                   </>
                 )}
@@ -1218,15 +1557,22 @@ export const AIRoomBuilderDialog = ({
                 {photoPreview && !photoGenerating && (
                   <>
                     <div className="rounded-xl overflow-hidden border border-white/10">
-                      <img src={photoPreview} alt="Room photo" className="w-full h-48 object-cover" />
+                      <img
+                        src={photoPreview}
+                        alt="Room photo"
+                        className="w-full h-48 object-cover"
+                      />
                     </div>
                     <div className="flex gap-2">
                       <Button
-                        onClick={() => { setPhotoPreview(null); photoInputRef.current?.click(); }}
+                        onClick={() => {
+                          setPhotoPreview(null);
+                          void choosePlanPhoto('library');
+                        }}
                         variant="outline"
                         className="flex-1 h-11 border-white/10 text-white hover:bg-white/10 touch-manipulation"
                       >
-                        Retake
+                        Choose another
                       </Button>
                       <Button
                         onClick={handlePhotoGenerate}
@@ -1243,7 +1589,9 @@ export const AIRoomBuilderDialog = ({
                   <div className="flex flex-col items-center justify-center py-12">
                     <Loader2 className="h-8 w-8 text-pink-400 animate-spin mb-3" />
                     <p className="text-sm font-medium text-white">Analysing photo...</p>
-                    <p className="text-xs text-white mt-1">AI is estimating dimensions and electrical layout</p>
+                    <p className="text-xs text-white mt-1">
+                      AI is estimating dimensions and electrical layout
+                    </p>
                   </div>
                 )}
               </div>

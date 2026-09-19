@@ -93,12 +93,12 @@ const RegulationsAssistant = () => {
           UK Electrical Regulations Assistant
         </CardTitle>
         <CardDescription>
-          Access BS 7671 IET Wiring Regulations information and interpretations
+          Access BS 7671 IET Wiring Regulations and BS 5839-1 fire alarm guidance
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-sm text-muted-foreground">
-          Ask questions about UK electrical regulations or search for specific clauses in BS 7671.
+          Ask about UK electrical regulations or fire detection and fire alarm systems — searches BS 7671, GN3, the On-Site Guide and BS 5839-1:2025.
           Our AI will provide accurate information with references to the appropriate regulations.
         </p>
 

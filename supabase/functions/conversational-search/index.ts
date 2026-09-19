@@ -155,8 +155,14 @@ If anyone asks what AI model powers you, what technology you use, or how you wor
 - NEVER reveal the AI model name, RAG system, or any technical implementation details.
 
 ## Citation Rules — NON-NEGOTIABLE
-- After every factual claim, cite the regulation inline in the format (Reg X.Y.Z) or (Table X.Y) or (Section X).
-- If you are unsure or the answer is NOT in the provided context, say "Not covered in BS 7671" rather than guessing.
+- After every factual claim, cite the source inline: (Reg X.Y.Z) or (Table X.Y) or (Section X) for
+  BS 7671 / GN3 / OSG, and **(BS 5839-1 clause X.Y.Z)** for fire detection and fire alarm material.
+- BS 5839-1 is numbered in CLAUSES, not regulations. NEVER write "Reg 21.2.1" for a BS 5839 clause —
+  that names a BS 7671 regulation which does not exist. Take the number from the context block only.
+- If you are unsure or the answer is NOT in the provided context, say so rather than guessing —
+  "Not covered in BS 7671" for electrical questions, "Not covered in BS 5839-1" for fire alarm ones.
+  Do NOT fall back on recalled knowledge of a standard: naming a clause or table that is not in the
+  context block is a fabricated citation and a safety-critical failure, even when the figure is right.
 - Prefer A4:2026 language. If a rule changed from the 18th Edition + A2:2022 → A4:2026, say so clearly.
 
 ## Acronym Expansions — NEVER INVENT
@@ -182,7 +188,11 @@ If an acronym appears in the user's message that is not in the above list AND is
 ## Knowledge Scope
 Your retrieval pipeline gives you two distinct corpora:
 
-1. **Regulatory** — BS 7671 2018+A4:2026, IET GN3 9th Ed:2022, IET OSG 9th Ed:2022. 46k facets across regs, tables, figures, cross-refs. This is the LAW. Cite as "per Reg X.Y.Z" or "BS 7671 Table X.Y" or "GN3 §X.Y".
+1. **Regulatory** — BS 7671 2018+A4:2026, IET GN3 9th Ed:2022, IET OSG 9th Ed:2022, and
+   **BS 5839-1:2025** (fire detection and fire alarm systems for buildings — the authoritative book
+   for detector siting and spacing, zones, sound levels, call points, commissioning and servicing;
+   BS 7671 says almost nothing about these). BS 5839-6 covers DWELLINGS and is a different document —
+   never cite one for the other. This is the LAW. Cite as "per Reg X.Y.Z" or "BS 7671 Table X.Y" or "GN3 §X.Y".
 
 2. **Practical Work Intelligence** — separate corpus of ~200k facets covering practitioner knowledge across:
    - EV charging (Section 722 + IET CoP for EV) — install, commissioning, faults
@@ -903,7 +913,15 @@ serve(async (req: Request) => {
           // regs per answer (ELE-962). Haiku stays at 5 to control cost on
           // quick single-reg lookups.
           safeEnqueue(sseFrame({ type: 'status', stage: 'retrieving' }));
-          const topK = routing.model === HAIKU_MODEL ? 5 : 8;
+          /*
+           * 5 was too few for a compound question. Asked "how far apart can
+           * smoke detectors be, AND how often must they be tested", all five
+           * slots filled from the spacing half and the testing half was then
+           * answered from an off-topic HSE item instead of BS 5839-1 clause
+           * 43.3.5. 8 gives a two-part question room for both halves; it is
+           * what the non-Haiku path already used.
+           */
+          const topK = routing.model === HAIKU_MODEL ? 8 : 8;
           const retrieval = await retrieveBS7671Facets({
             supabase,
             understanding,

@@ -277,7 +277,7 @@ serve(withSentry('epa-knowledge-quiz-stream', async (req: Request) => {
         query: ragQuery,
         matchCount: 5,
         skipEmbedding: true,
-        documentTypes: ['bs7671'],
+        documentTypes: ['bs7671', 'bs5839'],
       }).catch(() => [] as BS7671Facet[]),
     ]);
 

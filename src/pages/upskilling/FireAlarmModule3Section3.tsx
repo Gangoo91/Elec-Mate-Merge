@@ -1325,7 +1325,7 @@ const FireAlarmModule3Section3 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 43.2 (12-month service) — clock verification"
+          source="BS 5839-1:2025 · Clause 43.2.10 (periodic visit — controls, indicators, timeclock)"
           clause={
             <>
               At every service visit, any time clock of the CIE should be checked and adjusted as

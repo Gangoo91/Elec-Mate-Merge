@@ -625,17 +625,21 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Monthly — Visual inspection.</strong> Check the panel for fault indicators,
-                verify battery charging, inspect any accessible wiring for damage, and check that
-                all detectors and call points are unobstructed.
+                <strong>Monthly — Standby supply checks.</strong> Where an automatically started
+                generator forms part of the standby supply, run it on load for at least an hour;
+                where vented batteries are used, inspect them and their connections (clause 42.2).
+                Checking the panel for faults and keeping detectors unobstructed is sensible
+                practice alongside this.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Quarterly — Professional inspection.</strong> A competent fire alarm
-                engineer tests 25% of the detectors (so all detectors are tested over the course of
-                a year), checks sounder operation, and inspects the panel and wiring.
+                <strong>Approximately every 6 months — Professional inspection.</strong> A competent
+                person carries out the periodic inspection and service visit (clause 43.2.1), which
+                may fall anywhere between 5 and 7 months after the previous one. There is no "test
+                25% of detectors" rule in BS 5839-1 — the work is scheduled so that the full
+                12-month programme below is completed across these visits.
               </span>
             </li>
             <li className="flex items-start gap-3">

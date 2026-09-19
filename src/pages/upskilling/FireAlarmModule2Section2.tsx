@@ -24,13 +24,13 @@ const inlineChecks = [
       'Per BS 5839-1:2025 clause 21.2, what are the maximum centre-to-centre and detector-to-wall distances for a SMOKE detector mounted on a flat ceiling, and how do they compare to a HEAT detector?',
     options: [
       'Smoke and heat use identical spacing: 7.5 m centre-to-centre and 5.3 m to wall for both.',
-      'Smoke is 7.5 m c/c and 5.3 m to wall; heat is tighter at 5.3 m c/c and 3.7 m to wall.',
+      'Smoke is 10.6 m c/c and 5.3 m to wall; heat is tighter at 7.5 m c/c and 3.75 m to wall.',
       '5.3 m centre-to-centre and 3.7 m to wall for both smoke and heat detectors.',
       '10 m centre-to-centre and 7 m to wall for both smoke and heat detectors.',
     ],
     correctIndex: 1,
     explanation:
-      'For a smoke detector: maximum 7.5 m centre-to-centre (effective radius ≈ 5.3 m) and 5.3 m from any wall. For a heat detector the values are tighter: 5.3 m centre-to-centre and 3.7 m from any wall. Heat numbers are tighter because a heat detector responds only to localised temperature rise — heat dissipates faster than smoke spreads, so it must be closer to the fire to respond in time. These come from clause 21.2 (unchanged from earlier editions); a heat detector spaced as a smoke detector will respond too late.',
+      'Clause 21.2.1 gives a maximum DISTANCE from any point in the protected area to the nearest detector — 7.5 m for smoke, 5.3 m for heat — not a grid pitch. Converting that radius to a square grid multiplies by √2: smoke becomes 10.6 m centre-to-centre with the outermost detectors 5.3 m from a wall (half a pitch), heat becomes 7.5 m centre-to-centre with 3.75 m to a wall. Clause 21.2.14 uses exactly those two figures, 10.6 m and 7.5 m, as the cell dimensions for closely spaced beams. Heat is tighter because a heat detector only responds once the fire is large enough to drive hot gases across the ceiling, so the standard gives it less distance to cover.',
   },
   {
     id: 'fam2-s2-element',
@@ -83,13 +83,13 @@ const quizQuestions = [
       'What is the maximum CENTRE-TO-CENTRE spacing for a smoke detector on a flat ceiling per BS 5839-1:2025 clause 21.2?',
     options: [
       '7.5 m centre-to-centre, 5.3 m to any wall.',
-      '5.3 m centre-to-centre, 3.7 m to any wall.',
-      '10.5 m centre-to-centre, 7.5 m to any wall.',
+      '5.3 m centre-to-centre, 3.75 m to any wall.',
+      '10.6 m centre-to-centre, 5.3 m to any wall.',
       '12 m centre-to-centre, 8 m to any wall.',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
-      'Smoke detector flat-ceiling rule: 7.5 m centre-to-centre, 5.3 m to wall — the standard smoke-detection grid, unchanged in the 2025 edition. Heat detector rule is tighter at 5.3 m centre-to-centre, 3.7 m to wall, because heat spreads less reliably than smoke; a heat detector must be closer to the fire to respond.',
+      'Clause 21.2.1a) sets a distance, not a grid: no point may be more than 7.5 m from the nearest smoke detector. The square grid that satisfies it is 10.6 m centre-to-centre (7.5 × √2), with the outermost detectors within half a pitch — 5.3 m — of the walls. "7.5 m c/c" is the classic trap: 7.5 m is the RADIUS, and using it as the grid pitch gives a layout that is compliant but needlessly dense and more expensive. Clause 21.2.14 confirms the figures, using 10.6 m for smoke and 7.5 m for heat as cell dimensions.',
   },
   {
     id: 2,
@@ -209,13 +209,13 @@ const quizQuestions = [
       'Approximately how many smoke detectors does it take to cover a 30 m × 30 m office floor (flat ceiling, no obstructions)?',
     options: [
       '4 detectors, on a 2 × 2 grid.',
-      '8 detectors, on a 2 × 4 grid.',
+      '9 detectors, on a 3 × 3 grid.',
       '16 detectors, on a 4 × 4 grid.',
-      '32 detectors, on a 4 × 8 grid.',
+      '25 detectors, on a 5 × 5 grid.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
-      'At 7.5 m spacing and 5.3 m to wall, a 30 m × 30 m floor needs a 4 × 4 grid = 16 detectors; the usable 19.4 m span between wall offsets fits three 7.5 m gaps per row. The "30 × 30 = 16 detectors" rule of thumb is a useful sanity check. For heat detection on the same floor (5.3 m centre-to-centre, 3.7 m to wall), the corresponding number is approximately 36 detectors — more than double, reflecting the tighter spacing rules for heat.',
+      'A 3 × 3 grid — 9 detectors. Place them at 5 m, 15 m and 25 m in both directions: the pitch is 10 m (inside the 10.6 m maximum), each outer detector is 5 m from its wall (inside 5.3 m), and the worst case, a room corner, is √(5² + 5²) = 7.07 m from the nearest detector, inside the 7.5 m limit of clause 21.2.1a). Always check the radial limit rather than the grid alone — the radius is the actual recommendation. A 2 × 2 grid fails both tests: 15 m pitch, and 10.6 m from the corner. On the same floor, heat detectors at 7.5 m c/c and 3.75 m to wall need a 4 × 4 grid = 16 — note that 16 is the HEAT answer here, which is exactly the figure people arrive at for smoke if they mistake the 7.5 m radius for a grid pitch.',
   },
 ];
 
@@ -244,7 +244,7 @@ const FireAlarmModule2Section2 = () => {
 
         <TLDR
           points={[
-            'Flat-ceiling spacing — SMOKE: 7.5 m centre-to-centre, 5.3 m to any wall (effective radius ≈ 5.3 m). HEAT: 5.3 m centre-to-centre, 3.7 m to any wall. Heat is tighter because heat dissipates faster than smoke spreads.',
+            'Flat-ceiling spacing (clause 21.2.1) — the recommendation is a DISTANCE, not a grid: no point more than 7.5 m from a smoke detector, or 5.3 m from a heat detector. The square grids that satisfy this are SMOKE 10.6 m centre-to-centre with 5.3 m to any wall, and HEAT 7.5 m centre-to-centre with 3.75 m to any wall.',
             'Sensitive-element offset (clause 21.2.4) — SMOKE: 25 to 600 mm below ceiling. HEAT: 25 to 150 mm. The 25 mm minimum keeps the element out of the ceiling boundary-layer dead zone; the upper bound keeps it within the active smoke/heat-spread region.',
             'Voids (clause 21.2.7) — NEW figure in 2025: void ≤ 1.25 m → detector in top 125 mm; void > 1.25 m and ≤ 1.5 m → detector in top 10 percent; void > 1.5 m → treat as normal-height room.',
             'Obstacles (clause 21.2.12) — NEW two-test rule: an obstruction (e.g. duct) is treated as a WALL only if BOTH (a) gap to ceiling < 300 mm AND (b) depth > 10 percent of ceiling height. Otherwise the obstruction is not treated as a wall.',
@@ -274,23 +274,26 @@ const FireAlarmModule2Section2 = () => {
 
         <ConceptBlock
           title="Smoke detector flat-ceiling spacing"
-          plainEnglish="On a flat horizontal ceiling, smoke detectors are arranged on a grid such that no point on the ceiling is more than 5.3 m from the nearest detector — that is the 'effective coverage radius' of a smoke detector. The convenient grid that achieves this is 7.5 m × 7.5 m centre-to-centre, with each detector centred in its own 7.5 m × 7.5 m square. The diagonal of that square is 10.6 m, so the corner-to-detector distance is 5.3 m — the geometric maximum. The detector at any position on the grid is not more than 5.3 m from its corresponding wall (so the boundary cells are equivalent to interior cells)."
-          onSite="When laying out detectors on a drawing, snap to a 7.5 m grid. Verify by drawing 5.3 m circles around each detector and confirming the union of circles covers every point on the floor. For irregular geometries, the 5.3 m radius around the proposed detector position is the test. Tighter spacing always passes; wider spacing always fails."
+          plainEnglish="On a flat horizontal ceiling the rule in clause 21.2.1a) is a distance, not a grid: no point in the protected area may be more than 7.5 m from the nearest smoke detector. A square grid is simply the convenient way to satisfy it. Put detectors on a 10.6 m × 10.6 m grid and the worst point — a room corner, or the centre of four detectors — sits 10.6 ÷ √2 = 7.5 m away, exactly on the limit. That is where 10.6 m comes from, and why the outermost detector sits no more than half a pitch, 5.3 m, from the wall."
+          onSite="Snap to a 10.6 m grid and keep the outer row within 5.3 m of the walls. Verify by drawing 7.5 m circles around each detector and confirming the union covers every point on the floor. For irregular geometries the 7.5 m radius around the proposed position is the test — that is the actual recommendation, and the grid is only a shortcut to it. Tighter spacing always passes; wider always fails."
         >
           <p>The exact wording from BS 5839-1:2025 clause 21.2:</p>
           <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
             <li>
-              <strong>Maximum centre-to-centre spacing:</strong> 7.5 m for smoke detectors.
+              <strong>Maximum distance from any point to the nearest detector:</strong> 7.5 m for
+              smoke detectors — this is the recommendation itself (clause 21.2.1a).
             </li>
             <li>
-              <strong>Maximum wall-to-detector distance:</strong> 5.3 m for smoke detectors.
+              <strong>Maximum centre-to-centre spacing:</strong> 10.6 m, the square grid that
+              satisfies the 7.5 m limit (7.5 × √2). Clause 21.2.14 uses this same figure.
             </li>
             <li>
-              <strong>Effective coverage radius:</strong> approximately 5.3 m (the diagonal of a 7.5
-              m square divided by 2).
+              <strong>Maximum wall-to-detector distance:</strong> 5.3 m — half the grid pitch, which
+              is how Figure 19 expresses it (end detector at 0.5M).
             </li>
             <li>
-              <strong>Per-detector floor area:</strong> 7.5 m × 7.5 m = 56.25 m² maximum.
+              <strong>Per-detector floor area:</strong> 10.6 m × 10.6 m ≈ 112 m². Note this is
+              derived, not a recommendation — BS 5839-1 sets no coverage area per detector.
             </li>
             <li>
               <strong>Wall and corner allowance:</strong> the same 5.3 m maximum applies — corners
@@ -301,21 +304,23 @@ const FireAlarmModule2Section2 = () => {
 
         <ConceptBlock
           title="Heat detector flat-ceiling spacing — TIGHTER than smoke"
-          plainEnglish="Heat detectors require closer spacing than smoke detectors because heat dissipates more rapidly than smoke spreads. A real fire produces a buoyant plume of hot gases that rises to the ceiling; smoke layers spread laterally along the ceiling and remain detectable for some time, but heat conducts and convects away more quickly. The detector therefore needs to be physically closer to the fire to receive useful temperature signal. The flat-ceiling rule for heat is 5.3 m centre-to-centre and 3.7 m to wall — about 70 percent of the smoke-detector dimensions."
+          plainEnglish="Heat detectors sit closer together than smoke detectors. A real fire produces a buoyant plume of hot gases that rises to the ceiling; smoke spreads laterally and stays detectable for some time, but heat conducts and convects away more quickly, so a heat detector only responds once the fire is already large enough to drive hot gases across the ceiling. Clause 21.2.1b) therefore allows only 5.3 m from any point to the nearest heat detector — about 70 percent of the smoke figure. The square grid that satisfies it is 7.5 m centre-to-centre, with the outer detectors within 3.75 m of the walls."
         >
           <p>BS 5839-1:2025 clause 21.2 — heat-detector spacing:</p>
           <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
             <li>
-              <strong>Maximum centre-to-centre spacing:</strong> 5.3 m for heat detectors.
+              <strong>Maximum distance from any point to the nearest detector:</strong> 5.3 m for
+              heat detectors (clause 21.2.1b).
             </li>
             <li>
-              <strong>Maximum wall-to-detector distance:</strong> 3.7 m for heat detectors.
+              <strong>Maximum centre-to-centre spacing:</strong> 7.5 m (5.3 × √2) — the same figure
+              clause 21.2.14 uses for heat.
             </li>
             <li>
-              <strong>Effective coverage radius:</strong> approximately 3.7 m.
+              <strong>Maximum wall-to-detector distance:</strong> 3.75 m, half the grid pitch.
             </li>
             <li>
-              <strong>Per-detector floor area:</strong> 5.3 m × 5.3 m ≈ 28 m² — about half the smoke
+              <strong>Per-detector floor area:</strong> 7.5 m × 7.5 m ≈ 56 m² — about half the smoke
               area.
             </li>
           </ul>
@@ -402,7 +407,7 @@ const FireAlarmModule2Section2 = () => {
             viewBox="0 0 820 540"
             className="w-full h-auto"
             role="img"
-            aria-label="Two side-by-side plan views. Left: smoke detector grid showing 7.5 m centre-to-centre spacing and 5.3 m to wall, with effective coverage circles overlapping. Right: heat detector grid with tighter 5.3 m centre-to-centre and 3.7 m to wall spacing, demonstrating the higher detector density required for heat detection."
+            aria-label="Two side-by-side plan views. Left: smoke detector grid showing 10.6 m centre-to-centre spacing and 5.3 m to wall, with 7.5 m coverage circles overlapping. Right: heat detector grid with tighter 7.5 m centre-to-centre and 3.75 m to wall spacing and 5.3 m circles, demonstrating the higher detector density required for heat detection."
           >
             {/* SMOKE GRID */}
             <g>
@@ -417,7 +422,7 @@ const FireAlarmModule2Section2 = () => {
                 SMOKE detector grid
               </text>
               <text x="200" y="48" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="10">
-                7.5 m c/c · 5.3 m to wall · radius 5.3 m
+                10.6 m c/c · 5.3 m to wall · radius 7.5 m
               </text>
               {/* Room outline */}
               <rect
@@ -509,7 +514,7 @@ const FireAlarmModule2Section2 = () => {
                 HEAT detector grid
               </text>
               <text x="600" y="48" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="10">
-                5.3 m c/c · 3.7 m to wall · radius 3.7 m
+                7.5 m c/c · 3.75 m to wall · radius 5.3 m
               </text>
               {/* Room outline (same size for comparison) */}
               <rect
@@ -859,14 +864,14 @@ const FireAlarmModule2Section2 = () => {
         <KeyTakeaways
           title="What to remember on site"
           points={[
-            'Flat-ceiling spacing — SMOKE: 7.5 m c/c, 5.3 m to wall (radius 5.3 m). HEAT: 5.3 m c/c, 3.7 m to wall (radius 3.7 m). Heat is roughly half the area per detector.',
+            'Flat-ceiling spacing — the recommendation is a RADIUS, not a grid: 7.5 m to the nearest smoke detector, 5.3 m to the nearest heat detector (clause 21.2.1). Grids that satisfy it: SMOKE 10.6 m c/c, 5.3 m to wall; HEAT 7.5 m c/c, 3.75 m to wall. Heat is roughly half the area per detector.',
             'Sensitive-element offset — SMOKE 25-600 mm, HEAT 25-150 mm (clause 21.2.4). The 25 mm minimum is critical — flush flush-mount detectors often violate it.',
             'Voids (clause 21.2.7) — three depth bands: ≤1.25 m → top 125 mm; >1.25 m and ≤1.5 m → top 10 percent; >1.5 m → treat as normal-height room.',
             'Obstacles (clause 21.2.12) — TWO tests: (a) gap < 300 mm AND (b) depth > 10 percent ceiling height. BOTH must pass for the obstruction to be treated as a wall.',
             'Beams ≤ 250 mm depth — no detector within 2× depth of the beam (unless beam has > 300 mm gap above, then beam is not an obstacle at all).',
             'Closely-spaced beams (≤ 1 m c/c) — NEW 2025 definition. Treat as cellular ceiling, not flat ceiling with obstructions.',
-            'Table 3 height limits — multi-sensor in AND-logic falls back to HEAT-detector limit (clause 17). Mode and height interact.',
-            'Heat detectors NOT permitted in sleeping rooms for new L1/L2/L3 work (clause 14, see Section 1).',
+            'Table 3 height limits (clause 21.8.1) — a multi-sensor detector takes the LOWEST limit expressed for the type of detection and mode of operation in use (clause 21.8.2), so mode and height interact.',
+            'Rooms designed as sleeping accommodation normally need SMOKE detection, not heat (clause 20.2c, Note 3). Earlier editions allowed heat there; the change is not retrospective until the system is substantially replaced or extended.',
             'When in doubt, apply the rule that produces TIGHTER spacing or LOWER ceiling assumption — false alarms are recoverable, missed fires are not.',
             'Document mode and rationale per detector under clause 20.11; the void figure, the obstacle test and the closely-spaced threshold are all numerically clear in 2025 — record your design decisions against them.',
           ]}

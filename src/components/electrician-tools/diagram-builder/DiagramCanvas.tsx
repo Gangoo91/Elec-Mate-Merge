@@ -1,9 +1,21 @@
 import { useEffect, useRef, useState, forwardRef, useImperativeHandle } from 'react';
-import { Canvas as FabricCanvas, Rect, Line, FabricText, FabricObject, Group, Circle, Path, Point, loadSVGFromString, util } from 'fabric';
+import {
+  Canvas as FabricCanvas,
+  Rect,
+  Line,
+  FabricText,
+  FabricObject,
+  Group,
+  Circle,
+  Path,
+  Point,
+  loadSVGFromString,
+  util,
+} from 'fabric';
 import type { TPointerEventInfo, TPointerEvent } from 'fabric';
 import type { CanvasObject } from '@/pages/electrician-tools/ai-tools/DiagramBuilderPage';
 import { symbolRegistry } from './symbols/symbolRegistry';
-import { electricalSymbols } from './symbols/electricalSymbols';
+import { resolveSymbolId } from './symbols/symbolAliases';
 import { loadSymbolSvg } from './symbols/svgLoader';
 import { extractWalls, orthogonalRoute } from './cableRouter';
 import { SCALE, GRID_MINOR, GRID_MAJOR, snapToStep } from './constants';
@@ -17,6 +29,19 @@ import { isTypingContext, shouldAllowSpaceDefault, isInOverlay } from '@/utils/k
 import { ZoomIn, ZoomOut, Maximize2, RotateCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useHaptic } from '@/hooks/useHaptic';
+
+/**
+ * One room as the generator returns it (ELE-1745).
+ *
+ * `origin` is the room's offset in metres from the top-left of the whole floor,
+ * which is what lets a photographed plan come back as a floor rather than a
+ * stack of rooms. `dimensions` are the sizes read off the drawing.
+ */
+type RoomMeta = {
+  name?: string;
+  origin?: { x?: number; y?: number };
+  dimensions?: { width?: number; height?: number; unit?: string };
+};
 
 // Minimap component — renders a small overview of the canvas
 const MinimapOverlay = ({ fabricCanvas }: { fabricCanvas: FabricCanvas | null }) => {
@@ -96,7 +121,10 @@ const MinimapOverlay = ({ fabricCanvas }: { fabricCanvas: FabricCanvas | null })
 
   return (
     <div className="absolute bottom-3 right-3 z-10">
-      <div className="bg-black/70 backdrop-blur border border-white/20 rounded-lg overflow-hidden" style={{ width: 120, height: 80 }}>
+      <div
+        className="bg-black/70 backdrop-blur border border-white/20 rounded-lg overflow-hidden"
+        style={{ width: 120, height: 80 }}
+      >
         <canvas ref={minimapRef} style={{ width: 120, height: 80 }} />
       </div>
     </div>
@@ -122,7 +150,7 @@ const FEATURE_WIDTH_PX: Record<string, number> = {
   'door-double': 84,
   'door-entry': 42,
   'door-release': 42,
-  'window': 52,
+  window: 52,
 };
 const isWallFeature = (symbolId?: string | null): boolean =>
   !!symbolId && symbolId in FEATURE_WIDTH_PX;
@@ -143,7 +171,11 @@ interface DiagramCanvasProps {
   snapEnabled: boolean;
   headerHeight?: number;
   toolbarHeight?: number;
-  onWallTapped?: (wallId: string, currentLength: number, screenPos: { x: number; y: number }) => void;
+  onWallTapped?: (
+    wallId: string,
+    currentLength: number,
+    screenPos: { x: number; y: number }
+  ) => void;
   onRotate?: () => void;
   onToolChange?: (tool: string) => void;
   showMinimap?: boolean;
@@ -178,7 +210,6 @@ const serialiseCanvasObject = (obj: CanvasObject): string => {
   );
 };
 
-
 /**
  * Pick a clear position for a circuit tag.
  *
@@ -190,10 +221,7 @@ const serialiseCanvasObject = (obj: CanvasObject): string => {
  */
 const TAG_RADIUS = 23;
 const TAG_CLEARANCE = 15;
-const findTagSpot = (
-  target: CanvasObject,
-  all: CanvasObject[]
-): { x: number; y: number } => {
+const findTagSpot = (target: CanvasObject, all: CanvasObject[]): { x: number; y: number } => {
   const candidates = [
     { x: 0, y: -TAG_RADIUS },
     { x: 0, y: TAG_RADIUS },
@@ -204,9 +232,7 @@ const findTagSpot = (
     { x: TAG_RADIUS * 0.75, y: TAG_RADIUS * 0.75 },
     { x: -TAG_RADIUS * 0.75, y: TAG_RADIUS * 0.75 },
   ];
-  const neighbours = all.filter(
-    (o) => o.type === 'symbol' && o.id !== target.id
-  );
+  const neighbours = all.filter((o) => o.type === 'symbol' && o.id !== target.id);
 
   for (const c of candidates) {
     const px = target.x + c.x;
@@ -339,7 +365,25 @@ const drawGrid = (canvas: FabricCanvas, enabled: boolean) => {
 };
 
 export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
-  ({ activeTool, selectedSymbolId, objects, onObjectsChange, onSelectionChange, onRequestProperties, gridEnabled, snapEnabled, headerHeight = 48, toolbarHeight = 56, onWallTapped, onRotate, onToolChange, showMinimap = true }, ref) => {
+  (
+    {
+      activeTool,
+      selectedSymbolId,
+      objects,
+      onObjectsChange,
+      onSelectionChange,
+      onRequestProperties,
+      gridEnabled,
+      snapEnabled,
+      headerHeight = 48,
+      toolbarHeight = 56,
+      onWallTapped,
+      onRotate,
+      onToolChange,
+      showMinimap = true,
+    },
+    ref
+  ) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     // Flex-driven wrapper around the fabric canvas. We size the canvas from
     // this element's measured box rather than `window.innerHeight − constants`
@@ -468,18 +512,18 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
 
       const originalPoint = wall.points[endpointIndex];
       const otherPoint = wall.points[endpointIndex === 0 ? 1 : 0];
-      const isHorizontal = Math.abs(otherPoint.x - originalPoint.x) >= Math.abs(otherPoint.y - originalPoint.y);
+      const isHorizontal =
+        Math.abs(otherPoint.x - originalPoint.x) >= Math.abs(otherPoint.y - originalPoint.y);
       const constrainedPoint = {
         x: isHorizontal ? nextPoint.x : otherPoint.x,
         y: isHorizontal ? otherPoint.y : nextPoint.y,
       };
 
-      const snappedPoint = findSnapEndpoint(
-        constrainedPoint.x,
-        constrainedPoint.y,
-        items,
-        [originalPoint, otherPoint]
-      ) || constrainedPoint;
+      const snappedPoint =
+        findSnapEndpoint(constrainedPoint.x, constrainedPoint.y, items, [
+          originalPoint,
+          otherPoint,
+        ]) || constrainedPoint;
 
       return items.map((obj) => {
         if (obj.type !== 'wall' || !obj.points || obj.points.length < 2) {
@@ -673,27 +717,27 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       });
       (highlight as any).wallAdornmentId = highlightId;
 
-        const handles = [p1, p2].map((point, endpointIndex) => {
-          const handleId = `wall-handle-${wallId}-${endpointIndex}`;
-          wallAdornmentIdsRef.current.add(handleId);
-          const handle = new Circle({
-            left: point.x,
-            top: point.y,
-            radius: 10,
-            fill: 'rgba(255,255,255,0.96)',
-            stroke: WALL_SNAP_GUIDE_COLOUR,
-            strokeWidth: 2,
-            originX: 'center',
-            originY: 'center',
-            selectable: true,
-            hasControls: false,
-            hasBorders: false,
-            lockScalingX: true,
-            lockScalingY: true,
-            padding: 10,
-            hoverCursor: 'grab',
-            moveCursor: 'grabbing',
-          });
+      const handles = [p1, p2].map((point, endpointIndex) => {
+        const handleId = `wall-handle-${wallId}-${endpointIndex}`;
+        wallAdornmentIdsRef.current.add(handleId);
+        const handle = new Circle({
+          left: point.x,
+          top: point.y,
+          radius: 10,
+          fill: 'rgba(255,255,255,0.96)',
+          stroke: WALL_SNAP_GUIDE_COLOUR,
+          strokeWidth: 2,
+          originX: 'center',
+          originY: 'center',
+          selectable: true,
+          hasControls: false,
+          hasBorders: false,
+          lockScalingX: true,
+          lockScalingY: true,
+          padding: 10,
+          hoverCursor: 'grab',
+          moveCursor: 'grabbing',
+        });
         (handle as any).wallAdornmentId = handleId;
         (handle as any).customData = { type: 'wall-handle', wallId, endpointIndex };
         return handle;
@@ -712,7 +756,10 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
 
       const existing = canvas.getObjects().filter((obj) => {
         const customData = (obj as any).customData;
-        return customData?.id === wall.id || (customData?.parentId === wall.id && customData?.type === 'wall-label');
+        return (
+          customData?.id === wall.id ||
+          (customData?.parentId === wall.id && customData?.type === 'wall-label')
+        );
       });
       existing.forEach((obj) => canvas.remove(obj));
       addObjectToCanvas(wall);
@@ -734,7 +781,9 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
     };
 
     const getPreferredPlacementCentre = () => {
-      const wallBounds = getBoundsForObjects(objectsRef.current.filter((obj) => obj.type === 'wall'));
+      const wallBounds = getBoundsForObjects(
+        objectsRef.current.filter((obj) => obj.type === 'wall')
+      );
       if (wallBounds) {
         return { x: wallBounds.centreX, y: wallBounds.centreY };
       }
@@ -758,16 +807,20 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       y: number,
       symbolId?: string | null,
       opts?: { alwaysSnap?: boolean }
-    ): WallSnapPlacement | null =>
-      computeWallSnap(x, y, symbolId, objectsRef.current, opts);
+    ): WallSnapPlacement | null => computeWallSnap(x, y, symbolId, objectsRef.current, opts);
 
     // Snap wall direction to horizontal/vertical if within threshold
-    const snapWallDirection = (sx: number, sy: number, ex: number, ey: number): { x: number; y: number } => {
+    const snapWallDirection = (
+      sx: number,
+      sy: number,
+      ex: number,
+      ey: number
+    ): { x: number; y: number } => {
       const dx = ex - sx;
       const dy = ey - sy;
       const angle = Math.abs(Math.atan2(dy, dx) * (180 / Math.PI));
       // Near horizontal (0 or 180 degrees)
-      if (angle < AXIS_SNAP_DEGREES || angle > (180 - AXIS_SNAP_DEGREES)) {
+      if (angle < AXIS_SNAP_DEGREES || angle > 180 - AXIS_SNAP_DEGREES) {
         return { x: ex, y: sy };
       }
       // Near vertical (90 degrees)
@@ -794,7 +847,10 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       if (objects.length === 0) return;
 
       // Calculate bounding box of all objects
-      let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+      let minX = Infinity,
+        minY = Infinity,
+        maxX = -Infinity,
+        maxY = -Infinity;
       for (const obj of objects) {
         const bound = obj.getBoundingRect();
         if (bound.left < minX) minX = bound.left;
@@ -820,7 +876,10 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       const centreX = minX + contentWidth / 2;
       const centreY = minY + contentHeight / 2;
       canvas.viewportTransform = [
-        zoom, 0, 0, zoom,
+        zoom,
+        0,
+        0,
+        zoom,
         leftInset + usableWidth / 2 - centreX * zoom,
         canvasHeight / 2 - centreY * zoom,
       ];
@@ -946,14 +1005,16 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             saveState();
             // Remove wall labels too
             if (customData.type === 'wall') {
-              const labels = canvas.getObjects().filter(o => (o as any).customData?.parentId === customData.id);
-              labels.forEach(l => canvas.remove(l));
+              const labels = canvas
+                .getObjects()
+                .filter((o) => (o as any).customData?.parentId === customData.id);
+              labels.forEach((l) => canvas.remove(l));
             }
             canvas.remove(active);
             renderedObjectIds.current.delete(customData.id);
             canvas.discardActiveObject();
             canvas.renderAll();
-            onObjectsChangeRef.current(objectsRef.current.filter(o => o.id !== customData.id));
+            onObjectsChangeRef.current(objectsRef.current.filter((o) => o.id !== customData.id));
           }
         } else if (selectedWallIdRef.current) {
           const wallId = selectedWallIdRef.current;
@@ -990,105 +1051,198 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
        * invisible to selection, undo and delete. Going through state removes
        * the duplication, the orphaned geometry and ~150 lines of drawing code.
        */
+      // Shape the generator returns per room (ELE-1745). `origin` places the
+      // room on the floor; `dimensions` are what the plan was labelled with.
       renderAIRoom: async (roomData: {
-        room?: { name?: string };
+        room?: RoomMeta;
         walls?: { id?: string; length: number }[];
         symbols?: { type: string; wall?: string; position?: number | string }[];
+        rooms?: {
+          room?: RoomMeta;
+          walls?: { id?: string; length: number }[];
+          symbols?: { type: string; wall?: string; position?: number | string }[];
+        }[];
       }) => {
         const canvas = fabricCanvasRef.current;
         if (!canvas) return;
 
-        const offsetX = 100;
-        const offsetY = 100;
-        const walls = roomData.walls || [];
-        const symbols = roomData.symbols || [];
+        /*
+         * ELE-1745 — a photographed plan is a FLOOR, not one room.
+         *
+         * Photo mode returns `rooms: [...]`, each with an `origin` in metres
+         * from the top-left of the floor, so a nursing-home plan comes back as
+         * the nursing home rather than a single rectangle. Description mode
+         * still returns one flat room, and older builds send the flat shape
+         * too, so that is wrapped into a one-entry array and everything below
+         * runs once per room.
+         */
+        const plan =
+          Array.isArray(roomData.rooms) && roomData.rooms.length > 0
+            ? roomData.rooms
+            : [{ room: roomData.room, walls: roomData.walls, symbols: roomData.symbols }];
+
         const stamp = Date.now();
         const next: CanvasObject[] = [];
 
-        // Walls, laid end to end from the offset origin.
-        let cx = offsetX;
-        let cy = offsetY;
-        walls.forEach((wall, idx) => {
-          const length = wall.length * SCALE;
-          let ex = cx;
-          let ey = cy;
-          if (wall.id === 'north') ex = cx + length;
-          else if (wall.id === 'east') ey = cy + length;
-          else if (wall.id === 'south') ex = cx - length;
-          else if (wall.id === 'west') ey = cy - length;
+        plan.forEach((entry, roomIdx) => {
+          const offsetX = 100 + (entry.room?.origin?.x ?? 0) * SCALE;
+          const offsetY = 100 + (entry.room?.origin?.y ?? 0) * SCALE;
+          const walls = entry.walls || [];
+          const symbols = entry.symbols || [];
 
-          next.push({
-            id: `ai-wall-${idx}-${stamp}`,
-            type: 'wall',
-            x: cx,
-            y: cy,
-            points: [{ x: cx, y: cy }, { x: ex, y: ey }],
+          /*
+           * Walls are resolved BY ID, not by array position.
+           *
+           * This used to walk the array in order, moving a pen on from the
+           * previous wall's end point, and then read the room's width and
+           * height off `walls[0]` and `walls[1]`. Both assume the model returns
+           * exactly north, east, south, west in that order. When it does not —
+           * and asking for a whole floor at once makes that far more likely —
+           * the rectangle is traced in the wrong order and comes out as an open
+           * zig-zag, while the extents come off the wrong walls so every symbol
+           * is placed against the wrong side of the room.
+           *
+           * Reading by id is order-independent, and a room missing one wall
+           * still closes because the opposite wall supplies the length.
+           */
+          const wallLength = (id: string) => walls.find((w) => w.id === id)?.length;
+          const widthM = wallLength('north') ?? wallLength('south') ?? 4;
+          const heightM = wallLength('east') ?? wallLength('west') ?? 4;
+          const roomWidth = widthM * SCALE;
+          const roomHeight = heightM * SCALE;
+
+          // Corners, clockwise from the room's top-left.
+          const x0 = offsetX;
+          const y0 = offsetY;
+          const x1 = offsetX + roomWidth;
+          const y1 = offsetY + roomHeight;
+
+          [
+            { from: { x: x0, y: y0 }, to: { x: x1, y: y0 } }, // north
+            { from: { x: x1, y: y0 }, to: { x: x1, y: y1 } }, // east
+            { from: { x: x1, y: y1 }, to: { x: x0, y: y1 } }, // south
+            { from: { x: x0, y: y1 }, to: { x: x0, y: y0 } }, // west
+          ].forEach((run, idx) => {
+            next.push({
+              id: `ai-wall-${roomIdx}-${idx}-${stamp}`,
+              type: 'wall',
+              x: run.from.x,
+              y: run.from.y,
+              points: [run.from, run.to],
+            });
           });
-          cx = ex;
-          cy = ey;
-        });
+          const SYMBOL_INSET = 4;
 
-        // Room extents, used to place symbols against the correct wall.
-        const roomWidth = (walls[0]?.length ?? 0) * SCALE || 200;
-        const roomHeight = (walls[1]?.length ?? 0) * SCALE || 200;
-        const SYMBOL_INSET = 4;
+          /*
+           * Spread symbols that land on the same spot.
+           *
+           * The model happily puts two accessories at the same wall position —
+           * a real response for a kitchen placed `socket-cooker-45a` and
+           * `socket-switched-fused-spur` both at north 1.5m — and they then
+           * draw exactly on top of each other. One symbol is simply invisible,
+           * and the drawing is wrong in a way the user cannot see.
+           *
+           * Each repeat of a wall+position is stepped along the wall instead.
+           */
+          const SYMBOL_SPREAD = 28;
+          const usedSlots = new Map<string, number>();
 
-        symbols.forEach((symbol, idx) => {
-          // ELE-604: AI sometimes emits ids suffixed with -bs7671.
-          const symbolId = symbol.type.replace(/-bs7671$/, '');
-          const known =
-            symbolRegistry.some((s) => s.id === symbolId) ||
-            electricalSymbols.some((s) => s.id === symbolId);
-          if (!known) {
-            console.warn(`[AI room] unknown symbol skipped: ${symbol.type} (resolved: ${symbolId})`);
-            return;
-          }
-
-          let sx = offsetX + 20;
-          let sy = offsetY + 20;
-          if (symbol.position === 'center') {
-            sx = offsetX + roomWidth / 2;
-            sy = offsetY + roomHeight / 2;
-          } else if (symbol.wall) {
-            const along = (typeof symbol.position === 'number' ? symbol.position : 0) * SCALE;
-            if (symbol.wall === 'north') {
-              sx = offsetX + along;
-              sy = offsetY + WALL_THICKNESS + SYMBOL_INSET;
-            } else if (symbol.wall === 'south') {
-              sx = offsetX + along;
-              sy = offsetY + roomHeight - WALL_THICKNESS - SYMBOL_INSET - 20;
-            } else if (symbol.wall === 'east') {
-              sx = offsetX + roomWidth - WALL_THICKNESS - SYMBOL_INSET - 20;
-              sy = offsetY + along;
-            } else if (symbol.wall === 'west') {
-              sx = offsetX + WALL_THICKNESS + SYMBOL_INSET;
-              sy = offsetY + along;
+          symbols.forEach((symbol, idx) => {
+            // ELE-604: the AI sometimes emits ids suffixed with -bs7671, and
+            // still uses names from the retired symbol list. `resolveSymbolId`
+            // handles both, so a room comes back with everything that was asked
+            // for rather than quietly missing items.
+            const symbolId = resolveSymbolId(symbol.type);
+            const known = symbolRegistry.some((s) => s.id === symbolId);
+            if (!known) {
+              console.warn(
+                `[AI room] unknown symbol skipped: ${symbol.type} (resolved: ${symbolId})`
+              );
+              return;
             }
+
+            let sx = offsetX + 20;
+            let sy = offsetY + 20;
+            if (symbol.position === 'center') {
+              /*
+               * Ceiling items all ask for "center", so a room with a light and
+               * a detector stacks them on one point — a real kitchen response
+               * put `light-ceiling` and `heat-detector` there, and the corridor
+               * did the same with its smoke detector. Each additional centre
+               * item is stepped to the side so all of them are visible and can
+               * be dragged apart.
+               */
+              const centreRepeat = usedSlots.get('center') ?? 0;
+              usedSlots.set('center', centreRepeat + 1);
+              sx = offsetX + roomWidth / 2 + centreRepeat * SYMBOL_SPREAD;
+              sy = offsetY + roomHeight / 2;
+            } else if (symbol.wall) {
+              const slotKey = `${symbol.wall}:${symbol.position}`;
+              const repeat = usedSlots.get(slotKey) ?? 0;
+              usedSlots.set(slotKey, repeat + 1);
+              const along =
+                (typeof symbol.position === 'number' ? symbol.position : 0) * SCALE +
+                repeat * SYMBOL_SPREAD;
+              if (symbol.wall === 'north') {
+                sx = offsetX + along;
+                sy = offsetY + WALL_THICKNESS + SYMBOL_INSET;
+              } else if (symbol.wall === 'south') {
+                sx = offsetX + along;
+                sy = offsetY + roomHeight - WALL_THICKNESS - SYMBOL_INSET - 20;
+              } else if (symbol.wall === 'east') {
+                sx = offsetX + roomWidth - WALL_THICKNESS - SYMBOL_INSET - 20;
+                sy = offsetY + along;
+              } else if (symbol.wall === 'west') {
+                sx = offsetX + WALL_THICKNESS + SYMBOL_INSET;
+                sy = offsetY + along;
+              }
+            }
+
+            next.push({
+              id: `ai-sym-${roomIdx}-${idx}-${stamp}`,
+              type: 'symbol',
+              x: sx,
+              y: sy,
+              width: 40,
+              height: 40,
+              rotation: 0,
+              symbolId,
+            });
+          });
+
+          // Room name as a real text object so it can be moved, edited or
+          // deleted like anything else — it used to be baked into the canvas.
+          if (entry.room?.name) {
+            /*
+             * The name goes INSIDE the room.
+             *
+             * It used to sit 40px above the top wall, which is fine for a
+             * single room floating on an empty canvas. With a whole floor the
+             * space above a room belongs to the room above it — on a real
+             * six-room plan the corridor's label landed inside the kitchen and
+             * bedroom one's landed inside the corridor. Inset from the top-left
+             * corner, a label is always in the room it names.
+             */
+            /*
+             * Name AND size. The model reads the dimensions off the drawing and
+             * we were dropping them — an electrician pricing a rewire needs the
+             * room size on the plan, and it is the first thing anyone checks a
+             * generated plan against. Both are ordinary text objects, so either
+             * can be moved, edited or deleted.
+             */
+            const dims = entry.room.dimensions;
+            const sizeLabel =
+              dims?.width && dims?.height ? `${dims.width}m x ${dims.height}m` : null;
+
+            next.push({
+              id: `ai-title-${roomIdx}-${stamp}`,
+              type: 'text',
+              x: offsetX + 8,
+              y: offsetY + 8,
+              text: sizeLabel ? `${entry.room.name}\n${sizeLabel}` : entry.room.name,
+            });
           }
-
-          next.push({
-            id: `ai-sym-${idx}-${stamp}`,
-            type: 'symbol',
-            x: sx,
-            y: sy,
-            width: 40,
-            height: 40,
-            rotation: 0,
-            symbolId,
-          });
         });
-
-        // Room name as a real text object so it can be moved, edited or
-        // deleted like anything else — it used to be baked into the canvas.
-        if (roomData.room?.name) {
-          next.push({
-            id: `ai-title-${stamp}`,
-            type: 'text',
-            x: offsetX,
-            y: offsetY - 40,
-            text: roomData.room.name,
-          });
-        }
 
         // Generating a room REPLACES whatever was on the canvas. Snapshot
         // first so that is reversible — an accidental tap on AI Help could
@@ -1098,7 +1252,9 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         // Replacing the drawing wholesale — clear the rendered-id bookkeeping
         // so the sync effect rebuilds from scratch rather than skipping ids it
         // thinks it has already drawn.
-        const nonGrid = canvas.getObjects().filter((obj) => !(obj as { isGridLine?: boolean }).isGridLine);
+        const nonGrid = canvas
+          .getObjects()
+          .filter((obj) => !(obj as { isGridLine?: boolean }).isGridLine);
         nonGrid.forEach((obj) => canvas.remove(obj));
         renderedObjectIds.current.clear();
         drawGrid(canvas, gridEnabledRef.current);
@@ -1248,7 +1404,9 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         // Small delay before clearing gesture flag so the final mouse:up from Fabric.js
         // still sees it as a gesture and doesn't trigger a draw
         if (isTouchGestureRef.current) {
-          setTimeout(() => { isTouchGestureRef.current = false; }, 50);
+          setTimeout(() => {
+            isTouchGestureRef.current = false;
+          }, 50);
         }
         // If all fingers lifted and we're still drawing, force-cancel (prevents stuck wall tool)
         if (e.touches.length === 0 && isDrawingRef.current) {
@@ -1468,7 +1626,11 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       // remove its rendered version so it can be rebuilt from state.
       canvas.getObjects().forEach((fabricObj) => {
         const customData = (fabricObj as any).customData;
-        if (!customData?.id || customData.type === 'wall-label' || customData.type === 'circuit-dot') {
+        if (
+          !customData?.id ||
+          customData.type === 'wall-label' ||
+          customData.type === 'circuit-dot'
+        ) {
           return;
         }
 
@@ -1536,7 +1698,9 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         }
 
         if (selectedWallIdRef.current) {
-          const wallStillExists = objects.some((obj) => obj.id === selectedWallIdRef.current && obj.type === 'wall');
+          const wallStillExists = objects.some(
+            (obj) => obj.id === selectedWallIdRef.current && obj.type === 'wall'
+          );
           renderWallAdornment(wallStillExists ? selectedWallIdRef.current : null);
         }
 
@@ -1550,8 +1714,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       addNewObjects();
     }, [objects]);
 
-    const snapToGrid = (value: number) =>
-      snapEnabledRef.current ? snapToStep(value) : value;
+    const snapToGrid = (value: number) => (snapEnabledRef.current ? snapToStep(value) : value);
 
     // Create a dimension line group from two points
     const createDimensionGroup = (x1: number, y1: number, x2: number, y2: number): Group => {
@@ -1566,25 +1729,45 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       const elements: FabricObject[] = [];
 
       // Main line
-      elements.push(new Line([x1, y1, x2, y2], {
-        stroke: '#333333', strokeWidth: 1, selectable: false,
-      }) as unknown as FabricObject);
+      elements.push(
+        new Line([x1, y1, x2, y2], {
+          stroke: '#333333',
+          strokeWidth: 1,
+          selectable: false,
+        }) as unknown as FabricObject
+      );
 
       // Tick marks (perpendicular end caps)
       if (isHorizontal) {
-        elements.push(new Line([x1, y1 - tickLen, x1, y1 + tickLen], {
-          stroke: '#333333', strokeWidth: 1, selectable: false,
-        }) as unknown as FabricObject);
-        elements.push(new Line([x2, y2 - tickLen, x2, y2 + tickLen], {
-          stroke: '#333333', strokeWidth: 1, selectable: false,
-        }) as unknown as FabricObject);
+        elements.push(
+          new Line([x1, y1 - tickLen, x1, y1 + tickLen], {
+            stroke: '#333333',
+            strokeWidth: 1,
+            selectable: false,
+          }) as unknown as FabricObject
+        );
+        elements.push(
+          new Line([x2, y2 - tickLen, x2, y2 + tickLen], {
+            stroke: '#333333',
+            strokeWidth: 1,
+            selectable: false,
+          }) as unknown as FabricObject
+        );
       } else {
-        elements.push(new Line([x1 - tickLen, y1, x1 + tickLen, y1], {
-          stroke: '#333333', strokeWidth: 1, selectable: false,
-        }) as unknown as FabricObject);
-        elements.push(new Line([x2 - tickLen, y2, x2 + tickLen, y2], {
-          stroke: '#333333', strokeWidth: 1, selectable: false,
-        }) as unknown as FabricObject);
+        elements.push(
+          new Line([x1 - tickLen, y1, x1 + tickLen, y1], {
+            stroke: '#333333',
+            strokeWidth: 1,
+            selectable: false,
+          }) as unknown as FabricObject
+        );
+        elements.push(
+          new Line([x2 - tickLen, y2, x2 + tickLen, y2], {
+            stroke: '#333333',
+            strokeWidth: 1,
+            selectable: false,
+          }) as unknown as FabricObject
+        );
       }
 
       // Arrowheads, pointing inward along the dimension line as drafting
@@ -1592,11 +1775,17 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       const angle = Math.atan2(dy, dx);
       const addArrowhead = (tipX: number, tipY: number, pointAngle: number) => {
         for (const spread of [-Math.PI / 6, Math.PI / 6]) {
-          elements.push(new Line([
-            tipX, tipY,
-            tipX + arrowSize * Math.cos(pointAngle + spread),
-            tipY + arrowSize * Math.sin(pointAngle + spread),
-          ], { stroke: '#333333', strokeWidth: 1, selectable: false }) as unknown as FabricObject);
+          elements.push(
+            new Line(
+              [
+                tipX,
+                tipY,
+                tipX + arrowSize * Math.cos(pointAngle + spread),
+                tipY + arrowSize * Math.sin(pointAngle + spread),
+              ],
+              { stroke: '#333333', strokeWidth: 1, selectable: false }
+            ) as unknown as FabricObject
+          );
         }
       };
       addArrowhead(x1, y1, angle);
@@ -1708,9 +1897,15 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         }
         case 'stairs': {
           const frame = new Rect({
-            left: 8, top: 6, width: 24, height: 28,
-            fill: '', stroke, strokeWidth: sw,
-            selectable: false, evented: false,
+            left: 8,
+            top: 6,
+            width: 24,
+            height: 28,
+            fill: '',
+            stroke,
+            strokeWidth: sw,
+            selectable: false,
+            evented: false,
           });
           const lines: FabricObject[] = [];
           for (let i = 1; i <= 5; i++) {
@@ -1762,23 +1957,35 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
     /** Yellow labeled placeholder so a failed symbol is visible, not silent. */
     const buildPlaceholderSymbol = (label: string): FabricObject => {
       const box = new Rect({
-        left: 0, top: 0, width: 48, height: 48,
-        fill: '#FEF3C7', stroke: '#D97706', strokeWidth: 1.5,
-        rx: 6, ry: 6,
-        selectable: false, evented: false,
-        originX: 'center', originY: 'center',
+        left: 0,
+        top: 0,
+        width: 48,
+        height: 48,
+        fill: '#FEF3C7',
+        stroke: '#D97706',
+        strokeWidth: 1.5,
+        rx: 6,
+        ry: 6,
+        selectable: false,
+        evented: false,
+        originX: 'center',
+        originY: 'center',
       });
       const txt = new FabricText(label.slice(0, 6), {
-        left: 0, top: 0,
+        left: 0,
+        top: 0,
         fontSize: 9,
         fontWeight: '700',
         fontFamily: 'system-ui, -apple-system, sans-serif',
         fill: '#92400E',
-        originX: 'center', originY: 'center',
-        selectable: false, evented: false,
+        originX: 'center',
+        originY: 'center',
+        selectable: false,
+        evented: false,
       });
       return new Group([box, txt as unknown as FabricObject], {
-        originX: 'center', originY: 'center',
+        originX: 'center',
+        originY: 'center',
       });
     };
 
@@ -1897,8 +2104,15 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         // scanning still works without the blob.
         if (obj.circuitRef && fabricObj) {
           const COLOURS: Record<string, string> = {
-            L1: '#1D4ED8', L2: '#3B82F6', S1: '#B91C1C', S2: '#DC2626',
-            C1: '#B45309', EV1: '#047857', FA1: '#BE185D', IH1: '#6D28D9', AC1: '#0E7490',
+            L1: '#1D4ED8',
+            L2: '#3B82F6',
+            S1: '#B91C1C',
+            S2: '#DC2626',
+            C1: '#B45309',
+            EV1: '#047857',
+            FA1: '#BE185D',
+            IH1: '#6D28D9',
+            AC1: '#0E7490',
           };
           const tagColour = COLOURS[obj.circuitRef] || '#374151';
           const spot = findTagSpot(obj, objectsRef.current);
@@ -1933,7 +2147,11 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           selectable: true,
           hasControls: true,
         });
-        (fabricObj as any).customData = { id: obj.id, type: 'rectangle', stateHash: serialiseCanvasObject(obj) };
+        (fabricObj as any).customData = {
+          id: obj.id,
+          type: 'rectangle',
+          stateHash: serialiseCanvasObject(obj),
+        };
       } else if (obj.type === 'line' && obj.points && obj.points.length >= 2) {
         const points = obj.points;
         fabricObj = new Line(
@@ -1945,7 +2163,11 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             hasControls: true,
           }
         );
-        (fabricObj as any).customData = { id: obj.id, type: 'line', stateHash: serialiseCanvasObject(obj) };
+        (fabricObj as any).customData = {
+          id: obj.id,
+          type: 'line',
+          stateHash: serialiseCanvasObject(obj),
+        };
       } else if (obj.type === 'text') {
         fabricObj = new FabricText(obj.text || 'Text', {
           left: obj.x,
@@ -1957,7 +2179,11 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           selectable: true,
           hasControls: true,
         });
-        (fabricObj as any).customData = { id: obj.id, type: 'text', stateHash: serialiseCanvasObject(obj) };
+        (fabricObj as any).customData = {
+          id: obj.id,
+          type: 'text',
+          stateHash: serialiseCanvasObject(obj),
+        };
       } else if (obj.type === 'wall' && obj.points && obj.points.length >= 2) {
         const p1 = obj.points[0];
         const p2 = obj.points[1];
@@ -1989,11 +2215,8 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             if (tRaw < 0 || tRaw > 1) continue;
             if (perpDist > WALL_MOUNT_OFFSET + 8) continue;
             const featureWidth = FEATURE_WIDTH_PX[other.symbolId!] || 40;
-            const halfT = (featureWidth / 2) / dist;
-            featureRanges.push([
-              Math.max(0, tRaw - halfT),
-              Math.min(1, tRaw + halfT),
-            ]);
+            const halfT = featureWidth / 2 / dist;
+            featureRanges.push([Math.max(0, tRaw - halfT), Math.min(1, tRaw + halfT)]);
           }
         }
         // Sort + merge overlapping ranges
@@ -2104,8 +2327,15 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         // which is visible against white yet distinct from black walls. Previously
         // the fallback was #6B7280 which rendered as invisible washed-out grey.
         const CIRCUIT_PALETTE: Record<string, string> = {
-          L1: '#2563eb', L2: '#60A5FA', S1: '#dc2626', S2: '#F87171',
-          C1: '#D97706', EV1: '#059669', FA1: '#DB2777', IH1: '#7C3AED', AC1: '#0891b2',
+          L1: '#2563eb',
+          L2: '#60A5FA',
+          S1: '#dc2626',
+          S2: '#F87171',
+          C1: '#D97706',
+          EV1: '#059669',
+          FA1: '#DB2777',
+          IH1: '#7C3AED',
+          AC1: '#0891b2',
         };
         const cableColour = CIRCUIT_PALETTE[obj.circuitRef || ''] || '#404040';
 
@@ -2126,7 +2356,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
               strokeLineCap: 'round',
               selectable: false,
               evented: false,
-            }) as unknown as FabricObject,
+            }) as unknown as FabricObject
           );
         }
 
@@ -2178,18 +2408,21 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           evented: false,
         });
 
-        const cableGroup = new Group([...segments, labelBg as unknown as FabricObject, label as unknown as FabricObject], {
-          selectable: true,
-          hasControls: false,
-          evented: true,
-          lockScalingX: true,
-          lockScalingY: true,
-          lockRotation: true,
-          lockMovementX: true,
-          lockMovementY: true,
-          perPixelTargetFind: true,
-          hoverCursor: 'pointer',
-        });
+        const cableGroup = new Group(
+          [...segments, labelBg as unknown as FabricObject, label as unknown as FabricObject],
+          {
+            selectable: true,
+            hasControls: false,
+            evented: true,
+            lockScalingX: true,
+            lockScalingY: true,
+            lockRotation: true,
+            lockMovementX: true,
+            lockMovementY: true,
+            perPixelTargetFind: true,
+            hoverCursor: 'pointer',
+          }
+        );
         (cableGroup as any).customData = {
           id: obj.id,
           type: 'cable',
@@ -2201,7 +2434,11 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         const p1 = obj.points[0];
         const p2 = obj.points[1];
         const group = createDimensionGroup(p1.x, p1.y, p2.x, p2.y);
-        (group as any).customData = { id: obj.id, type: 'dimension', stateHash: serialiseCanvasObject(obj) };
+        (group as any).customData = {
+          id: obj.id,
+          type: 'dimension',
+          stateHash: serialiseCanvasObject(obj),
+        };
         canvas.add(group);
         return; // Already added manually
       }
@@ -2459,9 +2696,9 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             hapticRef.current.medium();
             saveState();
             if (customData.type === 'wall') {
-              const labels = canvas.getObjects().filter(
-                (o) => (o as any).customData?.parentId === customData.id
-              );
+              const labels = canvas
+                .getObjects()
+                .filter((o) => (o as any).customData?.parentId === customData.id);
               labels.forEach((l) => canvas.remove(l));
             }
             canvas.remove(e.target);
@@ -2500,14 +2737,13 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
                   symId.startsWith('smoke-') ||
                   symId.startsWith('heat-') ||
                   symId.startsWith('co-')
-                ) return 'FA1';
+                )
+                  return 'FA1';
                 if (symId.startsWith('socket-')) return 'S1';
                 return 'S1';
               };
               const circuitRef =
-                startObj.circuitRef ||
-                targetObj.circuitRef ||
-                inferCircuit(startObj.symbolId);
+                startObj.circuitRef || targetObj.circuitRef || inferCircuit(startObj.symbolId);
 
               const startPt = { x: startObj.x, y: startObj.y };
               const endPt = { x: targetObj.x, y: targetObj.y };
@@ -2588,7 +2824,10 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
               type: 'dimension',
               x: ds.x,
               y: ds.y,
-              points: [{ x: ds.x, y: ds.y }, { x, y }],
+              points: [
+                { x: ds.x, y: ds.y },
+                { x, y },
+              ],
             };
             onObjectsChangeRef.current([...objectsRef.current, newObj]);
             dimensionStartRef.current = null;
@@ -2612,8 +2851,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           clearWallSnapPreview();
           const symId = selectedSymbolIdRef.current;
           saveState();
-          const found = symbolRegistry.find((s) => s.id === symId) ||
-                        electricalSymbols.find((s) => s.id === symId);
+          const found = symbolRegistry.find((s) => s.id === resolveSymbolId(symId));
           if (found) {
             let placeX = x;
             let placeY = y;
@@ -2741,7 +2979,9 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
 
         if (tool === 'line') {
           const line = new Line([sp.x, sp.y, x, y], {
-            stroke: '#000000', strokeWidth: 2, selectable: false,
+            stroke: '#000000',
+            strokeWidth: 2,
+            selectable: false,
           });
           (line as any).isTemp = true;
           canvas.add(line);
@@ -2837,7 +3077,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           }
 
           const snapStart = findSnapEndpoint(sp.x, sp.y);
-          if (snapStart && (snapStart.x === sp.x && snapStart.y === sp.y)) {
+          if (snapStart && snapStart.x === sp.x && snapStart.y === sp.y) {
             const snapIndicator = new Circle({
               left: snapStart.x,
               top: snapStart.y,
@@ -2892,7 +3132,10 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             type: 'line',
             x: sp.x,
             y: sp.y,
-            points: [{ x: sp.x, y: sp.y }, { x, y }],
+            points: [
+              { x: sp.x, y: sp.y },
+              { x, y },
+            ],
           };
           onObjectsChangeRef.current([...objectsRef.current, newObj]);
         } else if (tool === 'rectangle') {
@@ -2925,7 +3168,10 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
               type: 'wall',
               x: sp.x,
               y: sp.y,
-              points: [{ x: sp.x, y: sp.y }, { x: endX, y: endY }],
+              points: [
+                { x: sp.x, y: sp.y },
+                { x: endX, y: endY },
+              ],
             };
             onObjectsChangeRef.current([...objectsRef.current, newObj]);
           }
@@ -2973,10 +3219,13 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
 
         // Move circuit colour dots to follow the symbol
         if (customData.type === 'symbol') {
-          const dots = canvas.getObjects().filter(
-            (o) => (o as any).customData?.type === 'circuit-dot' &&
-                   (o as any).customData?.parentId === customData.id
-          );
+          const dots = canvas
+            .getObjects()
+            .filter(
+              (o) =>
+                (o as any).customData?.type === 'circuit-dot' &&
+                (o as any).customData?.parentId === customData.id
+            );
           const moved = objectsRef.current.find((o) => o.id === customData.id);
           if (moved) {
             // Re-run placement rather than translating by a fixed offset — the
@@ -3008,7 +3257,14 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
               return updatedObject;
             }
 
-            if ((customData.type === 'line' || customData.type === 'wall' || customData.type === 'cable' || customData.type === 'dimension') && obj.points && obj.points.length >= 2) {
+            if (
+              (customData.type === 'line' ||
+                customData.type === 'wall' ||
+                customData.type === 'cable' ||
+                customData.type === 'dimension') &&
+              obj.points &&
+              obj.points.length >= 2
+            ) {
               const currentBounds = getBoundsForObjects([obj]);
               const nextLeft = modifiedObj.left ?? currentBounds?.minX ?? obj.x;
               const nextTop = modifiedObj.top ?? currentBounds?.minY ?? obj.y;
@@ -3066,10 +3322,15 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
 
         if (customData.type === 'wall-handle') {
           const snapshot = wallDragPreviewRef.current ?? getRenderableObjects();
-          const nextObjects = buildWallEndpointUpdate(snapshot, customData.wallId, customData.endpointIndex, {
-            x: snapToGrid(movingObj.left || 0),
-            y: snapToGrid(movingObj.top || 0),
-          });
+          const nextObjects = buildWallEndpointUpdate(
+            snapshot,
+            customData.wallId,
+            customData.endpointIndex,
+            {
+              x: snapToGrid(movingObj.left || 0),
+              y: snapToGrid(movingObj.top || 0),
+            }
+          );
           wallDragPreviewRef.current = nextObjects;
           nextObjects
             .filter((obj) => obj.type === 'wall')
@@ -3194,10 +3455,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       const canvas = fabricCanvasRef.current;
       if (!canvas) return;
       const next = Math.min(Math.max(canvas.getZoom() * factor, 0.1), 5);
-      canvas.zoomToPoint(
-        new Point((canvas.width || 0) / 2, (canvas.height || 0) / 2),
-        next
-      );
+      canvas.zoomToPoint(new Point((canvas.width || 0) / 2, (canvas.height || 0) / 2), next);
       setZoomLevel(next);
       drawGrid(canvas, gridEnabledRef.current);
       canvas.renderAll();
@@ -3240,44 +3498,44 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             collided with the empty-state card and cluttered the very first
             thing a user sees, on a canvas with nothing to zoom or rotate. */}
         {objects.length > 0 && (
-        <div className="absolute top-3 right-3 flex flex-col overflow-hidden rounded-xl border border-white/10 bg-black/70 backdrop-blur-xl shadow-2xl divide-y divide-white/10">
-          <Button
-            size="icon"
-            variant="outline"
-            onClick={handleZoomIn}
-            className="h-11 w-11 sm:h-10 sm:w-10 rounded-none border-0 bg-transparent text-white hover:bg-white/10 touch-manipulation"
-            title="Zoom In"
-          >
-            <ZoomIn className="h-4 w-4" />
-          </Button>
-          <Button
-            size="icon"
-            variant="outline"
-            onClick={handleZoomOut}
-            className="h-11 w-11 sm:h-10 sm:w-10 rounded-none border-0 bg-transparent text-white hover:bg-white/10 touch-manipulation"
-            title="Zoom Out"
-          >
-            <ZoomOut className="h-4 w-4" />
-          </Button>
-          <Button
-            size="icon"
-            variant="outline"
-            onClick={handleResetView}
-            className="h-11 w-11 sm:h-10 sm:w-10 rounded-none border-0 bg-transparent text-white hover:bg-white/10 touch-manipulation"
-            title="Reset View"
-          >
-            <Maximize2 className="h-4 w-4" />
-          </Button>
-          <Button
-            size="icon"
-            variant="outline"
-            onClick={handleRotate}
-            className="h-11 w-11 sm:h-10 sm:w-10 rounded-none border-0 bg-transparent text-white hover:bg-white/10 touch-manipulation"
-            title="Rotate 90°"
-          >
-            <RotateCw className="h-4 w-4" />
-          </Button>
-        </div>
+          <div className="absolute top-3 right-3 flex flex-col overflow-hidden rounded-xl border border-white/10 bg-black/70 backdrop-blur-xl shadow-2xl divide-y divide-white/10">
+            <Button
+              size="icon"
+              variant="outline"
+              onClick={handleZoomIn}
+              className="h-11 w-11 sm:h-10 sm:w-10 rounded-none border-0 bg-transparent text-white hover:bg-white/10 touch-manipulation"
+              title="Zoom In"
+            >
+              <ZoomIn className="h-4 w-4" />
+            </Button>
+            <Button
+              size="icon"
+              variant="outline"
+              onClick={handleZoomOut}
+              className="h-11 w-11 sm:h-10 sm:w-10 rounded-none border-0 bg-transparent text-white hover:bg-white/10 touch-manipulation"
+              title="Zoom Out"
+            >
+              <ZoomOut className="h-4 w-4" />
+            </Button>
+            <Button
+              size="icon"
+              variant="outline"
+              onClick={handleResetView}
+              className="h-11 w-11 sm:h-10 sm:w-10 rounded-none border-0 bg-transparent text-white hover:bg-white/10 touch-manipulation"
+              title="Reset View"
+            >
+              <Maximize2 className="h-4 w-4" />
+            </Button>
+            <Button
+              size="icon"
+              variant="outline"
+              onClick={handleRotate}
+              className="h-11 w-11 sm:h-10 sm:w-10 rounded-none border-0 bg-transparent text-white hover:bg-white/10 touch-manipulation"
+              title="Rotate 90°"
+            >
+              <RotateCw className="h-4 w-4" />
+            </Button>
+          </div>
         )}
 
         {/* Minimap — bottom-right overview. Driven by state rather than

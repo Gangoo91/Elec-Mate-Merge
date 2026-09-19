@@ -54,34 +54,44 @@ export interface ServiceInterval {
 // ============================================
 
 /**
- * Sound level requirements per BS 5839-1:2025 Clause 16.5
+ * Sound level requirements per BS 5839-1:2025 Clause 15.1.
  *
- * General areas:
- * - Minimum 65 dB(A) at any occupiable point
- * - OR 5 dB(A) above any ambient noise likely to persist for > 30 seconds
+ * Clause 16 is VISUAL alarm signals, not audible — an earlier version of this
+ * file cited 16.5 throughout, which does not exist.
  *
- * Sleeping areas:
- * - Minimum 75 dB(A) at the bedhead
- * - Higher level required to wake sleeping persons
+ * 15.1.1 a) Not less than 65 dB(A) throughout all accessible areas, except:
+ *           - 60 dB(A) in stairways, enclosures of not more than approximately
+ *             60 m² (e.g. cellular offices) and specific points of limited extent
+ *           - no minimum in areas designated under 14.4, or areas under 1 m²
+ * 15.1.1 b) Not less than 75 dB(A) at the bedhead where the system is intended
+ *           to rouse people from sleep.
+ * 15.1.1 c) Not greater than 120 dB(A) at any normally accessible point.
+ * 15.1.3   Where background noise EXCEEDS 60 dB(A), the alarm signal should be
+ *          5 dB(A) above it. Background noise unlikely to persist longer than
+ *          30 s may be ignored. The 60 dB(A) trigger matters: below it the flat
+ *          65 dB(A) minimum governs, so "5 dB above ambient" on its own is not
+ *          the recommendation.
  *
- * Note: In areas where hearing protection is worn, visual alarm devices
- * may be necessary in addition to sounders.
+ * Visual alarm devices are a separate requirement (16.1): provided where
+ * ambient noise exceeds 90 dB(A) or hearing protection is normally worn.
  */
 export const SOUND_LEVEL_REQUIREMENTS: Record<AreaType, SoundLevelRequirement> = {
   general: {
     minDb: 65,
-    description: 'General occupied areas - minimum 65 dB(A) or 5 dB above ambient',
-    reference: 'BS 5839-1:2025 Clause 16.5.1',
+    description:
+      'General accessible areas - minimum 65 dB(A); 60 dB(A) in stairways and rooms of approx 60 m² or less',
+    reference: 'BS 5839-1:2025 Clause 15.1.1a)',
   },
   sleeping: {
     minDb: 75,
-    description: 'Sleeping areas (bedrooms) - minimum 75 dB(A) at bedhead',
-    reference: 'BS 5839-1:2025 Clause 16.5.2',
+    description: 'Sleeping areas (bedrooms) - minimum 75 dB(A) at the bedhead',
+    reference: 'BS 5839-1:2025 Clause 15.1.1b)',
   },
   'high-ambient-noise': {
     minDb: 65,
-    description: 'High ambient noise areas - 5 dB(A) above ambient noise level',
-    reference: 'BS 5839-1:2025 Clause 16.5.1',
+    description:
+      'Where background noise exceeds 60 dB(A) - alarm signal 5 dB(A) above the background level',
+    reference: 'BS 5839-1:2025 Clause 15.1.3',
   },
 };
 
@@ -90,59 +100,67 @@ export const SOUND_LEVEL_REQUIREMENTS: Record<AreaType, SoundLevelRequirement> =
 // ============================================
 
 /**
- * Service and inspection intervals per BS 5839-1:2025 Clause 45
+ * Routine testing (Clause 42) and inspection and servicing (Clause 43).
  *
- * Weekly:
- * - User check of panel indicators
+ * An earlier version of this file cited "Clause 45" for all of these. Clause 45
+ * is EXTENSIONS. It also claimed a quarterly test of 25% of devices, which does
+ * not appear anywhere in BS 5839-1 — see the annual entry below.
  *
- * Monthly:
- * - Test operation of at least one device per zone (rotating)
- *
- * Quarterly:
- * - Test at least 25% of devices
- * - Check batteries and chargers
- *
- * 6-Monthly:
- * - Full service inspection by competent person
- * - Test ALL devices
- * - Check all connections
- * - Verify cause and effect programming
- *
- * Annually:
- * - Comprehensive test and inspection
- * - Test batteries under load
- * - Check all cable routes
+ * 42.1 Weekly    A test using a manual call point, during normal working hours.
+ *                A DIFFERENT call point each week (42.1.6), so that all are
+ *                tested in rotation.
+ * 42.2 Monthly   CONDITIONAL, not a general device test. Applies only where an
+ *                automatically started generator forms part of the standby
+ *                supply (start it monthly, on load, for at least 1 h) or where
+ *                VENTED batteries are used (visual inspection).
+ * 43.1 Quarterly CONDITIONAL. Examination of VENTED batteries and their
+ *                connections by a competent person. This is the only quarterly
+ *                item in the inspection clauses, and it is about batteries —
+ *                not a quarterly percentage of detectors.
+ * 43.2 ~6-month  Periodic inspection and test by a competent person. Successive
+ *                visits at intervals of approximately 6 months; 43.2.1 Note 1
+ *                accepts anything between 5 and 7 months after the previous
+ *                visit, with the date of acceptance as the datum.
+ * 43.3 12-month  The work to be covered across a rolling 12-month period. This
+ *                includes a functional test of EVERY detector (43.3.5) — 100%,
+ *                not a sample. Note this is a period, not a separate annual
+ *                visit: the work is spread across the ~6-monthly visits.
  */
 export const SERVICE_INTERVALS = {
   weekly: {
     months: 0.25,
     days: 7,
-    description: 'Weekly user check - verify panel shows normal, no faults',
-    reference: 'BS 5839-1:2025 Clause 45.2',
+    description:
+      'Weekly test - operate a manual call point during working hours, using a different call point each week',
+    reference: 'BS 5839-1:2025 Clause 42.1',
   },
   monthly: {
     months: 1,
     days: 30,
-    description: 'Monthly test - operate one device per zone (rotation)',
-    reference: 'BS 5839-1:2025 Clause 45.3',
+    description:
+      'Monthly - only where fitted: run an auto-start generator on load for 1 h, and visually inspect vented batteries',
+    reference: 'BS 5839-1:2025 Clause 42.2',
   },
   quarterly: {
     months: 3,
     days: 90,
-    description: 'Quarterly test - 25% of devices, check batteries',
-    reference: 'BS 5839-1:2025 Clause 45.4',
+    description:
+      'Quarterly - only where vented batteries are fitted: examine the batteries and their connections',
+    reference: 'BS 5839-1:2025 Clause 43.1',
   },
   sixMonthly: {
     months: 6,
     days: 183,
-    description: 'Six-monthly service - full inspection by competent person',
-    reference: 'BS 5839-1:2025 Clause 45.5',
+    description:
+      'Periodic inspection and service by a competent person - approximately every 6 months (5 to 7 months acceptable)',
+    reference: 'BS 5839-1:2025 Clause 43.2.1',
   },
   annual: {
     months: 12,
     days: 365,
-    description: 'Annual comprehensive test - load test batteries, check all cables',
-    reference: 'BS 5839-1:2025 Clause 45.6',
+    description:
+      'Across each 12-month period - functional test of EVERY detector, plus the full 43.3 schedule',
+    reference: 'BS 5839-1:2025 Clause 43.3',
   },
 };
 
@@ -151,7 +169,12 @@ export const SERVICE_INTERVALS = {
 // ============================================
 
 /**
- * Battery standby requirements per BS 5839-1:2025 Clause 25.2
+ * Battery standby requirements per BS 5839-1:2025 Clause 24.3.5
+ *
+ * (An earlier version cited Clause 25.2. Standby power supplies are Clause 24;
+ * 24.3.5 sets the capacity, calculated in accordance with Annex E (normative,
+ * "Method for calculating standby battery capacity"), and 24.3.2
+ * expects a battery with a life of at least 4 years.)
  *
  * The system must be capable of operating from batteries for:
  * - 24 hours standby PLUS
@@ -168,17 +191,17 @@ export const BATTERY_REQUIREMENTS = {
   standardStandby: {
     hours: 24,
     description: '24 hours normal standby operation',
-    reference: 'BS 5839-1:2025 Clause 25.2',
+    reference: 'BS 5839-1:2025 Clause 24.3.5',
   },
   alarmDuration: {
     minutes: 30,
     description: '30 minutes in alarm condition after standby',
-    reference: 'BS 5839-1:2025 Clause 25.2',
+    reference: 'BS 5839-1:2025 Clause 24.3.5',
   },
   extendedStandby: {
     hours: 72,
     description: 'Extended standby for remote/unmonitored sites',
-    reference: 'BS 5839-1:2025 Clause 25.2 Note',
+    reference: 'BS 5839-1:2025 Clause 24.3.5 Note',
   },
 };
 
@@ -187,21 +210,30 @@ export const BATTERY_REQUIREMENTS = {
 // ============================================
 
 /**
- * System category definitions per BS 5839-1:2025 Clause 6
+ * System categories per BS 5839-1:2025 Clause 4 (Categories of system); the
+ * areas each one protects are Clause 7 (Relationship between system category
+ * and protected areas).
  *
- * Life Protection Categories (L):
- * L1 - Full coverage throughout the building
- * L2 - Coverage in specified parts + all escape routes
- * L3 - Coverage of escape routes only
- * L4 - Within escape routes (e.g., stairwells, corridors)
- * L5 - System defined in fire risk assessment
+ * An earlier version cited Clause 6 for the definitions and Clauses 8 and 9 for
+ * the subdivisions. Clause 6 is Variations, Clause 8 is Actuation of other fire
+ * protection systems, and Clause 9 is Systems in explosive gas or dust
+ * atmospheres — none of them define a category.
  *
- * Property Protection Categories (P):
- * P1 - Full coverage for property protection
- * P2 - Partial coverage of specified high-risk areas
- *
- * Manual Category (M):
- * M - Manual call points only (no automatic detection)
+ * M  - Manual only; no automatic fire detectors.
+ * L1 - Throughout all areas. Earliest possible warning, longest escape time.
+ * L2 - As L3, PLUS early warning to occupants of rooms in which people sleep
+ *      and to specified areas of high fire hazard level and/or high fire risk.
+ * L3 - Escape routes AND rooms opening on to an escape route. The objective is
+ *      that everyone except possibly those in the room of origin escapes before
+ *      the routes become impassable. It is NOT "escape routes only" — detectors
+ *      go on the accommodation side of doors opening onto the route (7.7).
+ * L4 - Only those parts of the escape routes comprising circulation areas and
+ *      spaces, such as corridors and stairways.
+ * L5 - The protected areas and/or detector locations are designed to satisfy a
+ *      specific fire safety objective other than that of L1 to L4, often to
+ *      compensate for a departure from normal guidance elsewhere.
+ * P1 - Throughout all areas, for protection of property.
+ * P2 - Defined parts only, for protection of property.
  */
 export const SYSTEM_CATEGORIES: Record<
   SystemCategoryType,
@@ -218,56 +250,59 @@ export const SYSTEM_CATEGORIES: Record<
     description: 'Automatic detection throughout all areas of the building',
     coverage: 'All areas including voids, roof spaces, and risers',
     typicalUse: ['Care homes', 'Hospitals', 'Hotels', 'HMOs', 'High-risk residential'],
-    reference: 'BS 5839-1:2025 Clause 8.2',
+    reference: 'BS 5839-1:2025 Clause 4 / 7.9',
   },
   L2: {
     name: 'L2 - Enhanced Coverage (Life)',
-    description: 'Automatic detection in escape routes plus high-risk/specified areas',
-    coverage: 'Escape routes + specified rooms (often bedrooms, high fire load areas)',
+    description:
+      'As L3, plus detection in rooms where people sleep and in specified areas of high fire hazard or high fire risk',
+    coverage: 'Escape routes + rooms opening onto them + specified sleeping and high-risk areas',
     typicalUse: ['Residential care', 'Sheltered housing', 'Large HMOs'],
-    reference: 'BS 5839-1:2025 Clause 8.3',
+    reference: 'BS 5839-1:2025 Clause 4 / 7.8',
   },
   L3: {
     name: 'L3 - Standard Coverage (Life)',
-    description: 'Automatic detection in escape routes only',
-    coverage: 'All circulation spaces forming escape routes',
+    description: 'Automatic detection in escape routes AND in rooms opening onto an escape route',
+    coverage:
+      'Escape routes plus detectors on the accommodation side of doors opening onto them (7.7)',
     typicalUse: ['Offices', 'Shops', 'Warehouses', 'Standard commercial'],
-    reference: 'BS 5839-1:2025 Clause 8.4',
+    reference: 'BS 5839-1:2025 Clause 4 / 7.7',
   },
   L4: {
     name: 'L4 - Escape Route Only (Life)',
     description: 'Automatic detection within escape routes',
     coverage: 'Circulation routes (corridors, stairwells, lobbies)',
-    typicalUse: ['Single-occupancy dwellings', 'Small premises'],
-    reference: 'BS 5839-1:2025 Clause 8.5',
+    typicalUse: ['Small simple premises', 'Low-risk commercial'],
+    reference: 'BS 5839-1:2025 Clause 4 / 7.5',
   },
   L5: {
     name: 'L5 - Engineered System (Life)',
-    description: 'Coverage as determined by fire risk assessment',
-    coverage: 'Custom coverage based on fire engineering principles',
+    description:
+      'Protected areas and detector locations designed to satisfy a specific fire safety objective other than L1 to L4',
+    coverage: 'Defined by the objective — often compensating for a departure from normal guidance',
     typicalUse: ['Complex buildings', 'Fire-engineered solutions'],
-    reference: 'BS 5839-1:2025 Clause 8.6',
+    reference: 'BS 5839-1:2025 Clause 4',
   },
   M: {
     name: 'M - Manual System',
     description: 'Manual call points only, no automatic detection',
     coverage: 'Manual call points at exits and on escape routes',
     typicalUse: ['Low-risk premises', 'Simple buildings with good visibility'],
-    reference: 'BS 5839-1:2025 Clause 7',
+    reference: 'BS 5839-1:2025 Clause 4',
   },
   P1: {
     name: 'P1 - Full Coverage (Property)',
     description: 'Automatic detection throughout for property protection',
     coverage: 'All areas to protect property and contents',
     typicalUse: ['Museums', 'Archives', 'High-value storage', 'Insurance requirement'],
-    reference: 'BS 5839-1:2025 Clause 9.2',
+    reference: 'BS 5839-1:2025 Clause 4 / 7.9',
   },
   P2: {
     name: 'P2 - Partial Coverage (Property)',
     description: 'Automatic detection in defined high-risk areas for property protection',
     coverage: 'Specified high-value or high-risk areas only',
     typicalUse: ['Server rooms', 'Plant rooms', 'Storage areas'],
-    reference: 'BS 5839-1:2025 Clause 9.3',
+    reference: 'BS 5839-1:2025 Clause 4 / 7.11',
   },
 };
 

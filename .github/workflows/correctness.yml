@@ -70,6 +70,41 @@ jobs:
       - name: Certificate dynamic imports are retried
         run: npm run check:cert-imports
 
+      # Green from the start, so enforced. The Room Planner draws symbols from a
+      # generated inline map while the public chart draws the .svg files; if the
+      # two drift, a corrected symbol reaches one surface and not the other —
+      # which is how the planner came to draw a plain circle for a socket outlet.
+      - name: Room Planner symbols match public/symbols
+        run: npm run check:symbol-svgs
+
+      # Green from the start, so enforced. ELE-1754: fire alarm study content
+      # taught figures that contradict BS 5839-1:2025 — an 84 m² detector
+      # coverage area that does not exist in the standard, a "test 25% of
+      # detectors annually over 4 years" cycle that does not exist either, and
+      # Clause 45 (Extensions) cited for every service interval. BS 5839-1 is
+      # NOT in the RAG, so nothing in the build could tell a real recommendation
+      # from a plausible invention, and several of the wrong figures were
+      # internally consistent. Verified against the purchased standard.
+      - name: Fire alarm facts match BS 5839-1:2025
+        run: npm run check:fire-alarm-facts
+
+      # Green from the start, so enforced. BS 5839-1:2025 shares the
+      # bs7671_facets corpus with BS 7671/GN3/OSG, and which book wins a query
+      # is decided solely by whether the query-understanding layer tags it
+      # `fire`. The original vocabulary held 'smoke detection', which does not
+      # substring-match "smoke detectors" — so the commonest fire alarm
+      # question of all routed to the Wiring Regs instead.
+      - name: Fire alarm questions route to BS 5839-1
+        run: npm run check:fire-alarm-routing
+
+      # Green from the start, so enforced. ELE-1754 second pass: the 46-page
+      # fire alarm course makes ~790 BS 5839-1 clause citations, and until the
+      # standard was ingested nothing could check them. Four named clauses that
+      # do not exist — 13.2.1, 13.2.7, 13.2.1.f and 22.5 — and a learner cannot
+      # tell an invented clause number from a real one.
+      - name: Fire alarm course cites real BS 5839-1 clauses
+        run: npm run check:fire-alarm-citations
+
       # Advisory ONLY because it is currently red: four general-upskilling mock
       # exam banks report CHANGED KEYS against HEAD (asbestos, first aid, MEWP,
       # PASMA). Those banks are graded against their keys, so this needs a

@@ -42,8 +42,9 @@ const sections = [
     content: (
       <>
         <p>
-          A single 13A switched socket to BS 1363. The basic socket symbol — a semicircle with a
-          line indicating switched. UK standard for general-purpose socket circuits.
+          A single 13A socket outlet to BS 1363. The basic socket symbol — a semicircle standing on
+          the baseline, with one stroke for the one outlet. UK standard for general-purpose socket
+          circuits.
         </p>
       </>
     ),
@@ -139,7 +140,7 @@ export default function Single13aSocketSymbolPage() {
       heroSubtitle="Single 13A switched socket outlet electrical symbol IEC 60617 — what it represents, where it appears in UK electrical drawings, and how it relates to the rest of the symbol library."
       readingTime={4}
       keyTakeaways={[
-        'A single 13A switched socket to BS 1363. The basic socket symbol — a semicircle with a line indicating switched. UK standard for general-purpose socket circuits.',
+        'A single 13A socket outlet to BS 1363. The basic socket symbol — a semicircle standing on the baseline, with one stroke for the one outlet. UK standard for general-purpose socket circuits.',
         'General-purpose outlets, behind appliances, individual radial circuits, kitchen specifics.',
         'Every Elec-Mate certificate + circuit diagram uses this symbol where applicable, drawn to IEC 60617.',
       ]}
@@ -148,7 +149,7 @@ export default function Single13aSocketSymbolPage() {
         {
           question: 'What does the Single 13A Socket Outlet symbol mean?',
           answer:
-            'A single 13A switched socket to BS 1363. The basic socket symbol — a semicircle with a line indicating switched. UK standard for general-purpose socket circuits.',
+            'A single 13A socket outlet to BS 1363. The basic socket symbol — a semicircle standing on the baseline, with one stroke for the one outlet. UK standard for general-purpose socket circuits.',
         },
         {
           question: 'Where is the Single 13A Socket Outlet symbol used?',

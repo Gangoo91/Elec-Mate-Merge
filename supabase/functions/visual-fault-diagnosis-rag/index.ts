@@ -272,7 +272,7 @@ serve(async (req) => {
               searchFacets(supabase, {
                 query,
                 matchCount: REG_MATCHES,
-                documentTypes: ['bs7671'],
+                documentTypes: ['bs7671', 'bs5839'],
               }),
           },
           {

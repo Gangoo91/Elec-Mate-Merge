@@ -341,7 +341,7 @@ const FireAlarmModule3Section2 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 13.2 (Subdivision and indication at the CIE)"
+          source="BS 5839-1:2025 · Clause 12.3 b) (Search distance within a zone)"
           clause={
             <>
               The distance any person may have to travel within a zone to determine the location of
@@ -1124,7 +1124,7 @@ const FireAlarmModule3Section2 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 43.2 (12-month service)"
+          source="BS 5839-1:2025 · Clause 43.3.25 (12-month period — zone identification)"
           clause={
             <>
               During the 12-month service visit, the zone identification reported on the CIE should

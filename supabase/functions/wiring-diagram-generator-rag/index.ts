@@ -256,7 +256,7 @@ Keep it brief - list facts only, no explanations.`,
               const results = await searchFacets(supabase, {
                 query: `${componentType}${ctxSuffix} wiring requirements: terminal connections, cable colours, protection requirements`,
                 matchCount: 8,
-                documentTypes: ['bs7671'],
+                documentTypes: ['bs7671', 'bs5839'],
               });
               return { data: results, error: null };
             },
@@ -268,7 +268,7 @@ Keep it brief - list facts only, no explanations.`,
               const results = await searchFacets(supabase, {
                 query: `${componentType} safety requirements: RCD protection, IP ratings, zones, isolation${earthCtx}`,
                 matchCount: 5,
-                documentTypes: ['bs7671'],
+                documentTypes: ['bs7671', 'bs5839'],
               });
               return { data: results, error: null };
             },
@@ -281,7 +281,7 @@ Keep it brief - list facts only, no explanations.`,
               const results = await searchFacets(supabase, {
                 query: `${componentType}${propCtx} installation method: mounting, earthing, bonding, testing`,
                 matchCount: 5,
-                documentTypes: ['bs7671', 'gn3', 'osg'],
+                documentTypes: ['bs7671', 'gn3', 'osg', 'bs5839'],
               });
               return { data: results, error: null };
             },

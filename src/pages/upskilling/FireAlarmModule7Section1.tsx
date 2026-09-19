@@ -942,7 +942,8 @@ const FireAlarmModule7Section1 = () => {
               <strong>Approximately every 6 months (5-7 month tolerance).</strong> Competent-person
               inspection and service visit. Includes battery condition check, alarm-receiving centre
               signal verification, function tests of detectors and sounders on a rolling basis
-              (typically 25% per visit so all devices are tested across a 12-month cycle).
+              (split across the visits so that every device is covered within 12 months — with
+              two visits a year that is half the devices each time, not a quarter).
             </li>
             <li>
               <strong>Annually.</strong> Cumulative effect of the two semi-annual visits — every

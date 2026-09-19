@@ -32,17 +32,58 @@ export const GN3_A4_EDITION_CODE = 'GN3 9th Ed:2022 (A4)';
 export const OSG_A4_EDITION_ID = '538f1f69-0de6-4756-afed-efc76138c6a6';
 export const OSG_A4_EDITION_CODE = 'OSG 9th Ed:2022 (A4)';
 
+// BS 5839-1:2025 — fire detection and fire alarm systems for buildings.
+// Not an IET document and not "A4-aligned" in the amendment sense, but it
+// belongs in the same retained set: the post-filter below keeps only the
+// listed editions, so omitting it would let fire alarm rows be retrieved by
+// the RPC and then silently discarded before the model ever saw them.
+export const BS5839_EDITION_ID = 'efa946e4-6b31-4345-a251-cee9db2f0b95';
+export const BS5839_EDITION_CODE = 'BS 5839-1:2025';
+
 // All three A4-aligned editions — used by vector + BM25 post-filters so
 // GN3/OSG rows are not silently dropped when BS 7671 hits dominate.
 export const A4_ALIGNED_EDITION_CODES = new Set<string>([
   A4_2026_EDITION_CODE,
   GN3_A4_EDITION_CODE,
   OSG_A4_EDITION_CODE,
+  BS5839_EDITION_CODE,
 ]);
 
 // Hard cap on retrieval wall-clock time before we start streaming.
 // Per spec: first-token target <1s, so keep retrieval <400ms.
-export const RETRIEVAL_DEADLINE_MS = 400;
+/*
+ * 🔴 400 ms was shorter than the retrieval actually takes, so the regulatory
+ * branches were being cut off and returning [] — silently. Elec-AI then
+ * answered from the model's training data while the status line reported
+ * `primary: 0`, which nothing surfaced to a user.
+ *
+ * Measured: `search_bs7671_v3` takes 330-510 ms SERVER-SIDE alone, before the
+ * edge-function round trip, and five branches run concurrently against the
+ * same database. Observed effect — "RCD requirements for socket outlets",
+ * "what size CPC for a 6mm radial", "maximum volt drop for a lighting
+ * circuit" and "when is an AFDD required" ALL returned primary=0 at exactly
+ * 402 ms. Those are core BS 7671 questions on a compliance tool.
+ *
+ * The root cause is in the RPC, not here: its `candidates` CTE selects f.*
+ * (including a halfvec(3072) embedding per row) with no filters in the common
+ * case, so BM25 scans a materialised copy of all ~58k facets instead of using
+ * idx_bs7671_facets_tsv. The same query against the table directly is 2.3 ms.
+ * Fixing that is the real fix and it belongs in the RPC.
+ *
+ * Until then this deadline has to exceed the real cost, because a slow
+ * grounded answer beats a fast invented one. Adding BS 5839-1 grew the corpus
+ * ~25% and made the old value bite more often, but it did not cause this.
+ *
+ * UPDATE: the RPC's candidates CTE has since been fixed (513 ms -> 170 ms), but
+ * measured end-to-end retrieval still clusters at ~1300 ms, and every branch is
+ * under 200 ms in the database (bs7671 170 ms, practical 60 ms, safety 10 ms).
+ * The remainder is edge-function -> PostgREST round-trip overhead across seven
+ * parallel branches, not query cost. At 1500 ms some runs measured 1539 ms —
+ * i.e. branches were still being truncated. This is a CAP, not a wait: raising
+ * it costs nothing when retrieval is fast and only stops truncation when it is
+ * not. Lowering it again needs that round-trip overhead addressed first.
+ */
+export const RETRIEVAL_DEADLINE_MS = 2500;
 
 export interface FacetContextUnit {
   /** Stable id (facet id or synthetic for tables / figures). */
@@ -603,6 +644,13 @@ function fuseUnits(
     bm25: 1.0,
     practical: 1.05, // raised from 0.85 — practical work intelligence is now v2 (halfvec hybrid RRF, OSG-classified) and adds genuine job-scoped depth (timing, tools, defects). Still below regulatory exact_reg/table/figure/vector so regs win on ambiguous ties.
     cross_ref: 0.3,
+    // Pre-existing type error: 'safety' and 'employer' are valid sources but
+    // were absent, so the Record was incomplete. Runtime already fell through
+    // to `?? 1.0` below, so these values are exactly what was happening —
+    // declared, not changed. (Both are returned in their own buckets rather
+    // than fused into `primary`, so this weight is currently unused.)
+    safety: 1.0,
+    employer: 1.0,
   };
 
   // Book boost based on query intent. GN3 is the inspection & testing book;
@@ -625,6 +673,19 @@ function fuseUnits(
       if (intent === 'procedure') return 1.2;
       if (intent === 'calculation') return 1.1;
       return 0.95;
+    }
+    /*
+     * BS 5839-1 is the fire detection and fire alarm standard, and it is the
+     * AUTHORITATIVE book for that subject — BS 7671 has almost nothing to say
+     * about detector spacing, zones or sounder levels. So when the query is
+     * fire-alarm topical, lift it above the regs; when it is not, push it well
+     * down. That second half matters as much as the first: this corpus adds
+     * ~12k fire alarm facets against 33.5k BS 7671 ones, and without a penalty
+     * a cable-sizing or Zs question can start pulling fire alarm cable clauses
+     * purely on lexical similarity.
+     */
+    if (docType === 'bs5839') {
+      return topics.includes('fire') ? 1.6 : 0.6;
     }
     return 1.0;
   };
@@ -849,18 +910,29 @@ export function formatFacetsForPrompt(
   const bookLabel = (docType?: string): string => {
     if (docType === 'gn3') return 'GN3';
     if (docType === 'osg') return 'OSG';
+    if (docType === 'bs5839') return 'BS 5839-1:2025';
     return 'BS 7671 A4:2026';
   };
+
+  /*
+   * How a retrieved unit is cited. BS 7671, GN3 and OSG are numbered as
+   * regulations; BS 5839-1 is numbered in CLAUSES, so rendering 21.2.1 as
+   * "Reg 21.2.1" would invent a BS 7671 regulation that does not exist — and
+   * the model would repeat it to the user as one. The default stays "Reg" so
+   * nothing about the existing three books changes.
+   */
+  const refLabel = (docType: string | undefined, num: string): string =>
+    docType === 'bs5839' ? `clause ${num}` : `Reg ${num}`;
 
   // Filter regulatory primary down to non-practical units.
   const regulatoryPrimary = primary.filter((u) => u.source !== 'practical');
 
   if (regulatoryPrimary.length > 0) {
-    lines.push('[RELEVANT BS 7671 A4:2026 / GN3 / OSG CONTEXT]');
+    lines.push('[RELEVANT BS 7671 A4:2026 / GN3 / OSG / BS 5839-1:2025 CONTEXT]');
     regulatoryPrimary.forEach((u, i) => {
       const book = bookLabel(u.document_type);
       const header = u.reg_number
-        ? `[${book}] Reg ${u.reg_number}${u.reg_title ? ' — ' + u.reg_title : ''}`
+        ? `[${book}] ${refLabel(u.document_type, u.reg_number)}${u.reg_title ? ' — ' + u.reg_title : ''}`
         : `[${book}] ${u.primary_topic || `Context ${i + 1}`}`;
       const tag = u.facet_type ? `(${u.facet_type})` : '';
       const content = (u.content || '').trim().slice(0, 900);
@@ -874,7 +946,7 @@ export function formatFacetsForPrompt(
     related.forEach((u) => {
       const book = bookLabel(u.document_type);
       const header = u.reg_number
-        ? `[${book}] Reg ${u.reg_number}${u.reg_title ? ' — ' + u.reg_title : ''}`
+        ? `[${book}] ${refLabel(u.document_type, u.reg_number)}${u.reg_title ? ' — ' + u.reg_title : ''}`
         : `[${book}] ${u.primary_topic || 'Related'}`;
       const snippet = (u.content || '').trim().slice(0, 300);
       lines.push(`- ${header}: ${snippet}`);
@@ -931,7 +1003,26 @@ export function formatFacetsForPrompt(
 
   if (safetyUnits.length > 0) {
     lines.push('');
-    lines.push('[SITE SAFETY & RAMS CONTEXT — HSE/industry practice, not BS 7671 text]');
+    /*
+     * The old header said only "not BS 7671 text", which stops the model
+     * citing it AS BS 7671 but does not stop it ANSWERING WITH it. Observed:
+     * asked "how far apart can smoke detectors be, and how often must they be
+     * tested", the model took the spacing from BS 5839-1 correctly and then
+     * answered the testing half from an HSE construction-site RCD item —
+     * "fixed detectors must be tested annually using an RCD-style test tool"
+     * — instead of BS 5839-1 clause 43.3.5. It is retrieved on a keyword
+     * overlap ("testing", "annually") and reads as on-topic when it is not.
+     */
+    lines.push(
+      '[SITE SAFETY & RAMS CONTEXT — HSE/industry practice. NOT BS 7671 and NOT BS 5839-1.]'
+    );
+    lines.push(
+      'This block is background for safe working only. It is NOT an answer to a technical ' +
+        'question about a standard. If the question asks what a standard requires — spacing, ' +
+        'test frequency, ratings, zones — answer ONLY from the regulatory block above, and if ' +
+        'that block does not cover it, say so. Never let an item here supply a figure or an ' +
+        'interval for equipment it does not actually name.'
+    );
     safetyUnits.forEach((u, i) => {
       const topic = (u.primary_topic || '').trim();
       const tag = u.facet_type ? ` (${u.facet_type})` : '';

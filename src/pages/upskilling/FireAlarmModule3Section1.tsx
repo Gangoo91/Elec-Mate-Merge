@@ -291,7 +291,7 @@ const FireAlarmModule3Section1 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 13.2 (Subdivision of the premises into zones)"
+          source="BS 5839-1:2025 · Clause 3.23 (Definition — fire detection zone)"
           clause={
             <>
               A fire detection zone is a subdivision of the protected premises such that the
@@ -742,13 +742,15 @@ const FireAlarmModule3Section1 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 13.2.1 (Zones in multi-storey premises)"
+          source="BS 5839-1:2025 · Clause 12.1 b) (All fire detection zones — storeys)"
           clause={
             <>
-              In a multi-storey building, each storey should comprise at least one zone. A storey is
-              part of a building comprising all the accessible areas that are on the same level,
-              including any gallery having an area of more than half that of the space into which it
-              projects, and a roof, unless it is accessible only for maintenance or repair.
+              If the total floor area of the building is greater than 300 m², each zone should be
+              restricted to a single storey. Where the total floor area is 300 m² or less, a zone may
+              cover more than a single storey. A storey is part of a building comprising all the
+              accessible areas on the same level, including any gallery having an area of more than
+              half that of the space into which it projects, and a roof, unless it is accessible only
+              for maintenance or repair.
             </>
           }
           meaning="Two specific 2025 alignments. First, the storey definition is now lifted from BS 4422:2024 verbatim — no more building-by-building debate over whether a mezzanine is a storey. Second, the gallery >50% rule is explicit. A gallery at exactly 50% is a borderline case the designer documents in the design rationale; >50% is a separate storey, <50% is not."
@@ -756,7 +758,7 @@ const FireAlarmModule3Section1 = () => {
 
         <ConceptBlock
           title="Stairways — separate zone per stairway"
-          plainEnglish="A stairway is the protected escape route. It is bounded by fire-resisting construction and must remain free of smoke for evacuation. The CIE must show fire IN the stairway distinct from fire on the adjacent storeys, because the fire-fighting and evacuation responses differ. BS 5839-1:2025 requires each stairway to be a separate zone in its own right (clause 13.2.1.f)."
+          plainEnglish="A stairway is the protected escape route. It is bounded by fire-resisting construction and must remain free of smoke for evacuation. The CIE must show fire IN the stairway distinct from fire on the adjacent storeys, because the fire-fighting and evacuation responses differ. BS 5839-1:2025 requires each stairway to be a separate zone in its own right (clause 12.3 c))."
         >
           <p>Why:</p>
           <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
@@ -823,13 +825,14 @@ const FireAlarmModule3Section1 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 13.2.7 (Short-circuit isolation)"
+          source="BS 5839-1:2025 · Clause 11.2.2 (Circuit integrity — single fault)"
           clause={
             <>
-              On a loop, short-circuit isolators should be incorporated such that a short-circuit
-              fault on any single section of cable will not result in the loss of protection from
-              more than one zone, and in any case will not result in the loss of protection over an
-              area greater than 2,000 m².
+              A single open-circuit or short-circuit fault on an automatic fire detector circuit
+              should not disable protection within an area of more than 2 000 m², nor on more than
+              one floor of the building plus a maximum of five devices on the floor immediately
+              above and five on the floor immediately below. Short-circuit isolators are the usual
+              means of achieving this on an addressable loop.
             </>
           }
           meaning="Two conditions, both apply. First, no single fault loses protection from more than one zone. Second, regardless of zone size, no single fault loses protection from more than 2,000 m². If a zone is split internally for any reason and SCIs are placed within it, the 2,000 m² rule still constrains the section size. SCIs are placed at zone boundaries — that is the design heuristic."
@@ -1056,7 +1059,7 @@ const FireAlarmModule3Section1 = () => {
             {
               question: 'Can a stairway be zoned with the storey it serves?',
               answer:
-                'No. BS 5839-1:2025 clause 13.2.1.f requires each stairway to be a separate zone in its own right, end to end. The reasoning is escape-route identification: a fire in the stairway must be distinguishable from a fire on a storey because the response differs (compromised escape route vs compartment fire on a single storey).',
+                'No. BS 5839-1:2025 clause 12.3 c) requires each stairway to be a separate zone in its own right, end to end. The reasoning is escape-route identification: a fire in the stairway must be distinguishable from a fire on a storey because the response differs (compromised escape route vs compartment fire on a single storey).',
             },
             {
               question:

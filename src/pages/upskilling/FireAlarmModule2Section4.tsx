@@ -1319,7 +1319,7 @@ const FireAlarmModule2Section4 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 25 (standby power supply) — sizing principles"
+          source="BS 5839-1:2025 · Clause 24.3.5 (standby battery capacity) — sizing principles"
           clause={
             <>
               The standby battery should have sufficient capacity to maintain the system in the

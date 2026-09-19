@@ -1302,7 +1302,10 @@ export class AIDesigner {
     );
     parts.push('SHOW YOUR WORKING using calculation steps from the knowledge base.');
     parts.push(
-      'CITE BS 7671 regulation numbers (e.g., "per Reg 433.1.1") and table references (e.g., "Table 4D5") directly.'
+      'CITE BS 7671 regulation numbers (e.g., "per Reg 433.1.1") and table references (e.g., "Table 4D5") directly. '
+        + 'Fire detection and fire alarm material comes from BS 5839-1:2025, which is numbered in CLAUSES — '
+        + 'cite it as "BS 5839-1 clause 21.2.1", never "Reg 21.2.1", which would name a BS 7671 regulation that does not exist. '
+        + 'Only use numbers present in the retrieved context; never recall one.'
     );
     parts.push(
       '**NEVER mention "RAG" or "RAG results" in justifications - cite actual regulations only.**'

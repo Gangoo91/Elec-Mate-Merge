@@ -356,7 +356,7 @@ serve(withSentry('analyze-portfolio-evidence', async (req: Request) => {
         searchFacets(supabase, {
           query: ragQuery,
           matchCount: 6,
-          documentTypes: ['bs7671'],
+          documentTypes: ['bs7671', 'bs5839'],
         }).catch(() => []),
         qualificationCode
           ? Promise.resolve(

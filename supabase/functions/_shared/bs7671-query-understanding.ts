@@ -70,7 +70,25 @@ const TOPIC_VOCAB: Record<string, string[]> = {
   inspection: ['inspection', 'periodic inspection', 'eicr'],
   testing: ['insulation resistance', 'ir test', 'megger', 'polarity'],
   certification: ['eic', 'eicr', 'minor works', 'certificate'],
-  fire: ['fire alarm', 'bs 5839', 'fire detection', 'smoke detection'],
+  // BS 5839-1:2025 is in the corpus, so this tag is what routes a query to it
+  // (see bookBoost in bs7671-facet-retrieval). Matching is plain substring, so
+  // singular forms catch plurals — 'smoke detector' matches "smoke detectors",
+  // but 'smoke detection' does NOT, which is why the original four phrases
+  // missed the most common phrasing of all: "how far apart can smoke detectors
+  // be". Terms here must be unambiguously fire-alarm; bare 'fire' is not,
+  // because BS 7671 talks about fire-resistant cable and fire barriers.
+  fire: [
+    'fire alarm', 'bs 5839', 'bs5839', 'fire detection', 'smoke detection',
+    'smoke detector', 'heat detector', 'multi-sensor detector', 'beam detector',
+    'aspirating', 'flame detector', 'combustion gas detector',
+    'manual call point', 'call point', 'mcp ',
+    'sounder', 'voice alarm', 'visual alarm device', 'vad ',
+    'fire panel', 'control and indicating equipment', 'cie ',
+    'detection zone', 'alarm zone', 'cause and effect',
+    'category l1', 'category l2', 'category l3', 'category l4', 'category l5',
+    'category p1', 'category p2', 'category m ',
+    'false alarm', 'unwanted fire signal', 'fire alarm log book', 'logbook',
+  ],
   'special-locations': ['section 7', 'swimming pool', 'sauna', 'construction site'],
   // A4:2026 new scope — Power over Ethernet (Section 716, Reg 110.1.1).
   // Users routinely type "POE" upper-case; the stored text uses "PoE".

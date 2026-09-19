@@ -1045,7 +1045,7 @@ const FireAlarmModule5Section3 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 25 (Audibility) — sound levels"
+          source="BS 5839-1:2025 · Clause 15.1.1 (Audible alarm signals) — sound levels"
           clause={
             <>
               The audible alarm signal should produce a sound pressure level of at least 65 dB(A) at

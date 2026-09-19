@@ -1107,15 +1107,34 @@ const DiagramBuilderPage = () => {
   };
 
   const handleRoomGenerated = (roomData: any) => {
-    if (canvasRef.current?.renderAIRoom) {
-      canvasRef.current.renderAIRoom(roomData);
-      haptic.success();
-      toast({
-        title: 'Room generated',
-        description: `${roomData.room.name} diagram created`,
-        variant: 'success',
-      });
-    }
+    if (!canvasRef.current?.renderAIRoom) return;
+
+    canvasRef.current.renderAIRoom(roomData);
+    haptic.success();
+
+    /*
+     * Say how many rooms came back, because that is the thing the user is
+     * checking. A photographed plan now returns the whole floor (ELE-1745),
+     * and after Patrick's "it will only show one room and not the floor" the
+     * count is the reassurance that it read the drawing properly.
+     *
+     * Both names are read defensively — this used to be
+     * `roomData.room.name` unguarded, which throws if a response ever arrives
+     * without a top-level room and takes the toast down with it.
+     */
+    const rooms: unknown[] = Array.isArray(roomData?.rooms) ? roomData.rooms : [];
+    const firstName = roomData?.room?.name ?? (rooms[0] as any)?.room?.name;
+
+    toast({
+      title: rooms.length > 1 ? `Floor plan generated — ${rooms.length} rooms` : 'Room generated',
+      description:
+        rooms.length > 1
+          ? 'Check each room against your plan before you rely on it.'
+          : firstName
+            ? `${firstName} diagram created`
+            : 'Diagram created',
+      variant: 'success',
+    });
   };
 
   // Name for the cloud `floor_plans` row — prefers the project, then the

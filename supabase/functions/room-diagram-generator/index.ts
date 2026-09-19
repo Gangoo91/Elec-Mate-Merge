@@ -21,8 +21,28 @@ serve(async (req) => {
     const geminiKey = Deno.env.get('GEMINI_API_KEY');
     if (!geminiKey) throw new Error('GEMINI_API_KEY not configured');
 
+    /*
+     * ELE-1745 — a photo is a FLOOR, not "a room".
+     *
+     * This said "Analyse this photo of a room" and the schema below allowed
+     * exactly one room with four walls, so a hand-drawn multi-room plan (the
+     * nursing home Patrick uploaded) was squeezed into a single rectangle:
+     * "it will only show one room and not the floor".
+     *
+     * The prompt now asks for every room on the plan, positioned relative to
+     * each other, so the result is the floor that was photographed.
+     */
     const photoPrompt = isPhotoMode
-      ? `Analyse this photo of a room. Estimate the room dimensions, identify walls, doors, windows, and suggest a complete electrical layout suitable for a UK domestic installation.`
+      ? `Analyse this photo of a floor plan. It may be hand-drawn.
+
+Identify EVERY room on the plan — not just one. Typical plans include several rooms plus corridors, halls, stairwells and WCs. For each room:
+  - read its name from the drawing where one is written, otherwise infer it (Kitchen, Bedroom 1, Corridor, WC...)
+  - estimate its dimensions in metres, using any figures written on the plan; if none are given, estimate from the relative proportions of the drawing
+  - give its position as "origin" — the x,y offset in metres of the room's top-left corner from the top-left of the whole floor — so the rooms can be laid out as they appear on the plan, not stacked on top of each other
+  - identify doors and windows on each wall
+  - suggest a complete electrical layout appropriate to that room type for a UK installation
+
+If the plan is genuinely a single room, return a single entry. Never merge several rooms into one.`
       : '';
 
     const prompt = `You are an expert electrical diagram generator for UK electricians. ${isPhotoMode ? 'Analyse the provided photo and' : 'Parse the user\'s natural language room description and'} convert it to a structured JSON format for canvas rendering.
@@ -30,7 +50,7 @@ serve(async (req) => {
 ${isPhotoMode ? photoPrompt : `USER DESCRIPTION:\n${description}`}
 
 IMPORTANT PARSING RULES:
-1. Extract room name
+1. Extract a name for EVERY room on the plan, and give each one an "origin" so they sit where the drawing shows them
 2. Parse wall dimensions (in metres) - identify north, south, east, west walls
 3. Identify features on each wall (doors, windows)
 4. Extract electrical components (sockets, switches, lights) with positions
@@ -80,25 +100,50 @@ ALL ROOMS:
 - CO detector required where there is a combustion appliance
 - Consider switch position relative to door opening direction
 
-Return ONLY valid JSON in this exact format:
+Return ONLY valid JSON in this exact format. "rooms" is an ARRAY — include one entry per room on the plan:
 {
-  "room": {
-    "name": "Kitchen",
-    "dimensions": { "width": 4, "height": 3, "unit": "m" }
-  },
-  "walls": [
-    { "id": "north", "length": 4, "features": [{ "type": "window", "position": "center", "width": 1.5 }] },
-    { "id": "east", "length": 3, "features": [{ "type": "door", "position": "right", "width": 0.9 }] },
-    { "id": "south", "length": 4, "features": [] },
-    { "id": "west", "length": 3, "features": [] }
-  ],
-  "symbols": [
-    { "type": "socket-double-13a", "wall": "south", "position": 1, "heightFromFloor": 0.3 },
-    { "type": "socket-double-13a", "wall": "south", "position": 2.5, "heightFromFloor": 0.3 },
-    { "type": "switch-1way", "wall": "west", "position": 0.3, "heightFromFloor": 1.2 },
-    { "type": "light-ceiling", "position": "center" }
+  "rooms": [
+    {
+      "room": {
+        "name": "Kitchen",
+        "dimensions": { "width": 4, "height": 3, "unit": "m" },
+        "origin": { "x": 0, "y": 0 }
+      },
+      "walls": [
+        { "id": "north", "length": 4, "features": [{ "type": "window", "position": "center", "width": 1.5 }] },
+        { "id": "east", "length": 3, "features": [{ "type": "door", "position": "right", "width": 0.9 }] },
+        { "id": "south", "length": 4, "features": [] },
+        { "id": "west", "length": 3, "features": [] }
+      ],
+      "symbols": [
+        { "type": "socket-double-13a", "wall": "south", "position": 1, "heightFromFloor": 0.3 },
+        { "type": "socket-double-13a", "wall": "south", "position": 2.5, "heightFromFloor": 0.3 },
+        { "type": "switch-1way", "wall": "west", "position": 0.3, "heightFromFloor": 1.2 },
+        { "type": "light-ceiling", "position": "center" }
+      ]
+    },
+    {
+      "room": {
+        "name": "Hallway",
+        "dimensions": { "width": 6, "height": 1.2, "unit": "m" },
+        "origin": { "x": 0, "y": 3 }
+      },
+      "walls": [
+        { "id": "north", "length": 6, "features": [] },
+        { "id": "east", "length": 1.2, "features": [] },
+        { "id": "south", "length": 6, "features": [{ "type": "door", "position": "left", "width": 0.9 }] },
+        { "id": "west", "length": 1.2, "features": [] }
+      ],
+      "symbols": [
+        { "type": "light-ceiling", "position": "center" },
+        { "type": "switch-2way", "wall": "west", "position": 0.3, "heightFromFloor": 1.2 },
+        { "type": "smoke-detector", "position": "center" }
+      ]
+    }
   ]
 }
+
+"origin" is in metres from the top-left of the whole floor, and is what keeps the rooms in the right places relative to one another. Rooms that share a wall should have touching origins rather than overlapping ones.
 
 CRITICAL: Return ONLY the JSON object, no markdown, no explanations, no code blocks. Use ONLY the exact symbol IDs listed above — never append suffixes like -bs7671.`;
 
@@ -110,14 +155,26 @@ CRITICAL: Return ONLY the JSON object, no markdown, no explanations, no code blo
         // For photo mode, call Gemini directly with vision parts
         let response;
         if (isPhotoMode) {
-          // Strip data URI prefix if present
-          const rawBase64 = image_base64.replace(/^data:image\/\w+;base64,/, '');
+          /*
+           * Keep the real image type instead of asserting JPEG.
+           *
+           * The data URI states what the bytes actually are, and this threw
+           * that away and told Gemini `image/jpeg` regardless. iPhones shoot
+           * HEIC by default and a screenshot of a plan is a PNG, so the type
+           * was frequently a lie — which is one of the reasons Photo-to-Plan
+           * "randomly works" (ELE-1745). The client now compresses to JPEG
+           * before sending, so this is the belt to that braces: any caller
+           * sending something else is still described honestly.
+           */
+          const dataUriMatch = image_base64.match(/^data:(image\/[a-zA-Z0-9.+-]+);base64,/);
+          const mimeType = dataUriMatch?.[1] ?? 'image/jpeg';
+          const rawBase64 = image_base64.replace(/^data:image\/[a-zA-Z0-9.+-]+;base64,/, '');
 
           const visionBody = {
             contents: [{
               role: 'user',
               parts: [
-                { inlineData: { mimeType: 'image/jpeg', data: rawBase64 } },
+                { inlineData: { mimeType, data: rawBase64 } },
                 { text: prompt },
               ],
             }],
@@ -182,11 +239,34 @@ CRITICAL: Return ONLY the JSON object, no markdown, no explanations, no code blo
         // response (missing room/walls/symbols) is a transient AI miss, so
         // throwing here lets withRetry try again instead of hard-failing the
         // request. Sentry: JAVASCRIPT-REACT-15 (285 occurrences).
-        if (!parsed.room || !parsed.walls || !parsed.symbols) {
+        /*
+         * Accept both shapes.
+         *
+         * Photo mode now returns `rooms: [...]` (ELE-1745). Description mode,
+         * and any client still on the old build, use the flat
+         * `{ room, walls, symbols }`. A single-room response is normalised into
+         * the array so everything downstream has one shape to handle, and an
+         * older app that gets an array still finds the first room where it
+         * expects it.
+         */
+        const normaliseRoom = (r: unknown) => {
+          const room = r as { room?: unknown; walls?: unknown; symbols?: unknown };
+          return !!room?.room && Array.isArray(room.walls) && Array.isArray(room.symbols);
+        };
+
+        if (Array.isArray(parsed.rooms)) {
+          if (parsed.rooms.length === 0 || !parsed.rooms.every(normaliseRoom)) {
+            throw new Error('Invalid room data structure returned by AI');
+          }
+          // Back-compat: expose the first room at the top level too.
+          return { ...parsed, ...parsed.rooms[0] };
+        }
+
+        if (!normaliseRoom(parsed)) {
           throw new Error('Invalid room data structure returned by AI');
         }
 
-        return parsed;
+        return { ...parsed, rooms: [{ room: parsed.room, walls: parsed.walls, symbols: parsed.symbols }] };
       },
       { maxAttempts: 3, backoff: [1000, 2000, 4000] }
     );

@@ -273,7 +273,7 @@ serve(async (req: Request) => {
       const facets = await searchFacets(supabase, {
         query: ragQuery,
         matchCount: 8,
-        documentTypes: ['bs7671'],
+        documentTypes: ['bs7671', 'bs5839'],
       }).catch(() => []);
       if (facets.length) {
         bs7671Context =

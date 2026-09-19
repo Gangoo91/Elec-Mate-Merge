@@ -17,7 +17,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'UK socket symbols use a semicircle shape — single = one semicircle, double = two semicircles back-to-back. A line through the symbol indicates the socket is switched.',
+  'UK socket symbols use a semicircle standing on a baseline, with one stroke per outlet — a single socket has one stroke, a double has two. The semicircle is the same on both; it is the strokes that change.',
   'A Fused Connection Unit (FCU / fused spur) symbol shows the basic socket outline with an integral fuse holder — used to provide local protection for fixed appliances like boilers and extractor fans.',
   'Shaver sockets are the only socket type permitted inside bathroom zone 2 — the integral isolating transformer (BS EN 61558-2-5) galvanically separates the user from earth.',
   'EV charger outlet symbols indicate a dedicated BS 7671 Section 722 circuit — must include a Type A RCD or RDC-DD per Regulation 722.531.',
@@ -28,7 +28,7 @@ const faqs = [
   {
     question: 'What is the symbol for a double 13A socket?',
     answer:
-      'A double 13A socket is drawn as two semicircles connected back-to-back, sharing a common base line representing the back box. A short line crossing the symbol indicates that the socket is switched. The symbol applies to standard BS 1363 double sockets — the workhorse of every UK domestic and commercial installation.',
+      'A double 13A socket is drawn as the same semicircle used for a single socket, standing on a baseline, but with two strokes inside it instead of one — a stroke for each outlet. The symbol applies to standard BS 1363 double sockets — the workhorse of every UK domestic and commercial installation.',
   },
   {
     question: 'How do I draw a fused spur on a wiring diagram?',
@@ -110,11 +110,10 @@ const sections = [
           chargers and outdoor IP66 — drawn to IEC 60617 with BS 7671 context.
         </p>
         <p>
-          Each symbol is drawn to <strong>IEC 60617</strong> — the UK adoption of the
-          international IEC 60617 standard for graphical symbols on electrical diagrams. The same
-          symbols appear on{' '}
-          <SEOInternalLink href="/how-to-fill-in-eicr">EICR forms</SEOInternalLink>,
-          distribution board schedules, single-line schematics and installation layout drawings.
+          Each symbol is drawn to <strong>IEC 60617</strong> — the UK adoption of the international
+          IEC 60617 standard for graphical symbols on electrical diagrams. The same symbols appear
+          on <SEOInternalLink href="/how-to-fill-in-eicr">EICR forms</SEOInternalLink>, distribution
+          board schedules, single-line schematics and installation layout drawings.
         </p>
         <p>
           Looking for symbols in a different category? See the full{' '}

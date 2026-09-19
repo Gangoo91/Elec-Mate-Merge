@@ -366,7 +366,7 @@ const FireAlarmModule3Section4 = () => {
               drives outputs
             </text>
             <text x="440" y="146" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
-              Clause 22.5 mandatory
+              Clause 8 / BS 7273
             </text>
 
             {/* Top-left — Door holders */}

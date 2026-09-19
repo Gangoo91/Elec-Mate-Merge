@@ -287,10 +287,97 @@ const OSG_CONFIG: DocTypeConfig = {
   },
 };
 
+// BS 5839-1:2025 — Fire detection and fire alarm systems for buildings.
+// Code of practice for design, installation, commissioning and maintenance of
+// systems in non-domestic premises. (BS 5839-6 covers dwellings and is NOT
+// this document.)
+//
+// Numbering: 48 top-level clauses grouped into 8 Sections, with sub-clauses to
+// three or four segments — 12.3, 21.2.1, 21.2.14, 43.3.26. Structurally this
+// behaves like GN3/OSG (flat beneath the top-level number) rather than
+// BS 7671, EXCEPT that the 48 clauses roll up into Sections. Those map onto
+// the existing hierarchy as Part, so a retrieved facet carries the Section it
+// came from — which is what tells a reader whether a clause is about design,
+// installation or maintenance.
+//
+// Clause-to-Section boundaries are taken from the contents pages of the 2025
+// edition, not inferred.
+const BS5839_SECTIONS: { n: number; title: string; from: number; to: number }[] = [
+  { n: 1, title: 'General', from: 1, to: 9 },
+  { n: 2, title: 'Design considerations', from: 10, to: 28 },
+  { n: 3, title: 'Limitation of false alarms and unwanted fire alarm signals', from: 29, to: 33 },
+  { n: 4, title: 'Installation', from: 34, to: 36 },
+  { n: 5, title: 'Commissioning and handover', from: 37, to: 41 },
+  { n: 6, title: 'Maintenance', from: 42, to: 44 },
+  { n: 7, title: 'Extensions and modifications', from: 45, to: 46 },
+  { n: 8, title: 'User responsibilities', from: 47, to: 48 },
+];
+
+function bs5839Section(clause: number) {
+  return BS5839_SECTIONS.find((s) => clause >= s.from && clause <= s.to) ?? null;
+}
+
+const BS5839_CONFIG: DocTypeConfig = {
+  doc_type: 'bs5839',
+  // LINE-ANCHORED, unlike the other documents. BS 5839-1 is dense with decimal
+  // dimensions — 1.4 m mounting height, 2.5 m, 1.25 m void depth, 7.5 m and
+  // 5.3 m spacings — and a bare /\d{1,2}\.\d+/ cannot tell "1.4 m above
+  // finished floor level" from clause 1.4. BS 7671 never had this problem
+  // because its regulations are three digits (411.3.2); GN3 and OSG carry far
+  // fewer bare measurements.
+  //
+  // The first attempt used the unanchored pattern and it went wrong exactly
+  // there: 1.4, 1.25 and 2.5 were created as regulations with empty titles,
+  // and because chunk boundaries are cut at the match offset, the chunk for
+  // 19.8 began mid-sentence at "1.4 m above finished floor level" — the
+  // clause's own opening words were lost. 98 of 544 regulations came out
+  // blank, and real clauses (19.8, 43.1) were never captured at all.
+  //
+  // Every clause heading in this document begins a line and is followed by
+  // whitespace then a letter or bracket, so anchoring is both safe and
+  // sufficient. It also drops the BS EN 54-x part numbers and BS 5839-6 /
+  // BS 7273-1 cross-references, which never start a line.
+  //
+  // Three branches, because this document's headings come in three shapes:
+  //   a) sub-clauses inline            "21.2.1 Under flat ceilings…"
+  //   b) a bare top-level number, title on the following line after a blank
+  //      (an OCR column artefact) — "20\n\nTypes of fire detector…"
+  //   c) "COMMENTARY ON CLAUSE 20", which is unambiguous and, at 45 of the 48
+  //      clauses, the most reliable top-level marker in the document.
+  //
+  // Without (b) and (c), a top-level heading is not a boundary, so the chunk
+  // for the PRECEDING sub-clause swallowed the whole commentary block: 45
+  // regulation chunks (8.4%) carried another clause's prose under the wrong
+  // number, e.g. clause 20's detector-type commentary filed under 19.10.
+  // "Key" is excluded from (b) — figure legends read "4\n\nKey".
+  regPattern: () =>
+    /^(?:((?:\d{1,2}(?:\.\d+){1,3})(?=\s+[A-Za-z(])|(?:\d{1,2})(?=\s*\n\s*\n(?!Key\b)[A-Z][a-z]))|COMMENTARY ON CLAUSE\s+(\d{1,2}))/gm,
+  // Clauses run 1-48.
+  minFirstDigit: 1,
+  maxFirstDigit: 48,
+  // 1 segment is valid here — a top-level clause heading such as "43".
+  minSegments: 1,
+  maxSegments: 4,
+  derive: (r) => {
+    const segs = r.split('.');
+    const clause = parseInt(segs[0], 10);
+    const section_number = segs.length >= 2 ? `${segs[0]}.${segs[1]}` : segs[0];
+    const sec = bs5839Section(clause);
+    return {
+      part_number: sec?.n ?? null,
+      part: sec ? `Section ${sec.n} — ${sec.title}` : null,
+      chapter_number: clause,
+      chapter: `Clause ${clause}`,
+      section_number,
+    };
+  },
+};
+
 const DOC_CONFIGS: Record<string, DocTypeConfig> = {
   bs7671: BS7671_CONFIG,
   gn3: GN3_CONFIG,
   osg: OSG_CONFIG,
+  bs5839: BS5839_CONFIG,
 };
 
 // True if `content` reads like real regulation prose, NOT an index entry or
@@ -357,7 +444,11 @@ function parseStructure(
   const pattern = config.regPattern();
   let m: RegExpExecArray | null;
   while ((m = pattern.exec(bodyText)) !== null) {
-    const regNum = m[1];
+    // Group 2 lets a config match a heading whose number is NOT the first
+    // thing on the line (BS 5839-1's "COMMENTARY ON CLAUSE 20"). The existing
+    // BS 7671 / GN3 / OSG patterns have no group 2, so this is a no-op there.
+    const regNum = m[1] ?? m[2];
+    if (!regNum) continue;
     const segments = regNum.split('.').length;
     if (segments < config.minSegments || segments > config.maxSegments) continue;
     const firstDigit = parseInt(regNum.split('.')[0], 10);
@@ -854,7 +945,9 @@ function buildFacetPrompt(params: {
         ? 'IET Guidance Note 3 — Inspection & Testing (the practical companion to BS 7671 Part 6)'
         : params.docType === 'osg'
           ? 'IET On-Site Guide — the practical installer handbook aligned with BS 7671'
-          : params.docType.toUpperCase();
+          : params.docType === 'bs5839'
+            ? 'BS 5839-1:2025 — Fire detection and fire alarm systems for buildings (code of practice for non-domestic premises)'
+            : params.docType.toUpperCase();
 
   const loc = [
     params.editionCode,
@@ -1021,7 +1114,12 @@ async function extractFacetsFromChunk(
     body: JSON.stringify({
       model: FACET_MODEL,
       max_completion_tokens: 12000,
-      reasoning_effort: 'minimal',
+      // 'minimal' is no longer an accepted value for this model — the API
+      // returns 400 "Unsupported value: 'reasoning_effort' does not support
+      // 'minimal'" and EVERY chunk in the batch fails, so a facet run loops
+      // forever reporting 0 created and no progress. 'low' is the nearest
+      // supported setting and is what the rest of the edge functions use.
+      reasoning_effort: 'low',
       messages: [
         {
           role: 'system',
@@ -1182,7 +1280,12 @@ async function extractTableFacetsWithVision(
     body: JSON.stringify({
       model: FACET_MODEL,
       max_completion_tokens: 12000,
-      reasoning_effort: 'minimal',
+      // 'minimal' is no longer an accepted value for this model — the API
+      // returns 400 "Unsupported value: 'reasoning_effort' does not support
+      // 'minimal'" and EVERY chunk in the batch fails, so a facet run loops
+      // forever reporting 0 created and no progress. 'low' is the nearest
+      // supported setting and is what the rest of the edge functions use.
+      reasoning_effort: 'low',
       messages: [
         {
           role: 'system',
@@ -1278,7 +1381,14 @@ function buildContextPrefix(params: {
   ];
   if (params.part) bits.push(params.part);
   if (params.chapter) bits.push(params.chapter);
-  if (params.regNumber) bits.push(`Reg ${params.regNumber}`);
+  if (params.regNumber) {
+    // BS 5839-1 is numbered in CLAUSES. "Reg 21.2.1" on a fire alarm facet
+    // reads as a BS 7671 regulation that does not exist — and this prefix is
+    // stored on the row and handed to the model verbatim, so getting it wrong
+    // here fabricates a citation no downstream formatter can undo.
+    const refWord = params.docTypeShort === 'BS 5839-1' ? 'clause' : 'Reg';
+    bits.push(`${refWord} ${params.regNumber}`);
+  }
   if (params.regTitle) bits.push(params.regTitle);
   bits.push(`[${params.facetType}]`);
   bits.push(params.primaryTopic);
@@ -1875,7 +1985,9 @@ serve(async (req) => {
               ? 'GN3'
               : edition.document_type === 'osg'
                 ? 'OSG'
-                : edition.document_type.toUpperCase();
+                : edition.document_type === 'bs5839'
+                  ? 'BS 5839-1'
+                  : edition.document_type.toUpperCase();
 
         // Pull next batch via RPC (server-side NOT EXISTS). The previous
         // client-side filter broke past 1000 facets because PostgREST caps
@@ -2093,6 +2205,71 @@ serve(async (req) => {
       // GPT-5-mini which reads the table directly from the image and
       // decomposes every cell into atomic compliance facts. Bypasses the
       // garbled OCR in bs7671_tables.raw_text.
+      /*
+       * backfill_facet_embeddings — re-embed facets whose embedding is NULL.
+       *
+       * A facet with no embedding is invisible to vector search; only BM25 can
+       * reach it. 165 BS 7671 facets were in that state, and they are all Zs
+       * table values ("Maximum Zs for a Type D MCB rated 80 A at 230 V for 5 s
+       * is 0.27 ohm") — among the most-asked facts in the app.
+       *
+       * The embed input is reconstructed exactly as the facet pipeline builds
+       * it (`context_prefix \n\n content`), so a backfilled row is identical
+       * to one embedded at ingest time.
+       */
+      case 'backfill_facet_embeddings': {
+        const { batch_size = 50, document_type = null } = body as {
+          batch_size?: number;
+          document_type?: string | null;
+        };
+        if (!openAiKey) throw new Error('OPENAI_API_KEY not configured');
+
+        let q = supabaseAdmin
+          .from('bs7671_facets')
+          .select('id, context_prefix, content')
+          .is('embedding', null)
+          .limit(batch_size);
+        if (document_type) q = q.eq('document_type', document_type);
+
+        const { data: rows, error: selErr } = await q;
+        if (selErr) throw selErr;
+        if (!rows || rows.length === 0) {
+          result = { processed: 0, remaining: 0, completed: true };
+          break;
+        }
+
+        const inputs = rows.map(
+          (r: { context_prefix: string | null; content: string }) =>
+            `${r.context_prefix ?? ''}\n\n${r.content ?? ''}`
+        );
+        const vectors = await embedBatch(openAiKey, inputs);
+
+        let updated = 0;
+        const errors: string[] = [];
+        for (let i = 0; i < rows.length; i++) {
+          const { error: upErr } = await supabaseAdmin
+            .from('bs7671_facets')
+            .update({ embedding: vectors[i] })
+            .eq('id', rows[i].id);
+          if (upErr) errors.push(`${rows[i].id}: ${upErr.message}`);
+          else updated++;
+        }
+
+        const { count: remaining } = await supabaseAdmin
+          .from('bs7671_facets')
+          .select('id', { count: 'exact', head: true })
+          .is('embedding', null);
+
+        result = {
+          processed: rows.length,
+          updated,
+          remaining: remaining ?? 0,
+          completed: (remaining ?? 0) === 0,
+          errors: errors.slice(0, 5),
+        };
+        break;
+      }
+
       case 'generate_table_facets_batch': {
         const { edition_id, batch_size = TABLE_FACET_BATCH_DEFAULT } = body;
         if (!edition_id) throw new Error('edition_id required');
@@ -2112,7 +2289,9 @@ serve(async (req) => {
               ? 'GN3'
               : edition.document_type === 'osg'
                 ? 'OSG'
-                : edition.document_type.toUpperCase();
+                : edition.document_type === 'bs5839'
+                  ? 'BS 5839-1'
+                  : edition.document_type.toUpperCase();
 
         const { data: pendingTables, error: pendingErr } = await supabaseAdmin.rpc(
           'get_pending_facet_tables',

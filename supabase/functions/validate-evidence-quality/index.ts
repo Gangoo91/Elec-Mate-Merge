@@ -336,7 +336,7 @@ serve(withSentry('validate-evidence-quality', async (req: Request) => {
       const facets = await searchFacets(supabase, {
         query: evidence_text.slice(0, 400) || 'electrical installation BS 7671',
         matchCount: 6,
-        documentTypes: ['bs7671'],
+        documentTypes: ['bs7671', 'bs5839'],
       }).catch(() => []);
       if (facets.length) {
         bs7671Context =

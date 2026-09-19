@@ -286,7 +286,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     file: 'sockets/single-13a.svg',
     altText: 'Single 13A switched socket outlet electrical symbol IEC 60617',
     description:
-      'A single 13A switched socket to BS 1363. The basic socket symbol — a semicircle with a line indicating switched. UK standard for general-purpose socket circuits.',
+      'A single 13A socket outlet to BS 1363. The basic socket symbol — a semicircle standing on the baseline, with one stroke for the one outlet. UK standard for general-purpose socket circuits.',
     useContext:
       'General-purpose outlets, behind appliances, individual radial circuits, kitchen specifics.',
   },
@@ -297,7 +297,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     file: 'sockets/double-13a.svg',
     altText: 'Double 13A switched socket outlet electrical symbol IEC 60617',
     description:
-      'A twin 13A switched socket — two outlets on one back box. Drawn as two semicircles back-to-back. Standard outlet for living spaces, bedrooms and offices.',
+      'A twin 13A socket outlet — two outlets on one back box. The same semicircle as the single socket, with two strokes instead of one: the number of strokes is the number of outlets. Standard outlet for living spaces, bedrooms and offices.',
     useContext:
       'Bedrooms (typically 2-4 doubles), living rooms, kitchens, offices — the workhorse outlet.',
   },

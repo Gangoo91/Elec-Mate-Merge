@@ -213,8 +213,8 @@ export const formatFireAlarmLogBookJson = ({
   // ── False alarm rate, BS 5839-1 Annex F ────────────────────────────
   // Per 100 automatic detectors over the trailing 12 months, regardless of the
   // selected export period: a 3-month export must not make the annual rate look
-  // like a quarter of what it is. Above 4 per 100/yr Annex F calls for a
-  // preliminary investigation.
+  // like a quarter of what it is. Annex F supplies only the formula; the
+  // thresholds for an in-depth investigation are clause 31.4 and 31.5.
   const yearAgo = new Date(now);
   yearAgo.setFullYear(yearAgo.getFullYear() - 1);
   const cutoff = yearAgo.toISOString().slice(0, 10);
@@ -342,7 +342,14 @@ export const formatFireAlarmLogBookJson = ({
     service_visit_count: byType('service').length,
     false_alarm_rate: falseAlarmRate != null ? String(falseAlarmRate) : '',
     false_alarm_count_12mo: String(falseAlarms12mo),
-    false_alarm_trigger_exceeded: falseAlarmRate != null && falseAlarmRate > 4,
+    // Clause 31.4 (>40 AFDs: rate exceeds five per 100 per annum) or 31.5
+    // (<41 AFDs: more than two in 12 months). See the note in
+    // useFireAlarmLogBook - this was `rate > 4`, which is neither threshold.
+    false_alarm_trigger_exceeded: !detectors
+      ? false
+      : detectors > 40
+        ? falseAlarmRate != null && falseAlarmRate > 5
+        : falseAlarms12mo > 2,
 
     open_defects: openDefects,
     sections,

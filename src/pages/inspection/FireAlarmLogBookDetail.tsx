@@ -645,7 +645,9 @@ const FireAlarmLogBookDetail = () => {
                     </div>
                     {status.falseAlarmInvestigationDue && (
                       <p className="mt-0.5 text-[11px] leading-relaxed text-orange-300/90">
-                        Over the Annex F trigger of 4 — arrange a preliminary investigation.
+                        {status.falseAlarmTriggerBasis === 'count'
+                          ? 'More than two false alarms in 12 months on a system of fewer than 41 detectors \u2014 clause 31.5 advises an in-depth investigation.'
+                          : 'Over five per 100 detectors per year \u2014 clause 31.4 advises an in-depth investigation.'}
                       </p>
                     )}
                   </div>

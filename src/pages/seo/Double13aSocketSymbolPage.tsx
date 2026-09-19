@@ -42,8 +42,9 @@ const sections = [
     content: (
       <>
         <p>
-          A twin 13A switched socket — two outlets on one back box. Drawn as two semicircles
-          back-to-back. Standard outlet for living spaces, bedrooms and offices.
+          A twin 13A socket outlet — two outlets on one back box. The same semicircle as the single
+          socket, with two strokes instead of one: the number of strokes is the number of outlets.
+          Standard outlet for living spaces, bedrooms and offices.
         </p>
       </>
     ),
@@ -139,7 +140,7 @@ export default function Double13aSocketSymbolPage() {
       heroSubtitle="Double 13A switched socket outlet electrical symbol IEC 60617 — what it represents, where it appears in UK electrical drawings, and how it relates to the rest of the symbol library."
       readingTime={4}
       keyTakeaways={[
-        'A twin 13A switched socket — two outlets on one back box. Drawn as two semicircles back-to-back. Standard outlet for living spaces, bedrooms and offices.',
+        'A twin 13A socket outlet — two outlets on one back box. The same semicircle as the single socket, with two strokes instead of one: the number of strokes is the number of outlets. Standard outlet for living spaces, bedrooms and offices.',
         'Bedrooms (typically 2-4 doubles), living rooms, kitchens, offices — the workhorse outlet.',
         'Every Elec-Mate certificate + circuit diagram uses this symbol where applicable, drawn to IEC 60617.',
       ]}
@@ -148,7 +149,7 @@ export default function Double13aSocketSymbolPage() {
         {
           question: 'What does the Double 13A Socket Outlet symbol mean?',
           answer:
-            'A twin 13A switched socket — two outlets on one back box. Drawn as two semicircles back-to-back. Standard outlet for living spaces, bedrooms and offices.',
+            'A twin 13A socket outlet — two outlets on one back box. The same semicircle as the single socket, with two strokes instead of one: the number of strokes is the number of outlets. Standard outlet for living spaces, bedrooms and offices.',
         },
         {
           question: 'Where is the Double 13A Socket Outlet symbol used?',

@@ -296,7 +296,7 @@ const FireAlarmModule2Section3 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 12 (manual call points — distance)"
+          source="BS 5839-1:2025 · Clause 19.5 (manual call points — travel distance)"
           clause={
             <>
               The distances to find the nearest call points has been simplified to the 30 m straight
@@ -680,7 +680,7 @@ const FireAlarmModule2Section3 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Clause 12 (protective covers)"
+          source="BS 5839-1:2025 · Clause 19 (manual call points — protective covers)"
           clause={
             <>
               The protective covers that were introduced as a recommendation in the 2017 edition are

@@ -118,7 +118,20 @@ export function formatFacetsForPrompt(facets: BS7671Facet[]): string {
   if (facets.length === 0) return '[no BS 7671 facets matched]';
   return facets
     .map((f, i) => {
-      const ref = f.regNumber ? `Reg ${f.regNumber}` : f.documentType.toUpperCase();
+      /*
+       * The corpus is not only BS 7671. BS 5839-1:2025 (fire detection and
+       * fire alarm systems) is numbered in CLAUSES, so rendering clause 21.2.1
+       * as "Reg 21.2.1" would hand the model a BS 7671 regulation number that
+       * does not exist, and it would cite it to the user as one. Name the book
+       * explicitly for it; everything else keeps the existing behaviour.
+       */
+      const ref = f.regNumber
+        ? f.documentType === 'bs5839'
+          ? `BS 5839-1 cl ${f.regNumber}`
+          : `Reg ${f.regNumber}`
+        : f.documentType === 'bs5839'
+          ? 'BS 5839-1'
+          : f.documentType.toUpperCase();
       const topic = f.primaryTopic ? ` — ${f.primaryTopic}` : '';
       const content = (f.content ?? '').replace(/\s+/g, ' ').slice(0, 400);
       return `${i + 1}. [${ref}${topic}] ${content}`;

@@ -259,7 +259,11 @@ export class DesignPipeline {
         const { data, error } = await supabase.rpc('search_bs7671_v3', {
           query_embedding: facetsEmbedding,
           query_text: facetQuery,
-          document_types: ['bs7671', 'gn3', 'osg'],
+          // bs5839 added so fire alarm cable, cause-and-effect and detector
+          // design questions ground against BS 5839-1:2025 rather than the
+          // model's training data. This list is explicit, so a new corpus is
+          // invisible here until it is named.
+          document_types: ['bs7671', 'gn3', 'osg', 'bs5839'],
           reg_number_filter: null,
           zones_filter: null,
           system_types_filter: null,
