@@ -2,6 +2,7 @@ import { Fragment } from 'react';
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { CalculatorSurface } from '@/components/calculators/shared';
 import CableCurrentCapacityCalculator from '@/components/apprentice/calculators/CableCurrentCapacityCalculator';
+import { CalculatorWithEmailCapture } from '@/components/seo/CalculatorWithEmailCapture';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import { BookOpen, Cable, Calculator, Layers, Zap, Thermometer, Search } from 'lucide-react';
@@ -97,7 +98,12 @@ const sections = [
           come from the BS 7671 Appendix 4 tables themselves. Free, no sign-up.
         </p>
         <CalculatorSurface>
-          <CableCurrentCapacityCalculator />
+          <CalculatorWithEmailCapture
+            calculatorName="Cable Current Capacity Calculator"
+            calculatorPath="/guides/appendix-4-tables-bs-7671"
+          >
+            {(onResult) => <CableCurrentCapacityCalculator onResult={onResult} />}
+          </CalculatorWithEmailCapture>
         </CalculatorSurface>
       </>
     ),

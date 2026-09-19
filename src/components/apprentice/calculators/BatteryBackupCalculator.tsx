@@ -1,7 +1,8 @@
 import { copyToClipboard } from '@/utils/clipboard';
 import type { CalcReport } from '@/lib/calculator-report';
 import { useProvideCalcReport } from '@/lib/calculator-report-context';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import type { CalculatorResultReporter } from '@/lib/calculator-outcome';
 import { Battery, ChevronDown, AlertTriangle, Plus, X, Clock, Copy, Check } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
@@ -46,7 +47,7 @@ interface Load {
 const CAT = 'ev-storage' as const;
 const config = CALCULATOR_CONFIG[CAT];
 
-const BatteryBackupCalculator = () => {
+const BatteryBackupCalculator = ({ onResult }: CalculatorResultReporter = {}) => {
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);
 
@@ -66,6 +67,47 @@ const BatteryBackupCalculator = () => {
   );
   const [requiredRuntime, setRequiredRuntime] = useState('');
   const [results, setResults] = useState<CalculationResults | null>(null);
+
+  // Published for the "email me this" offer on the public pages. The headline
+  // follows the mode: runtime mode answers "how long", sizing mode answers
+  // "how big", and labelling them the same would misreport one of them.
+  useEffect(() => {
+    if (!onResult) return;
+    if (!results) return onResult(null);
+    const sizing = mode === 'sizing';
+    onResult({
+      headline: sizing
+        ? `${Math.round(results.requiredAh ?? 0)} Ah`
+        : `${results.runtime.toFixed(1)} h`,
+      headlineLabel: sizing ? 'Battery bank required' : 'Runtime on the stated load',
+      inputs: [
+        { label: 'Average load', value: `${Math.round(results.averagePower)} W` },
+        { label: 'Peak load', value: `${Math.round(results.peakPower)} W` },
+        { label: 'Bank voltage', value: `${results.bankVoltage} V` },
+      ],
+      outputs: [
+        ...(sizing
+          ? [{ label: 'Required capacity', value: `${Math.round(results.requiredAh ?? 0)} Ah` }]
+          : [{ label: 'Runtime', value: `${results.runtime.toFixed(1)} hours` }]),
+        { label: 'Usable energy', value: `${Math.round(results.usableEnergyWh)} Wh` },
+        { label: 'DC current', value: `${results.dcCurrent.toFixed(1)} A` },
+        {
+          label: 'Inverter',
+          value: `${Math.round(results.recommendedWatts)} W / ${Math.round(results.recommendedVA)} VA`,
+        },
+        { label: 'DC fuse', value: `${results.recommendedFuse} A` },
+        { label: 'DC cable', value: results.recommendedCableSize },
+        { label: 'Recharge time', value: `${results.rechargeTime.toFixed(1)} hours` },
+      ],
+      // Chapter 57 only. Section 712 is solar PV and does not govern a
+      // battery bank on its own; Ch.57 is the chapter A4:2026 ADDED for
+      // stationary secondary batteries. It does not cover batteries inside
+      // pluggable UPS products, which is worth saying where the figure is
+      // going to be read away from the page.
+      basis:
+        'BS 7671:2018+A4:2026 Chapter 57 (stationary secondary batteries \u2014 excludes pluggable UPS); DC volt drop to Appendix 4',
+    });
+  }, [results, mode, onResult]);
 
   const [showGuidance, setShowGuidance] = useState(false);
   const [showRegs, setShowRegs] = useState(false);

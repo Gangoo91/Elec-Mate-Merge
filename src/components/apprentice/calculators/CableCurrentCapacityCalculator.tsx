@@ -15,6 +15,7 @@ import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import { useEffect, useMemo, useState } from 'react';
+import type { CalculatorResultReporter } from '@/lib/calculator-outcome';
 import {
   CalculatorCard,
   CalculatorDivider,
@@ -43,7 +44,7 @@ import {
   type PhaseKey,
 } from '@/lib/calculators/bs7671-data/appendix4CurrentCapacity';
 
-const CableCurrentCapacityCalculator = () => {
+const CableCurrentCapacityCalculator = ({ onResult }: CalculatorResultReporter = {}) => {
   const config = CALCULATOR_CONFIG['cable'];
 
   const [cableSize, setCableSize] = useState<string>('');
@@ -89,6 +90,43 @@ const CableCurrentCapacityCalculator = () => {
       suggestions: string[];
     } | null;
   } | null>(null);
+
+  // Published for the "email me this" offer on the public pages.
+  useEffect(() => {
+    if (!onResult) return;
+    if (!result) return onResult(null);
+    const c = result.compliance;
+    onResult({
+      headline: `${result.finalCapacity.toFixed(1)} A`,
+      headlineLabel: `Iz \u2014 ${result.referenceMethod}`,
+      inputs: [
+        { label: 'Reference method', value: result.referenceMethod },
+        { label: 'Tabulated capacity', value: `${result.baseCapacity} A` },
+        { label: 'Ambient factor (Ca)', value: String(result.tempCorrectionFactor) },
+        { label: 'Grouping factor (Cg)', value: String(result.groupingCorrectionFactor) },
+        ...(result.soilCorrectionFactor !== 1
+          ? [{ label: 'Soil factor (Cs)', value: String(result.soilCorrectionFactor) }]
+          : []),
+      ],
+      outputs: [
+        { label: 'Corrected capacity (Iz)', value: `${result.finalCapacity.toFixed(1)} A` },
+        ...(c
+          ? [
+              { label: 'Design current (Ib)', value: `${c.Ib} A` },
+              { label: 'Device rating (In)', value: `${c.In} A` },
+              // Ib <= In <= Iz is the whole test; giving the three together
+              // means the email can be checked, not just read.
+              {
+                label: 'Ib \u2264 In \u2264 Iz',
+                value: c.overallCompliant ? 'Satisfied' : 'NOT satisfied',
+              },
+            ]
+          : []),
+        { label: 'Cable', value: result.voltageRating },
+      ],
+      basis: `BS 7671:2018+A4:2026 Appendix 4 \u2014 ${result.standard}`,
+    });
+  }, [result, onResult]);
 
   // Cable sizes dropdown options
   // Cable types, sizes and installation methods all come from the verified
