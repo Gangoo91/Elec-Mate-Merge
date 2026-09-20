@@ -460,3 +460,32 @@ export function humanMinutes(minutes: number): string {
   if (rest === 0) return `${hours}h`;
   return `${hours}h ${rest}m`;
 }
+
+/**
+ * Colour by STATE, not by type (ELE-1755 calendar rebuild).
+ *
+ * A job was amber whether it was booked, on site, finished or invoiced, so
+ * the grid could not answer the question the electrician actually has of a
+ * week: what is done and what is still to do. Linked jobs take their colour
+ * from the job's status; everything else keeps its type colour.
+ */
+export const STATE_COLOURS = {
+  active: '#10B981',
+  completed: '#64748B',
+  on_hold: '#F97316',
+} as const;
+
+export function displayColour(event: CalendarEvent): string {
+  const status = event.project?.status;
+  if (status === 'active') return STATE_COLOURS.active;
+  if (status === 'completed' || status === 'cancelled') return STATE_COLOURS.completed;
+  if (status === 'on_hold') return STATE_COLOURS.on_hold;
+  return event.colour;
+}
+
+/** A real booking with a customer who has never been emailed about it. */
+export function needsTelling(event: CalendarEvent): boolean {
+  if (isSyntheticEvent(event)) return false;
+  if (!event.client_id || event.confirmation_sent_at) return false;
+  return new Date(event.start_at) > new Date();
+}

@@ -7,9 +7,11 @@ import {
   ChevronRight,
   MoreHorizontal,
   Settings,
+  Printer,
   Share2,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { eyebrowCn } from './calendarStyles';
 import CalendarViewSwitcher from './CalendarViewSwitcher';
 import type { CalendarView } from '@/types/calendar';
 
@@ -26,6 +28,10 @@ interface CalendarHeaderProps {
   googleConnected: boolean;
   googleConnecting: boolean;
   onConnectGoogle: () => void;
+  /** Tap the title → pick a date to jump to. */
+  onJumpTo: (date: Date) => void;
+  /** The week on paper, black on white. */
+  onPrint: () => void;
 }
 
 const GoogleG = ({ className }: { className?: string }) => (
@@ -52,6 +58,13 @@ function getHeaderLabel(date: Date, view: CalendarView): string {
       return isSameMonth(weekStart, weekEnd)
         ? `${format(weekStart, 'd')}–${format(weekEnd, 'd MMM yyyy')}`
         : `${format(weekStart, 'd MMM')} – ${format(weekEnd, 'd MMM yyyy')}`;
+    }
+    case 'three': {
+      const end = new Date(date);
+      end.setDate(date.getDate() + 2);
+      return isSameMonth(date, end)
+        ? `${format(date, 'EEE d')} – ${format(end, 'EEE d MMM')}`
+        : `${format(date, 'EEE d MMM')} – ${format(end, 'EEE d MMM')}`;
     }
     case 'month':
       return format(date, 'MMMM yyyy');
@@ -81,9 +94,23 @@ const CalendarHeader = ({
   googleConnected,
   googleConnecting,
   onConnectGoogle,
+  onJumpTo,
+  onPrint,
 }: CalendarHeaderProps) => {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [jumpOpen, setJumpOpen] = useState(false);
+  const jumpRef = useRef<HTMLDivElement>(null);
+  const weekNumber = format(currentDate, 'I');
+
+  useEffect(() => {
+    if (!jumpOpen) return;
+    function onClickOutside(e: MouseEvent) {
+      if (jumpRef.current && !jumpRef.current.contains(e.target as Node)) setJumpOpen(false);
+    }
+    document.addEventListener('mousedown', onClickOutside);
+    return () => document.removeEventListener('mousedown', onClickOutside);
+  }, [jumpOpen]);
   const menuRef = useRef<HTMLDivElement>(null);
   const showToday = !isToday(currentDate);
 
@@ -110,8 +137,10 @@ const CalendarHeader = ({
     navigate('/electrician/booking');
   };
 
+  // The shell's top bar is fixed and publishes its height; sticking at 0 put
+  // this header underneath it the moment the page scrolled.
   return (
-    <div className="sticky top-0 z-50 border-b border-white/[0.10] bg-background/95 backdrop-blur-sm">
+    <div className="sticky top-[var(--header-height,56px)] z-50 border-b border-white/[0.10] bg-background/95 backdrop-blur-sm">
       <div className="px-4 py-2">
         <div className="flex h-11 items-center gap-2">
           <button
@@ -123,9 +152,91 @@ const CalendarHeader = ({
             <ArrowLeft className="h-5 w-5" />
           </button>
 
-          <h1 className="min-w-0 flex-1 truncate text-[19px] font-semibold tracking-tight text-white sm:text-[21px]">
-            {getHeaderLabel(currentDate, view)}
-          </h1>
+          {/* From `sm` the period is stepped from the title itself — ‹ Month ›
+              — with the view chips on the same row, the way every desktop
+              calendar is laid out. On a phone the arrows live with the chips
+              on the row below, within reach of the thumb. */}
+          <button
+            type="button"
+            onClick={onPrevious}
+            aria-label={`Previous ${view}`}
+            className="hidden h-11 w-11 shrink-0 items-center justify-center rounded-xl text-white transition-colors hover:bg-white/10 touch-manipulation active:scale-[0.96] sm:flex"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+          {/* The title is the jump control: tap it, pick a date. The ISO week
+              number sits beside it from `sm` for anyone who plans by week. */}
+          <div className="relative min-w-0 flex-1 sm:flex-none" ref={jumpRef}>
+            <button
+              type="button"
+              onClick={() => setJumpOpen((v) => !v)}
+              aria-expanded={jumpOpen}
+              aria-label="Jump to a date"
+              className="flex h-11 min-w-0 max-w-full items-center gap-2 rounded-xl px-1 text-left touch-manipulation hover:bg-white/[0.06]"
+            >
+              <h1 className="min-w-0 truncate text-[19px] font-semibold tracking-tight text-white sm:text-[21px]">
+                {getHeaderLabel(currentDate, view)}
+              </h1>
+              {view !== 'month' && (
+                <span className="hidden shrink-0 rounded-md border border-white/[0.14] px-1.5 py-0.5 text-[11px] font-semibold tabular-nums text-white sm:inline">
+                  Wk {weekNumber}
+                </span>
+              )}
+            </button>
+            {jumpOpen && (
+              <div className="absolute left-0 top-12 z-50 w-[260px] space-y-2 rounded-xl border border-white/[0.12] bg-neutral-900 p-3 shadow-xl shadow-black/40">
+                <span className={cn(eyebrowCn, 'block')}>Go to</span>
+                <input
+                  type="date"
+                  autoFocus
+                  defaultValue={format(currentDate, 'yyyy-MM-dd')}
+                  onChange={(e) => {
+                    const v = e.target.value;
+                    if (!v) return;
+                    const [y, m, d] = v.split('-').map(Number);
+                    onJumpTo(new Date(y, m - 1, d));
+                    setJumpOpen(false);
+                  }}
+                  className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 [color-scheme:dark] touch-manipulation"
+                />
+                <div className="flex flex-wrap gap-1.5 pt-1">
+                  {[
+                    { label: 'Today', days: 0 },
+                    { label: 'Next week', days: 7 },
+                    { label: 'In 2 weeks', days: 14 },
+                    { label: 'Next month', days: 30 },
+                  ].map((q) => (
+                    <button
+                      key={q.label}
+                      type="button"
+                      onClick={() => {
+                        const t = new Date();
+                        t.setDate(t.getDate() + q.days);
+                        onJumpTo(t);
+                        setJumpOpen(false);
+                      }}
+                      className="h-9 rounded-full border border-white/[0.12] bg-white/[0.06] px-3 text-[12px] font-medium text-white touch-manipulation active:scale-[0.97]"
+                    >
+                      {q.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+          <button
+            type="button"
+            onClick={onNext}
+            aria-label={`Next ${view}`}
+            className="hidden h-11 w-11 shrink-0 items-center justify-center rounded-xl text-white transition-colors hover:bg-white/10 touch-manipulation active:scale-[0.96] sm:flex"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+          <div className="hidden min-w-0 flex-1 items-center gap-2 sm:flex">
+            <div className="ml-2">
+              <CalendarViewSwitcher view={view} onViewChange={onViewChange} />
+            </div>
+          </div>
 
           {!googleConnected && (
             <button
@@ -149,25 +260,6 @@ const CalendarHeader = ({
               Today
             </button>
           )}
-
-          <div className="flex shrink-0 items-center">
-            <button
-              type="button"
-              onClick={onPrevious}
-              aria-label="Previous"
-              className="flex h-11 w-9 items-center justify-center rounded-xl text-white transition-colors hover:bg-white/10 touch-manipulation active:scale-[0.98]"
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </button>
-            <button
-              type="button"
-              onClick={onNext}
-              aria-label="Next"
-              className="flex h-11 w-9 items-center justify-center rounded-xl text-white transition-colors hover:bg-white/10 touch-manipulation active:scale-[0.98]"
-            >
-              <ChevronRight className="h-5 w-5" />
-            </button>
-          </div>
 
           <div className="relative shrink-0" ref={menuRef}>
             <button
@@ -196,6 +288,17 @@ const CalendarHeader = ({
                   type="button"
                   onClick={() => {
                     setMenuOpen(false);
+                    onPrint();
+                  }}
+                  className="flex h-11 w-full items-center gap-2.5 px-3 text-left text-[13.5px] font-medium text-white hover:bg-white/[0.06] touch-manipulation"
+                >
+                  <Printer className="h-4 w-4 text-elec-yellow" />
+                  Print this week
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMenuOpen(false);
                     onOpenSettings();
                   }}
                   className="flex h-11 w-full items-center gap-2.5 px-3 text-left text-[13.5px] font-medium text-white hover:bg-white/[0.06] touch-manipulation"
@@ -209,8 +312,31 @@ const CalendarHeader = ({
         </div>
       </div>
 
-      <div className="px-4 pb-3">
+      {/* The period controls sit WITH the view chips, not in the title row:
+          "next week" belongs beside "Week". They were 36px chevrons by the ⋯
+          menu, top right — the furthest thing from the grid on a laptop and
+          invisible enough that a customer asked whether the calendar could
+          move week by week at all. 44px, both. */}
+      <div className="flex items-center gap-2 px-4 pb-3 sm:hidden">
         <CalendarViewSwitcher view={view} onViewChange={onViewChange} />
+        <div className="ml-auto flex shrink-0 items-center gap-1.5">
+          <button
+            type="button"
+            onClick={onPrevious}
+            aria-label={`Previous ${view}`}
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-white/[0.12] bg-white/[0.06] text-white transition-colors hover:bg-white/10 touch-manipulation active:scale-[0.96]"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+          <button
+            type="button"
+            onClick={onNext}
+            aria-label={`Next ${view}`}
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-white/[0.12] bg-white/[0.06] text-white transition-colors hover:bg-white/10 touch-manipulation active:scale-[0.96]"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+        </div>
       </div>
     </div>
   );

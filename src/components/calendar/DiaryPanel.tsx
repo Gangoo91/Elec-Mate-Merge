@@ -32,6 +32,7 @@ import {
   nextEventFrom,
   occupiesTime,
   totalHours,
+  displayColour,
 } from './eventUtils';
 import { calendarDayUrl, calendarNewEventUrl, eventRecordHref, CALENDAR_PATH } from './diaryLinks';
 import { useDiaryEvents, diaryRange, DIARY_WINDOW_DAYS } from '@/hooks/useDiaryEvents';
@@ -173,7 +174,7 @@ const DiaryPanel = ({ variant = 'full' }: DiaryPanelProps) => {
             </span>
             <span
               className="mt-0.5 w-[3px] shrink-0 self-stretch rounded-full"
-              style={{ backgroundColor: next.colour }}
+              style={{ backgroundColor: displayColour(next) }}
             />
             <span className="min-w-0 flex-1">
               <span className="block truncate text-[15px] font-semibold leading-snug tracking-tight text-white">
@@ -249,7 +250,7 @@ const DiaryPanel = ({ variant = 'full' }: DiaryPanelProps) => {
                     <span
                       key={e.id}
                       className="h-1.5 w-1.5 rounded-full"
-                      style={{ backgroundColor: active ? '#000' : e.colour }}
+                      style={{ backgroundColor: active ? '#000' : displayColour(e) }}
                     />
                   ))}
                 </span>
@@ -331,7 +332,7 @@ const DiaryPanel = ({ variant = 'full' }: DiaryPanelProps) => {
                   >
                     <span
                       className="mt-[3px] h-2 w-2 shrink-0 rounded-full"
-                      style={{ backgroundColor: event.colour }}
+                      style={{ backgroundColor: displayColour(event) }}
                     />
                     <span className="min-w-0 flex-1">
                       <span className="block truncate text-[11px] font-semibold leading-tight text-white">
@@ -397,7 +398,7 @@ function DiaryRow({
       </span>
       <span
         className="mt-0.5 w-[3px] shrink-0 self-stretch rounded-full"
-        style={{ backgroundColor: event.colour }}
+        style={{ backgroundColor: displayColour(event) }}
       />
       <span className="min-w-0 flex-1">
         <span className="block truncate text-[14px] font-semibold leading-snug tracking-tight text-white">

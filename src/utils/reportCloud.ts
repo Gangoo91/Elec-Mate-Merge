@@ -814,16 +814,29 @@ export const reportCloud = {
        * into a certificate's stored data no matter which caller passes it, and
        * means a future caller cannot leak it by forgetting.
        */
+      /*
+       * `_projectId` — the job this certificate was started from (ELE-1755).
+       *
+       * Set into the form's defaults by readCertificatePrefill when the cert
+       * is opened from a job or the diary, and written to `reports.project_id`
+       * here so the certificate is on the job from the first save. Until now
+       * the only way a certificate reached its job was the job page's "Link
+       * certificate" picker, which nobody used from the tools.
+       */
+      let projectId: string | null = null;
       if (
         Object.prototype.hasOwnProperty.call(data, '__createReportId') ||
-        Object.prototype.hasOwnProperty.call(data, '_clientCertId')
+        Object.prototype.hasOwnProperty.call(data, '_clientCertId') ||
+        Object.prototype.hasOwnProperty.call(data, '_projectId')
       ) {
         const {
           __createReportId: _ignoredKey,
           _clientCertId: _ignoredIdentity,
+          _projectId: fromJob,
           ...cleaned
         } = data as Record<string, unknown>;
         data = cleaned;
+        projectId = typeof fromJob === 'string' && fromJob ? fromJob : null;
       }
 
       // Calculate status based on form data - handles all report types
@@ -868,6 +881,7 @@ export const reportCloud = {
           `${reportType.toUpperCase()}-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`,
         status,
         customer_id: customerId || null,
+        project_id: projectId,
         client_name: data.clientName || null,
         installation_address:
           data.installationAddress || data.propertyAddress || data.premisesAddress || null,

@@ -77,6 +77,20 @@ interface MateHealth {
     cost_24h: number;
     cost_7d: number;
     cost_30d: number;
+    /*
+     * ELE-1748 — the APP's Anthropic spend, separate from Mate's above.
+     *
+     * `cost_*` is internal OpenClaw usage, aggregated by a cron on the VPS.
+     * `app_cost_*` is what customers asking Elec-AI cost. They are never
+     * summed: which of the two the £1,224 is going to is the whole question.
+     *
+     * Optional because an older deployment of admin-mate-health does not
+     * return them, and the page must not break while that rolls out.
+     */
+    app_cost_24h?: number;
+    app_cost_7d?: number;
+    app_cost_30d?: number;
+    app_calls_30d?: number;
     generated_at: string;
   };
   users: MateUser[];
@@ -359,9 +373,24 @@ export default function AdminMate() {
                 value: <AnimatedCounter value={summary.tool_calls_7d} />,
               },
               {
-                label: 'Spend 30d',
+                /*
+                 * Labelled "Mate" now that it is not the only spend on screen.
+                 * It reads $0 from 13 July onward because the VPS aggregator
+                 * that feeds `mate_cost_daily` stopped — and an empty cost
+                 * tile looked exactly like a cheap month for two months.
+                 */
+                label: 'Mate spend 30d',
                 value: formatUsd(summary.cost_30d),
-                sub: `${formatUsd(summary.cost_7d)} last 7d`,
+                sub: `${formatUsd(summary.cost_7d)} last 7d · internal`,
+                tone: 'purple',
+              },
+              {
+                // ELE-1748 — customer-facing Elec-AI, the other half of the bill.
+                label: 'App AI spend 30d',
+                value: formatUsd(summary.app_cost_30d ?? 0),
+                sub: summary.app_calls_30d
+                  ? `${summary.app_calls_30d} calls · customers`
+                  : 'no calls recorded',
                 tone: 'purple',
               },
             ];

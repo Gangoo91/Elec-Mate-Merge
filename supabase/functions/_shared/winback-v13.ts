@@ -13,22 +13,28 @@
  *
  * Cadence
  *   Touch 1 — day +1  | sincere check-in, no offer
- *   Touch 2 — day +7  | 25% off for life, tier-matched
- *   Touch 3 — day +30 | final attempt, DEEPEST offer (electrician £9.99/mo
- *                        for life via WINBACK999; apprentice holds £5.24).
+ *   Touch 2 — day +7  | half price for 12 months, tier-matched
+ *   Touch 3 — day +30 | final attempt, same price, last time we ask.
  *                        Evergreen copy — no dated "what's new" list.
  *
- * Offer (Stripe assets created 2026-07-17)
- *   25% off FOR LIFE via coupon sSf4XaAS / promo code WINBACK25,
- *   applied on the 2026 prices:
- *     apprentice   → £5.24/mo forever (list £6.99)
- *     electrician  → £14.99/mo forever (list £19.99)
+ * Offer (Stripe assets created 2026-09-20, Andrew's call: "50% off to them
+ * all… for 12 months, not for life")
+ *   50% off FOR 12 MONTHS via coupon WINBACK50_12M (promo_1UHme72RKw5t5RAm6CsVuehU) / promo code WINBACK50,
+ *   restricted to the Apprentice + Electrician products, on the 2026 prices:
+ *     apprentice   → £3.49/mo for 12 months (list £6.99)
+ *     electrician  → £9.99/mo for 12 months (list £19.99)
+ *   12 months matches the App Store / Play Store win-back cap, so the offer
+ *   reads the same on every channel.
  *   Yearly-tier cancellers are offered the matching monthly plan.
  *   Other tiers (employer, business_ai) → founder-note variant, no offer.
  *
- * v12 offer (£3.99/£9.99 amount-off coupons on pre-Jun-2026 prices) is
- * superseded; its promo codes MATEWINBACK4/MATEWINBACK10 remain live in
- * Stripe for anyone still holding an old email.
+ *   WRITE IT AS A PRICE, NOT A PERCENTAGE. The retired "£9.99 for life"
+ *   offer (May–Jul) was redeemed 26 times; the "25% off for life" that
+ *   replaced it in July, 4 times. Same money, different words.
+ *
+ * Earlier offers (25% for life via WINBACK25; £9.99 via WINBACK999; v12
+ * MATEWINBACK4/MATEWINBACK10) remain live in Stripe for anyone holding an
+ * old email, but nothing sends them any more.
  */
 
 export const WINBACK_FROM = 'Andrew at Elec-Mate <founder@elec-mate.com>';
@@ -46,24 +52,21 @@ export interface WinbackContext {
   accountEmail?: string; // pre-fills Stripe Checkout with the account email
 }
 
-// Stripe Payment Links (created 2026-07-17) on the 2026 monthly prices with
-// the WINBACK25 promotion code (25% off forever) auto-applied via
+// Stripe Payment Links (created 2026-09-20) on the 2026 monthly prices with
+// the WINBACK50 promotion code (50% off for 12 months) auto-applied via
 // prefilled_promo_code. No edge function, no login. We stamp each link
 // per-recipient with client_reference_id (via withIdentity) so the webhook
 // reactivates the RIGHT account regardless of which email they pay with —
 // matching by email alone silently failed for customers whose
 // checkout/personal email differed from their account email.
 const PAYMENT_LINK_APPRENTICE =
-  'https://buy.stripe.com/4gMaEQcZ49jm6U9e7IbjW0d?prefilled_promo_code=WINBACK25';
+  'https://buy.stripe.com/eVq3co0ci5367Yd4x8bjW0i?prefilled_promo_code=WINBACK50';
 const PAYMENT_LINK_ELECTRICIAN =
-  'https://buy.stripe.com/28E00c5wC2UY2DT9RsbjW0e?prefilled_promo_code=WINBACK25';
+  'https://buy.stripe.com/9B6dR22kq2UYa6l9RsbjW0h?prefilled_promo_code=WINBACK50';
 
-// Touch-3 FINAL offer (created 2026-07-25): electrician only, £9.99/mo for life
-// via coupon ZVpraGjW (£10 amount-off, forever) / promo code WINBACK999 on the
-// 2026 electrician price (£19.99 − £10 = £9.99). Apprentice is already £5.24 at
-// 25% off, so its final touch keeps that price rather than going lower.
-const PAYMENT_LINK_ELECTRICIAN_FINAL =
-  'https://buy.stripe.com/bJe28k6AG9jmguJaVwbjW0f?prefilled_promo_code=WINBACK999';
+// Touch 3 is the same price as touch 2. Half price for a year is already the
+// floor, so the final email is "last time I'll ask", not "even lower".
+const PAYMENT_LINK_ELECTRICIAN_FINAL = PAYMENT_LINK_ELECTRICIAN;
 
 export interface WinbackEmail {
   subject: string;
@@ -72,7 +75,7 @@ export interface WinbackEmail {
 }
 
 // ─── Tier offer mapping ──────────────────────────────────────────────────
-// 25% off for life on the 2026 monthly prices. Yearly cancellers get the
+// Half price for 12 months on the 2026 monthly prices. Yearly cancellers get the
 // matching monthly offer — a "for life" discount makes no sense to gate
 // behind the annual commitment they just walked away from.
 function tierOffer(tier: string): {
@@ -85,7 +88,7 @@ function tierOffer(tier: string): {
   if (t.startsWith('apprentice')) {
     return {
       hasOffer: true,
-      newPrice: '£5.24',
+      newPrice: '£3.49',
       oldPrice: '£6.99',
       ctaUrl: PAYMENT_LINK_APPRENTICE,
     };
@@ -93,7 +96,7 @@ function tierOffer(tier: string): {
   if (t.startsWith('electrician')) {
     return {
       hasOffer: true,
-      newPrice: '£14.99',
+      newPrice: '£9.99',
       oldPrice: '£19.99',
       ctaUrl: PAYMENT_LINK_ELECTRICIAN,
     };
@@ -285,7 +288,7 @@ ${sig()}`;
   return { subject, html: shell({ preheader, bodyHtml }), text };
 }
 
-// ─── Touch 2 — Day +7, the offer: 25% off for life ───────────────────────
+// ─── Touch 2 — Day +7, the offer: half price for 12 months ───────────────
 export function winbackTouch2(ctx: WinbackContext): WinbackEmail {
   const name = ctx.firstName || 'mate';
   const offer = tierOffer(ctx.tier);
@@ -325,8 +328,8 @@ ${sig()}`;
     return { subject, html: shell({ preheader, bodyHtml }), text };
   }
 
-  const subject = `${name}, come back for 25% off — for life`;
-  const preheader = `${offer.newPrice}/mo instead of ${offer.oldPrice}, locked for as long as you stay. Everything you saved is still there.`;
+  const subject = `${name}, come back at ${offer.newPrice} a month for a year`;
+  const preheader = `${offer.newPrice}/mo instead of ${offer.oldPrice}, for the next 12 months. Everything you saved is still there.`;
 
   // Cost-vs-value anchor — what they actually get for that money,
   // versus piecing the same workflow together from disconnected tools.
@@ -353,19 +356,19 @@ ${sig()}`;
     ? 'vs ~£40–60/mo for a college add-on subscription + separate revision app'
     : 'vs ~£60–120/mo for separate cert software + CRM + quote tool + accounting connector';
 
-  const savingPerYear = ctx.tier.startsWith('apprentice') ? '£21' : '£60';
+  const savingPerYear = ctx.tier.startsWith('apprentice') ? '£42' : '£120';
 
   const bodyHtml = `
-${h1(`${escapeHtml(name)}, your seat&rsquo;s still here — now 25% off for life.`)}
+${h1(`${escapeHtml(name)}, your seat&rsquo;s still here — ${escapeHtml(offer.newPrice)} a month for a year.`)}
 ${p('It&rsquo;s been a week since you cancelled, and I&rsquo;ve been thinking about it. Rather than let you go, I&rsquo;d rather earn you back — so here&rsquo;s the best price I can give anyone, and it&rsquo;s yours to keep.')}
 <div style="margin: 6px 0 22px; padding: 24px; background: #fffdf5; border: 1px solid rgba(250,204,21,0.55); border-radius: 14px; text-align: center;">
-  <p style="margin: 0 0 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #b45309;">Your price — locked for life</p>
+  <p style="margin: 0 0 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #b45309;">Your price — for the next 12 months</p>
   <p style="margin: 0 0 6px; font-size: 40px; font-weight: 800; line-height: 1; color: ${INK}; letter-spacing: -0.02em;">
     ${escapeHtml(offer.newPrice)}<span style="font-size: 16px; font-weight: 500; color: ${MUTED};">/month</span>
   </p>
   <p style="margin: 0; font-size: 13px; color: ${BODY};">
     Instead of <span style="text-decoration: line-through; color: ${MUTED};">${escapeHtml(offer.oldPrice)}</span>
-    · saves you about ${savingPerYear}/year · never goes up
+    · saves you ${savingPerYear} over the year
   </p>
 </div>
 
@@ -375,22 +378,22 @@ ${valueListHtml}
   <em>${escapeHtml(compareLabel)}.</em>
 </p>
 
-${p('No tricks, no three-month teaser that jumps back up. It&rsquo;s 25% off every single month for as long as you stay — the kind of price I can only really justify offering the people who&rsquo;ve already backed us once.')}
+${p('No tricks, no three-month teaser. It&rsquo;s half price, every month, for a full year — the kind of price I can only really justify for people who&rsquo;ve already backed us once. After the year it goes to the normal price, and I&rsquo;ll tell you before it does.')}
 ${p('And nothing&rsquo;s been lost: every customer, cert, quote and calc you saved is exactly where you left it, waiting for you to log back in.')}
 ${ctaButton(primaryCtaUrl, `Come back at ${offer.newPrice}/mo →`)}
 ${pSmall('One tap takes you straight to Stripe — no login, no faffing, the discount&rsquo;s already applied. Or just hit reply if you&rsquo;ve a question first.')}
 ${sig()}`;
 
   const text = [
-    `${name}, come back at 25% off — for life.`,
+    `${name}, come back at ${offer.newPrice} a month for a year.`,
     '',
     "It's been a week since you cancelled. I've been thinking about it.",
     '',
     'If you want to come back, I have locked in a price just for you:',
     '',
-    `${offer.newPrice}/month instead of ${offer.oldPrice} — 25% off for life. Never goes up, for as long as you stay subscribed.`,
+    `${offer.newPrice}/month instead of ${offer.oldPrice} — half price for the next 12 months.`,
     '',
-    'No tricks. No 3-month teaser that goes back up. 25% off every month, forever.',
+    "No tricks. No 3-month teaser. Half price every month for a full year, then the normal price — and I'll tell you before it changes.",
     '',
     'All your old data, customers, certs and quotes are still there.',
     '',
@@ -405,10 +408,9 @@ ${sig()}`;
   return { subject, html: shell({ preheader, bodyHtml }), text };
 }
 
-// Touch-3 final offer. Electrician drops DEEPER than touch 2 (£9.99/mo for life
-// vs the 25%-off £14.99), the last and lowest price. Apprentice is already
-// £5.24 at 25% off, so its final touch holds that price (deeper=false → "last
-// chance" framing rather than "even lower").
+// Touch-3 final offer. Same half-price-for-a-year as touch 2 for both tiers —
+// it is already the floor — so deeper is always false and the copy is "last
+// time I'll ask", never "even lower".
 function tierFinalOffer(tier: string): {
   hasOffer: boolean;
   newPrice: string;
@@ -423,19 +425,25 @@ function tierFinalOffer(tier: string): {
       newPrice: '£9.99',
       oldPrice: '£19.99',
       ctaUrl: PAYMENT_LINK_ELECTRICIAN_FINAL,
-      deeper: true,
+      deeper: false,
     };
   }
   if (t.startsWith('apprentice')) {
     return {
       hasOffer: true,
-      newPrice: '£5.24',
+      newPrice: '£3.49',
       oldPrice: '£6.99',
       ctaUrl: PAYMENT_LINK_APPRENTICE,
       deeper: false,
     };
   }
-  return { hasOffer: false, newPrice: '', oldPrice: '', ctaUrl: 'https://www.elec-mate.com/subscriptions', deeper: false };
+  return {
+    hasOffer: false,
+    newPrice: '',
+    oldPrice: '',
+    ctaUrl: 'https://www.elec-mate.com/subscriptions',
+    deeper: false,
+  };
 }
 
 // ─── Touch 3 — Day +30, final attempt (deepest offer, evergreen copy) ─────
@@ -447,14 +455,14 @@ export function winbackTouch3(ctx: WinbackContext): WinbackEmail {
   const subject = !offer.hasOffer
     ? `Last one, ${name}`
     : offer.deeper
-      ? `Last one, ${name} — my best price, ${offer.newPrice}/mo for life`
-      : `Last one, ${name} — ${offer.newPrice}/mo for life, last chance`;
+      ? `Last one, ${name} — my best price, ${offer.newPrice}/mo for a year`
+      : `Last one, ${name} — ${offer.newPrice}/mo for a year, last chance`;
 
   const preheader = !offer.hasOffer
     ? 'Final shout — the door stays open whenever you want it.'
     : offer.deeper
-      ? `The lowest the electrician plan goes: ${offer.newPrice}/mo for life. Everything you saved is still there.`
-      : `Your ${offer.newPrice}/mo for-life price, one last time. All your data is still there.`;
+      ? `The lowest the electrician plan goes: ${offer.newPrice}/mo for 12 months. Everything you saved is still there.`
+      : `Your ${offer.newPrice}/mo for the next 12 months, one last time. All your data is still there.`;
 
   // The offer card — headline price, light branded (matches touch 2).
   const offerCard = offer.hasOffer
@@ -465,14 +473,18 @@ export function winbackTouch3(ctx: WinbackContext): WinbackEmail {
         </p>
         <p style="margin: 0; font-size: 13px; color: ${BODY};">
           Instead of <span style="text-decoration: line-through; color: ${MUTED};">${escapeHtml(offer.oldPrice)}</span>
-          · locked for life · never goes up
+          · for the next 12 months
         </p>
       </div>`
     : '';
 
   const pitchLine = offer.deeper
-    ? p(`I&rsquo;ll be honest — I&rsquo;d rather have you back than not. So for this last email I&rsquo;ve dropped your price as low as it goes: <strong style="color:${INK};">half price, ${escapeHtml(offer.newPrice)} a month, locked for life.</strong> I can only really justify that for someone who&rsquo;s already backed us once.`)
-    : p(`I&rsquo;ll be honest — I&rsquo;d rather have you back than not. Your <strong style="color:${INK};">25% off for life</strong> price is still here for the taking, but this is the last time I&rsquo;ll put it in front of you.`);
+    ? p(
+        `I&rsquo;ll be honest — I&rsquo;d rather have you back than not. So for this last email I&rsquo;ve dropped your price as low as it goes: <strong style="color:${INK};">half price, ${escapeHtml(offer.newPrice)} a month, for the next 12 months.</strong> I can only really justify that for someone who&rsquo;s already backed us once.`
+      )
+    : p(
+        `I&rsquo;ll be honest — I&rsquo;d rather have you back than not. Your <strong style="color:${INK};">${escapeHtml(offer.newPrice)} a month for a year</strong> price is still here for the taking, but this is the last time I&rsquo;ll put it in front of you.`
+      );
 
   const bodyHtml = `
 ${h1(`Last one, ${escapeHtml(name)}.`)}
@@ -494,16 +506,16 @@ ${sig()}`;
     "This is the last email I'll send about coming back — I won't keep chasing you.",
     '',
     offer.deeper
-      ? `I'd rather have you back than not. So I've dropped your price as low as it goes: half price, ${offer.newPrice} a month, locked for life — instead of ${offer.oldPrice}. I can only really justify that for someone who's already backed us once.`
+      ? `I'd rather have you back than not. So I've dropped your price as low as it goes: half price, ${offer.newPrice} a month for the next 12 months — instead of ${offer.oldPrice}. I can only really justify that for someone who's already backed us once.`
       : offer.hasOffer
-        ? `I'd rather have you back than not. Your 25% off for life price — ${offer.newPrice}/month instead of ${offer.oldPrice} — is still here, but this is the last time I'll put it in front of you.`
+        ? `I'd rather have you back than not. Your half-price-for-a-year deal — ${offer.newPrice}/month instead of ${offer.oldPrice} — is still here, but this is the last time I'll put it in front of you.`
         : "I'd rather have you back than not. The door stays open whenever you want it.",
     '',
     "Nothing's been lost: every customer, cert, quote and calc you saved is exactly where you left it. And the app keeps getting better — we ship updates most weeks.",
     '',
     `${offer.hasOffer ? `Come back at ${offer.newPrice}/mo` : 'Take another look'}: ${primaryCtaUrl}`,
     '',
-    "Either way, thanks for giving us a go.",
+    'Either way, thanks for giving us a go.',
     '',
     'Andrew',
     'Founder, Elec-Mate',

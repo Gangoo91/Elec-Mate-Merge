@@ -88,25 +88,34 @@ const CalendarTidyStrip = ({ onOpenEvent }: CalendarTidyStripProps) => {
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        className={cn(
-          'flex min-h-12 w-full items-center gap-3 rounded-2xl border border-elec-yellow/40 bg-elec-yellow/10 px-4 py-2.5 text-left touch-manipulation active:scale-[0.99]'
-        )}
-      >
-        <span className="min-w-0 flex-1">
-          <span className={cn(eyebrowCn, 'block')}>Next two weeks</span>
-          <span className="block text-[14px] font-medium leading-snug text-white">
-            {parts.join(' · ')}
-          </span>
-        </span>
-        <ChevronRight className="h-4 w-4 shrink-0 text-elec-yellow" />
-      </button>
+      {/* Pills, not a banner. A full-width yellow bar read as an alert and
+          spanned 2,000px on a laptop with one sentence in it. Each item is
+          its own pill; they wrap on a phone and sit left on a desktop. */}
+      <div className="flex flex-wrap gap-2">
+        {parts.map((label) => (
+          <button
+            key={label}
+            type="button"
+            onClick={() => setOpen(true)}
+            className={cn(
+              // Neutral surface, yellow only as the accent. A 10% yellow wash
+              // over the dark ground reads as brown (Andrew, 20 Sep).
+              'inline-flex min-h-11 items-center gap-2 rounded-full border border-white/[0.12] bg-white/[0.06] pl-3.5 pr-3 text-left text-[13px] font-medium text-white touch-manipulation hover:bg-white/[0.09] active:scale-[0.98]'
+            )}
+          >
+            <span className="h-2 w-2 shrink-0 rounded-full bg-elec-yellow" aria-hidden />
+            <span className="min-w-0 truncate">{label}</span>
+            <ChevronRight className="h-4 w-4 shrink-0 text-elec-yellow" />
+          </button>
+        ))}
+      </div>
 
       <Sheet open={open} onOpenChange={setOpen}>
-        <SheetContent side="bottom" className="h-[85vh] overflow-hidden rounded-t-2xl p-0">
-          <div className="flex h-full flex-col bg-background">
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] overflow-hidden rounded-t-2xl p-0 sm:mx-auto sm:h-auto sm:max-h-[85vh] sm:w-full sm:max-w-[640px]"
+        >
+          <div className="flex h-full max-h-[85vh] flex-col bg-background">
             <SheetHeader className="shrink-0 px-4 py-3 sm:px-5">
               <p className={eyebrowCn}>Next two weeks</p>
               <SheetTitle className="text-left text-[19px] font-semibold leading-tight tracking-tight text-white">

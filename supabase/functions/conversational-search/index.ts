@@ -5,7 +5,7 @@
  *   - Primary retrieval: bs7671_facets (46.5K rows, ~33K on A4:2026)
  *   - Model routing: Anthropic Haiku (simple) / Sonnet (complex/calc) / gpt-5.4-mini (vision)
  *   - Tool-calls for deterministic calculations
- *   - Response cache (24 h) + embedding cache (7 d)
+ *   - Response cache (7 d) + embedding cache (7 d)
  *   - SSE status events BEFORE content, backwards-compatible frame shape
  *
  * SSE CONTRACT (must be preserved for frontend):
@@ -18,6 +18,7 @@ import 'https://deno.land/x/xhr@0.1.0/mod.ts';
 import { serve } from '../_shared/deps.ts';
 import { captureException } from '../_shared/sentry.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { recordAnthropicUsage, type AnthropicUsage } from '../_shared/ai-cost.ts';
 
 import {
   understandBS7671Query,
@@ -115,7 +116,34 @@ async function fetchDocumentAsBase64(
 const CLAUDE_IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/gif', 'image/webp']);
 
 // Cache TTLs (spec).
-const RESPONSE_CACHE_TTL_MS = 24 * 60 * 60 * 1000;
+/*
+ * ELE-1748 — 7 days, not 24 hours. Measured, not guessed.
+ *
+ * Across 390 real questions over 60 days, 98 were a repeat of something
+ * already asked. At the old 24-hour TTL exactly half of those hit the cache
+ * and half were paid for again:
+ *
+ *   repeat asks              98
+ *   hit the 24h cache        49
+ *   missed, billed again     49
+ *   would hit at 7 days      85   (+36)
+ *   would hit at 30 days     96   (+47)
+ *
+ * So seven days converts 36 more billed calls into cache hits — about 9% of
+ * all questions asked, for free. Most of the duplication is people tapping the
+ * same "Try asking" example cards, which are identical strings every time.
+ *
+ * Seven and not thirty, deliberately. The cache is keyed on question text
+ * alone, so a corpus change — a new standard ingested, a corrected clause —
+ * leaves cached answers stale for the whole TTL. A week bounds that to
+ * something a person would notice and can be cleared by hand; a month does
+ * not. BS 7671 itself does not move, but what we have ingested about it does:
+ * BS 5839-1 landed on 19 Sep and corrected figures the app had been teaching.
+ *
+ * 🔴 If the RAG corpus is updated, clear `ai_response_cache`. Nothing does
+ * that automatically.
+ */
+const RESPONSE_CACHE_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 const EMBEDDING_CACHE_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 
 // ─── Static system prompt (cacheable) ────────────────────────────────────
@@ -557,7 +585,19 @@ async function streamAnthropic(
   opts: AnthropicStreamOpts,
   onContent: (text: string) => void,
   onToolUse?: (toolName: string, toolInput: any) => Promise<{ output: unknown; tool_use_id: string }>
-): Promise<void> {
+): Promise<AnthropicUsage> {
+  /*
+   * Accumulated across iterations, not overwritten. A tool call makes a SECOND
+   * billed request — the model answers, we run the tool, and the whole
+   * transcript goes back up including the tool result. Recording only the last
+   * iteration would under-count the tool path, which is the expensive one.
+   */
+  const usage: AnthropicUsage = {
+    inputTokens: 0,
+    outputTokens: 0,
+    cacheReadTokens: 0,
+    cacheWriteTokens: 0,
+  };
   // Anthropic tool use requires iterative calls: we run up to 2 iterations
   // (model → tool call → follow-up answer). Each iteration streams.
   const systemBlocks = [
@@ -679,8 +719,28 @@ async function streamAnthropic(
             currentBlock = {};
             break;
           }
+          /*
+           * Both of these carried usage all along and both were being thrown
+           * away — `message_delta` fell through to `default`, and
+           * `message_start` had no case at all.
+           *
+           * Anthropic splits them: the INPUT side (including both cache
+           * counters) arrives once at `message_start`, and the OUTPUT count
+           * arrives at `message_delta` as the message finishes. Reading only
+           * one of them records half a bill.
+           */
+          case 'message_start': {
+            const u = event.message?.usage ?? {};
+            usage.inputTokens += u.input_tokens ?? 0;
+            usage.cacheReadTokens += u.cache_read_input_tokens ?? 0;
+            usage.cacheWriteTokens += u.cache_creation_input_tokens ?? 0;
+            break;
+          }
+          case 'message_delta': {
+            usage.outputTokens += event.usage?.output_tokens ?? 0;
+            break;
+          }
           case 'message_stop':
-          case 'message_delta':
           default:
             break;
         }
@@ -689,7 +749,7 @@ async function streamAnthropic(
 
     // If no tool use → we are done.
     if (toolUses.length === 0 || !onToolUse) {
-      return;
+      return usage;
     }
 
     // Otherwise: assemble assistant message with any text already streamed
@@ -718,6 +778,9 @@ async function streamAnthropic(
     }
     workingMessages = [...workingMessages, { role: 'user', content: toolResults }];
   }
+
+  // Loop exhausted maxIterations without a final tool-free answer.
+  return usage;
 }
 
 // ─── OpenAI streaming adapter (for vision) ───────────────────────────────
@@ -820,6 +883,30 @@ serve(async (req: Request) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
     await ensureEmbeddingCacheTable(supabase);
+
+    /*
+     * ELE-1748 — who is asking, for cost attribution only.
+     *
+     * This function runs on the service-role key and has never needed to know
+     * the caller. It still does not: nothing below branches on this, and a
+     * failure to resolve it changes nothing about the answer. It exists
+     * because `mate_cost_daily` is keyed (user_id, day, model) with a foreign
+     * key to auth.users, so usage cannot be attributed without a real id — and
+     * spend that cannot be attributed cannot be reduced.
+     *
+     * Best-effort by design. An anonymous or expired caller records no row
+     * rather than failing the request.
+     */
+    let billingUserId = '';
+    try {
+      const jwt = req.headers.get('Authorization')?.replace(/^Bearer /i, '');
+      if (jwt) {
+        const { data } = await supabase.auth.getUser(jwt);
+        billingUserId = data?.user?.id ?? '';
+      }
+    } catch {
+      /* cost attribution is never worth failing an answer for */
+    }
 
     const anthropicKey = Deno.env.get('ANTHROPIC_API_KEY');
     const openAiKey = Deno.env.get('OPENAI_API_KEY');
@@ -1148,7 +1235,7 @@ serve(async (req: Request) => {
           }
 
           let accumulated = '';
-          await streamAnthropic(
+          const anthropicUsage = await streamAnthropic(
             anthropicKey,
             {
               model: routing.model,
@@ -1177,6 +1264,23 @@ serve(async (req: Request) => {
                 tool_use_id: '',
               };
             }
+          );
+
+          /*
+           * ELE-1748 — record what that answer cost.
+           *
+           * Deliberately NOT awaited before the answer reaches the user: the
+           * text has already streamed, and a slow or failing write to an
+           * accounting table must never be something a customer waits on.
+           * `recordAnthropicUsage` swallows its own errors for the same
+           * reason.
+           */
+          void recordAnthropicUsage(
+            supabase,
+            billingUserId,
+            routing.model,
+            'conversational-search',
+            anthropicUsage
           );
 
           // ELE-1260: machine-check every cited reg number against the

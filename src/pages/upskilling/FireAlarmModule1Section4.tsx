@@ -708,6 +708,23 @@ const FireAlarmModule1Section4 = () => {
           meaning="Three phrases earn close reading. 'Suitable and sufficient' — proportionate to the risk and informed by competent assessment; an FRA that omits the building's actual use, occupancy or geometry is not suitable and sufficient. 'Relevant persons' — anyone lawfully on the premises plus anyone in the immediate vicinity at risk. 'General fire precautions' — includes the fire-detection and warning system, so the BS 5839-1:2025 category selection is part of acting on the FRA's findings."
         />
 
+        <RegsCallout
+          source="BS 5839-1:2025 · Clause 7, Relationship between system category and protected areas — commentary"
+          clause={
+            <>
+              Before fundamental system design can begin, the system category needs to be defined,
+              as this governs the areas in which the manual call points and any automatic fire
+              detectors are to be installed, along with other design parameters.
+              <br />
+              <br />
+              The appropriate extent of automatic fire detection is normally determined by a fire
+              risk assessment, rather than a rigid application of system category to every building
+              of a specific type or occupancy.
+            </>
+          }
+          meaning="This is the clause that joins the Order to the standard, and it settles the question people get wrong most often. The category is an OUTPUT of the fire risk assessment, not a property of the building type. 'It's a care home, so it's L1' and 'we did L2 on the last office, so L2 here' are both the rigid application this clause rules out. Note the ordering too: the category is fixed BEFORE design begins, because it decides where detectors and call points go. A design that starts before the category is agreed is a design with no defined protected areas."
+        />
+
         <InlineCheck
           id={inlineChecks[0].id}
           question={inlineChecks[0].question}

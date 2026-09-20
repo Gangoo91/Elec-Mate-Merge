@@ -1,9 +1,10 @@
 import { useMemo, useEffect, useRef, useState } from 'react';
-import { startOfWeek, addDays, isToday, format, differenceInMinutes } from 'date-fns';
+import { startOfWeek, addDays, isToday, isSameDay, format, differenceInMinutes } from 'date-fns';
 import { useSwipeable } from 'react-swipeable';
 import { cn } from '@/lib/utils';
 import { cardCn, eyebrowCn } from './calendarStyles';
-import { eventsOnDay, isMultiDay, layoutDayEvents } from './eventUtils';
+import { displayColour, effectiveEnd, eventsOnDay, isMultiDay, layoutDayEvents } from './eventUtils';
+import { useDragMove } from './useDragMove';
 import type { CalendarEvent } from '@/types/calendar';
 
 interface CalendarWeekViewProps {
@@ -12,13 +13,74 @@ interface CalendarWeekViewProps {
   workingHoursStart: number;
   workingHoursEnd: number;
   onEventTap: (event: CalendarEvent) => void;
-  onTimeSlotTap: (date: Date, hour: number) => void;
+  /** `minute` is 0 or 30 — the half of the hour cell that was tapped. */
+  onTimeSlotTap: (date: Date, hour: number, minute?: number) => void;
   onSwipeLeft: () => void;
   onSwipeRight: () => void;
+  /** Days worked (0 = Sunday). Days off shade like weekends used to. */
+  workingDays?: number[];
+  /** How many columns. 7 = the week; 3 = three days from `currentDate`. */
+  days?: number;
+  /** `week` starts the columns on Monday; `day` starts them on `currentDate`. */
+  anchor?: 'week' | 'day';
+  /** Drag a block to a new time or column (mouse and pen only). */
+  onMoveEvent?: (event: CalendarEvent, minuteShift: number, dayShift: number) => void;
 }
+const DEFAULT_DAYS = [1, 2, 3, 4, 5];
 
-const HOUR_HEIGHT = 56;
-const TIME_COL = 42;
+// Desktop-only from ELE-1755 (the phone shows a day strip and a rail), so the
+// rows can be tall enough to read and the time gutter wide enough for "08".
+const HOUR_HEIGHT = 64;
+const TIME_COL = 48;
+/** Continuous all-day bars per week, before the rest collapse into "+n". */
+const MAX_BANNER_LANES = 3;
+
+/**
+ * One all-day or multi-day event as a bar across the columns it covers.
+ *
+ * It used to be drawn once per day it touched — a two-day job appeared twice,
+ * side by side, and each copy overflowed its 1fr column into the next. Same
+ * lane packing as the month view: one event, one bar, first free lane.
+ */
+interface BannerSegment {
+  event: CalendarEvent;
+  startCol: number;
+  endCol: number;
+  opensLeft: boolean;
+  closesRight: boolean;
+}
+function packBanner(
+  weekDays: Date[],
+  events: CalendarEvent[]
+): { lanes: BannerSegment[][]; hidden: number } {
+  const n = weekDays.length;
+  const weekStart = weekDays[0];
+  const weekEnd = weekDays[n - 1];
+  const spanning = events
+    .filter((e) => e.all_day || isMultiDay(e))
+    .filter((e) => new Date(e.start_at) <= addDays(weekEnd, 1) && effectiveEnd(e) >= weekStart);
+  const colOf = (date: Date) => weekDays.findIndex((d) => isSameDay(d, date));
+  const lanes: BannerSegment[][] = [];
+  let hidden = 0;
+  for (const event of spanning) {
+    const rawStart = colOf(new Date(event.start_at));
+    const rawEnd = colOf(effectiveEnd(event));
+    const seg: BannerSegment = {
+      event,
+      startCol: rawStart === -1 ? 0 : rawStart,
+      endCol: rawEnd === -1 ? n - 1 : rawEnd,
+      opensLeft: rawStart !== -1,
+      closesRight: rawEnd !== -1,
+    };
+    const lane = lanes.find((l) =>
+      l.every((s) => s.endCol < seg.startCol || s.startCol > seg.endCol)
+    );
+    if (lane) lane.push(seg);
+    else if (lanes.length < MAX_BANNER_LANES) lanes.push([seg]);
+    else hidden++;
+  }
+  return { lanes, hidden };
+}
 
 const CalendarWeekView = ({
   currentDate,
@@ -29,6 +91,10 @@ const CalendarWeekView = ({
   onTimeSlotTap,
   onSwipeLeft,
   onSwipeRight,
+  workingDays = DEFAULT_DAYS,
+  days = 7,
+  anchor = 'week',
+  onMoveEvent,
 }: CalendarWeekViewProps) => {
   const swipeHandlers = useSwipeable({
     onSwipedLeft: onSwipeLeft,
@@ -40,11 +106,36 @@ const CalendarWeekView = ({
   const scrollRef = useRef<HTMLDivElement>(null);
   const [now, setNow] = useState(new Date());
 
-  const weekStart = startOfWeek(currentDate, { weekStartsOn: 1 });
+  const weekStart =
+    anchor === 'day'
+      ? new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate())
+      : startOfWeek(currentDate, { weekStartsOn: 1 });
   const weekDays = useMemo(
-    () => Array.from({ length: 7 }, (_, i) => addDays(weekStart, i)),
-    [weekStart]
+    () => Array.from({ length: days }, (_, i) => addDays(weekStart, i)),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [weekStart.getTime(), days]
   );
+
+  /*
+   * Drag to move. The column width is measured, not assumed: the seven (or
+   * three) columns share what is left after the time gutter.
+   */
+  const [columnWidth, setColumnWidth] = useState<number | null>(null);
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const measure = () => setColumnWidth((el.clientWidth - TIME_COL) / days);
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, [days]);
+  const dragMove = useDragMove({
+    hourHeight: HOUR_HEIGHT,
+    columnWidth,
+    columns: days,
+    enabled: !!onMoveEvent,
+    onMove: (event, minuteShift, dayShift) => onMoveEvent?.(event, minuteShift, dayShift),
+  });
 
   const hours = useMemo(() => {
     const start = Math.max(0, workingHoursStart - 2);
@@ -67,9 +158,8 @@ const CalendarWeekView = ({
         const onDay = eventsOnDay(events, day);
         return {
           day,
-          banner: onDay.filter((e) => e.all_day || isMultiDay(e)),
           timed: layoutDayEvents(
-            onDay.filter((e) => !isMultiDay(e)),
+            onDay.filter((e) => !e.all_day && !isMultiDay(e)),
             day
           ),
         };
@@ -77,7 +167,8 @@ const CalendarWeekView = ({
     [weekDays, events]
   );
 
-  const hasBanner = perDay.some((d) => d.banner.length > 0);
+  const banner = useMemo(() => packBanner(weekDays, events), [weekDays, events]);
+  const hasBanner = banner.lanes.length > 0 || banner.hidden > 0;
 
   useEffect(() => {
     if (!showNowLine) return;
@@ -85,11 +176,21 @@ const CalendarWeekView = ({
     return () => clearInterval(interval);
   }, [showNowLine]);
 
+  /*
+   * Land on the start of the working day, not two hours before now.
+   *
+   * Scrolling to "now" hid the morning: opened at three in the afternoon the
+   * grid began at 13:00, with the 08:30 job above the fold and the empty
+   * evening filling the screen. The morning is where the jobs are.
+   */
   useEffect(() => {
-    if (!scrollRef.current || !showNowLine) return;
-    const nowHour = new Date().getHours();
-    scrollRef.current.scrollTop = Math.max(0, (nowHour - firstHour - 2) * HOUR_HEIGHT);
-  }, [firstHour, showNowLine]);
+    if (!scrollRef.current) return;
+    // -8 keeps the first hour label whole; it sits 6px above its line.
+    scrollRef.current.scrollTop = Math.max(
+      0,
+      (workingHoursStart - 1 - firstHour) * HOUR_HEIGHT - 8
+    );
+  }, [firstHour, workingHoursStart, currentDate]);
 
   const nowLineTop = useMemo(() => {
     if (!showNowLine) return -1;
@@ -100,7 +201,7 @@ const CalendarWeekView = ({
     return (minutes / 60) * HOUR_HEIGHT;
   }, [now, firstHour, showNowLine]);
 
-  const gridColumns = `${TIME_COL}px repeat(7, 1fr)`;
+  const gridColumns = `${TIME_COL}px repeat(${days}, 1fr)`;
 
   return (
     <div {...swipeHandlers} className={cn(cardCn, 'select-none overflow-hidden')}>
@@ -141,38 +242,55 @@ const CalendarWeekView = ({
           style={{ gridTemplateColumns: gridColumns }}
         >
           <div className="flex items-start justify-end pr-1.5 pt-2">
-            <span className="text-[9px] font-semibold uppercase tracking-[0.1em] text-white">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.1em] text-white">
               All
             </span>
           </div>
-          {perDay.map(({ day, banner }) => (
-            <div key={day.toISOString()} className="space-y-1 px-0.5 py-1.5">
-              {banner.slice(0, 2).map((event) => (
-                <button
-                  key={event.id}
-                  type="button"
-                  onClick={() => onEventTap(event)}
-                  className="block w-full truncate rounded px-1 py-0.5 text-left text-[9px] font-semibold text-white touch-manipulation"
-                  style={{
-                    backgroundColor: `${event.colour}30`,
-                    borderLeft: `2px solid ${event.colour}`,
-                  }}
-                >
-                  {event.title}
-                </button>
-              ))}
-              {banner.length > 2 && (
-                <span className="block px-1 text-[9px] font-semibold tabular-nums text-white">
-                  +{banner.length - 2}
-                </span>
-              )}
-            </div>
-          ))}
+          {/* One bar per event across the days it covers, in lanes — the
+              seven day cells are only the track it is drawn along. */}
+          <div className="relative col-span-7 space-y-1 py-1.5">
+            {banner.lanes.map((lane, laneIndex) => (
+              <div key={laneIndex} className="relative h-6">
+                {lane.map((seg) => {
+                  const inset = (seg.opensLeft ? 3 : 0) + (seg.closesRight ? 3 : 0);
+                  return (
+                    <button
+                      key={`${seg.event.id}-${seg.startCol}`}
+                      type="button"
+                      onClick={() => onEventTap(seg.event)}
+                      className={cn(
+                        'absolute top-0 flex h-6 items-center overflow-hidden px-2 text-left touch-manipulation active:scale-[0.99]',
+                        seg.opensLeft && 'rounded-l-md',
+                        seg.closesRight && 'rounded-r-md'
+                      )}
+                      style={{
+                        left: `calc(${(seg.startCol / days) * 100}% + ${seg.opensLeft ? 3 : 0}px)`,
+                        width: `calc(${((seg.endCol - seg.startCol + 1) / days) * 100}% - ${inset}px)`,
+                        backgroundColor: `${displayColour(seg.event)}30`,
+                        borderLeft: seg.opensLeft ? `2px solid ${displayColour(seg.event)}` : undefined,
+                      }}
+                    >
+                      <span className="truncate text-[12px] font-semibold text-white">
+                        {seg.event.title}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            ))}
+            {banner.hidden > 0 && (
+              <span className="block px-2 text-[11px] font-semibold tabular-nums text-white">
+                +{banner.hidden} more
+              </span>
+            )}
+          </div>
         </div>
       )}
 
       {/* Time grid */}
-      <div ref={scrollRef} className="max-h-[calc(100vh-340px)] overflow-y-auto">
+      {/* Fills the window rather than stopping at its content — a time grid
+          with dark space under it looked unfinished on a tall screen. */}
+      <div ref={scrollRef} className="h-[calc(100vh-290px)] min-h-[480px] overflow-y-auto">
         <div className="relative grid" style={{ gridTemplateColumns: gridColumns }}>
           {hours.map((hour) => {
             const working = hour >= workingHoursStart && hour < workingHoursEnd;
@@ -190,15 +308,17 @@ const CalendarWeekView = ({
                   </span>
                 </div>
 
-                {weekDays.map((day, dayIdx) => (
+                {weekDays.map((day) => (
                   <button
                     key={`${day.toISOString()}-${hour}`}
                     type="button"
-                    onClick={() => onTimeSlotTap(day, hour)}
+                    onClick={(e) =>
+                      onTimeSlotTap(day, hour, e.nativeEvent.offsetY > HOUR_HEIGHT / 2 ? 30 : 0)
+                    }
                     className={cn(
                       'relative border-l border-t border-white/[0.05] touch-manipulation active:bg-white/[0.06]',
                       working
-                        ? dayIdx >= 5
+                        ? !workingDays.includes(day.getDay())
                           ? 'bg-white/[0.02]'
                           : 'bg-white/[0.03]'
                         : 'bg-transparent'
@@ -247,8 +367,9 @@ const CalendarWeekView = ({
               // gutter, so a plain `dayIndex * (100/7)%` — which is what this
               // used to do — drifts a whole gutter's width by Sunday.
               const track = `(100% - ${TIME_COL}px)`;
-              const offset = dayIndex / 7 + column / columns / 7;
-              const widthFraction = 1 / 7 / columns;
+              const offset = dayIndex / days + column / columns / days;
+              const widthFraction = 1 / days / columns;
+              const dragging = dragMove.drag?.id === event.id ? dragMove.drag : null;
 
               return (
                 <button
@@ -256,23 +377,33 @@ const CalendarWeekView = ({
                   type="button"
                   onClick={(e) => {
                     e.stopPropagation();
-                    onEventTap(event);
+                    dragMove.guardClick(() => onEventTap(event))();
                   }}
-                  className="absolute z-10 overflow-hidden rounded-md px-1 py-0.5 text-left touch-manipulation active:scale-[0.97]"
+                  onPointerDown={dragMove.onPointerDown(event, dayIndex)}
+                  onPointerMove={dragMove.onPointerMove}
+                  onPointerUp={dragMove.onPointerUp}
+                  onPointerCancel={dragMove.onPointerCancel}
+                  className={cn(
+                    'absolute z-10 flex flex-col items-start justify-start overflow-hidden rounded-md px-1.5 py-1 text-left touch-manipulation active:scale-[0.97]',
+                    onMoveEvent && 'cursor-grab',
+                    dragging && 'z-30 cursor-grabbing shadow-xl shadow-black/40 ring-1 ring-elec-yellow/60'
+                  )}
                   style={{
                     top,
                     height,
+                    transform: dragging ? `translate(${dragging.dx}px, ${dragging.dy}px)` : undefined,
+                    transition: dragging ? 'none' : undefined,
                     left: `calc(${TIME_COL}px + ${track} * ${offset.toFixed(6)} + 2px)`,
                     width: `calc(${track} * ${widthFraction.toFixed(6)} - 3px)`,
-                    backgroundColor: `${event.colour}2E`,
-                    borderLeft: `2px solid ${event.colour}`,
+                    backgroundColor: `${displayColour(event)}2E`,
+                    borderLeft: `2px solid ${displayColour(event)}`,
                   }}
                 >
-                  <span className="line-clamp-1 text-[9px] font-semibold leading-tight text-white">
+                  <span className="line-clamp-1 text-[12px] font-semibold leading-tight text-white">
                     {event.title}
                   </span>
-                  {height > 28 && (
-                    <span className="text-[8px] tabular-nums text-white">
+                  {height > 34 && (
+                    <span className="text-[11px] tabular-nums text-white">
                       {format(start, 'HH:mm')}
                     </span>
                   )}

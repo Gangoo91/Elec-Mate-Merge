@@ -159,6 +159,9 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
      * written — see reportCloud.createReport.
      */
     _clientCertId: crypto.randomUUID(),
+    // The job this certificate was started from, if any — becomes
+    // reports.project_id on create (reportCloud.createReport strips it).
+    _projectId: readCertificatePrefill()?.projectId ?? null,
     certificateNumber: '',
     // From the job or the diary when started there (?clientName=&address=,
     // read by readCertificatePrefill), else blank.

@@ -366,7 +366,7 @@ const FireAlarmModule2Section4 = () => {
             viewBox="0 0 820 620"
             className="w-full h-auto"
             role="img"
-            aria-label="Three coordinated diagrams. Top-left: clean floor plan showing BEDROOM A (≥75 dB(A) at bed-head), STAIRWELL <60 m² (≥60 dB(A)) and OPEN OFFICE (≥65 dB(A)) — each room labelled with its clause 15 SPL minimum INSIDE the room, no rings overlaid. Top-right: separate sounder coverage chart showing SPL falling with distance from a single sounder marker (~95 dB(A) at 1 m, ~85 dB(A) at 3 m, ~75 dB(A) at 10 m, ~65 dB(A) at 30 m) illustrating the inverse-square law without colliding with floor-plan content. Bottom: VAD field of view showing a ceiling-mounted C-3-3 VAD and a wall-mounted W-2-4-6 VAD with their coverage volumes, plus a background-noise margin strip stating ≥+5 dB above ambient lasting 30 s or longer."
+            aria-label="Three coordinated diagrams. Top-left: clean floor plan showing BEDROOM A (≥75 dB(A) at bed-head), STAIRWELL <60 m² (≥60 dB(A)) and OPEN OFFICE (≥65 dB(A)) — each room labelled with its clause 15 SPL minimum INSIDE the room, no rings overlaid. Top-right: separate sounder coverage chart showing SPL falling with distance from a single sounder marker (~95 dB(A) at 1 m, ~85 dB(A) at 3 m, ~75 dB(A) at 10 m, ~65 dB(A) at 30 m) illustrating the inverse-square law without colliding with floor-plan content. Bottom: VAD field of view showing a ceiling-mounted C-3-3 VAD and a wall-mounted W-2-4-6 VAD with their coverage volumes, plus a background-noise margin strip stating that where background noise exceeds 60 dB(A), the signal is +5 dB(A) above it."
           >
             {/* ===== TITLE ===== */}
             <text
@@ -1007,7 +1007,7 @@ const FireAlarmModule2Section4 = () => {
               fontSize="11"
               fontWeight="bold"
             >
-              ⚠ Ambient-noise margin — clause 15 also requires +5 dB above ambient lasting ≥ 30 s
+              ⚠ Ambient-noise margin — 15.1.3: where background exceeds 60 dB(A), +5 dB(A) above it
             </text>
             <text x="410" y="606" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9.5">
               Evacuation tone: slow-whoop (sweep ~800 → 500 Hz, 1 s) OR two-tone (alt. ~500 / 1000
@@ -1023,9 +1023,9 @@ const FireAlarmModule2Section4 = () => {
         </ContentEyebrow>
 
         <ConceptBlock
-          title="+5 dB above any ambient noise lasting 30 seconds or more"
-          plainEnglish="The 65/60/75 dB(A) minima are the FLOOR. BS 5839-1:2025 also requires that the alarm signal be at least 5 dB(A) above any persistent ambient sound — specifically, any sound that lasts 30 seconds or more. So in a workshop running a 70 dB(A) extract fan, 65 dB(A) coverage is not enough — you need at least 75 dB(A) at every point a person might be."
-          onSite="Survey the actual ambient noise during commissioning, not the empty-shell condition. Run the plant and machinery that will normally be running. Note continuous-source levels (fans, compressors, machine tools, traffic noise on a roadside frontage). The design SPL is whichever is higher: the 65/60/75 floor, or 5 dB(A) above the persistent ambient. The 30-second qualifier means transient peaks (a single hammer blow, a passing emergency vehicle siren) don't trigger the rule — but anything that holds for half a minute does."
+          title="+5 dB where background noise exceeds 60 dB(A)"
+          plainEnglish="The 65/60/75 dB(A) minima are the FLOOR. Clause 15.1.3 adds a second test, and it has a TRIGGER LEVEL that is easy to drop: only WHERE THE BACKGROUND NOISE IS GREATER THAN 60 dB(A) does the alarm signal need to be 5 dB(A) above that background. Below 60 dB(A) of background noise the rule does not bite at all and the 65/60/75 floor governs on its own. So a quiet 45 dB(A) office needs 65 dB(A), not 50 — but a workshop running a 70 dB(A) extract fan needs at least 75 dB(A) at every point a person might be. NOTE 1 adds two carve-outs: the recommendation does not apply to noise from running water in bathrooms and shower rooms, and background noise unlikely to persist for longer than 30 s may be ignored."
+          onSite="Survey the actual ambient noise during commissioning, not the empty-shell condition. Run the plant and machinery that will normally be running. Note continuous-source levels (fans, compressors, machine tools, traffic noise on a roadside frontage). The design SPL is the 65/60/75 floor, and additionally — only where the background exceeds 60 dB(A) — 5 dB(A) above that background, whichever is higher. The 30-second qualifier means transient peaks (a single hammer blow, a passing emergency vehicle siren) don't trigger the rule — but anything that holds for half a minute does."
         >
           <p>Common cases where the +5 dB rule bites and the 65 dB(A) floor is not enough:</p>
           <ul className="list-disc pl-5 space-y-1.5 text-[14px]">

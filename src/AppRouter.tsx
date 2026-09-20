@@ -131,6 +131,7 @@ const AdminPricingModeration = lazyWithRetry(() => import('@/pages/Admin/AdminPr
 const AdminDocumentReview = lazyWithRetry(() => import('@/pages/Admin/AdminDocumentReview'));
 const AdminFounders = lazyWithRetry(() => import('@/pages/Admin/AdminFounders'));
 const AdminTrials = lazyWithRetry(() => import('@/pages/Admin/AdminTrials'));
+const AdminRetention = lazyWithRetry(() => import('@/pages/Admin/AdminRetention'));
 const AdminWinback = lazyWithRetry(() => import('@/pages/Admin/AdminWinback'));
 const AdminIncompleteSignup = lazyWithRetry(() => import('@/pages/Admin/AdminIncompleteSignup'));
 const AdminApprenticeCampaigns = lazyWithRetry(
@@ -1900,6 +1901,14 @@ const AppRouter = () => {
                 element={
                   <LazyRoute>
                     <AdminTrials />
+                  </LazyRoute>
+                }
+              />
+              <Route
+                path="retention"
+                element={
+                  <LazyRoute>
+                    <AdminRetention />
                   </LazyRoute>
                 }
               />

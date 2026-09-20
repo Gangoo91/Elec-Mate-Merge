@@ -7,12 +7,14 @@
 export { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 // HTTP Server - Locked to std@0.168.0
-// Modern Deno uses built-in Deno.serve instead of importing from std/http
-export const serve = Deno.serve;
+export { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 
 // CORS Headers
 export { corsHeaders } from './cors.ts';
 
 // Shared Types
 export type { Database } from './types.ts';
-export type { ValidationResult, ValidationIssue } from './response-validation.ts';
+export type { 
+  ValidationResult, 
+  ValidationIssue 
+} from './response-validation.ts';

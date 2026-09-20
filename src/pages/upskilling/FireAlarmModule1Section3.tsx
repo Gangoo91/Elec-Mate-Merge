@@ -328,15 +328,20 @@ const FireAlarmModule1Section3 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Categories of system (clause 5) — in summary, not a verbatim quote"
+          source="BS 5839-1:2025 · Clause 4, Categories of system — commentary"
           clause={
             <>
-              Category M systems are manual fire alarm systems. They have no automatic fire
-              detection or fire alarm devices, only manual call points by which occupants can
-              trigger the alarm.
+              Category M systems. These are manual systems and, therefore, incorporate no automatic
+              fire detectors.
+              <br />
+              <br />
+              Even in buildings with comprehensive fire detection, the provision of manual call
+              points is still normally of great value; people in the vicinity of a fire are normally
+              aware of the fire, and able to raise the alarm by use of a manual call point, before
+              it is detected automatically.
             </>
           }
-          meaning="The clause is short and definitive. 'No automatic fire detection' — the absence is the defining feature. 'Manual call points by which occupants can trigger the alarm' — the system depends entirely on occupants observing a fire and reaching an MCP. Selection of M is therefore a statement that those occupants will notice a fire in time, will be able to reach an MCP in time, and will operate it correctly — all of which the FRA must support."
+          meaning="The definition is one sentence, and the absence is the whole of it — no automatic detectors. Selecting M is therefore a positive assertion that occupants will notice a fire, reach a call point and operate it in time, and the fire risk assessment has to support that. The second paragraph is the part people skip: the standard rates manual call points highly even where detection is comprehensive, because a person who can see the fire beats a detector waiting for smoke to reach the ceiling. That is why M is combined with other categories as P1/M, P2/M and L5/M rather than being thought of as the cheap option."
         />
 
         {/* Manual-only system layout diagram */}

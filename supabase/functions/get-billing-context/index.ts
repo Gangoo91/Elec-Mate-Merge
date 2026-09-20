@@ -48,7 +48,7 @@ const log = (step: string, details?: unknown) => {
  * constant rather than showing nothing.
  */
 async function retentionOfferTerms(stripe: Stripe) {
-  const couponId = Deno.env.get('RETENTION_COUPON_ID') || 'ELECMATE_STAY_40';
+  const couponId = Deno.env.get('RETENTION_COUPON_ID') || 'ELECMATE_STAY_35';
   try {
     const coupon = await stripe.coupons.retrieve(couponId);
     if (!coupon.valid || !coupon.percent_off) return null;

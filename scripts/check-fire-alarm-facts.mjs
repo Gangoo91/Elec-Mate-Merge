@@ -103,6 +103,89 @@ const RULES = [
       'There is no four-year detector cycle in BS 5839-1. The only "4 years" is secondary battery life (24.3.2), a different subject.',
   },
   {
+    /*
+     * A CONDITIONAL rule stated as an absolute one.
+     *
+     * 12.1 b) restricts a zone to a single storey only where the total floor
+     * area of the BUILDING exceeds 300 m², and NOTE 2 expressly permits a zone
+     * to span storeys at 300 m² or less. The course's own RegsCallout quotes
+     * that correctly — but a quiz explanation in the same section taught the
+     * rule with no condition at all, and marked a distractor wrong that would
+     * have been right had it said 300 m² instead of 2,000 m².
+     *
+     * That is the shape to watch: the threshold is easy to conflate with the
+     * 2,000 m² zone-AREA cap, and dropping it turns a rule with an exception
+     * into a rule without one. This fires on any statement that a storey is
+     * its own zone unless the 300 m² condition or the clause number is nearby.
+     */
+    id: 'storey-zone-unconditional',
+    pattern: /each storey[^.]{0,60}(its own|a separate|separate)\s+zone|(one|a)\s+zone\s+per\s+storey/i,
+    not: /300\s?m|12\.1|greater than 300|less than or equal to 300/i,
+    detail:
+      'Clause 12.1 b) restricts a zone to a single storey only where the total floor area of the building is greater than 300 m². NOTE 2 permits a zone to cover more than one storey at 300 m² or less. State the condition, and do not confuse the 300 m² building threshold with the 2,000 m² zone-area cap.',
+  },
+  {
+    /*
+     * The second conditional-stated-absolutely case found, same shape as
+     * `storey-zone-unconditional`.
+     *
+     * 15.1.3 requires the alarm signal to be 5 dB(A) above background noise
+     * ONLY "where the sound pressure level of background noise is greater than
+     * 60 dB(A)". Below that trigger the rule does not apply at all and the
+     * 65/60/75 dB(A) floors govern alone. The course taught "+5 dB above any
+     * persistent ambient sound" in three places, which would have a 45 dB(A)
+     * office designed to 50 dB(A) instead of 65.
+     *
+     * The trap is that 60 dB(A) appears in Clause 15 TWICE meaning different
+     * things — the small-enclosed-space MINIMUM, and this background-noise
+     * TRIGGER — so the file can be full of "60 dB" and still never state the
+     * condition. Hence the `not` looks for the trigger phrasing, not the bare
+     * number.
+     */
+    /*
+     * Tightened after a first run that over-matched: `.{0,40}` let the phrase
+     * bridge "…5 dB(A) at bed-head" to an unrelated "ambient" much later in the
+     * same long aria-label, so the two halves must now be adjacent.
+     *
+     * The `not` also needed widening from `exceeds?` to `exceed\w*`: M5S5 says
+     * "background EXCEEDING 60 dB(A)", which is correct and was being flagged.
+     *
+     * One I wrongly dismissed as a false positive turned out to be real — the
+     * diagram's own aria-label read "≥+5 dB above ambient lasting 30 s or
+     * longer", handing screen-reader users the unconditional version of the
+     * rule. Check what the pattern actually matched before calling it noise.
+     */
+    id: 'ambient-5db-unconditional',
+    pattern: /5\s?dB\(?A?\)?\s+above\s+(?:the\s+|any\s+|persistent\s+)*(?:ambient|background)\b/i,
+    not: /(greater than|exceed\w*|above|over)\s+60\s?dB|15\.1\.3/i,
+    detail:
+      'Clause 15.1.3 applies the +5 dB(A) rule ONLY where background noise is greater than 60 dB(A). Below that trigger the 65/60/75 dB(A) minima govern on their own. NOTE 1 also exempts running water in bathrooms and shower rooms, and noise unlikely to persist longer than 30 s.',
+  },
+  {
+    /*
+     * FP200 is a STANDARD (PH 30) cable, not an enhanced one.
+     *
+     * 25.5 Standard: 30 min survival, BS EN 50200:2015 including the Annex E
+     * water spray — class PH 30.
+     * 25.6 Enhanced: 120 min, BS EN 50200:2015 AND BS 8434-2 — class PH 120.
+     *
+     * A flashcard described "FP200 (enhanced fire-resistant cable…)" while the
+     * course's own cable section correctly taught FP200 Gold as the standard
+     * PH 30 choice and FP PLUS as the enhanced PH 120 one. The error is
+     * expensive in both directions: it either has enhanced cable specified
+     * across a whole building that does not need it, or — far worse — has
+     * FP200 accepted on a critical path that the fire strategy said needed
+     * 120 minutes.
+     */
+    id: 'fp200-enhanced',
+    pattern: /FP\s?200[^.]{0,50}\benhanced\b|\benhanced\b[^.]{0,40}\bFP\s?200\b/i,
+    // Also exempts text that is CORRECTING the error — "do not describe FP200
+    // as enhanced", "it is the standard grade" — which otherwise trips on itself.
+    not: /not enhanced|is a standard|the standard grade|do not (describe|present)|PH\s?30|standard \(PH/i,
+    detail:
+      'FP200 / FP200 Gold is a STANDARD fire-resisting cable — 30 min, class PH 30 (clause 25.5). Enhanced means 120 min, class PH 120, tested to BS EN 50200:2015 AND BS 8434-2 (clause 25.6) — FP PLUS and similar. Do not present FP200 as enhanced.',
+  },
+  {
     id: 'clause-45-servicing',
     pattern: /reference:\s*'[^']*Clause 45|per BS 5839-1:2025 Clause 45/,
     detail:
@@ -181,9 +264,26 @@ for (const file of files) {
     if (/\boptions:\s*\[/.test(line)) inOptions = true;
     else if (inOptions && /^\s*\],?\s*$/.test(line)) inOptions = false;
     if (inOptions) return;
+    /*
+     * `not` is checked against a small WINDOW, not just the matching line.
+     *
+     * Prettier wraps JSX prose at 100 characters, so a single sentence is
+     * routinely spread over three or four lines. A line-only check therefore
+     * cannot see a qualifier that landed one line up — M5S5 states "in areas
+     * where ambient noise exceeds 60 dB(A)" on one line and "sounders must be
+     * at least 5 dB above the ambient background" on the next, and was flagged
+     * as unconditional when it is nothing of the sort.
+     *
+     * Three lines either side covers a wrapped sentence, and a block comment
+     * whose qualifier sits a couple of lines above the phrase it qualifies,
+     * without reaching into a genuinely separate statement. `pattern` still matches on the single line, so this
+     * only ever suppresses a false positive — it cannot hide a claim that has
+     * no qualifier anywhere near it.
+     */
+    const window = lines.slice(Math.max(0, i - 3), i + 4).join(' ');
     for (const rule of RULES) {
       if (!rule.pattern.test(line)) continue;
-      if (rule.not && rule.not.test(line)) continue;
+      if (rule.not && rule.not.test(window)) continue;
       // A rule scoped with `near` only fires when its context word is present
       // on the same line — otherwise the shared figures report everywhere.
       if (rule.near && !rule.near.test(line)) continue;

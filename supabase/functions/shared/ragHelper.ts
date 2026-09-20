@@ -17,7 +17,7 @@ async function generateEmbedding(text: string, openAIApiKey: string): Promise<nu
   const response = await fetch('https://api.openai.com/v1/embeddings', {
     method: 'POST',
     headers: {
-      Authorization: `Bearer ${openAIApiKey}`,
+      'Authorization': `Bearer ${openAIApiKey}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
@@ -45,14 +45,14 @@ export async function searchBS7671Regulations(
   limit: number = 15
 ): Promise<string> {
   console.log('🔍 RAG: Searching BS 7671 regulations for:', query);
-
+  
   const embedding = await generateEmbedding(query, openAIApiKey);
   const supabase = createClient(supabaseUrl, supabaseKey);
 
   const { data, error } = await supabase.rpc('search_bs7671', {
     query_embedding: JSON.stringify(embedding),
     match_threshold: 0.7,
-    match_count: limit,
+    match_count: limit
   });
 
   if (error) {
@@ -66,13 +66,10 @@ export async function searchBS7671Regulations(
   }
 
   console.log(`✅ Found ${data.length} relevant regulations`);
-
-  return data
-    .map(
-      (reg: any) =>
-        `Reg ${reg.regulation_number} (${reg.section}): ${reg.content} [Similarity: ${(reg.similarity * 100).toFixed(0)}%]`
-    )
-    .join('\n\n');
+  
+  return data.map((reg: any) => 
+    `Reg ${reg.regulation_number} (${reg.section}): ${reg.content} [Similarity: ${(reg.similarity * 100).toFixed(0)}%]`
+  ).join('\n\n');
 }
 
 /**
@@ -86,14 +83,14 @@ export async function searchInstallationKnowledge(
   limit: number = 10
 ): Promise<string> {
   console.log('🔍 RAG: Searching installation knowledge for:', query);
-
+  
   const embedding = await generateEmbedding(query, openAIApiKey);
   const supabase = createClient(supabaseUrl, supabaseKey);
 
   const { data, error } = await supabase.rpc('search_installation_knowledge', {
     query_embedding: JSON.stringify(embedding),
     match_threshold: 0.7,
-    match_count: limit,
+    match_count: limit
   });
 
   if (error) {
@@ -107,13 +104,10 @@ export async function searchInstallationKnowledge(
   }
 
   console.log(`✅ Found ${data.length} relevant installation guides`);
-
-  return data
-    .map(
-      (item: any) =>
-        `${item.topic} (${item.source}): ${item.content} [Similarity: ${(item.similarity * 100).toFixed(0)}%]`
-    )
-    .join('\n\n');
+  
+  return data.map((item: any) => 
+    `${item.topic} (${item.source}): ${item.content} [Similarity: ${(item.similarity * 100).toFixed(0)}%]`
+  ).join('\n\n');
 }
 
 /**
@@ -127,12 +121,8 @@ export async function searchPricingData(
   category?: string,
   limit: number = 15
 ): Promise<string> {
-  console.log(
-    '🔍 RAG: Searching pricing data for:',
-    query,
-    category ? `(category: ${category})` : ''
-  );
-
+  console.log('🔍 RAG: Searching pricing data for:', query, category ? `(category: ${category})` : '');
+  
   const embedding = await generateEmbedding(query, openAIApiKey);
   const supabase = createClient(supabaseUrl, supabaseKey);
 
@@ -140,7 +130,7 @@ export async function searchPricingData(
     query_embedding: JSON.stringify(embedding),
     category_filter: category || null,
     match_threshold: 0.7,
-    match_count: limit,
+    match_count: limit
   });
 
   if (error) {
@@ -154,13 +144,10 @@ export async function searchPricingData(
   }
 
   console.log(`✅ Found ${data.length} relevant products`);
-
-  return data
-    .map(
-      (item: any) =>
-        `${item.item_name} at ${item.wholesaler}: £${item.base_cost} ${item.price_per_unit} ${item.in_stock ? '✓ In Stock' : '✗ Out of Stock'} [Similarity: ${(item.similarity * 100).toFixed(0)}%]`
-    )
-    .join('\n\n');
+  
+  return data.map((item: any) => 
+    `${item.item_name} at ${item.wholesaler}: £${item.base_cost} ${item.price_per_unit} ${item.in_stock ? '✓ In Stock' : '✗ Out of Stock'} [Similarity: ${(item.similarity * 100).toFixed(0)}%]`
+  ).join('\n\n');
 }
 
 /**
@@ -174,14 +161,14 @@ export async function searchProjectManagement(
   limit: number = 10
 ): Promise<string> {
   console.log('🔍 RAG: Searching project management knowledge for:', query);
-
+  
   const embedding = await generateEmbedding(query, openAIApiKey);
   const supabase = createClient(supabaseUrl, supabaseKey);
 
   const { data, error } = await supabase.rpc('search_project_mgmt', {
     query_embedding: JSON.stringify(embedding),
     match_threshold: 0.7,
-    match_count: limit,
+    match_count: limit
   });
 
   if (error) {
@@ -195,13 +182,10 @@ export async function searchProjectManagement(
   }
 
   console.log(`✅ Found ${data.length} relevant project management guides`);
-
-  return data
-    .map(
-      (item: any) =>
-        `${item.topic} (${item.source}): ${item.content} [Similarity: ${(item.similarity * 100).toFixed(0)}%]`
-    )
-    .join('\n\n');
+  
+  return data.map((item: any) => 
+    `${item.topic} (${item.source}): ${item.content} [Similarity: ${(item.similarity * 100).toFixed(0)}%]`
+  ).join('\n\n');
 }
 
 /**
@@ -215,14 +199,14 @@ export async function searchHealthSafety(
   limit: number = 10
 ): Promise<string> {
   console.log('🔍 RAG: Searching health & safety knowledge for:', query);
-
+  
   const embedding = await generateEmbedding(query, openAIApiKey);
   const supabase = createClient(supabaseUrl, supabaseKey);
 
   const { data, error } = await supabase.rpc('search_health_safety', {
     query_embedding: JSON.stringify(embedding),
     match_threshold: 0.7,
-    match_count: limit,
+    match_count: limit
   });
 
   if (error) {
@@ -236,13 +220,10 @@ export async function searchHealthSafety(
   }
 
   console.log(`✅ Found ${data.length} relevant health & safety guides`);
-
-  return data
-    .map(
-      (item: any) =>
-        `${item.topic} (${item.source}): ${item.content} [Similarity: ${(item.similarity * 100).toFixed(0)}%]`
-    )
-    .join('\n\n');
+  
+  return data.map((item: any) => 
+    `${item.topic} (${item.source}): ${item.content} [Similarity: ${(item.similarity * 100).toFixed(0)}%]`
+  ).join('\n\n');
 }
 
 /**
@@ -256,14 +237,14 @@ export async function searchInspectionTesting(
   limit: number = 10
 ): Promise<string> {
   console.log('🔍 RAG: Searching inspection & testing knowledge for:', query);
-
+  
   const embedding = await generateEmbedding(query, openAIApiKey);
   const supabase = createClient(supabaseUrl, supabaseKey);
 
   const { data, error } = await supabase.rpc('search_inspection_testing', {
     query_embedding: JSON.stringify(embedding),
     match_threshold: 0.7,
-    match_count: limit,
+    match_count: limit
   });
 
   if (error) {
@@ -277,11 +258,8 @@ export async function searchInspectionTesting(
   }
 
   console.log(`✅ Found ${data.length} relevant inspection & testing guides`);
-
-  return data
-    .map(
-      (item: any) =>
-        `${item.topic} (${item.source}): ${item.content} [Similarity: ${(item.similarity * 100).toFixed(0)}%]`
-    )
-    .join('\n\n');
+  
+  return data.map((item: any) => 
+    `${item.topic} (${item.source}): ${item.content} [Similarity: ${(item.similarity * 100).toFixed(0)}%]`
+  ).join('\n\n');
 }

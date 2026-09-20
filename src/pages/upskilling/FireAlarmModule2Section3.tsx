@@ -941,7 +941,7 @@ const FireAlarmModule2Section3 = () => {
             {
               question: 'Can I rely on detectors alone in a small premises and skip MCPs?',
               answer:
-                'No. BS 5839-1:2025 requires manual call points in all categories of life-safety system (L1, L2, L3, L4, L5) and in M-category systems. The MCP is the human override — the device that allows a person who has detected a fire to raise the alarm immediately, without waiting for an automatic detector to respond. Detectors and MCPs are complementary; both are required.',
+                'No. Automatic detection does not displace manual call points. The MCP is the human override — the device that lets someone who has SEEN a fire raise the alarm immediately, without waiting for smoke to reach a ceiling detector, and the commentary to Clause 4 makes the point directly: even in buildings with comprehensive fire detection, manual call points are still normally of great value, because a person in the vicinity is usually aware of the fire first. Manual initiation is assumed within L1 to L4; the /M combinations the standard names are P1/M, P2/M and L5/M. The exceptions run the other way — Clause 19 commentary notes call points are not normally provided in some unsupervised public areas because of malicious operation.',
             },
             {
               question: 'Does the 45 m actual-travel distance apply to all categories, or only L1?',

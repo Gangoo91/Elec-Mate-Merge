@@ -6,6 +6,7 @@ import Header from '@/components/layout/Header';
 import { useState, useEffect, useRef } from 'react';
 import { PageTransition } from '@/components/layout/PageTransition';
 import AnnouncementBanner from '@/components/announcements/AnnouncementBanner';
+import FailedPaymentBanner from '@/components/billing/FailedPaymentBanner';
 import MaintenanceBanner from '@/components/layout/MaintenanceBanner';
 import PushNotificationPrompt from '@/components/notifications/PushNotificationPrompt';
 import { AchievementListener } from '@/components/study-centre/AchievementListener';
@@ -156,6 +157,9 @@ const Layout = () => {
 
               {/* Announcements Banner */}
               <AnnouncementBanner />
+
+              {/* A bounced card, with the fix one tap away (retention plan, 20 Sep 2026) */}
+              <FailedPaymentBanner />
             </div>
 
             {/* The push prompt used to sit HERE, above <Outlet />, which put it

@@ -163,7 +163,7 @@ const quizQuestions = [
       'Annex E, alongside the detector selection and configuration recording.',
       'Annex H, the same annex that holds the system logbook.',
       'Annex K, a new annex introduced for acceptance documentation in 2025.',
-      'Annex G.4, formalising the PURCHASER accepting the system — 40.3 asks the handing-over organization to obtain the purchaser&rsquo;s signature.',
+      'Annex G.4, formalising the PURCHASER accepting the system — 40.3 asks the handing-over organization to obtain the purchaser’s signature.',
     ],
     correctAnswer: 3,
     explanation:
@@ -856,7 +856,7 @@ const FireAlarmModule3Section6 = () => {
 
         <ConceptBlock
           title="A working tool, not a paperwork artefact"
-          plainEnglish="The operating and maintenance manual is the responsible person\'s primary reference. It tells them how to read the CIE, what to do in routine events (false alarm, planned disablement, service visit), how the system is structured, and how to engage the service organisation when needed. A good O&amp;M manual is a working document the responsible person opens regularly; a poor one is a binder that sits unread on a shelf."
+          plainEnglish="The operating and maintenance manual is the responsible person\'s primary reference. It tells them how to read the CIE, what to do in routine events (false alarm, planned disablement, service visit), how the system is structured, and how to engage the service organisation when needed. A good O&M manual is a working document the responsible person opens regularly; a poor one is a binder that sits unread on a shelf."
         >
           <p>O&amp;M manual content:</p>
           <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
@@ -907,7 +907,7 @@ const FireAlarmModule3Section6 = () => {
 
         <CommonMistake
           title="Treating documentation as the install team\'s problem"
-          whatHappens="A new fire alarm install is complete; the install team are eager to wrap up and move to the next project. The documentation handover is rushed — drawings on a USB stick handed over with limited explanation, certificates printed but the responsible person does not fully understand them, the O&amp;M manual is a generic template with the building\'s specifics not filled in. The responsible person accepts because they trust the install team. Six months later, a service visit arrives; the service organisation asks for documentation; the responsible person produces the USB stick. The drawings are out of date (the install team made undocumented changes near completion); the cause-and-effect matrix is missing; the logbook is empty. The service is harder to do correctly."
+          whatHappens="A new fire alarm install is complete; the install team are eager to wrap up and move to the next project. The documentation handover is rushed — drawings on a USB stick handed over with limited explanation, certificates printed but the responsible person does not fully understand them, the O&M manual is a generic template with the building\'s specifics not filled in. The responsible person accepts because they trust the install team. Six months later, a service visit arrives; the service organisation asks for documentation; the responsible person produces the USB stick. The drawings are out of date (the install team made undocumented changes near completion); the cause-and-effect matrix is missing; the logbook is empty. The service is harder to do correctly."
           doInstead="Documentation handover is part of acceptance, not separate from it. The responsible person walks through every document with the commissioning engineer; questions are asked; gaps are identified; the package is updated before signing the acceptance certificate. The 2025 standard\'s explicit obligation on the commissioning technician to inform the user about documentation maintenance is directly relevant. Some commissioning organisations now offer documentation training as part of acceptance; make use of it."
         />
 
@@ -920,7 +920,7 @@ const FireAlarmModule3Section6 = () => {
         <CommonMistake
           title="Not updating drawings after modifications"
           whatHappens="A fire alarm system has had three extensions over five years: a new wing, a new mezzanine, and an upgrade of the kitchen detector configuration. Each was certificated (extension or modification certificate). But the drawings — block diagram, schematic, riser, zone plan — were never updated to reflect the changes. The new wing is on the system but not on any drawing. Three years later, a fault occurs in the new wing; the service engineer cannot diagnose because the drawings show only the original system. The fault is misdiagnosed; a wrong device is replaced; the actual issue persists."
-          doInstead="Drawings are updated as part of every modification. The certificate references the updated drawing revision. The old drawing is archived for historical reference; the new drawing supersedes. The vendor or design organisation typically holds the master drawings (revision-controlled); they issue updates as needed. The responsible person\'s O&amp;M manual is updated to refer to the latest revision. The service organisation accesses the latest drawings during service visits."
+          doInstead="Drawings are updated as part of every modification. The certificate references the updated drawing revision. The old drawing is archived for historical reference; the new drawing supersedes. The vendor or design organisation typically holds the master drawings (revision-controlled); they issue updates as needed. The responsible person\'s O&M manual is updated to refer to the latest revision. The service organisation accesses the latest drawings during service visits."
         />
 
         <SectionRule />

@@ -24,7 +24,11 @@ export interface LogEntry {
 /**
  * Create a structured log entry
  */
-function createLogEntry(level: LogLevel, message: string, metadata?: LogMetadata): LogEntry {
+function createLogEntry(
+  level: LogLevel,
+  message: string,
+  metadata?: LogMetadata
+): LogEntry {
   return {
     level,
     message,
@@ -110,7 +114,11 @@ export class Logger {
   /**
    * Time an operation and log duration
    */
-  async time<T>(operation: string, fn: () => Promise<T>, metadata?: LogMetadata): Promise<T> {
+  async time<T>(
+    operation: string,
+    fn: () => Promise<T>,
+    metadata?: LogMetadata
+  ): Promise<T> {
     const start = Date.now();
     this.debug(`Starting ${operation}`, metadata);
 

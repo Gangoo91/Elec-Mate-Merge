@@ -407,6 +407,15 @@ const PlansList = ({ billing }: PlansListProps) => {
         ))}
       </div>
 
+      {/* The no-silent-charge promise (20 Sep 2026). Ten of September's 34 web
+          trial cancellers turned renewal off on day 0 or 1 "so they couldn't be
+          charged". Saying this here, before the card goes in, removes the
+          reason to do that. The promise is kept by the trial-ending email. */}
+      <p className="mx-auto max-w-md text-center text-[13px] leading-relaxed text-white">
+        Nothing is taken for seven days, and we email you the day before the first charge. No silent
+        charges, ever. Cancel in two taps if it’s not for you.
+      </p>
+
       {/* Native IAP disclosure text — required by Apple & Google */}
       {isNative && (
         <div className="text-center space-y-2">

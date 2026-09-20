@@ -272,6 +272,28 @@ const FireAlarmModule4Section4 = () => {
 
         <ContentEyebrow>Cable supports — interval, type, fire-rating</ContentEyebrow>
 
+        <RegsCallout
+          source="BS 5839-1:2025 · Clause 25, Cables, wiring and other interconnections — 25.7, 25.8, 25.9"
+          clause={
+            <>
+              <strong>25.7</strong> All conductors should have a cross-sectional area of not less
+              than 1 mm&sup2;.
+              <br />
+              <br />
+              <strong>25.8</strong> Where multicore cable is used for interconnection of fire alarm
+              circuits, none of the conductors should be used for circuits other than those of the
+              fire detection and fire alarm system.
+              <br />
+              <br />
+              <strong>25.9</strong> All fire alarm cables and the low voltage mains supply should be
+              of a single, common colour that is not used for cables of general electrical services
+              in the building, to enable these cables to be distinguished from those of other
+              circuits. NOTE The colour red is preferred.
+            </>
+          }
+          meaning="Three short recommendations that between them settle most first-fix arguments. 25.7 sets a floor of 1 mm² on every conductor — this is a mechanical and volt-drop minimum, not a current-carrying one, so 0.5 mm² does not become acceptable just because the load is tiny. 25.8 bans borrowing a spare core: a multicore carrying fire alarm circuits carries nothing else, so the spare pair in a fire alarm cable is not available for a door holder or a plant interlock. 25.9 is the familiar red-cable rule, and note its actual wording — the recommendation is a SINGLE COMMON COLOUR distinct from general services, with red only 'preferred' in a note. An installation wired consistently in another distinct colour conforms; one wired in red for half the job and white for the rest does not."
+        />
+
         <ConceptBlock
           title="Why support interval matters in fire conditions"
           plainEnglish="A fire-resistant cable installed loosely between supports 5 metres apart has a problem the moment fire begins. Even a fully PH120-classified cable will sag under its own weight as polymeric components soften; the sag concentrates stress at remaining supports; the supports fail in sequence; the cable falls out of path. The cable was rated for 120 minutes, but the system as installed delivered perhaps 20 minutes. Support intervals of approximately 1 metre on vertical runs (closer where direction changes) prevent this — when one fixing fails, adjacent fixings still hold the cable in path until they too fail, and by that time the cable\'s fire-survival duration is reached. Support spacing is a redundancy parameter."
@@ -590,6 +612,19 @@ const FireAlarmModule4Section4 = () => {
         <ContentEyebrow>Containment — metal trunking, basket, tray</ContentEyebrow>
 
         <ConceptBlock
+          title="Routing through a firefighting shaft or protected stairway"
+          plainEnglish="A firefighting shaft and a protected stairway are the routes the fire and rescue service use to reach the fire and that occupants use to leave it. BS 7671 Regulation 422.2.201 deals with what may run through them, and its NOTE 2 says that cables there should generally be limited to lighting and associated accessories, emergency lighting, and fire detection and alarm systems."
+          onSite="Fire alarm cabling is on the permitted list — so a detection loop or sounder circuit serving the stair is fine. What is NOT fine is treating the stair as a convenient vertical riser for everything else because the fire alarm cable is already going that way. General power and data borrowed into a protected stairway on the back of a fire alarm route is the non-conformity this catches, and a protected stairway is the last place you want a fire load nobody assessed."
+        >
+          <p>
+            The wording in the NOTE is guidance rather than an absolute prohibition, which is why
+            you will see exceptions justified on some designs. Treat it as: the fire alarm belongs
+            there, other services need a reason, and the reason belongs in the design, not in the
+            first-fix decision of whoever is pulling the cable.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
           title="When containment is the support"
           plainEnglish="Where fire alarm cabling is run inside containment — metal trunking, cable basket, cable tray — the containment becomes the support. The cable does not need clips along the containment run; the containment carries the cable. But the containment itself must be fire-rated and supported on fire-rated brackets. The system-thinking principle is unchanged: the weakest element controls the survival duration."
         >
@@ -643,6 +678,39 @@ const FireAlarmModule4Section4 = () => {
         <SectionRule />
 
         <ContentEyebrow>Segregation — BS 7671 Reg 528 + BS 5839-1 cl 35.8/35.9</ContentEyebrow>
+
+        <RegsCallout
+          source="BS 5839-1:2025 · Clause 27, Electromagnetic compatibility — commentary"
+          clause={
+            <>
+              It is known that malperformance of some fire detection and fire alarm systems has
+              occurred due to electromagnetic interference as a result of close proximity of fire
+              alarm cables to power cables with high current, inductive loads. The extent to which
+              this might occur depends on a number of factors including: the susceptibility of the
+              particular fire alarm equipment to electromagnetic interference; the level of
+              screening afforded by the cable; and the separation distance between the fire alarm
+              cables and the cables of other services.
+              <br />
+              <br />
+              Where practicable, fire alarm cables ought not to run unnecessarily long distances
+              (say, <strong>more than 35 m in aggregate</strong>) in close proximity to high current
+              power cables, particularly if these serve high inductive loads.
+              <br />
+              <br />
+              Electromagnetic interference can be reduced where there is a metal partition between
+              the fire alarm cables and the power cables (as in the case of compartmented trunking)
+              &hellip; separation needs to be maintained as far as possible, particularly in
+              addressable and networked systems, unless guidance from the system manufacturer
+              indicates that separation is unnecessary; the extent will be minimized if, for
+              example,{' '}
+              <strong>
+                fire alarm cables always cross the cables of other services at right angles
+              </strong>
+              .
+            </>
+          }
+          meaning="Segregation is usually taught as a safety measure — keeping LV faults off an ELV system — and it is. Clause 27 adds the second reason, which is that proximity degrades the SIGNAL even when nothing faults at all, and the failure it produces is intermittent and maddening to diagnose. Three usable numbers and rules come out of it. The 35 m aggregate figure is the one to carry: it is cumulative across the whole run, not per parallel section, so five separate 8 m parallel stretches have already spent it. The right-angle crossing is the practical answer where a crossing is unavoidable — coupling depends on the length the two cables run alongside each other, and a perpendicular crossing reduces that to almost nothing. And note the emphasis on ADDRESSABLE AND NETWORKED systems: a loop carrying digital signalling is far more vulnerable to induced noise than a conventional detection circuit that only has to change resistance, which is why an old conventional system tolerated routing that will make an addressable loop misbehave."
+        />
 
         <ConceptBlock
           title="Why segregation is non-negotiable for fire alarm wiring"
@@ -931,7 +999,7 @@ const FireAlarmModule4Section4 = () => {
               question:
                 "My cable manufacturer's technical data shows a 1.5 m support spacing for vertical runs but BS 8519 suggests 1 m. Which applies?",
               answer:
-                'Apply the more conservative figure — 1 m in this case. The BS 8519 figure is the code-of-practice general guidance; the manufacturer figure may reflect specific cable testing under defined conditions. In practice, taking the more conservative interval costs a small amount of additional fixing labour and material, and provides additional fixing redundancy in fire conditions. Where the manufacturer&apos;s data is more conservative than BS 8519, the manufacturer figure controls.',
+                'Apply the more conservative figure — 1 m in this case. The BS 8519 figure is the code-of-practice general guidance; the manufacturer figure may reflect specific cable testing under defined conditions. In practice, taking the more conservative interval costs a small amount of additional fixing labour and material, and provides additional fixing redundancy in fire conditions. Where the manufacturer\'s data is more conservative than BS 8519, the manufacturer figure controls.',
             },
             {
               question:

@@ -263,6 +263,31 @@ const FireAlarmModule4Section5 = () => {
 
         <ContentEyebrow>The 100-second reporting requirement</ContentEyebrow>
 
+        <RegsCallout
+          source="BS 5839-1:2025 · Clause 28, Electrical earthing — 28.1, 28.2, 28.4"
+          clause={
+            <>
+              <strong>28.1</strong> The system design should be such as to satisfy the relevant
+              requirements of BS 7671:2018+A3. NOTE Particular attention is drawn to the need for
+              CPCs to be adequately rated.
+              <br />
+              <br />
+              <strong>28.2</strong> The functional earthing (FE) conductor of fire alarm
+              installation wiring systems should be identified in accordance with BS 7671:2018+A3,
+              Table 51. NOTE BS 7671:2018+A3, Table 51, requires an FE conductor to be identified by
+              the colour pink (e.g. by pink insulation or sleeving), or by alphanumeric marking
+              &ldquo;FE&rdquo;.
+              <br />
+              <br />
+              <strong>28.4</strong> LV and ELV circuits should be segregated throughout in
+              accordance with Clause 27 and 35.9. If any ELV fire alarm cables share the same wiring
+              containment with other cables, the cable insulation of the fire alarm cables should be
+              rated for the highest voltage.
+            </>
+          }
+          meaning="Earth fault monitoring only means something if the earthing it monitors is sound, which is why this clause sits behind the whole section. Three things to carry: the CPC note in 28.1 is there because a fire alarm CPC is often sized by habit rather than calculation; the FE conductor is a FUNCTIONAL earth, not a protective one, and is identified pink or marked FE precisely so nobody mistakes it for a CPC; and 28.4's last sentence is the one that bites in shared containment — if fire alarm ELV cables share a containment with mains, the fire alarm cable's insulation must be rated for the HIGHER voltage. Segregating by distance is not the only option, but under-rated insulation in shared trunking is never one. (The standard cites BS 7671:2018+A3, the edition current when it was drafted; the same requirements carry into the current amendment.)"
+        />
+
         <ConceptBlock
           title="Why 100 seconds, not faster or slower"
           plainEnglish="A fire alarm system needs to know it has a fault. An earth fault on the loop wiring or on a device circuit is one of the most common faults the system experiences in service — environmental moisture, mechanical damage to insulation, ageing of polymeric insulation, contamination from cleaning products, all produce earth faults eventually. The CIE has to detect the fault and report it within a defined time. Too fast and the CIE chases noise transients and produces nuisance fault reports; too slow and real faults are missed for hours or days, producing degraded protection without anyone knowing. 100 seconds is the figure calibrated by BS EN 54-2 (the CIE standard) to balance these two failure modes; BS 5839-1 inherits the figure as the system-level reporting requirement."

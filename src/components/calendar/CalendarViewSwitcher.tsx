@@ -7,8 +7,15 @@ interface CalendarViewSwitcherProps {
   onViewChange: (view: CalendarView) => void;
 }
 
-const views: { value: CalendarView; label: string }[] = [
+const views: { value: CalendarView; label: string; className?: string }[] = [
   { value: 'day', label: 'Day' },
+  // Three days from today: seven columns at 1024px are still tight, and on a
+  // phone the week view is already a day strip, so this chip is tablet-up.
+  {
+    value: 'three',
+    label: '3 days',
+    className: 'hidden sm:inline-flex sm:items-center sm:justify-center',
+  },
   { value: 'week', label: 'Week' },
   { value: 'month', label: 'Month' },
 ];
@@ -26,7 +33,7 @@ const CalendarViewSwitcher = ({ view, onViewChange }: CalendarViewSwitcherProps)
         type="button"
         onClick={() => onViewChange(v.value)}
         aria-pressed={view === v.value}
-        className={cn(chipBase, view === v.value ? chipOn : chipOff)}
+        className={cn(chipBase, view === v.value ? chipOn : chipOff, v.className)}
       >
         {v.label}
       </button>

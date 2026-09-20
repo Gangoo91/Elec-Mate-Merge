@@ -32,7 +32,13 @@ function freeLabel(day: Date | null): string {
 const CalendarSummaryStrip = ({ pulse, onGoToDay, onGoToWeek }: CalendarSummaryStripProps) => {
   const { todayCount, weekHours, nextFreeDay, loading } = pulse;
 
-  const cellCn = 'px-3 py-3.5 text-left touch-manipulation transition-colors sm:px-4';
+  // Half the height it was. On an iPhone 13 this strip, the tidy strip and
+  // the header together pushed the grid below the fold; the numbers read
+  // just as well at 15px in a 44px row.
+  // Stacked on a phone (a 130px cell cannot hold "NEXT FREE" beside "Today"),
+  // side by side from `sm` where the cell is 450px wide and 44px is plenty.
+  const cellCn =
+    'flex min-h-[52px] flex-col items-start justify-center gap-0 px-3 py-1.5 text-left touch-manipulation transition-colors sm:min-h-11 sm:flex-row sm:items-center sm:justify-start sm:gap-2 sm:px-5 sm:py-2';
 
   return (
     <div className={cn(cardCn, 'grid grid-cols-3 overflow-hidden')}>
@@ -41,8 +47,8 @@ const CalendarSummaryStrip = ({ pulse, onGoToDay, onGoToWeek }: CalendarSummaryS
         onClick={() => onGoToDay(new Date())}
         className={cn(cellCn, 'hover:bg-white/[0.04] active:bg-white/[0.06]')}
       >
-        <span className={cn(eyebrowCn, 'block')}>Today</span>
-        <span className={cn(statValueCn, 'block text-white')}>{loading ? '—' : todayCount}</span>
+        <span className={cn(eyebrowCn, 'block whitespace-nowrap')}>Today</span>
+        <span className={cn(statValueCn, 'mt-0 block text-[15px] text-white sm:text-[20px]')}>{loading ? '—' : todayCount}</span>
       </button>
 
       <button
@@ -53,8 +59,8 @@ const CalendarSummaryStrip = ({ pulse, onGoToDay, onGoToWeek }: CalendarSummaryS
           'border-l border-white/[0.10] hover:bg-white/[0.04] active:bg-white/[0.06]'
         )}
       >
-        <span className={cn(eyebrowCn, 'block')}>7 days</span>
-        <span className={cn(statValueCn, 'block text-white')}>
+        <span className={cn(eyebrowCn, 'block whitespace-nowrap')}>7 days</span>
+        <span className={cn(statValueCn, 'mt-0 block text-[15px] text-white sm:text-[20px]')}>
           {loading ? '—' : `${weekHours}h`}
         </span>
       </button>
@@ -68,8 +74,8 @@ const CalendarSummaryStrip = ({ pulse, onGoToDay, onGoToWeek }: CalendarSummaryS
           'border-l border-white/[0.10] hover:bg-white/[0.04] active:bg-white/[0.06] disabled:active:bg-transparent'
         )}
       >
-        <span className={cn(eyebrowCn, 'block')}>Next free</span>
-        <span className={cn(statValueCn, 'block text-elec-yellow')}>
+        <span className={cn(eyebrowCn, 'block whitespace-nowrap')}>Next free</span>
+        <span className={cn(statValueCn, 'mt-0 block text-[15px] text-elec-yellow sm:text-[20px]')}>
           {loading ? '—' : freeLabel(nextFreeDay)}
         </span>
       </button>

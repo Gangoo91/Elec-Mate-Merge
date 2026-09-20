@@ -104,7 +104,7 @@ export const fireAlarmSystems: FlashcardData[] = [
     question:
       'What is the minimum sound level requirement for fire alarm sounders under BS 5839-1:2025?',
     answer:
-      'Fire alarm sounders must achieve a minimum of 65 dB(A) throughout all accessible areas, or 5 dB above any ambient noise likely to persist for more than 30 seconds, whichever is greater. In sleeping areas, the minimum at the bedhead is 75 dB(A). Where occupants may have hearing impairments, visual alarm devices (VADs) in the form of flashing beacons should supplement the audible warning.',
+      'Fire alarm sounders must achieve a minimum of 65 dB(A) throughout all accessible areas, or — where background noise exceeds 60 dB(A) (15.1.3) — 5 dB(A) above that background, whichever is greater, ignoring noise unlikely to persist beyond 30 s. In sleeping areas, the minimum at the bedhead is 75 dB(A). Where occupants may have hearing impairments, visual alarm devices (VADs) in the form of flashing beacons should supplement the audible warning.',
     category: 'Detection',
     difficulty: 'medium',
   },
@@ -123,7 +123,7 @@ export const fireAlarmSystems: FlashcardData[] = [
     id: 'fa14',
     question: 'What types of cable are acceptable for fire alarm system wiring?',
     answer:
-      'BS 5839-1:2025 requires fire alarm cables to be fire-resistant, maintaining circuit integrity during a fire. Acceptable types include FP200 (enhanced fire-resistant cable with a low-smoke zero-halogen sheath), mineral-insulated copper-clad (MICC) cable, and other cables meeting the enhanced fire resistance category of BS 8434-2. Standard PVC cables are not acceptable for fire alarm circuits.',
+      'Fire alarm cables on critical signal paths must keep working during a fire, and BS 5839-1:2025 defines TWO grades — do not conflate them. Clause 25.5 STANDARD: 30 minutes survival, tested to BS EN 50200:2015 including the Annex E water spray, corresponding to class PH 30. Clause 25.6 ENHANCED: 120 minutes, tested to BS EN 50200:2015 AND BS 8434-2, corresponding to class PH 120. FP200 Gold is a STANDARD (PH 30) cable and is the normal choice for most of an installation; FP PLUS and similar are the enhanced (PH 120) grade, specified selectively where the fire strategy needs survival beyond 30 minutes. MICC is the extreme-duty option. Ordinary PVC cable is not acceptable on a critical signal path.',
     category: 'Wiring',
     difficulty: 'easy',
   },

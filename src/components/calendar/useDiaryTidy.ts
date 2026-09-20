@@ -41,8 +41,16 @@ export function looksLikeAJob(e: CalendarEvent): boolean {
   if (e.project_id) return false;
   if (NOT_WORK.has(e.event_type)) return false;
   if (!e.google_event_id && e.event_type !== 'job') return false;
-  return !!(e.location && e.location.trim()) || !!postcodeIn(e.title);
+  // "Releaf Video Consultation" with a https:// location was flagged as a
+  // job with no job (20 Sep). A link is where a call happens, not a site.
+  if (VIRTUAL_TITLE.test(e.title)) return false;
+  const loc = (e.location ?? '').trim();
+  const realPlace = !!loc && !/^https?:\/\//i.test(loc) && !VIRTUAL_PLACE.test(loc);
+  return realPlace || !!postcodeIn(e.title);
 }
+
+const VIRTUAL_TITLE = /\b(video|zoom|teams|webinar|google meet|hangout)\b/i;
+const VIRTUAL_PLACE = /\b(zoom|teams|meet\.google|webex|skype)\b/i;
 
 export function useDiaryTidy(enabled = true) {
   return useQuery({

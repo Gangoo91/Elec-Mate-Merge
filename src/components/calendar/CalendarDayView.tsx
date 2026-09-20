@@ -3,7 +3,10 @@ import { format, differenceInMinutes, isToday, startOfDay } from 'date-fns';
 import { useSwipeable } from 'react-swipeable';
 import { cn } from '@/lib/utils';
 import { cardCn, eyebrowCn } from './calendarStyles';
-import { effectiveEnd, eventsOnDay, isMultiDay, layoutDayEvents } from './eventUtils';
+import { displayColour, effectiveEnd, eventsOnDay, isMultiDay, layoutDayEvents } from './eventUtils';
+import { Car } from 'lucide-react';
+import { useDragMove } from './useDragMove';
+import { useTravelTimes } from './useTravelTimes';
 import type { CalendarEvent } from '@/types/calendar';
 
 interface CalendarDayViewProps {
@@ -12,9 +15,12 @@ interface CalendarDayViewProps {
   workingHoursStart: number;
   workingHoursEnd: number;
   onEventTap: (event: CalendarEvent) => void;
-  onTimeSlotTap: (date: Date, hour: number) => void;
+  /** `minute` is 0 or 30 — the half of the hour cell that was tapped. */
+  onTimeSlotTap: (date: Date, hour: number, minute?: number) => void;
   onSwipeLeft: () => void;
   onSwipeRight: () => void;
+  /** Drag a block to a new time (mouse and pen only). */
+  onMoveEvent?: (event: CalendarEvent, minuteShift: number, dayShift: number) => void;
 }
 
 const HOUR_HEIGHT = 64;
@@ -29,7 +35,16 @@ const CalendarDayView = ({
   onTimeSlotTap,
   onSwipeLeft,
   onSwipeRight,
+  onMoveEvent,
 }: CalendarDayViewProps) => {
+  const dragMove = useDragMove({
+    hourHeight: HOUR_HEIGHT,
+    columnWidth: null,
+    enabled: !!onMoveEvent,
+    onMove: (event, minuteShift) => onMoveEvent?.(event, minuteShift, 0),
+  });
+  // Drive time between consecutive bookings with addresses (Google Maps).
+  const travel = useTravelTimes(events, currentDate);
   const swipeHandlers = useSwipeable({
     onSwipedLeft: onSwipeLeft,
     onSwipedRight: onSwipeRight,
@@ -67,12 +82,22 @@ const CalendarDayView = ({
     return () => clearInterval(interval);
   }, [showNowLine]);
 
-  // Land on the current time rather than at midnight.
+  /*
+   * Where the rail opens.
+   *
+   * Today, during the working day: an hour before now, so the job he is on
+   * is in view. Any other day, or today outside working hours: the start of
+   * the working day. "Now minus two" on a Sunday afternoon opened every day
+   * at 13:00 with the morning's jobs scrolled out of sight.
+   */
   useEffect(() => {
-    if (!scrollRef.current || !showNowLine) return;
+    if (!scrollRef.current) return;
     const nowHour = new Date().getHours();
-    scrollRef.current.scrollTop = Math.max(0, (nowHour - firstHour - 2) * HOUR_HEIGHT);
-  }, [firstHour, showNowLine]);
+    const onSiteNow = showNowLine && nowHour >= workingHoursStart && nowHour < workingHoursEnd;
+    const landOn = onSiteNow ? nowHour - 1 : workingHoursStart - 1;
+    // -8 keeps the first hour label whole; it sits 7px above its line.
+    scrollRef.current.scrollTop = Math.max(0, (landOn - firstHour) * HOUR_HEIGHT - 8);
+  }, [firstHour, showNowLine, workingHoursStart, workingHoursEnd, currentDate]);
 
   const nowLineTop = useMemo(() => {
     if (!showNowLine) return -1;
@@ -101,8 +126,8 @@ const CalendarDayView = ({
                 onClick={() => onEventTap(event)}
                 className="flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-left touch-manipulation active:scale-[0.98]"
                 style={{
-                  backgroundColor: `${event.colour}25`,
-                  borderLeft: `3px solid ${event.colour}`,
+                  backgroundColor: `${displayColour(event)}25`,
+                  borderLeft: `3px solid ${displayColour(event)}`,
                 }}
               >
                 <span className="min-w-0 flex-1 truncate text-[14px] font-semibold text-white">
@@ -119,15 +144,27 @@ const CalendarDayView = ({
         </div>
       )}
 
+      {/* An empty day says so, once, at the top — a bare rail of hour lines
+          read as "still loading" rather than "nothing booked". */}
+      {dayEvents.length === 0 && (
+        <p className="border-b border-white/[0.10] px-4 py-2.5 text-[13px] text-white sm:px-5">
+          Nothing booked — tap a time to add.
+        </p>
+      )}
       {/* Time grid */}
-      <div ref={scrollRef} className="relative max-h-[calc(100vh-320px)] overflow-y-auto">
+      <div
+        ref={scrollRef}
+        className="relative max-h-[calc(100vh-320px)] min-h-[360px] overflow-y-auto sm:h-[calc(100vh-330px)]"
+      >
         {hours.map((hour) => {
           const working = hour >= workingHoursStart && hour < workingHoursEnd;
           return (
             <button
               key={hour}
               type="button"
-              onClick={() => onTimeSlotTap(currentDate, hour)}
+              onClick={(e) =>
+                onTimeSlotTap(currentDate, hour, e.nativeEvent.offsetY > HOUR_HEIGHT / 2 ? 30 : 0)
+              }
               className={cn(
                 'relative flex w-full items-start touch-manipulation active:bg-white/[0.06]',
                 working ? 'bg-white/[0.03]' : 'bg-transparent'
@@ -176,6 +213,52 @@ const CalendarDayView = ({
           </div>
         )}
 
+        {/* Drive time to each booking from the one before, in the gap between
+            them. Orange when the drive is longer than the gap — that is the
+            13:00 in Bolton after the 12:00 in Preston. */}
+        {positioned.map(({ event, start }) => {
+          const leg = travel.get(event.id);
+          if (!leg) return null;
+          const tight = leg.minutes > leg.gapMinutes;
+          // At the START of the gap — the moment he leaves the last job — so
+          // it reads "35 mins drive, then the next one". Only when the gap is
+          // too short to hold a chip does it tuck up against the next block.
+          const startPx =
+            (differenceInMinutes(
+              start,
+              new Date(
+                currentDate.getFullYear(),
+                currentDate.getMonth(),
+                currentDate.getDate(),
+                firstHour
+              )
+            ) /
+              60) *
+            HOUR_HEIGHT;
+          const gapPx = (leg.gapMinutes / 60) * HOUR_HEIGHT;
+          const y = gapPx >= 30 ? startPx - gapPx + 4 : startPx - 22;
+          return (
+            <div
+              key={`travel-${event.id}`}
+              className="pointer-events-none absolute z-20 flex items-center"
+              style={{ top: Math.max(0, y), left: TIME_COL + 4 }}
+            >
+              <span
+                title={`${leg.origin} → ${leg.destination}`}
+                className={cn(
+                  'flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-semibold tabular-nums',
+                  tight
+                    ? 'border-orange-500/40 bg-orange-500/15 text-orange-300'
+                    : 'border-white/[0.14] bg-background text-white'
+                )}
+              >
+                {leg.text} drive
+                {tight ? ` · only ${leg.gapMinutes} min gap` : ''}
+              </span>
+            </div>
+          );
+        })}
+
         {/* Event blocks */}
         {positioned.map(({ event, start, end, column, columns }) => {
           const topMinutes = differenceInMinutes(
@@ -198,18 +281,31 @@ const CalendarDayView = ({
               type="button"
               onClick={(e) => {
                 e.stopPropagation();
-                onEventTap(event);
+                dragMove.guardClick(() => onEventTap(event))();
               }}
-              className="absolute z-10 overflow-hidden rounded-xl px-3 py-2 text-left touch-manipulation active:scale-[0.98]"
+              onPointerDown={dragMove.onPointerDown(event, 0)}
+              onPointerMove={dragMove.onPointerMove}
+              onPointerUp={dragMove.onPointerUp}
+              onPointerCancel={dragMove.onPointerCancel}
+              className={cn(
+                'absolute z-10 flex flex-col items-start justify-start overflow-hidden rounded-xl px-3 py-2 text-left touch-manipulation active:scale-[0.98]',
+                onMoveEvent && 'cursor-grab',
+                dragMove.drag?.id === event.id &&
+                  'z-30 cursor-grabbing shadow-xl shadow-black/40 ring-1 ring-elec-yellow/60'
+              )}
               style={{
                 top,
                 height,
+                transform:
+                  dragMove.drag?.id === event.id
+                    ? `translate(0px, ${dragMove.drag.dy}px)`
+                    : undefined,
                 left: `calc(${TIME_COL}px + 4px + (100% - ${TIME_COL}px - 12px) * ${
                   (column * widthPct) / 100
                 })`,
                 width: `calc((100% - ${TIME_COL}px - 12px) * ${widthPct / 100} - 3px)`,
-                backgroundColor: `${event.colour}22`,
-                borderLeft: `3px solid ${event.colour}`,
+                backgroundColor: `${displayColour(event)}22`,
+                borderLeft: `3px solid ${displayColour(event)}`,
               }}
             >
               <span className="block truncate text-[14px] font-semibold text-white">

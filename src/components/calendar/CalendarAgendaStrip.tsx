@@ -3,7 +3,7 @@ import { format, isToday, isTomorrow, isYesterday } from 'date-fns';
 import { ChevronRight, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { cardCn, eyebrowCn, rowCn } from './calendarStyles';
-import { clampToDay, effectiveEnd, eventsOnDay, isMultiDay } from './eventUtils';
+import { clampToDay, displayColour, effectiveEnd, eventsOnDay, isMultiDay } from './eventUtils';
 import type { CalendarEvent } from '@/types/calendar';
 
 interface CalendarAgendaStripProps {
@@ -48,7 +48,7 @@ const CalendarAgendaStrip = ({
         <button
           type="button"
           onClick={onOpenDayView}
-          className="flex items-center gap-1.5 touch-manipulation"
+          className="-my-2 flex min-h-11 items-center gap-1.5 touch-manipulation"
         >
           <span className={eyebrowCn}>{agendaHeading(date)}</span>
           <span className="text-[11px] font-semibold tabular-nums text-white">
@@ -59,7 +59,7 @@ const CalendarAgendaStrip = ({
         <button
           type="button"
           onClick={onAdd}
-          className="ml-auto flex items-center gap-1 text-[12px] font-semibold text-elec-yellow touch-manipulation"
+          className="-my-2 ml-auto flex min-h-11 items-center gap-1 px-1 text-[12px] font-semibold text-elec-yellow touch-manipulation"
         >
           <Plus className="h-3.5 w-3.5" />
           Add
@@ -100,7 +100,7 @@ const CalendarAgendaStrip = ({
                 {/* Colour spine — a bar, not a dot, so it reads as a block of time */}
                 <span
                   className="mt-0.5 w-[3px] shrink-0 self-stretch rounded-full"
-                  style={{ backgroundColor: event.colour }}
+                  style={{ backgroundColor: displayColour(event) }}
                 />
 
                 <span className="min-w-0 flex-1">

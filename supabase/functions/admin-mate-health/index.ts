@@ -115,6 +115,34 @@ Deno.serve(async (req) => {
       .slice(0, 10);
     const costSince1dDay = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
 
+    /*
+     * ELE-1748 — app-side Anthropic spend, read whole rather than per-user.
+     *
+     * Not filtered by `userIds` like the Mate figures below: that list is the
+     * Mate FLEET, and the people spending money on Elec-AI are ordinary
+     * customers who are not on it. Filtering by it would report the app's cost
+     * as zero and look like a working number.
+     */
+    const { data: appCostRows } = await supabaseAdmin
+      .from('ai_app_cost_daily')
+      .select('day, cost_usd, call_count')
+      .gte('day', costSince30dDay);
+    let appCost24h = 0;
+    let appCost7d = 0;
+    let appCost30d = 0;
+    let appCalls30d = 0;
+    for (const row of (appCostRows ?? []) as {
+      day: string;
+      cost_usd: number;
+      call_count: number;
+    }[]) {
+      const cost = Number(row.cost_usd) || 0;
+      appCost30d += cost;
+      appCalls30d += Number(row.call_count) || 0;
+      if (row.day >= costSince7dDay) appCost7d += cost;
+      if (row.day >= costSince1dDay) appCost24h += cost;
+    }
+
     const { data: costRowsRaw } =
       userIds.length > 0
         ? await supabaseAdmin
@@ -377,12 +405,33 @@ Deno.serve(async (req) => {
       cost_24h: fleetCost24h,
       cost_7d: fleetCost7d,
       cost_30d: fleetCost30d,
+      /*
+       * ELE-1748 — the APP's own Anthropic spend, beside Mate's.
+       *
+       * The three figures above are `mate_cost_daily`: internal OpenClaw usage,
+       * aggregated by a cron on the VPS. They have read ZERO since 13 July,
+       * when that script stopped — and nobody noticed for two months, because
+       * an empty cost tile looks exactly like a cheap month.
+       *
+       * These are `ai_app_cost_daily`: what customers asking Elec-AI actually
+       * cost. Kept as separate fields rather than summed, because the entire
+       * question this ticket exists to answer is which of the two the £1,224
+       * is going to. A single total would destroy it.
+       */
+      app_cost_24h: appCost24h,
+      app_cost_7d: appCost7d,
+      app_cost_30d: appCost30d,
+      app_calls_30d: appCalls30d,
       generated_at: new Date().toISOString(),
     };
 
     return json({ summary, users, top_tools_24h, top_errors_24h, tool_reliability_7d });
   } catch (error: unknown) {
-    await captureException(error, { functionName: 'admin-mate-health', requestUrl: req.url, requestMethod: req.method });
+    await captureException(error, {
+      functionName: 'admin-mate-health',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
     const message = error instanceof Error ? error.message : String(error);
     console.error('[admin-mate-health] Uncaught error:', message);
     return json({ error: message }, 500);

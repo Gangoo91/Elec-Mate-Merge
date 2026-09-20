@@ -1342,7 +1342,7 @@ const FireAlarmModule5Section4 = () => {
               the test.
             </>
           }
-          meaning="BS 5839-1 sets its OWN acceptance value for fire alarm wiring — 2 MΩ at 500 V DC — which is HIGHER than the 1 MΩ general minimum in BS 7671. Clause 36.1&rsquo;s NOTE explains why: control and indicating equipment may have earth-fault sensing set at around 1 MΩ, so wiring built only to 1 MΩ sits on the panel&rsquo;s own fault threshold and will nuisance-trip. Critically, the same clause specifies that electronic devices connected to the circuit should be disconnected for the test. The rule is in BS 7671; it applies on every LV circuit including fire alarm loops. Devices in place + 500 V dc = destroyed devices."
+          meaning="BS 5839-1 sets its OWN acceptance value for fire alarm wiring — 2 MΩ at 500 V DC — which is HIGHER than the 1 MΩ general minimum in BS 7671. Clause 36.1’s NOTE explains why: control and indicating equipment may have earth-fault sensing set at around 1 MΩ, so wiring built only to 1 MΩ sits on the panel’s own fault threshold and will nuisance-trip. Critically, the same clause specifies that electronic devices connected to the circuit should be disconnected for the test. The rule is in BS 7671; it applies on every LV circuit including fire alarm loops. Devices in place + 500 V dc = destroyed devices."
         />
 
         <SectionRule />

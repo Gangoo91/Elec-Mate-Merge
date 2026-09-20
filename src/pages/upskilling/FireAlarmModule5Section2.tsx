@@ -752,6 +752,19 @@ const FireAlarmModule5Section2 = () => {
         <ContentEyebrow>Mains supply, batteries and earthing</ContentEyebrow>
 
         <ConceptBlock
+          title="Flexible connections at the panel — BS 7671 522.12.2"
+          plainEnglish="BS 7671 Regulation 522.12.2(b) requires flexible connections where equipment is subject to movement or vibration, and names 'all items of essential equipment, for example, safety services' among the cases it covers. A fire alarm control panel and an emergency lighting central battery are exactly that kind of equipment."
+          onSite="The practical reading: connections into a panel should not be made in a way that puts strain on terminations when the enclosure or its door moves. Flexible pigtails or flexible-lidded terminals let the panel and its lid move without loading the conductor. It is a small detail that shows up years later as an intermittent fault nobody can find, because the break is inside the insulation at a point that only opens when the door is shut."
+        >
+          <p>
+            It pairs with everything else in this module about mechanical strain — the Clause 25
+            point about collapsing cables pulling on terminations, and the Clause 35 rule that
+            supports must match the cable. Each of them is the same underlying idea: the electrical
+            connection is only as good as the mechanical arrangement holding it still.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
           title="Mains supply termination — dedicated, labelled, locked"
           plainEnglish="The CIE mains supply is one of the safety-critical inputs of the system. A panel switched off accidentally because it shared a circuit with cleaning sockets is a panel that has stopped detecting fire. The supply is therefore dedicated (its own final circuit), hard-wired (no plug-and-socket), labelled (so the maintainer and the unconnected electrician know what it is), lockable-off (so maintenance can isolate safely under permit-to-work) and accessible only to authorised personnel (so occupants cannot operate it in error)."
         >

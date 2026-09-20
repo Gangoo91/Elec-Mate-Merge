@@ -57,8 +57,24 @@ const PLAN_TO_WAITLIST: Record<string, WaitlistPlan | null> = {
 };
 
 // ─── Component ────────────────────────────────────────────────────────────────
+// "ANDREW MOORE" typed in caps on signup should not shout back from the
+// cancel flow. First word only, first letter up, the rest down.
+function firstNameForCopy(fullName: string | null | undefined): string | null {
+  const first = (fullName ?? '').trim().split(/\s+/)[0];
+  if (!first) return null;
+  return first[0].toUpperCase() + first.slice(1).toLowerCase();
+}
+
 const Subscriptions = () => {
-  const { user, isSubscribed, subscriptionTier, isTrialActive, trialEndsAt, profile } = useAuth();
+  const {
+    user,
+    isSubscribed,
+    subscriptionTier,
+    isTrialActive,
+    trialEndsAt,
+    profile,
+    checkSubscriptionStatus,
+  } = useAuth();
   const {
     isNative,
     restorePurchases,
@@ -71,8 +87,87 @@ const Subscriptions = () => {
   } = useRevenueCat(user?.id);
   const { toast } = useToast();
 
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const wasCancelled = searchParams.get('cancelled') === '1';
+
+  // Admin-only preview: ?preview=cancel-flow opens the cancel flow with a
+  // sample electrician subscription so the design can be checked on an
+  // account that has nothing to cancel. The sample id is not a real
+  // subscription, so the server refuses anything that gets as far as a call.
+  useEffect(() => {
+    const adminRole = (profile as { admin_role?: string | null } | null)?.admin_role;
+    if (!adminRole || searchParams.get('preview') !== 'cancel-flow') return;
+    setCancelFlow({
+      open: true,
+      subscriptionId: 'sub_preview',
+      tier: 'electrician',
+      managedBy: 'stripe',
+      currentAmount: 1999,
+      interval: 'month',
+      alreadyDiscounted: false,
+      alreadyPaused: false,
+      offerPercentOff: 35,
+      offerDurationMonths: 12,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profile?.id, searchParams]);
+
+  // ── Trial-sequence deep links (20 Sep 2026) ───────────────────────────
+  // ?extend=1  the trial-ending email's "one tap adds seven days"
+  // ?resume=1  the day-6 "turn renewal back on" for early cancellers
+  // Each fires once, tells the user what happened, and drops the param so a
+  // refresh cannot repeat it. Both functions verify ownership server-side.
+  useEffect(() => {
+    const extend = searchParams.get('extend') === '1';
+    const resume = searchParams.get('resume') === '1';
+    if (!user || (!extend && !resume)) return;
+    const fn = extend ? 'trial-extend' : 'subscription-resume';
+    (async () => {
+      const { data, error } = await supabase.functions.invoke(fn, { body: {} });
+      // On a non-2xx the client returns { data: null, error: FunctionsHttpError };
+      // the function's own message lives on error.context.
+      let msg = (data as { message?: string } | null)?.message;
+      if (error && 'context' in error && error.context instanceof Response) {
+        try {
+          msg = ((await error.context.clone().json()) as { message?: string })?.message ?? msg;
+        } catch {
+          // no JSON body — keep the fallback copy
+        }
+      }
+      if (error || !data?.success) {
+        toast({
+          title: extend ? 'Could not extend the trial' : 'Could not turn renewal back on',
+          description:
+            msg ??
+            (extend
+              ? 'The extra week may already have been added. Email founder@elec-mate.com and Andrew will sort it.'
+              : 'Renewal may already be on. Email founder@elec-mate.com if not.'),
+          variant: 'destructive',
+        });
+      } else if (extend) {
+        const end = (data as { trial_end?: string }).trial_end;
+        // The page's "days left" reads the profile; make it agree with the toast.
+        void checkSubscriptionStatus?.({ forceRefresh: true });
+        toast({
+          title: 'Seven more days added',
+          description: end
+            ? `Your trial now runs to ${new Date(end).toLocaleDateString('en-GB', { day: 'numeric', month: 'long' })}. Nothing is charged before then, and we email you the day before.`
+            : 'Nothing is charged before it ends, and we email you the day before.',
+        });
+      } else {
+        toast({
+          title: 'Renewal is back on',
+          description:
+            'Nothing changes until your trial ends, and we email you the day before any charge.',
+        });
+      }
+      const next = new URLSearchParams(searchParams);
+      next.delete('extend');
+      next.delete('resume');
+      setSearchParams(next, { replace: true });
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id]);
 
   // ── Win-back deep link ────────────────────────────────────────────────
   // Email CTAs from the win-back sequence (touch 2 / touch 3) land here
@@ -1008,7 +1103,8 @@ const Subscriptions = () => {
         alreadyPaused={cancelFlow.alreadyPaused}
         offerPercentOff={cancelFlow.offerPercentOff}
         offerDurationMonths={cancelFlow.offerDurationMonths}
-        firstName={profile?.full_name?.split(' ')[0] ?? null}
+        firstName={firstNameForCopy(profile?.full_name)}
+        preview={cancelFlow.subscriptionId === 'sub_preview'}
         onClose={() =>
           setCancelFlow({
             open: false,
@@ -1313,7 +1409,9 @@ const PlanCard = ({
             {plan.inheritsFrom ? `Everything in ${plan.inheritsFrom}, plus` : "What's included"}
           </span>
           <span className="flex items-center gap-1.5 sm:hidden">
-            <span className="text-[11px] font-medium text-white/45 tabular-nums">{featureCount}</span>
+            <span className="text-[11px] font-medium text-white/45 tabular-nums">
+              {featureCount}
+            </span>
             <ChevronDown
               className={cn(
                 'h-4 w-4 text-white/45 transition-transform duration-200',
@@ -1333,8 +1431,14 @@ const PlanCard = ({
                 </p>
                 <ul className="space-y-2">
                   {group.items.map((item, ii) => (
-                    <li key={ii} className="flex items-start gap-2.5 text-[13.5px] text-white/85 leading-relaxed">
-                      <Check className="h-3.5 w-3.5 text-white/55 shrink-0 mt-0.5" strokeWidth={2.5} />
+                    <li
+                      key={ii}
+                      className="flex items-start gap-2.5 text-[13.5px] text-white/85 leading-relaxed"
+                    >
+                      <Check
+                        className="h-3.5 w-3.5 text-white/55 shrink-0 mt-0.5"
+                        strokeWidth={2.5}
+                      />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -1344,7 +1448,10 @@ const PlanCard = ({
           ) : (
             <ul className="space-y-2">
               {plan.features.map((item, i) => (
-                <li key={i} className="flex items-start gap-2.5 text-[13.5px] text-white/85 leading-relaxed">
+                <li
+                  key={i}
+                  className="flex items-start gap-2.5 text-[13.5px] text-white/85 leading-relaxed"
+                >
                   <Check className="h-3.5 w-3.5 text-white/55 shrink-0 mt-0.5" strokeWidth={2.5} />
                   <span>{item}</span>
                 </li>

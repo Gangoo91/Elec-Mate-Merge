@@ -290,14 +290,25 @@ const FireAlarmModule1Section2 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Categories of system (clause 5) — in summary, not a verbatim quote"
+          source="BS 5839-1:2025 · Clause 4, Categories of system — commentary"
           clause={
             <>
-              Category P systems are systems intended for the protection of property. They are
-              sub-divided as P1 and P2 according to the extent of automatic detection provided.
+              Category P systems. These are automatic fire detection and fire alarm systems intended
+              for the protection of property. They are further subdivided as follows.
+              <br />
+              <br />
+              Category P1: systems installed throughout all areas of the building. The objective of
+              a Category P1 system is to offer the earliest possible warning of fire so as to
+              minimize the time between ignition and the arrival of firefighters.
+              <br />
+              <br />
+              Category P2: systems installed only in defined parts of the building. The objective of
+              a Category P2 system is to provide early warning of fire in areas of high fire hazard
+              level, or areas in which the risk to property or business continuity from fire is
+              high.
             </>
           }
-          meaning="Two phrases earn close reading. 'Protection of property' — property loss minimisation is the load-bearing objective; life safety is incidental. 'According to the extent of automatic detection' — P1 and P2 differ in coverage extent, much as the L1-L5 family differs along that same axis. The selection of P1 vs P2 IS the coverage decision."
+          meaning="Read the two objectives against each other. P1 is measured against the ARRIVAL OF FIREFIGHTERS — the whole point is to shorten ignition-to-attendance, which is why P1 is throughout. P2 is measured against WHERE THE VALUE IS — high hazard, or high risk to property or business continuity. Note that business continuity is named explicitly: a P2 system can legitimately be designed around a server room or a production line rather than around the fire load."
         />
 
         <SectionRule />

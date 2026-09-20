@@ -19,14 +19,14 @@
  */
 
 import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 import { DashboardContainer } from '@/components/dashboard/DashboardContainer';
 import TrialBanner from '@/components/dashboard/TrialBanner';
 import TrialReceiptCard from '@/components/dashboard/TrialReceiptCard';
 import ResumeCard from '@/components/dashboard/editorial/ResumeCard';
 import WelcomeModal from '@/components/onboarding/WelcomeModal';
+import FirstWeekChecklist from '@/components/dashboard/FirstWeekChecklist';
 
 import { EditorialHubGrid } from '@/components/dashboard/editorial/EditorialHubGrid';
 import { ReferralRaceCard } from '@/components/referrals/ReferralRaceCard';
@@ -44,58 +44,21 @@ import {
 import { DashboardDataProvider, useSharedDashboardData } from '@/hooks/useDashboardData';
 import { useAuth } from '@/contexts/AuthContext';
 import useSEO from '@/hooks/useSEO';
-import { storageGetSync, storageSetSync } from '@/utils/storage';
-
-const FIRST_STOP_DISMISSED_KEY = 'elec-mate-first-stop-dismissed';
+import { storageGetSync } from '@/utils/storage';
 
 // Exact, not "£6.0k". A KPI card has room for six characters, and the whole
 // point of the figure is that it is money someone owes you — rounding £6,027
 // to £6.0k loses £27 and makes three pages show three different numbers for
 // the same thing.
-const money = (v: number) =>
-  `£${Math.round(v).toLocaleString('en-GB')}`;
+const money = (v: number) => `£${Math.round(v).toLocaleString('en-GB')}`;
 
 // `as const` on the spring type: framer-motion's Variants wants the literal
 // 'spring', and a widened `string` fails to satisfy AnimationGeneratorType —
 // which is why this whole object would not assign to Variants.
-const sectionVariants = {
-  hidden: { opacity: 0, y: 16 },
-  visible: (delay: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      type: 'spring' as const,
-      stiffness: 300,
-      damping: 24,
-      delay: delay * 0.08,
-    },
-  }),
-};
-
 const Dashboard = () => {
   const { user, profile, isLoading } = useAuth();
   const navigate = useNavigate();
   const [showWelcome, setShowWelcome] = useState(false);
-  const [firstStopDismissed, setFirstStopDismissed] = useState(
-    () => storageGetSync(FIRST_STOP_DISMISSED_KEY) === '1'
-  );
-  const isFirstVisit =
-    !isLoading && !!profile && !profile.onboarding_completed && !firstStopDismissed;
-
-  const quickStart =
-    profile?.role === 'apprentice'
-      ? { cta: 'Open Study Centre', href: '/study-centre/apprentice' }
-      : profile?.role === 'employer'
-        ? { cta: 'Open Employer Hub', href: '/employer' }
-        : // Electrical Hub, not certificates directly — the hub runs the
-          // company-details SetupWizard on first visit, so quotes/invoices/
-          // certs are pre-filled before they make their first one.
-          { cta: 'Open Electrical Hub', href: '/electrician' };
-
-  const dismissFirstStop = () => {
-    storageSetSync(FIRST_STOP_DISMISSED_KEY, '1');
-    setFirstStopDismissed(true);
-  };
 
   // Safety net: redirect users with NULL role to complete their profile
   useEffect(() => {
@@ -124,44 +87,12 @@ const Dashboard = () => {
     <DashboardContainer>
       <DashboardDataProvider>
         <div className="space-y-10 sm:space-y-14">
-          {/* First-visit welcome banner — kept, single yellow accent only */}
-          {isFirstVisit && (
-            <motion.section
-              variants={sectionVariants}
-              initial="hidden"
-              animate="visible"
-              custom={-0.5}
-            >
-              <div className="relative rounded-2xl border border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/[0.06] via-amber-500/[0.02] to-transparent p-5 sm:p-6">
-                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/70 via-amber-400/70 to-orange-400/70 opacity-70" />
-                <button
-                  type="button"
-                  onClick={dismissFirstStop}
-                  className="absolute right-3 top-3 h-8 touch-manipulation rounded-xl border border-white/[0.12] bg-black/40 px-3 text-[12px] font-medium text-white transition-colors hover:bg-black/70 hover:text-yellow-400"
-                  aria-label="Dismiss"
-                >
-                  Dismiss
-                </button>
-                <div className="flex flex-col gap-4 pr-20 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:pr-24">
-                  <div>
-                    <h2 className="text-[1.25rem] font-bold leading-[1.2] tracking-[-0.02em] text-white sm:text-[1.5rem]">
-                      Make the first <span className="text-yellow-400">ten minutes</span> count.
-                    </h2>
-                    <p className="mt-2 text-[14px] leading-[1.55] text-white sm:text-[15px]">
-                      Run one real task through the platform — the rest of the workflow unfolds from
-                      there.
-                    </p>
-                  </div>
-                  <Link
-                    to={quickStart.href}
-                    className="inline-flex h-11 flex-shrink-0 touch-manipulation items-center justify-center rounded-2xl bg-yellow-500 px-5 text-[14px] font-semibold text-black transition-colors hover:bg-yellow-400"
-                  >
-                    {quickStart.cta}
-                  </Link>
-                </div>
-              </div>
-            </motion.section>
-          )}
+          {/* First week — seven day-dots and four things that tick themselves
+              off. Replaces the first-visit banner (retention plan, 20 Sep 2026):
+              three active days in the first seven is what predicts who stays,
+              so the dashboard shows that, not a feature tour. Hides itself once
+              they have three days and a real document, or after day eight. */}
+          <FirstWeekChecklist />
 
           {/* Trial receipt — their own numbers ("3 certs, £4,200 quoted")
               while the trial runs; flips to an activation nudge when they
@@ -353,7 +284,9 @@ function EditorialDashboard() {
             <HubKpi
               label="Certs in progress"
               value={String(certificates.expiringSoon)}
-              verdict={certificates.expiringSoon > 0 ? 'Finish and issue these' : 'Nothing part-written'}
+              verdict={
+                certificates.expiringSoon > 0 ? 'Finish and issue these' : 'Nothing part-written'
+              }
               context={certificates.total > 0 ? `${certificates.total} on file` : undefined}
               onClick={() => navigate('/electrician/inspection-testing?section=my-reports')}
             />

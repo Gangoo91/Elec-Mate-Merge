@@ -55,12 +55,16 @@ const log = (step: string, details?: unknown) => {
 };
 
 /**
- * One coupon, every tier. Percentage-based and duration-limited, created
- * 2026-09-10. Overridable by env so the level can be changed in the Supabase
- * dashboard without a redeploy — the modal reads the real percentage back off
- * the coupon, so changing it there changes what users are offered too.
+ * One coupon, every tier. Since 20 Sep 2026 it is ELECMATE_STAY_35 — 35% off
+ * for 12 months, which is £12.99 on the £19.99 electrician price (Andrew:
+ * "should be 12.99 on retention"). The half-price-for-life WINBACK50 coupon is
+ * for LAPSED customers only; offering it here would hand anyone who pressed
+ * cancel a permanent 50% off. The 40%-for-3-months coupon before that was
+ * shown 29 times and taken 0. Overridable by env so the level can be changed
+ * in the Supabase dashboard without a redeploy — the modal reads the real
+ * terms back off the coupon.
  */
-const RETENTION_COUPON_ID = Deno.env.get('RETENTION_COUPON_ID') || 'ELECMATE_STAY_40';
+const RETENTION_COUPON_ID = Deno.env.get('RETENTION_COUPON_ID') || 'ELECMATE_STAY_35';
 
 /** Pause is capped at three months: past that it is a lapsed user, not a pause. */
 const MAX_PAUSE_MONTHS = 3;

@@ -21,6 +21,12 @@ interface CalendarSettings {
    * is still bookable.
    */
   jobsAtOnce: number;
+  /**
+   * Days worked, 0 = Sunday … 6 = Saturday. One start and end for all seven
+   * days was wrong for a four-day week: Friday counted as free, "next free
+   * day" pointed at it, and the month shaded it as open.
+   */
+  workingDays: number[];
 }
 
 const DEFAULT_SETTINGS: CalendarSettings = {
@@ -33,6 +39,8 @@ const DEFAULT_SETTINGS: CalendarSettings = {
   // One, because a sole trader is the common case and it reproduces the old
   // behaviour exactly. Anyone with a second pair of hands raises it once.
   jobsAtOnce: 1,
+  // Monday to Friday. Saturdays and Sundays are opted into, not out of.
+  workingDays: [1, 2, 3, 4, 5],
 };
 
 /** Guards a persisted value that could be anything after a hand-edit. */
@@ -44,7 +52,15 @@ function loadSettings(): CalendarSettings {
   const merged = { ...DEFAULT_SETTINGS, ...stored };
   // Everyone who used the calendar before this setting existed has no value
   // saved, and a zero or a NaN here would make every slot read as full.
-  return { ...merged, jobsAtOnce: sane(merged.jobsAtOnce) };
+  const days = Array.isArray(merged.workingDays)
+    ? merged.workingDays.map(Number).filter((d) => Number.isInteger(d) && d >= 0 && d <= 6)
+    : DEFAULT_SETTINGS.workingDays;
+  return {
+    ...merged,
+    jobsAtOnce: sane(merged.jobsAtOnce),
+    // Nobody works zero days; an empty list means the value was mangled.
+    workingDays: days.length > 0 ? days : DEFAULT_SETTINGS.workingDays,
+  };
 }
 
 export function useCalendarSettings() {
@@ -72,6 +88,11 @@ export function useCalendarSettings() {
 
   const setDefaultReminder = useCallback(
     (minutes: number) => updateSettings({ defaultReminderMinutes: minutes }),
+    [updateSettings]
+  );
+
+  const setWorkingDays = useCallback(
+    (days: number[]) => updateSettings({ workingDays: days }),
     [updateSettings]
   );
 
@@ -111,5 +132,6 @@ export function useCalendarSettings() {
     setWorkingHours,
     setDefaultReminder,
     setJobsAtOnce,
+    setWorkingDays,
   };
 }

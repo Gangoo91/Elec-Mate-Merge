@@ -24,7 +24,8 @@
 import { useMemo, useRef, useEffect, useState } from 'react';
 import { addDays, differenceInMinutes, format, isBefore, isToday, startOfDay, subDays } from 'date-fns';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { ChevronLeft, ChevronRight, Plus, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { useTravelTimes } from './useTravelTimes';
 import { useSwipeable } from 'react-swipeable';
 import { cn } from '@/lib/utils';
 import { eyebrowCn } from './calendarStyles';
@@ -36,6 +37,7 @@ import {
   humanMinutes,
   isMultiDay,
   occupiesTime,
+  displayColour,
 } from './eventUtils';
 import type { CalendarEvent } from '@/types/calendar';
 
@@ -137,6 +139,8 @@ const CalendarDaySheet = ({
   );
 
   const dayEvents = useMemo(() => eventsOnDay(events, date), [events, date]);
+  // Drive time between consecutive bookings with addresses (server-side Maps).
+  const travel = useTravelTimes(events, date, open);
   /**
    * Everything the rail has to account for: timed, time-occupying work,
    * INCLUDING the middle days of a multi-day job.
@@ -316,7 +320,7 @@ const CalendarDaySheet = ({
         // directly on top of the one in the header row below — two overlapping
         // crosses in the corner.
         hideCloseButton
-        className="h-[85vh] overflow-hidden rounded-t-2xl p-0"
+        className="h-[85vh] overflow-hidden rounded-t-2xl p-0 sm:mx-auto sm:w-full sm:max-w-[760px]"
       >
         <div
           {...swipeHandlers}
@@ -409,8 +413,8 @@ const CalendarDaySheet = ({
                   onClick={() => onEventTap(event)}
                   className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left touch-manipulation active:scale-[0.99]"
                   style={{
-                    backgroundColor: `${event.colour}22`,
-                    borderLeft: `3px solid ${event.colour}`,
+                    backgroundColor: `${displayColour(event)}22`,
+                    borderLeft: `3px solid ${displayColour(event)}`,
                   }}
                 >
                   <span className="min-w-0 flex-1 truncate text-[13px] font-semibold text-white">
@@ -490,7 +494,11 @@ const CalendarDaySheet = ({
                         onPickSlot(timeFromOffset(e.clientY - box.top, gap.start, gap.end));
                       }}
                       className={cn(
-                        'absolute overflow-hidden rounded-xl border border-dashed border-elec-yellow/35 bg-elec-yellow/[0.05] text-left transition-colors touch-manipulation hover:bg-elec-yellow/[0.10] active:bg-elec-yellow/[0.14]',
+                        // Free time is the rail itself, not a box drawn on it:
+                        // the dashed yellow panels read as brown slabs on a
+                        // desktop (Andrew, 20 Sep). One quiet line says how
+                        // long the gap is; the whole gap is the tap target.
+                        'absolute overflow-hidden rounded-lg text-left transition-colors touch-manipulation hover:bg-white/[0.04] active:bg-white/[0.06]',
                         // A past day is still bookable — people write jobs up
                         // after the fact — but it should not shout at you.
                         isPast && 'opacity-45'
@@ -503,18 +511,15 @@ const CalendarDaySheet = ({
                       }}
                     >
                       {height >= 34 && (
-                        <span className="flex items-center gap-1.5 px-2.5 py-1.5">
-                          <Plus className="h-3.5 w-3.5 shrink-0 text-elec-yellow" strokeWidth={2.5} />
-                          <span className="min-w-0">
-                            <span className="block truncate text-[12px] font-semibold tabular-nums text-white">
-                              {hhmm(gap.start)}–{hhmm(gap.end)}
-                            </span>
-                            {height >= 64 && (
-                              <span className="block text-[11px] tabular-nums text-elec-yellow">
-                                {humanMinutes(minutes)} free · tap to book
-                              </span>
-                            )}
+                        <span className="block px-3 py-2">
+                          <span className="block truncate text-[12px] font-semibold tabular-nums text-white">
+                            {humanMinutes(minutes)} free
                           </span>
+                          {height >= 64 && (
+                            <span className="block text-[11px] tabular-nums text-elec-yellow">
+                              {hhmm(gap.start)}–{hhmm(gap.end)} · tap to book
+                            </span>
+                          )}
                         </span>
                       )}
                     </button>
@@ -523,6 +528,47 @@ const CalendarDaySheet = ({
               )}
 
               {/* Booked blocks */}
+              {/* Drive time to each booking from the one before, above the
+                  block in its lane. Orange when the drive is longer than the
+                  gap — the sheet is where the next job gets booked, so this
+                  is where the warning earns its place. */}
+              {lanes.map((lane, laneIndex) =>
+                lane.map(({ event, start }) => {
+                  const leg = travel.get(event.id);
+                  if (!leg) return null;
+                  const tight = leg.minutes > leg.gapMinutes;
+                  const drawStart = start < railTop ? railTop : start;
+                  // At the start of the gap (leaving the last job), unless the
+                  // gap is too short to hold a chip.
+                  const gapPx = (leg.gapMinutes / 60) * HOUR_HEIGHT;
+                  const chipTop = gapPx >= 30 ? yFor(drawStart) - gapPx + 4 : yFor(drawStart) - 22;
+                  return (
+                    <div
+                      key={`travel-${event.id}`}
+                      className="pointer-events-none absolute z-20"
+                      style={{
+                        top: Math.max(0, chipTop),
+                        // Right-hand side of the lane, clear of the gap's own
+                        // "09:00–10:00 · tap to book" label on the left.
+                        left: `calc(${TIME_COL}px + 8px + (100% - ${TIME_COL}px - 8px) * ${(laneIndex + 0.55) / laneCount})`,
+                      }}
+                    >
+                      <span
+                        title={`${leg.origin} → ${leg.destination}`}
+                        className={cn(
+                          'flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-semibold tabular-nums',
+                          tight
+                            ? 'border-orange-500/40 bg-orange-500/15 text-orange-300'
+                            : 'border-white/[0.14] bg-background text-white'
+                        )}
+                      >
+                        {leg.text} drive
+                        {tight ? ` · only ${leg.gapMinutes} min gap` : ''}
+                      </span>
+                    </div>
+                  );
+                })
+              )}
               {lanes.map((lane, laneIndex) =>
                 lane.map(({ event, start, end }) => {
                   /*
@@ -556,8 +602,8 @@ const CalendarDaySheet = ({
                         height,
                         left: `calc(${TIME_COL}px + 4px + (100% - ${TIME_COL}px - 8px) * ${laneIndex / laneCount})`,
                         width: `calc((100% - ${TIME_COL}px - 8px) / ${laneCount} - 4px)`,
-                        backgroundColor: `${event.colour}26`,
-                        borderLeft: `3px solid ${event.colour}`,
+                        backgroundColor: `${displayColour(event)}26`,
+                        borderLeft: `3px solid ${displayColour(event)}`,
                       }}
                     >
                       <span className="block truncate text-[13px] font-semibold leading-tight text-white">
@@ -646,7 +692,6 @@ const CalendarDaySheet = ({
               }
               className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black touch-manipulation active:scale-[0.98]"
             >
-              <Plus className="h-5 w-5" strokeWidth={2.5} />
               {isPast ? 'Add to this day' : firstGap ? `Book ${hhmm(firstGap)}` : 'Book anyway'}
             </button>
           </div>

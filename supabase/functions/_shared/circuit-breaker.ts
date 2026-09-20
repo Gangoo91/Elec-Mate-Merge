@@ -52,11 +52,9 @@ export class CircuitBreaker {
     this.failures++;
     this.lastFailTime = Date.now();
     console.warn(`⚠️ Circuit breaker ${this.name} - failure ${this.failures}/${this.threshold}`);
-
+    
     if (this.failures >= this.threshold) {
-      console.error(
-        `🔴 Circuit breaker ${this.name} OPEN - will retry after ${this.resetTimeout}ms`
-      );
+      console.error(`🔴 Circuit breaker ${this.name} OPEN - will retry after ${this.resetTimeout}ms`);
     }
   }
 
@@ -64,7 +62,7 @@ export class CircuitBreaker {
     return {
       name: this.name,
       failures: this.failures,
-      isOpen: this.isOpen(),
+      isOpen: this.isOpen()
     };
   }
 }

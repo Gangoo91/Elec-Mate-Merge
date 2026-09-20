@@ -34,11 +34,14 @@ function esc(s: unknown): string {
 }
 
 function buildEmail(firstName: string, isTrial: boolean, store: string) {
-  const storeName = store === 'PLAY_STORE' ? 'Google Play' : 'the App Store';
+  const storeName =
+    store === 'PLAY_STORE' ? 'Google Play' : store === 'WEB' ? 'Elec-Mate' : 'the App Store';
   const storePath =
     store === 'PLAY_STORE'
       ? 'Play Store → profile → Payments &amp; subscriptions'
-      : 'Settings → your name → Subscriptions';
+      : store === 'WEB'
+        ? 'Settings → Billing in the app (or the link in your trial-ending email)'
+        : 'Settings → your name → Subscriptions';
   const opener = isTrial
     ? `I saw your Elec-Mate trial is set not to renew — no problem at all, and your access runs to the end of the trial either way.`
     : `I saw your Elec-Mate subscription is set not to renew — no problem at all, and everything keeps working until the end of your billing period.`;
@@ -89,6 +92,9 @@ Deno.serve(async (req: Request): Promise<Response> => {
       .from('billing_events')
       .select('user_id, store, product_id, period_type, created_at')
       .eq('event_type', 'CANCELLATION')
+      // A failed card is not a decision to leave; dunning handles it. Legacy
+      // rows have a null reason and must stay in.
+      .or('cancel_reason.is.null,cancel_reason.neq.BILLING_ERROR')
       .gte('created_at', from)
       .lte('created_at', to)
       .order('created_at', { ascending: true });
@@ -159,7 +165,9 @@ Deno.serve(async (req: Request): Promise<Response> => {
       const { error: mailErr } = await resend.emails.send({
         from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
         to: email,
-        subject: firstName ? `${firstName} — quick one before it lapses` : 'Quick one before it lapses',
+        subject: firstName
+          ? `${firstName} — quick one before it lapses`
+          : 'Quick one before it lapses',
         html,
         text: htmlToPlainText(html),
       });
@@ -171,10 +179,86 @@ Deno.serve(async (req: Request): Promise<Response> => {
 
       await db.from('trial_emails_sent').insert({ user_id: c.user_id, email_type: EMAIL_TYPE });
       sent++;
-      details.push(`${email} (${isTrial ? 'trial' : c.period_type ?? 'unknown'})`);
+      details.push(`${email} (${isTrial ? 'trial' : (c.period_type ?? 'unknown')})`);
     }
 
-    console.log(`[askwhy] sent=${sent} skipped=${skipped} of ${cancels?.length ?? 0} cancellations`);
+    // ── Web trial cancellers (20 Sep 2026) ────────────────────────────────
+    // The 13% reply rate is the best signal we have, and until now it only
+    // reached store cancellers. Web trialists who cancelled in the same
+    // 1–25 h window get the same ask, unless they already wrote a reason
+    // detail in the cancel flow (then we know why) or already had one.
+    const { data: webCancels } = await db
+      .from('cancel_survey_responses')
+      .select('user_id, reason, reason_detail, outcome_at, subscription_tier')
+      .eq('outcome', 'cancelled')
+      .gte('outcome_at', from)
+      .lte('outcome_at', to)
+      .order('outcome_at', { ascending: true });
+    let webSent = 0;
+    for (const c of webCancels ?? []) {
+      if (!c.user_id || seen.has(c.user_id)) continue;
+      seen.add(c.user_id);
+      const wrote = (c.reason_detail ?? '').trim();
+      if (wrote && wrote !== 'Other' && wrote.length > 12) continue; // they told us already
+      // Changed their mind since? subscription-resume records a 'resumed' row.
+      const { data: resumed } = await db
+        .from('trial_emails_sent')
+        .select('id')
+        .eq('user_id', c.user_id)
+        .eq('email_type', 'resumed')
+        .gte('sent_at', c.outcome_at)
+        .limit(1);
+      if (resumed && resumed.length > 0) continue;
+      const { data: already } = await db
+        .from('trial_emails_sent')
+        .select('id')
+        .eq('user_id', c.user_id)
+        .eq('email_type', EMAIL_TYPE)
+        .limit(1);
+      if (already && already.length > 0) continue;
+      const { data: au } = await db.auth.admin.getUserById(c.user_id);
+      const email = au?.user?.email ?? null;
+      if (!email) continue;
+      const { data: suppressed } = await db
+        .from('email_suppressions')
+        .select('email')
+        .eq('email', email.toLowerCase())
+        .limit(1);
+      if (suppressed && suppressed.length > 0) continue;
+      const { data: prof } = await db
+        .from('profiles')
+        .select('full_name, is_trial, created_at')
+        .eq('id', c.user_id)
+        .maybeSingle();
+      const firstName = (prof?.full_name ?? '').trim().split(/\s+/)[0] ?? '';
+      const ageDays = prof?.created_at
+        ? (Date.now() - new Date(prof.created_at).getTime()) / 86_400_000
+        : 99;
+      const isTrial = ageDays <= 9; // cancelled inside the first week: a trial, whatever the flag says
+      const html = buildEmail(firstName, isTrial, 'WEB');
+      const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
+      const { error: mailErr } = await resend.emails.send({
+        from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
+        to: email,
+        subject: firstName
+          ? `${firstName} — quick one before it lapses`
+          : 'Quick one before it lapses',
+        html,
+        text: htmlToPlainText(html),
+      });
+      if (mailErr) {
+        console.warn(`[askwhy] web send failed for ${c.user_id}:`, mailErr.message);
+        continue;
+      }
+      await db.from('trial_emails_sent').insert({ user_id: c.user_id, email_type: EMAIL_TYPE });
+      webSent++;
+      details.push(`${email} (web ${isTrial ? 'trial' : 'paid'})`);
+    }
+    sent += webSent;
+
+    console.log(
+      `[askwhy] sent=${sent} (web ${webSent}) skipped=${skipped} of ${cancels?.length ?? 0} store + ${webCancels?.length ?? 0} web cancellations`
+    );
     return new Response(JSON.stringify({ success: true, sent, skipped, details }), {
       status: 200,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

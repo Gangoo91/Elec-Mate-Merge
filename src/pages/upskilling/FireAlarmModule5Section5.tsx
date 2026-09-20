@@ -272,6 +272,36 @@ const FireAlarmModule5Section5 = () => {
 
         <ContentEyebrow>The commissioning sequence — order matters</ContentEyebrow>
 
+        <RegsCallout
+          source="BS 5839-1:2025 · Clause 37, Commissioning — commentary and 37.2, 37.4, 37.9"
+          clause={
+            <>
+              It is not, in general, the responsibility of the commissioning technician to verify
+              conformity of the design, or of the installation work, to this part of BS 5839 (i.e.
+              with Section 2 and Section 4). In general, the responsibility of the commissioning
+              technician is to verify that the system operates correctly in the manner designed and
+              that the installation workmanship is of an adequate standard. However, in practice, it
+              might be difficult to check that the system conforms to Section 2 until the time of
+              commissioning, e.g. commissioning might represent the first (and only) opportunity to
+              determine whether the number and distribution of fire alarm sounders is sufficient to
+              conform to Clause 15 in respect of sound pressure levels.
+              <br />
+              <br />
+              <strong>37.2</strong> The system should be commissioned by a competent person (see
+              3.13) who has access to the requirements of the designer.
+              <br />
+              <br />
+              <strong>37.4</strong> At commissioning, the entire system should be inspected and
+              tested to verify that it operates satisfactorily.
+              <br />
+              <br />
+              <strong>37.9</strong> On completion of commissioning, a commissioning certificate
+              signed by a competent person should be issued.
+            </>
+          }
+          meaning="Read this against Clause 34 and the whole chain falls into place. The designer owns Section 2, the installer owns Section 4 and whatever of Section 2 was delegated with adequate information, and the commissioning technician owns 'does it work as designed, and is the workmanship adequate'. Nobody is auditing everybody. But the same caveat appears in both clauses, and it is the practical heart of the job: some things can only be established at commissioning. Sound pressure levels under Clause 15 are the standard's own example — commissioning may be the first and only chance to find out whether the sounders are sufficient. That is why a commissioning engineer who finds the building too loud has found a real defect, not something outside their remit, even though the sounder count was someone else's decision. 37.9 then requires the certificate — and Annex G sets what that certificate has to say."
+        />
+
         <ConceptBlock
           title="Why the order is fixed"
           plainEnglish="Commissioning is a sequence of verifications that build on each other. Each step assumes the previous step has passed; each step's tools and methods are different. Skipping or re-ordering produces gaps in the safety case — a step that depends on an earlier step having passed is signed off without the underlying basis. Doing the steps in order, with each step's results recorded before moving to the next, gives an end-to-end verification record that is contractually and legally robust."

@@ -102,6 +102,9 @@ const MinorWorksForm = ({
      * written — see reportCloud.createReport.
      */
     _clientCertId: crypto.randomUUID(),
+    // The job this certificate was started from, if any — becomes
+    // reports.project_id on create (reportCloud.createReport strips it).
+    _projectId: readCertificatePrefill()?.projectId ?? null,
     // Certificate Header
     certificateNumber: '',
 

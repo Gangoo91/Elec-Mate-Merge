@@ -97,7 +97,18 @@ export function TLDR({ points, className }: TLDRProps) {
 
 interface ConceptBlockProps {
   title: string;
-  children: ReactNode;
+  /**
+   * The body prose. Optional: a concept is sometimes carried entirely by
+   * `plainEnglish` and `onSite`, and several pages already use the block that
+   * way — `<ConceptBlock title plainEnglish onSite />` with no body.
+   *
+   * This was typed as required, so every one of those was a `tsc` error that
+   * nothing caught, because `vite build` runs no type check. Widening a
+   * required prop to optional cannot break an existing caller; the guard is
+   * below, where an absent body no longer renders an empty div (which still
+   * counted for the section's `space-y-3` and left a gap under the heading).
+   */
+  children?: ReactNode;
   /**
    * Optional inline asides — render as italicised paragraphs with a thin
    * left rule rather than separate sub-cards.
@@ -126,9 +137,11 @@ export function ConceptBlock({
             the Functional Skills pages run 74rem so a line of worked
             calculation fits on one line, which pushed running prose to 119
             characters. Cards keep the full width; only paragraphs cap. */}
-      <div className="max-w-[80ch] space-y-3 text-[14.5px] leading-relaxed text-white lg:text-[16px]">
-        {children}
-      </div>
+      {children && (
+        <div className="max-w-[80ch] space-y-3 text-[14.5px] leading-relaxed text-white lg:text-[16px]">
+          {children}
+        </div>
+      )}
 
       {plainEnglish && (
         <p className="border-l-2 border-blue-400/70 pl-4 text-[13.5px] italic leading-relaxed text-white lg:text-[15px]">

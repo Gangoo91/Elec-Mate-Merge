@@ -133,6 +133,35 @@ jobs:
       - name: Fire alarm certificates carry the Annex G statements of conformity
         run: npm run check:fire-alarm-declarations
 
+      # Green from the start, so enforced. The course makes ~840 BS 5839-1
+      # citations and they are all real clause numbers — but fourteen top-level
+      # clauses were never cited anywhere, and thirteen of those were topics the
+      # course teaches at length. M5S5 is four hundred lines on commissioning
+      # that cited 14.17, 29.6 and 30 and never Clause 37, "Commissioning".
+      # Module 1 is four sections on system categories that never cited Clause 4,
+      # "Categories of system" — two of them miscited it as clause 5, which is
+      # "Exchange of information and definition of responsibilities".
+      #
+      # That is what content written from memory looks like after piecemeal
+      # correction: the citations someone thought to check became right, and the
+      # obvious one — the clause the section is ABOUT — stayed missing. A learner
+      # cannot look up what is never cited.
+      - name: Fire alarm sections cite their governing clause
+        run: npm run check:fire-alarm-governing-clauses
+
+      # Green from the start, so enforced. learning.tsx renders `meaning`,
+      # `plainEnglish`, `onSite` and friends as React children, and React does
+      # not decode HTML entities in a JavaScript string. So `meaning="Clause
+      # 36.1&rsquo;s NOTE…"` puts the literal characters &rsquo; on the page.
+      # Four were live: two in M5S4 and three in M3S6 that rendered every mention
+      # of the O&M manual as "O&amp;M".
+      #
+      # Nothing in the toolchain sees it — valid TS, valid JSX, well-formed
+      # string literal, and `vite build` runs no tsc anyway. It is visible only
+      # by rendering the page and reading it.
+      - name: Fire alarm course has no HTML entities in rendered string props
+        run: npm run check:fire-alarm-entities
+
       # Green from the start, so enforced. ELE-1703: a CIS reverse-charge sale
       # carries zero VAT, so it took the same branch as a genuinely
       # out-of-scope supply and posted to Xero as "No VAT" — under-reporting
@@ -203,6 +232,38 @@ jobs:
       # composer 84px past the fold.
       - name: App shell leaves room for the banners
         run: npm run check:app-shell
+
+      # Green from the start, so enforced. ELE-1748: Anthropic is ~£1,224 a
+      # month, 65% of the business's running costs, and not one token of it was
+      # recorded anywhere — so no reduction could be anything but guesswork.
+      # The four token counts are now stored verbatim from Anthropic; cost_usd
+      # is DERIVED, and the derived half is the half that can be silently
+      # wrong. A misplaced cache multiplier produces a plausible number nobody
+      # questions until it is used to make a decision about the bill.
+      #
+      # The cache assertions matter most: a read is a tenth of a fresh input
+      # token and a write is a quarter MORE than one. Get that backwards and
+      # prompt caching looks like it saves nothing, and someone removes it.
+      - name: AI cost arithmetic
+        run: npm run check:ai-cost
+
+      # Green from the start, so enforced. A reconciliation on 20 Sep 2026
+      # found SIXTEEN functions live in production with no source in the repo —
+      # including `stripe-webhook`, and `text-to-speech` and
+      # `scan-inspection-photo`, both of which the app calls on a user's behalf.
+      #
+      # Code in that state is invisible to lint, typecheck, CI, review, git
+      # history and blame, and a redeploy from a clean checkout erases it.
+      # `lti-deep-link` is what it costs: eight months deployed carrying an
+      # unsigned `{"alg":"none"}` JWT path that was not a fallback but the only
+      # path, because the condition guarding the real branch tested a column
+      # that does not exist. No reviewer could have caught it.
+      #
+      # Checks one direction only — deployed must exist in the repo. More in
+      # the repo than deployed is normal. Skips where the Supabase CLI or a
+      # token is unavailable rather than failing the build.
+      - name: Every deployed edge function is in the repo
+        run: npm run check:fns-versioned
 
       # Advisory ONLY because it is currently red: four general-upskilling mock
       # exam banks report CHANGED KEYS against HEAD (asbestos, first aid, MEWP,

@@ -126,7 +126,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'Vertical separation is fundamental: a fire on a different floor changes the evacuation strategy entirely. Each storey is its own zone (the BS 4422:2024 storey definition treats a gallery >50% as part of the storey it projects into), so a two-storey building has at least two zones plus a separate zone per stairway. A single-storey building can have one zone subject to the 2,000 m² / 60 m rules. This produces a clear at-a-glance map of where the fire is.',
+      'Vertical separation is fundamental: a fire on a different floor changes the evacuation strategy entirely. Clause 12.1 b) restricts each zone to a single storey where the total floor area of the BUILDING is greater than 300 m² — so a two-storey building over that size has at least two zones plus a separate zone per stairway. Note the condition, because the threshold is easy to misremember as the 2,000 m² zone-area cap: NOTE 2 to 12.1 permits a zone to cover more than one storey where the building is 300 m² or less, which is why a small two-storey shop can legitimately be wired as a single zone. The BS 4422:2024 storey definition treats a gallery >50% as part of the storey it projects into. A single-storey building can have one zone subject to the 2,000 m² / 60 m rules.',
   },
   {
     id: 5,
@@ -237,7 +237,7 @@ const FireAlarmModule3Section1 = () => {
             'Maximum zone area = 2,000 m² floor area. Firm. Cannot be exceeded by variation under BS 5839-1:2025.',
             'Maximum search distance within a zone = 60 m for non-addressable systems (the walk to find the operated device). Addressable systems relax this because the device address is the location.',
             'One zone per fire compartment, where practicable. The zone aligns with the passive fire-protection architecture.',
-            'Multi-storey: each storey is a separate zone. Gallery >50% of the space it projects into = part of the storey (BS 4422:2024 / BS 5839-1:2025 alignment).',
+            'Multi-storey: where the building exceeds 300 m², each storey is a separate zone (12.1 b); at 300 m² or less a zone may span storeys. Gallery >50% of the space it projects into = part of the storey (BS 4422:2024 / BS 5839-1:2025 alignment).',
             'Each stairway is a separate zone. The escape route is identified independently from the storeys.',
             'Short-circuit isolators (SCIs) at zone boundaries ensure a single short cannot lose protection from more than one zone (≤2,000 m² of devices).',
             'Zone plans MUST be displayed at the CIE (clause 22.2.5). Their absence in multi-zone sleeping premises is a NEW unacceptable variation — not a variation that can be agreed.',
@@ -711,14 +711,17 @@ const FireAlarmModule3Section1 = () => {
         </ConceptBlock>
 
         <ConceptBlock
-          title="Multi-storey — one zone per storey"
-          plainEnglish="Vertical separation matters. A fire on a different floor changes the evacuation strategy entirely (occupants below the fire evacuate normally; occupants above the fire need a managed strategy). The CIE indication must distinguish floors. BS 5839-1:2025 requires each storey to be a separate zone. The 2025 storey definition (aligned with BS 4422:2024) treats a gallery whose area is more than half the space it projects into as part of the storey. Below 50% the gallery is a feature of the storey beneath, not a separate floor."
+          title="Multi-storey — one zone per storey above 300 m²"
+          plainEnglish="Vertical separation matters, and clause 12.1 b) ties it to building size: above 300 m² total floor area each zone is restricted to a single storey, while NOTE 2 lets a zone span storeys at 300 m² or less. A fire on a different floor changes the evacuation strategy entirely (occupants below the fire evacuate normally; occupants above the fire need a managed strategy). The CIE indication must distinguish floors. BS 5839-1:2025 requires each storey to be a separate zone. The 2025 storey definition (aligned with BS 4422:2024) treats a gallery whose area is more than half the space it projects into as part of the storey. Below 50% the gallery is a feature of the storey beneath, not a separate floor."
         >
           <p>Practical implications:</p>
           <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
             <li>
-              <strong>Two-storey premises</strong> — at least two zones (plus stairway, see below).
-              Even if the total floor area is well under 2,000 m², each storey gets its own zone.
+              <strong>Two-storey premises over 300 m²</strong> — at least two zones (plus stairway,
+              see below). The 2,000 m² zone-area cap is a separate limit and does not rescue you
+              here: a building of 900 m² total is well under the area cap and still gets a zone per
+              storey, because the threshold that matters for storeys is the 300 m² one in 12.1 b).
+              Below that, NOTE 2 lets a single zone span both floors.
             </li>
             <li>
               <strong>Mezzanine / gallery &gt;50%</strong> — counted as part of the storey it
@@ -1038,7 +1041,7 @@ const FireAlarmModule3Section1 = () => {
             'Maximum zone area = 2,000 m² floor area. Firm. No variation permitted to exceed it.',
             'Maximum search distance within a zone = 60 m for non-addressable systems. Addressable systems relax this because the device address resolves location.',
             'One zone per fire compartment, where practicable. Align with passive fire protection.',
-            'One zone per storey. BS 4422:2024 storey definition applies — gallery >50% of projected space = part of storey. ≤50% = feature of storey beneath.',
+            'One zone per storey where the building is over 300 m² (12.1 b); a zone may span storeys at 300 m² or less. BS 4422:2024 storey definition applies — gallery >50% of projected space = part of storey. ≤50% = feature of storey beneath.',
             'One zone per stairway. The escape route is identified independently end-to-end, not split at landings.',
             'Short-circuit isolators at zone boundaries on a loop ensure a single fault loses no more than one zone (≤ 2,000 m²) of devices.',
             'Zone plan at the CIE per clause 22.2.5. Absence in multi-zone sleeping premises = unacceptable variation (new in 2025).',

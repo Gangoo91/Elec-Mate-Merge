@@ -505,9 +505,13 @@ const sections = [
                   BS 7671 Reg 560.8 requires that cables supplying safety circuits — including fire
                   alarm zone wiring and sounder circuits — shall have a resistance to fire rating.
                   Where no British Standard specifies the duration, a minimum one-hour rating
-                  applies. In practice this means MICC (mineral-insulated copper-clad) or IEC
-                  60331-compliant enhanced fire-resistant cable (such as FP200 Gold or equivalent)
-                  is required for fire alarm wiring in commercial premises. Standard PVC
+                  applies. In practice this means fire-resisting cable rather than general-purpose
+                  cable. BS 5839-1:2025 sets the two grades: clause 25.5 STANDARD, 30 minutes,
+                  class PH 30 — which is where FP200 Gold and equivalents sit, and which covers
+                  most of a typical installation; and clause 25.6 ENHANCED, 120 minutes, class
+                  PH 120, tested to BS EN 50200:2015 and BS 8434-2, specified selectively where
+                  the fire strategy needs survival beyond 30 minutes. MICC is the extreme-duty
+                  option. Do not describe FP200 as enhanced — it is the standard grade. Standard PVC
                   twin-and-earth is not acceptable for life-safety circuits. Where standard PVC
                   cable is found on fire alarm zone or sounder wiring during an EICR, this is
                   typically a <strong>C2 observation</strong> — potentially dangerous, requiring

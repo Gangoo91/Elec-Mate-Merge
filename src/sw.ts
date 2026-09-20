@@ -527,6 +527,12 @@ self.addEventListener('notificationclick', (event: NotificationEvent) => {
     default:
       url = '/dashboard';
   }
+  // A generic in-app destination beats the per-type table: lifecycle pushes
+  // (trial-sequence, dormant nudges) name the page they want opened. Same key
+  // the native tap handler honours (useNativeApp resolvePushDestinationUrl).
+  if (typeof data.deep_link === 'string' && data.deep_link.startsWith('/')) {
+    url = data.deep_link;
+  }
 
   event.waitUntil(
     self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {

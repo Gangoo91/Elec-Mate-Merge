@@ -272,6 +272,31 @@ const FireAlarmModule5Section6 = () => {
 
         <ContentEyebrow>The handover documentation set</ContentEyebrow>
 
+        <RegsCallout
+          source="BS 5839-1:2025 · Clause 38, Documentation and Clause 40, Handover — commentary"
+          clause={
+            <>
+              <strong>Clause 38</strong> &mdash; The responsibility for provision of the
+              documentation might rest with more than one organization and needs to be defined
+              before an order for the system is placed. On completion of commissioning (see Clause
+              37), either the documentation needs to have been provided to the relevant parties, or
+              any absent documentation identified for appropriate action. Particular importance
+              needs to be attached to the preparation and accuracy of as-fitted drawings and
+              operation and maintenance manuals. Without these drawings and manuals, maintenance or
+              future modification of the system might be difficult.
+              <br />
+              <br />
+              <strong>Clause 40</strong> &mdash; Before accepting the handover of the system, the
+              purchaser or a representative needs to be satisfied with the installed system, that
+              the user has an adequate understanding of the operation of the system and the measures
+              necessary to prevent false alarms, and that relevant documentation has been provided.
+              As evidence of acceptance, an acceptance certificate needs to be signed by the
+              purchaser.
+            </>
+          }
+          meaning="Two things here are easy to get wrong. First, who owns the documentation is settled BEFORE the order is placed, not discovered at handover — and where something is genuinely missing, the standard's answer is to identify it for action, not to quietly hand over an incomplete pack. Second, look at who signs the acceptance certificate: the PURCHASER, not the installer. That makes acceptance an act by the person receiving the system, which is why it cannot be manufactured by the contractor at the end of the job. The three things the purchaser is checking are also specific — satisfied with the system, the user understands how to operate it AND how to avoid false alarms, and the documentation has arrived. False-alarm understanding sitting inside the acceptance test tells you how seriously the standard takes it."
+        />
+
         <ConceptBlock
           title="What is handed over — the eight documents"
           plainEnglish="At handover, the commissioning organisation hands over a defined set of documents that constitute the system's permanent record. The user retains them for the life of the system. Each document has a specific purpose and audience: the acceptance certificate proves commissioning sign-off; the operating manual lets the user run the system day-to-day; the O&M manual supports the maintenance organisation; the as-installed drawings show what was built; the cause-and-effect documents the design intent; the logbook records ongoing events; the variations record documents departures from BS 5839-1:2025; the third-party certification shows competence."

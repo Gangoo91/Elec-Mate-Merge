@@ -43,6 +43,10 @@ import CalendarSettingsSheet from './CalendarSettingsSheet';
 import CalendarAgendaStrip from './CalendarAgendaStrip';
 import CalendarSummaryStrip from './CalendarSummaryStrip';
 import CalendarTidyStrip from './CalendarTidyStrip';
+import WeekDayStrip from './WeekDayStrip';
+import { printWeek } from './printWeek';
+import CalendarLegend from './CalendarLegend';
+import { eventsOnDay, isSyntheticEvent, occupiesTime, totalHours } from './eventUtils';
 import { DIARY_TIDY_KEY } from './useDiaryTidy';
 import StartDateRequestsCard from '@/components/electrician/booking/StartDateRequestsCard';
 import { useStartDateRequests } from '@/hooks/useStartDateRequests';
@@ -64,7 +68,7 @@ import { spawnFromBooking } from '@/lib/bookingSpawn';
 import { useCalendarPulse } from '@/hooks/useCalendarPulse';
 import { useGoogleCalendarSync } from '@/hooks/useGoogleCalendarSync';
 import { useOutlookCalendarSync } from '@/hooks/useOutlookCalendarSync';
-import { toast } from '@/hooks/use-toast';
+import { dismiss, toast } from '@/hooks/use-toast';
 import {
   trackCalendarCustomerAttached,
   trackCalendarJobAction,
@@ -85,7 +89,14 @@ import type {
 const CalendarPageContent = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const { settings, setDefaultView, setWorkingHours, setDefaultReminder, setJobsAtOnce } =
+  const {
+    settings,
+    setDefaultView,
+    setWorkingHours,
+    setDefaultReminder,
+    setJobsAtOnce,
+    setWorkingDays,
+  } =
     useCalendarSettings();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [view, setView] = useState<CalendarView>(settings.defaultView);
@@ -115,6 +126,8 @@ const CalendarPageContent = () => {
   const [tellTarget, setTellTarget] = useState<TellCustomerTarget | null>(null);
   /** The saved booking the email is sent against. */
   const [tellEventId, setTellEventId] = useState<string | null>(null);
+  /** The way back from the last drag, while its Tell sheet is open. */
+  const [tellUndo, setTellUndo] = useState<(() => void) | null>(null);
   const [tellBooking, setTellBooking] = useState<{
     title: string;
     start: Date;
@@ -195,6 +208,18 @@ const CalendarPageContent = () => {
         const we = endOfWeek(currentDate, { weekStartsOn: 1 });
         return { dateFrom: ws.toISOString(), dateTo: we.toISOString() };
       }
+      case 'three': {
+        const ts = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+        const te = new Date(
+          currentDate.getFullYear(),
+          currentDate.getMonth(),
+          currentDate.getDate() + 2,
+          23,
+          59,
+          59
+        );
+        return { dateFrom: ts.toISOString(), dateTo: te.toISOString() };
+      }
       case 'day': {
         const ds = new Date(
           currentDate.getFullYear(),
@@ -255,6 +280,8 @@ const CalendarPageContent = () => {
           return addMonths(d, 1);
         case 'week':
           return addWeeks(d, 1);
+        case 'three':
+          return addDays(d, 3);
         case 'day':
           return addDays(d, 1);
       }
@@ -270,6 +297,8 @@ const CalendarPageContent = () => {
           return subMonths(d, 1);
         case 'week':
           return subWeeks(d, 1);
+        case 'three':
+          return subDays(d, 3);
         case 'day':
           return subDays(d, 1);
       }
@@ -384,10 +413,159 @@ const CalendarPageContent = () => {
     setView('week');
   }, [haptic]);
 
+  /**
+   * A booking dragged to a new time or day on the desktop grid.
+   *
+   * Same write and the same "tell the customer it moved" prompt as changing
+   * the time in Edit — a drag is not allowed to be a quieter way to move a
+   * job the customer has been told about. Split jobs are refused here: their
+   * days are edited as a set from the sheet, and dragging one day of three
+   * silently would break the set.
+   */
+  const handleMoveEvent = useCallback(
+    (event: CalendarEvent, minuteShift: number, dayShift: number) => {
+      if (isSyntheticEvent(event)) return;
+      if (jobDays(event, allEvents).length > 1) {
+        toast({
+          title: 'This is one day of a split job',
+          description: 'Move its days together from Edit.',
+        });
+        return;
+      }
+      const before = event;
+      const start = new Date(event.start_at);
+      const end = new Date(event.end_at);
+      start.setDate(start.getDate() + dayShift);
+      end.setDate(end.getDate() + dayShift);
+      start.setMinutes(start.getMinutes() + minuteShift);
+      end.setMinutes(end.getMinutes() + minuteShift);
+      haptic.selection();
+      /*
+       * Say what it now clashes with, and offer the way back. A drag is one
+       * gesture with no confirm step, so the toast IS the confirmation: where
+       * it landed, whether that is on top of something, and Undo.
+       */
+      const clashes = allEvents.filter(
+        (e) =>
+          e.id !== event.id &&
+          !isSyntheticEvent(e) &&
+          occupiesTime(e) &&
+          !e.all_day &&
+          new Date(e.start_at) < end &&
+          new Date(e.end_at) > start
+      );
+      // Undo puts the booking back AND drops the "tell the customer it
+      // moved" prompt — a sheet offering to announce a move that no longer
+      // happened is worse than no sheet.
+      let moveToast: string | number | undefined;
+      const revert = () => {
+        dismiss(moveToast);
+        setTellEventId(null);
+        setTellTarget(null);
+        setTellBooking(null);
+        setTellUndo(null);
+        updateMutation.mutate({
+          id: event.id,
+          updates: { start_at: before.start_at, end_at: before.end_at },
+        });
+      };
+      updateMutation.mutate(
+        { id: event.id, updates: { start_at: start.toISOString(), end_at: end.toISOString() } },
+        {
+          onSuccess: (updated) => {
+            moveToast = toast({
+              title: `Moved to ${format(start, 'EEE d MMM, HH:mm')}`,
+              description:
+                clashes.length > 0
+                  ? `Now overlaps ${clashes.map((c) => c.title || 'a booking').join(', ')}.`
+                  : undefined,
+              variant: clashes.length > 0 ? 'destructive' : undefined,
+              action: { label: 'Undo', onClick: revert },
+              // The Tell sheet opens on top of this toast; four seconds was
+              // gone before anyone had read it (20 Sep, in Chrome).
+              duration: 12_000,
+            });
+            const customer = customers.find((c) => c.id === event.client_id);
+            if (!customer) return;
+            setTellTarget({
+              id: customer.id,
+              name: customer.name,
+              phone: customer.phone,
+              email: customer.email,
+            });
+            setTellEventId(updated.id);
+            setTellUndo(() => revert);
+            setTellBooking({
+              title: updated.title,
+              start: new Date(updated.start_at),
+              end: new Date(updated.end_at),
+              allDay: updated.all_day,
+              location: updated.location,
+              movedFrom: {
+                start: new Date(before.start_at),
+                end: new Date(before.end_at),
+                allDay: before.all_day,
+              },
+            });
+            setTellSheetOpen(true);
+          },
+        }
+      );
+    },
+    [allEvents, customers, haptic, updateMutation]
+  );
+
+  /** Title tap → a date. Keeps the view; only the period moves. */
+  const handleJumpTo = useCallback(
+    (date: Date) => {
+      haptic.selection();
+      setDirection(date > currentDate ? 1 : -1);
+      setCurrentDate(date);
+    },
+    [haptic, currentDate]
+  );
+
+  /** The week on paper — see printWeek.ts for why not window.print(). */
+  const handlePrint = useCallback(() => {
+    const ok = printWeek(currentDate, allEvents, companyProfile?.company_name ?? null);
+    if (!ok) {
+      toast({
+        title: 'Could not open the print window',
+        description: 'Allow pop-ups for this site and try again.',
+        variant: 'destructive',
+      });
+    }
+  }, [currentDate, allEvents, companyProfile?.company_name]);
+
   const handleOpenSelectedAsDay = useCallback(() => {
     setCurrentDate(selectedDate ?? new Date());
     setView('day');
   }, [selectedDate]);
+
+  /**
+   * Arrow keys move the period on a keyboard; T is today. Sean drives the
+   * diary from a laptop in the office. Ignored while typing or while a sheet
+   * has the focus, so a booking form's cursor keys stay its own.
+   */
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      const t = e.target as HTMLElement | null;
+      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+      if (t?.closest('[role="dialog"]')) return;
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        goPrevious();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        goNext();
+      } else if (e.key === 't' || e.key === 'T') {
+        goToday();
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [goPrevious, goNext, goToday]);
 
   // Event tap — synthetic events navigate to the record they stand for. The
   // mapping lives in diaryLinks so the hub panels resolve a tap identically.
@@ -422,10 +600,11 @@ const CalendarPageContent = () => {
   );
 
   // Time slot tap (week/day view)
-  const handleTimeSlotTap = useCallback((date: Date, hour: number) => {
+  const handleTimeSlotTap = useCallback((date: Date, hour: number, minute = 0) => {
     setNewEventDate(date);
     setNewEventHour(hour);
-    setNewEventMinute(0);
+    // The lower half of an hour cell books at :30 — the rail is the picker.
+    setNewEventMinute(minute);
     setNewEventDays(undefined);
     setEditingEvent(null);
     setEventSheetOpen(true);
@@ -1113,7 +1292,11 @@ const CalendarPageContent = () => {
       {/* A calendar earns its width: the month grid, the week columns and the
           agenda all get more readable the more of the screen they have, and
           `max-w-6xl` left a third of a desktop window empty beside the grid. */}
-      <div className="mx-auto max-w-[1600px] lg:px-8">
+      {/* Full width of the content area, sidebar to window edge. The 1600px
+          cap and 32px gutters left a strip of dark nothing either side of the
+          grid on a wide screen (Andrew, 20 Sep). A calendar wants every column
+          of width it can get. */}
+      <div className="w-full lg:px-5">
         <CalendarHeader
           currentDate={currentDate}
           view={view}
@@ -1125,13 +1308,15 @@ const CalendarPageContent = () => {
           googleConnecting={googleSync.connecting}
           onConnectGoogle={googleSync.connect}
           onViewChange={handleViewChange}
+          onJumpTo={handleJumpTo}
+          onPrint={handlePrint}
         />
 
         <motion.main
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="space-y-4 px-4 py-4"
+          className="space-y-3 px-4 py-3 pb-28 sm:space-y-4 sm:py-4 sm:pb-6 lg:px-0"
         >
           {/* ELE-1755 — what the fortnight ahead still needs: bookings that
               are not jobs yet, customers never told. Renders nothing when
@@ -1188,46 +1373,144 @@ const CalendarPageContent = () => {
                 selectedDate={selectedDate}
                 workingHoursStart={settings.workingHoursStart}
                 workingHoursEnd={settings.workingHoursEnd}
+                workingDays={settings.workingDays}
                 capacity={settings.jobsAtOnce}
               />
             )}
 
             {view === 'week' && (
+              <>
+                {/* A phone cannot show a week of detail in seven 48px columns —
+                    every title read "M20…". It shows the week's shape and one
+                    day's detail: the day strip, then that day's rail. Next
+                    week keeps the weekday. From `sm` the time grid is legible
+                    and takes over. */}
+                <div className="space-y-3 sm:hidden">
+                  <WeekDayStrip
+                    currentDate={currentDate}
+                    events={allEvents}
+                    workingHoursStart={settings.workingHoursStart}
+                    workingHoursEnd={settings.workingHoursEnd}
+                    workingDays={settings.workingDays}
+                    onSelect={(d) => {
+                      haptic.selection();
+                      setCurrentDate(d);
+                    }}
+                  />
+                  {/* Which day the rail is showing — the header says the
+                      week, the chip is highlighted, and this says it in words. */}
+                  {(() => {
+                    const onDay = eventsOnDay(allEvents, currentDate).filter(
+                      (e) => !isSyntheticEvent(e) && occupiesTime(e)
+                    );
+                    const hours = totalHours(
+                      onDay,
+                      settings.workingHoursEnd - settings.workingHoursStart
+                    );
+                    return (
+                      <p className="flex items-baseline gap-2 px-1 text-[15px] font-semibold tracking-tight text-white">
+                        {currentDate.toLocaleDateString('en-GB', {
+                          weekday: 'long',
+                          day: 'numeric',
+                          month: 'long',
+                        })}
+                        <span className="text-[12px] font-medium tabular-nums text-white">
+                          {onDay.length === 0
+                            ? 'nothing booked'
+                            : `${onDay.length} booked · ${hours % 1 === 0 ? hours : hours.toFixed(1)}h`}
+                        </span>
+                      </p>
+                    );
+                  })()}
+                  <CalendarDayView
+                    currentDate={currentDate}
+                    events={allEvents}
+                    workingHoursStart={settings.workingHoursStart}
+                    workingHoursEnd={settings.workingHoursEnd}
+                    onEventTap={handleEventTap}
+                    onTimeSlotTap={handleTimeSlotTap}
+                    onSwipeLeft={goNext}
+                    onSwipeRight={goPrevious}
+                  />
+                </div>
+                <div className="hidden sm:block">
+                  <CalendarWeekView
+                    currentDate={currentDate}
+                    events={allEvents}
+                    workingHoursStart={settings.workingHoursStart}
+                    workingHoursEnd={settings.workingHoursEnd}
+                    onEventTap={handleEventTap}
+                    onTimeSlotTap={handleTimeSlotTap}
+                    onSwipeLeft={goNext}
+                    onSwipeRight={goPrevious}
+                    workingDays={settings.workingDays}
+                    onMoveEvent={handleMoveEvent}
+                  />
+                </div>
+              </>
+            )}
+
+            {view === 'three' && (
               <CalendarWeekView
                 currentDate={currentDate}
+                days={3}
+                anchor="day"
                 events={allEvents}
                 workingHoursStart={settings.workingHoursStart}
                 workingHoursEnd={settings.workingHoursEnd}
+                workingDays={settings.workingDays}
                 onEventTap={handleEventTap}
                 onTimeSlotTap={handleTimeSlotTap}
                 onSwipeLeft={goNext}
                 onSwipeRight={goPrevious}
+                onMoveEvent={handleMoveEvent}
               />
             )}
 
             {view === 'day' && (
-              <CalendarDayView
-                currentDate={currentDate}
-                events={allEvents}
-                workingHoursStart={settings.workingHoursStart}
-                workingHoursEnd={settings.workingHoursEnd}
-                onEventTap={handleEventTap}
-                onTimeSlotTap={handleTimeSlotTap}
-                onSwipeLeft={goNext}
-                onSwipeRight={goPrevious}
-              />
+              <>
+                {/* The next day is the commonest move in a diary; the strip
+                    puts the whole week within a thumb's reach of the rail. */}
+                <WeekDayStrip
+                  currentDate={currentDate}
+                  events={allEvents}
+                  workingHoursStart={settings.workingHoursStart}
+                  workingHoursEnd={settings.workingHoursEnd}
+                  workingDays={settings.workingDays}
+                  onSelect={(d) => {
+                    haptic.selection();
+                    setCurrentDate(d);
+                  }}
+                />
+                <CalendarDayView
+                  currentDate={currentDate}
+                  events={allEvents}
+                  workingHoursStart={settings.workingHoursStart}
+                  workingHoursEnd={settings.workingHoursEnd}
+                  onEventTap={handleEventTap}
+                  onTimeSlotTap={handleTimeSlotTap}
+                  onSwipeLeft={goNext}
+                  onSwipeRight={goPrevious}
+                  onMoveEvent={handleMoveEvent}
+                />
+              </>
             )}
 
+            <CalendarLegend />
+
             {/* Day view is already a list of the day — a second one below it
-                would only repeat itself. */}
+                would only repeat itself. On a phone the week view IS a day
+                rail too, so the agenda only earns its place there from `sm`. */}
             {view !== 'day' && (
-              <CalendarAgendaStrip
-                date={agendaDate}
-                events={allEvents}
-                onEventTap={handleEventTap}
-                onAdd={() => openNewEvent(agendaDate)}
-                onOpenDayView={handleOpenSelectedAsDay}
-              />
+              <div className={view === 'week' ? 'hidden sm:block' : undefined}>
+                <CalendarAgendaStrip
+                  date={agendaDate}
+                  events={allEvents}
+                  onEventTap={handleEventTap}
+                  onAdd={() => openNewEvent(agendaDate)}
+                  onOpenDayView={handleOpenSelectedAsDay}
+                />
+              </div>
             )}
           </motion.div>
         </motion.main>
@@ -1263,12 +1546,17 @@ const CalendarPageContent = () => {
 
       <TellCustomerSheet
         open={tellSheetOpen}
-        onOpenChange={setTellSheetOpen}
+        onOpenChange={(o) => {
+          setTellSheetOpen(o);
+          // The undo belongs to the drag that opened this sheet, not the next one.
+          if (!o) setTellUndo(null);
+        }}
         customer={tellTarget}
         booking={tellBooking}
         businessName={companyProfile?.company_name}
         eventId={tellEventId}
         template={companyProfile?.booking_confirmation_template}
+        onUndoMove={tellUndo}
       />
 
       <CalendarEventDetail
@@ -1340,6 +1628,8 @@ const CalendarPageContent = () => {
         onDefaultReminderChange={setDefaultReminder}
         jobsAtOnce={settings.jobsAtOnce}
         onJobsAtOnceChange={setJobsAtOnce}
+        workingDays={settings.workingDays}
+        onWorkingDaysChange={setWorkingDays}
       />
 
       <button

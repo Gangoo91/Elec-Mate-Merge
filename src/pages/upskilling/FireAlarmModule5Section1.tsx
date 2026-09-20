@@ -262,6 +262,27 @@ const FireAlarmModule5Section1 = () => {
 
         <ContentEyebrow>The site survey — drawings versus reality</ContentEyebrow>
 
+        <RegsCallout
+          source="BS 5839-1:2025 · Clause 34, Responsibility of installer — commentary"
+          clause={
+            <>
+              It is not, in general, the responsibility of the installer to check or confirm whether
+              the design of the system conforms to this part of BS 5839, unless the installer is
+              also the designer. The responsibility of the installer is to install the system in
+              accordance with the requirements of the designer and to follow good practice.
+              <br />
+              <br />
+              At the design stage, the designer might have inadequate information to meet all the
+              recommendations in Section 2. For example, it is rarely possible, at the design stage,
+              to warrant that the recommendations given in Clause 15 in respect of sound pressure
+              levels will be satisfied by a particular number and distribution of fire alarm
+              sounders. Accordingly, it is often necessary for conformity to certain clauses of
+              Section 2 to rest with the installer.
+            </>
+          }
+          meaning="This clause draws the line you are working to, and it cuts both ways. You are not signing up to audit someone else's design — that is the plain reading of the first sentence, and it is why the G2 installation certificate certifies against the SPECIFICATION and Section 4, not against the whole standard. But the second paragraph stops that becoming an excuse. Some things genuinely cannot be settled on a drawing: nobody can promise from a plan that sound pressure levels will meet Clause 15, and a drawing rarely shows the structural features that decide detector siting under Clause 21. Those land with the installer by necessity. The planning question to ask before you start, therefore, is not 'is the design right?' but 'which parts of Section 2 has the designer left to me, and has enough information come with them?'"
+        />
+
         <ConceptBlock
           title="What the survey is for"
           plainEnglish="The pre-installation site survey is the bridge between the design and the build. The architect's general arrangement drawings and the M&E consultant's fire alarm layout describe the design intent — where detectors should go, what category of system, what containment route. The survey verifies whether that design can actually be installed in the building as it stands. Voids smaller than drawn. Services routed where the layout assumes clear space. Fire-resisting compartment lines that were never on the drawings. Structural beams that will force detector relocation under the BS 5839-1:2025 spacing rules. Every one of these issues is cheap to fix at survey and expensive at first-fix."

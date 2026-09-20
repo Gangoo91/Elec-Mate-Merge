@@ -24,12 +24,12 @@
 
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Loader2, X, ArrowLeft, ArrowRight, Heart, MessageCircleHeart } from 'lucide-react';
+import { useRef } from 'react';
+import { Loader2, X, ArrowLeft, ArrowRight, Check } from 'lucide-react';
 
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
-import { Button } from '@/components/ui/button';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { useToast } from '@/components/ui/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -75,6 +75,8 @@ interface CancelFlowProps {
   onStayed?: () => void;
   /** Called after the subscription has actually been cancelled. */
   onCancelled?: () => void;
+  /** Admin design preview: walk every step, write nothing, call nothing. */
+  preview?: boolean;
 }
 
 // ─── Copy / data ────────────────────────────────────────────────────────
@@ -85,15 +87,37 @@ interface CancelFlowProps {
 const REASON_CHIPS: Record<string, { prompt: string; options: string[] }> = {
   switching: {
     prompt: 'Which app are you moving to?',
-    options: ['iCertifi', 'CertSuite (Tysoft)', 'NAPIT EasyCert', 'iCert Mobile', 'Paper certs', 'Other'],
+    options: [
+      'iCertifi',
+      'TradeCert',
+      'CertSuite (Tysoft)',
+      'NAPIT EasyCert',
+      'NICEIC online certs',
+      'iCert Mobile',
+      'Clik Cert',
+      'Paper certs',
+      'Other',
+    ],
   },
   too_expensive: {
     prompt: 'What would feel fair?',
-    options: ['About half the price', 'Pay per certificate', 'Free tier + paid extras', "Wouldn't pay at any price", 'Other'],
+    options: [
+      'About half the price',
+      'Pay per certificate',
+      'Free tier + paid extras',
+      "Wouldn't pay at any price",
+      'Other',
+    ],
   },
   not_using: {
     prompt: 'What got in the way?',
-    options: ['Work changed / less certs', 'Never got set up properly', 'Only needed it once', 'Too complicated', 'Other'],
+    options: [
+      'Work changed / less certs',
+      'Never got set up properly',
+      'Only needed it once',
+      'Too complicated',
+      'Other',
+    ],
   },
 };
 const REASONS: { id: Reason; label: string; hint: string }[] = [
@@ -152,8 +176,12 @@ const REASONS: { id: Reason; label: string; hint: string }[] = [
  * when that read fails, so the modal shows a sensible number rather than a
  * blank. Keep them roughly in step with the coupon.
  */
-const RETENTION_PERCENT = 40;
-const RETENTION_MONTHS = 3;
+// 20 Sep 2026: the coupon is ELECMATE_STAY_35 — 35% off for 12 months, i.e.
+// £12.99 on the £19.99 electrician price. A null duration anywhere below
+// means "for as long as you stay", never "for null months", so a future
+// forever coupon renders correctly too.
+const RETENTION_PERCENT = 35;
+const RETENTION_MONTHS: number | null = 12;
 const PAUSE_CHOICES = [1, 2, 3] as const;
 
 type Intervention = 'discount' | 'pause' | 'founder';
@@ -225,6 +253,37 @@ function discountedPrice(
   };
 }
 
+const DONE_FOUNDER = {
+  title: 'Sent to Andrew.',
+  lead: 'He reads it himself and replies personally, usually the same day.',
+  items: [
+    'Your plan carries on as it was, nothing has changed',
+    'The reply comes to the email on your account',
+    'If it needs fixing, it goes straight on the list',
+  ],
+};
+const doneForPause = (resumes: Date) => ({
+  title: 'Paused. See you soon.',
+  lead: `Nothing to pay until ${formatMonthDay(resumes)}`,
+  items: [
+    'Everything you’ve made is kept exactly as you left it',
+    'Billing and access come back on together that day',
+    'Come back sooner any time from Subscriptions',
+  ],
+});
+const doneForDiscount = (amount: string, months: number | null) => ({
+  title: `${amount} a month it is.`,
+  lead:
+    months === null
+      ? `${amount} from your next bill, for as long as you stay`
+      : `${amount} from your next bill, for the next ${months} months`,
+  items: [
+    'Same access, nothing to re-sign',
+    'It shows on your next Stripe receipt',
+    'Cancel any time, this doesn’t tie you in',
+  ],
+});
+
 /** Display-only echo of the server's resume date, so the two never disagree. */
 function addMonths(d: Date, months: number): Date {
   const out = new Date(d);
@@ -272,6 +331,7 @@ export function CancelFlow({
   firstName,
   onStayed,
   onCancelled,
+  preview = false,
 }: CancelFlowProps) {
   const isMobile = useMediaQuery('(max-width: 640px)');
   const { toast } = useToast();
@@ -284,12 +344,30 @@ export function CancelFlow({
   const [surveyId, setSurveyId] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [pauseMonths, setPauseMonths] = useState<number>(2);
+  // The screen after a yes. A toast and a page reload felt like being thrown
+  // out; this says what changed, in the same place, and hands back control.
+  const [done, setDone] = useState<{ title: string; lead: string; items: string[] } | null>(null);
+  const followUpRef = useRef<HTMLDivElement | null>(null);
+
+  // On a phone the follow-up to a reason can land below the fold; bring it up.
+  useEffect(() => {
+    if (!reason) return;
+    const t = setTimeout(
+      () => followUpRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' }),
+      60
+    );
+    return () => clearTimeout(t);
+  }, [reason]);
 
   const safeName = firstName?.trim() || 'mate';
   const intervention = interventionFor(reason, alreadyDiscounted, alreadyPaused);
   // Stripe's numbers win over ours whenever we have them.
   const percentOff = offerPercentOff ?? RETENTION_PERCENT;
-  const durationMonths = offerDurationMonths ?? RETENTION_MONTHS;
+  // `null` from get-billing-context means the coupon runs forever; only an
+  // absent value falls back to the constant. `??` would swallow the null.
+  const durationMonths: number | null =
+    offerDurationMonths !== undefined ? offerDurationMonths : RETENTION_MONTHS;
+  const forLife = durationMonths === null;
   const priced = discountedPrice(currentAmount, interval, percentOff);
 
   const INTERVENTION_EVENT: Record<Intervention, string> = {
@@ -325,6 +403,7 @@ export function CancelFlow({
       setReasonChip(null);
       setFounderMsg('');
       setPauseMonths(2);
+      setDone(null);
     }, 250);
   };
 
@@ -353,6 +432,11 @@ export function CancelFlow({
       document.getElementById('cancel-detail')?.focus();
       return;
     }
+    if (preview) {
+      setFounderMsg(detail.trim());
+      setStep(2);
+      return;
+    }
     setIsSubmitting(true);
     try {
       const {
@@ -369,8 +453,7 @@ export function CancelFlow({
         .insert({
           user_id: user.id,
           reason,
-          reason_detail:
-            [reasonChip, detail.trim()].filter(Boolean).join(' — ') || null,
+          reason_detail: [reasonChip, detail.trim()].filter(Boolean).join(' — ') || null,
           offered_intervention: offered,
           subscription_tier: tier ?? null,
           subscription_id: subscriptionId,
@@ -410,6 +493,14 @@ export function CancelFlow({
       });
       return;
     }
+    if (preview) {
+      setDone(
+        action === 'pause'
+          ? doneForPause(addMonths(new Date(), pauseMonths))
+          : doneForDiscount(priced?.now ?? `${percentOff}% off`, durationMonths)
+      );
+      return;
+    }
     setIsSubmitting(true);
     try {
       const { data, error } = await supabase.functions.invoke('apply-retention-offer', {
@@ -424,30 +515,22 @@ export function CancelFlow({
       if (!data?.success) throw new Error(friendlyOfferError(data?.error));
 
       if (action === 'pause') {
-        const resumes = data?.resumes_at ? new Date(data.resumes_at) : null;
-        toast({
-          title: `Paused until ${resumes ? formatMonthDay(resumes) : 'you’re back'}`,
-          description:
-            'Nothing to pay and nothing to do — everything you’ve made is kept, and it switches itself back on that day.',
-        });
+        const resumes = data?.resumes_at
+          ? new Date(data.resumes_at)
+          : addMonths(new Date(), pauseMonths);
+        setDone(doneForPause(resumes));
       } else {
         const amount =
           typeof data?.next_amount === 'number'
             ? formatPence(data.next_amount, data?.next_currency ?? 'gbp')
-            : null;
-        toast({
-          title: `${data?.percent_off ?? percentOff}% off — sorted`,
-          description: amount
-            ? `${amount} on your next bill, then for ${data?.duration_in_months ?? durationMonths} months.`
-            : 'Applied to your next bill.',
-        });
+            : (priced?.now ?? `${data?.percent_off ?? percentOff}% off`);
+        const months: number | null = data?.duration_in_months ?? durationMonths;
+        setDone(doneForDiscount(amount, months));
       }
 
       trackRetentionOfferAccepted({
         offer: action === 'pause' ? 'retention_pause' : 'retention_discount',
       });
-      onStayed?.();
-      resetAndClose();
     } catch (err) {
       console.error('[CancelFlow] offer accept failed', err);
       toast({
@@ -472,6 +555,10 @@ export function CancelFlow({
         description: 'A sentence is enough — it goes straight to Andrew.',
         variant: 'destructive',
       });
+      return;
+    }
+    if (preview) {
+      setDone(DONE_FOUNDER);
       return;
     }
     setIsSubmitting(true);
@@ -503,13 +590,8 @@ export function CancelFlow({
       });
       if (error) throw new Error(error.message);
 
-      toast({
-        title: 'Sent to Andrew',
-        description: 'He replies personally, usually the same day.',
-      });
       trackRetentionOfferAccepted({ offer: 'founder_message' });
-      onStayed?.();
-      resetAndClose();
+      setDone(DONE_FOUNDER);
     } catch (err) {
       console.error('[CancelFlow] founder message failed', err);
       toast({
@@ -532,10 +614,18 @@ export function CancelFlow({
       });
       return;
     }
+    if (preview) {
+      toast({ title: 'Preview only', description: 'Nothing was cancelled.' });
+      return;
+    }
     setIsSubmitting(true);
     try {
       const { data, error } = await supabase.functions.invoke('cancel-subscription', {
-        body: { subscriptionId },
+        body: {
+          subscriptionId,
+          reason,
+          detail: [reasonChip, detail.trim()].filter(Boolean).join(' / '),
+        },
       });
       if (error) throw new Error(error.message);
       if (!data?.success) throw new Error(data?.message || 'Cancellation failed');
@@ -547,9 +637,12 @@ export function CancelFlow({
           .eq('id', surveyId);
       }
 
+      const accessUntil: string | null = data?.access_until ?? null;
       toast({
         title: 'Subscription cancelled',
-        description: 'Your data is safe for 90 days if you change your mind.',
+        description: accessUntil
+          ? `You keep full access until ${formatMonthDay(new Date(accessUntil))}. Everything you’ve made stays in your account after that.`
+          : 'Your data is safe for 90 days if you change your mind.',
       });
 
       trackCancelConfirmed({ reason: reason ?? undefined });
@@ -568,100 +661,131 @@ export function CancelFlow({
   };
 
   // ── Step renderers ───────────────────────────────────────────────────
+  // The app's form language throughout: a hairline list instead of boxed
+  // cards, chips for the one-tap follow-up, underline fields, and the price
+  // as a figure on the page rather than inside a coloured box.
+  const detailLabel =
+    reason === 'missing_feature'
+      ? "What's the missing feature?"
+      : reason === 'switching'
+        ? 'Which tool did you switch to?'
+        : reason === 'bug'
+          ? 'What broke?'
+          : 'What happened?';
+  // Switching already asks "which app" with chips, so the box only appears
+  // for "Other"; the other free-text reasons need the box to mean anything.
+  const wantsDetail =
+    reason === 'missing_feature' ||
+    reason === 'bug' ||
+    reason === 'other' ||
+    (reason !== null && reasonChip === 'Other');
+
   const renderStep = () => {
+    if (done) {
+      return (
+        <StepShell eyebrow="All done" title={done.title}>
+          <Facts lead={done.lead} items={done.items} />
+        </StepShell>
+      );
+    }
+
     if (step === 1) {
       return (
         <StepShell
           eyebrow="Before you go"
           title={`What's not working, ${safeName}?`}
-          subtitle="Pick the closest one. Takes 5 seconds and helps us actually fix it."
+          subtitle="Pick the closest one. It takes five seconds and it decides what gets fixed."
         >
-          <div className="space-y-2">
+          <div role="radiogroup" className="border-t border-white/[0.08]">
             {REASONS.map((r) => {
               const active = reason === r.id;
+              const chips = REASON_CHIPS[r.id];
               return (
-                <button
-                  key={r.id}
-                  type="button"
-                  onClick={() => {
-                    setReason(r.id);
-                    setReasonChip(null);
-                  }}
-                  className={cn(
-                    'w-full touch-manipulation rounded-2xl border p-4 text-left transition-all',
-                    active
-                      ? 'border-yellow-400/70 bg-yellow-400/[0.06]'
-                      : 'border-white/10 bg-white/[0.02] hover:border-white/25'
-                  )}
-                >
-                  <p
-                    className={cn(
-                      'text-[15px] font-semibold leading-tight',
-                      active ? 'text-yellow-300' : 'text-white'
-                    )}
+                <div key={r.id} className="border-b border-white/[0.08]">
+                  <button
+                    type="button"
+                    role="radio"
+                    aria-checked={active}
+                    onClick={() => {
+                      setReason(r.id);
+                      setReasonChip(null);
+                    }}
+                    className="flex min-h-[60px] w-full touch-manipulation items-center gap-3.5 py-3 text-left transition-colors hover:bg-white/[0.03] active:bg-white/[0.06]"
                   >
-                    {r.label}
-                  </p>
-                  <p className="mt-1 text-[13px] leading-snug text-white">{r.hint}</p>
-                </button>
+                    <RadioMark on={active} />
+                    <span className="min-w-0 flex-1">
+                      <span
+                        className={cn(
+                          'block text-[15px] font-semibold leading-5',
+                          active ? 'text-elec-yellow' : 'text-white'
+                        )}
+                      >
+                        {r.label}
+                      </span>
+                      <span className="mt-0.5 block text-[13px] leading-[18px] text-white">
+                        {r.hint}
+                      </span>
+                    </span>
+                  </button>
+
+                  {/* The follow-up sits under the answer it belongs to, not at
+                      the bottom of the list. */}
+                  {active && (chips || wantsDetail) && (
+                    <div ref={followUpRef} className="pb-4 pl-[34px]">
+                      {chips && (
+                        <>
+                          <p className="mt-1 text-[13px] font-medium text-white">{chips.prompt}</p>
+                          <div className="mt-2.5 grid grid-cols-2 gap-2">
+                            {chips.options.map((opt, idx) => {
+                              const on = reasonChip === opt;
+                              const lastOdd =
+                                idx === chips.options.length - 1 && chips.options.length % 2 === 1;
+                              return (
+                                <button
+                                  key={opt}
+                                  type="button"
+                                  aria-pressed={on}
+                                  onClick={() => setReasonChip(on ? null : opt)}
+                                  className={cn(
+                                    'h-11 touch-manipulation rounded-full border px-3 text-[13px] leading-tight transition-colors',
+                                    lastOdd && 'col-span-2',
+                                    on
+                                      ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                                      : 'border-white/[0.14] bg-white/[0.04] font-medium text-white hover:border-white/30'
+                                  )}
+                                >
+                                  {opt}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </>
+                      )}
+                      {wantsDetail && (
+                        <div className={cn(chips && 'mt-4')}>
+                          <label
+                            htmlFor="cancel-detail"
+                            className="block text-[13px] font-medium text-white"
+                          >
+                            {detailLabel}
+                          </label>
+                          <textarea
+                            id="cancel-detail"
+                            value={detail}
+                            onChange={(e) => setDetail(e.target.value)}
+                            rows={2}
+                            maxLength={500}
+                            placeholder="A line is enough"
+                            className={UNDERLINE_FIELD}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
               );
             })}
           </div>
-
-          {reason && REASON_CHIPS[reason] && (
-            <div className="mt-4">
-              <p className="mb-2 text-[13px] font-medium text-white">
-                {REASON_CHIPS[reason].prompt}
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {REASON_CHIPS[reason].options.map((opt) => (
-                  <button
-                    key={opt}
-                    type="button"
-                    onClick={() => setReasonChip(reasonChip === opt ? null : opt)}
-                    className={cn(
-                      'h-11 px-3.5 rounded-xl text-[13px] font-medium touch-manipulation transition-colors border',
-                      reasonChip === opt
-                        ? 'bg-yellow-400/[0.12] text-yellow-300 border-yellow-400/60'
-                        : 'bg-white/[0.04] text-white border-white/[0.12] hover:border-white/25'
-                    )}
-                  >
-                    {opt}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {(reason === 'missing_feature' ||
-            reason === 'switching' ||
-            reason === 'bug' ||
-            reason === 'other' ||
-            (reason && reasonChip === 'Other')) && (
-            <div className="mt-4">
-              <label
-                htmlFor="cancel-detail"
-                className="mb-2 block text-[13px] font-medium text-white"
-              >
-                {reason === 'missing_feature'
-                  ? "What's the missing feature?"
-                  : reason === 'switching'
-                    ? 'Which tool did you switch to?'
-                    : reason === 'bug'
-                      ? 'What broke?'
-                      : 'What happened?'}
-              </label>
-              <textarea
-                id="cancel-detail"
-                value={detail}
-                onChange={(e) => setDetail(e.target.value)}
-                rows={3}
-                maxLength={500}
-                placeholder="One line is plenty — it goes straight to Andrew."
-                className="w-full touch-manipulation rounded-2xl border border-white/[0.12] bg-white/[0.04] px-4 py-3 text-[15px] leading-[1.5] text-white placeholder:text-white/35 outline-none focus:border-yellow-400/70 focus:bg-white/[0.06] focus:ring-2 focus:ring-yellow-400/20"
-              />
-            </div>
-          )}
         </StepShell>
       );
     }
@@ -673,43 +797,35 @@ export function CancelFlow({
             eyebrow={reason === 'bug' ? "Let's fix this" : 'One last thing'}
             title={
               reason === 'bug'
-                ? "Send Andrew a message — he'll personally sort it."
+                ? 'Tell Andrew what broke.'
                 : reason === 'missing_feature'
                   ? `${safeName}, this one goes on the build list.`
-                  : `${safeName}, mind giving Andrew a minute first?`
+                  : `${safeName}, give Andrew a minute first?`
             }
             subtitle={
               reason === 'bug'
-                ? "Most bugs get fixed the same day. It's a small team — replies come from the founder, not a queue."
+                ? 'Most bugs are fixed the same day. Replies come from the founder, not a queue.'
                 : reason === 'missing_feature'
-                  ? 'Andrew reads these himself and they genuinely decide what gets built next. He’ll tell you straight whether it’s coming.'
-                  : "He reads every cancel email personally. If there's anything he can do, he will."
+                  ? 'Andrew reads these himself and they decide what gets built next. He’ll tell you straight whether it’s coming.'
+                  : 'He reads every one of these personally. If there’s anything he can do, he will.'
             }
           >
-            <div className="rounded-2xl border border-yellow-400/20 bg-yellow-400/[0.06] p-5">
-              <div className="flex items-start gap-3">
-                <div className="rounded-full bg-yellow-400/20 p-2">
-                  <MessageCircleHeart className="h-5 w-5 text-yellow-400" />
-                </div>
-                <div className="flex-1">
-                  <p className="text-[15px] font-semibold text-white">Message the founder</p>
-                  <p className="mt-1 text-[13px] leading-relaxed text-white">
-                    Goes straight to Andrew — replies come from him, not a queue.
-                  </p>
-                </div>
-              </div>
+            <div className="border-t border-white/[0.08] pt-4">
+              <label htmlFor="cancel-founder" className="block text-[13px] font-medium text-white">
+                Your message
+              </label>
               <textarea
+                id="cancel-founder"
                 value={founderMsg}
                 onChange={(e) => setFounderMsg(e.target.value)}
+                rows={4}
                 placeholder={
-                  reason === 'bug'
-                    ? 'What broke? Where were you in the app when it happened?'
-                    : "What's on your mind?"
+                  reason === 'bug' ? 'What broke, and where in the app?' : 'A line is enough'
                 }
-                className="mt-4 w-full min-h-[110px] rounded-xl bg-white/[0.08] border border-white/[0.16] px-4 py-3 text-[15px] text-white placeholder:text-white/45 outline-none focus:border-yellow-500/60 touch-manipulation"
+                className={UNDERLINE_FIELD}
               />
-              <p className="mt-2 text-[11.5px] text-white">
-                Or email founder@elec-mate.com directly if you prefer.
+              <p className="mt-3 text-[12px] leading-[18px] text-white">
+                Or email founder@elec-mate.com if you’d rather.
               </p>
             </div>
           </StepShell>
@@ -723,52 +839,42 @@ export function CancelFlow({
         return (
           <StepShell
             eyebrow="Come back when you need it"
-            title={`Want to just pause it instead, ${safeName}?`}
-            subtitle="Stop paying now, pick up where you left off later. Your certificates, quotes and progress are all kept — the subscription just goes quiet and starts itself back up on the date you choose."
+            title={`Pause it instead, ${safeName}?`}
+            subtitle="Stop paying now and pick up where you left off later. Certificates, quotes and progress all stay exactly where they are."
           >
-            <div className="rounded-3xl border border-yellow-400/40 bg-gradient-to-br from-yellow-400/[0.10] via-yellow-400/[0.04] to-transparent p-6">
-              <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-yellow-300">
-                Pause for
-              </p>
-              <div className="mt-3 flex gap-2">
-                {PAUSE_CHOICES.map((m) => (
+            <div className="grid grid-cols-3 gap-2">
+              {PAUSE_CHOICES.map((m) => {
+                const on = pauseMonths === m;
+                return (
                   <button
                     key={m}
                     type="button"
+                    aria-pressed={on}
                     onClick={() => setPauseMonths(m)}
                     className={cn(
-                      'h-11 flex-1 touch-manipulation rounded-xl border text-[14px] font-semibold transition-colors',
-                      pauseMonths === m
-                        ? 'border-yellow-400 bg-elec-yellow text-black'
-                        : 'border-white/[0.12] bg-white/[0.04] text-white hover:border-white/25'
+                      'h-12 touch-manipulation rounded-full border text-[14px] transition-colors',
+                      on
+                        ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                        : 'border-white/[0.14] bg-white/[0.04] font-medium text-white hover:border-white/30'
                     )}
                   >
                     {m} {m === 1 ? 'month' : 'months'}
                   </button>
-                ))}
-              </div>
-              {/* Says plainly that access stops too. A "pause" that quietly
-                  left the product switched on would be a pleasant surprise for
-                  about a week and a betrayal the first time someone noticed
-                  they'd been locked out without being told. */}
-              <p className="mt-4 text-[13px] leading-relaxed text-white">
-                Nothing to pay until {formatMonthDay(addMonths(new Date(), pauseMonths))}. The app
-                goes on hold until then — your work is all still here waiting, and billing and
-                access both switch back on together. Come back sooner any time.
-              </p>
+                );
+              })}
             </div>
-
-            <p className="mt-4 text-center text-[12px] text-white">
-              Rather talk to someone?{' '}
-              <button
-                type="button"
-                onClick={handleMessageFounder}
-                className="touch-manipulation underline decoration-white/35 underline-offset-4"
-              >
-                Message Andrew
-              </button>{' '}
-              — he replies same day.
-            </p>
+            {/* Says plainly that access stops too. A "pause" that quietly left
+                the product switched on would be a betrayal the first time
+                someone noticed they'd been locked out without being told. */}
+            <Facts
+              lead={`Nothing to pay until ${formatMonthDay(addMonths(new Date(), pauseMonths))}`}
+              items={[
+                'Everything you’ve made is kept exactly as you left it',
+                'Access goes on hold with the billing, and both come back on that day',
+                'Come back sooner any time, one tap',
+              ]}
+            />
+            <FounderLine onClick={handleMessageFounder} />
           </StepShell>
         );
       }
@@ -777,62 +883,48 @@ export function CancelFlow({
       // `priced` is derived from the live Stripe amount. When it is missing we
       // lead with the percentage rather than printing a price we cannot stand
       // behind — Stripe confirms the exact figure on the way back either way.
+      const forCopy = forLife
+        ? 'for as long as you stay'
+        : priced?.per === 'year'
+          ? 'on your next renewal'
+          : `for ${durationMonths} months`;
+      // What it adds up to: the monthly saving times the months it runs.
+      const saving =
+        currentAmount && !forLife && durationMonths && priced?.per === 'month'
+          ? `${formatPence(Math.round(currentAmount * (percentOff / 100)) * durationMonths)} over ${durationMonths} months`
+          : currentAmount && priced?.per === 'year'
+            ? `${formatPence(Math.round(currentAmount * (percentOff / 100)))} on your next renewal`
+            : null;
       return (
         <StepShell
           eyebrow="Stay on for less"
           title={
             priced
-              ? `How about ${priced.now}/${priced.per}, ${safeName}?`
-              : `How about ${percentOff}% off, ${safeName}?`
+              ? `${priced.now} a ${priced.per}, ${safeName}?`
+              : `${percentOff}% off, ${safeName}?`
           }
-          subtitle={
-            priced?.per === 'year'
-              ? `Same access, ${percentOff}% off your next renewal. No catch and no re-signing — it just comes off the bill.`
-              : `Same access, ${percentOff}% off for your next ${durationMonths} months. No catch and no re-signing — it just comes off your next bill.`
-          }
+          subtitle="Same access, nothing to re-sign. It comes off your next bill."
         >
-          <div className="rounded-3xl border border-yellow-400/40 bg-gradient-to-br from-yellow-400/[0.10] via-yellow-400/[0.04] to-transparent p-6">
-            <div className="flex items-end justify-between gap-4">
-              <div>
-                <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-yellow-300">
-                  {priced ? 'Your new price' : 'Your discount'}
-                </p>
-                <div className="mt-1 flex items-baseline gap-2">
-                  <span className="text-5xl font-extrabold leading-none tracking-tight text-white">
-                    {priced ? priced.now : `${percentOff}%`}
-                  </span>
-                  <span className="text-base text-white">
-                    {priced ? `/${priced.per}` : 'off'}
-                  </span>
-                </div>
-                {priced && (
-                  <p className="mt-2 text-[13px] text-white">
-                    Was <span className="line-through decoration-white/40">{priced.was}</span> ·
-                    Save {percentOff}%{' '}
-                    {priced.per === 'year' ? 'on your next renewal' : `for ${durationMonths} months`}
-                  </p>
-                )}
-              </div>
-              <div className="hidden sm:block">
-                <Heart className="h-10 w-10 text-yellow-400/30" strokeWidth={1.5} />
-              </div>
-            </div>
-            <p className="mt-4 text-[13px] leading-relaxed text-white">
-              Applied to your next bill. Cancel any time — this doesn't tie you in.
-            </p>
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-white">
+            <span className="text-[52px] font-semibold leading-none tracking-[-0.03em] tabular-nums">
+              {priced ? priced.now : `${percentOff}%`}
+            </span>
+            <span className="text-[15px]">{priced ? `a ${priced.per}` : 'off'}</span>
+            {priced && (
+              <span className="text-[15px]">
+                usually <span className="line-through decoration-white/50">{priced.was}</span>
+              </span>
+            )}
           </div>
-
-          <p className="mt-4 text-center text-[12px] text-white">
-            Or{' '}
-            <button
-              type="button"
-              onClick={handleMessageFounder}
-              className="touch-manipulation underline decoration-white/35 underline-offset-4"
-            >
-              message Andrew directly
-            </button>{' '}
-            — he replies same day.
-          </p>
+          <Facts
+            items={[
+              `${percentOff}% off every bill, ${forCopy}`,
+              ...(saving ? [`You save ${saving}`] : []),
+              'Starts on your next bill, nothing to re-sign',
+              'No tie-in, cancel any time',
+            ]}
+          />
+          <FounderLine onClick={handleMessageFounder} />
         </StepShell>
       );
     }
@@ -842,164 +934,151 @@ export function CancelFlow({
       <StepShell
         eyebrow="Last check"
         title={`Cancel for sure, ${safeName}?`}
-        subtitle="Your subscription ends now, but your data and account stay safe for 90 days — you can resubscribe any time without losing anything."
+        subtitle="Renewal switches off. You keep everything until the end of the period you’ve already paid for."
       >
-        <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 space-y-3">
-          <Row label="Plan" value={(tier ?? 'Subscription').toString()} />
-          <div className="h-px bg-white/5" />
-          <Row label="What happens now" value="Access ends immediately. No further charges." />
-          <div className="h-px bg-white/5" />
-          <Row label="Your data" value="Saved for 90 days. Resubscribe and it's all back." />
-        </div>
+        <Facts
+          lead={`${tierName(tier)} plan stops renewing`}
+          items={[
+            'No further charges',
+            'Access runs to the end of the period you’ve paid for',
+            'Your data is safe for 90 days after that. Resubscribe and it’s all back',
+          ]}
+        />
       </StepShell>
     );
   };
 
   // ── Footer (varies by step) ──────────────────────────────────────────
+  const busy = isSubmitting;
+  const spinner = <Loader2 className="h-4 w-4 animate-spin" />;
   const renderFooter = () => {
+    if (done) {
+      return (
+        <FooterRow>
+          <button
+            type="button"
+            onClick={() => {
+              onStayed?.();
+              resetAndClose();
+            }}
+            className={PRIMARY_BTN}
+          >
+            Back to my account
+          </button>
+        </FooterRow>
+      );
+    }
+
     if (step === 1) {
       return (
         <FooterRow>
-          <Button
-            variant="ghost"
-            onClick={resetAndClose}
-            disabled={isSubmitting}
-            className="h-11 touch-manipulation rounded-xl px-4 text-[13px] font-medium text-white hover:bg-white/[0.06]"
-          >
+          <button type="button" onClick={resetAndClose} disabled={busy} className={GHOST_BTN}>
             Keep my plan
-          </Button>
+          </button>
           {/* One tap on the follow-up is required where one exists. Optional,
-              it was never used: reason_detail fill fell 50% (May, free text) →
-              12% (Jul) → 0 of 18 this week, because the 31 Jul chip rework also
-              removed the free-text box for `not_using` and `too_expensive` —
-              63% of all cancellations — leaving a skippable chip as the only
-              way to say anything. This is one tap, and it never blocks the
+              it was never used: reason_detail fill fell 50% → 12% → 0 of 18
+              in a week once the chip became skippable. This never blocks the
               cancellation itself, only advancing without answering. */}
-          <Button
+          <button
+            type="button"
             onClick={handleSubmitReason}
-            disabled={
-              !reason || Boolean(REASON_CHIPS[reason] && !reasonChip) || isSubmitting
-            }
-            className="h-12 touch-manipulation rounded-2xl bg-yellow-500 px-6 text-[14px] font-bold text-black hover:bg-yellow-400 disabled:opacity-40"
+            disabled={!reason || Boolean(REASON_CHIPS[reason] && !reasonChip) || busy}
+            className={PRIMARY_BTN}
           >
-            {isSubmitting ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
+            {busy ? (
+              spinner
             ) : (
               <>
                 Continue
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <ArrowRight className="ml-1.5 h-4 w-4" />
               </>
             )}
-          </Button>
+          </button>
         </FooterRow>
       );
     }
 
     if (step === 2) {
       return (
-        <FooterRow
-          left={
-            <Button
-              variant="ghost"
-              onClick={() => setStep(1)}
-              disabled={isSubmitting}
-              className="h-11 touch-manipulation rounded-xl px-3 text-[13px] font-medium text-white hover:bg-white/[0.06]"
-            >
-              <ArrowLeft className="mr-1 h-4 w-4" />
-              Back
-            </Button>
-          }
-        >
-          <Button
-            variant="ghost"
-            onClick={() => setStep(3)}
-            disabled={isSubmitting}
-            className="h-11 touch-manipulation rounded-xl px-4 text-[13px] font-medium text-white hover:bg-white/[0.06]"
-          >
+        <FooterRow left={<BackButton onClick={() => setStep(1)} disabled={busy} />}>
+          <button type="button" onClick={() => setStep(3)} disabled={busy} className={GHOST_BTN}>
             No thanks, cancel
-          </Button>
+          </button>
           {intervention === 'founder' ? (
-            <Button
+            <button
+              type="button"
               onClick={handleMessageFounder}
-              disabled={isSubmitting}
-              className="h-12 touch-manipulation rounded-2xl bg-yellow-500 px-6 text-[14px] font-bold text-black hover:bg-yellow-400 disabled:opacity-50"
+              disabled={busy}
+              className={PRIMARY_BTN}
             >
-              {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Send to Andrew'}
-            </Button>
+              {busy ? spinner : 'Send to Andrew'}
+            </button>
           ) : intervention === 'pause' ? (
-            <Button
+            <button
+              type="button"
               onClick={() => handleAcceptOffer('pause')}
-              disabled={isSubmitting}
-              className="h-12 touch-manipulation rounded-2xl bg-yellow-500 px-6 text-[14px] font-bold text-black hover:bg-yellow-400 disabled:opacity-50"
+              disabled={busy}
+              className={PRIMARY_BTN}
             >
-              {isSubmitting ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                <>Pause for {pauseMonths} {pauseMonths === 1 ? 'month' : 'months'}</>
-              )}
-            </Button>
+              {busy
+                ? spinner
+                : `Pause for ${pauseMonths} ${pauseMonths === 1 ? 'month' : 'months'}`}
+            </button>
           ) : (
-            <Button
+            <button
+              type="button"
               onClick={() => handleAcceptOffer('discount')}
-              disabled={isSubmitting}
-              className="h-12 touch-manipulation rounded-2xl bg-yellow-500 px-6 text-[14px] font-bold text-black hover:bg-yellow-400 disabled:opacity-50"
+              disabled={busy}
+              className={PRIMARY_BTN}
             >
-              {isSubmitting ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : priced ? (
-                <>Yes, {priced.now}/{priced.per === 'year' ? 'yr' : 'mo'} it is</>
-              ) : (
-                <>Yes, {percentOff}% off it is</>
-              )}
-            </Button>
+              {busy
+                ? spinner
+                : priced
+                  ? `Yes, ${priced.now} a ${priced.per}`
+                  : `Yes, ${percentOff}% off`}
+            </button>
           )}
         </FooterRow>
       );
     }
 
     return (
-      <FooterRow
-        left={
-          <Button
-            variant="ghost"
-            onClick={() => setStep(2)}
-            disabled={isSubmitting}
-            className="h-11 touch-manipulation rounded-xl px-3 text-[13px] font-medium text-white hover:bg-white/[0.06]"
-          >
-            <ArrowLeft className="mr-1 h-4 w-4" />
-            Back
-          </Button>
-        }
-      >
-        <Button
-          variant="ghost"
-          onClick={resetAndClose}
-          disabled={isSubmitting}
-          className="h-11 touch-manipulation rounded-xl px-4 text-[13px] font-semibold text-white hover:bg-white/[0.06]"
-        >
+      <FooterRow left={<BackButton onClick={() => setStep(2)} disabled={busy} />}>
+        <button type="button" onClick={resetAndClose} disabled={busy} className={GHOST_BTN}>
           Keep my plan
-        </Button>
-        <Button
+        </button>
+        <button
+          type="button"
           onClick={handleConfirmCancel}
-          disabled={isSubmitting}
-          variant="destructive"
-          className="h-12 touch-manipulation rounded-2xl bg-red-500/90 px-6 text-[14px] font-bold text-white hover:bg-red-500"
+          disabled={busy}
+          className={cn(PRIMARY_BTN, 'bg-[#d9483b] text-white hover:bg-[#c53f33]')}
         >
-          {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Cancel subscription'}
-        </Button>
+          {busy ? spinner : 'Cancel subscription'}
+        </button>
       </FooterRow>
     );
   };
 
   const content = (
-    <div className="flex h-full min-h-0 flex-col bg-[#0a0a0a]">
-      {/* Close X */}
-      <div className="flex items-center justify-end px-5 pt-5">
+    <div className="flex h-full min-h-0 flex-col bg-background bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
+      {/* Where you are, and the way out */}
+      <div className="flex items-center justify-between px-6 pt-5 sm:px-8">
+        <div className="flex items-center gap-1.5" aria-label={`Step ${step} of 3`}>
+          {[1, 2, 3].map((i) => (
+            <span
+              key={i}
+              className={cn(
+                'h-1 w-7 rounded-full transition-colors',
+                done || i <= step ? 'bg-elec-yellow' : 'bg-white/[0.14]'
+              )}
+            />
+          ))}
+        </div>
         <button
           type="button"
           onClick={resetAndClose}
           disabled={isSubmitting}
-          className="touch-manipulation rounded-full p-2 text-white/55 hover:bg-white/[0.06] hover:text-white"
+          className="-mr-2 flex h-11 w-11 touch-manipulation items-center justify-center rounded-full text-white transition-colors hover:bg-white/[0.06]"
           aria-label="Close"
         >
           <X className="h-5 w-5" />
@@ -1010,7 +1089,7 @@ export function CancelFlow({
       <div className="min-h-0 flex-1 overflow-y-auto px-6 pb-2 sm:px-8">
         <AnimatePresence mode="wait">
           <motion.div
-            key={step}
+            key={done ? 'done' : step}
             initial={{ opacity: 0, x: 16 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -16 }}
@@ -1022,7 +1101,7 @@ export function CancelFlow({
       </div>
 
       {/* Footer */}
-      <div className="border-t border-white/[0.06] bg-black/40 px-6 pt-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:px-8">
+      <div className="border-t border-white/[0.1] px-6 pt-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:px-8">
         {renderFooter()}
       </div>
     </div>
@@ -1033,7 +1112,8 @@ export function CancelFlow({
       <Sheet open={isOpen} onOpenChange={(open) => !open && resetAndClose()}>
         <SheetContent
           side="bottom"
-          className="h-[85vh] overflow-hidden rounded-t-[2rem] border-white/[0.08] p-0"
+          hideCloseButton
+          className="h-[85vh] overflow-hidden rounded-t-2xl border-white/[0.14] p-0"
         >
           <VisuallyHidden>
             <DialogTitle>Cancel subscription</DialogTitle>
@@ -1052,7 +1132,10 @@ export function CancelFlow({
       {/* max-h + flex-col so the footer (with the Cancel button) can never be
           pushed below the viewport on short laptop screens — the body scrolls
           instead. A user reported physically not being able to cancel. */}
-      <DialogContent className="flex max-h-[85dvh] w-full max-w-lg flex-col overflow-hidden rounded-[2rem] border-white/[0.08] bg-[#0a0a0a] p-0 shadow-[0_30px_120px_rgba(0,0,0,0.6)]">
+      <DialogContent
+        hideCloseButton
+        className="flex max-h-[85dvh] w-full max-w-lg flex-col overflow-hidden rounded-2xl border border-white/[0.14] bg-background p-0 shadow-[0_30px_120px_rgba(0,0,0,0.6)] outline-none focus:outline-none focus-visible:outline-none"
+      >
         <VisuallyHidden>
           <DialogTitle>Cancel subscription</DialogTitle>
           <DialogDescription>
@@ -1066,6 +1149,25 @@ export function CancelFlow({
 }
 
 // ─── Small visual primitives ────────────────────────────────────────────
+// The same shapes as the rest of the app: underline fields, chips, hairline
+// rows, one yellow. Nothing here is boxed.
+
+const UNDERLINE_FIELD =
+  'textarea-soft mt-1 w-full resize-none rounded-none border-0 border-b border-white/[0.15] bg-transparent px-0 py-2 text-[15px] leading-[1.5] text-white caret-elec-yellow placeholder:text-white/35 outline-none transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 touch-manipulation';
+const GHOST_BTN =
+  'inline-flex h-11 touch-manipulation items-center rounded-full px-4 text-[14px] font-medium text-white transition-colors hover:bg-white/[0.06] disabled:opacity-40';
+const PRIMARY_BTN =
+  'inline-flex h-12 touch-manipulation items-center justify-center rounded-full bg-elec-yellow px-6 text-[14px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:opacity-40';
+
+function tierName(tier: Tier | null): string {
+  const t = (tier ?? 'Subscription')
+    .toString()
+    .toLowerCase()
+    .replace('_yearly', '')
+    .replace('_', ' ');
+  return t.charAt(0).toUpperCase() + t.slice(1);
+}
+
 function StepShell({
   eyebrow,
   title,
@@ -1078,37 +1180,91 @@ function StepShell({
   children: React.ReactNode;
 }) {
   return (
-    <div className="space-y-6 py-4">
+    <div className="space-y-5 pb-4 pt-3">
       <div>
-        <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-yellow-400">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
           {eyebrow}
         </p>
-        <h2 className="mt-2 text-[1.5rem] font-bold leading-[1.15] tracking-[-0.01em] text-white sm:text-[1.75rem]">
+        <h2 className="mt-1.5 text-[24px] font-semibold leading-[28px] tracking-[-0.02em] text-white sm:text-[26px] sm:leading-[30px]">
           {title}
         </h2>
-        {subtitle && (
-          <p className="mt-2 text-[14px] leading-[1.6] text-white sm:text-[15px]">{subtitle}</p>
-        )}
+        {subtitle && <p className="mt-2 text-[14px] leading-[21px] text-white">{subtitle}</p>}
       </div>
       {children}
     </div>
   );
 }
 
-function FooterRow({ children, left }: { children: React.ReactNode; left?: React.ReactNode }) {
+function RadioMark({ on }: { on: boolean }) {
   return (
-    <div className="flex items-center justify-between gap-3">
-      <div className="flex-shrink-0">{left ?? <span className="w-0" />}</div>
-      <div className="flex flex-1 items-center justify-end gap-2">{children}</div>
+    <span
+      aria-hidden
+      className={cn(
+        'flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition-colors',
+        on ? 'border-elec-yellow bg-elec-yellow' : 'border-white/[0.3]'
+      )}
+    >
+      {on && <span className="h-2 w-2 rounded-full bg-black" />}
+    </span>
+  );
+}
+
+/** Label on the left, the fact on the right, a hairline between each. */
+function Facts({ lead, items }: { lead?: React.ReactNode; items: string[] }) {
+  return (
+    <div className="border-t border-white/[0.08] pt-4 text-white">
+      {lead && <p className="text-[17px] font-semibold leading-6">{lead}</p>}
+      <ul className={cn('space-y-2.5', lead && 'mt-3')}>
+        {items.map((it) => (
+          <li key={it} className="flex items-start gap-2.5 text-[14px] leading-5">
+            <Check
+              className="mt-0.5 h-4 w-4 shrink-0 text-elec-yellow"
+              strokeWidth={2.5}
+              aria-hidden
+            />
+            <span>{it}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
 
-function Row({ label, value }: { label: string; value: string }) {
+function FounderLine({ onClick }: { onClick: () => void }) {
   return (
-    <div className="flex items-start justify-between gap-4">
-      <span className="text-[12px] uppercase tracking-wider text-white">{label}</span>
-      <span className="text-right text-[13px] font-medium text-white">{value}</span>
+    <p className="text-[13px] leading-[18px] text-white">
+      Rather talk to someone?{' '}
+      <button
+        type="button"
+        onClick={onClick}
+        className="touch-manipulation font-semibold text-elec-yellow"
+      >
+        Message Andrew
+      </button>
+      . He replies the same day.
+    </p>
+  );
+}
+
+function BackButton({ onClick, disabled }: { onClick: () => void; disabled?: boolean }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      className="-ml-2 inline-flex h-11 touch-manipulation items-center gap-1 rounded-full px-2 text-[14px] font-medium text-white transition-colors hover:bg-white/[0.06] disabled:opacity-40"
+    >
+      <ArrowLeft className="h-4 w-4" />
+      Back
+    </button>
+  );
+}
+
+function FooterRow({ children, left }: { children: React.ReactNode; left?: React.ReactNode }) {
+  return (
+    <div className="flex items-center justify-between gap-3">
+      <div className="shrink-0">{left ?? <span className="w-0" />}</div>
+      <div className="flex flex-1 items-center justify-end gap-2">{children}</div>
     </div>
   );
 }

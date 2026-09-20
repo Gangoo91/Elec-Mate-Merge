@@ -20,6 +20,7 @@ const primaryNavItems: NavItem[] = [
   { name: 'Colleges', path: '/admin/colleges' },
   { name: 'Employers', path: '/admin/employers' },
   { name: 'Trials', path: '/admin/trials' },
+  { name: 'Retention', path: '/admin/retention' },
   { name: 'Revenue', path: '/admin/revenue' },
   { name: 'Messages', path: '/admin/user-messages' },
   { name: 'Peer Safety', path: '/admin/peer-safety' },

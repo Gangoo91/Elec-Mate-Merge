@@ -509,7 +509,7 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     ],
     correctAnswer: 0,
     explanation:
-      'Fire alarm sounders must achieve a minimum of 65dB(A) in occupied areas or 5dB above ambient noise.',
+      'Fire alarm sounders must achieve a minimum of 65 dB(A) in occupied areas, and where background noise exceeds 60 dB(A), 5 dB(A) above that background (15.1.3).',
     section: 'Module 2',
     difficulty: 'intermediate',
     topic: 'Sounder Requirements',
@@ -1838,7 +1838,7 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     ],
     correctAnswer: 2,
     explanation:
-      'BS 5839-1 requires fire alarm systems to be serviced every 6 months by a competent person.',
+      'BS 5839-1:2025 clause 43.2.1 recommends successive inspection and servicing visits at intervals of approximately 6 months, by a competent person. NOTE 1 accepts any visit between 5 and 7 months after the previous one, and NOTE 2 makes the date of acceptance the datum for those periods.',
     section: 'Module 6',
     difficulty: 'intermediate',
     topic: 'Service Frequency',

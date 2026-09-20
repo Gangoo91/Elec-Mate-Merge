@@ -137,7 +137,7 @@ export function useCalendarEvents(dateFrom: string, dateTo: string, enabled = tr
           *,
           customer:customers(id, name),
           job:employer_jobs(id, title),
-          project:spark_projects!calendar_events_project_id_fkey(id, title)
+          project:spark_projects!calendar_events_project_id_fkey(id, title, status)
         `
         )
         .eq('user_id', user.id)
@@ -196,7 +196,7 @@ export function useTodayEvents() {
           *,
           customer:customers(id, name),
           job:employer_jobs(id, title),
-          project:spark_projects!calendar_events_project_id_fkey(id, title)
+          project:spark_projects!calendar_events_project_id_fkey(id, title, status)
         `
         )
         .eq('user_id', user.id)
@@ -253,7 +253,7 @@ export function useUpcomingEvents(days: number = 7) {
           *,
           customer:customers(id, name),
           job:employer_jobs(id, title),
-          project:spark_projects!calendar_events_project_id_fkey(id, title)
+          project:spark_projects!calendar_events_project_id_fkey(id, title, status)
         `
         )
         .eq('user_id', user.id)

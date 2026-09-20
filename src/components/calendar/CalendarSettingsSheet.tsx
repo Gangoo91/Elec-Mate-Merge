@@ -7,7 +7,6 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
 import {
   Select,
   SelectContent,
@@ -15,21 +14,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Label } from '@/components/ui/label';
-import {
-  RefreshCw,
-  Unplug,
-  Loader2,
-  CheckCircle2,
-  Copy,
-  Check,
-  ChevronRight,
-  Apple,
-  Smartphone,
-} from 'lucide-react';
+import { ChevronRight, Loader2 } from 'lucide-react';
+import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { chipBase, chipOff, chipOn, ghostButtonCn, primaryButtonCn, labelCn } from './calendarStyles';
+import { selectTriggerCn } from '@/components/forms/fieldStyles';
+import { IconRow, ROW_TONE } from './IconRow';
 import type { GoogleCalendarStatus, CalendarView } from '@/types/calendar';
 
 type Platform = 'ios' | 'android' | 'web';
@@ -98,6 +90,9 @@ interface CalendarSettingsSheetProps {
   jobsAtOnce: number;
   onJobsAtOnceChange: (jobs: number) => void;
   onDefaultReminderChange: (minutes: number) => void;
+  /** Days worked, 0 = Sunday … 6 = Saturday. */
+  workingDays: number[];
+  onWorkingDaysChange: (days: number[]) => void;
 }
 
 const HOUR_OPTIONS = Array.from({ length: 24 }, (_, i) => ({
@@ -132,6 +127,8 @@ const CalendarSettingsSheet = ({
   jobsAtOnce,
   onJobsAtOnceChange,
   onDefaultReminderChange,
+  workingDays,
+  onWorkingDaysChange,
 }: CalendarSettingsSheetProps) => {
   const [feedUrl, setFeedUrl] = useState<string | null>(null);
   const [syncStep, setSyncStep] = useState<SyncStep>('idle');
@@ -200,377 +197,283 @@ const CalendarSettingsSheet = ({
     }
   }, [feedUrl, toast]);
 
+  const connectedPill = (
+    <span className="inline-flex items-center gap-1.5 rounded-full bg-green-500/15 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-[0.12em] text-green-400">
+      Connected
+    </span>
+  );
+
+  const chip = (on: boolean, extra = '') =>
+    cn(chipBase, on ? chipOn : chipOff, 'px-4 touch-manipulation', extra);
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-background">
-          <SheetHeader className="px-5 py-3 border-b border-white/[0.06] flex-shrink-0">
-            <SheetTitle className="text-white text-lg font-bold">Calendar Settings</SheetTitle>
-            <SheetDescription className="sr-only">
-              Manage calendar sync and preferences
-            </SheetDescription>
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] overflow-hidden rounded-t-2xl p-0 sm:mx-auto sm:h-auto sm:max-h-[85vh] sm:w-full sm:max-w-[640px]"
+      >
+        <div className="flex h-full max-h-[85vh] flex-col bg-background">
+          <SheetHeader className="shrink-0 px-4 py-3 sm:px-5">
+            <SheetTitle className="text-left text-[19px] font-semibold leading-tight tracking-tight text-white">
+              Calendar settings
+            </SheetTitle>
+            <SheetDescription className="sr-only">Sync and preferences</SheetDescription>
           </SheetHeader>
 
-          <div className="flex-1 overflow-y-auto px-5 py-5 space-y-6">
-            {/* ──────────────────────────────────────────────────────
-                Sync to Your Phone
-               ────────────────────────────────────────────────────── */}
-            <section className="space-y-3">
-              <div>
-                <h3 className="text-sm font-bold text-white">Sync to Your Phone</h3>
-                <p className="text-xs text-white mt-0.5">
-                  See your Elec-Mate events in your phone's calendar app
-                </p>
-              </div>
-
-              <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
-                {syncStep === 'idle' && (
-                  <div className="p-4 space-y-3">
-                    <p className="text-sm text-white">
-                      This creates a live link between Elec-Mate and your phone's calendar. Events
-                      you add here will automatically appear in your calendar app.
-                    </p>
-                    <Button
-                      onClick={handleGetFeedUrl}
-                      className="h-12 w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-xl touch-manipulation active:scale-[0.98]"
+          <div className="flex-1 overflow-y-auto pb-6">
+            {/* ── Google Calendar, two-way ── */}
+            <IconRow tone={ROW_TONE.sync} label="Google Calendar">
+              {syncLoading ? (
+                <span className="flex items-center gap-2">
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Checking…
+                </span>
+              ) : googleStatus.connected ? (
+                <div className="space-y-3">
+                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                    {connectedPill}
+                    {googleStatus.email && <span className="truncate">{googleStatus.email}</span>}
+                  </div>
+                  <p className="text-[12px] text-white">
+                    Changes go both ways.
+                    {googleStatus.lastSyncAt &&
+                      ` Last synced ${format(new Date(googleStatus.lastSyncAt), 'EEE d MMM, HH:mm')}.`}
+                  </p>
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      onClick={onSyncNow}
+                      disabled={syncing}
+                      className={cn(ghostButtonCn, 'h-11 flex-1 text-[13px]')}
                     >
-                      Set Up Phone Sync
-                    </Button>
-                  </div>
-                )}
-
-                {syncStep === 'generating' && (
-                  <div className="p-4 flex items-center justify-center gap-2">
-                    <Loader2 className="h-5 w-5 animate-spin text-emerald-400" />
-                    <span className="text-sm text-white">Generating your link...</span>
-                  </div>
-                )}
-
-                {syncStep === 'ready' && (
-                  <div className="divide-y divide-white/[0.06]">
-                    {/* Primary action — platform-aware */}
-                    <div className="p-4 space-y-3">
-                      <p className="text-xs text-white">
-                        {platform === 'ios'
-                          ? 'Tap the button below — iOS will prompt you to subscribe in Apple Calendar. No copy-paste needed.'
-                          : platform === 'android'
-                            ? 'Tap to add the feed to your Google Calendar in one step.'
-                            : "Pick the calendar app you use. We'll open it with the link ready to add."}
-                      </p>
-
-                      {/* iOS / iPadOS / macOS — webcal:// one-tap */}
-                      {platform === 'ios' ? (
-                        <>
-                          <Button
-                            onClick={handleSubscribeApple}
-                            className="h-12 w-full bg-elec-yellow hover:bg-elec-yellow/90 text-black font-bold rounded-xl touch-manipulation active:scale-[0.98]"
-                          >
-                            <Apple className="h-4 w-4 mr-2" />
-                            Subscribe in Apple Calendar
-                          </Button>
-                          <Button
-                            onClick={handleSubscribeGoogle}
-                            variant="outline"
-                            className="h-11 w-full bg-white/[0.04] hover:bg-white/[0.08] text-white border-white/[0.1] font-medium rounded-xl touch-manipulation active:scale-[0.98]"
-                          >
-                            <Smartphone className="h-4 w-4 mr-2" />
-                            Or add to Google Calendar
-                          </Button>
-                        </>
-                      ) : platform === 'android' ? (
-                        <>
-                          <Button
-                            onClick={handleSubscribeGoogle}
-                            className="h-12 w-full bg-elec-yellow hover:bg-elec-yellow/90 text-black font-bold rounded-xl touch-manipulation active:scale-[0.98]"
-                          >
-                            <Smartphone className="h-4 w-4 mr-2" />
-                            Add to Google Calendar
-                          </Button>
-                          <Button
-                            onClick={handleSubscribeApple}
-                            variant="outline"
-                            className="h-11 w-full bg-white/[0.04] hover:bg-white/[0.08] text-white border-white/[0.1] font-medium rounded-xl touch-manipulation active:scale-[0.98]"
-                          >
-                            <Apple className="h-4 w-4 mr-2" />
-                            Or open in Apple Calendar
-                          </Button>
-                        </>
-                      ) : (
-                        <div className="grid grid-cols-2 gap-2">
-                          <Button
-                            onClick={handleSubscribeApple}
-                            className="h-12 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-bold rounded-xl touch-manipulation active:scale-[0.98]"
-                          >
-                            <Apple className="h-4 w-4 mr-2" />
-                            Apple
-                          </Button>
-                          <Button
-                            onClick={handleSubscribeGoogle}
-                            className="h-12 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-bold rounded-xl touch-manipulation active:scale-[0.98]"
-                          >
-                            <Smartphone className="h-4 w-4 mr-2" />
-                            Google
-                          </Button>
-                        </div>
-                      )}
-
-                      {/* Copy fallback — always available */}
-                      <Button
-                        onClick={handleCopyFeedUrl}
-                        variant="outline"
-                        className={cn(
-                          'h-11 w-full font-medium rounded-xl touch-manipulation active:scale-[0.98] border-white/[0.1]',
-                          copied
-                            ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'
-                            : 'bg-white/[0.02] hover:bg-white/[0.06] text-white'
-                        )}
-                      >
-                        {copied ? (
-                          <Check className="h-4 w-4 mr-2" />
-                        ) : (
-                          <Copy className="h-4 w-4 mr-2" />
-                        )}
-                        {copied ? 'Link copied' : 'Copy link instead'}
-                      </Button>
-                    </div>
-
-                    {/* Per-platform manual instructions (collapsed) */}
-                    <div className="p-4 space-y-2">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="text-xs font-semibold text-white/70">
-                          Manual setup (if the buttons don't work)
-                        </span>
-                      </div>
-                      <InstructionRow
-                        title="iPhone (Apple Calendar)"
-                        steps="Settings → Calendar → Accounts → Add Account → Other → Add Subscribed Calendar → Paste link"
-                      />
-                      <InstructionRow
-                        title="Google Calendar"
-                        steps="Open Google Calendar → Settings → Add calendar → From URL → Paste link"
-                      />
-                      <InstructionRow
-                        title="Samsung Calendar"
-                        steps="Menu → Manage calendars → Add account → Add subscription → Paste link"
-                      />
-                      <InstructionRow
-                        title="Outlook"
-                        steps="Settings → View all Outlook settings → Calendar → Shared calendars → Subscribe from web → Paste link"
-                      />
-                    </div>
-
-                    {/* Done note */}
-                    <div className="px-4 py-3 bg-emerald-500/5">
-                      <p className="text-xs text-emerald-400">
-                        Once subscribed, new events will sync automatically every few hours. Most
-                        calendar apps update on their own schedule — Apple Calendar refreshes by
-                        default; you can tighten this in Settings → Calendar → Accounts → your
-                        Elec-Mate subscription → Refresh Calendars.
-                      </p>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </section>
-
-            {/* ──────────────────────────────────────────────────────
-                Google Calendar (Two-Way)
-               ────────────────────────────────────────────────────── */}
-            <section className="space-y-3">
-              <div>
-                <h3 className="text-sm font-bold text-white">Google Calendar</h3>
-                <p className="text-xs text-white mt-0.5">Two-way sync — changes go both ways</p>
-              </div>
-
-              <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
-                {syncLoading ? (
-                  <div className="p-4 flex items-center gap-2">
-                    <Loader2 className="h-4 w-4 animate-spin text-white" />
-                    <span className="text-sm text-white">Checking...</span>
-                  </div>
-                ) : googleStatus.connected ? (
-                  <div className="divide-y divide-white/[0.06]">
-                    <div className="p-4 flex items-center gap-3">
-                      <CheckCircle2 className="h-5 w-5 text-green-400 flex-shrink-0" />
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-white">Connected</p>
-                        {googleStatus.email && (
-                          <p className="text-xs text-white truncate">{googleStatus.email}</p>
-                        )}
-                      </div>
-                    </div>
-                    {googleStatus.lastSyncAt && (
-                      <div className="px-4 py-2">
-                        <p className="text-xs text-white">
-                          Last synced {new Date(googleStatus.lastSyncAt).toLocaleString('en-GB')}
-                        </p>
-                      </div>
-                    )}
-                    <div className="flex">
-                      <button
-                        type="button"
-                        onClick={onSyncNow}
-                        disabled={syncing}
-                        className="flex-1 h-12 flex items-center justify-center gap-2 text-sm font-semibold text-white touch-manipulation active:bg-white/[0.04]"
-                      >
-                        {syncing ? (
-                          <Loader2 className="h-4 w-4 animate-spin" />
-                        ) : (
-                          <RefreshCw className="h-4 w-4" />
-                        )}
-                        Sync Now
-                      </button>
-                      <div className="w-px bg-white/[0.06]" />
-                      <button
-                        type="button"
-                        onClick={onDisconnect}
-                        className="flex-1 h-12 flex items-center justify-center gap-2 text-sm font-semibold text-red-400 touch-manipulation active:bg-white/[0.04]"
-                      >
-                        <Unplug className="h-4 w-4" />
-                        Disconnect
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="p-4 space-y-3">
-                    <p className="text-sm text-white">
-                      Connect your Google account to sync events both ways. Events you create in
-                      either app will appear in both.
-                    </p>
-                    <Button
-                      onClick={onConnect}
-                      disabled={connecting}
-                      className="h-12 w-full bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl touch-manipulation active:scale-[0.98]"
+                      {syncing && <Loader2 className="mr-2 inline h-4 w-4 animate-spin" />}
+                      Sync now
+                    </button>
+                    <button
+                      type="button"
+                      onClick={onDisconnect}
+                      className="h-11 flex-1 rounded-xl border border-red-500/25 bg-red-500/10 text-[13px] font-medium text-red-300 transition-colors hover:bg-red-500/15 touch-manipulation active:scale-[0.98]"
                     >
-                      {connecting && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
-                      Connect Google Calendar
-                    </Button>
+                      Disconnect
+                    </button>
                   </div>
-                )}
-              </div>
-            </section>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  <p>
+                    Connect your Google account and bookings go both ways — what Gaynor puts in
+                    Google lands here, what you start here lands in Google.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={onConnect}
+                    disabled={connecting}
+                    className="h-12 w-full rounded-xl text-[14px] font-semibold text-white transition-colors touch-manipulation active:scale-[0.98] disabled:opacity-60"
+                    style={{ backgroundColor: ROW_TONE.sync }}
+                  >
+                    {connecting && <Loader2 className="mr-2 inline h-4 w-4 animate-spin" />}
+                    Connect Google Calendar
+                  </button>
+                </div>
+              )}
+            </IconRow>
 
-            {/* ──────────────────────────────────────────────────────
-                Outlook Calendar (Two-Way)
-                Hidden until the Azure app registration is switched to
-                multitenant + the calendar redirect URI is added — the
-                backend (oauth + sync-outlook-calendar) is live and waiting.
-                Flip OUTLOOK_CALENDAR_ENABLED when Andrew does the console.
-               ────────────────────────────────────────────────────── */}
+            {/* ── Outlook, two-way. Hidden until the Azure app registration is
+                multitenant with the calendar redirect URI — the backend
+                (oauth + sync-outlook-calendar) is live and waiting. ── */}
             {OUTLOOK_CALENDAR_ENABLED && (
-            <section className="space-y-3">
-              <div>
-                <h3 className="text-sm font-bold text-white">Outlook Calendar</h3>
-                <p className="text-xs text-white mt-0.5">
-                  Microsoft 365 / Outlook.com — two-way sync
-                </p>
-              </div>
-
-              <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
+              <IconRow tone="#0078D4" label="Outlook Calendar">
                 {syncLoading ? (
-                  <div className="p-4 flex items-center gap-2">
-                    <Loader2 className="h-4 w-4 animate-spin text-white" />
-                    <span className="text-sm text-white">Checking...</span>
-                  </div>
+                  <span className="flex items-center gap-2">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Checking…
+                  </span>
                 ) : outlookStatus.connected ? (
-                  <div className="divide-y divide-white/[0.06]">
-                    <div className="p-4 flex items-center gap-3">
-                      <CheckCircle2 className="h-5 w-5 text-green-400 flex-shrink-0" />
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-white">Connected</p>
-                        {outlookStatus.email && (
-                          <p className="text-xs text-white truncate">{outlookStatus.email}</p>
-                        )}
-                      </div>
+                  <div className="space-y-3">
+                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                      {connectedPill}
+                      {outlookStatus.email && <span className="truncate">{outlookStatus.email}</span>}
                     </div>
                     {outlookStatus.lastSyncAt && (
-                      <div className="px-4 py-2">
-                        <p className="text-xs text-white">
-                          Last synced {new Date(outlookStatus.lastSyncAt).toLocaleString('en-GB')}
-                        </p>
-                      </div>
+                      <p className="text-[12px] text-white">
+                        Last synced {format(new Date(outlookStatus.lastSyncAt), 'EEE d MMM, HH:mm')}.
+                      </p>
                     )}
-                    <div className="flex">
+                    <div className="flex gap-2">
                       <button
                         type="button"
                         onClick={onOutlookSyncNow}
                         disabled={outlookSyncing}
-                        className="flex-1 h-12 flex items-center justify-center gap-2 text-sm font-semibold text-white touch-manipulation active:bg-white/[0.04]"
+                        className={cn(ghostButtonCn, 'h-11 flex-1 text-[13px]')}
                       >
-                        {outlookSyncing ? (
-                          <Loader2 className="h-4 w-4 animate-spin" />
-                        ) : (
-                          <RefreshCw className="h-4 w-4" />
-                        )}
-                        Sync Now
+                        {outlookSyncing && <Loader2 className="mr-2 inline h-4 w-4 animate-spin" />}
+                        Sync now
                       </button>
-                      <div className="w-px bg-white/[0.06]" />
                       <button
                         type="button"
                         onClick={onOutlookDisconnect}
-                        className="flex-1 h-12 flex items-center justify-center gap-2 text-sm font-semibold text-red-400 touch-manipulation active:bg-white/[0.04]"
+                        className="h-11 flex-1 rounded-xl border border-red-500/25 bg-red-500/10 text-[13px] font-medium text-red-300 transition-colors hover:bg-red-500/15 touch-manipulation active:scale-[0.98]"
                       >
-                        <Unplug className="h-4 w-4" />
                         Disconnect
                       </button>
                     </div>
                   </div>
                 ) : (
-                  <div className="p-4 space-y-3">
-                    <p className="text-sm text-white">
-                      Connect your Microsoft account to sync events both ways with Outlook or
-                      Microsoft 365.
-                    </p>
-                    <Button
+                  <div className="space-y-3">
+                    <p>Connect a Microsoft 365 or Outlook.com account and bookings go both ways.</p>
+                    <button
+                      type="button"
                       onClick={onOutlookConnect}
                       disabled={outlookConnecting}
-                      className="h-12 w-full bg-[#0078D4] hover:bg-[#106EBE] text-white font-bold rounded-xl touch-manipulation active:scale-[0.98]"
+                      className="h-12 w-full rounded-xl bg-[#0078D4] text-[14px] font-semibold text-white transition-colors touch-manipulation active:scale-[0.98] disabled:opacity-60"
                     >
-                      {outlookConnecting && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
+                      {outlookConnecting && <Loader2 className="mr-2 inline h-4 w-4 animate-spin" />}
                       Connect Outlook Calendar
-                    </Button>
+                    </button>
                   </div>
                 )}
-              </div>
-            </section>
+              </IconRow>
             )}
 
-            {/* ──────────────────────────────────────────────────────
-                Preferences
-               ────────────────────────────────────────────────────── */}
-            <section className="space-y-4">
-              <h3 className="text-sm font-bold text-white">Preferences</h3>
-
-              {/* Default view — three options, chips beat a select */}
-              <div>
-                <p className="text-[12px] font-medium text-white mb-2">Default view</p>
-                <div className="grid grid-cols-3 gap-2">
-                  {(['day', 'week', 'month'] as const).map((v) => (
-                    <button
-                      key={v}
-                      type="button"
-                      onClick={() => onDefaultViewChange(v as CalendarView)}
-                      className={
-                        defaultView === v
-                          ? 'h-11 rounded-xl border border-elec-yellow bg-elec-yellow text-[13px] font-semibold text-black touch-manipulation'
-                          : 'h-11 rounded-xl border border-white/[0.12] bg-white/[0.06] text-[13px] font-medium text-white touch-manipulation'
-                      }
-                    >
-                      {v.charAt(0).toUpperCase() + v.slice(1)}
-                    </button>
-                  ))}
+            {/* ── The phone's own calendar app, one-way feed ── */}
+            <IconRow tone={ROW_TONE.phone} label="Your phone's calendar">
+              {syncStep === 'idle' && (
+                <div className="space-y-3">
+                  <p>
+                    A live feed of your bookings into Apple Calendar or Google Calendar, next to
+                    your other diaries. One way: the app reads, it never writes.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={handleGetFeedUrl}
+                    className={cn(ghostButtonCn, 'h-11 w-full text-[13px]')}
+                  >
+                    Set up phone sync
+                  </button>
                 </div>
-              </div>
+              )}
 
-              {/* Working hours — the length of the day, side by side */}
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <p className="text-[12px] font-medium text-white mb-2">Work starts</p>
+              {syncStep === 'generating' && (
+                <span className="flex items-center gap-2">
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Making your link…
+                </span>
+              )}
+
+              {syncStep === 'ready' && (
+                <div className="space-y-3">
+                  <p className="text-[12px]">
+                    {platform === 'ios'
+                      ? 'Tap the button and iOS asks to subscribe in Apple Calendar. Nothing to paste.'
+                      : platform === 'android'
+                        ? 'Tap to add the feed to Google Calendar in one step.'
+                        : 'Pick the calendar you use. It opens with the link ready to add.'}
+                  </p>
+
+                  {platform === 'ios' ? (
+                    <div className="space-y-2">
+                      <button type="button" onClick={handleSubscribeApple} className={primaryButtonCn}>
+                        Subscribe in Apple Calendar
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleSubscribeGoogle}
+                        className={cn(ghostButtonCn, 'h-11 w-full text-[13px]')}
+                      >
+                        Or add to Google Calendar
+                      </button>
+                    </div>
+                  ) : platform === 'android' ? (
+                    <div className="space-y-2">
+                      <button type="button" onClick={handleSubscribeGoogle} className={primaryButtonCn}>
+                        Add to Google Calendar
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleSubscribeApple}
+                        className={cn(ghostButtonCn, 'h-11 w-full text-[13px]')}
+                      >
+                        Or open in Apple Calendar
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-2 gap-2">
+                      <button type="button" onClick={handleSubscribeApple} className={primaryButtonCn}>
+                        Apple
+                      </button>
+                      <button type="button" onClick={handleSubscribeGoogle} className={primaryButtonCn}>
+                        Google
+                      </button>
+                    </div>
+                  )}
+
+                  <button
+                    type="button"
+                    onClick={handleCopyFeedUrl}
+                    className={cn(
+                      ghostButtonCn,
+                      'h-11 w-full text-[13px]',
+                      copied && 'border-green-500/30 bg-green-500/10 text-green-300'
+                    )}
+                  >
+                    {copied ? 'Link copied' : 'Copy the link instead'}
+                  </button>
+
+                  <div className="space-y-1.5">
+                    <p className="text-[12px] font-medium">If the buttons do nothing, add it by hand</p>
+                    <InstructionRow
+                      title="iPhone (Apple Calendar)"
+                      steps="Settings → Calendar → Accounts → Add Account → Other → Add Subscribed Calendar → paste the link"
+                    />
+                    <InstructionRow
+                      title="Google Calendar"
+                      steps="Open Google Calendar → Settings → Add calendar → From URL → paste the link"
+                    />
+                    <InstructionRow
+                      title="Samsung Calendar"
+                      steps="Menu → Manage calendars → Add account → Add subscription → paste the link"
+                    />
+                    <InstructionRow
+                      title="Outlook"
+                      steps="Settings → View all Outlook settings → Calendar → Shared calendars → Subscribe from web → paste the link"
+                    />
+                  </div>
+
+                  <p className="text-[12px] leading-snug">
+                    Once subscribed, new bookings arrive on the phone every few hours — each
+                    calendar app refreshes on its own schedule. Apple Calendar lets you tighten
+                    it under Settings → Calendar → Accounts → your Elec-Mate subscription.
+                  </p>
+                </div>
+              )}
+            </IconRow>
+
+            {/* ── Preferences ── */}
+            <IconRow tone={ROW_TONE.view} label="Opens on">
+              <div className="mt-1.5 grid grid-cols-4 gap-2">
+                {(['day', 'three', 'week', 'month'] as const).map((v) => (
+                  <button
+                    key={v}
+                    type="button"
+                    aria-pressed={defaultView === v}
+                    onClick={() => onDefaultViewChange(v as CalendarView)}
+                    className={chip(defaultView === v, 'px-0')}
+                  >
+                    {v === 'three' ? '3 days' : v.charAt(0).toUpperCase() + v.slice(1)}
+                  </button>
+                ))}
+              </div>
+            </IconRow>
+
+            <IconRow tone={ROW_TONE.hours} label="Working hours">
+              <div className="mt-1 grid grid-cols-2 gap-x-4">
+                <label className="block">
+                  <span className={labelCn}>From</span>
                   <Select
                     value={String(workingHoursStart)}
                     onValueChange={(v) => onWorkingHoursChange(parseInt(v, 10), workingHoursEnd)}
                   >
-                    <SelectTrigger className="h-11 w-full touch-manipulation rounded-xl bg-white/[0.06] border border-white/[0.12] text-sm font-semibold text-white focus:ring-0">
+                    <SelectTrigger className={cn(selectTriggerCn, 'w-full')}>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
@@ -581,14 +484,14 @@ const CalendarSettingsSheet = ({
                       ))}
                     </SelectContent>
                   </Select>
-                </div>
-                <div>
-                  <p className="text-[12px] font-medium text-white mb-2">Work ends</p>
+                </label>
+                <label className="block">
+                  <span className={labelCn}>Until</span>
                   <Select
                     value={String(workingHoursEnd)}
                     onValueChange={(v) => onWorkingHoursChange(workingHoursStart, parseInt(v, 10))}
                   >
-                    <SelectTrigger className="h-11 w-full touch-manipulation rounded-xl bg-white/[0.06] border border-white/[0.12] text-sm font-semibold text-white focus:ring-0">
+                    <SelectTrigger className={cn(selectTriggerCn, 'w-full')}>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
@@ -599,65 +502,89 @@ const CalendarSettingsSheet = ({
                       ))}
                     </SelectContent>
                   </Select>
-                </div>
+                </label>
               </div>
+              <p className="mt-2 text-[12px]">
+                The grid opens here each morning and the hours outside are dimmed.
+              </p>
+            </IconRow>
 
-              {/* Jobs at once — the width of the day. Chips, no truncation. */}
-              <div>
-                <p className="text-[12px] font-medium text-white mb-2">Jobs at once</p>
-                <div className="flex flex-wrap gap-2">
-                  {JOBS_AT_ONCE_OPTIONS.map((n) => (
+            {/* Monday-first, matching the grid. At least one stays on — a
+                zero-day week would make "next free day" never. */}
+            <IconRow tone={ROW_TONE.days} label="Days you work">
+              <div className="mt-1.5 flex gap-1.5">
+                {[1, 2, 3, 4, 5, 6, 0].map((d) => {
+                  const on = workingDays.includes(d);
+                  const label = ['S', 'M', 'T', 'W', 'T', 'F', 'S'][d];
+                  return (
                     <button
-                      key={n}
+                      key={d}
                       type="button"
-                      onClick={() => onJobsAtOnceChange(n)}
-                      className={
-                        jobsAtOnce === n
-                          ? 'h-11 px-4 rounded-xl border border-elec-yellow bg-elec-yellow text-[13px] font-semibold text-black touch-manipulation'
-                          : 'h-11 px-4 rounded-xl border border-white/[0.12] bg-white/[0.06] text-[13px] font-medium text-white touch-manipulation'
+                      aria-pressed={on}
+                      aria-label={
+                        ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][d]
                       }
+                      onClick={() => {
+                        const next = on ? workingDays.filter((x) => x !== d) : [...workingDays, d];
+                        if (next.length > 0) onWorkingDaysChange(next);
+                      }}
+                      className={cn(
+                        'flex h-11 min-w-0 flex-1 items-center justify-center rounded-full border text-[13px] touch-manipulation active:scale-[0.96]',
+                        on ? chipOn : chipOff
+                      )}
                     >
-                      {n === 1 ? 'Just me' : String(n)}
+                      {label}
                     </button>
-                  ))}
-                </div>
-                <p className="mt-2 text-[12px] leading-snug text-white">
-                  How many jobs you can have running at the same time. A day only counts as full
-                  once it hits this — below it, overlapping bookings are normal rather than a
-                  clash.
-                </p>
+                  );
+                })}
               </div>
+              <p className="mt-2 text-[12px]">Days off are shaded and skipped when finding your next free day.</p>
+            </IconRow>
 
-              {/* Default reminder — six options, chips again */}
-              <div>
-                <p className="text-[12px] font-medium text-white mb-2">Default reminder</p>
-                <div className="flex flex-wrap gap-2">
-                  {(
-                    [
-                      { v: 0, label: 'None' },
-                      { v: 5, label: '5 min' },
-                      { v: 15, label: '15 min' },
-                      { v: 30, label: '30 min' },
-                      { v: 60, label: '1 hour' },
-                      { v: 1440, label: '1 day' },
-                    ] as const
-                  ).map((opt) => (
-                    <button
-                      key={opt.v}
-                      type="button"
-                      onClick={() => onDefaultReminderChange(opt.v)}
-                      className={
-                        defaultReminderMinutes === opt.v
-                          ? 'h-11 px-4 rounded-xl border border-elec-yellow bg-elec-yellow text-[13px] font-semibold text-black touch-manipulation'
-                          : 'h-11 px-4 rounded-xl border border-white/[0.12] bg-white/[0.06] text-[13px] font-medium text-white touch-manipulation'
-                      }
-                    >
-                      {opt.label}
-                    </button>
-                  ))}
-                </div>
+            <IconRow tone={ROW_TONE.capacity} label="Jobs at once">
+              <div className="mt-1.5 flex flex-wrap gap-2">
+                {JOBS_AT_ONCE_OPTIONS.map((n) => (
+                  <button
+                    key={n}
+                    type="button"
+                    aria-pressed={jobsAtOnce === n}
+                    onClick={() => onJobsAtOnceChange(n)}
+                    className={chip(jobsAtOnce === n)}
+                  >
+                    {n === 1 ? 'Just me' : String(n)}
+                  </button>
+                ))}
               </div>
-            </section>
+              <p className="mt-2 text-[12px] leading-snug">
+                How many jobs can run at the same time. A day only counts as full once it hits
+                this — below it, overlapping bookings are normal, not a clash.
+              </p>
+            </IconRow>
+
+            <IconRow tone={ROW_TONE.reminder} label="Default reminder">
+              <div className="mt-1.5 flex flex-wrap gap-2">
+                {(
+                  [
+                    { v: 0, label: 'None' },
+                    { v: 5, label: '5 min' },
+                    { v: 15, label: '15 min' },
+                    { v: 30, label: '30 min' },
+                    { v: 60, label: '1 hour' },
+                    { v: 1440, label: '1 day' },
+                  ] as const
+                ).map((opt) => (
+                  <button
+                    key={opt.v}
+                    type="button"
+                    aria-pressed={defaultReminderMinutes === opt.v}
+                    onClick={() => onDefaultReminderChange(opt.v)}
+                    className={chip(defaultReminderMinutes === opt.v)}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </IconRow>
           </div>
         </div>
       </SheetContent>
@@ -665,25 +592,26 @@ const CalendarSettingsSheet = ({
   );
 };
 
-/** Collapsible instruction row for each calendar platform */
+/** One platform's manual steps, folded until tapped. */
 function InstructionRow({ title, steps }: { title: string; steps: string }) {
   const [expanded, setExpanded] = useState(false);
 
   return (
     <button
       type="button"
+      aria-expanded={expanded}
       onClick={() => setExpanded(!expanded)}
-      className="w-full text-left rounded-xl bg-white/[0.03] border border-white/[0.06] overflow-hidden touch-manipulation"
+      className="w-full overflow-hidden rounded-xl border border-white/[0.12] bg-white/[0.04] text-left touch-manipulation"
     >
-      <div className="flex items-center justify-between h-11 px-3">
-        <span className="text-sm font-semibold text-white">{title}</span>
+      <div className="flex h-11 items-center justify-between px-3">
+        <span className="text-[13px] font-medium text-white">{title}</span>
         <ChevronRight
           className={cn('h-4 w-4 text-white transition-transform', expanded && 'rotate-90')}
         />
       </div>
       {expanded && (
         <div className="px-3 pb-3">
-          <p className="text-xs text-white leading-relaxed">{steps}</p>
+          <p className="text-[12px] leading-relaxed text-white">{steps}</p>
         </div>
       )}
     </button>

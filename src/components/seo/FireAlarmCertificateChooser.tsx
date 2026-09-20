@@ -23,9 +23,16 @@
  *    the installing company
  *  · commissioning — functional tests of every device, cause-and-effect,
  *    sounder levels, battery drain; signed by the commissioning engineer
- *  · verification — issued by an independent third party who was NOT the
- *    installer; not always required, but recommended for complex or high-risk
- *    systems and often required by insurers or building control
+ *  · verification — arranged by the purchaser or user, not issued automatically.
+ *    🔴 It does NOT have to be an independent third party: BS 5839-1:2025
+ *    Clause 41 says the verifying organisation "can be one of those involved in
+ *    the design, supply, installation or commissioning processes (e.g. the
+ *    system supplier or the designer) or an independent third party". This
+ *    component and the page body both said "independent third party" as though
+ *    it were a requirement — corrected 20 Sep 2026 against the standard. What
+ *    Clause 41.1 requires is competence, not independence. Clause 41's own
+ *    triggers are the split of work between organisations, the building design
+ *    evolving during construction, and missing detail at design stage
  *  · service records — ongoing, retained in the fire safety logbook
  *  · the Responsible Person keeps them all (RRO 2005 in England and Wales;
  *    equivalent duties in Scotland and Northern Ireland)
@@ -71,11 +78,12 @@ const CERTS: Record<Stage, CertInfo> = {
   },
   verification: {
     name: 'Verification certificate',
-    when: 'After commissioning, where independent confirmation is wanted.',
-    signedBy: 'An independent third party — someone who was not the installer.',
+    when: 'After commissioning, where the purchaser or user arranges a check across the whole system.',
+    signedBy:
+      'A person competent in BS 5839-1 design and familiar with installation practices. Clause 41 allows this to be one of the organisations involved in the design, supply, installation or commissioning — or an independent third party.',
     records:
-      'An independent check that the completed installation complies with BS 5839-1 and the design specification.',
-    note: 'Not every installation requires it, but it is recommended for complex or high-risk systems and is often required by insurers or building control.',
+      'That the system conforms to BS 5839-1, plus the scope and extent of the verification carried out (or where that information can be found).',
+    note: 'Not every system needs one. Clause 41 points to it for larger or more complex systems, typically where the work was split between organisations, the building design evolved during construction, or detailed information was missing at design stage. An insurer or building control body may require it separately as their own condition.',
   },
   service: {
     name: 'Service records',

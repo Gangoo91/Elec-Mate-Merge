@@ -14,6 +14,7 @@ import {
   KeyTakeaways,
   FAQ,
   SectionRule,
+  VideoCard,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
@@ -262,6 +263,89 @@ const FireAlarmModule4Section1 = () => {
             'Diagnose the most common primary-supply non-compliance patterns: shared circuits, mis-rated protective devices, undocumented isolation, mis-identified functional earth',
           ]}
         />
+
+        <SectionRule />
+
+        <ContentEyebrow>Where BS 7671 meets the fire alarm supply</ContentEyebrow>
+
+        <ConceptBlock
+          title="A fire alarm is a safety service, and BS 7671 has a chain of regulations for that"
+          plainEnglish="BS 5839-1 tells you what the fire alarm system needs. BS 7671 tells you how the electrical installation that feeds it must be designed — and it treats a fire detection and fire alarm system as a 'safety service', a named category with its own requirements. Most electricians meet Section 560 and stop there. The regulations below sit upstream of it and decide things Section 560 assumes you have already settled."
+          onSite="If you are asked to justify why the fire alarm gets its own way — its own circuit, its own protective arrangements, no shared RCD, no convenient borrow from a nearby board — this chain is the answer, and it is in the book the client's electrician already owns."
+        >
+          <p>
+            The chain, in the order BS 7671 itself runs:
+          </p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+            <li>
+              <strong>131.7</strong> (Part 1, Chapter 13) — protection against power supply
+              interruption. Where loss of supply would cause danger, the designer has to consider it
+              and specify measures. A life-safety system is the textbook case.
+            </li>
+            <li>
+              <strong>313.2</strong> (Part 3, Chapter 31) — supplies for safety services and standby
+              systems, i.e. the assessment that the installation needs one at all.
+            </li>
+            <li>
+              <strong>Chapter 35, Regulations 351 and 352</strong> — safety services generally, and
+              their classification by the consequences of failure. Classification is what drives how
+              much supply continuity and segregation is required.
+            </li>
+            <li>
+              <strong>341.1</strong> — the installation must be designed so it can be maintained
+              without introducing danger. For a fire alarm that means access for the six-monthly and
+              annual work, not just for the install.
+            </li>
+            <li>
+              <strong>361.1</strong> — an assessment shall be made, for each circuit, of any need
+              for continuity of service.
+            </li>
+            <li>
+              <strong>Section 560</strong> — the detailed requirements for safety services, which
+              the course covers in depth and which the above regulations lead into.
+            </li>
+          </ul>
+          <p>
+            Regulation <strong>643.3.2</strong> then closes the loop from the other direction: its
+            NOTE points the reader of BS 7671 at BS 5839-1 for the wiring of fire detection and fire
+            alarm systems in buildings. The two standards are written to be used together, and each
+            expects you to hold the other.
+          </p>
+          <p className="text-white/85 text-[13px] italic">
+            The regulation numbers and subject matter above are from BS 7671:2018+A4:2026; the
+            descriptions are summaries, not quotations. Read the regulations themselves before
+            relying on them in a design.
+          </p>
+        </ConceptBlock>
+
+        {/*
+          Further viewing, deliberately framed as a discussion rather than a
+          lesson. It is a three-hour round-table on coding fire alarm
+          observations during an EICR — exactly the BS 7671 / BS 5839-1 boundary
+          this block is about — and the opinions in it are the panel's, not the
+          standard's. Watch time is credited as off-the-job minutes.
+        */}
+        <VideoCard
+          url="https://www.youtube.com/watch?v=eg2kO082gRA"
+          title="EICR coding and discussion on fire systems to BS 5839-1"
+          channel="SparkyNinja"
+          duration="3:05:42"
+          topic="BS 7671 and BS 5839-1 interface"
+          caption="Further viewing, not a lesson — a long-form discussion between working electricians on how to code fire alarm observations on an EICR, and where BS 7671's remit stops and BS 5839-1 takes over. Treat the codes argued for as opinion: the panel disagree with each other in places, which is itself the useful part. The clauses in this section are the authority."
+        />
+
+        <ConceptBlock
+          title="The one that surprises people — overload protection may be omitted"
+          plainEnglish="Regulation 433.3.3 lists circuits where protection against overload may be omitted, on the basis that unexpected disconnection would itself cause danger. A circuit supplying a safety service — a fire alarm or a gas alarm — is one of the listed examples."
+          onSite="This is not permission to leave a fire alarm circuit unprotected against FAULT current: short-circuit protection still applies, and the cable still has to be selected properly. What it recognises is that tripping the fire alarm supply to prevent a cable overheating can be the more dangerous of the two outcomes, so the usual overload rule is not applied blindly."
+        >
+          <p>
+            Learners meet this one in exams and disbelieve it, because &ldquo;always protect against
+            overload&rdquo; is learned early and learned hard. Read 433.3.3 in full and the logic is
+            consistent with everything else here: the fire alarm is a safety service, and continuity
+            of a safety service can outweigh a risk that would govern an ordinary circuit.
+          </p>
+        </ConceptBlock>
 
         <SectionRule />
 

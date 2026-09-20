@@ -26,8 +26,12 @@ export const selectTriggerCn =
 
 /** Multi-line. The one field that stays a soft filled box — an underline gives
  *  no sense of the writing area. */
+// `w-full` + `resize-none`: without a width a <textarea> takes the browser's
+// default ~220px, which is what the Edit event sheet was showing in a 640px
+// panel (Andrew, 20 Sep) — and the drag grip in the corner is not a control
+// anyone on a phone can use.
 export const textareaCn =
-  'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
+  'textarea-soft w-full resize-none rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
 
 /** Field label. Sentence case, FULL white — never white/65, which reads grey. */
 export const labelCn = 'text-[12px] font-medium text-white mb-1 block';

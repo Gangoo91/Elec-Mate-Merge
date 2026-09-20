@@ -1017,7 +1017,7 @@ const FireAlarmModule4Section2 = () => {
               question:
                 'I have a CIE rated for 0.5 h of alarm. Can I size T2 differently for an installation that requires longer alarm duration?',
               answer:
-                'Some installations — sites with extended evacuation times, or specific design requirements — may require alarm duration longer than the standard 0.5 h. The formula scales linearly: a longer T2 produces a proportionally larger I2·T2 term and therefore a larger Cmin. The minimum T2 = 0.5 h is the BS 5839-1 default; the design may specify longer where required by the building&apos;s evacuation strategy or by fire engineering. The formula structure is unchanged; only T2 changes.',
+                'Some installations — sites with extended evacuation times, or specific design requirements — may require alarm duration longer than the standard 0.5 h. The formula scales linearly: a longer T2 produces a proportionally larger I2·T2 term and therefore a larger Cmin. The minimum T2 = 0.5 h is the BS 5839-1 default; the design may specify longer where required by the building\'s evacuation strategy or by fire engineering. The formula structure is unchanged; only T2 changes.',
             },
             {
               question:

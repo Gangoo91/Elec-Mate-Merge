@@ -6,30 +6,30 @@ import { IntentAnalysis } from './intent-detection.ts';
 
 // PHASE 3: Intent-Aware RAG Prioritization
 export const RAG_PRIORITIES: Record<string, any> = {
-  designer: {
-    bs7671: 100,
-    design: 90,
-    installation: 20,
-    health_safety: 30,
+  designer: { 
+    bs7671: 100, 
+    design: 90, 
+    installation: 20, 
+    health_safety: 30 
   },
-  installer: {
-    bs7671: 60,
-    design: 40,
-    installation: 100,
-    health_safety: 70,
+  installer: { 
+    bs7671: 60, 
+    design: 40, 
+    installation: 100, 
+    health_safety: 70 
   },
-  'health-safety': {
-    bs7671: 80,
-    design: 20,
-    installation: 60,
-    health_safety: 100,
+  'health-safety': { 
+    bs7671: 80, 
+    design: 20, 
+    installation: 60, 
+    health_safety: 100 
   },
-  commissioning: {
-    bs7671: 90,
-    design: 30,
-    installation: 70,
-    health_safety: 50,
-  },
+  commissioning: { 
+    bs7671: 90, 
+    design: 30, 
+    installation: 70, 
+    health_safety: 50 
+  }
 };
 
 export interface AgentPlan {
@@ -65,9 +65,7 @@ export interface AgentOutput {
 }
 
 // Normalise intent keys to agent IDs
-function normaliseIntentKey(
-  k: string
-): 'designer' | 'installer' | 'health-safety' | 'commissioning' {
+function normaliseIntentKey(k: string): 'designer' | 'installer' | 'health-safety' | 'commissioning' {
   const map: Record<string, 'designer' | 'installer' | 'health-safety' | 'commissioning'> = {
     design: 'designer',
     designer: 'designer',
@@ -79,7 +77,7 @@ function normaliseIntentKey(
     hazard: 'health-safety',
     risk: 'health-safety',
     'risk-assessment': 'health-safety',
-    commissioning: 'commissioning',
+    commissioning: 'commissioning'
   };
   return map[k] ?? 'designer';
 }
@@ -90,9 +88,10 @@ export async function planAgentSequence(
   userQuery: string,
   openAIApiKey: string
 ): Promise<AgentPlan> {
+  
   try {
     console.log('📋 Using RULE-BASED agent planning (fast, deterministic)');
-
+    
     // Defensive check: ensure intents object exists
     if (!intentAnalysis || !intentAnalysis.intents) {
       console.warn('⚠️ Invalid intent analysis, using default full sequence');
@@ -113,16 +112,14 @@ export async function planAgentSequence(
     if (highConfidenceIntents.length === 1) {
       console.log(`✅ Single high-confidence intent: ${highConfidenceIntents[0].agent}`);
       return {
-        sequence: [
-          {
-            agent: highConfidenceIntents[0].agent,
-            priority: 1,
-            reasoning: `Primary focus on ${highConfidenceIntents[0].agent}`,
-            dependencies: [],
-          },
-        ],
+        sequence: [{
+          agent: highConfidenceIntents[0].agent,
+          priority: 1,
+          reasoning: `Primary focus on ${highConfidenceIntents[0].agent}`,
+          dependencies: []
+        }],
         reasoning: 'Single clear intent detected',
-        estimatedComplexity: 'simple',
+        estimatedComplexity: 'simple'
       };
     }
 
@@ -130,16 +127,14 @@ export async function planAgentSequence(
     if (commissionScore >= 0.6 && designScore < 0.4) {
       console.log('✅ Testing/commissioning query detected');
       return {
-        sequence: [
-          {
-            agent: 'commissioning',
-            priority: 1,
-            reasoning: 'Testing and commissioning focus',
-            dependencies: [],
-          },
-        ],
+        sequence: [{
+          agent: 'commissioning',
+          priority: 1,
+          reasoning: 'Testing and commissioning focus',
+          dependencies: []
+        }],
         reasoning: 'Commissioning-only request',
-        estimatedComplexity: 'simple',
+        estimatedComplexity: 'simple'
       };
     }
 
@@ -147,16 +142,14 @@ export async function planAgentSequence(
     if (installScore >= 0.6 && designScore < 0.4 && commissionScore < 0.4) {
       console.log('✅ Installation guidance query detected');
       return {
-        sequence: [
-          {
-            agent: 'installer',
-            priority: 1,
-            reasoning: 'Practical installation focus',
-            dependencies: [],
-          },
-        ],
+        sequence: [{
+          agent: 'installer',
+          priority: 1,
+          reasoning: 'Practical installation focus',
+          dependencies: []
+        }],
         reasoning: 'Installation-only request',
-        estimatedComplexity: 'simple',
+        estimatedComplexity: 'simple'
       };
     }
 
@@ -177,7 +170,7 @@ export async function planAgentSequence(
         agent: 'designer',
         priority: priority++,
         reasoning: 'Circuit design and calculations',
-        dependencies: [],
+        dependencies: []
       });
     }
 
@@ -186,7 +179,7 @@ export async function planAgentSequence(
         agent: 'installer',
         priority: priority++,
         reasoning: 'Installation guidance',
-        dependencies: designScore >= 0.4 ? ['designer'] : [],
+        dependencies: designScore >= 0.4 ? ['designer'] : []
       });
     }
 
@@ -195,7 +188,7 @@ export async function planAgentSequence(
         agent: 'commissioning',
         priority: priority++,
         reasoning: 'Testing and certification',
-        dependencies: [],
+        dependencies: []
       });
     }
 
@@ -203,26 +196,25 @@ export async function planAgentSequence(
     if (sequence.length === 0) {
       console.warn('⚠️ No clear intents, using default designer');
       return {
-        sequence: [
-          {
-            agent: 'designer',
-            priority: 1,
-            reasoning: 'Default - need more context',
-            dependencies: [],
-          },
-        ],
+        sequence: [{
+          agent: 'designer',
+          priority: 1,
+          reasoning: 'Default - need more context',
+          dependencies: []
+        }],
         reasoning: 'Unclear request - starting with design',
-        estimatedComplexity: 'simple',
+        estimatedComplexity: 'simple'
       };
     }
 
-    console.log(`✅ Built sequence from intents: ${sequence.map((s) => s.agent).join(' → ')}`);
-
+    console.log(`✅ Built sequence from intents: ${sequence.map(s => s.agent).join(' → ')}`);
+    
     return {
       sequence,
       reasoning: 'Rule-based planning from intent analysis',
-      estimatedComplexity: sequence.length > 2 ? 'complex' : 'moderate',
+      estimatedComplexity: sequence.length > 2 ? 'complex' : 'moderate'
     };
+
   } catch (outerError) {
     console.error('❌ Critical error in planAgentSequence:', outerError);
     return createStandardSequence('Emergency fallback - full workflow');
@@ -233,44 +225,24 @@ export async function planAgentSequence(
 function createStandardSequence(reasoning: string): AgentPlan {
   return {
     sequence: [
-      {
-        agent: 'designer',
-        priority: 1,
-        reasoning: 'Circuit design and calculations (with cost estimates)',
-        dependencies: [],
-      },
-      {
-        agent: 'installer',
-        priority: 2,
-        reasoning: 'Practical installation guidance',
-        dependencies: ['designer'],
-      },
-      {
-        agent: 'health-safety',
-        priority: 3,
-        reasoning: 'Risk assessment and PPE requirements',
-        dependencies: ['installer'],
-      },
-      {
-        agent: 'commissioning',
-        priority: 4,
-        reasoning: 'Testing and certification',
-        dependencies: [],
-      },
+      { agent: 'designer', priority: 1, reasoning: 'Circuit design and calculations (with cost estimates)', dependencies: [] },
+      { agent: 'installer', priority: 2, reasoning: 'Practical installation guidance', dependencies: ['designer'] },
+      { agent: 'health-safety', priority: 3, reasoning: 'Risk assessment and PPE requirements', dependencies: ['installer'] },
+      { agent: 'commissioning', priority: 4, reasoning: 'Testing and certification', dependencies: [] }
     ],
     reasoning,
-    estimatedComplexity: 'moderate' as const,
+    estimatedComplexity: 'moderate' as const
   };
 }
 
 function createFallbackPlan(intentAnalysis: IntentAnalysis): AgentPlan {
   // Safe defaults if intents are missing or malformed
-  const intents = intentAnalysis?.intents ?? {
-    design: 0.6,
-    installation: 0.5,
-    commissioning: 0.4,
+  const intents = intentAnalysis?.intents ?? { 
+    design: 0.6, 
+    installation: 0.5, 
+    commissioning: 0.4 
   };
-
+  
   const sequence: AgentStep[] = [];
   let priority = 1;
 
@@ -282,30 +254,30 @@ function createFallbackPlan(intentAnalysis: IntentAnalysis): AgentPlan {
   for (const [intentKey, score] of sortedIntents) {
     const agent = normaliseIntentKey(intentKey);
     // Prevent duplicates if multiple keys normalise to same agent
-    if (!sequence.find((s) => s.agent === agent)) {
+    if (!sequence.find(s => s.agent === agent)) {
       sequence.push({
         agent,
         priority: priority++,
         reasoning: `Intent score: ${(score ?? 0).toFixed(2)}`,
-        dependencies: [],
+        dependencies: []
       });
     }
   }
 
   // Ultimate fallback: always have at least one agent
   if (sequence.length === 0) {
-    sequence.push({
-      agent: 'designer',
-      priority: 1,
-      reasoning: 'Ultimate fallback - no valid intents',
-      dependencies: [],
+    sequence.push({ 
+      agent: 'designer', 
+      priority: 1, 
+      reasoning: 'Ultimate fallback - no valid intents', 
+      dependencies: [] 
     });
   }
 
   return {
     sequence,
     reasoning: 'Fallback plan based on normalised intent scores',
-    estimatedComplexity: sequence.length > 2 ? 'complex' : 'simple',
+    estimatedComplexity: sequence.length > 2 ? 'complex' : 'simple'
   };
 }
 

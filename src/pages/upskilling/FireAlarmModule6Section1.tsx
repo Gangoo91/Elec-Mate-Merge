@@ -65,7 +65,7 @@ const inlineChecks = [
     question:
       'New in BS 5839-1:2025: at the twelve-monthly service visit, what additional functional test is now expected for any smoke detectors mounted in air-handling ductwork?',
     options: [
-      'Functional testing of the duct-mounted smoke detectors is part of the 12-month programme: clause 43.3.14 — smoke detectors in ventilation ducts should be functionally inspected and tested in accordance with the manufacturer&rsquo;s instructions. (43.2.1 is the ~6-monthly visit interval, a different clause.)',
+      'Functional testing of the duct-mounted smoke detectors is part of the 12-month programme: clause 43.3.14 — smoke detectors in ventilation ducts should be functionally inspected and tested in accordance with the manufacturer’s instructions. (43.2.1 is the ~6-monthly visit interval, a different clause.)',
       'No specific requirement — duct detectors remain outside the routine functional-test regime.',
       'A visual inspection of the duct detector through the access hatch, with no functional test required.',
       'A continuity test on the duct detector cabling only, leaving the head itself untested.',
@@ -327,6 +327,44 @@ const FireAlarmModule6Section1 = () => {
         <SectionRule />
 
         <ContentEyebrow>The weekly user test — RRO 2005 duty</ContentEyebrow>
+
+        <RegsCallout
+          source="BS 5839-1:2025 · Clause 42, Routine testing — commentary and 42.1.1"
+          clause={
+            <>
+              It is also important for regular tests to be carried out to verify that there has not
+              been any major failure of the system, or a significant part of the system.
+              <br />
+              <br />
+              Routine testing of the system also provides an opportunity for occupants of the
+              building to become, and remain, familiar with the fire alarm signal(s) that the system
+              produces. In systems with staged alarms that incorporate an &ldquo;Alert&rdquo; and an
+              &ldquo;Evacuate&rdquo; signal,{' '}
+              <strong>
+                both signals need to be operated on the occasion of each test to make occupants
+                aware of the existence of both signals and their different meaning
+              </strong>
+              .
+              <br />
+              <br />
+              <strong>42.1.1</strong> The manufacturer&rsquo;s recommendations regarding weekly
+              testing should be followed. NOTE The manufacturer&rsquo;s recommendations are
+              particularly important when battery-powered devices are being tested, e.g. within
+              radio-linked fire detection and fire alarm systems.
+              <br />
+              <br />
+              <strong>42.1.2</strong> A test should be carried out every week, during normal working
+              hours, to verify that: a) the control equipment is capable of processing a fire alarm
+              signal and providing an output to fire alarm sounders; and b) the fire alarm signal is
+              correctly received at any ARC to which fire alarm signals are transmitted.{' '}
+              <strong>
+                NOTE 1 The occasional omission of the weekly test, or an extension of the period
+                between tests by a few days, is not considered to be a non-conformity.
+              </strong>
+            </>
+          }
+          meaning="The weekly test has two purposes and most people only know the first. Proving the system still works is the obvious one. The second is that the occupants hear the sound and learn what it means — which is why the test is deliberately not silent, and why a building where everyone ignores the weekly bell has lost half the point of it. The staged-alarm sentence follows directly: if a system has both an Alert and an Evacuate signal, testing only one leaves occupants who have never heard the other, and they will meet it for the first time during a real fire. Test both, every time. 42.1.1 adds the trap for radio systems — weekly activation of battery-powered devices runs their batteries down, so the manufacturer's regime governs, not habit. And NOTE 1 is the one to quote when a logbook has gaps in it: an occasional missed week, or a test running a few days late, is expressly NOT a non-conformity. That matters in both directions — it stops a reasonable logbook being written up as a failure, and it stops anyone reading it as permission to test monthly."
+        />
 
         <ConceptBlock
           title="The duty and the content"

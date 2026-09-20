@@ -109,11 +109,29 @@ export default function FAG3SoundEnvironment({ formData, onUpdate }: Props) {
     const updated = readings.map((r: any) => {
       if (r.id !== id) return r;
       const newR = { ...r, [field]: value };
-      // Auto-set min required based on area type + ambient noise (BS 5839-1: 5dB above ambient)
+      /*
+       * Minimum required SPL = the Clause 15.1.1 floor for the area, raised to
+       * ambient + 5 dB where Clause 15.1.3 bites.
+       *
+       * 15.1.3 applies ONLY where background noise is greater than 60 dB(A) —
+       * it is not "+5 above ambient" unconditionally, which is the way it is
+       * usually misquoted. This code enforces that trigger without testing for
+       * it, and the reason is worth writing down because it looks like an
+       * omission:
+       *
+       *   non-sleeping floor is 65, so `ambient + 5 > 65` is true exactly when
+       *   ambient > 60 — the trigger and the arithmetic coincide.
+       *
+       * The sleeping case is safe for a different reason: the floor is 75, so
+       * the +5 only raises it once ambient exceeds 70, and at any lower ambient
+       * the 75 dB(A) bedhead minimum is already the higher of the two figures.
+       *
+       * So do NOT "simplify" this to apply +5 whenever ambient is set. That
+       * would require 50 dB(A) in a 45 dB(A) office, where the answer is 65.
+       */
       if (field === 'areaType' || field === 'dBReading') {
         const areaType = field === 'areaType' ? value : newR.areaType;
         let minReq = areaType === 'sleeping' ? 75 : 65;
-        // If ambient noise is high, min required = ambient + 5
         if (ambient > 0 && ambient + 5 > minReq) {
           minReq = Math.ceil(ambient + 5);
         }

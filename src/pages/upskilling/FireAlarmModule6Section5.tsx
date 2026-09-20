@@ -271,6 +271,34 @@ const FireAlarmModule6Section5 = () => {
 
         <ContentEyebrow>The acceptance certificate — Annex G</ContentEyebrow>
 
+        <RegsCallout
+          source="BS 5839-1:2025 · Clause 39, Certification and Clause 41, Verification — commentary"
+          clause={
+            <>
+              <strong>Clause 39</strong> &mdash; On completion of design, installation and
+              commissioning, a separate certificate needs to be issued for each of the three
+              processes, confirming compliance with the recommendations of this part of BS 5839 for
+              the stage in question (i.e. design, installation or commissioning) or identifying
+              variations. Each process might be undertaken by one organization or different
+              organizations. Whichever arrangement applies,{' '}
+              <strong>three separate certificates need to be issued</strong>. An organization could
+              issue a certificate for the process for which they are responsible, regardless of
+              whether a certificate has been issued for either of the other processes. It is
+              essential that the person who signs these certificates is competent to determine
+              whether the recommendations &hellip; have, or have not, been satisfied.
+              <br />
+              <br />
+              <strong>Clause 41</strong> &mdash; For certain (usually large and/or complex) systems,
+              the purchaser or user might wish to arrange for verification of conformity to this
+              part of BS 5839. This is typically as a result of one or more of the following: the
+              division of work elements between different organizations; the evolution of the
+              building design during construction; and the lack of detailed information at the time
+              of design.
+            </>
+          }
+          meaning="Clause 39 settles a question that comes up on nearly every small job: one contractor did the design, the install AND the commissioning, so surely one certificate covers it? No — three processes, three certificates, whoever did them. The reason is in the last sentence: each certificate is a competent person's statement about a DIFFERENT question, and the person signing has to be competent to answer that particular one. It also means you can issue yours without waiting for anyone else's. Clause 41 is a different animal and often confused with it: verification is not a fourth certificate in the same series, it is an optional overview someone buys when the work was split across organisations or the building changed during construction — precisely the conditions under which three separate certificates can each be honest and the system still not hang together."
+        />
+
         <ConceptBlock
           title="What acceptance fixes"
           plainEnglish="The acceptance certificate is the handover document — issued by the commissioning organisation after the design / installation / commissioning has been completed, the system has been demonstrated to perform per the cause-and-effect matrix and the design specification, and any agreed variations have been recorded. The certificate is the key document for the rest of the system\'s life. It fixes the baseline configuration. It establishes the datum date for the six-monthly servicing cycle (clause 43.2.1 Note 2). It carries the list of any agreed variations. It is referenced by every subsequent extension, modification, and periodic certificate."

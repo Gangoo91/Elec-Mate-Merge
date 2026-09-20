@@ -264,33 +264,15 @@ export async function captureMessage(
 /**
  * Wrapper to capture errors from edge function handlers
  */
-/**
- * The shape a Supabase edge handler actually has.
- *
- * `Response | Promise<Response>` because a handful of handlers are synchronous
- * (lti-jwks serves a static JWKS document and never awaits anything).
- */
-type EdgeHandler = (req: Request) => Response | Promise<Response>;
-
-/**
- * Wrap an edge function handler so anything it throws reaches Sentry.
- *
- * ⚠️ The signature was `T extends (...args: unknown[]) => Promise<Response>`,
- * which no real handler satisfies: parameters are contravariant, so a
- * `(req: Request) => …` handler is not assignable to one taking `unknown`.
- * The helper could not be called at all, and in ~500 edge functions nothing
- * ever did — every covered function reached for `captureException` by hand
- * instead. `deno check` rejected the first attempt to use it, which is how
- * this surfaced.
- *
- * Re-throws after reporting, so behaviour is unchanged — the runtime still
- * turns the error into whatever response it did before.
- */
-export function withSentry<T extends EdgeHandler>(functionName: string, handler: T): T {
-  return (async (req: Request) => {
+export function withSentry<T extends (...args: unknown[]) => Promise<Response>>(
+  functionName: string,
+  handler: T
+): T {
+  return (async (...args: unknown[]) => {
     try {
-      return await handler(req);
+      return await handler(...args);
     } catch (error) {
+      const req = args[0] as Request | undefined;
       await captureException(error, {
         functionName,
         requestUrl: req?.url,

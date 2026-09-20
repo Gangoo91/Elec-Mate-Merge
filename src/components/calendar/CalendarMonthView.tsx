@@ -13,7 +13,15 @@ import {
 import { useSwipeable } from 'react-swipeable';
 import { cn } from '@/lib/utils';
 import { cardCn, eyebrowCn } from './calendarStyles';
-import { buildDayShape, compareEvents, dayKey, effectiveEnd, eventsOnDay, isMultiDay } from './eventUtils';
+import {
+  buildDayShape,
+  compareEvents,
+  dayKey,
+  displayColour,
+  effectiveEnd,
+  eventsOnDay,
+  isMultiDay,
+} from './eventUtils';
 import type { CalendarEvent } from '@/types/calendar';
 
 interface CalendarMonthViewProps {
@@ -27,9 +35,12 @@ interface CalendarMonthViewProps {
   workingHoursStart: number;
   workingHoursEnd: number;
   capacity: number;
+  /** Days worked (0 = Sunday). Days off shade like weekends used to. */
+  workingDays?: number[];
 }
 
 const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const DEFAULT_DAYS = [1, 2, 3, 4, 5];
 
 /**
  * How many continuous bars a week row shows before the rest collapse into the
@@ -121,6 +132,7 @@ const CalendarMonthView = ({
   workingHoursStart,
   workingHoursEnd,
   capacity,
+  workingDays = DEFAULT_DAYS,
 }: CalendarMonthViewProps) => {
   const swipeHandlers = useSwipeable({
     onSwipedLeft: onSwipeLeft,
@@ -197,7 +209,9 @@ const CalendarMonthView = ({
               const inMonth = isSameMonth(day, currentDate);
               const today = isToday(day);
               const selected = selectedDate ? isSameDay(day, selectedDate) : false;
-              const weekend = col >= 5;
+              // A day off shades the way weekends used to — driven by the
+              // days actually worked, so a four-day week shades its Friday.
+              const weekend = !workingDays.includes(day.getDay());
 
               // Dots stand for timed work; anything spanning is already a bar.
               const dotted = eventsOnDay(events, day).filter((e) => !e.all_day && !isMultiDay(e));
@@ -215,7 +229,7 @@ const CalendarMonthView = ({
                   className={cn(
                     // Taller cells as the grid gets wider, so a wide window
                     // shows squares rather than stretched letterboxes.
-                    'relative flex min-h-[76px] touch-manipulation flex-col items-center pt-1.5 transition-colors sm:min-h-[104px] xl:min-h-[124px]',
+                    'relative flex min-h-[76px] touch-manipulation flex-col items-center pt-1.5 transition-colors sm:min-h-[128px] xl:min-h-[140px]',
                     col > 0 && 'border-l border-white/[0.05]',
                     weekend && inMonth && 'bg-white/[0.02]',
                     // A day with nothing left in it. Deliberately a wash over
@@ -253,22 +267,46 @@ const CalendarMonthView = ({
                     <span className="pointer-events-none absolute inset-x-0 bottom-0 h-[2px] bg-orange-400/60" />
                   )}
 
-                  {/* Timed events */}
+                  {/* Timed events. A phone cell is 48px wide, so dots; from
+                      `sm` the cell is 100px+ tall and wide enough to say WHAT
+                      is on — time and title, three lines, like any desktop
+                      calendar. Dots on a 124px desktop cell were a waste. */}
                   {(dotted.length > 0 || overflow > 0) && (
-                    <span className="flex items-center gap-[3px] px-1">
-                      {dotted.slice(0, 3).map((event) => (
-                        <span
-                          key={event.id}
-                          className="h-[5px] w-[5px] shrink-0 rounded-full"
-                          style={{ backgroundColor: event.colour }}
-                        />
-                      ))}
-                      {extra > 0 && (
-                        <span className="text-[9px] font-semibold tabular-nums text-white">
-                          +{extra}
-                        </span>
-                      )}
-                    </span>
+                    <>
+                      <span className="flex items-center gap-[3px] px-1 sm:hidden">
+                        {dotted.slice(0, 3).map((event) => (
+                          <span
+                            key={event.id}
+                            className="h-[5px] w-[5px] shrink-0 rounded-full"
+                            style={{ backgroundColor: displayColour(event) }}
+                          />
+                        ))}
+                        {extra > 0 && (
+                          <span className="text-[9px] font-semibold tabular-nums text-white">
+                            +{extra}
+                          </span>
+                        )}
+                      </span>
+                      <span className="hidden w-full min-w-0 flex-col gap-[2px] px-1 sm:flex">
+                        {dotted.slice(0, 3).map((event) => (
+                          <span
+                            key={event.id}
+                            className="flex min-w-0 items-center gap-1 rounded px-1 text-left text-[11px] leading-[16px] text-white"
+                            style={{ backgroundColor: `${displayColour(event)}26` }}
+                          >
+                            <span className="shrink-0 font-semibold tabular-nums">
+                              {format(new Date(event.start_at), 'HH:mm')}
+                            </span>
+                            <span className="truncate">{event.title}</span>
+                          </span>
+                        ))}
+                        {extra > 0 && (
+                          <span className="px-1 text-[11px] font-semibold tabular-nums text-white">
+                            +{extra} more
+                          </span>
+                        )}
+                      </span>
+                    </>
                   )}
                 </button>
               );
@@ -297,8 +335,8 @@ const CalendarMonthView = ({
                           left: `calc(${(seg.startCol / 7) * 100}% + ${seg.opensLeft ? 3 : 0}px)`,
                           width: `calc(${((seg.endCol - seg.startCol + 1) / 7) * 100}% - ${inset}px)`,
                           height: 12,
-                          backgroundColor: `${seg.event.colour}38`,
-                          borderLeft: seg.opensLeft ? `2px solid ${seg.event.colour}` : undefined,
+                          backgroundColor: `${displayColour(seg.event)}38`,
+                          borderLeft: seg.opensLeft ? `2px solid ${displayColour(seg.event)}` : undefined,
                         }}
                       >
                         {/* A title only fits where the cells are wide enough. */}

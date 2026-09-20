@@ -43,19 +43,19 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Fire alarm systems require five key certificates across their lifecycle: design, installation, commissioning, verification, and annual service records.',
+  'BS 5839-1:2025 Annex G contains seven model certificates: design (G.1), installation (G.2), commissioning (G.3), acceptance (G.4), verification (G.5), inspection and servicing (G.6), and extension or modification (G.7). Not every system needs all seven — acceptance and verification are arranged by the purchaser rather than issued automatically.',
   'BS 5839-1 requires a design certificate confirming the system category, detector layout, sounder coverage, and cable routes before installation begins.',
   'The commissioning certificate must record functional tests of every device, cause-and-effect verification, sounder level measurements, and battery drain tests.',
   'Keeping the fire alarm system maintained is a legal duty on the Responsible Person — under the Regulatory Reform (Fire Safety) Order 2005 in England and Wales, and under equivalent fire safety legislation in Scotland and Northern Ireland. Service records kept in the fire safety logbook are how that duty is evidenced.',
   'The fire alarm panel’s mains supply circuit also requires a BS 7671 Electrical Installation Certificate. Under A4:2026 the Appendix 6 model forms now include dedicated fields for recording the details of any SPDs and AFDDs fitted on that circuit.',
-  'Elec-Mate provides digital fire alarm certificate templates for all five certificate types, with professional PDF export and cloud storage.',
+  'Elec-Mate provides digital fire alarm certificates for design, installation, commissioning, inspection and servicing, and extension or modification, with professional PDF export and cloud storage.',
 ];
 
 const faqs = [
   {
     question: 'What certificates are required for a fire alarm system under BS 5839?',
     answer:
-      'BS 5839-1 requires a series of certificates across the system lifecycle. A design certificate is produced during the design phase, confirming the system category, zone layout, detector types, sounder coverage, and cable specification. An installation certificate confirms the physical installation matches the design. A commissioning certificate records the results of all functional tests. A verification certificate may be issued by an independent third party to confirm compliance. Ongoing annual service records document regular testing and maintenance. Each certificate serves a distinct purpose and all should be retained in the building fire safety logbook.',
+      'BS 5839-1 requires a series of certificates across the system lifecycle. A design certificate is produced during the design phase, confirming the system category, zone layout, detector types, sounder coverage, and cable specification. An installation certificate confirms the physical installation matches the design. A commissioning certificate records the results of all functional tests. A verification certificate may be arranged by the purchaser or user where a check across the whole system is wanted — BS 5839-1:2025 Clause 41 allows the verifier to be one of the organisations already involved, or an independent third party. Ongoing inspection and servicing records document regular testing and maintenance. Each certificate serves a distinct purpose and all should be retained in the building fire safety logbook.',
   },
   {
     question: 'Who is responsible for keeping fire alarm certificates?',
@@ -71,7 +71,7 @@ const faqs = [
     question:
       'What is the difference between a commissioning certificate and a verification certificate?',
     answer:
-      'A commissioning certificate is issued by the installer who commissioned the fire alarm system. It records the results of the commissioning tests — functional tests of every device, sounder level measurements, battery capacity tests, and cause-and-effect verification. A verification certificate is issued by an independent third party (not the installer) who inspects the completed installation and confirms it complies with BS 5839-1 and the design specification. Verification provides an independent check that the system is correctly installed and functional. Not all installations require independent verification, but it is recommended for complex or high-risk systems and is often required by insurers or building control.',
+      'A commissioning certificate is issued by the installer who commissioned the fire alarm system. It records the results of the commissioning tests — functional tests of every device, sounder level measurements, battery capacity tests, and cause-and-effect verification. A verification certificate is a separate exercise arranged by the purchaser or user, checking that the system as a whole conforms to BS 5839-1. Contrary to common belief, Clause 41 does not require the verifier to be independent — it may be one of the organisations involved in the design, supply, installation or commissioning, or an independent third party. Clause 41.1 requires competence in BS 5839-1 design and familiarity with installation practices. Not every system needs verification; Clause 41 points to it for larger or more complex systems, typically where the work was split between organisations, the building design evolved during construction, or detailed information was missing at design stage. An insurer or building control body may require it as their own condition.',
   },
   {
     question: 'Can I create fire alarm certificates digitally instead of on paper?',
@@ -207,10 +207,12 @@ const sections = [
               <h3 className="font-bold text-white">Verification certificate</h3>
             </div>
             <p className="text-white/80 text-sm mb-2">
-              Independent third-party confirmation of compliance, where required.
+              A check that the system as a whole conforms to BS 5839-1, arranged by the purchaser or
+              user. Not needed on every system.
             </p>
             <p className="text-yellow-400/90 text-xs font-medium">
-              Issued by: an independent verifier
+              Issued by: a competent verifier — Clause 41 permits one of the organisations already
+              involved, or an independent third party
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 sm:col-span-2">
@@ -540,53 +542,72 @@ const sections = [
     content: (
       <>
         <p>
-          A verification certificate is issued by an independent third party — someone who was not
-          involved in the design, installation, or commissioning of the fire alarm system. The
-          purpose of verification is to provide an independent check that the system complies with
-          BS 5839-1 and the design specification.
+          Verification is a check that the system as a whole conforms to BS 5839-1, arranged by the
+          purchaser or user rather than issued automatically at the end of a job. It sits outside
+          the design, installation and commissioning certificates — those three cover their own
+          stage, and verification looks across all of them.
         </p>
         <p>
-          Verification is not always required, but it is recommended by BS 5839-1 for the following
-          situations:
+          A common misconception is that verification must be carried out by an independent third
+          party. BS 5839-1:2025 Clause 41 says otherwise: the verifying organisation{' '}
+          <strong>
+            can be one of those involved in the design, supply, installation or commissioning
+            processes — for example the system supplier or the designer — or an independent third
+            party
+          </strong>
+          . What Clause 41.1 does require is competence: the person responsible for verification
+          should be competent in the design of fire detection and fire alarm systems to BS 5839-1
+          and familiar with the relevant installation practices. Independence may still be what an
+          insurer or approving authority asks for, but that is their condition rather than the
+          standard&rsquo;s.
+        </p>
+        <p>
+          Verification is not required on every system. BS 5839-1:2025 Clause 41 describes it as
+          something the purchaser or user might arrange for certain — usually large and/or complex —
+          systems, typically as a result of one or more of the following:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                Complex systems in large commercial or industrial buildings where the consequences
-                of system failure are significant.
+                The division of work elements between different organisations — where design,
+                installation and commissioning sat with different companies, each certifying only
+                its own stage.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                Systems protecting sleeping accommodation — care homes, hospitals, hotels, and large
-                HMOs — where occupants may be unable to self-evacuate.
+                The evolution of the building design during construction — the building that was
+                designed for is not quite the building that was built.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                Systems where the insurer, building control, or fire authority specifically requires
-                independent verification as a condition of approval.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                Systems installed by companies that are not third-party certificated (for example,
-                not BAFE SP203-1 registered).
+                The lack of detailed information at the time of design — decisions that had to be
+                left open and settled later on site.
               </span>
             </li>
           </ul>
+          <p className="text-white/85 text-sm mt-4">
+            Those three are the reasons BS 5839-1:2025 Clause 41 actually gives. Note the thread
+            running through them: each describes a way the system can end up with every individual
+            certificate honest and the whole still not hanging together. An insurer, building
+            control body or fire authority may separately require verification as a condition of
+            approval — that is a commercial or regulatory condition, not a recommendation of the
+            standard.
+          </p>
         </div>
         <p>
-          The verification process involves reviewing the design documentation, inspecting a
-          representative sample of the installation, witnessing a selection of functional tests, and
-          confirming the system meets the requirements of BS 5839-1. The verifier issues a
-          verification certificate recording their findings. This provides the client and their
-          insurer with independent assurance of compliance.
+          Clause 41.2 puts the scope in the hands of the two parties: where verification is
+          requested, the scope and extent should be agreed between the purchaser or user and the
+          verifying organisation. Clause 41.3 then requires a verification certificate on
+          completion, and — this part is easy to miss — that certificate should also contain
+          information on the scope and extent of the verification carried out, or identify where
+          that information can be found, such as in an accompanying report. A verification
+          certificate that does not say what was verified is incomplete.
         </p>
       </>
     ),
@@ -610,10 +631,11 @@ const sections = [
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <p className="text-yellow-400 font-bold text-sm mb-1">Every six months</p>
-            <p className="text-white font-bold mb-1">Periodic service</p>
+            <p className="text-yellow-400 font-bold text-sm mb-1">Approximately every six months</p>
+            <p className="text-white font-bold mb-1">Inspection and servicing</p>
             <p className="text-white/70 text-xs">
-              Carried out by a competent servicing engineer; recorded as a service report.
+              By a competent person. BS 5839-1:2025 Clause 43.2.1 accepts any visit between five and
+              seven months after the last one, measured from the date of acceptance as the datum.
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">

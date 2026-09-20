@@ -16,7 +16,7 @@
  */
 import { useEffect, useMemo, useState } from 'react';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Check, Copy, Loader2, Mail, MessageCircle, MessageSquare } from 'lucide-react';
+import { Check, Copy, Loader2, Mail, MessageCircle, MessageSquare, RotateCcw } from 'lucide-react';
 import { Switch } from '@/components/ui/switch';
 import { cn } from '@/lib/utils';
 import { toast } from '@/hooks/use-toast';
@@ -56,6 +56,12 @@ interface TellCustomerSheetProps {
   eventId?: string | null;
   /** ELE-1685 — the electrician's own confirmation wording, if set in Settings. */
   template?: string | null;
+  /**
+   * After a drag, the way back. The move toast has Undo too, but this sheet
+   * is modal and sits on top of it — a tap on the toast only closed the
+   * sheet (found in Chrome, 20 Sep). So the undo lives here as well.
+   */
+  onUndoMove?: (() => void) | null;
 }
 
 const TellCustomerSheet = ({
@@ -66,6 +72,7 @@ const TellCustomerSheet = ({
   businessName,
   eventId,
   template,
+  onUndoMove,
 }: TellCustomerSheetProps) => {
   const { send, sending } = useSendBookingConfirmation();
   const [emailed, setEmailed] = useState(false);
@@ -166,25 +173,57 @@ const TellCustomerSheet = ({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="max-h-[85vh] overflow-hidden rounded-t-2xl p-0">
+      <SheetContent
+        side="bottom"
+        /*
+         * Full width from the sidebar to the window edge on a desktop — not a
+         * 640px panel like the other calendar sheets. This one is a compose
+         * screen: the message on the left, the ways to send it on the right
+         * (Andrew, 20 Sep). On a phone it stacks, message first.
+         */
+        className="max-h-[85vh] overflow-hidden rounded-t-2xl p-0"
+      >
         <div className="flex max-h-[85vh] flex-col bg-background">
-          <SheetHeader className="shrink-0 px-4 py-3">
-            <SheetTitle className="text-left text-[17px] font-semibold tracking-tight text-white">
-              {booking?.movedFrom ? 'Moved' : 'Booked in'}
-              {customer ? ` — tell ${customer.name.split(/\s+/)[0]}` : ''}
+          <SheetHeader className="shrink-0 px-4 py-3 sm:px-6 sm:py-4">
+            <SheetTitle className="flex flex-wrap items-center gap-2 text-left text-[17px] font-semibold tracking-tight text-white sm:text-[19px]">
+              {/* A pill for the state, colour-coded like the grid: green for a
+                  fresh booking, orange for one that has moved. */}
+              <span
+                className={cn(
+                  'rounded-full px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-[0.12em]',
+                  booking?.movedFrom
+                    ? 'bg-orange-500/20 text-orange-300'
+                    : 'bg-emerald-500/20 text-emerald-300'
+                )}
+              >
+                {booking?.movedFrom ? 'Rescheduled' : 'Booked in'}
+              </span>
+              <span>
+                Tell{' '}
+                <span className="text-elec-yellow">
+                  {customer ? customer.name.split(/\s+/)[0] : 'the customer'}
+                </span>
+              </span>
             </SheetTitle>
             <SheetDescription className="text-left text-[13px] text-white">
               {parts ? whenLine(parts) : 'Nothing to send.'}
             </SheetDescription>
           </SheetHeader>
 
-          <div className="flex-1 space-y-4 overflow-y-auto px-4 pb-4">
-            <div>
-              <span className={cn(eyebrowCn, 'mb-2 block')}>What they&rsquo;ll get</span>
-              <pre className="whitespace-pre-wrap rounded-2xl border border-white/[0.12] bg-white/[0.04] px-3.5 py-3 font-sans text-[13px] leading-relaxed text-white">
-                {preview}
-              </pre>
-            </div>
+          <div className="flex-1 overflow-y-auto px-4 pb-4 sm:px-6 sm:pb-6">
+            {/* Phone: message, then the ways to send it. Desktop: side by side —
+                the message gets the width it needs to read as a message, and
+                the channels sit where the hand goes next. */}
+            <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_420px] lg:gap-8">
+              <div>
+                <span className={cn(eyebrowCn, 'mb-2 block')}>What they&rsquo;ll get</span>
+                <pre className="whitespace-pre-wrap rounded-2xl border border-white/[0.12] border-l-[3px] border-l-elec-yellow bg-white/[0.04] px-4 py-3.5 font-sans text-[13px] leading-relaxed text-white sm:px-5 sm:py-4 sm:text-[14px] lg:min-h-[280px]">
+                  {preview}
+                </pre>
+              </div>
+
+              <div className="space-y-3">
+                <span className={cn(eyebrowCn, 'hidden lg:block')}>Send it by</span>
 
             {emailError && (
               <p className="rounded-xl border border-orange-500/30 bg-orange-500/10 px-3 py-2.5 text-[13px] text-orange-300">
@@ -208,32 +247,24 @@ const TellCustomerSheet = ({
 
             <div className="grid grid-cols-2 gap-2">
               <ChannelButton
-                icon={<MessageCircle className="h-5 w-5" />}
                 label="WhatsApp"
+                tone="#25D366"
                 hint={hasPhone ? undefined : 'No number on file'}
                 disabled={!hasPhone}
                 primary={preferred === 'whatsapp'}
                 onClick={() => handOff('whatsapp')}
               />
               <ChannelButton
-                icon={<MessageSquare className="h-5 w-5" />}
                 label="Text"
+                tone="#3B82F6"
                 hint={hasPhone ? undefined : 'No number on file'}
                 disabled={!hasPhone}
                 primary={preferred === 'sms'}
                 onClick={() => handOff('sms')}
               />
               <ChannelButton
-                icon={
-                  sending ? (
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                  ) : emailed ? (
-                    <Check className="h-5 w-5" />
-                  ) : (
-                    <Mail className="h-5 w-5" />
-                  )
-                }
                 label={emailed ? 'Emailed' : 'Email'}
+                tone="#FACC15"
                 // Says what makes email different — it is the only channel that
                 // can put the job straight into the customer's own diary.
                 hint={
@@ -250,26 +281,42 @@ const TellCustomerSheet = ({
                 onClick={sendEmail}
               />
               <ChannelButton
-                icon={<Copy className="h-5 w-5" />}
                 label="Copy"
+                tone="#A78BFA"
                 onClick={copy}
               />
+              </div>
+              </div>
             </div>
           </div>
 
           <div
-            className="shrink-0 border-t border-white/[0.10] px-4 pt-3"
+            className="shrink-0 border-t border-white/[0.10] px-4 pt-3 sm:px-6"
             style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
           >
-            <button
-              type="button"
-              onClick={() => onOpenChange(false)}
-              className="flex h-12 w-full items-center justify-center rounded-xl border border-white/[0.12] bg-white/[0.04] text-[15px] font-semibold text-white touch-manipulation active:scale-[0.98]"
-            >
-              {/* Wording matters on a reschedule: "Not now" on a job that has
-                  MOVED reads as "remind me", and nothing will remind them. */}
-              {booking?.movedFrom ? 'I’ll tell them myself' : 'Not now'}
-            </button>
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-end">
+              {booking?.movedFrom && onUndoMove && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    onUndoMove();
+                    onOpenChange(false);
+                  }}
+                  className="flex h-12 w-full items-center justify-center gap-2 rounded-xl text-[14px] font-medium text-white underline decoration-white/40 underline-offset-4 touch-manipulation sm:w-auto sm:px-4"
+                >
+                  Moved by mistake? Put it back
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={() => onOpenChange(false)}
+                className="flex h-12 w-full items-center justify-center rounded-xl border border-white/[0.12] bg-white/[0.04] text-[15px] font-semibold text-white touch-manipulation active:scale-[0.98] sm:w-auto sm:min-w-[240px] sm:px-8"
+              >
+                {/* Wording matters on a reschedule: "Not now" on a job that has
+                    MOVED reads as "remind me", and nothing will remind them. */}
+                {booking?.movedFrom ? 'I’ll tell them myself' : 'Not now'}
+              </button>
+            </div>
           </div>
         </div>
       </SheetContent>
@@ -278,19 +325,20 @@ const TellCustomerSheet = ({
 };
 
 function ChannelButton({
-  icon,
   label,
   hint,
   disabled,
   primary,
+  tone,
   onClick,
 }: {
-  icon: React.ReactNode;
   label: string;
   hint?: string;
   disabled?: boolean;
   /** The channel used last for this customer — leads, rather than being found. */
   primary?: boolean;
+  /** The channel's own colour — WhatsApp green, iMessage blue — on its label. */
+  tone?: string;
   onClick: () => void;
 }) {
   return (
@@ -299,16 +347,20 @@ function ChannelButton({
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        'flex min-h-[76px] flex-col items-center justify-center gap-1 rounded-2xl border px-3 py-3 transition-colors touch-manipulation',
+        'flex min-h-[64px] flex-col items-center justify-center gap-1 rounded-2xl border px-3 py-3 transition-colors touch-manipulation',
         primary
           ? 'border-elec-yellow bg-elec-yellow text-black active:bg-elec-yellow/90'
-          : 'border-white/[0.12] bg-white/[0.05] text-white active:bg-white/[0.10]',
+          : 'border-white/[0.12] bg-white/[0.05] text-white hover:bg-white/[0.08] active:bg-white/[0.10]',
         // Dimmed as a whole rather than greyed type — the house rule.
         disabled && 'pointer-events-none opacity-40'
       )}
     >
-      {icon}
-      <span className="text-[13px] font-semibold">{label}</span>
+      <span
+        className="text-[15px] font-semibold"
+        style={!primary && tone ? { color: tone } : undefined}
+      >
+        {label}
+      </span>
       {hint && <span className="text-[11px] leading-tight">{hint}</span>}
     </button>
   );

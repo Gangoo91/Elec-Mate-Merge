@@ -1136,6 +1136,31 @@ const FireAlarmModule3Section3 = () => {
 
         <ContentEyebrow>Evacuation philosophies — one-stage, two-stage, phased</ContentEyebrow>
 
+        <RegsCallout
+          source="BS 5839-1:2025 · Clause 18, Staged fire alarms — commentary"
+          clause={
+            <>
+              In a staged fire detection and fire alarm system, the initial warning of fire is given
+              in a restricted area, or is restricted to personnel, but can be extended in further
+              stages to warn, ultimately, all occupants of the premises.
+              <br />
+              <br />
+              In certain large or high-rise buildings, it might be desirable to evacuate first those
+              areas closest to the fire and immediately above it; other areas are evacuated
+              thereafter. A particular example of this arrangement, commonly used in high-rise
+              buildings, is known as phased evacuation. This arrangement enables the number and/or
+              widths of stairways to be reduced; under these circumstances,{' '}
+              <strong>
+                it is important that no control is provided to evacuate the entire building in a
+                single phase, as there will be insufficient stairway capacity for simultaneous
+                evacuation of all occupants
+              </strong>
+              .
+            </>
+          }
+          meaning="The last sentence is the one to carry onto site, because it inverts the instinct. On a phased-evacuation high-rise, an 'evacuate all' control is not a helpful safety extra — it is a hazard. The stairs in that building were permitted to be fewer or narrower BECAUSE the evacuation is phased; sending everyone into them at once puts more people into the stairway than it was designed to hold. So if you are commissioning a phased system and find a general evacuate function on the panel, that is a finding to raise, not a feature to demonstrate at handover. It also explains why phased evacuation is a fire-engineering decision that reaches back into the architecture — the staging and the stair widths are the same decision."
+        />
+
         <ConceptBlock
           title="One-stage simultaneous evacuation"
           plainEnglish="The simplest staging philosophy. Any cause triggers all evacuation effects immediately. The whole building evacuates at once. The matrix has effectively one row: 'all causes'. The matrix has effectively one column: 'all effects'. Single time delay (immediate). Used in small premises, single-compartment buildings, and any building where simultaneous evacuation is the design intent."

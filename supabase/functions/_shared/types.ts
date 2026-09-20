@@ -18,4 +18,15 @@ export type AnyArray = any[];
 // Fix for object with string index
 export type StringIndexedObject = Record<string, any>;
 
+// Common FireCrawl response type
+export interface FireCrawlResponse {
+  success: boolean;
+  data?: {
+    markdown?: string;
+    extract?: any;
+    [key: string]: any;
+  };
+  error?: string;
+}
+
 export {};

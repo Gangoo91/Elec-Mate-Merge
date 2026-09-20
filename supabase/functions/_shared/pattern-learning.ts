@@ -14,7 +14,7 @@ async function createPatternHash(key: string): Promise<string> {
   const data = encoder.encode(key);
   const hashBuffer = await crypto.subtle.digest('SHA-256', data);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
 export interface DesignPattern {
@@ -53,26 +53,22 @@ export async function searchDesignPattern(
   }
 
   const pattern = data[0];
-
+  
   // Check if cable length is similar (if provided)
   if (cableLength && pattern.cable_length) {
     const lengthDiff = Math.abs(cableLength - pattern.cable_length) / cableLength;
-    if (lengthDiff > 0.2) {
-      // More than 20% different
+    if (lengthDiff > 0.2) { // More than 20% different
       return { found: false, confidence: 0 };
     }
   }
 
   // Calculate confidence based on success count and recency
-  const daysSinceLastUse =
-    (Date.now() - new Date(pattern.last_used).getTime()) / (1000 * 60 * 60 * 24);
-  const recencyFactor = Math.max(0, 1 - daysSinceLastUse / 365); // Decay over 1 year
+  const daysSinceLastUse = (Date.now() - new Date(pattern.last_used).getTime()) / (1000 * 60 * 60 * 24);
+  const recencyFactor = Math.max(0, 1 - (daysSinceLastUse / 365)); // Decay over 1 year
   const successFactor = Math.min(1, pattern.success_count / 10); // Cap at 10 uses
-  const confidence = pattern.confidence_score * 0.5 + recencyFactor * 0.3 + successFactor * 0.2;
+  const confidence = (pattern.confidence_score * 0.5) + (recencyFactor * 0.3) + (successFactor * 0.2);
 
-  console.log(
-    `🎯 Found pattern match: ${pattern.success_count} uses, ${confidence.toFixed(2)} confidence`
-  );
+  console.log(`🎯 Found pattern match: ${pattern.success_count} uses, ${confidence.toFixed(2)} confidence`);
 
   return {
     found: true,
@@ -123,36 +119,29 @@ export async function recordPatternFeedback(
   const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
   const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
   const supabase = createClient(supabaseUrl, supabaseKey);
-
+  
   // Positive feedback: small confidence boost
   // Negative feedback: larger confidence penalty
-  const adjustment = wasSuccessful ? 0.05 : -0.1;
-
-  console.log(
-    `📊 Pattern feedback: ${wasSuccessful ? 'SUCCESS' : 'FAILURE'} (adjustment: ${adjustment})`
-  );
-
+  const adjustment = wasSuccessful ? 0.05 : -0.10;
+  
+  console.log(`📊 Pattern feedback: ${wasSuccessful ? 'SUCCESS' : 'FAILURE'} (adjustment: ${adjustment})`);
+  
   // Fetch current values
   const { data: pattern, error: fetchError } = await supabase
     .from('design_patterns')
     .select('confidence_score, success_count')
     .eq('id', patternId)
     .single();
-
+  
   if (fetchError) {
     console.error('❌ Failed to fetch pattern:', fetchError);
     return;
   }
-
+  
   // Calculate new values (clamped between 0.3 and 1.0)
-  const newConfidence = Math.max(
-    0.3,
-    Math.min(1.0, (pattern?.confidence_score ?? 0.3) + adjustment)
-  );
-  const newSuccessCount = wasSuccessful
-    ? (pattern?.success_count ?? 0) + 1
-    : (pattern?.success_count ?? 0);
-
+  const newConfidence = Math.max(0.3, Math.min(1.0, (pattern?.confidence_score ?? 0.3) + adjustment));
+  const newSuccessCount = wasSuccessful ? (pattern?.success_count ?? 0) + 1 : (pattern?.success_count ?? 0);
+  
   // Update pattern
   const { error } = await supabase
     .from('design_patterns')
@@ -162,13 +151,13 @@ export async function recordPatternFeedback(
       last_used: new Date().toISOString(),
     })
     .eq('id', patternId);
-
+  
   if (error) {
     console.error('❌ Failed to record pattern feedback:', error);
   } else {
     console.log(`✅ Pattern confidence updated: ${wasSuccessful ? '+5%' : '-10%'}`);
   }
-
+  
   // Optional: Store feedback comment for learning review
   if (userComment) {
     console.log(`💬 User feedback: "${userComment}"`);
@@ -183,7 +172,7 @@ export async function recordPatternUsage(patternId: string): Promise<void> {
   const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
   const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
   const supabase = createClient(supabaseUrl, supabaseKey);
-
+  
   await supabase
     .from('design_patterns')
     .update({ last_used: new Date().toISOString() })

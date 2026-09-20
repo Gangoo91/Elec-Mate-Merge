@@ -37,11 +37,7 @@ interface CachedQuery {
 function generateCacheKey(query: string, jobType?: string): string {
   const normalized = query.toLowerCase().trim();
   const key = jobType ? `${normalized}:${jobType}` : normalized;
-  // UTF-8 safe base64 encoding to handle emojis/special characters
-  const encoder = new TextEncoder();
-  const data = encoder.encode(key);
-  const binString = Array.from(data, (byte) => String.fromCodePoint(byte)).join('');
-  return btoa(binString).substring(0, 32);
+  return btoa(key).substring(0, 32); // Base64 hash, first 32 chars
 }
 
 /**
@@ -92,65 +88,23 @@ async function storeQueryCache(
 ): Promise<void> {
   try {
     const expiresAt = new Date(Date.now() + 60 * 60 * 1000); // 60 minutes
-
-    await supabase.from('cost_query_cache').upsert({
-      query_hash: queryHash,
-      query,
-      results,
-      job_type: jobType,
-      hit_count: 0,
-      created_at: new Date().toISOString(),
-      expires_at: expiresAt.toISOString(),
-    });
+    
+    await supabase
+      .from('cost_query_cache')
+      .upsert({
+        query_hash: queryHash,
+        query,
+        results,
+        job_type: jobType,
+        hit_count: 0,
+        created_at: new Date().toISOString(),
+        expires_at: expiresAt.toISOString()
+      });
 
     logger.debug('Stored in cache', { queryHash, resultCount: results.length });
   } catch (err) {
     logger.warn('Cache store failed', { error: err instanceof Error ? err.message : String(err) });
   }
-}
-
-// Words that appear in every query preamble / carry no pricing signal
-const KEYWORD_STOPWORDS = new Set([
-  'electrical',
-  'remedial',
-  'materials',
-  'material',
-  'location',
-  'circuit',
-  'defect',
-  'defects',
-  'work',
-  'works',
-  'with',
-  'from',
-  'that',
-  'this',
-  'have',
-  'been',
-  'required',
-  'install',
-  'installed',
-  'installation',
-  'missing',
-  'damaged',
-  'present',
-  'evident',
-  'observed',
-]);
-
-/**
- * Extract distinctive, PostgREST-safe keyword terms from a free-text query.
- * The previous keyword leg passed the ENTIRE query into a single ilike
- * pattern — a whole-paragraph match that never hit, and any comma in the
- * text broke the `.or()` filter syntax outright.
- */
-function extractKeywordTerms(query: string, maxTerms = 6): string[] {
-  const words = query
-    .toLowerCase()
-    .replace(/[^a-z0-9\s]/g, ' ')
-    .split(/\s+/)
-    .filter((w) => w.length >= 4 && !KEYWORD_STOPWORDS.has(w));
-  return Array.from(new Set(words)).slice(0, maxTerms);
 }
 
 /**
@@ -164,7 +118,7 @@ export async function searchPricingKnowledge(
   jobType?: string
 ): Promise<PricingResult[]> {
   const searchStart = Date.now();
-
+  
   // Check cache first
   const cacheKey = generateCacheKey(query, jobType);
   const cached = await checkQueryCache(supabase, cacheKey, logger);
@@ -176,45 +130,40 @@ export async function searchPricingKnowledge(
   logger.debug('Starting hybrid pricing search', { query, jobType });
 
   try {
-    // Keyword leg matches per-term (single sanitised words), never the whole
-    // query string — see extractKeywordTerms above for why.
-    const keywordTerms = extractKeywordTerms(query);
-
     // Parallel execution: vector search + keyword search
     const [vectorResults, keywordResults] = await Promise.all([
       // Vector search with lower threshold
       supabase.rpc('search_pricing', {
         query_embedding: embedding,
         match_threshold: 0.5, // Lower from 0.7 → 0.5
-        match_count: 12, // Increase from 8 → 12
+        match_count: 12       // Increase from 8 → 12
       }),
-
-      // Keyword search for distinctive terms
-      keywordTerms.length > 0
-        ? supabase
-            .from('pricing_embeddings')
-            .select('*')
-            .or(
-              keywordTerms
-                .map((t) => `item_name.ilike.%${t}%,content.ilike.%${t}%`)
-                .join(',')
-            )
-            .limit(8)
-        : Promise.resolve({ data: [] as PricingResult[] }),
+      
+      // Keyword search for common terms
+      supabase
+        .from('pricing_embeddings')
+        .select('*')
+        .or(`item_name.ilike.%${query}%,content.ilike.%${query}%`)
+        .limit(8)
     ]);
 
     // Merge results (dedupe by id)
-    const allResults = [...(vectorResults.data || []), ...(keywordResults.data || [])];
+    const allResults = [
+      ...(vectorResults.data || []),
+      ...(keywordResults.data || [])
+    ];
 
     const uniqueResults = allResults
-      .filter((item, index, self) => index === self.findIndex((t) => t.id === item.id))
+      .filter((item, index, self) => 
+        index === self.findIndex(t => t.id === item.id)
+      )
       .slice(0, 15); // Top 15 results
 
     logger.info('Hybrid search complete', {
       duration: Date.now() - searchStart,
       vectorResults: vectorResults.data?.length || 0,
       keywordResults: keywordResults.data?.length || 0,
-      totalUnique: uniqueResults.length,
+      totalUnique: uniqueResults.length
     });
 
     // Store in cache
@@ -224,7 +173,7 @@ export async function searchPricingKnowledge(
   } catch (error) {
     logger.error('Hybrid search failed', {
       error: error instanceof Error ? error.message : String(error),
-      duration: Date.now() - searchStart,
+      duration: Date.now() - searchStart
     });
     throw error;
   }
@@ -238,15 +187,10 @@ export function formatPricingContext(results: PricingResult[]): string {
     return 'No database pricing found. Use fallback market rates.';
   }
 
-  return (
-    `DATABASE PRICES (${results.length} items, 15% markup applied):\n` +
-    results
-      .map(
-        (p) =>
-          `- ${p.item_name}: £${p.base_cost.toFixed(2)} (${p.wholesaler}${p.in_stock ? '' : ' - awaiting stock'})`
-      )
-      .join('\n')
-  );
+  return `DATABASE PRICES (${results.length} items):\n` +
+    results.map(p => 
+      `- ${p.item_name}: £${p.base_cost} (${p.wholesaler}${p.in_stock ? '' : ' - awaiting stock'})`
+    ).join('\n');
 }
 
 /**
@@ -260,7 +204,7 @@ export async function searchLabourTimeKnowledge(
   jobType?: string
 ): Promise<any[]> {
   const searchStart = Date.now();
-
+  
   // Check cache first
   const cacheKey = generateCacheKey(`labour_${query}`, jobType);
   const cached = await checkQueryCache(supabase, cacheKey, logger);
@@ -278,31 +222,34 @@ export async function searchLabourTimeKnowledge(
       supabase.rpc('search_project_mgmt_hybrid', {
         query_text: query,
         query_embedding: embedding,
-        match_count: 10,
+        match_count: 10
       }),
-
+      
       // Keyword search for labour/time/hours
       supabase
         .from('project_mgmt_knowledge')
         .select('*')
-        .or(
-          `topic.ilike.%labour%,topic.ilike.%time%,content.ilike.%hours%,content.ilike.%installation%`
-        )
-        .limit(8),
+        .or(`topic.ilike.%labour%,topic.ilike.%time%,content.ilike.%hours%,content.ilike.%installation%`)
+        .limit(8)
     ]);
 
     // Merge results (dedupe by id)
-    const allResults = [...(vectorResults.data || []), ...(keywordResults.data || [])];
+    const allResults = [
+      ...(vectorResults.data || []),
+      ...(keywordResults.data || [])
+    ];
 
     const uniqueResults = allResults
-      .filter((item, index, self) => index === self.findIndex((t) => t.id === item.id))
+      .filter((item, index, self) => 
+        index === self.findIndex(t => t.id === item.id)
+      )
       .slice(0, 12); // Top 12 labour time results
 
     logger.info('Labour time search complete', {
       duration: Date.now() - searchStart,
       vectorResults: vectorResults.data?.length || 0,
       keywordResults: keywordResults.data?.length || 0,
-      totalUnique: uniqueResults.length,
+      totalUnique: uniqueResults.length
     });
 
     // Store in cache (60 min TTL)
@@ -312,7 +259,7 @@ export async function searchLabourTimeKnowledge(
   } catch (error) {
     logger.error('Labour time search failed', {
       error: error instanceof Error ? error.message : String(error),
-      duration: Date.now() - searchStart,
+      duration: Date.now() - searchStart
     });
     return []; // Return empty array on error (fallback to hardcoded values)
   }
@@ -326,8 +273,8 @@ export function formatLabourTimeContext(results: any[]): string {
     return 'No labour time data found in handbook. Use fallback estimates.';
   }
 
-  return (
-    `LABOUR TIME STANDARDS (from PROJECT-AND-COST-ENGINEERS-HANDBOOK):\n` +
-    results.map((r) => `- ${r.topic}: ${r.content.substring(0, 150)}...`).join('\n')
-  );
+  return `LABOUR TIME STANDARDS (from PROJECT-AND-COST-ENGINEERS-HANDBOOK):\n` +
+    results.map(r => 
+      `- ${r.topic}: ${r.content.substring(0, 150)}...`
+    ).join('\n');
 }

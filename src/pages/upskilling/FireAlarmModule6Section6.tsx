@@ -343,6 +343,28 @@ const FireAlarmModule6Section6 = () => {
 
         <ContentEyebrow>The handover training session</ContentEyebrow>
 
+        <RegsCallout
+          source="BS 5839-1:2025 · Clause 47, Premises management — commentary and 47.1"
+          clause={
+            <>
+              The role of the premises management is to ensure that the system is tested and
+              maintained in accordance with this part of BS 5839, that appropriate records are kept,
+              and that relevant occupants in the protected premises are aware of their roles and
+              responsibilities in connection with the fire detection and fire alarm system. It is
+              important that premises management takes steps to avoid situations that could be
+              detrimental to the standard of protection afforded by the system and to minimize the
+              level of false alarms. Operator training is also an important role for the premises
+              management and is essential to the correct functioning of the system.
+              <br />
+              <br />
+              <strong>47.1</strong> A single, named member of the premises management should be
+              appointed to supervise all matters pertaining to the fire detection and fire alarm
+              system.
+            </>
+          }
+          meaning="47.1 is the recommendation to press at handover, because it is the one that decides whether everything else survives. A SINGLE NAMED person — not 'facilities', not 'whoever is on shift'. Systems degrade when responsibility is diffuse: the weekly test slips, the logbook goes unfilled, a zone sits disabled for months and nobody owns putting it right. If you are running the handover session and there is no named person, that is the most valuable thing you can raise, and it costs the client nothing. Note too that this clause makes the USER responsible for minimising false alarms — which is why the false-alarm briefing belongs in your training session and in the acceptance check under Clause 40, not as an afterthought."
+        />
+
         <ConceptBlock
           title="What good handover training looks like"
           plainEnglish="Handover training is a structured session run by the commissioning / handover organisation for the responsible person and any designated representatives. It is not a casual conversation at the end of installation; it is a formal session with an agenda, training material, opportunity for questions, and recorded acknowledgement. The session is the bridge between technical delivery (the system is installed and commissioned) and operational reality (the system is being safely operated by the people who run the building)."

@@ -1,15 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import {
-  Check,
-  CheckCircle2,
-  Eye,
-  EyeOff,
-  Fingerprint,
-  Loader2,
-  ScanFace,
-} from 'lucide-react';
+import { Check, CheckCircle2, Eye, EyeOff, Fingerprint, Loader2, ScanFace } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import BiometricPromptSheet from '@/components/auth/BiometricPromptSheet';
@@ -40,6 +32,15 @@ const SignIn = () => {
 
   const { signIn } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  // ProtectedRoute sends "/subscriptions?extend=1" here as state.from; the
+  // trial emails rely on landing back on it after sign-in. Anything else
+  // still goes to the dashboard.
+  const from = (location.state as { from?: { pathname?: string; search?: string } } | null)?.from;
+  const destination =
+    from?.pathname && from.pathname.startsWith('/') && from.pathname !== '/auth/signin'
+      ? `${from.pathname}${from.search ?? ''}`
+      : '/dashboard';
   const biometric = useBiometricAuth();
 
   useEffect(() => {
@@ -84,7 +85,7 @@ const SignIn = () => {
         setShowBiometricPrompt(true);
       } else {
         setShowSuccess(true);
-        setTimeout(() => navigate('/dashboard'), 800);
+        setTimeout(() => navigate(destination), 800);
       }
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'An error occurred during sign in');
@@ -112,14 +113,14 @@ const SignIn = () => {
     setShowBiometricPrompt(false);
     pendingCredentials.current = null;
     setShowSuccess(true);
-    setTimeout(() => navigate('/dashboard'), 800);
+    setTimeout(() => navigate(destination), 800);
   };
 
   const handleBiometricSkip = () => {
     setShowBiometricPrompt(false);
     pendingCredentials.current = null;
     setShowSuccess(true);
-    setTimeout(() => navigate('/dashboard'), 800);
+    setTimeout(() => navigate(destination), 800);
   };
 
   const handleBiometricLogin = async () => {
@@ -147,7 +148,7 @@ const SignIn = () => {
         setError('Saved credentials are no longer valid. Please sign in with your password.');
       } else {
         setShowSuccess(true);
-        setTimeout(() => navigate('/dashboard'), 800);
+        setTimeout(() => navigate(destination), 800);
       }
     } catch {
       setError('Biometric sign-in failed. Please use your password.');

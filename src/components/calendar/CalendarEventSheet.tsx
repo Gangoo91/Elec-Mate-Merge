@@ -215,6 +215,18 @@ const CalendarEventSheet = ({
 
   /** What the booking should start, decided here and carried out by the page. */
   const [createProject, setCreateProject] = useState(false);
+
+  /**
+   * Size a textarea to its text. Deliberately a fresh function each render
+   * so React re-runs it as a ref callback whenever the value changes — an
+   * existing description is the right height the moment the sheet opens,
+   * not after the first keystroke.
+   */
+  const autoGrow = (el: HTMLTextAreaElement | null) => {
+    if (!el) return;
+    el.style.height = 'auto';
+    el.style.height = `${el.scrollHeight}px`;
+  };
   const [createSiteVisit, setCreateSiteVisit] = useState(false);
 
   /**
@@ -688,7 +700,10 @@ const CalendarEventSheet = ({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] overflow-hidden rounded-t-2xl p-0">
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] overflow-hidden rounded-t-2xl p-0 sm:mx-auto sm:w-full sm:max-w-[640px]"
+      >
         <div className="flex h-full flex-col bg-background">
           <div className="h-1 shrink-0 transition-colors" style={{ backgroundColor: colour }} />
 
@@ -921,7 +936,7 @@ const CalendarEventSheet = ({
             {/* Type */}
             <div>
               <span className={labelCn}>Type</span>
-              <div className="scrollbar-hide -mx-4 flex gap-2 overflow-x-auto px-4 pb-1">
+              <div className="scrollbar-hide -mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
                 {EVENT_TYPES.map((type) => (
                   <button
                     key={type}
@@ -965,7 +980,7 @@ const CalendarEventSheet = ({
                   changed in a year. Renders nothing until there is a habit to
                   spot, so a new account never sees an empty row. */}
               {quickTitles.length > 0 && (
-                <div className="scrollbar-hide -mx-4 mt-2 flex gap-2 overflow-x-auto px-4 pb-1">
+                <div className="scrollbar-hide -mx-4 mt-2 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
                   {quickTitles.map((h) => (
                     <button
                       key={h.title}
@@ -992,7 +1007,7 @@ const CalendarEventSheet = ({
             {suggestions.length > 0 && (
               <div>
                 <span className={cn(eyebrowCn, 'mb-2 block')}>Next times that fit</span>
-                <div className="scrollbar-hide -mx-4 flex gap-2 overflow-x-auto px-4 pb-1">
+                <div className="scrollbar-hide -mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
                   {suggestions.map((slot) => {
                     const chosen = slot.start.getTime() === startAt.getTime();
                     return (
@@ -1037,7 +1052,7 @@ const CalendarEventSheet = ({
                   </span>
                 )}
               </div>
-              <div className="scrollbar-hide -mx-4 flex gap-2 overflow-x-auto px-4 pb-1">
+              <div className="scrollbar-hide -mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
                 {DURATIONS.map((option) => (
                   <button
                     key={option.label}
@@ -1389,7 +1404,7 @@ const CalendarEventSheet = ({
             {/* Reminder */}
             <div>
               <span className={cn(eyebrowCn, 'mb-2 block')}>Reminder</span>
-              <div className="scrollbar-hide -mx-4 flex gap-2 overflow-x-auto px-4 pb-1">
+              <div className="scrollbar-hide -mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
                 {REMINDER_OPTIONS.map((opt) => (
                   <button
                     key={opt.value}
@@ -1408,13 +1423,16 @@ const CalendarEventSheet = ({
               <label className={labelCn} htmlFor="event-description">
                 Description
               </label>
+              {/* Grows with the text. A two-row box with an inner scrollbar
+                  hid the third line of every description that had one. */}
               <textarea
                 id="event-description"
+                ref={autoGrow}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="What needs doing"
-                rows={2}
-                className={cn(textareaCn, 'min-h-[72px]')}
+                rows={3}
+                className={cn(textareaCn, 'min-h-[88px] overflow-hidden')}
               />
             </div>
 
@@ -1425,11 +1443,12 @@ const CalendarEventSheet = ({
               </label>
               <textarea
                 id="event-notes"
+                ref={autoGrow}
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 placeholder="Only you see these"
-                rows={2}
-                className={cn(textareaCn, 'min-h-[72px]')}
+                rows={3}
+                className={cn(textareaCn, 'min-h-[88px] overflow-hidden')}
               />
             </div>
             </div>

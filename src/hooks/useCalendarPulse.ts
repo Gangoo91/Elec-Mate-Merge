@@ -84,6 +84,8 @@ export function useCalendarPulse(): CalendarPulse {
     let nextFreeDay: Date | null = null;
     for (let i = 0; i < HORIZON_DAYS; i++) {
       const day = addDays(today, i);
+      // A day off is not a free day — "next free" must not point at Sunday.
+      if (!settings.workingDays.includes(day.getDay())) continue;
       const shape = buildDayShape(
         eventsOnDay(booked, day),
         day,

@@ -300,22 +300,41 @@ const FireAlarmModule1Section1 = () => {
             </li>
           </ul>
           <p>
-            Manual call points are required in every L category — L1, L2, L3, L4 and L5 all include
-            manual call points by default. The "/M" suffix (e.g. P1/M, P2/M, L5/M) is used only for
-            the categories that do not already include manual call points.
+            Manual call points and the category system interact through the &quot;/M&quot;
+            suffix, and it repays reading carefully. BS 5839-1:2025 Clause 4 says that where a
+            Category M system is used in conjunction with a Category <strong>P1, P2 or L5</strong>
+            system, the combined system is categorised P1/M, P2/M or L5/M respectively. Those
+            three are the combinations the standard names — L1 to L4 are not among them, because
+            manual initiation is taken as part of a life-safety system covering escape routes.
+            <br />
+            <br />
+            L5 sits outside that assumption by design: it is the bespoke category, defined by a
+            specific fire-safety objective rather than by a coverage template, so whether it
+            includes manual call points depends on what that objective is. Where manual
+            initiation is wanted alongside it, the system is L5/M. Note too that the standard
+            does not treat call points as universal regardless of area: the commentary to Clause
+            19 records that they are not normally provided in some unsupervised public areas
+            because of malicious operation, and that an emergency voice communication system can
+            be used instead in public car parks within a building.
           </p>
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 5839-1:2025 · Categories of system (clause 5) — in summary, not a verbatim quote"
+          source="BS 5839-1:2025 · Clause 4, Categories of system — commentary"
           clause={
             <>
-              Category L systems are systems intended for the protection of life. They are
-              sub-divided as L1, L2, L3, L4 and L5 according to the extent of automatic detection
-              provided.
+              Category L systems. These are automatic fire detection and fire alarm systems intended
+              for the protection of life. They are further subdivided as follows.
+              <br />
+              <br />
+              This part of BS 5839 does not recommend which category of system needs to be installed
+              in any given premises. The various system categories are to be regarded as a
+              &ldquo;menu&rdquo; &hellip; from which purchasers, users, specifiers, enforcing
+              authorities, insurers or system designers can select a suitable system for any
+              building.
             </>
           }
-          meaning="Two phrases earn close reading. 'Protection of life' — life safety is the load-bearing objective; property is incidental. 'According to the extent of automatic detection' — the suffix number is a coverage scale, and the category selection therefore IS the coverage decision."
+          meaning="Two things follow from this, and the second surprises people. First, 'protection of life' is the load-bearing objective of an L system — property is incidental. Second, the standard does not tell you which category a building needs. It is a menu, not a lookup table. The category comes from the fire risk assessment, the fire strategy, the enforcing authority and the insurer — BS 5839-1 tells you what each category MEANS, and then what to do once one is chosen. Anyone who says 'the standard requires L2 here' has misread it; what they mean is that the risk assessment concluded L2."
         />
 
         <SectionRule />

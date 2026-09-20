@@ -9,6 +9,53 @@ const corsHeaders = {
     'authorization, x-client-info, apikey, content-type, x-request-id',
 };
 
+// ── Linear: every "missing feature" / "found something else" / "bug" answer
+// becomes a ticket the moment it is typed (retention plan, 20 Sep 2026). The
+// weekly digest used to be the only place these surfaced; a fortnight is too
+// long to learn the same gap three times. Same helper shape as
+// weekly-churn-digest; no key configured means no ticket, never an error.
+function linearGql(query: string, variables: Record<string, unknown>) {
+  const key = Deno.env.get('LINEAR_API_KEY');
+  if (!key) return Promise.resolve(null);
+  return fetch('https://api.linear.app/graphql', {
+    method: 'POST',
+    headers: { Authorization: key, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ query, variables }),
+    // deno-lint-ignore no-explicit-any
+  }).then((r) => r.json() as Promise<any>);
+}
+async function raiseCancelTicket(
+  reason: string,
+  detail: string,
+  who: { name: string | null; email: string; tier: string | null; wasTrial: boolean }
+): Promise<void> {
+  try {
+    const teams = await linearGql('query { teams(first: 10) { nodes { id key } } }', {});
+    const teamId = teams?.data?.teams?.nodes?.find((t: { key: string }) => t.key === 'ELE')?.id;
+    if (!teamId) return;
+    const label =
+      reason === 'missing_feature'
+        ? 'Missing feature'
+        : reason === 'switching'
+          ? 'Switched to another app'
+          : 'Bug on the way out';
+    const title = `[Cancel] ${label}: ${detail.slice(0, 80)}`;
+    const body = [
+      `**${who.name ?? 'Unknown'}** ${who.email} · ${who.tier ?? 'tier unknown'} · ${who.wasTrial ? 'trial' : 'paying'}`,
+      '',
+      `Their words: *"${detail}"*`,
+      '',
+      `Raised automatically by the cancel flow on ${new Date().toISOString().slice(0, 10)}. Andrew replies within a day; the reply and outcome go in the comments.`,
+    ].join('\n');
+    await linearGql(
+      `mutation($input: IssueCreateInput!) { issueCreate(input: $input) { issue { identifier } } }`,
+      { input: { teamId, title, description: body, priority: 3 } }
+    );
+  } catch (e) {
+    console.warn('[cancel] Linear ticket failed (non-fatal):', String(e));
+  }
+}
+
 // Helper logging function for debugging
 const logStep = (step: string, details?: any) => {
   const detailsStr = details ? ` - ${JSON.stringify(details)}` : '';
@@ -45,7 +92,11 @@ serve(async (req) => {
     logStep('User authenticated', { userId: user.id, email: user.email });
 
     // Body is optional now — see below. A malformed body is not fatal.
-    let body: { subscriptionId?: string } = {};
+    // `reason` / `detail` come from the cancel flow's survey step and are
+    // passed through to Stripe's cancellation_details so the Stripe dashboard
+    // and cancel_survey_responses tell the same story (they disagreed on 58 of
+    // 61 September cancellations: Stripe had nothing).
+    let body: { subscriptionId?: string; reason?: string; detail?: string } = {};
     try {
       body = await req.json();
     } catch {
@@ -129,8 +180,43 @@ serve(async (req) => {
     // one alive means "I cancelled" followed by another charge.
     const targets = requestedId ? owned.filter((s) => s.id === requestedId) : owned;
     const cancelled: string[] = [];
+    // Stripe's own vocabulary for cancellation_details.feedback.
+    const FEEDBACK: Record<string, string> = {
+      too_expensive: 'too_expensive',
+      not_using: 'unused',
+      missing_feature: 'missing_features',
+      switching: 'switched_service',
+      bug: 'low_quality',
+      other: 'other',
+    };
+    const cancellation_details = body.reason
+      ? {
+          feedback: (FEEDBACK[body.reason] ??
+            'other') as Stripe.SubscriptionCancelParams.CancellationDetails.Feedback,
+          comment: (body.detail ?? '').slice(0, 500) || undefined,
+        }
+      : undefined;
+    // Access runs to the end of what they have, the way the App Store and
+    // Play Store already do it. Until 20 Sep 2026 a web cancel was immediate,
+    // so someone who cancelled on day 2 of a 7-day trial — or on the 5th of a
+    // month they had paid for — was locked out on the spot. past_due / unpaid /
+    // incomplete still cancel immediately: there is nothing paid-for to keep.
+    let accessUntil: string | null = null;
     for (const s of targets) {
-      const done = await stripe.subscriptions.cancel(s.id);
+      if (s.status === 'trialing' || s.status === 'active') {
+        const done = await stripe.subscriptions.update(s.id, {
+          cancel_at_period_end: true,
+          ...(cancellation_details ? { cancellation_details } : {}),
+        });
+        cancelled.push(done.id);
+        const endsAt =
+          done.trial_end && done.status === 'trialing' ? done.trial_end : done.current_period_end;
+        if (endsAt) accessUntil = new Date(endsAt * 1000).toISOString();
+        continue;
+      }
+      const done = await stripe.subscriptions.cancel(s.id, {
+        ...(cancellation_details ? { cancellation_details } : {}),
+      });
       cancelled.push(done.id);
       // Void anything still open so neither Stripe's retries nor our payday
       // sweep can chase a subscription the customer has just cancelled.
@@ -143,14 +229,37 @@ serve(async (req) => {
         logStep('Could not void open invoice (non-fatal)', { error: String(voidErr) });
       }
     }
-    const canceledSubscription = { status: 'canceled', id: cancelled[0] };
-    logStep('Subscription(s) cancelled', { cancelled });
+    const canceledSubscription = {
+      status: accessUntil ? 'cancel_at_period_end' : 'canceled',
+      id: cancelled[0],
+    };
+    // Product losses become tickets on the spot (missing feature / switching / bug with words).
+    const detail = (body.detail ?? '').trim();
+    if (
+      body.reason &&
+      ['missing_feature', 'switching', 'bug'].includes(body.reason) &&
+      detail.length > 3
+    ) {
+      const { data: prof } = await serviceClient
+        .from('profiles')
+        .select('full_name, subscription_tier, is_trial')
+        .eq('id', user.id)
+        .maybeSingle();
+      await raiseCancelTicket(body.reason, detail, {
+        name: prof?.full_name ?? null,
+        email: user.email,
+        tier: prof?.subscription_tier ?? null,
+        wasTrial: !!prof?.is_trial || targets.some((s) => s.status === 'trialing'),
+      });
+    }
+    logStep('Subscription(s) cancelled', { cancelled, accessUntil });
 
     // Return success response
     return new Response(
       JSON.stringify({
         success: true,
         status: canceledSubscription.status,
+        access_until: accessUntil,
         message: 'Subscription cancelled successfully',
       }),
       {
@@ -159,7 +268,11 @@ serve(async (req) => {
       }
     );
   } catch (error) {
-    await captureException(error, { functionName: 'cancel-subscription', requestUrl: req.url, requestMethod: req.method });
+    await captureException(error, {
+      functionName: 'cancel-subscription',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
     const errorMessage = error instanceof Error ? error.message : String(error);
     logStep('ERROR in cancel-subscription', { message: errorMessage });
 

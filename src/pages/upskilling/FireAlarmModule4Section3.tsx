@@ -271,6 +271,27 @@ const FireAlarmModule4Section3 = () => {
 
         <ContentEyebrow>The two cable categories — Standard and Enhanced</ContentEyebrow>
 
+        <RegsCallout
+          source="BS 5839-1:2025 · Clause 25, Cables, wiring and other interconnections — commentary"
+          clause={
+            <>
+              It is not normally possible to predict, with any accuracy, those areas of a building
+              in which fire can or cannot occur. At the design stage, the exact routes that cables
+              will follow might also be unknown. Therefore, to enable cables used for critical
+              signal paths (see 3.15) to remain operational for an adequate duration, cables with an
+              inherent ability to resist attack by fire need to be used throughout such critical
+              signal paths.
+              <br />
+              <br />
+              Unless cables are supported in such a manner that they remain supported for a duration
+              similar to that for which the cable itself can survive a fire, early failure of the
+              circuit might occur because of strain on terminations as a result of collapsing
+              cables.
+            </>
+          }
+          meaning="The first paragraph is the reason fire-resisting cable is used THROUGHOUT a critical signal path rather than only where fire seems likely: nobody can say in advance where the fire will start, and at design stage nobody knows the final cable route either. 'Throughout' is doing real work — a single length of standard cable in an otherwise enhanced path sets the survival time for the whole path. The second paragraph is the one that gets missed on site, and it is why plastic clips are not acceptable: the CABLE surviving the fire is worthless if what holds it up does not, because the cable falls, drags on its terminations and the circuit opens anyway. The support system has to be rated to match the cable. BS 7671 makes the same point for installations generally — Regulation 521.10.202, in Part 5 Chapter 52, gives the requirements for methods of support of wiring systems."
+        />
+
         <ConceptBlock
           title="Standard (PH30) — the default for most circuits"
           plainEnglish="A PH30 cable is one that has been tested under the BS EN 50200:2015 Annex D procedure — a defined gas flame at 930 °C, periodic water spray representing fire-fighting water hitting the cable, and periodic mechanical impact representing falling debris — and continued to carry signal or power for at least 30 minutes. The PH classification is the time of circuit integrity under those combined stresses. Standard PH30 cable is the default selection for routine fire alarm circuits in most buildings: detection loops, sounder circuits, interface circuits in non-extended-evacuation buildings."
@@ -932,7 +953,7 @@ const FireAlarmModule4Section3 = () => {
             {
               question: 'My CIE manual recommends a specific cable type. Should I follow it?',
               answer:
-                'The CIE manufacturer&apos;s recommendation is one input. The design must also satisfy BS 5839-1:2025 / BS 8519 / BS 7671 Section 560 — sometimes the manufacturer&apos;s recommendation is more conservative than the standard, sometimes less. Where the recommendation is more conservative (specifying enhanced cable where the standard would allow standard), follow the recommendation. Where the recommendation is less conservative (specifying standard cable where the design analysis identifies an enhanced-cable driver), follow the standard. The standards are the floor; manufacturer recommendations can lift the floor but cannot lower it.',
+                'The CIE manufacturer\'s recommendation is one input. The design must also satisfy BS 5839-1:2025 / BS 8519 / BS 7671 Section 560 — sometimes the manufacturer\'s recommendation is more conservative than the standard, sometimes less. Where the recommendation is more conservative (specifying enhanced cable where the standard would allow standard), follow the recommendation. Where the recommendation is less conservative (specifying standard cable where the design analysis identifies an enhanced-cable driver), follow the standard. The standards are the floor; manufacturer recommendations can lift the floor but cannot lower it.',
             },
             {
               question: 'How long is MICC service life in fire alarm applications?',

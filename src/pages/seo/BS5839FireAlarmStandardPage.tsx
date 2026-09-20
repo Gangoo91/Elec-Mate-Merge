@@ -538,8 +538,9 @@ const sections = [
               <span>
                 <strong>Sounder coverage</strong> — fire alarm sounders must achieve a minimum sound
                 level of 65dB(A) in all accessible areas, or 75dB(A) at the bedhead in sleeping
-                accommodation. This must be measured with all doors closed. In noisy environments,
-                the sounder level must be at least 5dB(A) above the ambient noise level.
+                accommodation. This must be measured with all doors closed. Where background noise exceeds 60dB(A),
+                Clause 15.1.3 asks for the sounder level to be at least 5dB(A) above that
+                background — below that trigger the 65dB(A) minimum governs on its own.
               </span>
             </li>
           </ul>

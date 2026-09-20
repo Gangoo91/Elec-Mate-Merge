@@ -269,6 +269,29 @@ const FireAlarmModule5Section3 = () => {
 
         <ContentEyebrow>Point detectors — mounting and positioning</ContentEyebrow>
 
+        <RegsCallout
+          source="BS 5839-1:2025 · Clause 35, Installation practices and workmanship — 35.1, 35.2, 35.3"
+          clause={
+            <>
+              <strong>35.1</strong> Installation practices and workmanship should conform to BS
+              7671:2018+A3, except where otherwise recommended in this part of BS 5839.
+              <br />
+              <br />
+              <strong>35.2</strong> Cables that are directly fixed to surfaces should be neatly run
+              and securely fixed at suitable intervals, in accordance with the cable manufacturer&rsquo;s
+              recommendations. Cables should not rely on suspended ceilings for their support.
+              <br />
+              <br />
+              <strong>35.3</strong> Methods of cable support should be non-combustible and such that
+              circuit integrity is not reduced below that afforded by the cable used, and should be
+              capable of withstanding a similar temperature and duration to that of the cable. NOTE
+              1 &hellip; This is likely to preclude, for example, the use of non-metallic cable
+              clips or cable ties as the sole means of support.
+            </>
+          }
+          meaning="35.1 is the sentence that makes fire alarm installation an electrician's job: the baseline is BS 7671, and BS 5839-1 only departs from it where it says so. So everything you already know about workmanship still applies unless this standard overrides it. 35.2 has a specific prohibition worth remembering on site — a suspended ceiling is not a cable support. Laying cable on ceiling tiles or hanging it from grid wire fails this even if it looks tidy, because the ceiling is the first thing to go in a fire. 35.3 and its note are where plastic clips and cable ties are ruled out as the SOLE means of support. Note the qualifier: a cable tie used to dress a cable inside a tray is not the sole support and is not what this precludes."
+        />
+
         <ConceptBlock
           title="Position below ceiling — the 25 mm / 600 mm / 150 mm rule"
           plainEnglish="Point detectors are mounted with the sensitive element positioned in a band below the ceiling. Too high (in the dead-air boundary layer right at the ceiling) and the sensing chamber misses the smoke or heat plume because air movement is minimal there. Too low and the plume disperses before reaching the chamber. The band differs by sensor type because smoke spreads further from the ceiling than heat does."
@@ -1125,6 +1148,54 @@ const FireAlarmModule5Section3 = () => {
           title="MCP fitted at door-handle height for builder convenience"
           whatHappens="An MCP is fitted at 950 mm AFFL because the wall has a dado rail at 1100 mm and the installer prefers to fit below the rail rather than re-route. The drawing shows 1.4 m. The 2025 tolerance is +200 / -300 mm — range 1.1-1.6 m. 950 mm is below the lower bound. Auditor flags non-compliant. Re-work removes the MCP, repairs the wall, refits at 1.1 m above the dado rail."
           doInstead="Survey the wall before MCP layout. If the dado rail prevents a 1.1-1.6 m fitting, change the position of the MCP, not the height. The tolerance is fixed by the standard and is not negotiable on a build basis. 950 mm is non-compliant under any 2025 reading."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Explosive gas and dust atmospheres — Clause 9</ContentEyebrow>
+
+        <ConceptBlock
+          title="When the area itself can ignite"
+          plainEnglish="Some areas can hold an explosive atmosphere — flammable gas, vapour or mist, or a cloud of combustible dust. Spray booths, fuel stores, LPG rooms, solvent handling, battery rooms, and the dust-generating ends of joinery, flour, feed and sugar processing are the everyday examples. In those areas the ordinary risk is inverted: the concern is not only that the fire alarm equipment survives the fire, but that the fire alarm equipment does not START one. A detector base arcing as a head is twisted in, or a cable fault releasing enough energy to spark, is an ignition source sitting inside the hazard."
+          onSite="Treat a hazardous-area classification drawing the way you treat a fire strategy — as something you must see before you fix anything. Areas are classified into zones (gas: 0, 1, 2; dust: 20, 21, 22) by how likely an explosive atmosphere is and for how long. Note the collision of vocabulary here: these are NOT the fire detection zones of Clause 12 or the alarm zones of Clause 13. Two entirely different meanings of the word 'zone', and they appear on drawings for the same building."
+        >
+          <p>
+            BS 5839-1 does not itself set out how to make equipment safe in these areas. It points
+            at the standards that do, and the pointer is deliberately narrow: installation follows
+            BS EN 60079-14 and maintenance follows BS EN IEC 60079-17. Equipment selection,
+            certification (ATEX / UKEX marking), cable entry devices, earthing and the competence
+            required to work on such installations all live in that family, not in BS 5839-1.
+          </p>
+          <p>
+            The practical consequence is that a fire alarm contractor without that competence should
+            not be improvising in a classified area. Knowing that the area is classified, and that a
+            different standard governs it, is the part this course is responsible for.
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 5839-1:2025 · Clause 9, Systems in explosive gas or dust atmospheres — 9.1 and 9.2"
+          clause={
+            <>
+              <strong>9.1</strong> Any system (or part of a system) protecting an area,{' '}
+              <strong>or with cables passing through an area</strong>, in which there might be an
+              explosive gas, vapour, mist or dust atmosphere should be installed in accordance with
+              BS EN 60079-14.
+              <br />
+              <br />
+              <strong>9.2</strong> Any system (or part of a system) protecting an area,{' '}
+              <strong>or with cables passing through an area</strong>, in which there might be an
+              explosive gas, vapour, mist or dust atmosphere should be maintained in accordance with
+              BS EN IEC 60079-17.
+            </>
+          }
+          meaning="The phrase to hold on to is 'or with cables passing through an area'. The clause does not only catch the detector in the spray booth — it catches a loop that merely crosses the booth on its way somewhere else, and it catches the sounder circuit routed through a dust-laden void to save a longer run. Read that way, Clause 9 constrains cable ROUTING across the whole building, not just device selection in one room. The second thing worth noticing is that 9.2 is separate: an installation that was correctly built to BS EN 60079-14 does not stay compliant on its own. Maintenance in a classified area follows BS EN IEC 60079-17, which is a different regime from the Clause 43 servicing the rest of this course covers — so a maintenance contract that quotes Clause 43 alone does not cover the hazardous part of the site."
+        />
+
+        <CommonMistake
+          title="A loop routed through a classified area because it was the shortest run"
+          whatHappens="A detection loop serving offices is routed through the ceiling void above a paint-mixing room to avoid a longer perimeter run. The room is a classified area; the void above it is within the classification on the hazardous-area drawing, which the fire alarm contractor never saw because it was issued to the process engineers. No device is installed in the room, so the job is treated as an ordinary install with ordinary cable, glands and containment. The non-conformity surfaces at the site's DSEAR review months later, and remediation means re-routing the loop through occupied offices with the system disabled in sections."
+          doInstead="Ask for the hazardous-area classification drawing at survey, alongside the fire strategy — and ask specifically whether any classified area exists on site, because it is routinely held by a different discipline and not volunteered. Plan cable routes to avoid classified areas entirely wherever a route exists; a longer run is far cheaper than a re-route. Where crossing genuinely cannot be avoided, that part of the system falls under BS EN 60079-14 and needs someone competent in that standard — it is not a fire alarm decision."
         />
 
         <CommonMistake

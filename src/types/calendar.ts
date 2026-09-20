@@ -8,7 +8,8 @@ export type CalendarEventType =
 
 export type SyncStatus = 'local_only' | 'synced' | 'pending_push' | 'pending_pull' | 'conflict';
 
-export type CalendarView = 'day' | 'week' | 'month';
+/** `three` — three days from the current date, for tablets and small laptops. */
+export type CalendarView = 'day' | 'three' | 'week' | 'month';
 
 export interface CalendarEvent {
   id: string;
@@ -67,7 +68,8 @@ export interface CalendarEvent {
   // Joined data
   customer?: { id: string; name: string };
   job?: { id: string; title: string };
-  project?: { id: string; title: string };
+  /** `status` drives the block colour on the grid — see eventUtils.displayColour. */
+  project?: { id: string; title: string; status?: string };
 }
 
 export type CreateCalendarEventInput = Omit<

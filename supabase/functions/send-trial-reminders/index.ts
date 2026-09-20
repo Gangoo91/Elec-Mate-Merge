@@ -228,6 +228,30 @@ async function upcomingChargePence(stripeCustomerId: string | null): Promise<num
   }
 }
 
+/**
+ * Has the trialist already switched renewal off? Since 20 Sep 2026 a web
+ * cancel is cancel_at_period_end, so they stay in this cohort with access —
+ * and "do nothing and your plan continues" would be a lie to them.
+ */
+async function renewalSwitchedOff(stripeCustomerId: string | null): Promise<boolean> {
+  const key = Deno.env.get('STRIPE_SECRET_KEY');
+  if (!key || !stripeCustomerId) return false;
+  try {
+    const res = await fetch(
+      `https://api.stripe.com/v1/subscriptions?customer=${encodeURIComponent(stripeCustomerId)}&status=trialing&limit=3`,
+      { headers: { Authorization: `Bearer ${key}` } }
+    );
+    if (!res.ok) return false;
+    const list = await res.json();
+    return (
+      Array.isArray(list?.data) &&
+      list.data.some((s: { cancel_at_period_end?: boolean }) => s.cancel_at_period_end)
+    );
+  } catch {
+    return false;
+  }
+}
+
 /** "£19.99", or "£0" when a discount clears the first invoice entirely. */
 function formatPence(pence: number): string {
   return pence % 100 === 0 ? `£${pence / 100}` : `£${(pence / 100).toFixed(2)}`;
@@ -256,7 +280,9 @@ function getReceiptEmail(
   when: string,
   /** What Stripe will actually take at trial end, e.g. '£0' for a referral
    *  coupon. Null when unknown (app-store subscribers, failed lookup). */
-  firstCharge: string | null = null
+  firstCharge: string | null = null,
+  /** They already turned renewal off: nothing will be taken; offer the undo. */
+  renewalOff = false
 ): EmailTemplate {
   const safeName = firstName?.trim() || 'mate';
   const firstMonthFree = firstCharge === '£0';
@@ -316,11 +342,13 @@ function getReceiptEmail(
     happened on 2026-08-31 — so say the true number first and the ongoing rate
     second.
   */
-  const keepLine = firstMonthFree
-    ? `Your first month is on the house — that's the referral credit, and <strong>nothing will be taken when the trial ends</strong>. After that it's ${price}/month, and you can cancel any time before it.`
-    : hasActivity
-      ? `All of it stays with you for ${price}/month. Do nothing and your plan continues — or cancel before ${when === 'tomorrow' ? 'then' : 'it ends'} and you pay nothing at all.`
-      : `If it’s not for you, cancel before it ends and you pay nothing. If you keep it, it’s ${price}/month and everything stays unlocked.`;
+  const keepLine = renewalOff
+    ? `You've switched renewal off, so <strong>nothing will be taken when the trial ends ${when}</strong>, and everything you've made stays in your account. If you've changed your mind, <a href="https://www.elec-mate.com/subscriptions?resume=1" style="color:#0C1B2A;">one tap turns it back on</a> and nothing changes until then.`
+    : firstMonthFree
+      ? `Your first month is on the house — that's the referral credit, and <strong>nothing will be taken when the trial ends</strong>. After that it's ${price}/month, and you can cancel any time before it.`
+      : hasActivity
+        ? `All of it stays with you for ${price}/month. Do nothing and your plan continues — or cancel before ${when === 'tomorrow' ? 'then' : 'it ends'} and you pay nothing at all.`
+        : `If it’s not for you, cancel before it ends and you pay nothing. If you keep it, it’s ${price}/month and everything stays unlocked. <strong>Need another week to put a real job through it?</strong> <a href="https://www.elec-mate.com/subscriptions?extend=1" style="color:#0C1B2A;">One tap adds seven days</a>, nothing charged, and I still email you the day before any charge.`;
 
   return {
     subject,
@@ -522,10 +550,18 @@ serve(async (req) => {
     //    ~24h ago (18-30h window gives 12h of slack for a daily job).
     const welcome24hStart = new Date(now.getTime() - 30 * 60 * 60 * 1000);
     const welcome24hEnd = new Date(now.getTime() - 18 * 60 * 60 * 1000);
+    // Electricians only since 20 Sep 2026: this email is "make your first
+    // cert", which never suited an apprentice. Apprentices get day 1 from
+    // trial-sequence (one section + ask the AI mentor).
+    // RETIRED 20 Sep 2026 — day 1 for BOTH roles now comes from trial-sequence,
+    // which reads what the person chose at signup and what they have done.
+    // The query is kept but matches nobody (`.eq('role', '__retired__')`) so
+    // the stats block and the alreadySent guard stay intact for the audit trail.
     const { data: welcomeProfiles } = await supabase
       .from('profiles')
       .select(PROFILE_COLS)
       .eq('subscribed', true)
+      .eq('role', '__retired__')
       .gt('trial_end', now.toISOString())
       .gte('created_at', welcome24hStart.toISOString())
       .lte('created_at', welcome24hEnd.toISOString());
@@ -582,8 +618,7 @@ serve(async (req) => {
             .eq('user_id', user.id);
           receipt.quizzes = quizRows?.length ?? 0;
           receipt.questions = (quizRows ?? []).reduce(
-            (sum: number, r: { total_questions: number | null }) =>
-              sum + (r.total_questions ?? 0),
+            (sum: number, r: { total_questions: number | null }) => sum + (r.total_questions ?? 0),
             0
           );
         } else {
@@ -635,10 +670,21 @@ serve(async (req) => {
       }
 
       const when = endsWhen((u as { trial_end: string | null }).trial_end, now);
+      const renewalOff = await renewalSwitchedOff(
+        (u as unknown as { stripe_customer_id: string | null }).stripe_customer_id ?? null
+      );
       if (
         await sendEmail(
           user.email,
-          getReceiptEmail(firstName, receipt, u.role ?? 'electrician', price, when, firstCharge)
+          getReceiptEmail(
+            firstName,
+            receipt,
+            u.role ?? 'electrician',
+            price,
+            when,
+            firstCharge,
+            renewalOff
+          )
         )
       ) {
         await supabase.from('trial_emails_sent').insert({
