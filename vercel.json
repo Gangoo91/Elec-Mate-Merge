@@ -209,6 +209,17 @@
   ],
   "redirects": [
     {
+      "source": "/((?!\\.well-known/).*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "elec-mate.com"
+        }
+      ],
+      "destination": "https://www.elec-mate.com/$1",
+      "statusCode": 308
+    },
+    {
       "source": "/signup",
       "destination": "/auth/signup",
       "statusCode": 302
