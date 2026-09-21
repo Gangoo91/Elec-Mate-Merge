@@ -37,7 +37,13 @@ export default defineConfig(({ mode }) => ({
       srcDir: 'src',
       filename: 'sw.ts',
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'logo.jpg'],
+      includeAssets: [
+        'favicon.ico',
+        'favicon-*.png',
+        'apple-touch-icon.png',
+        'pwa-*.png',
+        'logo.jpg',
+      ],
       manifest: {
         name: 'Elec-Mate',
         short_name: 'Elec-Mate',
@@ -47,22 +53,9 @@ export default defineConfig(({ mode }) => ({
         display: 'standalone',
         start_url: '/',
         icons: [
-          {
-            src: 'logo.jpg',
-            sizes: '192x192',
-            type: 'image/jpeg',
-          },
-          {
-            src: 'logo.jpg',
-            sizes: '512x512',
-            type: 'image/jpeg',
-          },
-          {
-            src: 'logo.jpg',
-            sizes: '512x512',
-            type: 'image/jpeg',
-            purpose: 'any maskable',
-          },
+          { src: 'pwa-192.png', sizes: '192x192', type: 'image/png' },
+          { src: 'pwa-512.png', sizes: '512x512', type: 'image/png' },
+          { src: 'pwa-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
         ],
       },
       injectManifest: {
