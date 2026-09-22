@@ -48,7 +48,6 @@ import Stripe from 'https://esm.sh/stripe@14.21.0';
 import { createClient, type SupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 import { captureException } from '../_shared/sentry.ts';
 
-
 const log = (step: string, details?: unknown) => {
   const detailsStr = details ? ` - ${JSON.stringify(details)}` : '';
   console.log(`[APPLY-RETENTION-OFFER] ${step}${detailsStr}`);
@@ -121,9 +120,7 @@ serve(async (req) => {
     // ── Ownership: prove this subscription is the caller's ──────────────
     const subscription = await stripe.subscriptions.retrieve(subscriptionId);
     const subCustomerId =
-      typeof subscription.customer === 'string'
-        ? subscription.customer
-        : subscription.customer.id;
+      typeof subscription.customer === 'string' ? subscription.customer : subscription.customer.id;
 
     const { data: profile } = await serviceClient
       .from('profiles')
@@ -131,8 +128,8 @@ serve(async (req) => {
       .eq('id', user.id)
       .maybeSingle();
 
-    let owns = Boolean(profile?.stripe_customer_id) &&
-      profile!.stripe_customer_id === subCustomerId;
+    let owns =
+      Boolean(profile?.stripe_customer_id) && profile!.stripe_customer_id === subCustomerId;
 
     // Fallback for accounts whose profile predates stripe_customer_id being
     // populated: the customer records on their email are equally authoritative.
@@ -147,10 +144,7 @@ serve(async (req) => {
         subscriptionId,
         subCustomerId,
       });
-      return jsonResponse(
-        { success: false, error: 'not_your_subscription' },
-        403
-      );
+      return jsonResponse({ success: false, error: 'not_your_subscription' }, 403);
     }
 
     // ── Pause ───────────────────────────────────────────────────────────
@@ -230,10 +224,7 @@ serve(async (req) => {
         subscriptionId,
         existing: subscription.discount.coupon?.id,
       });
-      return jsonResponse(
-        { success: false, error: 'already_discounted' },
-        400
-      );
+      return jsonResponse({ success: false, error: 'already_discounted' }, 400);
     }
 
     await stripe.subscriptions.update(subscriptionId, {
@@ -372,30 +363,18 @@ async function previewNextInvoice(
  * can refuse cleanly instead of applying something unknown.
  */
 async function ensureCoupon(stripe: Stripe): Promise<Stripe.Coupon | null> {
+  // Read only. The coupon is created by hand in Stripe with the terms Andrew
+  // chose; if it is missing we refuse the offer rather than invent one, because
+  // the modal prints whatever terms come back and a made-up fallback would
+  // promise the customer something nobody agreed to.
   try {
     return await stripe.coupons.retrieve(RETENTION_COUPON_ID);
-  } catch {
-    log('Retention coupon missing — creating it', { coupon: RETENTION_COUPON_ID });
-  }
-  try {
-    return await stripe.coupons.create({
-      id: RETENTION_COUPON_ID,
-      percent_off: 40,
-      duration: 'repeating',
-      duration_in_months: 3,
-      name: 'Elec-Mate — stay offer (40% for 3 months)',
-      metadata: { created_by: 'apply-retention-offer', purpose: 'cancel-flow retention' },
-    });
   } catch (err) {
-    // Most likely a race with a concurrent request that just created it.
-    log('Coupon create failed — re-reading', {
+    log('Retention coupon missing — refusing offer', {
+      coupon: RETENTION_COUPON_ID,
       message: err instanceof Error ? err.message : String(err),
     });
-    try {
-      return await stripe.coupons.retrieve(RETENTION_COUPON_ID);
-    } catch {
-      return null;
-    }
+    return null;
   }
 }
 

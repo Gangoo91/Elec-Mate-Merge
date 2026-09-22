@@ -462,7 +462,10 @@ serve(async (req: Request) => {
         for (const row of unresolvedRows ?? []) {
           try {
             const inv = await stripe.invoices.retrieve(row.stripe_invoice_id);
-            if (inv.status === 'paid') {
+            // paid = recovered. void / uncollectible = Stripe (or we) gave up on
+            // it, so there is nothing left to chase and the banner must come
+            // down; leaving these open kept emailing people about dead invoices.
+            if (inv.status === 'paid' || inv.status === 'void' || inv.status === 'uncollectible') {
               if (!dryRun) {
                 await supabase
                   .from('failed_payment_emails')
