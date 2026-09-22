@@ -35,6 +35,59 @@ export const InvoiceReviewStep = ({
   const totalAmount = invoice.total || 0;
   const allItems = [...(invoice.items || []), ...(invoice.additional_invoice_items || [])];
 
+  /*
+   * ELE-1760 — a deposit already paid (credited as total_paid when the quote
+   * was converted) is shown here, so the electrician SEES the balance the
+   * client will owe before creating the invoice — not just after it saves.
+   * The two totals blocks below used to be duplicated verbatim; sharing one
+   * renderer stops them drifting and adds the deposit line in a single place.
+   */
+  const depositPaid = Number(invoice.total_paid) || 0;
+  const balanceDue = Math.max(0, totalAmount - depositPaid);
+
+  const renderTotals = () => (
+    <>
+      <div className="flex justify-between text-[13px]">
+        <span className="text-white">Subtotal</span>
+        <span className="text-white tabular-nums">{formatCurrency(invoice.subtotal || 0)}</span>
+      </div>
+      {invoice.settings?.discountEnabled && (invoice.discountAmount || 0) > 0 && (
+        <div className="flex justify-between text-[13px]">
+          <span className="text-red-400">{invoice.settings.discountLabel || 'Discount'}</span>
+          <span className="text-red-400 tabular-nums">
+            -{formatCurrency(invoice.discountAmount || 0)}
+          </span>
+        </div>
+      )}
+      {invoice.settings?.vatRegistered && (
+        <div className="flex justify-between text-[13px]">
+          <span className="text-white">VAT ({invoice.settings?.vatRate || 20}%)</span>
+          <span className="text-white tabular-nums">{formatCurrency(invoice.vatAmount || 0)}</span>
+        </div>
+      )}
+      {depositPaid > 0 && (
+        <>
+          <div className="flex justify-between text-[13px]">
+            <span className="text-white">Total</span>
+            <span className="text-white tabular-nums">{formatCurrency(totalAmount)}</span>
+          </div>
+          <div className="flex justify-between text-[13px]">
+            <span className="text-white">Deposit paid</span>
+            <span className="text-emerald-400 tabular-nums">-{formatCurrency(depositPaid)}</span>
+          </div>
+        </>
+      )}
+      <div className="mt-3 p-4 rounded-xl bg-white/[0.06] border border-elec-yellow/20 flex justify-between items-baseline">
+        <span className="text-[15px] font-bold text-white">
+          {depositPaid > 0 ? 'Balance Due' : 'Total Due'}
+        </span>
+        <span className="text-[26px] font-bold text-elec-yellow tabular-nums">
+          {formatCurrency(depositPaid > 0 ? balanceDue : totalAmount)}
+        </span>
+      </div>
+    </>
+  );
+
   // Summary only mode
   if (showSummaryOnly) {
     return (
@@ -76,26 +129,7 @@ export const InvoiceReviewStep = ({
         </div>
 
         <div className="pt-3 border-t border-white/[0.12] space-y-2">
-          <div className="flex justify-between text-[13px]">
-            <span className="text-white">Subtotal</span>
-            <span className="text-white tabular-nums">{formatCurrency(invoice.subtotal || 0)}</span>
-          </div>
-          {invoice.settings?.discountEnabled && (invoice.discountAmount || 0) > 0 && (
-            <div className="flex justify-between text-[13px]">
-              <span className="text-red-400">{invoice.settings.discountLabel || 'Discount'}</span>
-              <span className="text-red-400 tabular-nums">-{formatCurrency(invoice.discountAmount || 0)}</span>
-            </div>
-          )}
-          {invoice.settings?.vatRegistered && (
-            <div className="flex justify-between text-[13px]">
-              <span className="text-white">VAT ({invoice.settings?.vatRate || 20}%)</span>
-              <span className="text-white tabular-nums">{formatCurrency(invoice.vatAmount || 0)}</span>
-            </div>
-          )}
-          <div className="mt-3 p-4 rounded-xl bg-white/[0.06] border border-elec-yellow/20 flex justify-between items-baseline">
-            <span className="text-[15px] font-bold text-white">Total Due</span>
-            <span className="text-[26px] font-bold text-elec-yellow tabular-nums">{formatCurrency(totalAmount)}</span>
-          </div>
+          {renderTotals()}
         </div>
       </div>
     );
@@ -209,26 +243,7 @@ export const InvoiceReviewStep = ({
 
             {/* Totals */}
             <div className="pt-3 mt-1 border-t border-white/[0.12] space-y-2">
-              <div className="flex justify-between text-[13px]">
-                <span className="text-white">Subtotal</span>
-                <span className="text-white tabular-nums">{formatCurrency(invoice.subtotal || 0)}</span>
-              </div>
-              {invoice.settings?.discountEnabled && (invoice.discountAmount || 0) > 0 && (
-                <div className="flex justify-between text-[13px]">
-                  <span className="text-red-400">{invoice.settings.discountLabel || 'Discount'}</span>
-                  <span className="text-red-400 tabular-nums">-{formatCurrency(invoice.discountAmount || 0)}</span>
-                </div>
-              )}
-              {invoice.settings?.vatRegistered && (
-                <div className="flex justify-between text-[13px]">
-                  <span className="text-white">VAT ({invoice.settings?.vatRate || 20}%)</span>
-                  <span className="text-white tabular-nums">{formatCurrency(invoice.vatAmount || 0)}</span>
-                </div>
-              )}
-              <div className="mt-3 p-4 rounded-xl bg-white/[0.06] border border-elec-yellow/20 flex justify-between items-baseline">
-                <span className="text-[15px] font-bold text-white">Total Due</span>
-                <span className="text-[26px] font-bold text-elec-yellow tabular-nums">{formatCurrency(totalAmount)}</span>
-              </div>
+              {renderTotals()}
             </div>
           </div>
         )}

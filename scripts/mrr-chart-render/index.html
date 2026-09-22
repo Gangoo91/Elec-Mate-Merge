@@ -1,0 +1,12 @@
+<meta charset="utf-8" />
+<!-- Load-bearing. Without it the browser decodes bundle.js as Latin-1 and the
+     UTF-8 "£" inside a REGEX LITERAL becomes "Â£", so /£([\d.]+)k/ matches
+     nothing. String literals survive because esbuild escapes them to \xA3;
+     regex literals it leaves as raw bytes. The chart rendered perfectly and the
+     harness reported "no axis labels rendered at all". -->
+<body style="margin:0;background:#0b0f14">
+  <link rel="stylesheet" href="./app.css" />
+  <div id="root" style="padding:24px"></div>
+  <pre id="res" style="position:fixed;top:0;left:0;color:#0f0;font:10px monospace;margin:0;z-index:99">running</pre>
+  <script src="./bundle.js"></script>
+</body>

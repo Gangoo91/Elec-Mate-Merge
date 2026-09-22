@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Check, Plus, X } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Input } from '@/components/ui/input';
@@ -624,6 +624,48 @@ const InspectionDetailsSectionInner = ({
       })
     : null;
 
+  /*
+   * Is the inspector's saved scope ALREADY on this certificate?
+   *
+   * This is the whole reason "Apply my saved" keeps getting reported as broken
+   * (ELE-1160, ELE-1169, ELE-1516, and Craig again): on a cert that already
+   * matches, the button can only no-op and toast "nothing changed", which every
+   * user reads as a dead button. The logic was correct each time; the state was
+   * invisible. So we surface it — when this is true the button becomes a plain
+   * "✓ applied" state, never a tappable action that does nothing.
+   *
+   * Same like-for-like comparison applyMySaved uses, as a derived boolean: true
+   * only when there is saved wording AND every non-empty saved field already
+   * equals the form.
+   */
+  const savedApplied = useMemo(() => {
+    if (!savedScope) return false;
+    const fields = Object.keys(STANDARD_SCOPE_TEXT) as StandardScopeField[];
+    let compared = 0;
+    for (const field of fields) {
+      const saved = (savedScope[field] || '').trim();
+      if (!saved) continue;
+      compared += 1;
+      const current = (formData[field] ?? '').toString();
+      const comparable =
+        field === 'limitationsOfInspection' ? stripPrePrinted(current) : current.trim();
+      if (comparable !== saved) return false;
+    }
+    return compared > 0;
+  }, [savedScope, formData]);
+
+  /*
+   * A short peek at the saved wording, shown beside the buttons. It makes
+   * "already applied" self-evident, and — the other half of Craig's confusion —
+   * it reveals a thin default: his saved extent is just "Fixed Wiring Only",
+   * which he could not see was what "Apply my saved" would give him.
+   */
+  const savedPreview = useMemo(() => {
+    const extent = (savedScope?.extentOfInspection || '').trim();
+    if (!extent) return '';
+    return extent.length > 120 ? `${extent.slice(0, 117).trimEnd()}…` : extent;
+  }, [savedScope]);
+
   // Phrase insertion — appends a complete sentence, never overwrites what the
   // inspector has typed. Tapping an already-inserted phrase takes it back out.
   const scopeText = (field: StandardScopeField) => {
@@ -1056,11 +1098,24 @@ const InspectionDetailsSectionInner = ({
           </h2>
           {/* Phone: two per row on their own line rather than three ragged rows */}
           <div className="grid w-full grid-cols-2 gap-1.5 sm:flex sm:w-auto sm:flex-wrap sm:items-center">
-            {hasSavedScope && (
-              <button type="button" onClick={applyMySaved} className={quietChipCn}>
-                Apply my saved
-              </button>
-            )}
+            {hasSavedScope &&
+              (savedApplied ? (
+                // Already on the cert — a done-state, not a button that no-ops.
+                <span
+                  aria-live="polite"
+                  className={cn(
+                    quietChipCn,
+                    'pointer-events-none inline-flex items-center justify-center gap-1 text-white/70'
+                  )}
+                >
+                  <Check className="h-3.5 w-3.5 text-elec-yellow" />
+                  Saved wording applied
+                </span>
+              ) : (
+                <button type="button" onClick={applyMySaved} className={quietChipCn}>
+                  Apply my saved
+                </button>
+              ))}
             <button type="button" onClick={applyAllStandard} className={quietChipCn}>
               Apply standard wording
             </button>
@@ -1081,12 +1136,22 @@ const InspectionDetailsSectionInner = ({
         </div>
 
         <p className="-mt-1 text-[11px] leading-relaxed text-white">
-          {savedAtLabel
-            ? `Saved as your default ${savedAtLabel} — tap Apply my saved to use it here. `
-            : 'Tap “Save current as my default” to reuse this wording on your next EICR. '}
+          {!hasSavedScope
+            ? 'Tap “Save current as my default” to reuse this wording on your next EICR. '
+            : savedApplied
+              ? `Your saved scope${savedAtLabel ? ` (from ${savedAtLabel})` : ''} is already on this certificate. `
+              : `Tap “Apply my saved” to put your saved scope${savedAtLabel ? ` (from ${savedAtLabel})` : ''} on this certificate. `}
           Use N/A when a box has nothing to record; LIM records that the extent
           itself was limited.
         </p>
+
+        {hasSavedScope && savedPreview && (
+          // Show WHAT the saved wording is — so "already applied" is obvious and
+          // a thin saved default is visible rather than a mystery behind a button.
+          <p className="-mt-0.5 text-[11px] leading-relaxed text-white/55">
+            Your saved extent: “{savedPreview}”
+          </p>
+        )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <FormField

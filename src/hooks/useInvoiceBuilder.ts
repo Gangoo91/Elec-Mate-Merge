@@ -6,6 +6,7 @@ import { dueDateForTerms } from '@/utils/invoice-status';
 import { toast } from '@/hooks/use-toast';
 import { v4 as uuidv4 } from 'uuid';
 import { generateSequentialInvoiceNumber } from '@/utils/invoice-number-generator';
+import { depositCreditFromQuote } from '@/utils/invoiceDeposit';
 import { supabase } from '@/integrations/supabase/client';
 import type { CompanyProfile } from '@/types/company';
 import { logger, generateRequestId } from '@/utils/logger';
@@ -77,8 +78,31 @@ export const createInvoiceFromQuote = (
   const dueDate = new Date();
   dueDate.setDate(dueDate.getDate() + 30); // 30 days payment terms
 
+  /*
+   * ELE-1760 — credit a deposit that has already been paid.
+   *
+   * When a quote is accepted with a deposit, a DEP- invoice is auto-raised and
+   * paid (ELE-954). The invoice for the job is still for the FULL amount — the
+   * deposit is a payment against it, not a discount — so we record it as
+   * `total_paid` + a payment line rather than reducing the total. The balance
+   * due (total − total_paid) is then the balance, and every downstream piece
+   * (status, the balance-aware pay links, the PDF's "deposit paid / balance
+   * due") already reads total_paid. This is exactly the balance the user
+   * expected the invoice to show (Ro's report) — no VAT change, no second
+   * document, and the invoice_raised guard keeps it from running twice.
+   */
+  const depositCredit = depositCreditFromQuote(
+    quote as unknown as {
+      deposit_paid_at?: string | null;
+      deposit_amount_pennies?: number | null;
+      deposit_invoice_id?: string | null;
+      total_paid?: number | null;
+    }
+  );
+
   return {
     ...quote,
+    ...(depositCredit ? { total_paid: depositCredit.total_paid } : {}),
     originalQuoteId: quote.id,
     invoice_raised: false,
     invoice_number: 'Invoice/TEMP', // Will be generated when saved
@@ -101,6 +125,9 @@ export const createInvoiceFromQuote = (
       paymentTerms: companyProfile?.payment_terms || '30 days',
       dueDate: dueDate,
       bankDetails: companyProfile?.bank_details || undefined,
+      // ELE-1760 — the PDF's first deposit source, so the credit is LABELLED
+      // ("Deposit paid £X / Balance due £Y"), not just silently deducted.
+      ...(depositCredit ? { depositApplied: depositCredit.depositApplied } : {}),
     },
   };
 };

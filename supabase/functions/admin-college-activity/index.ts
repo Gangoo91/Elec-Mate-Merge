@@ -53,6 +53,9 @@ const json = (body: unknown, status = 200) =>
     headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   });
 
+/** Provided by the Supabase edge runtime; keeps the isolate alive past the response. */
+declare const EdgeRuntime: { waitUntil(p: Promise<unknown>): void };
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { headers: corsHeaders });
   try {
@@ -63,24 +66,76 @@ serve(async (req) => {
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) return json({ error: 'unauthorised' }, 401);
     const token = authHeader.replace('Bearer ', '');
-    const {
-      data: { user },
-      error: authError,
-    } = await admin.auth.getUser(token);
-    if (authError || !user) return json({ error: 'unauthorised' }, 401);
-    const { data: caller } = await admin
-      .from('profiles')
-      .select('admin_role')
-      .eq('id', user.id)
-      .single();
-    if (!caller?.admin_role) return json({ error: 'forbidden' }, 403);
 
+    /*
+      The background refresh calls this function with the service-role key and
+      has no user behind it. Everything else must be a signed-in admin.
+    */
+    const scheduled = token === serviceKey;
+    if (!scheduled) {
+      const {
+        data: { user },
+        error: authError,
+      } = await admin.auth.getUser(token);
+      if (authError || !user) return json({ error: 'unauthorised' }, 401);
+      const { data: caller } = await admin
+        .from('profiles')
+        .select('admin_role')
+        .eq('id', user.id)
+        .single();
+      if (!caller?.admin_role) return json({ error: 'forbidden' }, 403);
+    }
+
+    // The body is readable once, so scheme and refresh come out together.
     let scheme: 'college' | 'employer' = 'college';
+    let forceRefresh = false;
     try {
       const body = await req.json();
       if (body?.scheme === 'employer') scheme = 'employer';
+      forceRefresh = body?.refresh === true;
     } catch {
-      /* no body = college */
+      /* no body = college, read path */
+    }
+
+    /*
+      Serve from cache, refresh behind the response.
+
+      This walks every promotion code on the account and then EVERY
+      subscription ever created (`status: 'all'`, with price expansion) to find
+      the ones carrying a scheme code. Measured p50 14.0s, worst 31.8s — paid
+      on every visit to Colleges and to Employers, which share this component.
+      Scheme take-up moves by a handful of rows a week, so a cached answer is
+      as true as a live one and arrives in milliseconds.
+    */
+    const CACHE_KEY = `college_activity_${scheme}`;
+    const FRESH_MS = 10 * 60 * 1000;
+
+    if (!forceRefresh) {
+      const { data: cached } = await admin
+        .from('admin_metric_cache')
+        .select('value, updated_at')
+        .eq('key', CACHE_KEY)
+        .maybeSingle();
+
+      if (cached?.value) {
+        const age = Date.now() - new Date(cached.updated_at).getTime();
+        if (age > FRESH_MS) {
+          EdgeRuntime.waitUntil(
+            fetch(`${supabaseUrl}/functions/v1/admin-college-activity`, {
+              method: 'POST',
+              headers: {
+                Authorization: `Bearer ${serviceKey}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ scheme, refresh: true }),
+            }).catch((e) => console.error('[admin-college-activity] refresh failed:', e))
+          );
+        }
+        console.log(
+          `[admin-college-activity] ${scheme} from cache, age ${Math.round(age / 1000)}s`
+        );
+        return json({ ...cached.value, cachedAt: cached.updated_at, servedFromCache: true });
+      }
     }
     const coupons = scheme === 'employer' ? EMPLOYER_COUPONS : COLLEGE_COUPONS;
     // Codes that belong to this scheme by NAME in promo_offers (catches the
@@ -289,7 +344,7 @@ serve(async (req) => {
       syncedAt: o.imported_at as string,
     }));
 
-    return json({
+    const payload = {
       generatedAt: new Date().toISOString(),
       scheme,
       codes: [...codesById.values()].sort(
@@ -298,7 +353,14 @@ serve(async (req) => {
       subs: subs.sort((a, b) => b.started.localeCompare(a.started)),
       tutors,
       outreach,
-    });
+    };
+
+    const { error: cacheErr } = await admin
+      .from('admin_metric_cache')
+      .upsert({ key: CACHE_KEY, value: payload, updated_at: new Date().toISOString() });
+    if (cacheErr) console.error('[admin-college-activity] cache upsert failed:', cacheErr.message);
+
+    return json({ ...payload, cachedAt: new Date().toISOString(), servedFromCache: false });
   } catch (err) {
     console.error('[admin-college-activity]', err);
     return json({ error: err instanceof Error ? err.message : 'unknown' }, 500);

@@ -67,6 +67,15 @@ const PERSONAL = '/study-centre/personal-development';
 export const IN_APP_MOCK_EXAMS: InAppMockExam[] = [
   // ── Level 2 (C&G 2365-02) — mockN draws from module N's bank ────────────
   {
+    id: 'osg-table-lookup',
+    title: 'On-Site Guide table lookup',
+    course: 'Exam technique',
+    description:
+      'Every answer is read off a table: maximum Zs, rating factors, cable capacity, voltage drop, conductor resistance and diversity. Have the book open.',
+    track: 'apprentice',
+    path: '/study-centre/mock-exams/osg-table-lookup',
+  },
+  {
     id: 'l2-m1',
     title: 'Level 2 — Paper 1',
     course: 'Level 2 Electrical Installation',

@@ -265,6 +265,54 @@ jobs:
       - name: Every deployed edge function is in the repo
         run: npm run check:fns-versioned
 
+      # Green from the start, so enforced. isServerContainedInLocal decides
+      # whether a certificate save may overwrite the server copy WITHOUT asking
+      # the user, so a wrong `true` is silent data loss on a legal document.
+      # The suite leans on the concurrent-edit cases — a QS changing a field,
+      # editing a schedule row or adding an observation must never auto-heal —
+      # and reconstructs the real incident (EICR-2026-5220) it was written for.
+      - name: Phantom-conflict heal is provably safe
+        run: npm run check:report-conflict
+
+      # Green from the start, so enforced. depositCreditFromQuote decides how
+      # much of a client's invoice is treated as already paid when a quote with
+      # a deposit is converted (ELE-1760). A wrong credit under- or over-bills a
+      # real customer. The case that must never slip: a deposit that was SET on
+      # the quote but never PAID must not reduce the balance.
+      - name: Invoice deposit credit maths
+        run: npm run check:invoice-deposit
+
+      # Green from the start, so enforced. At £4,652 MRR the admin chart's
+      # y-axis labelled £4.5k as its highest gridline and the line ran above
+      # it: the domain already reached £5,000, but the tick loop excluded its
+      # own ceiling, so the axis never said so. Gridline spacing also came from
+      # `max - min` — how far the line MOVED — so a flat month at £50k would
+      # have drawn £100 gridlines.
+      #
+      # Both are silent. tsc, eslint and a render harness all pass on a chart
+      # whose axis is quietly lying, which is why the arithmetic is tested
+      # separately from the picture: check:mrr-scale proves the numbers,
+      # check:mrr-chart proves what is actually drawn at five points up the
+      # ladder including a phone.
+      - name: MRR axis arithmetic
+        run: npm run check:mrr-scale
+
+      - name: MRR chart renders what it claims
+        run: npm run check:mrr-chart
+
+      # The six-tile KPI strip above the chart. Two defects it locks down, both
+      # of which tsc and eslint pass: (1) the tile values drifting off a shared
+      # baseline when a longer title wraps to two lines, so the six numbers no
+      # longer scan as a row; (2) the sparklines losing direction — every line
+      # drawn in its tile's accent regardless of which way the series moved, so
+      # a falling trial conversion looked identical to a rising one. Churn is
+      # the inverted case: falling is GOOD and must wear the good colour, which
+      # a naive "down is bad" rule gets backwards. Rendered at desktop and
+      # laptop widths because the alignment defect only appears where a title
+      # wraps.
+      - name: Admin KPI strip aligns and reads direction
+        run: npm run check:kpi-strip
+
       # Advisory ONLY because it is currently red: four general-upskilling mock
       # exam banks report CHANGED KEYS against HEAD (asbestos, first aid, MEWP,
       # PASMA). Those banks are graded against their keys, so this needs a

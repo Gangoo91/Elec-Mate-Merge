@@ -36,6 +36,7 @@ const SEARCH_DIRS = [
   'src/data/upskilling',
   'src/data/general-upskilling',
   'src/data/learning-hub-quiz',
+  'src/data/study-centre',
   // 2026-05-25: inline section-quiz questions in apprentice page TSX files.
   'src/pages/apprentice-courses',
 ];

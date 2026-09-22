@@ -399,6 +399,66 @@ Deno.serve(async (req) => {
       }
     }
 
+    /*
+      Serve the whole payload from cache, refresh behind the response.
+
+      The RevenueCat API calls were already cached, but the Postgres half was
+      not: every request re-ran the subscriber query, the engagement query and
+      `get_lifetime_engagement` — which alone averages 1.6s across 9,054 calls
+      a day, four hours of database time. Measured end to end at 3.2s, and the
+      headline MRR figure is Stripe PLUS stores, so the number on the dashboard
+      waited for this even once admin-stripe-stats answered in 0.5s.
+
+      Same shape as admin-stripe-stats: fresh cache answers at once, a stale one
+      answers at once and rebuilds behind the response, only a cold cache waits.
+    */
+    const OVERVIEW_KEY = 'revenuecat_payload';
+    const OVERVIEW_FRESH_MS = 10 * 60 * 1000;
+
+    let forceRefresh = scheduled;
+    if (!forceRefresh && req.method === 'POST') {
+      try {
+        const body = await req.json();
+        forceRefresh = body?.refresh === true;
+      } catch {
+        // No body: the normal read path.
+      }
+    }
+
+    const cacheClient = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+    );
+
+    if (!forceRefresh) {
+      const { data: cached } = await cacheClient
+        .from('admin_metric_cache')
+        .select('value, updated_at')
+        .eq('key', OVERVIEW_KEY)
+        .maybeSingle();
+
+      if (cached?.value) {
+        const age = Date.now() - new Date(cached.updated_at).getTime();
+        if (age > OVERVIEW_FRESH_MS) {
+          EdgeRuntime.waitUntil(
+            fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/admin-revenuecat-stats`, {
+              method: 'POST',
+              headers: {
+                Authorization: `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ refresh: true }),
+            }).catch((e) => console.error('[ADMIN-REVENUECAT-STATS] refresh failed:', e))
+          );
+        }
+        console.log(`[ADMIN-REVENUECAT-STATS] from cache, age ${Math.round(age / 1000)}s`);
+        return new Response(
+          JSON.stringify({ ...cached.value, cachedAt: cached.updated_at, servedFromCache: true }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+    }
+
     // Use service role for full data access
     const supabaseAdmin = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
@@ -608,18 +668,25 @@ Deno.serve(async (req) => {
       })
     );
 
+    const payload = {
+      subscribersBySource: bySource,
+      tiersBySource,
+      totalSubscribers: Object.values(bySource).reduce((a, b) => a + b, 0),
+      revenuecat: rcMetrics,
+      gross: rcGross,
+      churn: rcChurn,
+      trialUsers,
+      paidUsers,
+      generatedAt: new Date().toISOString(),
+    };
+
+    const { error: cacheErr } = await cacheClient
+      .from('admin_metric_cache')
+      .upsert({ key: OVERVIEW_KEY, value: payload, updated_at: new Date().toISOString() });
+    if (cacheErr) console.error('[ADMIN-REVENUECAT-STATS] cache upsert failed:', cacheErr.message);
+
     return new Response(
-      JSON.stringify({
-        subscribersBySource: bySource,
-        tiersBySource,
-        totalSubscribers: Object.values(bySource).reduce((a, b) => a + b, 0),
-        revenuecat: rcMetrics,
-        gross: rcGross,
-        churn: rcChurn,
-        trialUsers,
-        paidUsers,
-        generatedAt: new Date().toISOString(),
-      }),
+      JSON.stringify({ ...payload, cachedAt: new Date().toISOString(), servedFromCache: false }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {

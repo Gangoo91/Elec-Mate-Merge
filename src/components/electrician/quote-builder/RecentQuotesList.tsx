@@ -20,6 +20,7 @@ import { openExternalUrl } from '@/utils/open-external-url';
 import { Capacitor } from '@capacitor/core';
 import { sharePdfBytesFromUrlToWhatsAppWeb } from '@/utils/share-pdf-to-whatsapp-web';
 import { sharePdfFileNative } from '@/utils/share-pdf-file-native';
+import { depositCreditFromQuote } from '@/utils/invoiceDeposit';
 
 interface RecentQuotesListProps {
   quotes: Quote[];
@@ -289,11 +290,9 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
         deposit_paid_at?: string | null;
         deposit_amount_pennies?: number | null;
         deposit_invoice_id?: string | null;
+        total_paid?: number | null;
       };
-      const depositPaidAmt =
-        q?.deposit_paid_at && Number(q.deposit_amount_pennies || 0) > 0
-          ? Number(q.deposit_amount_pennies) / 100
-          : 0;
+      const depositCredit = depositCreditFromQuote(q);
 
       const invoiceData = {
         ...quoteForInvoice,
@@ -303,6 +302,11 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
         invoice_due_date: dueDate,
         invoice_status: 'draft' as const,
         invoice_raised: true,
+        // ELE-1760 — one util for both conversion paths (this and the
+        // InvoiceQuoteBuilder wizard), so they credit the deposit identically:
+        // total_paid drives the balance (in-app card, pay link, PDF max), and
+        // settings.depositApplied below labels it on the PDF.
+        ...(depositCredit ? { total_paid: depositCredit.total_paid } : {}),
         settings: {
           ...quoteForInvoice.settings,
           paymentTerms: '30 days',
@@ -310,14 +314,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
           // Deposit-already-paid record carried forward from the parent
           // quote. Drives the PDF's "Deposit Applied" totals row +
           // "Balance Due" final line, and powers the in-app summary.
-          depositApplied:
-            depositPaidAmt > 0 && q.deposit_paid_at
-              ? {
-                  amount: depositPaidAmt,
-                  paidAt: q.deposit_paid_at,
-                  depositInvoiceId: q.deposit_invoice_id || null,
-                }
-              : null,
+          depositApplied: depositCredit?.depositApplied ?? null,
         },
       };
 

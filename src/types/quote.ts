@@ -230,6 +230,15 @@ export interface Quote {
   invoice_paid_at?: Date;
   invoice_payment_method?: string;
   invoice_payment_reference?: string;
+  /**
+   * Deposit taken up front on the quote (ELE-954). When a client accepts a
+   * quote with a deposit, a DEP- invoice is auto-raised; `deposit_paid_at` is
+   * stamped when that deposit is actually paid, and `deposit_amount_pennies`
+   * is the amount. Carried onto the invoice conversion (ELE-1760) so the
+   * balance invoice credits what has already been paid.
+   */
+  deposit_paid_at?: string | null;
+  deposit_amount_pennies?: number | null;
   /** Amount paid so far (e.g. a Xero deposit / partial payment). */
   total_paid?: number;
   partial_payments?: Array<{ amount: number; date?: string; method?: string; reference?: string }>;

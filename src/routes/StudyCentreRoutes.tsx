@@ -19,6 +19,9 @@ const LearningVideos = lazyWithRetry(() => import('@/pages/apprentice/LearningVi
 const OnJobFlashcards = lazyWithRetry(() => import('@/pages/apprentice/OnJobFlashcards'));
 const NotFound = lazyWithRetry(() => import('@/pages/apprentice-courses/NotFound'));
 const MockExamsPage = lazyWithRetry(() => import('@/pages/study-centre/MockExamsPage'));
+const OSGTableLookupMockExam = lazyWithRetry(
+  () => import('@/pages/study-centre/OSGTableLookupMockExam')
+);
 const StudyCentreGlossary = lazyWithRetry(() => import('@/pages/study-centre/StudyCentreGlossary'));
 
 // Import nested route components with retry
@@ -363,6 +366,9 @@ export default function StudyCentreRoutes() {
         {/* Every in-app paper in one index. Dashboard has linked here since
             before the page existed — that link used to render blank. */}
         <Route path="mock-exams" element={<MockExamsPage />} />
+        {/* ELE-1761 — the On-Site Guide table-lookup paper stands alone; it
+            closes no course, so it lives under the index rather than a module. */}
+        <Route path="mock-exams/osg-table-lookup" element={<OSGTableLookupMockExam />} />
         <Route path="glossary" element={<StudyCentreGlossary />} />
         <Route path="videos" element={<LearningVideos backTo="/study-centre" />} />
         {/* Same reason as videos above: the Study Centre tile used to link

@@ -22,6 +22,7 @@ import ReferralShareSheet from '@/components/referrals/ReferralShareSheet';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { ConflictResolutionDialog } from '@/components/inspection/ConflictResolutionDialog';
 import { isNotifiableWork, createNotificationFromCertificate } from '@/utils/notificationHelper';
 import { sanitizeTextInput } from '@/utils/inputSanitization';
 import { draftStorage } from '@/utils/draftStorage';
@@ -541,6 +542,8 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
     syncNow,
     syncNowImmediate,
     onTabChange,
+    activeConflict,
+    resolveConflict,
   } = useCloudSync({
     reportId: currentReportId,
     reportType: 'eic',
@@ -1458,6 +1461,8 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
           context="post_cert_success"
         />
       </CertificatePhotoProvider>
+      {/* Same fix as EICRFormProvider — the toast fired here with no dialog to resolve it. */}
+      <ConflictResolutionDialog conflict={activeConflict} onResolve={resolveConflict} />
     </EICFormContext.Provider>
   );
 };

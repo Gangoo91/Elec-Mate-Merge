@@ -152,7 +152,12 @@ function discoverAllBanks() {
       else if (e.name.endsWith('.ts') && !e.name.endsWith('.d.ts')) banks.add(p);
     }
   };
-  for (const d of ['src/data/general-upskilling', 'src/data/upskilling', 'src/data/apprentice-courses'])
+  for (const d of [
+    'src/data/general-upskilling',
+    'src/data/upskilling',
+    'src/data/apprentice-courses',
+    'src/data/study-centre',
+  ])
     walk(join(ROOT, d));
   return banks;
 }

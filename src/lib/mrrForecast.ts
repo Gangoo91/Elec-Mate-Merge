@@ -104,6 +104,28 @@ export function forecastMilestone(
   });
 }
 
+/**
+ * The MRR milestones the business steers by.
+ *
+ * Lived as a local in AdminRevenue, which meant the Dashboard could not mark
+ * the same target on its own chart without inventing a second, different one.
+ * Two pages showing two different "next goal" for the same number is how a
+ * dashboard stops being trusted.
+ */
+export const MRR_MILESTONES = [5_000, 10_000, 20_000, 50_000];
+
+/**
+ * The next milestone above today's MRR — just the figure.
+ *
+ * `nextMilestone` below needs a full forecast (pace, ARPU) to say WHEN. The
+ * chart only needs to know WHERE to draw the line, and the Dashboard has no
+ * pace data, so this is the cheap half both can share.
+ */
+export function nextMilestoneTarget(mrr: number): number | null {
+  if (!Number.isFinite(mrr) || mrr <= 0) return null;
+  return MRR_MILESTONES.find((m) => m > mrr) ?? null;
+}
+
 /** The first milestone not yet reached — what the panel leads with. */
 export function nextMilestone(list: MilestoneForecast[]): MilestoneForecast | null {
   return list.find((m) => !m.reached) ?? null;
@@ -215,8 +237,7 @@ export function flowOver(
     grossNew: netChange + churned,
     churned,
     net: netChange,
-    monthlyChurnPct:
-      baseAtStart && baseAtStart > 0 ? ((churned / months) / baseAtStart) * 100 : null,
+    monthlyChurnPct: baseAtStart && baseAtStart > 0 ? (churned / months / baseAtStart) * 100 : null,
   };
 }
 

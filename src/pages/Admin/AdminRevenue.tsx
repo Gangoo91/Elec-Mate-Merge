@@ -44,7 +44,12 @@ import {
   StackBar,
   gbp,
 } from '@/components/admin/overview/primitives';
-import { MrrChart, type MrrPoint, type Range } from '@/components/admin/overview/MrrHero';
+import {
+  MrrChart,
+  daysInRange,
+  type MrrPoint,
+  type Range,
+} from '@/components/admin/overview/MrrHero';
 import {
   DailyCashChart,
   NewMrrChart,
@@ -72,6 +77,7 @@ import {
   requirementFor,
   forecastMilestone,
   nextMilestone,
+  MRR_MILESTONES,
   horizonLabel,
 } from '@/lib/mrrForecast';
 import { useLifetimeBuyers } from '@/hooks/useLifetimeBuyers';
@@ -243,7 +249,7 @@ function PriceRow({ row, max }: { row: PriceLadderRow; max: number }) {
 
 export default function AdminRevenue() {
   const queryClient = useQueryClient();
-  const [range, setRange] = useState<Range>(30);
+  const [range, setRange] = useState<Range>('ytd');
 
   const {
     data: stripeStats,
@@ -317,8 +323,23 @@ export default function AdminRevenue() {
     for (const r of rows) {
       if (r.stripe_mrr != null) lastStripe = Number(r.stripe_mrr);
       if (r.rc_mrr != null) lastRc = Number(r.rc_mrr);
-      if (lastStripe == null || lastRc == null) continue;
-      pts.push({ day: r.day, stripe: lastStripe, rc: lastRc, total: lastStripe + lastRc });
+      // Stripe is where the business starts; nothing before its first reading.
+      if (lastStripe == null) continue;
+      /*
+        Requiring BOTH rails threw away every day before RevenueCat began
+        reporting on 4 June 2026, so the chart silently started in June no
+        matter how much history the table held.
+
+        `?? 0` is a guard, not a reconstruction: rc_mrr is now populated for
+        every day, backfilled from RevenueCat's own daily MRR chart (which
+        matches our recorded figures exactly across the seven overlapping days
+        from 4 June). Store revenue really was £0 until 4 April 2026. If a rail
+        ever goes missing again this draws a zero rather than a gap, so a new
+        hole in the data will show up as a visible cliff — which is what you
+        want to see, rather than months quietly vanishing off the left.
+      */
+      const rc = lastRc ?? 0;
+      pts.push({ day: r.day, stripe: lastStripe, rc, total: lastStripe + rc });
     }
     if (pts.length && stripeStats && rcLoaded) {
       const last = pts[pts.length - 1];
@@ -339,7 +360,8 @@ export default function AdminRevenue() {
     monthly rate extrapolated seven months is a wish rather than a forecast.
     The gap between the two dates is the honest uncertainty and is shown.
   */
-  const MILESTONES = [5000, 10000, 20000, 50000];
+  // Shared with the Dashboard so both charts mark the SAME target.
+  const MILESTONES = MRR_MILESTONES;
   const pace30 = useMemo(() => paceOver(mrrPoints, 30), [mrrPoints]);
   const pace90 = useMemo(() => paceOver(mrrPoints, 90), [mrrPoints]);
   const blendedArpu = paying > 0 ? mrr / paying : null;
@@ -428,9 +450,28 @@ export default function AdminRevenue() {
   const trialsInFlight =
     (stripeStats?.stripe?.trialingSubscriptions ?? 0) + (rcStats?.revenuecat?.activeTrials ?? 0);
 
-  const mrrThen = mrrPoints.length > range ? mrrPoints[mrrPoints.length - 1 - range].total : null;
+  // 'all' is every day we hold rather than a fixed count, so it has to be
+  // resolved against the data before any comparison — see Range in MrrHero.
+  const rangeDays = daysInRange(range, mrrPoints.map((p) => p.day));
+  const rangeLabel =
+    range === 'all' ? 'all time' : range === 'ytd' ? 'this year' : `${range} days`;
+  const mrrThen =
+    mrrPoints.length > rangeDays ? mrrPoints[mrrPoints.length - 1 - rangeDays].total : null;
   const mrrDelta = mrrThen != null ? mrr - mrrThen : null;
-  const mrrDeltaPct = mrrThen ? Math.round(((mrrDelta as number) / mrrThen) * 100) : null;
+  /*
+    A percentage needs a baseline worth dividing by.
+
+    Over 'Year' and 'All' the window opens on the very start of the business —
+    £5.99 of MRR, which was Andrew's own test subscription — and the honest
+    arithmetic then reads "+78382% in this year". True, and useless. Below
+    £100 of starting MRR the absolute change is the only figure that means
+    anything, so the percentage is dropped and the copy falls back to it.
+  */
+  const PCT_MIN_BASELINE = 100;
+  const mrrDeltaPct =
+    mrrThen && mrrThen >= PCT_MIN_BASELINE
+      ? Math.round(((mrrDelta as number) / mrrThen) * 100)
+      : null;
   const payingSeries = useMemo(
     () =>
       (series?.metric_daily ?? [])
@@ -656,6 +697,8 @@ export default function AdminRevenue() {
                 { key: 7, label: '7d' },
                 { key: 30, label: '30d' },
                 { key: 90, label: '90d' },
+                { key: 'ytd', label: 'Year' },
+                { key: 'all', label: 'All' },
               ]}
               value={range}
               onChange={setRange}
@@ -692,7 +735,7 @@ export default function AdminRevenue() {
                     </Delta>
                     <span>
                       {mrrDeltaPct != null &&
-                        `${mrrDeltaPct > 0 ? '+' : ''}${mrrDeltaPct}% in ${range} days · `}
+                        `${mrrDeltaPct > 0 ? '+' : ''}${mrrDeltaPct}% in ${rangeLabel} · `}
                       {gbp((mrr * 12) / 1000, 1)}k a year
                     </span>
                   </>
@@ -753,10 +796,16 @@ export default function AdminRevenue() {
                     reference label, which is clipped at this width and is in any
                     case redundant beside the delta printed under the figure. */}
                 <div className="hidden lg:block">
-                  <MrrChart points={mrrPoints} range={range} height={260} compact />
+                  <MrrChart
+                    points={mrrPoints}
+                    range={range}
+                    height={260}
+                    compact
+                    goal={nextGoal?.target ?? null}
+                  />
                 </div>
                 <div className="lg:hidden">
-                  <MrrChart points={mrrPoints} range={range} height={190} compact />
+                  <MrrChart points={mrrPoints} range={range} height={190} compact goal={nextGoal?.target ?? null} />
                 </div>
               </div>
             </div>

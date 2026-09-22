@@ -32,6 +32,7 @@ const SEARCH_DIRS = [
   'src/data/upskilling',
   'src/data/general-upskilling',
   'src/data/learning-hub-quiz',
+  'src/data/study-centre',
   'src/pages/mock-exams',
   'src/components/seo',
   // 2026-05-25: many apprentice section quizzes (HNC, Level 2/3, AM2) keep

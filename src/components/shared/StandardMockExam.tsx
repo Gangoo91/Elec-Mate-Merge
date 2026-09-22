@@ -339,6 +339,8 @@ export const StandardMockExam = ({
         timeLimitMinutes={Math.round(config.timeLimit / 60)}
         passThreshold={config.passThreshold}
         topics={config.categories}
+        subtitle={config.subtitle}
+        note={config.note}
         history={history}
         onStart={startExam}
         onExit={() => navigate(examExit.to)}

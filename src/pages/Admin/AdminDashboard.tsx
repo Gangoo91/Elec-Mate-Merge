@@ -56,7 +56,13 @@ import {
   StateDot,
   gbp,
 } from '@/components/admin/overview/primitives';
-import { MrrChart, type MrrPoint, type Range } from '@/components/admin/overview/MrrHero';
+import {
+  MrrChart,
+  daysInRange,
+  type MrrPoint,
+  type Range,
+} from '@/components/admin/overview/MrrHero';
+import { nextMilestoneTarget } from '@/lib/mrrForecast';
 import InboxThreadSheet from '@/components/admin/overview/InboxThreadSheet';
 import {
   OVERVIEW_SERIES_KEY,
@@ -301,7 +307,7 @@ export default function AdminDashboard() {
   const navigate = useNavigate();
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [selectedUser, setSelectedUser] = useState<AdminUser | null>(null);
-  const [range, setRange] = useState<Range>(90);
+  const [range, setRange] = useState<Range>('ytd');
   const [mobileList, setMobileList] = useState<ListKey>('live');
   const [expanded, setExpanded] = useState<Record<ListKey, boolean>>({
     live: false,
@@ -316,6 +322,25 @@ export default function AdminDashboard() {
 
   const handleRefresh = useCallback(async () => {
     setIsRefreshing(true);
+    /*
+      admin-stripe-stats and admin-college-activity now answer from a cache and
+      rebuild behind the response, so invalidating alone would just re-read the
+      same cached numbers and the button would look broken. An explicit refresh
+      asks for the real recompute and waits for it.
+    */
+    try {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (session) {
+        await supabase.functions.invoke('admin-stripe-stats', {
+          headers: { Authorization: `Bearer ${session.access_token}` },
+          body: { refresh: true },
+        });
+      }
+    } catch (e) {
+      console.error('[admin] forced stripe refresh failed', e);
+    }
     await Promise.all(
       [
         ['admin-dashboard-stats'],
@@ -346,16 +371,22 @@ export default function AdminDashboard() {
 
   const { data: stripeStats, isLoading: stripeLoading } = useQuery<StripeStats>({
     queryKey: ['admin-stripe-live-stats'],
-    refetchInterval: 60000,
+    /*
+      Was 60000 with a 30s staleTime, against a call that took ~30 seconds to
+      answer — so a walk of the whole Stripe account was almost permanently in
+      flight. These are daily metrics; five minutes is already generous, and
+      the server refreshes its own cache behind the response.
+    */
+    refetchInterval: 5 * 60 * 1000,
     refetchOnWindowFocus: true,
-    staleTime: 30000,
+    staleTime: 5 * 60 * 1000,
     queryFn: () => authedInvoke<StripeStats>('admin-stripe-stats'),
   });
 
   const { data: rcStats, dataUpdatedAt: rcUpdatedAt } = useQuery<RcStats>({
     queryKey: ['admin-revenuecat-stats'],
-    refetchInterval: 60000,
-    staleTime: 30000,
+    refetchInterval: 5 * 60 * 1000,
+    staleTime: 5 * 60 * 1000,
     queryFn: () => authedInvoke<RcStats>('admin-revenuecat-stats'),
   });
 
@@ -538,8 +569,23 @@ export default function AdminDashboard() {
     for (const r of rows) {
       if (r.stripe_mrr != null) lastStripe = Number(r.stripe_mrr);
       if (r.rc_mrr != null) lastRc = Number(r.rc_mrr);
-      if (lastStripe == null || lastRc == null) continue;
-      pts.push({ day: r.day, stripe: lastStripe, rc: lastRc, total: lastStripe + lastRc });
+      // Stripe is where the business starts; nothing before its first reading.
+      if (lastStripe == null) continue;
+      /*
+        Requiring BOTH rails threw away every day before RevenueCat began
+        reporting on 4 June 2026, so the chart silently started in June no
+        matter how much history the table held.
+
+        `?? 0` is a guard, not a reconstruction: rc_mrr is now populated for
+        every day, backfilled from RevenueCat's own daily MRR chart (which
+        matches our recorded figures exactly across the seven overlapping days
+        from 4 June). Store revenue really was £0 until 4 April 2026. If a rail
+        ever goes missing again this draws a zero rather than a gap, so a new
+        hole in the data will show up as a visible cliff — which is what you
+        want to see, rather than months quietly vanishing off the left.
+      */
+      const rc = lastRc ?? 0;
+      pts.push({ day: r.day, stripe: lastStripe, rc, total: lastStripe + rc });
     }
     if (pts.length && stripeStats && rcLoaded) {
       const today = series?.today_date;
@@ -551,10 +597,32 @@ export default function AdminDashboard() {
     return pts;
   }, [series, stripeStats, rcLoaded, stripeMrr, rcMrr, mrr]);
 
-  // The range switch drives every comparison on the page, not just the chart.
-  const mrrThen = mrrPoints.length > range ? mrrPoints[mrrPoints.length - 1 - range].total : null;
+  /*
+    The range switch drives every comparison on the page, not just the chart.
+
+    `range` is what the control says; `rangeDays` is how many days that
+    actually covers. They differ for 'all', which means "every day we hold" —
+    so every comparison below resolves against the data rather than treating
+    the control value as a number.
+  */
+  const rangeDays = daysInRange(range, mrrPoints.map((p) => p.day));
+  const rangeLabel =
+    range === 'all' ? 'all time' : range === 'ytd' ? 'this year' : `${range} days`;
+  const mrrThen =
+    mrrPoints.length > rangeDays ? mrrPoints[mrrPoints.length - 1 - rangeDays].total : null;
   const mrrDelta = mrrThen != null ? mrr - mrrThen : null;
-  const mrrDeltaPct = mrrThen ? Math.round((mrrDelta! / mrrThen) * 100) : null;
+  /*
+    A percentage needs a baseline worth dividing by.
+
+    Over 'Year' and 'All' the window opens on the very start of the business —
+    £5.99 of MRR, which was Andrew's own test subscription — and the honest
+    arithmetic then reads "+78382% in this year". True, and useless. Below
+    £100 of starting MRR the absolute change is the only figure that means
+    anything, so the percentage is dropped and the copy falls back to it.
+  */
+  const PCT_MIN_BASELINE = 100;
+  const mrrDeltaPct =
+    mrrThen && mrrThen >= PCT_MIN_BASELINE ? Math.round((mrrDelta! / mrrThen) * 100) : null;
 
   /*
     Who pays: paying subscriptions by plan across both rails, and what each
@@ -579,7 +647,7 @@ export default function AdminDashboard() {
 
   const metric = series?.metric_daily ?? [];
   const last31 = metric.slice(-31);
-  const window = metric.slice(-(range + 1));
+  const window = range === 'all' ? metric : metric.slice(-(rangeDays + 1));
   const sumRails = (a: number | null, b: number | null) =>
     a == null && b == null ? null : (a ?? 0) + (b ?? 0);
   const payingSeries = window
@@ -588,7 +656,7 @@ export default function AdminDashboard() {
   const trialSeries = window
     .map((r) => sumRails(r.stripe_trialing, r.rc_trialing))
     .filter((v): v is number => v != null);
-  const first = window.length === range + 1 ? window[0] : null;
+  const first = window.length === rangeDays + 1 ? window[0] : null;
   const payingThen =
     first && first.stripe_paying != null && first.rc_paying != null
       ? sumRails(first.stripe_paying, first.rc_paying)
@@ -609,7 +677,7 @@ export default function AdminDashboard() {
       : stripeOnlyThen != null
         ? totalSubs - stripeOnlyThen
         : null;
-  const payingDeltaLabel = payingThen != null ? `in ${range} days` : `on Stripe in ${range} days`;
+  const payingDeltaLabel = payingThen != null ? `in ${rangeLabel}` : `on Stripe in ${rangeLabel}`;
   const stripeTrialsThen =
     trialsThen == null && first && first.stripe_trialing != null ? first.stripe_trialing : null;
   const trialsDelta =
@@ -618,7 +686,7 @@ export default function AdminDashboard() {
       : stripeTrialsThen != null
         ? stripeTrials - stripeTrialsThen
         : null;
-  const trialsDeltaLabel = trialsThen != null ? `in ${range} days` : `on Stripe in ${range} days`;
+  const trialsDeltaLabel = trialsThen != null ? `in ${rangeLabel}` : `on Stripe in ${rangeLabel}`;
 
   const dau = series?.dau_daily ?? [];
   const dauLast30 = dau.slice(-30).map((d) => d.n);
@@ -626,12 +694,22 @@ export default function AdminDashboard() {
     ? Math.round(dauLast30.reduce((t, n) => t + n, 0) / dauLast30.length)
     : null;
   const signupsDaily = series?.signups_daily ?? [];
-  const signupsWindow = signupsDaily.slice(-range).map((d) => d.n);
-  const signupsPrevWindow = signupsDaily.slice(-2 * range, -range).map((d) => d.n);
+  /*
+    Over all time there is no earlier period to compare against, so the
+    previous window is empty and the percentage below resolves to null rather
+    than inventing a comparison.
+  */
+  const signupsWindow = (
+    range === 'all' ? signupsDaily : signupsDaily.slice(-rangeDays)
+  ).map((d) => d.n);
+  const signupsPrevWindow =
+    range === 'all' || signupsDaily.length < 2 * rangeDays
+      ? []
+      : signupsDaily.slice(-2 * rangeDays, -rangeDays).map((d) => d.n);
   const signupsInRange = signupsWindow.reduce((t, n) => t + n, 0);
   const signupsPrev = signupsPrevWindow.reduce((t, n) => t + n, 0);
   const signupsPct =
-    signupsPrevWindow.length === range && signupsPrev > 0
+    signupsPrevWindow.length === rangeDays && signupsPrev > 0
       ? Math.round(((signupsInRange - signupsPrev) / signupsPrev) * 100)
       : null;
 
@@ -1325,6 +1403,8 @@ export default function AdminDashboard() {
                 { key: 7, label: '7d' },
                 { key: 30, label: '30d' },
                 { key: 90, label: '90d' },
+                { key: 'ytd', label: 'Year' },
+                { key: 'all', label: 'All' },
               ]}
               value={range}
               onChange={setRange}
@@ -1344,127 +1424,150 @@ export default function AdminDashboard() {
 
         {/* The money: figure, history, and where it comes from */}
         <Panel tone="accent">
-          <div className="grid gap-5 lg:grid-cols-[380px_minmax(0,1fr)] lg:grid-rows-[auto_1fr] lg:gap-x-10 lg:gap-y-0">
-            <div className="order-1 flex min-w-0 flex-col gap-2 text-white lg:order-none">
-              <div className="text-[13px] font-medium leading-4">Monthly recurring revenue</div>
-              <button
-                onClick={() => navigate('/admin/revenue')}
-                className="touch-manipulation text-left text-[44px] font-semibold leading-[46px] tracking-[-0.03em] transition-opacity hover:opacity-80 lg:text-[56px] lg:leading-[56px]"
-              >
-                {stripePending ? (
-                  <span className="opacity-40">£—</span>
-                ) : (
-                  gbp(rcLoaded ? mrr : stripeMrr)
-                )}
-              </button>
-              <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[13px]">
-                {stripePending ? (
-                  <span>Stripe is answering, usually 15 seconds…</span>
-                ) : !rcLoaded ? (
-                  <span>Stripe only · stores loading</span>
-                ) : mrrDelta != null ? (
-                  <>
-                    <Delta
-                      dir={mrrDelta > 0 ? 'up' : mrrDelta < 0 ? 'down' : 'flat'}
-                      tone={mrrDelta > 0 ? 'good' : mrrDelta < 0 ? 'bad' : 'neutral'}
-                      size={13}
-                    >
-                      {gbp(Math.abs(mrrDelta))}
-                    </Delta>
-                    <span>
-                      {mrrDeltaPct != null &&
-                        `${mrrDeltaPct > 0 ? '+' : ''}${mrrDeltaPct}% in ${range} days · `}
-                      {gbp((mrr * 12) / 1000, 1)}k a year
+          {/*
+            Figures left, chart right — the same shape as the Revenue hero, so the
+            two pages read as one product rather than two takes on it. Andrew's
+            call, 21 Sep: the dashboard follows Revenue, not the other way round.
+
+            The figures share a column and stack within it; the chart takes the
+            rest. On a phone the grid collapses and the chart falls below the
+            numbers, which is the order Revenue already used.
+          */}
+          <div className="grid gap-5 lg:grid-cols-[380px_minmax(0,1fr)] lg:gap-x-10">
+            <div className="flex min-w-0 flex-col gap-5">
+              <div className="flex min-w-0 flex-col gap-2 text-white">
+                <div className="text-[13px] font-medium leading-4">Monthly recurring revenue</div>
+                <button
+                  onClick={() => navigate('/admin/revenue')}
+                  className="touch-manipulation text-left text-[44px] font-semibold leading-[46px] tracking-[-0.03em] transition-opacity hover:opacity-80 lg:text-[56px] lg:leading-[56px]"
+                >
+                  {stripePending ? (
+                    <span className="opacity-40">£—</span>
+                  ) : (
+                    gbp(rcLoaded ? mrr : stripeMrr)
+                  )}
+                </button>
+                <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[13px]">
+                  {stripePending ? (
+                    <span>Loading Stripe…</span>
+                  ) : !rcLoaded ? (
+                    <span>Stripe only · stores loading</span>
+                  ) : mrrDelta != null ? (
+                    <>
+                      <Delta
+                        dir={mrrDelta > 0 ? 'up' : mrrDelta < 0 ? 'down' : 'flat'}
+                        tone={mrrDelta > 0 ? 'good' : mrrDelta < 0 ? 'bad' : 'neutral'}
+                        size={13}
+                      >
+                        {gbp(Math.abs(mrrDelta))}
+                      </Delta>
+                      <span>
+                        {/* Without a usable baseline the window still needs naming,
+                            or the delta reads as a figure from nowhere. */}
+                        {mrrDeltaPct != null
+                          ? `${mrrDeltaPct > 0 ? '+' : ''}${mrrDeltaPct}% in ${rangeLabel} · `
+                          : `in ${rangeLabel} · `}
+                        {gbp((mrr * 12) / 1000, 1)}k a year
+                      </span>
+                    </>
+                  ) : (
+                    <span>{gbp((mrr * 12) / 1000, 1)}k a year</span>
+                  )}
+                </div>
+              </div>
+              <div className="flex min-w-0 flex-col text-white">
+                <div className="mt-0 lg:mt-2">
+                  <StackBar
+                    segments={[
+                      { value: stripeMrr, color: BLUE, label: 'Stripe' },
+                      { value: rcMrr, color: AQUA, label: 'App Store & Play Store' },
+                    ]}
+                    height={8}
+                  />
+                  <div className="mt-2.5 flex flex-col gap-1.5 whitespace-nowrap text-[12px] sm:flex-row sm:gap-5">
+                    <span className="inline-flex items-center gap-1.5">
+                      <span className="h-2 w-2 rounded-[2px]" style={{ background: BLUE }} />
+                      Stripe <b className="font-semibold tabular-nums">{gbp(stripeMrr)}</b> ·{' '}
+                      {totalSubs} paying
                     </span>
-                  </>
-                ) : (
-                  <span>{gbp((mrr * 12) / 1000, 1)}k a year</span>
+                    <span className="inline-flex items-center gap-1.5">
+                      <span className="h-2 w-2 rounded-[2px]" style={{ background: AQUA }} />
+                      App Store &amp; Play{' '}
+                      {rcLoaded ? (
+                        <>
+                          <b className="font-semibold tabular-nums">{gbp(rcMrr)}</b> · {storeSubs}{' '}
+                          paying
+                        </>
+                      ) : (
+                        'loading'
+                      )}
+                    </span>
+                  </div>
+                </div>
+
+                {plans.length > 0 && (
+                  <div className="mt-4 border-t border-white/[0.1] pt-4">
+                    <div className="flex items-baseline justify-between gap-3">
+                      <div className="text-[13px] font-semibold">Who pays</div>
+                      <div className="text-[12px]">{allPaying} paying, by plan</div>
+                    </div>
+                    <div className="mt-2.5">
+                      <StackBar
+                        segments={plans.map((p) => ({
+                          value: p.count,
+                          color: p.color,
+                          label: `${p.label} ${p.count}`,
+                        }))}
+                      />
+                    </div>
+                    <div className="mt-2.5 grid grid-cols-2 gap-x-5 gap-y-2 text-[12px]">
+                      {plans.map((p) => (
+                        <span key={p.key} className="flex min-w-0 items-center gap-1.5">
+                          <span
+                            className="h-2 w-2 shrink-0 rounded-[2px]"
+                            style={{ background: p.color }}
+                          />
+                          <span className="truncate">
+                            {p.label} <b className="font-semibold tabular-nums">{p.count}</b>
+                          </span>
+                          {p.price > 0 && (
+                            <span className="ml-auto whitespace-nowrap tabular-nums">
+                              {gbp(p.count * p.price)}
+                            </span>
+                          )}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="mt-1.5 text-[11px]">
+                      Values at list price, yearly plans as monthly.
+                    </div>
+                  </div>
                 )}
+
+                <div className="mt-4 border-t border-white/[0.1] pt-4 lg:hidden">{movementBlock}</div>
               </div>
             </div>
-            <div className="order-2 flex min-w-0 flex-col justify-between lg:order-none lg:row-span-2">
+            <div className="flex min-w-0 flex-col justify-between">
               <div className="-mx-2 lg:mx-0">
+                {/* `compact` on desktop, matching Revenue: in a half-width
+                    column the "30 days ago" label clips, and the delta under
+                    the figure already says it. */}
                 <div className="hidden lg:block">
-                  <MrrChart points={mrrPoints} range={range} height={300} />
+                  <MrrChart
+                    points={mrrPoints}
+                    range={range}
+                    height={260}
+                    compact
+                    goal={nextMilestoneTarget(mrr)}
+                  />
                 </div>
                 <div className="lg:hidden">
-                  <MrrChart points={mrrPoints} range={range} height={190} compact />
+                  <MrrChart points={mrrPoints} range={range} height={190} compact goal={nextMilestoneTarget(mrr)} />
                 </div>
               </div>
               <div className="mt-3 hidden border-t border-white/[0.1] pt-3 lg:block">
                 {movementBlock}
               </div>
-            </div>
-            <div className="order-3 flex min-w-0 flex-col text-white lg:order-none">
-              <div className="mt-0 lg:mt-2">
-                <StackBar
-                  segments={[
-                    { value: stripeMrr, color: BLUE, label: 'Stripe' },
-                    { value: rcMrr, color: AQUA, label: 'App Store & Play Store' },
-                  ]}
-                  height={8}
-                />
-                <div className="mt-2.5 flex flex-col gap-1.5 whitespace-nowrap text-[12px] sm:flex-row sm:gap-5">
-                  <span className="inline-flex items-center gap-1.5">
-                    <span className="h-2 w-2 rounded-[2px]" style={{ background: BLUE }} />
-                    Stripe <b className="font-semibold tabular-nums">{gbp(stripeMrr)}</b> ·{' '}
-                    {totalSubs} paying
-                  </span>
-                  <span className="inline-flex items-center gap-1.5">
-                    <span className="h-2 w-2 rounded-[2px]" style={{ background: AQUA }} />
-                    App Store &amp; Play{' '}
-                    {rcLoaded ? (
-                      <>
-                        <b className="font-semibold tabular-nums">{gbp(rcMrr)}</b> · {storeSubs}{' '}
-                        paying
-                      </>
-                    ) : (
-                      'loading'
-                    )}
-                  </span>
-                </div>
-              </div>
-
-              {plans.length > 0 && (
-                <div className="mt-4 border-t border-white/[0.1] pt-4">
-                  <div className="flex items-baseline justify-between gap-3">
-                    <div className="text-[13px] font-semibold">Who pays</div>
-                    <div className="text-[12px]">{allPaying} paying, by plan</div>
-                  </div>
-                  <div className="mt-2.5">
-                    <StackBar
-                      segments={plans.map((p) => ({
-                        value: p.count,
-                        color: p.color,
-                        label: `${p.label} ${p.count}`,
-                      }))}
-                    />
-                  </div>
-                  <div className="mt-2.5 grid grid-cols-2 gap-x-5 gap-y-2 text-[12px]">
-                    {plans.map((p) => (
-                      <span key={p.key} className="flex min-w-0 items-center gap-1.5">
-                        <span
-                          className="h-2 w-2 shrink-0 rounded-[2px]"
-                          style={{ background: p.color }}
-                        />
-                        <span className="truncate">
-                          {p.label} <b className="font-semibold tabular-nums">{p.count}</b>
-                        </span>
-                        {p.price > 0 && (
-                          <span className="ml-auto whitespace-nowrap tabular-nums">
-                            {gbp(p.count * p.price)}
-                          </span>
-                        )}
-                      </span>
-                    ))}
-                  </div>
-                  <div className="mt-1.5 text-[11px]">
-                    Values at list price, yearly plans as monthly.
-                  </div>
-                </div>
-              )}
-
-              <div className="mt-4 border-t border-white/[0.1] pt-4 lg:hidden">{movementBlock}</div>
             </div>
           </div>
         </Panel>
@@ -1544,7 +1647,10 @@ export default function AdminDashboard() {
             <KpiTile
               label={
                 churn
-                  ? `Churn, ${monthName(churn.month)}${churn.isCurrentMonth ? ' so far' : ''}`
+                  ? // The month lives in the footnote below, not the title.
+                    // "Churn, September so far" wrapped to two lines and was the
+                    // one tile in six whose number sat lower than the rest.
+                    `Churn · ${monthShort(churn.month)}`
                   : 'Churn'
               }
               value={churn?.rate != null ? `${churn.rate}%` : '—'}
@@ -1584,7 +1690,9 @@ export default function AdminDashboard() {
                     ? 'loading Stripe…'
                     : 'computing from invoices…'
               }
-              viz={<Sparkline series={churn?.daily ?? []} accent={SERIOUS} />}
+              // `invert`: churn falling is the good outcome, so the accent has to
+              // follow the opposite direction from every other tile here.
+              viz={<Sparkline series={churn?.daily ?? []} accent={GOOD} invert />}
               onClick={() => navigate('/admin/revenue')}
             />
             <KpiTile
@@ -1605,7 +1713,13 @@ export default function AdminDashboard() {
               onClick={() => navigate('/admin/users?filter=active')}
             />
             <KpiTile
-              label={`Signups, ${range} days`}
+              label={
+                range === 'all'
+                  ? 'Signups, all time'
+                  : range === 'ytd'
+                    ? 'Signups this year'
+                    : `Signups, ${range} days`
+              }
               value={signupsInRange}
               delta={
                 signupsPct != null ? (
@@ -1613,7 +1727,7 @@ export default function AdminDashboard() {
                     dir={signupsPct >= 0 ? 'up' : 'down'}
                     tone={signupsPct >= 0 ? 'good' : 'bad'}
                   >
-                    {Math.abs(signupsPct)}% vs previous {range}
+                    {Math.abs(signupsPct)}% vs previous {rangeDays}
                   </Delta>
                 ) : undefined
               }

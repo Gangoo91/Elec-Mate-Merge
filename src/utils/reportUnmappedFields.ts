@@ -28,6 +28,19 @@ import { Sentry } from '@/lib/sentry';
  */
 const ALWAYS_IGNORED = ['duplicatedFrom'];
 
+/**
+ * Key prefixes that are never PDF *fields* on any certificate.
+ *   - `em_` — the cover-palette / masthead branding tokens (ELE-1671:
+ *     em_cover_from, em_accent_deep, em_mast_bg, em_scheme_logo_light, …).
+ *     They are injected into form data but resolved through the cover-payload
+ *     path (coverKeysFromFormData), not the formatter's field getters, so they
+ *     ALWAYS look "unmapped" although no cert data is lost. Sean Mulcahy's EV
+ *     certificate raised exactly these 12 (Sentry DZ) — a false alarm that was
+ *     also masking any genuine dropped field behind the noise. No electrical
+ *     field uses this prefix.
+ */
+const IGNORED_PREFIXES = ['em_'];
+
 export interface UnmappedFieldOptions {
   /** form-data keys to ignore — UI-only state, or values resolved via another key */
   ignore?: string[];
@@ -77,6 +90,7 @@ export function reportUnmappedFields(
 
   for (const [key, value] of Object.entries(formData ?? {})) {
     if (ignore.has(key)) continue;
+    if (IGNORED_PREFIXES.some((p) => key.startsWith(p))) continue;
 
     if (nested.has(key) && value && typeof value === 'object' && !Array.isArray(value)) {
       for (const [nk, nv] of Object.entries(value as Record<string, unknown>)) {

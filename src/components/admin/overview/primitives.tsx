@@ -51,17 +51,51 @@ export const gbp = (v: number, dp = 0) =>
 /* ── charts that are not charts ────────────────────────── */
 
 /** 12-to-31 point trend in the de-emphasis grey; the last step and end dot in the accent. */
+/**
+ * A KPI's recent history, at 72×28.
+ *
+ * ── WHAT THIS USED TO BE, AND WHY IT WAS CHANGED ─────────────────────────
+ *
+ * A flat grey line with its last segment and a dot in the tile's colour. Six
+ * of them side by side were six identical squiggles: you could not tell a KPI
+ * that had climbed all quarter from one that had fallen off a cliff without
+ * reading the delta text beside it — at which point the chart has done no
+ * work. The colour sat on the final segment only, which reads as an accent
+ * rather than as meaning.
+ *
+ * Three changes, each carrying information rather than decoration:
+ *
+ *   DIRECTION IS THE COLOUR. The whole line takes the tile's accent when the
+ *   series ends above where it started and a muted warm tone when it ends
+ *   below. Six tiles now answer "which way is this going" at a glance, in
+ *   peripheral vision, before any number is read.
+ *
+ *   A BASELINE AT THE STARTING VALUE. A dotted rule where the series began, so
+ *   the area above or below it IS the change. Without it a sparkline shows
+ *   shape but not sign — a line can wander upward across the box while ending
+ *   lower than it started, and nothing tells you.
+ *
+ *   A FILL TO THAT BASELINE. At 28px tall a 1.5px stroke is nearly invisible
+ *   on a dark panel. The fill gives the shape weight and makes the gap between
+ *   now and then a readable area rather than a distance between two points.
+ *
+ * `invert` is for series where DOWN is the good outcome — churn, refunds. It
+ * swaps which direction earns the accent so green never means "churn rose".
+ */
 export function Sparkline({
   series,
   width = 72,
   height = 28,
   accent = ACCENT,
+  invert = false,
   className,
 }: {
   series: number[];
   width?: number;
   height?: number;
   accent?: string;
+  /** Set where a FALLING series is the good news — churn, refunds, failures. */
+  invert?: boolean;
   className?: string;
 }) {
   if (series.length < 2) return <span style={{ width, height }} className="shrink-0" />;
@@ -69,13 +103,26 @@ export function Sparkline({
   const hi = Math.max(...series);
   const range = hi - lo || 1;
   const n = series.length;
-  const pts = series.map((v, i) => [
-    2 + (i * (width - 4)) / (n - 1),
-    2 + (height - 4) * (1 - (v - lo) / range),
-  ]);
-  const d = pts.map(([x, y], i) => `${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)}`).join(' ');
-  const [x1, y1] = pts[n - 2];
+  // 3px of inset rather than 2: the end dot is r=3.5 with a 2px surface ring,
+  // and at the old inset it clipped against the right edge of the viewBox.
+  const PAD = 3;
+  const x = (i: number) => PAD + (i * (width - PAD * 2)) / (n - 1);
+  const y = (v: number) => PAD + (height - PAD * 2) * (1 - (v - lo) / range);
+
+  const pts = series.map((v, i) => [x(i), y(v)] as const);
+  const d = pts.map(([px, py], i) => `${i === 0 ? 'M' : 'L'}${px.toFixed(1)},${py.toFixed(1)}`).join(' ');
+
+  const rose = series[n - 1] >= series[0];
+  const favourable = invert ? !rose : rose;
+  const stroke = favourable ? accent : SERIOUS;
+
+  // The fill closes to the STARTING value, not to the floor of the box, so the
+  // shaded area is the change rather than the magnitude.
+  const baseY = y(series[0]);
+  const areaD = `${d} L${pts[n - 1][0].toFixed(1)},${baseY.toFixed(1)} L${pts[0][0].toFixed(1)},${baseY.toFixed(1)} Z`;
+  const gradientId = `spark-${stroke.replace(/[^a-z0-9]/gi, '')}-${favourable ? 'up' : 'down'}`;
   const [x2, y2] = pts[n - 1];
+
   return (
     <svg
       width={width}
@@ -84,22 +131,32 @@ export function Sparkline({
       aria-hidden
       className={cn('block shrink-0', className)}
     >
+      <defs>
+        <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={stroke} stopOpacity={0.28} />
+          <stop offset="100%" stopColor={stroke} stopOpacity={0.03} />
+        </linearGradient>
+      </defs>
+      <path d={areaD} fill={`url(#${gradientId})`} stroke="none" />
+      {/* Where the series began. Everything above it is growth. */}
+      <line
+        x1={PAD}
+        y1={baseY}
+        x2={width - PAD}
+        y2={baseY}
+        stroke={DE_EMPHASIS}
+        strokeWidth={1}
+        strokeDasharray="2 3"
+      />
       <path
         d={d}
         fill="none"
-        stroke={DE_EMPHASIS}
+        stroke={stroke}
         strokeWidth={1.5}
         strokeLinejoin="round"
         strokeLinecap="round"
       />
-      <path
-        d={`M${x1.toFixed(1)},${y1.toFixed(1)} L${x2.toFixed(1)},${y2.toFixed(1)}`}
-        fill="none"
-        stroke={accent}
-        strokeWidth={1.5}
-        strokeLinecap="round"
-      />
-      <circle cx={x2} cy={y2} r={3.5} fill={accent} stroke={SURFACE} strokeWidth={2} />
+      <circle cx={x2} cy={y2} r={3.5} fill={stroke} stroke={SURFACE} strokeWidth={2} />
     </svg>
   );
 }
@@ -258,17 +315,35 @@ export function KpiTile({
         className
       )}
     >
-      <div className="text-[12px] font-medium leading-4 lg:text-[13px]">{label}</div>
-      <div className="flex items-end justify-between gap-2.5">
+      {/*
+        Each row is given a floor so the six tiles share baselines.
+
+        Without it every row is only as tall as its own content, so a label
+        that wraps to two lines — "Churn, September so far" — pushes its number
+        and its footnote down while the five beside it stay put. The strip read
+        as five tiles and a mistake. `items-start` on the label keeps a
+        one-line title at the top of its box rather than centred in the gap.
+      */}
+      <div className="flex min-h-[32px] items-start text-[12px] font-medium leading-4 lg:min-h-[34px] lg:text-[13px]">
+        {label}
+      </div>
+      <div className="flex min-h-[34px] items-end justify-between gap-2.5 lg:min-h-[38px]">
         <div className="text-[26px] font-semibold leading-[30px] tracking-[-0.02em] lg:text-[30px] lg:leading-[34px]">
           {value}
         </div>
         {viz}
       </div>
-      <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] leading-4">
-        {delta}
-        {definition && <span className="text-[11px] lg:text-[12px]">{definition}</span>}
-      </div>
+      {/*
+        The delta owns its own line. Sharing a wrapping flex row with the
+        definition meant a long definition could pull the delta onto a second
+        line on one tile and not its neighbour, so the green and orange cues
+        sat at different heights across the strip — exactly the signal the eye
+        is meant to scan along.
+      */}
+      <div className="flex min-h-[16px] items-start text-[12px] leading-4">{delta}</div>
+      {definition && (
+        <div className="text-[11px] leading-4 lg:text-[12px]">{definition}</div>
+      )}
     </Tag>
   );
 }

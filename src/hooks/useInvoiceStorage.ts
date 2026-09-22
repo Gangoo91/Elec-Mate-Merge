@@ -436,6 +436,14 @@ export const useInvoiceStorage = () => {
               profit: parseNumber(invoice.profit),
               vat_amount: parseNumber(invoice.vatAmount),
               total: parseNumber(invoice.total),
+              // ELE-1760 — persist a credited deposit on the new invoice so its
+              // balance due is correct from the moment it is created. Only on
+              // INSERT; the update path below must never overwrite total_paid,
+              // or it would wipe payments the invoice has taken since. The
+              // deposit is NOT written into partial_payments — it is shown via
+              // settings.depositApplied (the DEP- invoice is its own record),
+              // so it cannot display twice on the PDF.
+              total_paid: parseNumber(invoice.total_paid) || 0,
               status: 'approved',
               invoice_raised: true,
               invoice_number: finalInvoiceNumber,

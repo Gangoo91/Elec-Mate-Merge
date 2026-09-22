@@ -34,6 +34,7 @@ import {
   linkCustomerToReport,
 } from '@/utils/customerHelper';
 import { supabase } from '@/integrations/supabase/client';
+import { ConflictResolutionDialog } from '@/components/inspection/ConflictResolutionDialog';
 import { useQsReviewStatus } from '@/hooks/useQsReview';
 
 interface EICRFormContextType {
@@ -413,6 +414,8 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     syncNow,
     syncNowImmediate,
     onTabChange,
+    activeConflict,
+    resolveConflict,
   } = useCloudSync({
     reportId: currentReportId,
     reportType: 'eicr',
@@ -1384,6 +1387,13 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
           }}
         />
       </CertificatePhotoProvider>
+      {/*
+        Mounted in the provider, not the page, so every EICR surface that uses
+        this context gets it — the six specialist certs render it at page level
+        and EICR/EIC never did, which left the conflict toast with no way to
+        resolve it (see useCloudSync). Dismissing = "keep my changes" = forceSave.
+      */}
+      <ConflictResolutionDialog conflict={activeConflict} onResolve={resolveConflict} />
     </EICRFormContext.Provider>
   );
 };

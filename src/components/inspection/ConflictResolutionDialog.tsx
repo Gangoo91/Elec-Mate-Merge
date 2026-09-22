@@ -19,8 +19,16 @@ export function ConflictResolutionDialog({ conflict, onResolve }: ConflictResolu
       })
     : null;
 
+  /*
+   * Dismissal is deliberately a no-op. It used to call onResolve(false) — "keep
+   * my changes" — which is a FORCE-OVERWRITE of whatever is on the server. So a
+   * tap outside the card, or Android back, silently discarded a teammate's
+   * edit with no explicit choice made. The two buttons are the only way out.
+   * (An AlertDialog is modal by design; a user who wants their form back has
+   * to pick a side, which is the whole point of surfacing the conflict.)
+   */
   return (
-    <AlertDialog open={!!conflict} onOpenChange={() => onResolve(false)}>
+    <AlertDialog open={!!conflict} onOpenChange={() => {}}>
       <AlertDialogContent className="bg-background border border-white/[0.08] rounded-2xl p-0 max-w-[calc(100vw-2rem)]">
         <AlertDialogTitle className="sr-only">Edit Conflict Detected</AlertDialogTitle>
         <AlertDialogDescription className="sr-only">Choose whether to use the server version or keep your local changes</AlertDialogDescription>

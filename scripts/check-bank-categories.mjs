@@ -36,7 +36,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 
 const ci = process.argv.includes('--ci');
-const DIRS = ['src/data/general-upskilling', 'src/data/upskilling'];
+const DIRS = ['src/data/general-upskilling', 'src/data/upskilling', 'src/data/study-centre'];
 
 const CATEGORIES_DECL = /export const \w*[Cc]ategories\s*(?::\s*[^=]+)?=\s*\[(.*?)\];/s;
 const QUOTED = /'([^']+)'/g;

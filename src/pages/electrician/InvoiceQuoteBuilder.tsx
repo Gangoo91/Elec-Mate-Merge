@@ -105,6 +105,11 @@ export default function InvoiceQuoteBuilder() {
           work_completion_date: data.work_completion_date
             ? new Date(data.work_completion_date)
             : undefined,
+          // ELE-1760 — carry the paid deposit so the invoice conversion can
+          // credit it. Without these two the deposit is invisible to the
+          // builder and the client is billed the full total again.
+          deposit_paid_at: data.deposit_paid_at ?? null,
+          deposit_amount_pennies: data.deposit_amount_pennies ?? null,
         };
 
         setQuote(quoteData);

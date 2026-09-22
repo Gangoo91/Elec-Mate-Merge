@@ -32,6 +32,8 @@ export interface ExamPanelQuestion {
   section?: string;
   topic?: string;
   category?: string;
+  /** Table and row the answer comes from, when the bank records it. */
+  reference?: string;
 }
 
 export interface ExamResultsPanelProps {

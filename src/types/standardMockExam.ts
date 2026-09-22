@@ -15,6 +15,11 @@ export interface StandardMockQuestion {
   difficulty: 'basic' | 'intermediate' | 'advanced';
   topic: string;
   category: string;
+  /**
+   * Where the value lives — table and row. Shown after marking so a wrong
+   * answer teaches where to look (ELE-1761, the On-Site Guide lookup paper).
+   */
+  reference?: string;
 }
 
 export interface MockExamConfig {
@@ -25,6 +30,14 @@ export interface MockExamConfig {
   passThreshold: number; // percentage
   exitPath: string;
   categories: string[];
+  /** One line under the title on the start screen, in volt. */
+  subtitle?: string;
+  /**
+   * A boxed instruction above the Start button — the On-Site Guide paper uses
+   * it to say "have the book open" (ELE-1761). Rendered by ExamStartPanel's
+   * existing `note` slot.
+   */
+  note?: string;
 }
 
 export interface DifficultyDistribution {

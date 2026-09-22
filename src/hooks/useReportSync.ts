@@ -4,6 +4,7 @@
 
 import { useState, useEffect, useLayoutEffect, useCallback, useRef, useMemo } from 'react';
 import debounce from 'lodash/debounce';
+import * as Sentry from '@sentry/react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { reportCloud, VersionConflict, ReportType } from '@/utils/reportCloud';
@@ -877,6 +878,20 @@ export const useReportSync = ({
             if (result.conflict) {
               // Version conflict detected
               console.log('[ReportSync] Conflict detected:', result.conflict);
+              // This was a console.log only — Sentry had zero events for a user
+              // who spent 100 minutes stuck in this state, so nothing could say
+              // how many others had hit it. Warning, not error: the local copy
+              // is intact and the dialog is the fix; this just makes it countable.
+              Sentry.captureMessage('report edit conflict', {
+                level: 'warning',
+                tags: { reportType, isAutoSync: String(isAutoSync) },
+                extra: {
+                  reportId: savedReportId,
+                  localVersion: result.conflict.localVersion,
+                  serverVersion: result.conflict.serverVersion,
+                  serverUpdatedAt: result.conflict.serverUpdatedAt,
+                },
+              });
               isSyncingRef.current = false;
               setActiveConflict(result.conflict);
               setStatus((prev) => ({
@@ -903,8 +918,28 @@ export const useReportSync = ({
 
             if (!result.success) throw result.error ?? new Error('Update failed');
 
-            // Update expected version after successful save
-            expectedVersionRef.current += 1;
+            if (result.healed) {
+              // A phantom conflict (server ⊆ local) was auto-resolved instead
+              // of dead-ending in the dialog. Breadcrumb, not a captureMessage:
+              // this is the system working, and we want to count how often it
+              // saves a save without alarming anyone.
+              console.log('[ReportSync] Phantom edit conflict auto-healed');
+              Sentry.addBreadcrumb({
+                category: 'sync',
+                level: 'info',
+                message: 'phantom edit conflict auto-healed (server ⊆ local)',
+                data: { reportType },
+              });
+            }
+
+            // Adopt the server's edit_version rather than assuming +1. The DB
+            // trigger only increments when `data` changed, so a no-op autosave
+            // leaves it flat; a blind += 1 drifts this session ahead of the
+            // server and silently masks a real concurrent edit of exactly +1.
+            expectedVersionRef.current =
+              typeof result.version === 'number'
+                ? result.version
+                : expectedVersionRef.current + 1;
           }
         } else {
           /*

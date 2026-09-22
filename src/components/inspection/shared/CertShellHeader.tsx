@@ -52,7 +52,11 @@ const saveWord = (
 ): { word: string; tone: string } => {
   if (cloud === 'offline') return { word: 'Offline', tone: 'text-orange-300' };
   if (isSaving || cloud === 'syncing') return { word: 'Saving', tone: 'text-white/90' };
-  if (cloud === 'error' || cloud === 'conflict') return { word: 'Retry save', tone: 'text-red-400' };
+  // A conflict is not fixed by retrying — the version check fails the same way
+  // every time until the user picks a side in the resolution dialog. Saying
+  // "Retry save" here sent people back to the toast in a loop.
+  if (cloud === 'conflict') return { word: 'Resolve conflict', tone: 'text-red-400' };
+  if (cloud === 'error') return { word: 'Retry save', tone: 'text-red-400' };
   if (cloud === 'queued') {
     return {
       word: queuedChanges > 1 ? `Pending ${queuedChanges}` : 'Pending',

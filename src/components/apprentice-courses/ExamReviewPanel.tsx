@@ -288,6 +288,15 @@ export function ExamReviewPanel({
                         </p>
                       </div>
                     )}
+
+                    {question.reference && (
+                      <div className={cn('mt-3 rounded-xl border border-white/[0.12] p-4', CARD_SURFACE)}>
+                        <p className="mb-1.5 text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
+                          Where to find it
+                        </p>
+                        <p className="text-[13.5px] leading-relaxed text-white">{question.reference}</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               );

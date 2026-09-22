@@ -1,4 +1,5 @@
 import { supabase } from '@/integrations/supabase/client';
+import { isServerContainedInLocal } from '@/utils/reportConflict';
 
 // All supported certificate types
 export type ReportType =
@@ -1411,13 +1412,39 @@ export const reportCloud = {
     expectedVersion: number,
     customerId?: string,
     isAutoSync: boolean = false
-  ): Promise<{ success: boolean; conflict?: VersionConflict; error?: unknown }> => {
+  ): Promise<{
+    success: boolean;
+    conflict?: VersionConflict;
+    error?: unknown;
+    /** The server's edit_version after this write — adopt it, don't guess it. */
+    version?: number;
+    /** True when a phantom conflict (server ⊆ local) was auto-resolved. */
+    healed?: boolean;
+  }> => {
     try {
       // First check for conflicts
       const conflict = await reportCloud.checkVersionConflict(reportId, userId, expectedVersion);
 
+      let healed = false;
       if (conflict.hasConflict) {
-        return { success: false, conflict };
+        /*
+         * A version bump is not a conflict by itself. If the server holds
+         * nothing this local copy doesn't already contain, keeping local loses
+         * no committed value — so this is a phantom (our own lost-ack write, or
+         * an older subset), not a concurrent edit. Proceed and adopt the
+         * server's version; see isServerContainedInLocal for the safety proof.
+         * The dialog is reserved for a genuine divergence the user must decide.
+         */
+        if (isServerContainedInLocal(conflict.serverData, data)) {
+          healed = true;
+          console.log('[reportCloud] Phantom conflict auto-healed (server ⊆ local)', {
+            reportId,
+            localVersion: conflict.localVersion,
+            serverVersion: conflict.serverVersion,
+          });
+        } else {
+          return { success: false, conflict };
+        }
       }
 
       // Get current status to check if it's an auto-draft.
@@ -1489,7 +1516,15 @@ export const reportCloud = {
         .update(updateData)
         // no user filter — RLS grants owner + team QS (Team Certificates)
         .eq('report_id', reportId)
-        .select('report_id');
+        // `edit_version` comes back so the caller can adopt the server's number
+        // instead of guessing. The increment_report_edit_version trigger only
+        // bumps it when `data` actually changed, so a save of identical data
+        // (a timer-driven autosave with nothing new) leaves it where it was —
+        // and a client that did `expected += 1` regardless drifts AHEAD of the
+        // server by one each time. Being ahead never raises a conflict; it
+        // hides one, because a genuine concurrent edit of exactly +1 then
+        // looks like the version this session expected.
+        .select('report_id, edit_version');
 
       if (error) throw error;
       if (!updatedRows || updatedRows.length === 0) {
@@ -1498,7 +1533,12 @@ export const reportCloud = {
         );
       }
 
-      return { success: true };
+      const version = updatedRows[0]?.edit_version;
+      return {
+        success: true,
+        version: typeof version === 'number' ? version : undefined,
+        healed,
+      };
     } catch (error) {
       console.error('[reportCloud] Failed to update report with version check:', error);
       return { success: false, error };

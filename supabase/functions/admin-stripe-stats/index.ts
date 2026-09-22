@@ -194,6 +194,81 @@ serve(async (req) => {
 
     console.log('[ADMIN-STRIPE-STATS] Access granted:', scheduled ? 'scheduled snapshot' : 'admin');
 
+    /*
+      Serve the whole payload from cache, refresh behind the response.
+
+      Even with the Stripe walks running in parallel this function is seconds
+      of work against a third-party API, and it was doing all of it on every
+      page load: measured p50 29.9s across 142 POSTs in 24h, worst 100.9s. The
+      dashboard polled it every 60 seconds on top of that, so a walk was almost
+      always in flight. None of these figures move fast enough to justify it —
+      MRR and paying counts are daily metrics.
+
+      So: a fresh cache answers immediately; a stale one still answers
+      immediately and kicks off a refresh behind the response; only a cold
+      cache waits. `refresh: true` forces the computation, which is how the
+      background refresh and the nightly snapshot cron get real work done.
+      The forced path never schedules another refresh, so this cannot recurse.
+    */
+    const OVERVIEW_CACHE_KEY = 'stripe_overview';
+    const OVERVIEW_FRESH_MS = 10 * 60 * 1000;
+
+    let forceRefresh = scheduled;
+    if (!forceRefresh && req.method === 'POST') {
+      try {
+        const body = await req.json();
+        forceRefresh = body?.refresh === true;
+      } catch {
+        // No body, or not JSON. A plain invoke is the normal read path.
+      }
+    }
+
+    if (!forceRefresh) {
+      const { data: overviewCache } = await supabase
+        .from('admin_metric_cache')
+        .select('value, updated_at')
+        .eq('key', OVERVIEW_CACHE_KEY)
+        .maybeSingle();
+
+      if (overviewCache?.value) {
+        const age = Date.now() - new Date(overviewCache.updated_at).getTime();
+        const cachedAt = overviewCache.updated_at;
+
+        if (age > OVERVIEW_FRESH_MS) {
+          /*
+            Stale. Answer from cache now and rebuild in the background by
+            calling this function again with the service key, which takes the
+            forced path. waitUntil keeps the isolate alive past the response.
+          */
+          EdgeRuntime.waitUntil(
+            fetch(`${supabaseUrl}/functions/v1/admin-stripe-stats`, {
+              method: 'POST',
+              headers: {
+                Authorization: `Bearer ${supabaseServiceKey}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ refresh: true }),
+            }).catch((e) => console.error('[ADMIN-STRIPE-STATS] background refresh failed:', e))
+          );
+        }
+
+        console.log(
+          `[ADMIN-STRIPE-STATS] served from cache, age ${Math.round(age / 1000)}s`,
+          age > OVERVIEW_FRESH_MS ? '(refreshing behind response)' : '(fresh)'
+        );
+
+        return new Response(
+          JSON.stringify({ ...overviewCache.value, cachedAt, servedFromCache: true }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+    }
+
+    console.log(
+      '[ADMIN-STRIPE-STATS] computing fresh payload',
+      forceRefresh ? '(forced)' : '(cold cache)'
+    );
+
     // Initialize Stripe
     const stripeKey = Deno.env.get('STRIPE_SECRET_KEY');
     if (!stripeKey) {
@@ -202,135 +277,98 @@ serve(async (req) => {
 
     const stripe = new Stripe(stripeKey, { apiVersion: '2023-10-16' });
 
-    // Fetch all active subscriptions from Stripe
-    const activeSubscriptions: Stripe.Subscription[] = [];
-    let hasMore = true;
-    let startingAfter: string | undefined;
-
-    while (hasMore) {
-      const batch = await stripe.subscriptions.list({
-        status: 'active',
-        limit: 100,
-        expand: ['data.customer', 'data.items.data.price'],
-        ...(startingAfter && { starting_after: startingAfter }),
-      });
-
-      activeSubscriptions.push(...batch.data);
-      hasMore = batch.has_more;
-      if (batch.data.length > 0) {
-        startingAfter = batch.data[batch.data.length - 1].id;
-      }
-    }
-
-    // Fetch all trialing subscriptions from Stripe
-    const trialingSubscriptions: Stripe.Subscription[] = [];
-    hasMore = true;
-    startingAfter = undefined;
-
-    while (hasMore) {
-      const batch = await stripe.subscriptions.list({
-        status: 'trialing',
-        limit: 100,
-        expand: ['data.customer', 'data.items.data.price'],
-        ...(startingAfter && { starting_after: startingAfter }),
-      });
-
-      trialingSubscriptions.push(...batch.data);
-      hasMore = batch.has_more;
-      if (batch.data.length > 0) {
-        startingAfter = batch.data[batch.data.length - 1].id;
-      }
-    }
-
     /*
-      Every coupon and promotion code on the account.
+      Every Stripe list this function needs, walked in parallel.
 
-      The revenue page could see who currently HAS a discount but not what
-      offers exist, how many codes were issued against them, or how many were
-      ever taken up — so a scheme with 161 codes and one redemption looked
-      identical to one nobody had set up. Both lists are small (tens of rows)
-      and cheap next to the subscription pagination.
+      These six walks are independent, but they were written to share ONE pair
+      of `hasMore` / `startingAfter` variables, which forced them to run one
+      after another: active subs, trialing subs, coupons, promotion codes,
+      past_due, unpaid, and up to 3,000 cancellations, each waiting for the
+      last to finish. That is what made this function take ~30 seconds on every
+      single dashboard load (measured p50 29.9s, p90 31.8s over 142 calls).
+      Each walk owns its own cursor now, so the wall-clock cost is the slowest
+      one rather than the sum of all of them.
     */
-    const allCoupons: Stripe.Coupon[] = [];
-    hasMore = true;
-    startingAfter = undefined;
-    while (hasMore) {
-      const batch = await stripe.coupons.list({
-        limit: 100,
-        ...(startingAfter && { starting_after: startingAfter }),
-      });
-      allCoupons.push(...batch.data);
-      hasMore = batch.has_more;
-      if (batch.data.length > 0) startingAfter = batch.data[batch.data.length - 1].id;
-    }
+    const paginate = async <T extends { id: string }>(
+      fetchPage: (cursor?: string) => Promise<Stripe.ApiList<T>>,
+      cap = Number.POSITIVE_INFINITY
+    ): Promise<T[]> => {
+      const out: T[] = [];
+      let cursor: string | undefined;
+      while (out.length < cap) {
+        const page = await fetchPage(cursor);
+        out.push(...page.data);
+        if (!page.has_more || page.data.length === 0) break;
+        cursor = page.data[page.data.length - 1].id;
+      }
+      return out;
+    };
 
-    const allPromoCodes: Stripe.PromotionCode[] = [];
-    hasMore = true;
-    startingAfter = undefined;
-    while (hasMore) {
-      const batch = await stripe.promotionCodes.list({
-        limit: 100,
-        ...(startingAfter && { starting_after: startingAfter }),
-      });
-      allPromoCodes.push(...batch.data);
-      hasMore = batch.has_more;
-      if (batch.data.length > 0) startingAfter = batch.data[batch.data.length - 1].id;
-    }
-
-    /*
-      Subscriptions where the money is failing right now.
-
-      `past_due` and `unpaid` are involuntary churn in progress — a card that
-      expired or bounced, not somebody who decided to leave. They were invisible
-      on this page, which meant recoverable revenue looked identical to revenue
-      that had already gone.
-    */
-    const failingSubscriptions: Stripe.Subscription[] = [];
-    for (const failStatus of ['past_due', 'unpaid'] as const) {
-      hasMore = true;
-      startingAfter = undefined;
-      while (hasMore) {
-        const batch = await stripe.subscriptions.list({
-          status: failStatus,
+    // `expand` roughly doubles the cost of a subscriptions page, so it is only
+    // asked for where the customer object or the price is actually read. The
+    // cancelled walk needs neither — it is counted by `canceled_at` alone.
+    const SUB_EXPAND = ['data.customer', 'data.items.data.price'];
+    const listSubs = (
+      status: 'active' | 'trialing' | 'past_due' | 'unpaid',
+      expand = true
+    ) =>
+      paginate<Stripe.Subscription>((cursor) =>
+        stripe.subscriptions.list({
+          status,
           limit: 100,
-          expand: ['data.customer', 'data.items.data.price'],
-          ...(startingAfter && { starting_after: startingAfter }),
-        });
-        failingSubscriptions.push(...batch.data);
-        hasMore = batch.has_more;
-        if (batch.data.length > 0) startingAfter = batch.data[batch.data.length - 1].id;
-      }
-    }
+          ...(expand ? { expand: SUB_EXPAND } : {}),
+          ...(cursor ? { starting_after: cursor } : {}),
+        })
+      );
 
-    // Churn, by when the subscription was CANCELLED.
-    //
-    // This filtered `created: { gte: thirtyDaysAgo }`, which counts something
-    // else entirely: subscriptions *started* in the last 30 days that have
-    // since cancelled. Anyone who signed up in January and left last week was
-    // invisible, so churn read 41 against a true 70 — and 41 was rendered
-    // inside a card headed "Last 14 Days", where the honest figure is 36.
-    //
-    // Stripe has no canceled_at filter on subscriptions.list, so the cancelled
-    // set is walked and filtered here. It also has to be paginated: the single
-    // limit:100 page silently capped the count once we passed 100 cancellations
-    // (there are 342), and the newest-created-first ordering meant the page
-    // held precisely the wrong ones — recent signups, not recent leavers.
     const nowSec = Math.floor(Date.now() / 1000);
     const thirtyDaysAgo = nowSec - 30 * 24 * 60 * 60;
     const fourteenDaysAgo = nowSec - 14 * 24 * 60 * 60;
 
-    const canceledAll: Stripe.Subscription[] = [];
-    let cancelCursor: string | undefined;
-    while (canceledAll.length < 3000) {
-      const page = await stripe.subscriptions.list({
-        status: 'canceled',
-        limit: 100,
-        ...(cancelCursor ? { starting_after: cancelCursor } : {}),
-      });
-      canceledAll.push(...page.data);
-      if (!page.has_more || page.data.length === 0) break;
-      cancelCursor = page.data[page.data.length - 1].id;
-    }
+    /*
+      Churn is counted by when a subscription was CANCELLED, not when it was
+      created. Stripe has no canceled_at filter on subscriptions.list, so the
+      cancelled set is walked and filtered here, and it must be paginated: a
+      single limit:100 page silently capped the count once we passed 100
+      cancellations, and the newest-created-first ordering meant that page held
+      precisely the wrong ones — recent signups, not recent leavers.
+    */
+    const [
+      activeSubscriptions,
+      trialingSubscriptions,
+      allCoupons,
+      allPromoCodes,
+      pastDueSubscriptions,
+      unpaidSubscriptions,
+      canceledAll,
+    ] = await Promise.all([
+      listSubs('active'),
+      listSubs('trialing'),
+      paginate<Stripe.Coupon>((cursor) =>
+        stripe.coupons.list({ limit: 100, ...(cursor ? { starting_after: cursor } : {}) })
+      ),
+      paginate<Stripe.PromotionCode>((cursor) =>
+        stripe.promotionCodes.list({ limit: 100, ...(cursor ? { starting_after: cursor } : {}) })
+      ),
+      listSubs('past_due'),
+      listSubs('unpaid'),
+      paginate<Stripe.Subscription>(
+        (cursor) =>
+          stripe.subscriptions.list({
+            status: 'canceled',
+            limit: 100,
+            ...(cursor ? { starting_after: cursor } : {}),
+          }),
+        3000
+      ),
+    ]);
+
+    /*
+      `past_due` and `unpaid` are involuntary churn in progress — a card that
+      expired or bounced, not somebody who decided to leave. Kept as one list
+      because every reader downstream treats them the same way.
+    */
+    const failingSubscriptions = [...pastDueSubscriptions, ...unpaidSubscriptions];
 
     const canceledSince = (since: number) =>
       canceledAll.filter((s) => s.canceled_at && s.canceled_at >= since);
@@ -1232,13 +1270,13 @@ serve(async (req) => {
       let chargeCount = 0;
       let firstChargeSec: number | null = null;
 
-      hasMore = true;
-      startingAfter = undefined;
+      let grossHasMore = true;
+      let grossCursor: string | undefined;
       // A hard page ceiling so a runaway account can never hang the request.
-      for (let page = 0; page < 120 && hasMore; page++) {
+      for (let page = 0; page < 120 && grossHasMore; page++) {
         const batch: Stripe.ApiList<Stripe.Charge> = await stripe.charges.list({
           limit: 100,
-          ...(startingAfter && { starting_after: startingAfter }),
+          ...(grossCursor ? { starting_after: grossCursor } : {}),
         });
         for (const c of batch.data) {
           if (c.status !== 'succeeded' || !c.paid) continue;
@@ -1250,8 +1288,8 @@ serve(async (req) => {
           const day = ukDay(c.created);
           byDay.set(day, (byDay.get(day) ?? 0) + net);
         }
-        hasMore = batch.has_more;
-        if (batch.data.length > 0) startingAfter = batch.data[batch.data.length - 1].id;
+        grossHasMore = batch.has_more;
+        if (batch.data.length > 0) grossCursor = batch.data[batch.data.length - 1].id;
       }
 
       grossPayload = {
@@ -1406,9 +1444,21 @@ serve(async (req) => {
         response.discrepancies.inStripeNotSupabase + response.discrepancies.inSupabaseNotStripe,
     });
 
-    return new Response(JSON.stringify(response), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    /*
+      Fill the cache every time real work is done, so the next reader — page
+      load or background refresh — is answered from Postgres in milliseconds.
+    */
+    const { error: cacheErr } = await supabase.from('admin_metric_cache').upsert({
+      key: OVERVIEW_CACHE_KEY,
+      value: response,
+      updated_at: new Date().toISOString(),
     });
+    if (cacheErr) console.error('[ADMIN-STRIPE-STATS] cache upsert failed:', cacheErr.message);
+
+    return new Response(
+      JSON.stringify({ ...response, cachedAt: new Date().toISOString(), servedFromCache: false }),
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    );
   } catch (error: unknown) {
     await captureException(error, { functionName: 'admin-stripe-stats', requestUrl: req.url, requestMethod: req.method });
     console.error('[ADMIN-STRIPE-STATS] Error:', error);

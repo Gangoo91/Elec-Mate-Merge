@@ -59,6 +59,8 @@ export const useCloudSync = ({
     syncNowImmediate,
     onTabChange,
     retrySync,
+    activeConflict,
+    resolveConflict,
   } = useReportSync({
     reportId,
     reportType,
@@ -144,5 +146,27 @@ export const useCloudSync = ({
     syncNow,
     syncNowImmediate, // For PDF generation - returns the saved data
     onTabChange,
+    /*
+     * The edit conflict, and the only way out of it.
+     *
+     * useReportSync raises a destructive "Edit conflict detected" toast the
+     * moment a save finds the server's edit_version ahead of the one this
+     * session last saw — a dropped response on 4G after a write that actually
+     * landed is enough. From then on EVERY save short-circuits at the version
+     * check, and nothing reaches the cloud until the user picks a side via
+     * `resolveConflict` (server version → reload; keep mine → forceSave, which
+     * skips the check and re-reads the version).
+     *
+     * This hook took both from useReportSync and returned neither, so the six
+     * certificates that call useReportSync directly show the resolution
+     * dialog and the two that go through here — EICR and EIC, the highest-
+     * volume certificates in the app — showed the toast and no dialog at all.
+     * A user could sit in that state indefinitely: Craig Soper spent 100
+     * minutes on EICR-2026-5220 with the toast on every tab while the row
+     * stayed at edit_version 19 / 09:08 and his board schedule lived only in
+     * the browser.
+     */
+    activeConflict,
+    resolveConflict,
   };
 };
