@@ -116,6 +116,8 @@ const OnJobFlashcards = ({ backTo }: { backTo?: string } = {}) => {
     setId: string;
     mode: string;
     dueCardIds?: string[];
+    /** Set for a Due Today session, which spans every deck. */
+    queue?: { setId: string; cardId: string }[];
   } | null>(null);
   const [activeCategory, setActiveCategory] = useState('all');
 
@@ -127,7 +129,7 @@ const OnJobFlashcards = ({ backTo }: { backTo?: string } = {}) => {
   } = useStudyStreak();
   const {
     getSetProgress,
-    getDueCards,
+    getAllDueCards,
     loading: progressLoading,
     refetch: refetchProgress,
   } = useFlashcardProgress();
@@ -179,21 +181,25 @@ const OnJobFlashcards = ({ backTo }: { backTo?: string } = {}) => {
     setSelectedSet(null);
   };
 
-  /** Start a "Due Today" review session across all level-filtered sets */
+  /**
+   * Start a "Due Today" review session across every deck.
+   *
+   * This used to walk the decks and start the FIRST one with anything due,
+   * then stop. A learner with forty cards due over eight decks reviewed one
+   * deck's worth, came back to a tile still showing a number, and had to
+   * guess that tapping it again would do a different deck. The queue is one
+   * queue — the schedule does not care which deck a card came from.
+   */
   const handleStartDueToday = () => {
-    // Gather all due cards across visible sets, start with the first set that has due cards
-    const levelSets = flashcardSetsUI;
-    for (const set of levelSets) {
-      const due = getDueCards(set.id);
-      if (due.length > 0) {
-        setStudySession({
-          setId: set.id,
-          mode: 'spaced',
-          dueCardIds: due,
-        });
-        return;
-      }
-    }
+    const due = getAllDueCards();
+    if (due.length === 0) return;
+    setStudySession({
+      // Kept for the single-deck props the session still takes; every answer
+      // is written against the card's own deck via the queue.
+      setId: due[0].setId,
+      mode: 'spaced',
+      queue: due.map((d) => ({ setId: d.setId, cardId: d.cardId })),
+    });
   };
 
   /*
@@ -224,7 +230,7 @@ const OnJobFlashcards = ({ backTo }: { backTo?: string } = {}) => {
   const overallProgress = totalCards > 0 ? Math.round((masteredCards / totalCards) * 100) : 0;
 
   // Count due-today cards across level-filtered sets
-  const dueTodayCount = levelFilteredSets.reduce((sum, set) => sum + getDueCards(set.id).length, 0);
+  const dueTodayCount = getAllDueCards().length;
 
   // Filter by category (composes with level filter)
   const filteredSets = useMemo(() => {
@@ -241,6 +247,7 @@ const OnJobFlashcards = ({ backTo }: { backTo?: string } = {}) => {
           studyMode={studySession.mode}
           onExit={handleExitStudySession}
           dueCardIds={studySession.dueCardIds}
+          queue={studySession.queue}
         />
       </div>
     );

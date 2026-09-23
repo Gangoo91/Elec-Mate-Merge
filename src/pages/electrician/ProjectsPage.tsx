@@ -146,6 +146,13 @@ const ProjectsPage = () => {
     setViewState(v);
     setStageFilter('all');
   };
+  // Jump straight to a view pre-filtered to one stage (e.g. the "chase" bar →
+  // completed view, awaiting_payment chip). Sets both directly so the stage
+  // survives the view change that setView would otherwise reset to 'all'.
+  const focusStage = (v: ProjectView, s: JobStage) => {
+    setViewState(v);
+    setStageFilter(s);
+  };
   const [deleteTarget, setDeleteTarget] = useState<{ id: string; title: string } | null>(null);
   const [actionsTarget, setActionsTarget] = useState<(typeof projects)[number] | null>(null);
 
@@ -197,42 +204,101 @@ const ProjectsPage = () => {
     const today = new Date();
     const startOfToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     const endOfTomorrow = new Date(startOfToday.getTime() + 2 * 86400000);
-    type Item = { project: (typeof allProjects)[number]; reason: string; tone: string };
+    type Item = {
+      project: (typeof allProjects)[number];
+      reason: string;
+      tone: string;
+      // Lower = more urgent. Drives which items win the four visible slots, so a
+      // £3k finished-but-unbilled job can never hide under recency (audit 09-23:
+      // the strip was in created_at order, burying the money). Sort key, not copy.
+      priority: number;
+      // £ at stake — tie-breaks within a priority so the biggest money surfaces.
+      value: number;
+      // One tap straight to the action, not a hop through the job detail.
+      href: string;
+    };
+    const jobHref = (p: (typeof allProjects)[number]) => `/electrician/projects/${p.id}`;
+    // A finished job with an accepted, not-yet-invoiced quote bills PRE-FILLED in
+    // one tap. WITHOUT one we must NOT blind-create: acceptedQuoteId is null both
+    // when there's no quote (T&M — blank invoice is right) AND when the quote was
+    // already converted to a DRAFT invoice (invoice_raised flips true, so it drops
+    // out of the accepted set). The list can't tell those apart, so we hand off to
+    // the job detail, whose next-action sends an existing draft to "view invoices"
+    // and a genuine no-quote job to blank-create — never a duplicate invoice
+    // (2 live jobs sit in exactly that draft-exists state; audit 09-23).
+    const billHref = (p: (typeof allProjects)[number]) =>
+      p.acceptedQuoteId ? `/electrician/invoice-quote-builder/${p.acceptedQuoteId}` : jobHref(p);
     const items: Item[] = [];
     for (const p of allProjects) {
       if (p.stage === 'cancelled' || p.stage === 'paid') continue;
+      const val = Number(p.estimatedValue ?? 0);
       const booked = p.bookedSlot ? new Date(p.bookedSlot) : null;
       if (booked && booked >= startOfToday && booked < endOfTomorrow) {
-        const when = booked < new Date(startOfToday.getTime() + 86400000) ? 'today' : 'tomorrow';
+        const isToday = booked < new Date(startOfToday.getTime() + 86400000);
         items.push({
           project: p,
-          reason: `On site ${when} · ${booked.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}`,
+          reason: `On site ${isToday ? 'today' : 'tomorrow'} · ${booked.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}`,
           tone: 'text-sky-300',
+          priority: isToday ? 0 : 1,
+          value: val,
+          href: jobHref(p),
         });
         continue;
       }
+      // Classification order below is unchanged (stages are mutually exclusive);
+      // urgency is carried by `priority` and applied by the sort, so money beats
+      // "book it in" in the visible slots without reshuffling the branches.
       if (p.stage === 'won') {
-        items.push({ project: p, reason: 'Quote accepted — book it in', tone: 'text-white/60' });
+        items.push({
+          project: p,
+          reason: 'Quote accepted — book it in',
+          tone: 'text-white/60',
+          priority: 5,
+          value: val,
+          href: jobHref(p),
+        });
       } else if (p.stage === 'bill_it') {
         items.push({
           project: p,
           reason: p.estimatedValue
             ? `Finished — invoice it (${formatCurrency(p.estimatedValue)})`
             : 'Finished — invoice it',
-          tone: 'text-white/60',
+          tone: 'text-elec-yellow/90',
+          priority: 3,
+          value: val,
+          href: billHref(p),
         });
       } else if (p.stage === 'awaiting_payment') {
-        items.push({ project: p, reason: 'Invoice out — chase payment', tone: 'text-white/60' });
+        items.push({
+          project: p,
+          reason: 'Invoice out — chase payment',
+          tone: 'text-amber-300',
+          priority: 2,
+          value: val,
+          href: jobHref(p),
+        });
       } else if (p.status === 'on_hold') {
-        items.push({ project: p, reason: 'On hold — waiting on a date', tone: 'text-violet-300' });
+        items.push({
+          project: p,
+          reason: 'On hold — waiting on a date',
+          tone: 'text-violet-300',
+          priority: 6,
+          value: val,
+          href: jobHref(p),
+        });
       } else if (p.dueDate && p.status !== 'completed' && new Date(p.dueDate) < startOfToday) {
         items.push({
           project: p,
           reason: `Past due date (${formatDate(p.dueDate)})`,
           tone: 'text-red-300',
+          priority: 4,
+          value: val,
+          href: jobHref(p),
         });
       }
     }
+    // Money and time-critical first; biggest £ wins ties within a tier.
+    items.sort((a, b) => a.priority - b.priority || b.value - a.value);
     return items;
   }, [allProjects]);
 
@@ -293,11 +359,16 @@ const ProjectsPage = () => {
     let toBillCount = 0;
     let wonThisMonthCount = 0;
     let wonThisMonthValue = 0;
+    // Jobs with an invoice out that hasn't been paid — the collect side of the
+    // leak. Counted from the server-derived stage (unpaid = sent/overdue), so it
+    // agrees with the awaiting_payment chip the "chase" bar filters to.
+    let toCollectCount = 0;
     // Whole book, not the current tab (audit P1) — and "to bill" means genuinely
     // uninvoiced completed work, not everything completed.
     for (const p of allProjects) {
       if (p.status === 'cancelled') continue;
       const val = Number(p.estimatedValue ?? 0);
+      if (p.stage === 'awaiting_payment') toCollectCount += 1;
       if (p.status === 'completed') {
         if (p.invoiceCount === 0) {
           toBillCount += 1;
@@ -318,6 +389,7 @@ const ProjectsPage = () => {
       activeValue,
       toBillCount,
       toBillValue,
+      toCollectCount,
       wonThisMonthCount,
       wonThisMonthValue,
     };
@@ -559,6 +631,22 @@ const ProjectsPage = () => {
               <ChevronRight className="h-4 w-4 text-white/40" />
             </button>
           )}
+          {metrics.toCollectCount > 0 && (
+            <button
+              type="button"
+              onClick={() => focusStage('all', 'awaiting_payment')}
+              className="w-full flex items-center justify-between px-3.5 sm:px-5 py-2.5 border-t border-white/[0.06] touch-manipulation active:bg-white/[0.03] transition-colors"
+            >
+              <span className="text-[12px] text-white/80">
+                <span className="font-semibold text-amber-300 tabular-nums">
+                  {metrics.toCollectCount}
+                </span>{' '}
+                {metrics.toCollectCount === 1 ? 'invoice is' : 'invoices are'} out awaiting payment
+                — chase {metrics.toCollectCount === 1 ? 'it' : 'them'}
+              </span>
+              <ChevronRight className="h-4 w-4 text-white/40" />
+            </button>
+          )}
         </div>
       </div>
 
@@ -575,11 +663,11 @@ const ProjectsPage = () => {
             <span className="text-[10px] text-white/40 tabular-nums">{attention.length}</span>
           </div>
           <div className={cn(PANEL, 'overflow-hidden divide-y divide-white/[0.06]')}>
-            {attention.slice(0, 4).map(({ project, reason, tone }) => (
+            {attention.slice(0, 4).map(({ project, reason, tone, href }) => (
               <button
                 key={project.id}
                 type="button"
-                onClick={() => navigate(`/electrician/projects/${project.id}`)}
+                onClick={() => navigate(href)}
                 className="w-full flex items-center gap-3 px-3.5 sm:px-5 py-3 text-left touch-manipulation active:bg-white/[0.03] transition-colors"
               >
                 <span
@@ -942,9 +1030,7 @@ const ProjectsPage = () => {
                               >
                                 {project.title}
                               </h3>
-                              {(project.jobNumber ||
-                                project.customerName ||
-                                project.location) && (
+                              {(project.jobNumber || project.customerName || project.location) && (
                                 <p className="mt-0.5 text-[12.5px] text-white/50 truncate leading-snug">
                                   {project.jobNumber && (
                                     <span className="font-semibold tabular-nums text-white/70">

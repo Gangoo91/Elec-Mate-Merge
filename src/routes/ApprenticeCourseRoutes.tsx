@@ -9,6 +9,9 @@ import { CourseSkeleton } from '@/components/ui/page-skeleton';
 // Import Level2Routes for nested routing
 const Level2Routes = lazyWithRetry(() => import('@/routes/Level2Routes'));
 import { level3Routes } from '@/routes/Level3Routes';
+// Welsh Level 3 — generated from the qualification handbook, so four routes
+// cover the whole course rather than one per page.
+const WelshLevel3Routes = lazyWithRetry(() => import('@/routes/WelshLevel3Routes'));
 
 // Loading component
 const LoadingFallback = CourseSkeleton;
@@ -6939,6 +6942,7 @@ export default function ApprenticeCourseRoutes() {
         <Route path="h-n-c-module9" element={<HNCModule9 />} />
         <Route path="h-n-c-module9-mock-exam" element={<HNCModule9MockExam />} />
         <Route index element={<Index />} />
+        <Route path="welsh-level3/*" element={<WelshLevel3Routes />} />
         <Route path="level2/*" element={<Level2Routes />} />
         <Route path="level2-module6-section6-1" element={<Level2Module6Section6_1 />} />
         <Route path="level2-module6-section6-2" element={<Level2Module6Section6_2 />} />

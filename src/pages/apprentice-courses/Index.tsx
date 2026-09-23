@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 
 import useSEO from '@/hooks/useSEO';
+import { useAuth } from '@/contexts/AuthContext';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
 import { completedSectionsForCourse } from '@/lib/courseProgressMatch';
 
@@ -23,6 +24,8 @@ interface Course {
   duration: string;
   link: string;
   routeKey: string;
+  /** Listed so Welsh learners can see it coming, but not openable yet. */
+  inDevelopment?: boolean;
 }
 
 /**
@@ -51,6 +54,17 @@ const COURSES: Course[] = [
     duration: '2 years',
     link: 'level3',
     routeKey: 'level3',
+  },
+  {
+    id: 'welsh-level3',
+    title: 'Welsh Level 3 Electrotechnical Installation',
+    description:
+      'The Level 3 taught in Wales, under its own unit codes — the electrical spine plus the planning, coordination and sector units.',
+    level: 'Intermediate',
+    duration: '2 years',
+    link: 'welsh-level3',
+    routeKey: 'welsh-level3',
+    inDevelopment: true,
   },
   {
     id: 'am2',
@@ -118,6 +132,9 @@ const COURSES: Course[] = [
 
 export default function ApprenticeCoursesIndex() {
   const { allProgress } = useCourseProgress();
+  const { profile } = useAuth();
+  // Only Elec-Mate admins can open a course still being written.
+  const isAdmin = profile?.admin_role === 'super_admin' || profile?.admin_role === 'admin';
 
   useSEO({
     title: 'Apprentice Courses | Study Centre | Elec-Mate',
@@ -151,7 +168,12 @@ export default function ApprenticeCoursesIndex() {
         </p>
 
         <HubKpiRow>
-          <HubKpi label="Courses" value={String(COURSES.length)} context="Available now" accent />
+          <HubKpi
+            label="Courses"
+            value={String(COURSES.filter((c) => !c.inDevelopment || isAdmin).length)}
+            context="Available now"
+            accent
+          />
           <HubKpi label="Completed" value={String(totalCompleted)} context="Sections done" />
           <HubKpi
             label="Levels"
@@ -166,13 +188,15 @@ export default function ApprenticeCoursesIndex() {
           columns="three"
           cards={COURSES.map((c) => {
             const completed = completedById[c.id] ?? 0;
+            const locked = Boolean(c.inDevelopment) && !isAdmin;
             return {
               id: c.id,
               eyebrow: c.level,
               title: c.title,
               description: c.description,
               meta: `${c.duration}${completed > 0 ? ` · ${completed} done` : ''}`,
-              to: c.link,
+              to: locked ? undefined : c.link,
+              locked,
             };
           })}
         />

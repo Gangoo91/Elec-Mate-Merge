@@ -77,6 +77,8 @@ export interface SparkProject {
   paidInvoiceCount: number;
   certCount: number;
   visitCount: number;
+  /** Accepted, not-yet-invoiced quote to convert — lets the list bill in one tap. */
+  acceptedQuoteId?: string;
 }
 
 export interface CreateProjectInput {
@@ -163,6 +165,7 @@ interface OverviewRow extends Omit<ProjectRow, 'customers'> {
   cert_count: number;
   visit_count: number;
   stage: string;
+  accepted_quote_id?: string | null;
 }
 
 function mapOverviewRow(row: OverviewRow): SparkProject {
@@ -201,6 +204,7 @@ function mapOverviewRow(row: OverviewRow): SparkProject {
     paidInvoiceCount: row.paid_invoice_count || 0,
     certCount: row.cert_count || 0,
     visitCount: row.visit_count || 0,
+    acceptedQuoteId: row.accepted_quote_id || undefined,
   };
 }
 
@@ -424,10 +428,7 @@ export const useSparkProjects = (view: ProjectView = 'active') => {
   const deleteProject = async (id: string): Promise<boolean> => {
     try {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { error } = await (supabase as any)
-        .from('spark_projects')
-        .delete()
-        .eq('id', id);
+      const { error } = await (supabase as any).from('spark_projects').delete().eq('id', id);
       if (error) throw error;
       toast({ title: 'Job deleted', description: 'Job permanently removed.' });
       await loadProjects();

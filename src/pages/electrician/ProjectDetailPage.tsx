@@ -176,6 +176,7 @@ const ProjectDetailPage = () => {
     totalTasks,
     doneTasks,
     quoteTotal,
+    pipelineTotal,
     invoiceTotal,
     paidInvoices,
     linkQuote,
@@ -426,7 +427,10 @@ const ProjectDetailPage = () => {
     return {
       ...computeProjectFinancials({
         invoiceTotal,
-        quoteTotal,
+        // Pipeline (open quotes + draft-but-raised invoices), NOT the raw quote
+        // section total — so a job converted to a still-draft invoice keeps its
+        // value as "Quoted" instead of dropping to estimated/none.
+        quoteTotal: pipelineTotal,
         estimatedValue: project?.estimated_value,
         expenses: realCosts,
         totalSeconds: timeSummary.totalSec,
@@ -435,7 +439,7 @@ const ProjectDetailPage = () => {
     };
   }, [
     invoiceTotal,
-    quoteTotal,
+    pipelineTotal,
     project?.estimated_value,
     projectSpend,
     serverFin,

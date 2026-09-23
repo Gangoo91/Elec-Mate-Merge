@@ -13,6 +13,14 @@ interface FlashcardProgress {
   next_review_at: string | null;
 }
 
+/** One card the schedule wants back, and the deck it belongs to. */
+export interface DueCard {
+  setId: string;
+  cardId: string;
+  dueAt: string;
+  masteryLevel: number;
+}
+
 interface SetProgress {
   setId: string;
   totalCards: number;
@@ -134,6 +142,34 @@ export function useFlashcardProgress() {
     [user, progress, fetchProgress]
   );
 
+  /**
+   * Every card due for review, across every deck, most overdue first.
+   *
+   * `getDueCards` below answers "what is due in THIS deck", which is what a
+   * deck tile needs. It is the wrong question for the learner arriving with
+   * nothing particular in mind: spaced repetition only works if the whole
+   * queue comes back, and theirs is spread over however many decks they have
+   * touched. Due Today used to start the first deck that had anything in it
+   * and stop there, so a queue spread over eight decks took eight visits to
+   * clear and the count never reached zero.
+   */
+  const getAllDueCards = useCallback((): DueCard[] => {
+    const now = Date.now();
+    return (
+      progress
+        .filter((p) => p.next_review_at && new Date(p.next_review_at).getTime() <= now)
+        .map((p) => ({
+          setId: p.flashcard_set_id,
+          cardId: p.card_id,
+          dueAt: p.next_review_at as string,
+          masteryLevel: p.mastery_level,
+        }))
+        // Most overdue first: the ones slipping furthest are the ones the
+        // schedule most wants back.
+        .sort((a, b) => new Date(a.dueAt).getTime() - new Date(b.dueAt).getTime())
+    );
+  }, [progress]);
+
   // Get cards due for review (spaced repetition)
   const getDueCards = useCallback(
     (setId: string): string[] => {
@@ -154,6 +190,7 @@ export function useFlashcardProgress() {
     getSetProgress,
     updateCardProgress,
     getDueCards,
+    getAllDueCards,
     refetch: fetchProgress,
   };
 }

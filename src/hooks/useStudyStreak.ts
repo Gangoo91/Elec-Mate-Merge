@@ -90,9 +90,16 @@ export function useStudyStreak() {
     fetchStreak();
   }, [fetchStreak]);
 
-  // Record a study session
+  /**
+   * Record a study session: keep the streak alive, and log the flashcard
+   * activity when the session actually was flashcards.
+   *
+   * `logFlashcardActivity` defaults to true so the flashcard caller is
+   * unchanged. Quiz and mock exam callers pass false — they keep the streak
+   * (a paper sat is a day studied) without filing themselves as card practice.
+   */
   const recordSession = useCallback(
-    async (cardsReviewed: number) => {
+    async (cardsReviewed: number, logFlashcardActivity = true) => {
       if (!user) return;
 
       // Use local timezone to avoid UTC conversion issues
@@ -150,13 +157,27 @@ export function useStudyStreak() {
         // Refresh streak data
         fetchStreak();
 
-        // Log XP for this flashcard session
-        logActivity({
-          activityType: 'flashcard_session',
-          sourceTitle: 'Flashcard Study Session',
-          cardsReviewed: cardsReviewed,
-          metadata: { cardsReviewed },
-        });
+        /*
+         * Log the flashcard session — but only when it WAS one.
+         *
+         * `useQuizCompletion` also calls this to keep the streak alive, which
+         * is right: sitting a mock exam is a study session. It was passing the
+         * question count as `cardsReviewed` and getting a row logged as
+         * `flashcard_session`, titled "Flashcard Study Session", with XP that
+         * scales by card count — so every quiz was also filed as flashcard
+         * practice. Measured 23 Sep: 144 of the 209 people with flashcard
+         * activity had never turned over a single card, the quiz already logs
+         * its own `quiz_completed` row in `useQuizResults`, and the weekly
+         * recap and activity feed both showed those quizzes as flashcards.
+         */
+        if (logFlashcardActivity) {
+          logActivity({
+            activityType: 'flashcard_session',
+            sourceTitle: 'Flashcard Study Session',
+            cardsReviewed: cardsReviewed,
+            metadata: { cardsReviewed },
+          });
+        }
       } catch {
         // Table may not exist - fail silently
       }

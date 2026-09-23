@@ -453,6 +453,16 @@ export interface HubTool {
   onClick?: () => void;
   /** Turns the figure volt. Reserve it for work that is actually outstanding. */
   alert?: boolean;
+  /**
+   * Shown, but not openable. For an area that exists and is announced but is
+   * not ready — a course being written, a hub behind a launch date. The card
+   * keeps its place in the grid and says why, rather than vanishing (which
+   * looks like a bug to anyone who was told it was coming) or opening onto
+   * something empty (which is worse).
+   */
+  locked?: boolean;
+  /** The badge on a locked card. */
+  lockedLabel?: string;
 }
 
 /**
@@ -532,7 +542,10 @@ export const HubToolGrid = ({
           <button
             key={card.id}
             type="button"
+            disabled={card.locked}
+            aria-disabled={card.locked || undefined}
             onClick={() => {
+              if (card.locked) return;
               haptic.light();
               if (card.onClick) card.onClick();
               else if (card.to) navigate(card.to);
@@ -541,6 +554,7 @@ export const HubToolGrid = ({
               CARD_BASE,
               CARD_NEUTRAL,
               'relative flex h-full flex-col overflow-hidden min-h-[132px] p-3.5 sm:p-4',
+              card.locked && 'cursor-not-allowed opacity-70',
               // Every card wears the gold edge now (see CARD_NEUTRAL); one
               // with work outstanding wears a brighter one. Degree, not
               // presence — that is what keeps the signal readable once the
@@ -549,7 +563,8 @@ export const HubToolGrid = ({
               // Desktop only — a 1px rise on hover reads as the card lifting
               // toward the cursor. Deliberately not on touch, where there is
               // no hover state and the press-scale already answers the tap.
-              'lg:hover:-translate-y-0.5'
+              // A locked card must not lift: it is not going to open.
+              !card.locked && 'lg:hover:-translate-y-0.5'
             )}
           >
             {/* A 1px volt line catching the top edge, on every card — this is
@@ -565,11 +580,18 @@ export const HubToolGrid = ({
                 card.alert ? 'via-elec-yellow/90' : 'via-elec-yellow/55'
               )}
             />
-            {card.eyebrow && (
-              <span className="min-w-0 truncate text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
-                {card.eyebrow}
-              </span>
-            )}
+            <span className="flex items-start justify-between gap-2">
+              {card.eyebrow && (
+                <span className="min-w-0 truncate text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
+                  {card.eyebrow}
+                </span>
+              )}
+              {card.locked && (
+                <span className="shrink-0 whitespace-nowrap rounded-full border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[9.5px] font-semibold uppercase tracking-wider text-amber-300">
+                  {card.lockedLabel ?? 'In development'}
+                </span>
+              )}
+            </span>
 
             <span
               className={cn(
@@ -586,10 +608,12 @@ export const HubToolGrid = ({
               <span className="line-clamp-2 min-w-0 break-words [overflow-wrap:anywhere]">
                 {card.title}
               </span>
-              <ChevronRight
-                className="h-3.5 w-3.5 shrink-0 text-white/55 transition-transform group-hover:translate-x-0.5 group-hover:text-elec-yellow"
-                aria-hidden
-              />
+              {!card.locked && (
+                <ChevronRight
+                  className="h-3.5 w-3.5 shrink-0 text-white/55 transition-transform group-hover:translate-x-0.5 group-hover:text-elec-yellow"
+                  aria-hidden
+                />
+              )}
             </span>
 
             {/* Reporting or inviting, never both. A card with something to say

@@ -23,6 +23,7 @@ import { useCourseProgress } from '@/hooks/useCourseProgress';
 import { completedSectionsForCourse } from '@/lib/courseProgressMatch';
 import useSEO from '@/hooks/useSEO';
 import { cn } from '@/lib/utils';
+import { useAuth } from '@/contexts/AuthContext';
 
 import { HubPage, HubBody, HubMasthead, HubSectionHeading } from '@/components/hub/HubPrimitives';
 import { CARD_BASE, CARD_NEUTRAL } from '@/components/ui/card-recipe';
@@ -47,6 +48,8 @@ const FILTERS: { key: Filter; label: string }[] = [
 
 export default function BrowseCoursesPage() {
   const navigate = useNavigate();
+  const { profile } = useAuth();
+  const isAdmin = profile?.admin_role === 'super_admin' || profile?.admin_role === 'admin';
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState<Filter>('all');
   const { allProgress } = useCourseProgress();
@@ -159,9 +162,7 @@ export default function BrowseCoursesPage() {
             /* A dead end is where people give up, so say what to do next
                rather than just reporting zero. */
             <div className={cn(CARD_BASE, CARD_NEUTRAL, 'p-6 text-center')}>
-              <p className="text-[15px] font-semibold text-white">
-                Nothing matches “{trimmed}”
-              </p>
+              <p className="text-[15px] font-semibold text-white">Nothing matches “{trimmed}”</p>
               <p className="mt-1.5 text-[13px] text-white">
                 Try a qualification code like “2391”, a topic like “solar”, or clear the search to
                 see all {TOTAL_COURSES} courses.
@@ -181,17 +182,33 @@ export default function BrowseCoursesPage() {
             <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] sm:gap-3">
               {results.map((c) => {
                 const done = progressFor[c.id] ?? 0;
+                const locked = Boolean(c.inDevelopment) && !isAdmin;
                 return (
                   <button
                     key={c.id}
                     type="button"
-                    onClick={() => navigate(c.path)}
-                    className={cn(CARD_BASE, CARD_NEUTRAL, 'p-4 text-left lg:hover:-translate-y-0.5')}
+                    disabled={locked}
+                    aria-disabled={locked || undefined}
+                    onClick={() => {
+                      if (locked) return;
+                      navigate(c.path);
+                    }}
+                    className={cn(
+                      CARD_BASE,
+                      CARD_NEUTRAL,
+                      'p-4 text-left',
+                      locked ? 'cursor-not-allowed opacity-70' : 'lg:hover:-translate-y-0.5'
+                    )}
                   >
                     <span className="flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.14em] text-white">
                       {TRACKS[c.track].short}
                       <span className="h-2.5 w-px bg-white/20" aria-hidden />
                       {c.level}
+                      {locked && (
+                        <span className="ml-auto shrink-0 whitespace-nowrap rounded-full border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[9.5px] font-semibold tracking-wider text-amber-300">
+                          In development
+                        </span>
+                      )}
                     </span>
 
                     <span className="mt-1.5 text-[15px] font-semibold leading-tight tracking-tight text-white">
@@ -212,7 +229,7 @@ export default function BrowseCoursesPage() {
                           done > 0 ? 'text-elec-yellow' : 'text-white'
                         )}
                       >
-                        {done > 0 ? `${done} done` : 'Start'}
+                        {locked ? 'Soon' : done > 0 ? `${done} done` : 'Start'}
                       </span>
                     </span>
                   </button>

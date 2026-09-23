@@ -42,6 +42,10 @@ export interface ProjectInvoice {
   invoice_number?: string;
   client_data?: Record<string, unknown>;
   created_at: string;
+  /** A separately-raised deposit (DEP-), not a job invoice. A deposit is a
+   *  PAYMENT against the job, so it is listed here but must never be summed
+   *  into the job's invoiced value on top of the full invoice (Andrew, 23 Sep). */
+  is_deposit?: boolean;
 }
 
 export interface ProjectCertificate {
@@ -288,6 +292,7 @@ export function useProjectEntities(projectId: string | undefined) {
           invoice_number: r.invoice_number,
           client_data: r.client_data,
           created_at: r.created_at,
+          is_deposit: false,
         }));
         const quoteInvoiceIds = new Set(quoteInvoices.map((q) => q.id));
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -302,6 +307,9 @@ export function useProjectEntities(projectId: string | undefined) {
             invoice_number: r.invoice_number,
             client_data: r.client_data,
             created_at: r.created_at,
+            // The invoices table on projects holds only deposits (all rows carry
+            // deposit_for_quote). Flagged so the job's invoiced total excludes them.
+            is_deposit: !!r.deposit_for_quote,
           }));
         setInvoices(
           [...quoteInvoices, ...tableInvoices].sort(
@@ -332,9 +340,28 @@ export function useProjectEntities(projectId: string | undefined) {
   const totalTasks = tasks.length;
   const doneTasks = tasks.filter((t) => t.status === 'done').length;
   const progress = totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : 0;
+  // "Invoiced" = final invoices actually SENT. A draft invoice isn't billed yet,
+  // and a deposit is a payment against the job — neither adds to the invoiced
+  // value (Andrew, 23 Sep), or the hero reads "Invoiced £X" before anything is
+  // sent (13 live jobs) and overstates by the deposit. This matches the server's
+  // get_job_financials `invoiced` rule (invoice_status <> 'draft').
+  const invoiceTotal = invoices
+    .filter((i) => !i.is_deposit && i.payment_status !== 'draft')
+    .reduce((sum, i) => sum + i.total, 0);
+  // Sum of the OPEN quotes only — this is the Quotes section total, so it must
+  // equal the quotes actually listed there (never fold anything else in here).
   const quoteTotal = quotes.reduce((sum, q) => sum + q.total, 0);
-  const invoiceTotal = invoices.reduce((sum, i) => sum + i.total, 0);
-  const paidInvoices = invoices.filter((i) => i.payment_status === 'paid').length;
+  // A quote converted to a DRAFT invoice leaves the quotes list (invoice_raised
+  // flips true), so its value would vanish from every figure. It is priced but
+  // not sent — pipeline. `pipelineTotal` is the revenue-fallback input for the
+  // financials (open quotes + draft-but-raised invoices), kept SEPARATE from
+  // quoteTotal so it drives "Quoted £X until sent" without inflating the section.
+  const draftInvoicePipeline = invoices
+    .filter((i) => !i.is_deposit && i.payment_status === 'draft')
+    .reduce((sum, i) => sum + i.total, 0);
+  const pipelineTotal = quoteTotal + draftInvoicePipeline;
+  // Count of job invoices settled — deposits are payments, not job invoices.
+  const paidInvoices = invoices.filter((i) => !i.is_deposit && i.payment_status === 'paid').length;
 
   // Link / unlink helpers
   async function linkEntity(table: string, entityId: string) {
@@ -609,6 +636,7 @@ export function useProjectEntities(projectId: string | undefined) {
     totalTasks,
     doneTasks,
     quoteTotal,
+    pipelineTotal,
     invoiceTotal,
     paidInvoices,
     linkQuote,

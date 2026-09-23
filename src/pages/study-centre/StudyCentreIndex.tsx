@@ -50,6 +50,7 @@ import { curatedVideos } from '@/data/apprentice/curatedVideos';
 import { glossaryTermCount } from '@/components/study-centre/GlossaryView';
 import { TOTAL_IN_APP_MOCK_EXAMS } from '@/data/study-centre/inAppMockExams';
 import { flashcardSetDefinitions } from '@/data/flashcards';
+import { useFlashcardProgress } from '@/hooks/useFlashcardProgress';
 import { TOTAL_COURSES, countByTrack, type CourseTrack } from '@/data/study-centre/courseCatalogue';
 
 // ─────────────────────────────────────────────────────────────────────────
@@ -245,6 +246,18 @@ export default function StudyCentreIndex() {
   // Counts are derived from the catalogues, never typed by hand — see the
   // CategoryDef note above for how hand-typed counts drift.
   const missedCount = user?.id ? getMissedCount(user.id) : 0;
+  /*
+   * Cards the spaced-repetition schedule wants back today.
+   *
+   * The flashcard tile used to show how many DECKS exist — a catalogue figure
+   * that never changes and asks nothing of anyone. The schedule already knows
+   * which cards are due and when, but it only said so once the learner was
+   * standing in the flashcards hub, which is the one person who did not need
+   * telling. Same treatment as the revision pile below: a number when there is
+   * something to do, an explanation when there is not.
+   */
+  const { getAllDueCards } = useFlashcardProgress();
+  const dueCardCount = getAllDueCards().length;
   const reviseCards: HubTool[] = useMemo(
     () => [
       {
@@ -259,8 +272,12 @@ export default function StudyCentreIndex() {
       {
         id: 'flashcards',
         title: 'Flashcards',
-        value: String(flashcardSetDefinitions.length),
-        valueLabel: 'revision decks',
+        ...(dueCardCount > 0
+          ? { value: String(dueCardCount), valueLabel: 'due for review', alert: true }
+          : {
+              value: String(flashcardSetDefinitions.length),
+              valueLabel: 'revision decks',
+            }),
         to: '/study-centre/flashcards',
       },
       {
@@ -293,7 +310,7 @@ export default function StudyCentreIndex() {
         to: '/study-centre/glossary',
       },
     ],
-    [missedCount, navigate]
+    [missedCount, dueCardCount, navigate]
   );
 
   // ── Your learning ────────────────────────────────────────────────────

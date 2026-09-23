@@ -19,6 +19,13 @@ interface ModuleCardProps {
   isCompleted?: boolean;
   progress?: number;
   index?: number;
+  /**
+   * The word before the number in the eyebrow. Defaults to "Module", which is
+   * what every C&G-shaped course calls one. The Welsh Level 3 is organised by
+   * the qualification's own units, so it passes "Unit" — a learner there should
+   * see "Unit 304E", the code their tutor and their handbook use.
+   */
+  label?: string;
 }
 
 /**
@@ -50,6 +57,7 @@ export const ModuleCard: React.FC<ModuleCardProps> = ({
   isCompleted: isCompletedProp = false,
   progress: progressProp,
   index: _index = 0,
+  label = 'Module',
 }) => {
   const { allProgress } = useCourseProgress();
   const location = useLocation();
@@ -73,7 +81,7 @@ export const ModuleCard: React.FC<ModuleCardProps> = ({
     progressProp ?? (autoProgress.pct > 0 && autoProgress.pct < 100 ? autoProgress.pct : undefined);
 
   const ModuleIcon = isExam ? GraduationCap : Icon;
-  const eyebrow = isExam ? 'Final assessment' : `Module ${moduleNumber}`;
+  const eyebrow = isExam ? 'Final assessment' : `${label} ${moduleNumber}`;
 
   // On the volt face everything sits in black; on the neutral face, white.
   const ink = isExam ? 'text-black' : 'text-white';

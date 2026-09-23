@@ -20,6 +20,12 @@ interface SectionCardProps {
   icon: LucideIcon;
   isCompleted?: boolean;
   index?: number;
+  /**
+   * The word before the number in the eyebrow. Defaults to "Section". The Welsh
+   * Level 3 splits a unit by the handbook's learning outcomes, so it passes
+   * "Outcome" — the word that unit's own criteria are numbered against.
+   */
+  label?: string;
 }
 
 /**
@@ -66,6 +72,7 @@ export const SectionCard: React.FC<SectionCardProps> = ({
   icon: Icon,
   isCompleted: isCompletedProp = false,
   index: _index = 0,
+  label = 'Section',
 }) => {
   const { allProgress } = useCourseProgress();
   const location = useLocation();
@@ -108,7 +115,7 @@ export const SectionCard: React.FC<SectionCardProps> = ({
 
       <span className="flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.14em] text-white">
         <Icon className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} aria-hidden />
-        Section {sectionNumber}
+        {label} {sectionNumber}
       </span>
 
       <span className="mt-1.5 text-[15px] font-semibold leading-tight tracking-tight text-white">

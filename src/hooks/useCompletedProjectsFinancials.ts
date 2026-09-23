@@ -1,18 +1,17 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import {
-  computeProjectFinancials,
-  type ProjectFinancials,
-} from '@/utils/projectFinancials';
+import { computeProjectFinancials, type ProjectFinancials } from '@/utils/projectFinancials';
 
 /**
  * Batched financials for a set of completed projects.
  *
- * Pulls expenses / invoices / quotes in three user-scoped, project-id-batched
- * queries (one `.in(...)` each, not per-project), then folds each project's
- * primitives through `computeProjectFinancials` — the single source of truth —
- * so every figure (revenue, materials, profit, margin) matches the project
- * detail hero and pipeline cards exactly.
+ * Pulls expenses + the invoice/quote money sources in user-scoped,
+ * project-id-batched queries (one `.in(...)` each, not per-project), then folds
+ * each project's primitives through `computeProjectFinancials` — the single
+ * source of truth — so every figure (revenue, materials, profit, margin) matches
+ * the project detail hero and pipeline cards exactly. "Invoiced" means SENT
+ * invoices only, and deposits (payments, not invoiced value) are excluded — the
+ * same rules the detail hero and get_job_financials use.
  *
  * Time is intentionally omitted (totalSeconds: 0); a sole trader's own labour
  * isn't a cash cost, so it doesn't change profit — only effectiveHourly, which
@@ -108,15 +107,30 @@ export function useCompletedProjectsFinancials(
           return;
         }
 
-        const [expenses, invoices, quotes] = await Promise.all([
-          sumPerProject('sole_trader_expenses', 'amount', user.id, ids),
-          sumPerProject('invoices', 'total', user.id, ids),
-          // Match the project-detail rule: only quotes not yet raised as
-          // invoices count toward the revenue fallback (avoid double-count).
-          sumPerProject('quotes', 'total', user.id, ids, (q) =>
-            q.eq('invoice_raised', false)
-          ),
-        ]);
+        const [expenses, sentQuoteInvoices, tableInvoices, openQuotes, draftInvoices] =
+          await Promise.all([
+            sumPerProject('sole_trader_expenses', 'amount', user.id, ids),
+            // "Invoiced" = SENT (non-draft) invoices only, matching the detail hero
+            // and get_job_financials. The app's real invoices are quotes rows with
+            // invoice_raised (invoice_status <> 'draft'); the `invoices` table on a
+            // project holds only DEPOSITS, which are payments, not invoiced value.
+            // Summing that table alone (the old bug) showed a completed job's
+            // revenue as its deposit — or £0 — never the actual invoice.
+            sumPerProject('quotes', 'total', user.id, ids, (q) =>
+              q.eq('invoice_raised', true).neq('invoice_status', 'draft')
+            ),
+            // Any genuine (non-deposit), sent invoices-table rows — future-proofing.
+            sumPerProject('invoices', 'total', user.id, ids, (q) =>
+              q.is('deposit_for_quote', null).neq('status', 'draft')
+            ),
+            // Pipeline (revenue fallback): open quotes …
+            sumPerProject('quotes', 'total', user.id, ids, (q) => q.eq('invoice_raised', false)),
+            // … plus quotes converted to a still-DRAFT invoice — priced but not
+            // sent, so their value shows as "Quoted" rather than vanishing.
+            sumPerProject('quotes', 'total', user.id, ids, (q) =>
+              q.eq('invoice_raised', true).eq('invoice_status', 'draft')
+            ),
+          ]);
 
         if (reqRef.current !== reqId) return; // stale response, drop it
 
@@ -125,8 +139,8 @@ export function useCompletedProjectsFinancials(
           next.set(
             id,
             computeProjectFinancials({
-              invoiceTotal: invoices.get(id) || 0,
-              quoteTotal: quotes.get(id) || 0,
+              invoiceTotal: (sentQuoteInvoices.get(id) || 0) + (tableInvoices.get(id) || 0),
+              quoteTotal: (openQuotes.get(id) || 0) + (draftInvoices.get(id) || 0),
               estimatedValue: estimatedValues[id] ?? null,
               expenses: expenses.get(id) || 0,
               totalSeconds: 0,

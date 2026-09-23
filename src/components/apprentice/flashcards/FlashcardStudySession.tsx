@@ -50,6 +50,15 @@ interface FlashcardStudySessionProps {
   studyMode: string;
   onExit: () => void;
   dueCardIds?: string[];
+  /**
+   * A review queue that spans decks: each entry names the card and the deck it
+   * came from. When present it replaces `setId`/`dueCardIds` as the source of
+   * cards, and every answer is written back against the card's OWN deck —
+   * writing them all against one `setId` would corrupt the other decks'
+   * mastery. Card ids are globally unique across the 41 decks, which is what
+   * makes the lookup safe.
+   */
+  queue?: { setId: string; cardId: string }[];
 }
 
 const haptic = (pattern: number | number[]) => {
@@ -78,6 +87,7 @@ const FlashcardStudySession = ({
   studyMode,
   onExit,
   dueCardIds,
+  queue,
 }: FlashcardStudySessionProps) => {
   const [flashcards, setFlashcards] = useState<FlashcardData[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -95,7 +105,31 @@ const FlashcardStudySession = ({
   const { recentlyUnlocked, reportSession } = useFlashcardAchievements();
   const sessionRecordedRef = useRef(false);
 
+  /** cardId -> the deck it belongs to, so progress is written back correctly. */
+  const [ownerOf, setOwnerOf] = useState<Record<string, string>>({});
+
   useEffect(() => {
+    /*
+     * A cross-deck queue keeps the order the schedule gave it (most overdue
+     * first). Re-sorting it by difficulty would undo the scheduling, which is
+     * the whole point of the queue.
+     */
+    if (queue && queue.length > 0) {
+      const owners: Record<string, string> = {};
+      const queued: FlashcardData[] = [];
+      for (const entry of queue) {
+        const card = (flashcardSets[entry.setId] || []).find((c) => c.id === entry.cardId);
+        // A card can disappear when a deck is edited; its progress row outlives
+        // it. Skip rather than render a blank card.
+        if (!card) continue;
+        owners[card.id] = entry.setId;
+        queued.push(card);
+      }
+      setOwnerOf(owners);
+      setFlashcards(queued);
+      return;
+    }
+
     let cards = flashcardSets[setId] || [];
 
     if (dueCardIds && dueCardIds.length > 0) {
@@ -114,8 +148,12 @@ const FlashcardStudySession = ({
       });
     }
 
+    setOwnerOf({});
     setFlashcards(orderedCards);
-  }, [setId, studyMode, dueCardIds]);
+  }, [setId, studyMode, dueCardIds, queue]);
+
+  /** The deck an answer belongs to — the card's own, on a mixed queue. */
+  const deckOf = useCallback((cardId: string) => ownerOf[cardId] ?? setId, [ownerOf, setId]);
 
   useEffect(() => {
     if (isCompleted && flashcards.length > 0 && !sessionRecordedRef.current) {
@@ -179,7 +217,7 @@ const FlashcardStudySession = ({
   const handleMarkCorrect = useCallback(() => {
     haptic(15);
     if (currentCard) {
-      updateCardProgress(setId, currentCard.id, true);
+      updateCardProgress(deckOf(currentCard.id), currentCard.id, true);
       setMasteredCards((prev) => new Set([...prev, currentCard.id]));
       setCorrectAnswers((prev) => prev + 1);
     }
@@ -188,19 +226,19 @@ const FlashcardStudySession = ({
       setSwipeFeedback(null);
       handleNextCard();
     }, 220);
-  }, [currentCard, setId, updateCardProgress, handleNextCard]);
+  }, [currentCard, deckOf, updateCardProgress, handleNextCard]);
 
   const handleMarkIncorrect = useCallback(() => {
     haptic([10, 30, 10]);
     if (currentCard) {
-      updateCardProgress(setId, currentCard.id, false);
+      updateCardProgress(deckOf(currentCard.id), currentCard.id, false);
     }
     setSwipeFeedback('incorrect');
     setTimeout(() => {
       setSwipeFeedback(null);
       handleNextCard();
     }, 220);
-  }, [currentCard, setId, updateCardProgress, handleNextCard]);
+  }, [currentCard, deckOf, updateCardProgress, handleNextCard]);
 
   const handleRestart = () => {
     setCurrentIndex(0);
@@ -431,6 +469,14 @@ const FlashcardStudySession = ({
               <p className="text-[16px] leading-relaxed text-white sm:text-[17px]">
                 {currentCard?.answer}
               </p>
+
+              {/* Where to check it. Quiet — the answer is the card, this is
+                  the footnote that makes the answer checkable. */}
+              {currentCard?.reference && (
+                <p className="mt-3 border-t border-white/[0.12] pt-3 text-[12.5px] leading-snug text-white opacity-80">
+                  {currentCard.reference}
+                </p>
+              )}
             </div>
 
             <div className="space-y-3">

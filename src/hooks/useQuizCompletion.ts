@@ -36,9 +36,17 @@ export function useQuizCompletion() {
           sessionId,
         });
 
-        // 2. Update study streak (counts as a study session)
-        // Pass totalQuestions as the "cards reviewed" count
-        await recordSession(result.totalQuestions);
+        /*
+         * 2. Keep the study streak alive — a paper sat is a day studied.
+         *
+         * Zero cards and no flashcard activity row: this was a quiz. It used
+         * to pass `result.totalQuestions` as "cards reviewed", which both
+         * inflated the streak's card total and logged the quiz as a flashcard
+         * session. `saveQuizResult` above already logs the `quiz_completed`
+         * activity and its XP, so the flashcard row was a second, wrong label
+         * on the same event.
+         */
+        await recordSession(0, false);
 
         // 3. Award XP points (+25 points via recordLessonCompletion)
         await recordLessonCompletion(`quiz-${assessmentId}`);

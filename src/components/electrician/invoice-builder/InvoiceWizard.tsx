@@ -20,12 +20,31 @@ import { InvoiceSettingsStep } from './steps/InvoiceSettingsStep';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { DocumentStepPanel } from '@/components/electrician/shared/DocumentStepPanel';
 
-
 const STEPS = [
-  { key: 'client', label: 'Client', title: 'Who’s the invoice for?', sub: 'Client and job details' },
-  { key: 'items', label: 'Items', title: 'What are you billing?', sub: 'Original quote items plus anything added on site' },
-  { key: 'settings', label: 'Settings', title: 'Money settings', sub: 'VAT, CIS, payment terms and notes' },
-  { key: 'review', label: 'Review', title: 'Check and create', sub: 'Everything your client will see' },
+  {
+    key: 'client',
+    label: 'Client',
+    title: 'Who’s the invoice for?',
+    sub: 'Client and job details',
+  },
+  {
+    key: 'items',
+    label: 'Items',
+    title: 'What are you billing?',
+    sub: 'Original quote items plus anything added on site',
+  },
+  {
+    key: 'settings',
+    label: 'Settings',
+    title: 'Money settings',
+    sub: 'VAT, CIS, payment terms and notes',
+  },
+  {
+    key: 'review',
+    label: 'Review',
+    title: 'Check and create',
+    sub: 'Everything your client will see',
+  },
 ] as const;
 
 interface InvoiceWizardProps {
@@ -103,9 +122,16 @@ export const InvoiceWizard = ({
 
   // Merge certificate data into existing invoice for proper initialization
   const mergedExistingInvoice =
-    initialCertificateData && !sourceQuote &&
+    initialCertificateData &&
+    !sourceQuote &&
     !(existingInvoice?.items?.length || existingInvoice?.client?.name)
       ? {
+          // Carry the job link through the cert rebuild. Billing a time session
+          // from a Job (TimeTrackerPage → invoice-builder/create with BOTH a
+          // certificateSessionId and projectId) lands here; without this the
+          // rebuilt invoice loses project_id and the invoice is orphaned from
+          // the Job (won't show under it, and the Job would offer to bill again).
+          ...(existingInvoice?.project_id && { project_id: existingInvoice.project_id }),
           client: initialCertificateData.client,
           jobDetails: initialCertificateData.jobDetails,
           // Include settings from company profile so useInvoiceBuilder can calculate totals
@@ -126,9 +152,7 @@ export const InvoiceWizard = ({
           ...(initialCertificateData.linkedCertificate && {
             linked_certificate_id: initialCertificateData.linkedCertificate.reportId,
             linked_certificate_type: initialCertificateData.linkedCertificate.certificateType as
-              | 'EICR'
-              | 'EIC'
-              | 'Minor Works',
+              'EICR' | 'EIC' | 'Minor Works',
             linked_certificate_reference:
               initialCertificateData.linkedCertificate.certificateReference,
             linked_certificate_pdf_url: initialCertificateData.linkedCertificate.pdfUrl,
@@ -249,7 +273,8 @@ export const InvoiceWizard = ({
 
   const canSave = !!(
     invoiceBuilder.invoice.client?.name &&
-    ((invoiceBuilder.invoice.items || []).length > 0 || (invoiceBuilder.invoice.additional_invoice_items || []).length > 0)
+    ((invoiceBuilder.invoice.items || []).length > 0 ||
+      (invoiceBuilder.invoice.additional_invoice_items || []).length > 0)
   );
 
   // Live stock check — single fetch here, shared with the items step (same
@@ -288,8 +313,18 @@ export const InvoiceWizard = ({
             </p>
           </div>
           <div className="flex gap-2 flex-shrink-0 ml-3">
-            <button onClick={handleDiscardDraft} className="text-[12px] text-white font-medium touch-manipulation">Discard</button>
-            <button onClick={handleRecoverDraft} className="text-[12px] text-amber-400 font-bold touch-manipulation">Recover</button>
+            <button
+              onClick={handleDiscardDraft}
+              className="text-[12px] text-white font-medium touch-manipulation"
+            >
+              Discard
+            </button>
+            <button
+              onClick={handleRecoverDraft}
+              className="text-[12px] text-amber-400 font-bold touch-manipulation"
+            >
+              Recover
+            </button>
           </div>
         </div>
       )}
@@ -354,53 +389,76 @@ export const InvoiceWizard = ({
           </div>
         )}
         <div className={cn(isDesktop && 'grid grid-cols-2 gap-5')}>
+          <DocumentStepPanel
+            isDesktop={isDesktop}
+            active={step === 0}
+            wide
+            title={STEPS[0].title}
+            sub={STEPS[0].sub}
+          >
+            <InvoiceClientDetailsStep
+              initialData={{
+                client: invoiceBuilder.invoice.client,
+                jobDetails: invoiceBuilder.invoice.jobDetails,
+              }}
+              onUpdate={handleClientUpdate}
+            />
+          </DocumentStepPanel>
 
-        <DocumentStepPanel isDesktop={isDesktop} active={step === 0} wide title={STEPS[0].title} sub={STEPS[0].sub}>
-          <InvoiceClientDetailsStep
-            initialData={{
-              client: invoiceBuilder.invoice.client,
-              jobDetails: invoiceBuilder.invoice.jobDetails,
-            }}
-            onUpdate={handleClientUpdate}
-          />
-        </DocumentStepPanel>
+          <DocumentStepPanel
+            isDesktop={isDesktop}
+            active={step === 1}
+            wide
+            title={STEPS[1].title}
+            sub={STEPS[1].sub}
+          >
+            <InvoiceItemsStep
+              originalItems={invoiceBuilder.invoice.items || []}
+              additionalItems={invoiceBuilder.invoice.additional_invoice_items || []}
+              onAddItem={invoiceBuilder.addInvoiceItem}
+              onUpdateItem={invoiceBuilder.updateInvoiceItem}
+              onRemoveItem={invoiceBuilder.removeInvoiceItem}
+              onMoveItem={invoiceBuilder.moveInvoiceItem}
+              settings={invoiceBuilder.invoice.settings}
+              subtotal={invoiceBuilder.invoice.subtotal || 0}
+              vatAmount={invoiceBuilder.invoice.vatAmount || 0}
+              total={invoiceBuilder.invoice.total || 0}
+              stockItems={stockItems}
+            />
+          </DocumentStepPanel>
 
-        <DocumentStepPanel isDesktop={isDesktop} active={step === 1} wide title={STEPS[1].title} sub={STEPS[1].sub}>
-          <InvoiceItemsStep
-            originalItems={invoiceBuilder.invoice.items || []}
-            additionalItems={invoiceBuilder.invoice.additional_invoice_items || []}
-            onAddItem={invoiceBuilder.addInvoiceItem}
-            onUpdateItem={invoiceBuilder.updateInvoiceItem}
-            onRemoveItem={invoiceBuilder.removeInvoiceItem}
-            onMoveItem={invoiceBuilder.moveInvoiceItem}
-            settings={invoiceBuilder.invoice.settings}
-            subtotal={invoiceBuilder.invoice.subtotal || 0}
-            vatAmount={invoiceBuilder.invoice.vatAmount || 0}
-            total={invoiceBuilder.invoice.total || 0}
-            stockItems={stockItems}
-          />
-        </DocumentStepPanel>
+          <DocumentStepPanel
+            isDesktop={isDesktop}
+            active={step === 2}
+            wide
+            title={STEPS[2].title}
+            sub={STEPS[2].sub}
+          >
+            <InvoiceSettingsStep
+              settings={invoiceBuilder.invoice.settings}
+              items={[
+                ...(invoiceBuilder.invoice.items || []),
+                ...(invoiceBuilder.invoice.additional_invoice_items || []),
+              ]}
+              notes={invoiceBuilder.invoice.invoice_notes}
+              onUpdateSettings={invoiceBuilder.updateInvoiceSettings}
+              onUpdateNotes={invoiceBuilder.setInvoiceNotes}
+            />
+          </DocumentStepPanel>
 
-        <DocumentStepPanel isDesktop={isDesktop} active={step === 2} wide title={STEPS[2].title} sub={STEPS[2].sub}>
-          <InvoiceSettingsStep
-            settings={invoiceBuilder.invoice.settings}
-            items={[
-              ...(invoiceBuilder.invoice.items || []),
-              ...(invoiceBuilder.invoice.additional_invoice_items || []),
-            ]}
-            notes={invoiceBuilder.invoice.invoice_notes}
-            onUpdateSettings={invoiceBuilder.updateInvoiceSettings}
-            onUpdateNotes={invoiceBuilder.setInvoiceNotes}
-          />
-        </DocumentStepPanel>
-
-        <DocumentStepPanel isDesktop={isDesktop} active={step === 3} wide title={STEPS[3].title} sub={STEPS[3].sub}>
-          <InvoiceReviewStep
-            invoice={invoiceBuilder.invoice}
-            onSetCertificateReleaseMode={invoiceBuilder.setCertificateReleaseMode}
-            onSetLinkedCertificate={invoiceBuilder.setLinkedCertificate}
-          />
-        </DocumentStepPanel>
+          <DocumentStepPanel
+            isDesktop={isDesktop}
+            active={step === 3}
+            wide
+            title={STEPS[3].title}
+            sub={STEPS[3].sub}
+          >
+            <InvoiceReviewStep
+              invoice={invoiceBuilder.invoice}
+              onSetCertificateReleaseMode={invoiceBuilder.setCertificateReleaseMode}
+              onSetLinkedCertificate={invoiceBuilder.setLinkedCertificate}
+            />
+          </DocumentStepPanel>
         </div>
       </div>
 
@@ -410,7 +468,8 @@ export const InvoiceWizard = ({
           {/* Stock warning */}
           {stockWarnings.length > 0 && (
             <p className="pt-2 text-[11px] text-amber-400">
-              {stockWarnings.length} item{stockWarnings.length !== 1 ? 's' : ''} over your stock level — saving this invoice deducts stock
+              {stockWarnings.length} item{stockWarnings.length !== 1 ? 's' : ''} over your stock
+              level — saving this invoice deducts stock
             </p>
           )}
 
@@ -421,14 +480,18 @@ export const InvoiceWizard = ({
               <span className="text-white/20 mx-1.5">·</span>
               <span className="text-white">
                 {itemCount > 0 ? `${itemCount} item${itemCount !== 1 ? 's' : ''}` : 'No items yet'}
-                {invoiceBuilder.invoice.settings?.vatRegistered && itemCount > 0 ? ' · inc. VAT' : ''}
+                {invoiceBuilder.invoice.settings?.vatRegistered && itemCount > 0
+                  ? ' · inc. VAT'
+                  : ''}
               </span>
               {(isSaving || lastSaved) && (
                 <span className="text-white/40"> {isSaving ? '· Saving…' : '· Saved'}</span>
               )}
             </span>
             <span className="text-[20px] font-bold text-elec-yellow tabular-nums tracking-tight">
-              {new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(invoiceBuilder.invoice.total || 0)}
+              {new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(
+                invoiceBuilder.invoice.total || 0
+              )}
             </span>
           </div>
 
@@ -445,11 +508,17 @@ export const InvoiceWizard = ({
               </button>
             )}
             <div className="hidden sm:flex items-center gap-2.5 min-w-0 text-[11px] text-white tabular-nums">
-              {!isDesktop && <span>Step {step + 1} of {STEPS.length}</span>}
+              {!isDesktop && (
+                <span>
+                  Step {step + 1} of {STEPS.length}
+                </span>
+              )}
               <span className="text-white/20">·</span>
               <span className="text-white truncate">
                 {itemCount > 0 ? `${itemCount} item${itemCount !== 1 ? 's' : ''}` : 'No items yet'}
-                {invoiceBuilder.invoice.settings?.vatRegistered && itemCount > 0 ? ' · inc. VAT' : ''}
+                {invoiceBuilder.invoice.settings?.vatRegistered && itemCount > 0
+                  ? ' · inc. VAT'
+                  : ''}
               </span>
               {(isSaving || lastSaved) && (
                 <span className="text-white/40">{isSaving ? '· Saving…' : '· Saved'}</span>
@@ -457,7 +526,9 @@ export const InvoiceWizard = ({
             </div>
             <div className="hidden sm:block flex-1" />
             <span className="hidden sm:inline text-[20px] font-bold text-elec-yellow tabular-nums tracking-tight">
-              {new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(invoiceBuilder.invoice.total || 0)}
+              {new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(
+                invoiceBuilder.invoice.total || 0
+              )}
             </span>
             {!isLastStep && canSave && (
               <button

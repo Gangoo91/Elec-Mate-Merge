@@ -34,6 +34,11 @@ export interface StudyCourse {
   /** Key used by `completedSectionsForCourse` to read progress. */
   routeKey: string;
   keywords: string[];
+  /**
+   * Listed but not openable — the course is announced and being written. Only
+   * an Elec-Mate admin can open one; everyone else sees the badge.
+   */
+  inDevelopment?: boolean;
 }
 
 export const TRACKS: Record<CourseTrack, { short: string; label: string; href: string }> = {
@@ -86,6 +91,31 @@ export const COURSE_CATALOGUE: StudyCourse[] = [
     path: '/study-centre/apprentice/level3',
     routeKey: 'level3',
     keywords: ['2365', 'level 3', 'apprentice', 'installation', 'third year', 'advanced diploma'],
+  },
+  {
+    id: 'welsh-level3',
+    title: 'Welsh Level 3 Electrotechnical Installation',
+    description:
+      'The Level 3 taught in Wales — the electrical spine plus planning, coordinating a work site and working in the sector in Wales, under its own unit codes.',
+    track: 'apprentice',
+    level: 'Intermediate',
+    duration: '2 years',
+    path: '/study-centre/apprentice/welsh-level3',
+    routeKey: 'welsh-level3',
+    keywords: [
+      'wales',
+      'welsh',
+      'cymru',
+      'building services engineering',
+      'bse',
+      'electrotechnical',
+      'level 3',
+      '304e',
+      '315e',
+      '319e',
+      'skills for wales',
+    ],
+    inDevelopment: true,
   },
   {
     id: 'am2',
@@ -652,8 +682,7 @@ const scoreToken = (c: StudyCourse, token: string): number => {
 
   const words = (s: string) => norm(s).split(' ').filter(Boolean);
   const hasWord = (s: string) => words(s).includes(t);
-  const hasPrefix = (s: string) =>
-    t.length >= MIN_PREFIX && words(s).some((w) => w.startsWith(t));
+  const hasPrefix = (s: string) => t.length >= MIN_PREFIX && words(s).some((w) => w.startsWith(t));
 
   // Title
   if (norm(c.title) === t) return 200;

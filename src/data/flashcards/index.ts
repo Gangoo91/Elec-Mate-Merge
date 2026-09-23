@@ -40,6 +40,9 @@ import { patTesting } from './patTesting';
 import { asbestosAwareness } from './asbestosAwareness';
 import { heatPumpDesign } from './heatPumpDesign';
 import { undergroundServices } from './undergroundServices';
+// Numbers decks — short answers, every card sourced. See the header of each.
+import { maxZsAndTestLimits } from './maxZsAndTestLimits';
+import { cableNumbers } from './cableNumbers';
 
 export type { FlashcardData, FlashcardSetMeta, FlashcardLevel } from './types';
 
@@ -86,6 +89,9 @@ export const flashcardSets: Record<string, FlashcardData[]> = {
   'asbestos-awareness': asbestosAwareness,
   'heat-pump-design': heatPumpDesign,
   'underground-services': undergroundServices,
+  // Numbers decks
+  'max-zs-test-limits': maxZsAndTestLimits,
+  'cable-numbers': cableNumbers,
 };
 
 /** Full metadata for each flashcard set — used by the hub page and filtering */
@@ -162,7 +168,7 @@ export const flashcardSetDefinitions: FlashcardSetMeta[] = [
     title: 'Earthing & Bonding',
     iconName: 'Cable',
     description: 'TN-S, TN-C-S, TT systems, MET, main and supplementary bonding',
-    count: 25,
+    count: 49,
     difficulty: 'intermediate',
     estimatedTime: '15 mins',
     category: 'Installation',
@@ -418,7 +424,8 @@ export const flashcardSetDefinitions: FlashcardSetMeta[] = [
     id: 'ev-charging',
     title: 'EV Charging Installations',
     iconName: 'Zap',
-    description: 'BS 7671 Section 722 and Approved Document S — scope, PME, Mode 3 and Part S duties',
+    description:
+      'BS 7671 Section 722 and Approved Document S — scope, PME, Mode 3 and Part S duties',
     count: 24,
     difficulty: 'advanced',
     estimatedTime: '16 mins',
@@ -440,7 +447,8 @@ export const flashcardSetDefinitions: FlashcardSetMeta[] = [
     id: 'am2-preparation',
     title: 'AM2 Preparation',
     iconName: 'Target',
-    description: 'The four sections, the seven faults, every cable type and the Section B test list',
+    description:
+      'The four sections, the seven faults, every cable type and the Section B test list',
     count: 26,
     difficulty: 'advanced',
     estimatedTime: '17 mins',
@@ -517,11 +525,36 @@ export const flashcardSetDefinitions: FlashcardSetMeta[] = [
     id: 'underground-services',
     title: 'Underground Services (HSG47)',
     iconName: 'Cable',
-    description: 'Safe digging, trial holes, cable strikes and why the tool risk is counter-intuitive',
+    description:
+      'Safe digging, trial holes, cable strikes and why the tool risk is counter-intuitive',
     count: 18,
     difficulty: 'intermediate',
     estimatedTime: '12 mins',
     category: 'Safety',
+    level: 'Both',
+  },
+  // ── Numbers decks ───────────────────────────────────────────────
+  // Short answers and a source on every card, unlike the prose decks above.
+  {
+    id: 'max-zs-test-limits',
+    title: 'Max Zs & test limits',
+    iconName: 'Target',
+    description: 'The figures you get asked for at a board: Zs, insulation resistance, RCD times',
+    count: 30,
+    difficulty: 'intermediate',
+    estimatedTime: '10 mins',
+    category: 'Testing & Inspection',
+    level: 'Both',
+  },
+  {
+    id: 'cable-numbers',
+    title: 'Cable numbers',
+    iconName: 'Cable',
+    description: 'Capacities, rating factors, voltage drop, conductor resistance and diversity',
+    count: 34,
+    difficulty: 'intermediate',
+    estimatedTime: '12 mins',
+    category: 'Installation',
     level: 'Both',
   },
 ];
