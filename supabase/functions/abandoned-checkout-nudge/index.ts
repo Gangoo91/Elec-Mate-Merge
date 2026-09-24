@@ -104,14 +104,50 @@ function esc(s: unknown): string {
     .replace(/>/g, '&gt;');
 }
 
-function buildEmail(r: { full_name: string | null; role: string; reached_checkout: boolean }): {
+/**
+ * Stamp a Stripe Payment Link with the buyer's identity.
+ *
+ * `stripe-subscription-webhook` reads `client_reference_id` FIRST on
+ * checkout.session.completed, so this links the payment to the correct account
+ * even when they pay with a different email at the till. Without it Stripe
+ * creates a customer from whatever they type, the webhook cannot match it to
+ * an account, and they pay while staying locked behind the paywall.
+ *
+ * That is not hypothetical. Three of the ten people who bought through the
+ * win-back payment links used an email that was not their account email
+ * (Lee Jones paid as leejones197795@ on a laj.electrics@ account; Andi Gjoka
+ * paid from icloud on a gmail account). They only got in because the win-back
+ * templates stamp their links — `_shared/winback-v12.ts → withIdentity`, which
+ * carries the same warning after the same bug stranded paying customers once
+ * already. `prefilled_email` nudges them onto the account address too, which
+ * also avoids creating a duplicate Stripe customer.
+ */
+function withIdentity(url: string, userId: string, accountEmail: string | null): string {
+  if (!userId || !url.includes('buy.stripe.com')) return url;
+  const sep = url.includes('?') ? '&' : '?';
+  let stamped = `${url}${sep}client_reference_id=${encodeURIComponent(userId)}`;
+  if (accountEmail) stamped += `&prefilled_email=${encodeURIComponent(accountEmail)}`;
+  return stamped;
+}
+
+function buildEmail(r: {
+  user_id?: string;
+  email?: string;
+  full_name: string | null;
+  role: string;
+  reached_checkout: boolean;
+}): {
   subject: string;
   html: string;
 } {
   const firstName = (r.full_name ?? '').trim().split(/\s+/)[0] ?? '';
   const name = firstName || 'mate';
   const plan = r.role === 'apprentice' ? PLAN.apprentice : PLAN.electrician;
-  const link = `${plan.link}?prefilled_promo_code=${PROMO}`;
+  const link = withIdentity(
+    `${plan.link}?prefilled_promo_code=${PROMO}`,
+    r.user_id ?? '',
+    r.email ?? null
+  );
 
   // Someone who reached the card form and stopped made a decision; someone who
   // never got there may simply not have looked yet. Pretending we cannot tell
@@ -186,6 +222,8 @@ Deno.serve(async (req: Request): Promise<Response> => {
 
     if (body.test && body.email) {
       const { subject, html } = buildEmail({
+        user_id: '00000000-0000-0000-0000-000000000000',
+        email: body.email,
         full_name: 'Andrew Moore',
         role: body.role === 'apprentice' ? 'apprentice' : 'electrician',
         reached_checkout: true,
