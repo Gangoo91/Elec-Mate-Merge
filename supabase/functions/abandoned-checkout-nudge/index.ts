@@ -67,11 +67,33 @@ const PLAN = {
     link: 'https://buy.stripe.com/28E7sE3ou5365Q5d3EbjW0l',
     was: '£19.99',
     now: '£13.99',
+    // 6 × £13.99. Stated because a monthly price is easy to wave away and a
+    // total is easy to weigh against one job.
+    sixMonths: '£83.94',
+    // Deliberately understated: a domestic EICR is commonly £150–£300, so
+    // "covers it" is true at the bottom of that range and cannot be argued with.
+    anchor: `One EICR covers all six months, with change.`,
+    bullets: [
+      `Every certificate on your phone — EICR, EIC, Minor Works, EV, solar, fire alarm, PAT. Branded PDF to the customer before you've left the drive.`,
+      `A board scanner that photographs the consumer unit and fills in your schedule of tests.`,
+      `Quotes and invoices with payment links, and reminders that chase the customer so you don't have to.`,
+      `59 calculators and an AI that knows BS 7671 — cable sizing, Zs, R1+R2, adiabatic, diversity.`,
+      `Certificate expiry tracking, so next year's re-inspection comes back to you instead of the next spark.`,
+    ],
   },
   apprentice: {
     link: 'https://buy.stripe.com/28EdR29MS9jm3HXaVwbjW0m',
     was: '£6.99',
     now: '£4.89',
+    sixMonths: '£29.34',
+    anchor: `That's less than one revision book, for the whole six months.`,
+    bullets: [
+      `Every unit, outcome and criterion your qualification needs, with your evidence marked against it.`,
+      `Off-the-job hours logged as you go — videos and quizzes count automatically, and export for your college.`,
+      `400+ UK training videos and 20,000+ practice questions.`,
+      `18th Edition and AM2 preparation, with timed mock exams.`,
+      `Fire alarm course checked line by line against BS 5839-1:2025.`,
+    ],
   },
 } as const;
 
@@ -98,18 +120,23 @@ function buildEmail(r: { full_name: string | null; role: string; reached_checkou
     ? `You got as far as the payment page on Elec-Mate and stopped. Completely fair — it's another monthly bill and you'd not seen it working yet.`
     : `You made an Elec-Mate account and never got started. Completely fair — most people sign up meaning to look properly and then a week on site happens.`;
 
-  const value =
-    r.role === 'apprentice'
-      ? `Your course, off-the-job hours, mock exams and 20,000-odd practice questions all sit behind it.`
-      : `Certificates, quotes, invoices and the calculators all sit behind it.`;
+  // The people who got the 23 Sep ask-why email were LAPSED customers who had
+  // already used the product, so a bare question worked on them. These people
+  // have never seen it do anything. Telling them the price without telling
+  // them what they are buying is asking them to decide on nothing, so the
+  // value goes in — as specifics they can picture, not adjectives.
+  const bullets = plan.bullets.map((b) => `<li style="margin:0 0 8px;">${esc(b)}</li>`).join('');
 
   const html = `
     <div style="font-family: -apple-system, 'Segoe UI', Arial, sans-serif; max-width: 560px; margin: 0 auto; padding: 8px 4px; color:#1a1a1a; font-size:15px; line-height:1.65;">
       <p style="margin:0 0 14px;">Hi ${esc(name)},</p>
       <p style="margin:0 0 14px;">It's Andrew, the electrician who built Elec-Mate.</p>
       <p style="margin:0 0 14px;">${esc(opener)}</p>
-      <p style="margin:0 0 14px;">So here's <strong>30% off your first six months</strong>: ${esc(plan.now)} a month instead of ${esc(plan.was)}. Seven days free before anything is charged, and you can cancel in two taps. ${esc(value)}</p>
-      <p style="margin:0 0 14px;"><a href="${esc(link)}" style="color:#1a1a1a;">Start with 30% off</a> — the discount is already on the page, nothing to type in.</p>
+      <p style="margin:0 0 14px;">So here's <strong>30% off your first six months</strong> — ${esc(plan.now)} a month instead of ${esc(plan.was)}. That's ${esc(plan.sixMonths)} for the six months. ${esc(plan.anchor)}</p>
+      <p style="margin:0 0 10px;">What you'd be getting for it:</p>
+      <ul style="padding-left:20px; margin:0 0 16px;">${bullets}</ul>
+      <p style="margin:0 0 14px;">Seven days free before anything is charged, and you can cancel in two taps. I'll email you the day before any payment, so you're never surprised by it.</p>
+      <p style="margin:0 0 14px;"><a href="${esc(link)}" style="color:#1a1a1a;"><strong>Start with 30% off</strong></a> — the discount is already on the page, nothing to type in.</p>
       <p style="margin:0 0 14px;">And if it wasn't the price that stopped you, tell me what it was. That's worth more to me than the sale. One line back is plenty, or my mobile is ${MOBILE}.</p>
       <p style="margin:0;">Cheers,<br/>Andrew<br/><span style="color:#555555; font-size:13px;">Founder, Elec-Mate</span></p>
     </div>`;
