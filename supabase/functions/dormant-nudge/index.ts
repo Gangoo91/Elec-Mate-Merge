@@ -32,6 +32,7 @@ const EMAIL_TYPE = 'dormant_10d';
 const FROM = 'Andrew at Elec-Mate <founder@elec-mate.com>';
 const MOBILE = '07507 241303';
 const DEFAULT_LIMIT = 40;
+const PAUSE_ENDPOINT = `${Deno.env.get('SUPABASE_URL') ?? ''}/functions/v1/pause-request`;
 
 function esc(s: unknown): string {
   return String(s ?? '')
@@ -46,7 +47,8 @@ function esc(s: unknown): string {
 function buildEmail(
   firstName: string,
   role: string,
-  source: string | null
+  source: string | null,
+  pauseToken?: string | null
 ): { subject: string; html: string } {
   const name = firstName || 'mate';
   const isApprentice = role === 'apprentice';
@@ -59,9 +61,20 @@ function buildEmail(
   // Store or Play billing, so the offer there is honest about where the
   // switch is — and that nothing is lost by using it.
   const isStore = source === 'app_store' || source === 'play_store';
+  // One-click, not "say so". Richard Dawson replied to this exact email asking
+  // to pause because he was signed off sick; nobody saw the reply in time and
+  // his subscription ended eight hours later. A reply triggers nothing, so the
+  // offer has to be a link that does the thing. Store users still get a link —
+  // it tells them where their own switch is and puts the request in front of
+  // Andrew, which beats a reply nobody reads.
+  const pauseUrl = (m: number) =>
+    `${PAUSE_ENDPOINT}?t=${encodeURIComponent(pauseToken ?? '')}&m=${m}`;
+  const pauseLinks = pauseToken
+    ? ` <a href="${pauseUrl(1)}" style="color:#1a1a1a;">one month</a>, <a href="${pauseUrl(2)}" style="color:#1a1a1a;">two</a> or <a href="${pauseUrl(3)}" style="color:#1a1a1a;">three</a> — one tap, it happens straight away.`
+    : '';
   const pauseLine = isStore
-    ? `If you’d rather stop it for a bit, you can turn it off in your ${source === 'play_store' ? 'Google Play' : 'App Store'} subscriptions and come back whenever; everything you’ve done stays exactly where it is.`
-    : `If you’d rather pause it for a month or two, say so and I’ll sort it; nothing gets charged while it’s paused.`;
+    ? `If you’d rather stop it for a bit, you can turn it off in your ${source === 'play_store' ? 'Google Play' : 'App Store'} subscriptions and come back whenever; everything you’ve done stays exactly where it is.${pauseLinks}`
+    : `If you’d rather pause it, I can stop it for${pauseLinks || ' a month or two — say so and I’ll sort it'} Nothing gets charged while it’s paused and nothing is lost.`;
   const middle = isApprentice
     ? `If college has just been full-on, that’s fine — your progress and streak are where you left them. ${pauseLine}`
     : `If it’s just been quiet on the cert front, that’s fine — it’ll all be there when the next job comes in. If something put you off, or there’s a job you’d like a hand setting up in it, tell me. ${pauseLine}`;
@@ -115,7 +128,8 @@ Deno.serve(async (req: Request): Promise<Response> => {
       const { subject, html } = buildEmail(
         body.name ?? 'Andrew',
         body.role ?? 'electrician',
-        'stripe'
+        'stripe',
+        'preview-token-not-real'
       );
       const { error } = await resend.emails.send({
         from: FROM,
@@ -178,7 +192,20 @@ Deno.serve(async (req: Request): Promise<Response> => {
     let failed = 0;
     for (const r of rows) {
       const firstName = (r.full_name ?? '').trim().split(/\s+/)[0] ?? '';
-      const { subject, html } = buildEmail(firstName, r.role, r.subscription_source);
+
+      // Mint a one-click pause token for this send. If it fails we still send
+      // the email — it just falls back to the old "say so and I'll sort it"
+      // wording rather than printing a dead link.
+      let pauseToken: string | null = crypto.randomUUID();
+      const { error: tokErr } = await db
+        .from('pause_requests')
+        .insert({ user_id: r.user_id, token: pauseToken, source: 'dormant_nudge' });
+      if (tokErr) {
+        console.warn(`[dormant-nudge] pause token failed for ${r.user_id}: ${tokErr.message}`);
+        pauseToken = null;
+      }
+
+      const { subject, html } = buildEmail(firstName, r.role, r.subscription_source, pauseToken);
       // Record BEFORE sending: the unique (user_id, email_type) index is the
       // lock, so a retry or a second manual run the same day cannot double-send.
       // Upsert refreshes sent_at, which is what the 45-day cooldown reads —
