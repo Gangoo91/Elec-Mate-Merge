@@ -64,17 +64,25 @@ function buildEmail(
   // One-click, not "say so". Richard Dawson replied to this exact email asking
   // to pause because he was signed off sick; nobody saw the reply in time and
   // his subscription ended eight hours later. A reply triggers nothing, so the
-  // offer has to be a link that does the thing. Store users still get a link —
-  // it tells them where their own switch is and puts the request in front of
-  // Andrew, which beats a reply nobody reads.
+  // offer has to be a link that does the thing.
+  //
+  // Store users get the same links but never the words "straight away": Apple
+  // and Play billing is not ours to stop, so the page shows them where their
+  // own switch is and puts the request in front of Andrew. Promising a one-tap
+  // pause and then handing them instructions would be the worse of both.
   const pauseUrl = (m: number) =>
     `${PAUSE_ENDPOINT}?t=${encodeURIComponent(pauseToken ?? '')}&m=${m}`;
-  const pauseLinks = pauseToken
-    ? ` <a href="${pauseUrl(1)}" style="color:#1a1a1a;">one month</a>, <a href="${pauseUrl(2)}" style="color:#1a1a1a;">two</a> or <a href="${pauseUrl(3)}" style="color:#1a1a1a;">three</a> — one tap, it happens straight away.`
+  const pauseChoices = pauseToken
+    ? `<a href="${pauseUrl(1)}" style="color:#1a1a1a;">one month</a>, <a href="${pauseUrl(2)}" style="color:#1a1a1a;">two</a> or <a href="${pauseUrl(3)}" style="color:#1a1a1a;">three</a>`
     : '';
+  const store = source === 'play_store' ? 'Google Play' : 'App Store';
   const pauseLine = isStore
-    ? `If you’d rather stop it for a bit, you can turn it off in your ${source === 'play_store' ? 'Google Play' : 'App Store'} subscriptions and come back whenever; everything you’ve done stays exactly where it is.${pauseLinks}`
-    : `If you’d rather pause it, I can stop it for${pauseLinks || ' a month or two — say so and I’ll sort it'} Nothing gets charged while it’s paused and nothing is lost.`;
+    ? pauseChoices
+      ? `If you’d rather stop it for a bit, tell me how long — ${pauseChoices} — and I’ll show you exactly where the switch is in your ${store} subscriptions. Nothing is lost either way; everything you’ve done stays where it is.`
+      : `If you’d rather stop it for a bit, you can turn it off in your ${store} subscriptions and come back whenever. Nothing is lost; everything you’ve done stays exactly where it is.`
+    : pauseChoices
+      ? `If you’d rather pause it, I can stop it for ${pauseChoices} — one tap and it happens straight away. Nothing gets charged while it’s paused and nothing is lost.`
+      : `If you’d rather pause it, I can stop it for a month or two — say so and I’ll sort it. Nothing gets charged while it’s paused and nothing is lost.`;
   const middle = isApprentice
     ? `If college has just been full-on, that’s fine — your progress and streak are where you left them. ${pauseLine}`
     : `If it’s just been quiet on the cert front, that’s fine — it’ll all be there when the next job comes in. If something put you off, or there’s a job you’d like a hand setting up in it, tell me. ${pauseLine}`;
@@ -114,6 +122,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
       send?: boolean;
       limit?: number;
       days?: number;
+      source?: string;
     } = {};
     try {
       body = await req.json();
@@ -128,7 +137,10 @@ Deno.serve(async (req: Request): Promise<Response> => {
       const { subject, html } = buildEmail(
         body.name ?? 'Andrew',
         body.role ?? 'electrician',
-        'stripe',
+        // `source` so a preview can show the App Store / Play wording too —
+        // that branch says something different and needs to be readable
+        // before it goes to a real customer.
+        body.source ?? 'stripe',
         'preview-token-not-real'
       );
       const { error } = await resend.emails.send({
