@@ -97,6 +97,31 @@ export const probePayload = async ({ formatter, exportName, fixture, reportId = 
 
     writeFileSync(supabaseStub, SUPABASE_STUB);
 
+    /*
+     * `react-dom/server` reaches the bundle through engineerVerify, which
+     * renders the Elec-ID QR for certificate PDFs (ELE-1453). Its CJS build
+     * dynamically requires `stream`, which esbuild cannot express in ESM, so
+     * bundling threw at import time: EICR and EIC reported "fixture failed to
+     * run" and silently fell back to static analysis, turning their field
+     * counts into guesses.
+     *
+     * Marking it external does not work either — the bundle is written to a
+     * tmpdir, so node cannot resolve react-dom from there.
+     *
+     * So this one module is stubbed, and unlike the gate in
+     * check-eicr-correctness.mjs it must NOT throw: the formatter calls it
+     * inside a try/catch that returns NONE on error, so a throwing stub would
+     * quietly drop the engineer_verify_* fields and this check would stop
+     * seeing them. It returns markup of the right shape instead.
+     */
+    const renderStub = join(tmp, 'react-dom-server.ts');
+    writeFileSync(
+      renderStub,
+      `export const renderToStaticMarkup = () =>
+         '<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96"></svg>';
+       export default { renderToStaticMarkup };`
+    );
+
     const entry = join(tmp, 'entry.ts');
     writeFileSync(entry, `export { ${exportName} } from '${formatter.replace(/^src/, '@')}';`);
 
@@ -116,6 +141,7 @@ export const probePayload = async ({ formatter, exportName, fixture, reportId = 
       },
       alias: {
         '@/integrations/supabase/client': supabaseStub,
+        'react-dom/server': renderStub,
         '@': './src',
       },
     });
