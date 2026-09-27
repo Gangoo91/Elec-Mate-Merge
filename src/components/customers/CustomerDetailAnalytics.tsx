@@ -11,7 +11,7 @@ import {
   Line,
   Cell,
 } from 'recharts';
-import { useCustomerReports } from '@/hooks/inspection/useCustomerReports';
+import { useCustomerReports } from '@/hooks/useCustomerReports';
 import { useCustomerActivity } from '@/hooks/inspection/useCustomerActivity';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';

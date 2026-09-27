@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useCustomer, useCustomers, Customer } from '@/hooks/inspection/useCustomers';
-import { useCustomerReports } from '@/hooks/inspection/useCustomerReports';
+import { useCustomerReports } from '@/hooks/useCustomerReports';
 import { useCustomerProjects } from '@/hooks/useCustomerProjects';
 import { useCustomerActivity } from '@/hooks/inspection/useCustomerActivity';
 import { CustomerReminders } from '@/components/customers/CustomerReminders';

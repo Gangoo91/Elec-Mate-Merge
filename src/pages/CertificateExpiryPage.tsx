@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { supabase } from '@/integrations/supabase/client';
 import { reportCloud } from '@/utils/reportCloud';
 import { useToast } from '@/hooks/use-toast';
-import { useExpiryReminders, ExpiryReminder } from '@/hooks/inspection/useExpiryReminders';
+import { useExpiryReminders, ExpiryReminder } from '@/hooks/useExpiryReminders';
 import {
   getDaysUntilExpiry,
   formatExpiryStatus,
@@ -30,6 +30,7 @@ import {
   type ContractPrefill,
 } from '@/components/electrician/MaintenanceContractsSection';
 import { cn } from '@/lib/utils';
+import { certificateHref } from '@/utils/certificate-href';
 
 type TimeFilter = 'all' | 'overdue' | '30days' | '60days' | '90days';
 
@@ -182,23 +183,8 @@ export default function CertificateExpiryPage() {
     };
   }, [selectedReminder]);
 
-  // Cert types that open via a dedicated React Router path (everything else
-  // is a core type opened through the inspection index query params).
-  const DEDICATED_ROUTE_TYPES = [
-    'ev-charging', 'fire-alarm', 'fire-alarm-design', 'fire-alarm-commissioning',
-    'fire-alarm-inspection', 'fire-alarm-modification', 'emergency-lighting',
-    'pat-testing', 'solar-pv', 'testing-only', 'bess', 'lightning-protection',
-    'g98-commissioning', 'g99-commissioning', 'smoke-co-alarm',
-  ];
-
   const openCert = (reportType: string, reportId: string) => {
-    if (DEDICATED_ROUTE_TYPES.includes(reportType)) {
-      navigate(`/electrician/inspection-testing/${reportType}/${reportId}`);
-    } else {
-      navigate(
-        `/electrician/inspection-testing?section=${reportType}&reportId=${reportId}&reportType=${reportType}`
-      );
-    }
+    navigate(certificateHref(reportType, reportId));
   };
 
   // Start a renewal — a periodic re-inspection is always an EICR (EICs don't

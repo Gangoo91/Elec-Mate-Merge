@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useCustomerReports } from '@/hooks/inspection/useCustomerReports';
+import { useCustomerReports } from '@/hooks/useCustomerReports';
 import { Customer } from '@/hooks/inspection/useCustomers';
 import { Loader2 } from 'lucide-react';
 import { unlinkCustomerFromReport } from '@/utils/customerHelper';
@@ -9,6 +9,7 @@ import { CustomerSiteVisitsCard } from './CustomerSiteVisitsCard';
 import { CustomerRAMSCard } from './CustomerRAMSCard';
 import { CustomerDesignConsultationCard } from './CustomerDesignConsultationCard';
 import { CustomerTasksCard } from './CustomerTasksCard';
+import { certificateHref } from '@/utils/certificate-href';
 
 interface CustomerOverviewTabProps {
   customer: Customer;
@@ -33,14 +34,14 @@ export const CustomerOverviewTab = ({
     });
   };
 
+  /*
+   * The map that was here listed the three types that ARE `?section=` routes,
+   * mapping each onto itself, and passed everything else through unchanged —
+   * so a customer's Smoke & CO alarm certificate became `?section=smoke-co-alarm`,
+   * which InspectionIndex does not recognise and renders as the dashboard.
+   */
   const handleViewCertificate = (reportId: string, reportType: string) => {
-    const sectionMap: Record<string, string> = {
-      eicr: 'eicr',
-      eic: 'eic',
-      'minor-works': 'minor-works',
-    };
-    const section = sectionMap[reportType] || reportType;
-    navigate(`/electrician/inspection-testing?section=${section}&reportId=${reportId}`);
+    navigate(certificateHref(reportType, reportId));
   };
 
   const getReportLabel = (type: string) => {
