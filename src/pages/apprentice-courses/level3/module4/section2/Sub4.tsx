@@ -346,7 +346,7 @@ export default function Sub4() {
             <li>
               <strong>Simple continuity (R2)</strong> — measure from the CPC at the DB to a single
               point (an accessory's earth terminal). Confirms the CPC reaches the accessory but
-              doesn\'t characterise the whole circuit.
+              doesn’t characterise the whole circuit.
             </li>
           </ul>
           <p>
@@ -376,7 +376,7 @@ export default function Sub4() {
 
         <ConceptBlock
           title="500 V DC test current — and what it can damage"
-          onSite="IR testing at 500 V on a circuit with embedded electronics is the most damage-prone test in the MFT\'s repertoire. LED drivers, dimmer modules, RCBOs with electronic detection, smart meters, surge protection devices — all can be damaged silently."
+          onSite="IR testing at 500 V on a circuit with embedded electronics is the most damage-prone test in the MFT’s repertoire. LED drivers, dimmer modules, RCBOs with electronic detection, smart meters, surge protection devices — all can be damaged silently."
         >
           <p>Standard L3 IR procedure:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -386,7 +386,7 @@ export default function Sub4() {
             <li>
               Disconnect or shunt-out electronic loads — LEDs, dimmers, AFDDs, smart switches.
             </li>
-            <li>Set MFT to 500 V DC (or 250 V if you can\'t fully disconnect electronics).</li>
+            <li>Set MFT to 500 V DC (or 250 V if you can’t fully disconnect electronics).</li>
             <li>
               Connect probes between L and CPC; press TEST. Reading should be ≥ 1 MΩ (BS 7671
               minimum), typically 100+ MΩ on a healthy circuit.
@@ -473,7 +473,7 @@ export default function Sub4() {
 
         <ConceptBlock
           title="Verifying the protective device is actually protecting"
-          onSite="An RCD that\'s slow to trip is more dangerous than no RCD at all — the customer believes they\'re protected. Trip-time testing is the L3 fault-diagnosis equivalent of putting your hand in front of a fan to check it\'s spinning the right speed."
+          onSite="An RCD that’s slow to trip is more dangerous than no RCD at all — the customer believes they’re protected. Trip-time testing is the L3 fault-diagnosis equivalent of putting your hand in front of a fan to check it’s spinning the right speed."
         >
           <p>BS 7671 Reg 643.8 (A4:2026) verification — a single AC test at rated I∆n:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -503,7 +503,7 @@ export default function Sub4() {
               Apprentice has isolated a kitchen circuit, set the MFT to 500 V IR, presses TEST.
               Reading is fine (200 MΩ). Half an hour later the LED dimmer in the kitchen has started
               failing intermittently — the 500 V test pulse damaged its input filter capacitors.
-              Customer reports flickering lights two days later. Apprentice didn\'t realise the test
+              Customer reports flickering lights two days later. Apprentice didn’t realise the test
               had caused the damage; firm replaces the dimmer at their cost.
             </>
           }
@@ -523,7 +523,7 @@ export default function Sub4() {
             <>
               Apprentice tests EFLI with the MFT in default mode (high test current). The test pulse
               trips the 30 mA RCD that protects the circuit. Apprentice resets the RCD, retests,
-              trips again, eventually realises they need Hi-Z mode. Meanwhile the customer\'s
+              trips again, eventually realises they need Hi-Z mode. Meanwhile the customer’s
               freezer (also on the affected RCD) has been off for 20 minutes. Customer complaint,
               refund of inconvenience.
             </>
@@ -531,7 +531,7 @@ export default function Sub4() {
           doInstead={
             <>
               For any RCD-protected circuit, use the Hi-Z (no-trip) EFLI mode. Megger calls it
-              \'Loop No-Trip' or 'Hi-Z'; Fluke calls it 'Z LOOP No-Trip'; Kewtech calls it similar.
+              ‘Loop No-Trip' or 'Hi-Z'; Fluke calls it 'Z LOOP No-Trip'; Kewtech calls it similar.
               Slightly slower, slightly less accurate, but doesn't trip RCDs. Standard mode is for
               non-RCD circuits only.
             </>
@@ -569,7 +569,7 @@ export default function Sub4() {
               joint; the pattern across continuity + EFLI + voltage drop + thermal does. The MFT
               gives you the values; the multimeter and clamp meter give you the in-service
               measurements; the thermal camera gives you the location. All four instruments
-              contributing to one fault diagnosis is the L3 step-up from L2\'s single-instrument
+              contributing to one fault diagnosis is the L3 step-up from L2’s single-instrument
               approach.
             </>
           }

@@ -446,7 +446,7 @@ export default function Sub2() {
 
         <ConceptBlock
           title="The CPS upload workflow — portal entry, BCCC generation, customer delivery"
-          plainEnglish="Contractor uploads the EIC details to the scheme portal. Scheme aggregates and notifies Building Control on the contractor\'s behalf. Scheme prints and posts the Building Control Compliance Certificate to the customer at the property address."
+          plainEnglish="Contractor uploads the EIC details to the scheme portal. Scheme aggregates and notifies Building Control on the contractor’s behalf. Scheme prints and posts the Building Control Compliance Certificate to the customer at the property address."
           onSite="Set the upload as the last item on your job-completion checklist — same day if possible, certainly within 30 days. Many contractors batch-upload weekly to avoid forgetting. Each of the three big schemes — NICEIC, NAPIT, ELECSA — has slightly different portal workflows but the same 30-day deadline and the same downstream BCCC issue process."
         >
           <p>The standard CPS upload workflow:</p>
@@ -590,7 +590,7 @@ export default function Sub2() {
               and move on to the next job without uploading the notification. Eight weeks later the
               customer calls — they have not received the Building Control Compliance Certificate,
               their solicitor is asking for it because the property sale is going through, and the
-              buyer\'s lender will not release funds without it. You log in to NICEIC Online and
+              buyer’s lender will not release funds without it. You log in to NICEIC Online and
               find the upload window has expired; the late notification will take additional weeks
               to process and triggers a late fee plus an audit flag against your scheme membership.
             </>
@@ -599,9 +599,9 @@ export default function Sub2() {
             <>
               Build the CPS upload into your job-completion checklist. Same-day upload is ideal.
               End-of-week batch upload as a fallback. Many contractors set a Friday afternoon
-              recurring slot to upload the week\'s notifications and review the scheme dashboard for
+              recurring slot to upload the week’s notifications and review the scheme dashboard for
               any flags. The 30-day window is generous but it disappears quickly when jobs stack up
-              — never let a month\'s worth of notifications accumulate.
+              — never let a month’s worth of notifications accumulate.
             </>
           }
         />
@@ -670,7 +670,7 @@ export default function Sub2() {
               <br />
               <br />
               <strong>Address the remortgage timing honestly.</strong> The lender accepts a
-              certificate dated today; if the customer\'s completion is tomorrow, the EIC from today
+              certificate dated today; if the customer’s completion is tomorrow, the EIC from today
               is current evidence. Do NOT back-date the EIC — back-dating is dishonest and can
               amount to fraud. If the lender requires the BCCC specifically and that is not yet
               available, the customer can present the EIC with the NICEIC notification reference as
@@ -685,7 +685,7 @@ export default function Sub2() {
           }
           whyItMatters={
             <>
-              The handover pack is the customer\'s evidence base across the entire lifetime of the
+              The handover pack is the customer’s evidence base across the entire lifetime of the
               installation. The remortgage tomorrow needs the EIC. The next EICR in 10 years needs
               the original Schedule of Test Results to compare current readings against. The
               property sale in 5 years needs both the EIC and the BCCC. The insurance claim after

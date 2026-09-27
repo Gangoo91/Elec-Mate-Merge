@@ -51,7 +51,7 @@ const corsHeaders = {
 
 const EMAIL_TYPE = 'abandoned_checkout';
 const FROM = 'Andrew at Elec-Mate <founder@elec-mate.com>';
-const MOBILE = '07507 241303';
+const MOBILE = '07506 026934';
 const DEFAULT_LIMIT = 40;
 const PROMO = 'FIRSTGO30';
 

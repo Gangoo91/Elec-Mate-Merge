@@ -35,6 +35,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { openOrDownloadPdf } from '@/utils/pdf-download';
 import { saveOrShareFile } from '@/utils/save-or-share-file';
 import { importWithRetry } from '@/utils/lazyWithRetry';
+import { certificateHref } from '@/utils/certificate-href';
 import {
   isFireAlarmReportType,
   fireAlarmTemplateId,
@@ -728,32 +729,14 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
   };
 
   const navigateToForm = () => {
-    const reportType = report.report_type.toLowerCase();
-    // Dedicated route types navigate to their own routes. Fire-alarm variants
-    // (design / commissioning / inspection / modification) each have their
-    // own route — without listing them here they fell through to the legacy
-    // section path and rendered as EICR.
-    const dedicatedRouteTypes = [
-      'ev-charging',
-      'fire-alarm',
-      'fire-alarm-design',
-      'fire-alarm-commissioning',
-      'fire-alarm-inspection',
-      'fire-alarm-modification',
-      'emergency-lighting',
-      'pat-testing',
-      'solar-pv',
-    ];
-    if (dedicatedRouteTypes.includes(reportType)) {
-      navigate(`/electrician/inspection-testing/${reportType}/${report.report_id || report.id}`);
-    } else {
-      // Legacy types use section-based routing via query params
-      const params = new URLSearchParams();
-      params.set('section', reportType);
-      params.set('reportId', report.report_id || report.id);
-      params.set('reportType', reportType);
-      navigate(`/electrician/inspection-testing?${params.toString()}`);
-    }
+    /*
+     * The nine-type list that was here carried a comment explaining that the
+     * fire-alarm variants had been added because omitting them "rendered as
+     * EICR". The same was true of every type it still did not name —
+     * smoke-co-alarm, bess, plug-in-solar, the G98/G99 pair and the rest — so
+     * the fix went to one helper rather than a tenth entry.
+     */
+    navigate(certificateHref(report.report_type, report.report_id || report.id));
     onOpenChange(false);
   };
 

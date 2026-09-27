@@ -644,7 +644,7 @@ export default function Sub1() {
 
         <ConceptBlock
           title="Comments on existing installation — observations on unaltered parts"
-          plainEnglish="On an addition or alteration, the EIC has a Comments on existing installation section for observations about parts of the installation NOT covered by the new work. This is where pre-existing defects on unaltered circuits are recorded for the customer\'s information."
+          plainEnglish="On an addition or alteration, the EIC has a Comments on existing installation section for observations about parts of the installation NOT covered by the new work. This is where pre-existing defects on unaltered circuits are recorded for the customer’s information."
           onSite="On a CU swap-out, the Comments box typically gets used. The new CU is your work and is certified clean. The downstream circuits are unaltered but you have visibility of their condition through the inspection and testing process. Anything you noticed on unaltered parts — old rubber-sheath cabling, no CPC on lighting drops, missing supplementary bonding in a bathroom — goes here as an observation."
         >
           <p>Typical Comments on existing installation entries:</p>
@@ -823,7 +823,7 @@ export default function Sub1() {
               You install a new dedicated EV charger circuit from the existing CU — single circuit,
               RCBO, isolator, charger. Job is small. You issue an MEIWC because it feels
               proportionate to the work scope. Six months later the customer is selling the house
-              and the buyer\'s solicitor flags the MEIWC as inappropriate for a new circuit. The
+              and the buyer’s solicitor flags the MEIWC as inappropriate for a new circuit. The
               Competent Person Scheme audit catches the same issue. You now have to retro-issue the
               EIC + Schedule of Inspections + Schedule of Test Results trio, re-attend to confirm
               the readings are still valid, and explain why the original certification was on the
@@ -904,9 +904,9 @@ export default function Sub1() {
               10 years (owner-occupied domestic).
               <br />
               <br />
-              <strong>Date.</strong> Today\'s date — the date the inspection and testing was
+              <strong>Date.</strong> Today’s date — the date the inspection and testing was
               completed and the declarations were signed. Not back-dated for the remortgage. The
-              lender accepts a certificate dated today; if the customer\'s completion is tomorrow,
+              lender accepts a certificate dated today; if the customer’s completion is tomorrow,
               that is between the customer and the lender.
               <br />
               <br />
@@ -919,7 +919,7 @@ export default function Sub1() {
           whyItMatters={
             <>
               The certification pack is what survives the install. The remortgage lender today, the
-              buyer\'s solicitor in five years, the EICR inspector in ten years and the insurance
+              buyer’s solicitor in five years, the EICR inspector in ten years and the insurance
               investigator after any incident will all pick up this EIC and need to make sense of
               it. Right form, right defect handling, right date, right comments on the unaltered
               parts — each one defensible on its own. Get any of those wrong and the certificate

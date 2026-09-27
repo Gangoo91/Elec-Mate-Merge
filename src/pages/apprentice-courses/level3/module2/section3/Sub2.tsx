@@ -41,7 +41,7 @@ const checks = [
   {
     id: 'l3-m2-s3-sub2-cop-scop',
     question:
-      'A heat pump datasheet quotes "COP 4.5 at A7/W35". The customer says "so this thing pays for itself in two winters?". What\'s the honest reply?',
+      'A heat pump datasheet quotes "COP 4.5 at A7/W35". The customer says "so this thing pays for itself in two winters?". What’s the honest reply?',
     options: [
       'Roughly two winters is about right. COP 4.5 means the unit delivers 4.5 kWh of heat for every kWh of electricity all year round, so the saving against a gas boiler clears the install cost within two seasons. A7/W35 is the year-round average, so take it at face value.',
       'Closer to one winter. COP 4.5 is a deliberately conservative figure measured in the harshest conditions, so real-world performance beats the quote. The customer should expect the saving to come in higher than the headline, making a single-season payback realistic.',
@@ -55,7 +55,7 @@ const checks = [
   {
     id: 'l3-m2-s3-sub2-electrical-interface',
     question:
-      'You\'re first-fixing the supply for a 12 kW ASHP that the manufacturer schedule lists as "32 A 230 V single-phase, Type C MCB, sized for sustained continuous load". The unit will sit 25 m from the consumer unit, run via SWA buried in the ground. What\'s the design check?',
+      'You’re first-fixing the supply for a 12 kW ASHP that the manufacturer schedule lists as "32 A 230 V single-phase, Type C MCB, sized for sustained continuous load". The unit will sit 25 m from the consumer unit, run via SWA buried in the ground. What’s the design check?',
     options: [
       'Size the cable purely on the 32 A figure using the clipped-direct column, because a heat pump is just another fixed appliance. Round up to 4 mm² T&E and run it underground like a cooker circuit. Volt-drop over 25 m is negligible and a Type B MCB is fine because there is no inrush on an inverter unit.',
       'No design calculation is needed — the manufacturer states 32 A, so fit a 32 A MCB and the nearest cable the wholesaler stocks. Buried SWA does not need a method-D rating check because the armour protects the conductor from soil thermal effect, and volt-drop limits only apply to lighting circuits.',
@@ -69,7 +69,7 @@ const checks = [
   {
     id: 'l3-m2-s3-sub2-fgas-boundary',
     question:
-      'On a heat-pump install the indoor unit is in place and the outdoor unit is bolted down. The customer asks if you can connect the refrigerant pipework "while you\'re here". What\'s the answer?',
+      'On a heat-pump install the indoor unit is in place and the outdoor unit is bolted down. The customer asks if you can connect the refrigerant pipework "while you’re here". What’s the answer?',
     options: [
       "Yes, provided you torque the flare connections to the manufacturer's figures and pressure-test with nitrogen afterwards. Connecting the pipework is a mechanical task, not a refrigerant-handling one, so any competent installer can make the joints — only the final gas charge needs a specialist.",
       'No — refrigerant work requires personal F-Gas certification; your boundary is the electrical supply, isolation, controls and bonding.',
@@ -178,7 +178,7 @@ const quizQuestions = [
   {
     id: 8,
     question:
-      'A customer asks "can I just fit one of these myself?". What\'s the responsible answer?',
+      'A customer asks "can I just fit one of these myself?". What’s the responsible answer?',
     options: [
       'No — the refrigerant work needs F-Gas certification and the grants, warranties and proper design all depend on MCS sign-off, so DIY is not a viable route.',
       'Yes, a competent DIYer can fit a monobloc heat pump because it arrives pre-charged and only needs plumbing and a plug. No certification is involved on a monobloc, so the customer can install it themselves and still claim the Boiler Upgrade Scheme grant afterwards.',
@@ -373,7 +373,7 @@ export default function Sub2() {
               IP-based smart controls.
             </li>
             <li>
-              <strong>Bonding</strong> — manufacturer\'s instructions plus BS 7671 Section 411 / 415
+              <strong>Bonding</strong> — manufacturer’s instructions plus BS 7671 Section 411 / 415
               logic. Bond if the unit chassis forms part of an extraneous- conductive part of the
               building.
             </li>
@@ -394,7 +394,7 @@ export default function Sub2() {
 
         <ConceptBlock
           title="Refrigerant work is not your trade"
-          plainEnglish="Heat pumps contain fluorinated greenhouse-gas refrigerants (R32, R410A, R134a, etc.) under the F-Gas Regulations. Any work that breaks into the refrigerant circuit — connecting pipework, charging, recovering refrigerant, leak testing — is restricted to F-Gas-certified personnel. The certification is personal, not company-wide. Working without certification is a criminal offence and invalidates the manufacturer\'s warranty."
+          plainEnglish="Heat pumps contain fluorinated greenhouse-gas refrigerants (R32, R410A, R134a, etc.) under the F-Gas Regulations. Any work that breaks into the refrigerant circuit — connecting pipework, charging, recovering refrigerant, leak testing — is restricted to F-Gas-certified personnel. The certification is personal, not company-wide. Working without certification is a criminal offence and invalidates the manufacturer’s warranty."
           onSite='On a typical ASHP install the trade boundaries are clear: F-Gas-certified engineer for refrigerant; you for the electrical supply, isolation, bonding and controls; plumber for the wet system; MCS-certified designer (often the lead trade) signs off the install. Customer requests that cross your boundary — "while you\&apos;re here, can you connect the refrigerant pipework?" — get a polite "that\&apos;s not my trade" answer.'
         >
           <p>The F-Gas certification framework:</p>
@@ -471,8 +471,8 @@ export default function Sub2() {
             <>
               MIS 3005 is the certification and quality standard the MCS-certified designer works
               to. It references BS 7671 explicitly for the electrical detail. As an apprentice on
-              the install, you work to the MCS designer\'s specification and the BS 7671 electrical
-              requirements — you don\'t sign off MIS 3005 yourself unless you\'re personally
+              the install, you work to the MCS designer’s specification and the BS 7671 electrical
+              requirements — you don’t sign off MIS 3005 yourself unless you’re personally
               certified. The MIS 3005 handover pack includes the heat-loss calc, emitter sizing,
               SCOP estimate and electrical schedule.
             </>
@@ -643,7 +643,7 @@ export default function Sub2() {
         <ContentEyebrow>Where it goes wrong</ContentEyebrow>
 
         <CommonMistake
-          title="Sizing the supply on the unit\'s average load instead of the nameplate maximum"
+          title="Sizing the supply on the unit’s average load instead of the nameplate maximum"
           whatHappens={
             <>
               Apprentice sees a 10 kW heat pump with an &quot;average load 1.8 kW&quot; figure on

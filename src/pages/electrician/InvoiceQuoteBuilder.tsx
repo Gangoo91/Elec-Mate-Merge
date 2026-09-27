@@ -202,11 +202,32 @@ export default function InvoiceQuoteBuilder() {
               invoice_notes: quote.invoice_notes,
               work_completion_date: quote.work_completion_date || new Date(),
               originalQuoteId: quote.id,
-              items: quote.items.map((item) => ({
-                ...item,
-                completionStatus: 'completed' as const,
-                actualQuantity: item.quantity,
-              })) as InvoiceItem[],
+              items: quote.items.map((item) => {
+                /*
+                 * ELE-1780 — the LINK is dropped, the HOURS are kept. They
+                 * are different things and only one of them is safe to carry.
+                 *
+                 * `derivedFromItemId` is a live relationship: on the quote it
+                 * ties a labour line to the material whose allowance produced
+                 * it, and `useQuoteBuilder` maintains the pair on every add,
+                 * edit and delete. The invoice builder has no such logic, so
+                 * a link carried across would orphan the labour the first
+                 * time someone deleted the material there — precisely the
+                 * defect this feature exists to remove.
+                 *
+                 * `timeAllowance` is a record, not a relationship. The
+                 * invoice is the end of the job, and the hours allowed are
+                 * part of what was done — worth keeping so the figure can be
+                 * explained, and so quoted-against-actual is answerable later
+                 * without re-deriving it from the labour lines.
+                 */
+                const { derivedFromItemId: _link, ...line } = item;
+                return {
+                  ...line,
+                  completionStatus: 'completed' as const,
+                  actualQuantity: item.quantity,
+                };
+              }) as InvoiceItem[],
               settings: {
                 ...quote.settings,
                 overheadPercentage: 0, // Already baked into item prices

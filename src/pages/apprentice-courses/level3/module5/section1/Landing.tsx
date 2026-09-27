@@ -30,7 +30,7 @@ const subsections = [
   {
     number: 'Subsection 3',
     title: 'IET Guidance Note 3 — what it adds',
-    description: 'Guidance Note 3 (GN3, 9th Edition + A4 update) — the IET\\',
+    description: 'Guidance Note 3 (GN3, 9th Edition + A4 update) — the IET’s guidance on inspection and testing.',
     icon: Shield,
     href: '/study-centre/apprentice/level3-module5-section1-3',
   },
@@ -51,7 +51,7 @@ const subsections = [
   {
     number: 'Subsection 6',
     title: 'Initial verification: purpose & information set',
-    description: 'Why we verify, what initial verification covers (Reg 641-644), and the information pack required before starting — supply data, ADS arrangement, designer\\',
+    description: 'Why we verify, what initial verification covers (Reg 641-644), and the information pack required before starting — supply data, ADS arrangement and the designer’s details.',
     icon: UserCheck,
     href: '/study-centre/apprentice/level3-module5-section1-6',
   },

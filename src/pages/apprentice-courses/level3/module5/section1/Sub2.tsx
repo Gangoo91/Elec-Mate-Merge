@@ -316,15 +316,15 @@ export default function Sub2() {
 
         <ConceptBlock
           title="What Reg 642.3 actually requires you to look at"
-          plainEnglish="Reg 642.3 lists the items to inspect — installed equipment correctly selected, manufacturers' instructions followed, joints terminated correctly, conductors identified, protective devices coordinated, RCDs and AFDDs where required, and many more. It\'s a long list — non-exhaustive — that gets ticked off on the Schedule of Inspections."
-          onSite="Visual inspection is BEFORE testing. You\'re catching the obvious defects (wrong cable size, missing CPC, bonding not done) before you waste time testing them. Walk the install with the schedule in hand and tick as you go."
+          plainEnglish="Reg 642.3 lists the items to inspect — installed equipment correctly selected, manufacturers' instructions followed, joints terminated correctly, conductors identified, protective devices coordinated, RCDs and AFDDs where required, and many more. It’s a long list — non-exhaustive — that gets ticked off on the Schedule of Inspections."
+          onSite="Visual inspection is BEFORE testing. You’re catching the obvious defects (wrong cable size, missing CPC, bonding not done) before you waste time testing them. Walk the install with the schedule in hand and tick as you go."
         >
           <p>
             The Reg 642.3 inspection items, as represented on the model Schedule of Inspections:
           </p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
-              <strong>Equipment selected and erected per manufacturer\'s instructions</strong>
+              <strong>Equipment selected and erected per manufacturer’s instructions</strong>
               (item a) — protective devices used per their published characteristics, accessories
               installed in their intended orientation, cable types appropriate for the installation
               environment.
@@ -400,7 +400,7 @@ export default function Sub2() {
 
         <ConceptBlock
           title="Why the test sequence matters"
-          plainEnglish="Each test in Reg 643 depends on the one before it. Run them out of order and you get misleading results. Worse, you can put yourself at risk by energising before you\'ve verified the installation is safe to switch on."
+          plainEnglish="Each test in Reg 643 depends on the one before it. Run them out of order and you get misleading results. Worse, you can put yourself at risk by energising before you’ve verified the installation is safe to switch on."
           onSite="Memorise the order. Continuity then ring final live continuity (if applicable) then IR then polarity then earth electrode (TT only) then ADS verification then polarity (live) then Zs then PFC then RCD then functional. The dead tests come first because they prove the installation is safe to energise."
         >
           <p>The Reg 643.1 sequence and why each step matters:</p>
@@ -493,7 +493,7 @@ export default function Sub2() {
         <ConceptBlock
           title="The three-form certification pack"
           plainEnglish="Initial verification produces three documents: the EIC (or MWC for minor works), the Schedule of Inspections (visual checks ticked), and the Schedule of Test Results (measurements and pass/fail). All three are required for full sign-off."
-          onSite="Don\'t issue the EIC without the schedules. The EIC is a summary signed by the competent persons; the schedules are the evidence behind it. Some scheme apps generate the three together — but check the schedules are populated, not blank tick-boxes."
+          onSite="Don’t issue the EIC without the schedules. The EIC is a summary signed by the competent persons; the schedules are the evidence behind it. Some scheme apps generate the three together — but check the schedules are populated, not blank tick-boxes."
         >
           <p>What each document covers:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -508,7 +508,7 @@ export default function Sub2() {
             <li>
               <strong>Schedule of Inspections.</strong> Tick-list of the Reg 642.3 items. Confirms
               visual inspection covered every required item. "N/A" is acceptable where an item
-              doesn\'t apply to this installation; "LIM" denotes a limitation (item not fully
+              doesn’t apply to this installation; "LIM" denotes a limitation (item not fully
               verifiable) with explanation.
             </li>
             <li>
@@ -521,7 +521,7 @@ export default function Sub2() {
               <strong>MWC (Minor Works Certificate).</strong> For additions and alterations to
               existing circuits with NO new circuit added. Single-page form. Records the work done,
               the test results for the affected portion, and a confirmation that the existing
-              installation\'s safety hasn\'t been compromised by the work.
+              installation’s safety hasn’t been compromised by the work.
             </li>
             <li>
               <strong>EICR (Electrical Installation Condition Report).</strong> The periodic
@@ -543,7 +543,7 @@ export default function Sub2() {
               the app"). The Schedule of Test Results has only Ze and one Zs reading on it. Two
               years later the installation has a fire from a defective accessory. The investigators
               ask for the verification evidence. You cannot show the inspection items were actually
-              checked. Your scheme provider opens an investigation. The client\'s insurer disputes
+              checked. Your scheme provider opens an investigation. The client’s insurer disputes
               the claim because the documentation is incomplete.
             </>
           }
@@ -718,7 +718,7 @@ export default function Sub2() {
               a textbook MWC scenario. Record on the MWC: the extent of the work (sockets added,
               ring extended), the test results for the altered ring (full three-part ring final
               test, IR, polarity, Zs at the new far end), and confirmation the existing
-              installation\'s safety is not impaired. Hand the MWC to the homeowner with a copy
+              installation’s safety is not impaired. Hand the MWC to the homeowner with a copy
               retained for your records. No need for a full EIC because no new circuit was
               installed.
             </>

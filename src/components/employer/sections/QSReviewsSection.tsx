@@ -29,6 +29,7 @@ import {
   type QsQueueItem,
 } from '@/hooks/useQsReviewQueue';
 import { useQsTeamContext } from '@/hooks/useQsReview';
+import { certificateHref } from '@/utils/certificate-href';
 
 const TYPE_LABEL: Record<string, string> = {
   eicr: 'EICR',
@@ -318,11 +319,10 @@ function QsReviewDetailSheet({ item, onClose }: { item: QsQueueItem | null; onCl
     const t = item.report_type;
     const id = encodeURIComponent(item.report_id);
     onClose();
-    if (['pat-testing', 'testing-only'].includes(t)) {
-      navigate(`/electrician/inspection-testing/${t}/${id}`);
-    } else {
-      navigate(`/electrician/inspection-testing?section=${t}&reportId=${id}`);
-    }
+    // Every type, both conventions. The two-type list that was here sent a
+    // reviewer opening anything else to `?section=<type>`, which InspectionIndex
+    // does not recognise — so the review click landed on the dashboard.
+    navigate(certificateHref(t, decodeURIComponent(id)));
   };
 
   const handleApprove = async () => {

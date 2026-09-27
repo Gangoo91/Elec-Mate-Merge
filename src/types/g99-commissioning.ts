@@ -25,6 +25,8 @@ export const G99_DEFAULTS = {
 };
 
 export interface G99FormData {
+  /** The number the row is filed under (ELE-1592) — adopted from the created row, printed as the certificate number. */
+  certificateNumber?: string;
   referenceNumber: string;
   // Stage 1: Application
   applicationDate: string;
@@ -126,7 +128,7 @@ export interface G99FormData {
 }
 
 export const getDefaultG99FormData = (): G99FormData => ({
-  referenceNumber: `G99-${Date.now().toString(36).toUpperCase()}`,
+  referenceNumber: '', // filled from the number the row is filed under (ELE-1592)
   applicationDate: new Date().toISOString().split('T')[0],
   proposedCommissioningDate: '',
   dnoName: '', dnoApplicationRef: '',

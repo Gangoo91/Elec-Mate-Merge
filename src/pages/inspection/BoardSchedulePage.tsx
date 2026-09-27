@@ -27,6 +27,7 @@ import { useCertificateEmail } from '@/hooks/useCertificateEmail';
 import { EmailCertificateDialog } from '@/components/certificate-completion/EmailCertificateDialog';
 import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
 import type { BoardCircuit, BoardScheduleData } from '@/utils/generate-board-schedule-pdf';
+import { useCreateReportKey } from '@/hooks/useCreateReportKey';
 
 const PHASES = ['L1', 'L2', 'L3'] as const;
 const REPORT_TYPE: ReportType = 'board-schedule';
@@ -60,6 +61,7 @@ export default function BoardSchedulePage() {
   const [saving, setSaving] = useState(false);
   const [emailOpen, setEmailOpen] = useState(false);
   const [reportId, setReportId] = useState<string | null>(editId ?? null);
+  const createKey = useCreateReportKey(REPORT_TYPE); // ELE-1603 — a retry adopts, never duplicates
   const [certificateNumber, setCertificateNumber] = useState('');
 
   const [board, setBoard] = useState<BoardScheduleData>(() => {
@@ -85,7 +87,7 @@ export default function BoardSchedulePage() {
     (async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
-      const stored = await reportCloud.getReportData(editId, user.id);
+      const stored = await reportCloud.getReportData(editId, user.id, 'board-schedule');
       if (!stored || cancelled) return;
       /*
        * `isThreePhase` and `certificateNumber` are stored inside `data` but are
@@ -247,12 +249,13 @@ export default function BoardSchedulePage() {
     const stored = { ...board, isThreePhase, certificateNumber } as unknown as Record<string, unknown>;
 
     if (reportId) {
-      await reportCloud.updateReport(reportId, user.id, stored);
+      const updated = await reportCloud.updateReport(reportId, user.id, stored, undefined, false, REPORT_TYPE);
+      if (!updated.success) { toast.error('Could not save the schedule'); return null; }
       await supabase.from('reports').update({ pdf_payload: payload }).eq('report_id', reportId);
       return reportId;
     }
 
-    const result = await reportCloud.createReport(user.id, REPORT_TYPE, stored);
+    const result = await reportCloud.createReport(user.id, REPORT_TYPE, stored, undefined, false, createKey.take());
     if (!result.success || !result.reportId) { toast.error('Could not save the schedule'); return null; }
 
     setReportId(result.reportId);

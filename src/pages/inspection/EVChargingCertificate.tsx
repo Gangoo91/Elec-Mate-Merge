@@ -45,6 +45,7 @@ import { cn } from '@/lib/utils';
 import { ConflictResolutionDialog } from '@/components/inspection/ConflictResolutionDialog';
 import { scrollToTopForStepChange } from '@/utils/scroll';
 import { coverKeysFromFormData } from '@/utils/certCoverPayload';
+import { issueCertificateNumber } from '@/utils/certificateNumbering';
 
 const REPORT_TYPE = 'ev-charging' as const;
 
@@ -108,8 +109,12 @@ export default function EVChargingCertificate() {
     enabled: !isLoading && !isLocked,
     isHydrating: isLoading, // Gate autosave while loading from cloud — prevents blank-overwrite race.
     customerId,
-    onReportCreated: (newId) => {
+    onReportCreated: (newId: string, certificateNumber?: string) => {
       setSavedReportId(newId);
+      // ELE-1592 — keep the number the row was filed under; without this the
+      // form stayed blank and the PDF printed an invented timestamp.
+      if (certificateNumber)
+        setFormData((prev) => (prev.certificateNumber ? prev : { ...prev, certificateNumber }));
       window.history.replaceState(null, '', `/electrician/inspection-testing/ev-charging/${newId}`);
     },
   });
@@ -165,7 +170,7 @@ export default function EVChargingCertificate() {
           // getReportDataWithId returns updated_at metadata — getReportData only returns
           // the data JSON, which left updated_at undefined and made ANY local draft
           // "newer" than cloud (stale drafts silently overwrote newer cloud copies).
-          const report = await reportCloud.getReportDataWithId(id, authUser.id);
+          const report = await reportCloud.getReportDataWithId(id, authUser.id, 'ev-charging');
 
           if (report) {
             if (
@@ -256,11 +261,14 @@ export default function EVChargingCertificate() {
     setGenerationError(null);
     setShowGenerationDialog(true);
     try {
-      await syncNowImmediate();
+      const synced = await syncNowImmediate();
 
       let dataWithCertNumber = {
         ...formData,
-        certificateNumber: formData.certificateNumber || `EVC-${Date.now()}`,
+        certificateNumber: await issueCertificateNumber(
+          formData.certificateNumber || synced.data?.certificateNumber,
+          REPORT_TYPE
+        ),
       };
 
       if (hasSavedCompanyBranding) {

@@ -18,6 +18,7 @@ import { reportCloud } from '@/utils/reportCloud';
 import { pageCardCn as sectionCn, pageInputCn as inputCn, pageTextareaCn as textareaCn } from '@/components/forms/pageStyles';
 
 import { PageHeader } from '@/components/forms/PageHeader';
+import { useCreateReportKey } from '@/hooks/useCreateReportKey';
 
 const SectionHeader = ({ title }: { title: string }) => (
   <h2 className="text-[15px] font-semibold tracking-tight text-white">{title}</h2>
@@ -61,7 +62,7 @@ interface SafeIsolationData {
 }
 
 const defaultData = (): SafeIsolationData => ({
-  referenceNumber: `SIP-${Date.now().toString(36).toUpperCase()}`,
+  referenceNumber: '', // filled from the number the row is filed under on first save (ELE-1592)
   date: new Date().toISOString().split('T')[0],
   time: new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }),
   location: '',
@@ -85,6 +86,7 @@ export default function SafeIsolationPage() {
   const { id: editId } = useParams<{ id: string }>();
   const [isSaving, setIsSaving] = useState(false);
   const [existingReportId, setExistingReportId] = useState<string | null>(null);
+  const createKey = useCreateReportKey('safe-isolation'); // ELE-1603 — a retry adopts, never duplicates
   const [data, setData] = useState<SafeIsolationData>(() => {
     const saved = storageGetJSONSync<Partial<SafeIsolationData>>(DRAFT_KEY, null);
     return saved ? { ...defaultData(), ...saved } : defaultData();
@@ -94,7 +96,7 @@ export default function SafeIsolationPage() {
     if (!editId) return;
     supabase.auth.getUser().then(async ({ data: { user } }) => {
       if (!user) return;
-      const result = await reportCloud.getReportData(editId, user.id);
+      const result = await reportCloud.getReportData(editId, user.id, 'safe-isolation');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       if (result) { setData((prev) => ({ ...prev, ...(result as any) })); setExistingReportId(editId); }
     });
@@ -141,13 +143,24 @@ export default function SafeIsolationPage() {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { toast.error('Please sign in'); return; }
+      // The reference the certificate prints IS the number it is filed under (ELE-1592);
+      // createReport allocates it, and the electrician can still overtype it later.
+      let referenceNumber = data.referenceNumber;
       if (existingReportId) {
+        // A refused write (wrong certificate type, RLS, network) used to fall through
+        // to "Saved". Check it the way the create path below already does.
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        await reportCloud.updateReport(existingReportId, user.id, data as any);
+        const updated = await reportCloud.updateReport(existingReportId, user.id, data as any, undefined, false, 'safe-isolation');
+        if (!updated.success) { toast.error('Failed to save'); return; }
       } else {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const result = await reportCloud.createReport(user.id, 'safe-isolation', data as any);
+        const result = await reportCloud.createReport(user.id, 'safe-isolation', data as any, undefined, false, createKey.take());
         if (!result.success) { toast.error('Failed to save'); return; }
+        if (!referenceNumber && result.certificateNumber) {
+          referenceNumber = result.certificateNumber;
+          update('referenceNumber', referenceNumber);
+        }
+        if (result.reportId) setExistingReportId(result.reportId);
       }
       storageRemoveSync(DRAFT_KEY);
       toast.success('Safe isolation record saved');
@@ -176,7 +189,7 @@ export default function SafeIsolationPage() {
           {/* Details */}
           <section className={sectionCn}>
             <SectionHeader title="Details" />
-            <Field label="Reference"><Input value={data.referenceNumber} onChange={(e) => update('referenceNumber', e.target.value)} className={inputCn} /></Field>
+            <Field label="Reference"><Input value={data.referenceNumber} placeholder="Allocated on first save" onChange={(e) => update('referenceNumber', e.target.value)} className={inputCn} /></Field>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <Field label="Date"><Input type="date" value={data.date} onChange={(e) => update('date', e.target.value)} className={inputCn} /></Field>
               <Field label="Time"><Input type="time" value={data.time} onChange={(e) => update('time', e.target.value)} className={inputCn} /></Field>

@@ -29,6 +29,8 @@ import { reportCloud } from '@/utils/reportCloud';
 import { formatDisconnectionCertificatePayload } from '@/utils/disconnection-certificate-formatter';
 import { scrollToTopForStepChange } from '@/utils/scroll';
 import { readEdgeFunctionError } from '@/lib/edgeFunctionError';
+import { issueCertificateNumber } from '@/utils/certificateNumbering';
+import { useCreateReportKey } from '@/hooks/useCreateReportKey';
 
 const cardCn =
   '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
@@ -100,7 +102,7 @@ interface DisconnectionData {
 }
 
 const defaultData = (): DisconnectionData => ({
-  referenceNumber: `DISC-${Date.now().toString(36).toUpperCase()}`,
+  referenceNumber: '' /* filled from the number the row is filed under on first save (ELE-1592) */,
   workDate: new Date().toISOString().split('T')[0],
   contractorName: '',
   contractorCompany: '',
@@ -272,6 +274,7 @@ export default function DisconnectionCertificate() {
   const [isSaving, setIsSaving] = useState(false);
   const [isProcessingPhoto, setIsProcessingPhoto] = useState(false);
   const [existingReportId, setExistingReportId] = useState<string | null>(null);
+  const createKey = useCreateReportKey('disconnection'); // ELE-1603 — a retry adopts, never duplicates
   const [currentStep, setCurrentStep] = useState<StepId>('details');
 
   // Email dialog state
@@ -320,7 +323,7 @@ export default function DisconnectionCertificate() {
     if (!editId) return;
     supabase.auth.getUser().then(async ({ data: { user } }) => {
       if (!user) return;
-      const result = await reportCloud.getReportData(editId, user.id);
+      const result = await reportCloud.getReportData(editId, user.id, 'disconnection');
       if (result) {
         setData((prev) => mergeDisconnection(prev, result as Partial<DisconnectionData>));
         setExistingReportId(editId);
@@ -495,8 +498,7 @@ export default function DisconnectionCertificate() {
         formattedData = formatDisconnectionCertificatePayload(
           {
             ...data,
-            referenceNumber:
-              data.referenceNumber || `DISC-${Date.now().toString(36).toUpperCase()}`,
+            referenceNumber: await issueCertificateNumber(data.referenceNumber, 'disconnection'),
           },
           company
         );
@@ -567,19 +569,32 @@ export default function DisconnectionCertificate() {
       // matches reports.report_id ('DISCONNECTION-...'), so relying on state
       // here silently updated 0 rows on every first-time generation.
       let reportIdForSave = existingReportId;
+      // The reference the certificate prints IS the number it is filed under (ELE-1592).
+      let referenceNumber = data.referenceNumber;
       if (existingReportId) {
-        await reportCloud.updateReport(
+        // Checked like the create branch below — a refused write must not fall
+        // through to "Saved — generating PDF".
+        const updated = await reportCloud.updateReport(
           existingReportId,
           user.id,
           data as unknown as Record<string, unknown>,
-          customerId
+          customerId,
+          false,
+          'disconnection'
         );
+        if (!updated.success) {
+          toast.error('Failed to save');
+          setIsSaving(false);
+          return;
+        }
       } else {
         const result = await reportCloud.createReport(
           user.id,
           'disconnection' as never,
           data as unknown as Record<string, unknown>,
-          customerId
+          customerId,
+          false,
+          createKey.take()
         );
         if (!result.success) {
           toast.error('Failed to save');
@@ -590,10 +605,14 @@ export default function DisconnectionCertificate() {
           reportIdForSave = result.reportId;
           setExistingReportId(result.reportId);
         }
+        if (!referenceNumber && result.certificateNumber) {
+          referenceNumber = result.certificateNumber;
+          update('referenceNumber', referenceNumber);
+        }
       }
 
       toast.success('Saved — generating PDF...');
-      const savedReportId = reportIdForSave || data.referenceNumber;
+      const savedReportId = reportIdForSave || referenceNumber;
       try {
         let company: Record<string, unknown> = {};
         try {
@@ -604,7 +623,8 @@ export default function DisconnectionCertificate() {
           /* proceed without branding */
         }
 
-        const payload = formatDisconnectionCertificatePayload(data, company);
+        const payload = formatDisconnectionCertificatePayload(
+          { ...data, referenceNumber }, company);
 
         // Store the formatted payload so server-side email regeneration can
         // rebuild the PDF without the client (EV pattern) — reportCloud
@@ -632,7 +652,7 @@ export default function DisconnectionCertificate() {
               pdfResult.download_url,
               user.id,
               savedReportId,
-              data.referenceNumber
+              referenceNumber
             );
             permanentPdfUrl = permanentUrl;
             await supabase
@@ -657,7 +677,7 @@ export default function DisconnectionCertificate() {
           const { openOrDownloadPdf } = await import('@/utils/pdf-download');
           await openOrDownloadPdf(
             permanentPdfUrl,
-            `Disconnection-Certificate-${data.referenceNumber}.pdf`
+            `Disconnection-Certificate-${referenceNumber}.pdf`
           );
           toast.success('Disconnection certificate issued');
         }
@@ -724,6 +744,7 @@ export default function DisconnectionCertificate() {
             <Field label="Record no.">
               <Input
                 value={data.referenceNumber}
+                placeholder="Allocated on first save"
                 onChange={(e) => update('referenceNumber', e.target.value)}
                 className={inputCn}
               />

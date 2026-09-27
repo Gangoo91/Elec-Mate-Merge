@@ -289,7 +289,7 @@ export default function Sub3() {
             </li>
             <li>
               <strong>2. Switch off</strong> the circuit's protective device. Confirm visually that
-              it\'s in the OFF position.
+              it’s in the OFF position.
             </li>
             <li>
               <strong>3. Lock-off</strong> with personal padlock and tag. Use a multi-lock hasp if
@@ -358,7 +358,7 @@ export default function Sub3() {
         <ConceptBlock
           title="Modern installations have multiple energy sources — each needs its own isolation"
           plainEnglish="A residential installation in 2026 may have grid supply (TN-C-S), solar PV (DC up to 600 V), battery storage (DC up to 800 V), EV charger (back-feed via V2G in some installations), microCHP (back-feed AC), and a standby generator. Each is an independent energy source and each has its own isolation point. Killing the main switch only kills the grid input — everything else stays live until you isolate it separately."
-          onSite="The growth of low-carbon technology means most domestic CUs you\'ll work on by mid-decade will have at least one supplementary source. Knowing where to isolate each one is part of the L3 fault-diagnosis competence. Inverter-DC isolators are usually rotary devices on the wall next to the inverter (Santon, Enwitec, BPV); battery DC isolators are often inside the battery housing; generator isolation is usually a changeover switch with a manual lockable position."
+          onSite="The growth of low-carbon technology means most domestic CUs you’ll work on by mid-decade will have at least one supplementary source. Knowing where to isolate each one is part of the L3 fault-diagnosis competence. Inverter-DC isolators are usually rotary devices on the wall next to the inverter (Santon, Enwitec, BPV); battery DC isolators are often inside the battery housing; generator isolation is usually a changeover switch with a manual lockable position."
         >
           <p>Isolation points for common multi-source installations:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -404,14 +404,14 @@ export default function Sub3() {
 
         <ConceptBlock
           title="When the safety case requires the whole property goes off"
-          onSite="Full isolation has the biggest customer impact and is rightly used sparingly — but when it\'s the right answer, the customer impact doesn\'t change the answer. The decision is a Reg 14 risk assessment in real time."
+          onSite="Full isolation has the biggest customer impact and is rightly used sparingly — but when it’s the right answer, the customer impact doesn’t change the answer. The decision is a Reg 14 risk assessment in real time."
         >
           <p>Full installation isolation is required when:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>The fault is on the supply / cut-out / tails / main switch / busbar itself.</li>
             <li>
-              You can\'t reliably identify which circuit feeds the fault location (e.g. a
-              downlighter that takes power from one circuit\'s L and another circuit\'s N — borrowed
+              You can’t reliably identify which circuit feeds the fault location (e.g. a
+              downlighter that takes power from one circuit’s L and another circuit’s N — borrowed
               neutral).
             </li>
             <li>
@@ -536,12 +536,12 @@ export default function Sub3() {
             <>
               Apprentice arrives at a domestic property with a 4&nbsp;kWp solar PV system to
               investigate an earth-leakage fault. They isolate at the main switch and prove dead at
-              the affected circuit\'s accessory. They start cutting back to a junction box. Halfway
-              through the cut they hit the inverter\'s DC input cable that runs through the same
-              containment. The DC side is at 480&nbsp;V (it\'s noon in June); the cut arcs, the
+              the affected circuit’s accessory. They start cutting back to a junction box. Halfway
+              through the cut they hit the inverter’s DC input cable that runs through the same
+              containment. The DC side is at 480&nbsp;V (it’s noon in June); the cut arcs, the
               apprentice gets a DC arc-flash burn, and the inverter is ruined. Diagnosis: AC
-              isolation didn\'t kill the DC side of the PV system, and the apprentice\'s AC-only
-              tester didn\'t see the DC voltage on the cable being cut.
+              isolation didn’t kill the DC side of the PV system, and the apprentice’s AC-only
+              tester didn’t see the DC voltage on the cable being cut.
             </>
           }
           doInstead={
@@ -550,7 +550,7 @@ export default function Sub3() {
               with a DC-rated voltage tester (Fluke T6-1000, Megger MFT1741 in DC mode) on any cable
               that might carry DC. If unsure whether a cable is AC or DC, treat as live until
               verified with the appropriate tester. Cover the PV array with an opaque sheet to drop
-              DC voltage to near-zero if you\'ll be working near DC cables for an extended period.
+              DC voltage to near-zero if you’ll be working near DC cables for an extended period.
             </>
           }
         />
@@ -564,7 +564,7 @@ export default function Sub3() {
               restarts automatically (the contactor was left in the run state when supply went off,
               and the holding circuit re-energises on power return). An apprentice machinist
               standing at the lathe has their hand inside the chuck guard; the spindle starts; the
-              machinist loses two fingers. Cause: no check that the motor\'s local isolator was OFF
+              machinist loses two fingers. Cause: no check that the motor’s local isolator was OFF
               before upstream restoration.
             </>
           }
@@ -595,12 +595,12 @@ export default function Sub3() {
           whatToDo={
             <>
               (1) Brief the customer on the four-category impact &mdash; their freezer is on the
-              affected circuit, they\'ll lose 60&ndash;90 minutes of supply. Agree the timing. (2)
+              affected circuit, they’ll lose 60&ndash;90 minutes of supply. Agree the timing. (2)
               Make a list of all the energy sources: grid, PV, battery, EV. (3) Isolate the kitchen
               RCBO, lock-off, prove dead at the work point, start investigating. (4) For this fault
               you do NOT need to isolate the PV / battery / EV &mdash; their feeds run via separate
-              ways and don\'t share conductors with the kitchen circuit. BUT check the kitchen
-              circuit doesn\'t have a borrowed neutral from the PV feed (older installations
+              ways and don’t share conductors with the kitchen circuit. BUT check the kitchen
+              circuit doesn’t have a borrowed neutral from the PV feed (older installations
               sometimes do). If it does, escalate to multi-source isolation. (5) Find and rectify
               the fault. Retest with an MFT &mdash; insulation resistance, RCD trip-time, polarity.
               (6) Restore, document, brief the customer.
@@ -611,9 +611,9 @@ export default function Sub3() {
               Multi-source CUs are the new normal. The L3 apprentice has to think through the
               isolation for every energy source independently, decide which ones the fault
               investigation actually touches, and isolate accordingly. Over-isolating wastes
-              customer time; under-isolating risks lethal contact with a source that\'s still live.
+              customer time; under-isolating risks lethal contact with a source that’s still live.
               The structured approach &mdash; identify every source, decide which the work touches,
-              isolate those &mdash; is the L3 step-up from the L2 \'just flip the main switch'
+              isolate those &mdash; is the L3 step-up from the L2 ‘just flip the main switch'
               habit.
             </>
           }

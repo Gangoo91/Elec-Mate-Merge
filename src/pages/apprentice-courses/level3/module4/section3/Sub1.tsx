@@ -316,7 +316,7 @@ export default function Sub1() {
           }
           meaning={
             <>
-              The \'fundamental principles' chapter sets the duty for protection against the fault
+              The ‘fundamental principles' chapter sets the duty for protection against the fault
               categories. Overcurrent protection (MCB / fuse) covers overload + short circuit. Earth
               fault protection (RCD / RCBO) covers earth fault. AFDD covers arc faults. SPD covers
               transients. Each category has a designated protective device under the regulation.
@@ -369,7 +369,7 @@ export default function Sub1() {
 
         <ConceptBlock
           title="Why high-resistance joints are the hardest fault to diagnose AND the most dangerous"
-          plainEnglish="HRJ is a termination with higher-than-design contact resistance. The \'normal' resistance is 0.001 Ω or less; an HRJ might be 0.05–5 Ω. Under load, the joint dissipates power as heat (I²R). Sustained heat damages the surrounding insulation and combustibles."
+          plainEnglish="HRJ is a termination with higher-than-design contact resistance. The ‘normal' resistance is 0.001 Ω or less; an HRJ might be 0.05–5 Ω. Under load, the joint dissipates power as heat (I²R). Sustained heat damages the surrounding insulation and combustibles."
           onSite="Sub 2.3 covered the thermal-imaging diagnosis. Sub 2.4 covered the multi-test signature (high R1+R2 + high Zs + voltage drop on load). HRJ is genuinely hard to find — and it's the leading cause of electrical fires in dwellings."
         >
           <p>HRJ causes:</p>
@@ -480,15 +480,15 @@ export default function Sub1() {
         <ContentEyebrow>Where it goes wrong</ContentEyebrow>
 
         <CommonMistake
-          title="Diagnosing an HRJ as \'just a worn socket' and replacing without root cause analysis"
+          title="Diagnosing an HRJ as ‘just a worn socket' and replacing without root cause analysis"
           whatHappens={
             <>
               Apprentice finds a kitchen socket with melted face plate, replaces socket, retests,
               all fine, leaves. Three months later the customer reports another melted socket on the
               same circuit. Apprentice replaces again. Cycle continues. Real cause: the upstream
               socket has been over-loaded for years (kettle + microwave + toaster on a single
-              faceplate) — the issue isn't the socket, it\'s the cable rating + the breaker rating +
-              the user\'s load pattern. The melting socket is a symptom; the design / load issue is
+              faceplate) — the issue isn't the socket, it’s the cable rating + the breaker rating +
+              the user’s load pattern. The melting socket is a symptom; the design / load issue is
               the root cause.
             </>
           }
@@ -530,7 +530,7 @@ export default function Sub1() {
             <>
               Customer reports three symptoms over two weeks: (1) lights flicker briefly when the
               fridge cycles on, (2) RCD on kitchen ring trips occasionally, (3) socket in utility
-              room is warm to the touch. They suspect 'something wrong with the wiring\'.
+              room is warm to the touch. They suspect 'something wrong with the wiring’.
             </>
           }
           whatToDo={
@@ -541,7 +541,7 @@ export default function Sub1() {
               fridge cycles. (2) RCD nuisance trip on kitchen ring — earth leakage. Use clamp meter
               (L+N together) to measure leakage; identify the leaky appliance by elimination (Sub
               3.4 covers this). (3) Warm socket — HRJ at that socket. Thermal imaging under load; if
-              hotspot confirmed, isolate, open, inspect, re-terminate. The customer\'s 'something
+              hotspot confirmed, isolate, open, inspect, re-terminate. The customer’s 'something
               wrong with the wiring' is actually three separate faults of different categories —
               your investigation reports each one and its rectification.
             </>

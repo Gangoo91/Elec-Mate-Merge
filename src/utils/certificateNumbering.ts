@@ -73,6 +73,32 @@ const PREFIX_MAP: Record<string, string> = {
 export const certificatePrefixFor = (reportType: string): string =>
   PREFIX_MAP[reportType] || reportType.toUpperCase();
 
+/**
+ * Does this look like a number the counter (or its offline fallback) produced —
+ * `PREFIX-YYYY-NNNN` or `PREFIX-YYYY-XXXXXX` — rather than the pre-ELE-1542
+ * raw-timestamp stamp (`EV-CHARGING-1789051068772`) that createReport used to
+ * write when a form had no number? The stamp is what 167 live rows are still
+ * filed under; it is not a certificate number and must never be printed.
+ */
+export const isHouseCertificateNumber = (value: unknown): value is string =>
+  typeof value === 'string' && /^[A-Z0-9/-]+-\d{4}-[0-9A-Z]{4,6}$/.test(value.trim());
+
+/**
+ * The number a certificate is issued under (ELE-1592).
+ *
+ * The number already on the form wins. Otherwise one is allocated from the
+ * account's counter. What this must never do is what every PDF path used to
+ * do — `\`EVC-${Date.now()}\`` — because that string went onto the client's
+ * paper, was stored nowhere, and left the row filed under a different number.
+ */
+export const issueCertificateNumber = async (
+  current: unknown,
+  reportType: string
+): Promise<string> => {
+  if (typeof current === 'string' && current.trim()) return current;
+  return generateCertificateNumber(reportType);
+};
+
 export const generateCertificateNumber = async (reportType: string): Promise<string> => {
   const prefix = certificatePrefixFor(reportType);
 

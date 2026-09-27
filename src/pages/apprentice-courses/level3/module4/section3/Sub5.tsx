@@ -336,7 +336,7 @@ export default function Sub5() {
           meaning={
             <>
               HSWA Section 3 puts the duty on the employer to consider the impact of work on third
-              parties — including the customer's data, the customer\'s staff, the customer\'s
+              parties — including the customer's data, the customer’s staff, the customer’s
               clients. Hard power-off of a server with data loss is a foreseeable harm; the firm has
               a duty to coordinate to prevent it.
             </>
@@ -352,7 +352,7 @@ export default function Sub5() {
 
         <ConceptBlock
           title="Regulated systems with their own coordination procedures"
-          plainEnglish="Fire alarm (BS 5839) and emergency lighting (BS 5266) are life-safety systems. Your isolation defeats their function temporarily and must be controlled. The Regulatory Reform (Fire Safety) Order 2005 puts the duty on the building\'s responsible person; your work fits into their procedure."
+          plainEnglish="Fire alarm (BS 5839) and emergency lighting (BS 5266) are life-safety systems. Your isolation defeats their function temporarily and must be controlled. The Regulatory Reform (Fire Safety) Order 2005 puts the duty on the building’s responsible person; your work fits into their procedure."
         >
           <p>Fire alarm isolation procedure:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -377,7 +377,7 @@ export default function Sub5() {
               Verify evacuation route safety; deploy alternative measures if route depends on
               affected lighting.
             </li>
-            <li>Place \'EMERGENCY LIGHTING UNDER MAINTENANCE' signage.</li>
+            <li>Place ‘EMERGENCY LIGHTING UNDER MAINTENANCE' signage.</li>
             <li>Brief responsible person; document in emergency lighting log book.</li>
             <li>Isolate at dedicated isolator; minimise outage to affected segment only.</li>
             <li>
@@ -482,9 +482,9 @@ export default function Sub5() {
           whatHappens={
             <>
               Apprentice isolates the supply to the comms cabinet to investigate a fault. The
-              customer\'s three Dell PowerEdge servers and the NAS array running the office\'s
+              customer’s three Dell PowerEdge servers and the NAS array running the office’s
               accounting database have a hard power-off. The accounting database is mid-transaction;
-              the post-restart database integrity check finds 47 corrupted records; the customer\'s
+              the post-restart database integrity check finds 47 corrupted records; the customer’s
               accountant spends a day reconciling. Bill: £600 of accountant time + lost
               productivity. The firm refunds; the apprentice gets a tutorial on IT coordination.
             </>
@@ -493,7 +493,7 @@ export default function Sub5() {
             <>
               Always coordinate with the IT contact BEFORE isolating any circuit feeding IT
               equipment. The 5–15 minute coordination window is trivial compared to the data-loss
-              cost. If the IT contact isn\'t available, escalate to the supervisor — don\'t proceed
+              cost. If the IT contact isn’t available, escalate to the supervisor — don’t proceed
               with the isolation.
             </>
           }
@@ -507,7 +507,7 @@ export default function Sub5() {
               a fault. The panel goes into fault. The alarm-receiving centre sees the fault signal,
               follows their standing protocol, dispatches the fire brigade. Two engines arrive 8
               minutes later. Hotel guests evacuate. Hotel charges the firm for the false-alarm
-              callout fee + lost revenue from disrupted bookings. The firm\'s fire-safety insurance
+              callout fee + lost revenue from disrupted bookings. The firm’s fire-safety insurance
               excludes coverage for un-notified isolations.
             </>
           }
@@ -515,7 +515,7 @@ export default function Sub5() {
             <>
               ALWAYS notify the ARC before any fire-alarm isolation. Brief the responsible person.
               Place fire watch. Document in the fire log book. The procedure exists because the
-              ARC\'s response to an un-notified fault is to dispatch the fire service, which is
+              ARC’s response to an un-notified fault is to dispatch the fire service, which is
               expensive and embarrassing.
             </>
           }
@@ -525,34 +525,34 @@ export default function Sub5() {
           title="Multi-system isolation at a small care home"
           situation={
             <>
-              You\'re at a 12-resident care home to investigate a fault on the kitchen circuit. The
+              You’re at a 12-resident care home to investigate a fault on the kitchen circuit. The
               kitchen circuit shares an RCD with the medication-fridge circuit (containing insulin),
               the electric beds in two rooms, and the call-bell system feeding back to the
-              night-staff\'s pager.
+              night-staff’s pager.
             </>
           }
           whatToDo={
             <>
               (1) Customer interview — identify the manager (responsible person under CQC), the
-              night-staff lead, and the resident\'s families if needed. (2) Map the affected loads —
+              night-staff lead, and the resident’s families if needed. (2) Map the affected loads —
               kitchen + medication fridge + 2 electric beds + call bell. The medication fridge and
               call bell are life-safety; the beds are mobility-safety. (3) Brief the manager; agree
-              the work timing (mid-morning when residents are mobile and the night staff aren\'t on
+              the work timing (mid-morning when residents are mobile and the night staff aren’t on
               shift). (4) Arrange alternative measures: portable cool-bag for medication fridge
               contents (manager organises); manual operation instructions for the affected beds;
               substitute call-bell coverage by additional staff round (manager organises). (5)
               Confirm with the manager that all alternatives are in place. (6) Isolate, work
               efficiently, restore as fast as possible. (7) After restoration: verify medication
               fridge cooling; verify beds operate normally; verify call bells reach the pager.
-              Document everything in the job sheet AND in the home\'s electrical log book.
+              Document everything in the job sheet AND in the home’s electrical log book.
             </>
           }
           whyItMatters={
             <>
               Care homes have multiple regulated load categories (CQC for clinical, fire safety,
-              food safety) all of which interact with electrical isolation. The L3 apprentice\'s
+              food safety) all of which interact with electrical isolation. The L3 apprentice’s
               role is identifying the regulated loads in the customer interview, planning the
-              isolation around them, and coordinating with the responsible person. \'Just isolate'
+              isolation around them, and coordinating with the responsible person. ‘Just isolate'
               on a care home is a regulatory minefield; the structured approach is what makes the
               work defensible.
             </>

@@ -57,6 +57,7 @@ import {
 import { useG99CommissioningTabs, G99TabValue } from '@/hooks/useG99CommissioningTabs';
 import useReadingKeypad from '@/hooks/useReadingKeypad';
 import { scrollToTopForStepChange } from '@/utils/scroll';
+import { issueCertificateNumber } from '@/utils/certificateNumbering';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -222,8 +223,14 @@ const {
     formData: data,
     enabled: !isLoading && !isLocked,
     isHydrating: isLoading, // Gate autosave while loading from cloud — prevents blank-overwrite race.
-    onReportCreated: (newId) => {
+    onReportCreated: (newId: string, certificateNumber?: string) => {
       setSavedReportId(newId);
+      // ELE-1592 — keep the number the row was filed under; without this the
+      // form stayed blank and the PDF printed an invented timestamp.
+      if (certificateNumber) setData((prev) => (prev.certificateNumber ? prev : { ...prev, certificateNumber }));
+      // The printed reference IS the filed number unless the electrician typed their own.
+      if (certificateNumber)
+        setData((prev) => (prev.referenceNumber ? prev : { ...prev, referenceNumber: certificateNumber }));
       window.history.replaceState(
         null,
         '',
@@ -256,7 +263,7 @@ const {
           setIsLoading(false);
           return;
         }
-        const reportData = await reportCloud.getReportData(editId, user.id);
+        const reportData = await reportCloud.getReportData(editId, user.id, 'g99-commissioning');
         if (reportData) {
           setData((prev) => ({ ...getDefaultG99FormData(), ...prev, ...(reportData as any) }));
           setSavedReportId(editId);
@@ -365,7 +372,7 @@ const {
       try {
         formattedData = formatG99Json({
           ...data,
-          referenceNumber: data.referenceNumber || `G99-${Date.now()}`,
+          referenceNumber: await issueCertificateNumber(data.referenceNumber || data.certificateNumber, 'g99-commissioning'),
         });
       } catch {
         formattedData = undefined; // fall back to server-side pdf_payload
@@ -407,7 +414,14 @@ const {
     setGenerationError(null);
     setShowGenerationDialog(true);
     try {
-      await syncNowImmediate();
+      const synced = await syncNowImmediate();
+      // ELE-1592 — the reference printed is the number the certificate is filed under, never invented.
+      const referenceNumber = await issueCertificateNumber(
+        data.referenceNumber || data.certificateNumber || synced.data?.certificateNumber,
+        'g99-commissioning'
+      );
+      if (referenceNumber !== data.referenceNumber)
+        setData((prev) => ({ ...prev, referenceNumber, certificateNumber: prev.certificateNumber || referenceNumber }));
       const {
         data: { user },
       } = await supabase.auth.getUser();
@@ -432,7 +446,7 @@ const {
         companyEmail: resolved.companyEmail || data.installerEmail,
       };
 
-      const payload = formatG99Json(data, branding);
+      const payload = formatG99Json({ ...data, referenceNumber }, branding);
 
       const { data: pdfResult, error: pdfError } = await supabase.functions.invoke(
         'generate-g99-commissioning-pdf',
@@ -441,9 +455,10 @@ const {
       if (pdfError) throw new Error(pdfError.message || 'PDF generation failed');
       if (!pdfResult?.download_url) throw new Error('No PDF URL returned');
 
-      const filename = `G99-${data.referenceNumber}.pdf`;
+      const filename = `G99-${referenceNumber}.pdf`;
       let url = pdfResult.download_url;
-      const reportId = savedReportId || data.referenceNumber;
+      // The id the sync just created is what the closure cannot see — use it before the state copy.
+      const reportId = synced.reportId || savedReportId || referenceNumber;
       try {
         const { saveCertificatePdf } = await import('@/utils/certificate-pdf-storage');
         const { permanentUrl, storagePath } = await saveCertificatePdf(
@@ -1240,6 +1255,7 @@ const {
           <Field label="Reference no.">
             <Input
               value={data.referenceNumber}
+              placeholder="Allocated on first save"
               onChange={(e) => update('referenceNumber', e.target.value)}
               className={inputCn}
             />

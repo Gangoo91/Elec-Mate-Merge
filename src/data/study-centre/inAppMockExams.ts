@@ -76,6 +76,15 @@ export const IN_APP_MOCK_EXAMS: InAppMockExam[] = [
     path: '/study-centre/mock-exams/osg-table-lookup',
   },
   {
+    id: 'welsh-level3-final',
+    title: 'Welsh Level 3 — final paper',
+    course: 'Welsh Level 3 Electrotechnical Installation',
+    description:
+      'The whole qualification in one paper: working practice, health and safety, electrical science, planning, installation, inspection and testing, and fault diagnosis. Results break down by module.',
+    track: 'apprentice',
+    path: `${APPRENTICE}/welsh-level3/mock-exam`,
+  },
+  {
     id: 'l2-m1',
     title: 'Level 2 — Paper 1',
     course: 'Level 2 Electrical Installation',

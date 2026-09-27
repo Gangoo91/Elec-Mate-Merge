@@ -304,7 +304,7 @@ export default function Sub3() {
 
         <ConceptBlock
           title="The most under-used instrument in the apprentice kit"
-          onSite="Apprentices reach for the multimeter and MFT first. The clamp meter measures things the others can\'t — live load current, earth leakage, inrush — without breaking the circuit. It answers questions the others can\'t."
+          onSite="Apprentices reach for the multimeter and MFT first. The clamp meter measures things the others can’t — live load current, earth leakage, inrush — without breaking the circuit. It answers questions the others can’t."
         >
           <p>
             Three primary fault-diagnosis use cases for the clamp meter (Fluke 376FC, Megger
@@ -322,7 +322,7 @@ export default function Sub3() {
             </li>
             <li>
               <strong>Inrush current capture</strong> — set to inrush mode, arm capture, operate the
-              load. Captures peak current in first 100 ms. Diagnoses \'breaker trips when the
+              load. Captures peak current in first 100 ms. Diagnoses ‘breaker trips when the
               compressor starts' problems — typically resolved by changing breaker type (B → C → D).
             </li>
           </ul>
@@ -356,7 +356,7 @@ export default function Sub3() {
 
         <ConceptBlock
           title="Spotting heat without opening the enclosure"
-          plainEnglish="Loose terminations, overloaded cables, failing components — all generate excess heat under load. A thermal camera spots the hotspots in seconds, without disturbing the installation. For commercial and industrial fault diagnosis it\'s now a standard tool."
+          plainEnglish="Loose terminations, overloaded cables, failing components — all generate excess heat under load. A thermal camera spots the hotspots in seconds, without disturbing the installation. For commercial and industrial fault diagnosis it’s now a standard tool."
           onSite="Most progressive firms have at least one Flir One Pro (~£300, plugs into a smartphone) or Fluke TiS20 (~£1500) in the van fleet. A 30-second thermal scan of a DB at full load identifies every loose termination without opening the cover."
         >
           <p>Standard L3 use cases:</p>
@@ -378,7 +378,7 @@ export default function Sub3() {
               heater suggests a failed element segment.
             </li>
             <li>
-              <strong>Junction box hotspots</strong> — heat in a junction box that\'s at ambient on
+              <strong>Junction box hotspots</strong> — heat in a junction box that’s at ambient on
               adjacent boxes indicates a fault inside.
             </li>
           </ul>
@@ -397,7 +397,7 @@ export default function Sub3() {
 
         <ConceptBlock
           title="Oscilloscope, PQ analyser, motor analyser"
-          onSite="L3 apprentices don\'t typically own these but should know when to ask for one. The senior or specialist deploys; the apprentice supports."
+          onSite="L3 apprentices don’t typically own these but should know when to ask for one. The senior or specialist deploys; the apprentice supports."
         >
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
@@ -487,7 +487,7 @@ export default function Sub3() {
             <>
               Apprentice clamps a Fluke 376FC around the L+N tails of a known-active circuit,
               expecting to read the load current. Meter shows 0.0 A. Apprentice assumes the circuit
-              isn\'t loaded, doesn\'t investigate further. The actual load is 8 A; the L+N together
+              isn’t loaded, doesn’t investigate further. The actual load is 8 A; the L+N together
               reading is the imbalance (earth leakage), which is correctly near zero. Apprentice
               misses the real condition.
             </>
@@ -553,7 +553,7 @@ export default function Sub3() {
               trips. The alternative (wait for the RCD to trip then guess which appliance was on) is
               what most customers describe — and it never finds the cause definitively. The clamp
               lets you catch the leakage in the act, identify the source by elimination, and fix the
-              actual fault. This is the L3 step-up from L2\'s \'reset the breaker and hope'
+              actual fault. This is the L3 step-up from L2’s ‘reset the breaker and hope'
               approach.
             </>
           }

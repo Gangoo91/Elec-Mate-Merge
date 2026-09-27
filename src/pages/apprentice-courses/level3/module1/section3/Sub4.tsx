@@ -92,7 +92,7 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question: 'What\'s a "first-aid needs assessment"?',
+    question: 'What’s a "first-aid needs assessment"?',
     options: [
       'A medical examination each employee undergoes to confirm they are fit to receive first aid.',
       'A test the appointed first aider sits to confirm they can use the equipment in the kit.',
@@ -231,7 +231,7 @@ const faqs = [
       "Psychological first aid (PFA) is short-term support for someone experiencing acute distress after an incident. Not legally required as a separate provision in most workplaces, but increasingly seen as good practice particularly after serious incidents. Mental Health First Aiders (MHFA-qualified) are increasingly part of larger firms' provision; the L3 supervisor recognising someone in shock and signposting to appropriate support is part of mature post-incident care.",
   },
   {
-    question: 'Does the customer\'s "appointed first aider" cover my employees on their site?',
+    question: 'Does the customer’s "appointed first aider" cover my employees on their site?',
     answer:
       "No. The First Aid Regs duty is to your own employees; it is not transferable to the customer. The customer may have their own provision for their staff and for visitors, but your employees remain your responsibility. On commercial sites coordination with the customer's arrangements is sensible (joint procedures, mutual aid agreements) but the legal duty stays with the employer.",
   },
@@ -381,7 +381,7 @@ export default function Sub4() {
         <ConceptBlock
           title="BS 8599 kit standards"
           plainEnglish="BS 8599-1 covers workplace first-aid kits in three sizes (small / medium / large). BS 8599-2 covers vehicle (motor vehicle) first-aid kits. Both specify minimum contents and provide a recommended replacement / inspection regime."
-          onSite="Replacing the firm\'s old generic kits with BS 8599-1 kits is a low-cost compliance win. Most suppliers stock them; £30-£60 per kit typical."
+          onSite="Replacing the firm’s old generic kits with BS 8599-1 kits is a low-cost compliance win. Most suppliers stock them; £30-£60 per kit typical."
         >
           <p>BS 8599-1 small kit contents (illustrative):</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -444,7 +444,7 @@ export default function Sub4() {
 
         <ConceptBlock
           title="Why misuse and non-restock matter"
-          plainEnglish="A first-aid kit only discharges the legal duty if it\'s actually available when the next incident happens. Misuse (using sterile items twice, applying burn gel to non-burns, taking plasters home) depletes the kit. Failure to restock leaves a gap that can be fatal."
+          plainEnglish="A first-aid kit only discharges the legal duty if it’s actually available when the next incident happens. Misuse (using sterile items twice, applying burn gel to non-burns, taking plasters home) depletes the kit. Failure to restock leaves a gap that can be fatal."
           onSite="Treat the first-aid kit as critical equipment. Same discipline as test instruments — checked, used as intended, replenished after use, inspected periodically."
         >
           <p>Common misuse / non-restock issues:</p>
@@ -785,7 +785,7 @@ export default function Sub4() {
 
         <SectionRule />
         <CommonMistake
-          title="Discovering the kit is empty when it\'s needed"
+          title="Discovering the kit is empty when it’s needed"
           whatHappens={
             <>
               Apprentice cuts hand badly on a sharp edge. Goes to the van first-aid kit; finds
@@ -803,7 +803,7 @@ export default function Sub4() {
         />
 
         <CommonMistake
-          title="Assuming the customer\'s kit is available"
+          title="Assuming the customer’s kit is available"
           whatHappens={
             <>
               Operative on customer site assumes the building&apos;s first-aid kit is accessible if
@@ -824,7 +824,7 @@ export default function Sub4() {
           title="Setting up first-aid for a small refurbishment job"
           situation={
             <>
-              You\'re leading a 3-week commercial refurbishment with 2 L2 apprentices and yourself.
+              You’re leading a 3-week commercial refurbishment with 2 L2 apprentices and yourself.
               The site is a vacant unit you have keys to; no other contractors most days; nearest
               hospital A&E is 8 minutes drive. You need to set up first-aid arrangements for the
               project.

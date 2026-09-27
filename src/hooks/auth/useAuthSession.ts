@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { Session, User } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { ProfileType } from './types';
@@ -12,7 +13,35 @@ import {
 // Track Elec-ID generation attempts to avoid duplicate calls
 const elecIdGenerationAttempted = new Set<string>();
 
+/**
+ * Users whose employer roster rows have already been claimed this session.
+ *
+ * 🔴 WHY THE CLAIM LIVES HERE AND NOT WHERE IT USED TO
+ *
+ * An employer adds a team member by email before that person has an account.
+ * `claim_employee_records()` is what later attaches the waiting roster row to
+ * the real account, matching on a CONFIRMED email — and until it runs, the
+ * member has an `employer_employees` row with a null `user_id`, which every
+ * employer-scoped query and RPC ignores. No assigned jobs, no clock-in, no
+ * timesheets, no QS review: `submit_report_for_qs_review` requires
+ * `auth.uid()` to match an active row, so an unclaimed member cannot submit a
+ * certificate for sign-off at all.
+ *
+ * It was called from exactly two places: `useQsTeamContext` — which only runs
+ * on the EICR / EIC / Minor Works forms and the QS screens — and location
+ * resolution. So a member who signed up and used the Study Centre, a
+ * calculator, or any specialist certificate was never linked. One account had
+ * been sitting confirmed and unclaimed for 83 days against an employer's
+ * roster, waiting for its owner to happen to open an EICR.
+ *
+ * Signing in is the moment we know who someone is, so it is the moment to ask.
+ * Cleared on SIGNED_OUT with the Elec-ID set below.
+ */
+const rosterClaimAttempted = new Set<string>();
+
 export function useAuthSession() {
+  // Safe: App.tsx mounts QueryClientProvider OUTSIDE AuthProvider.
+  const queryClient = useQueryClient();
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<ProfileType | null>(null);
@@ -113,6 +142,7 @@ export function useAuthSession() {
       // This prevents blocking generation after logout/login cycle
       if (event === 'SIGNED_OUT') {
         elecIdGenerationAttempted.clear();
+        rosterClaimAttempted.clear();
       }
 
       setSession(currentSession);
@@ -193,6 +223,66 @@ export function useAuthSession() {
       subscription.unsubscribe();
     };
   }, [fetchProfile]);
+
+  /*
+   * Claim any employer roster rows waiting on this account's email.
+   *
+   * Keyed on the user id rather than bolted onto the three places that call
+   * `fetchProfile`, so it runs exactly once per signed-in user however the
+   * session arrived — fresh sign-in, restored session, or biometric unlock.
+   *
+   * Non-blocking and failure-tolerant by design: this is a convenience link,
+   * and nothing about signing in should wait on it or break because of it.
+   */
+  useEffect(() => {
+    const userId = user?.id;
+    if (!userId) return;
+
+    /*
+     * ⚠️ The RPC matches on `email_confirmed_at is not null` and returns 0 for
+     * anyone else. Checking it here rather than letting the RPC no-op means an
+     * unconfirmed user does not burn their one attempt — otherwise someone who
+     * confirmed their email mid-session would stay unlinked until they next
+     * signed in.
+     */
+    if (!user?.email_confirmed_at) return;
+    if (rosterClaimAttempted.has(userId)) return;
+    rosterClaimAttempted.add(userId);
+
+    /*
+     * ⚠️ `supabase.rpc()` returns a PromiseLike, not a Promise — it has `.then`
+     * but no `.catch`, so a `.then().catch()` chain does not compile and a
+     * thrown error would have gone unhandled. try/catch around an await covers
+     * both the returned `error` and a transport throw.
+     */
+    void (async () => {
+      try {
+        const { data, error } = await supabase.rpc('claim_employee_records');
+        if (error) {
+          // Let a later auth event try again — a transient failure here would
+          // otherwise leave the member unlinked for the whole session.
+          rosterClaimAttempted.delete(userId);
+          console.warn('[AUTH] Employer roster claim failed:', error.message);
+          return;
+        }
+        const claimed = typeof data === 'number' ? data : 0;
+        if (claimed > 0) {
+          console.log(`[AUTH] Linked ${claimed} employer roster record(s) to this account`);
+          /*
+           * The account is on a team as of a moment ago. Anything that asked
+           * "am I on a team?" before now holds a stale no — `qs-team-context`
+           * caches for ten minutes. Same two keys JoinTeamCard invalidates
+           * after the invite-code route, for the same reason.
+           */
+          queryClient.invalidateQueries({ queryKey: ['qs-team-context'] });
+          queryClient.invalidateQueries({ queryKey: ['my-employee-record'] });
+        }
+      } catch (err) {
+        rosterClaimAttempted.delete(userId);
+        console.warn('[AUTH] Employer roster claim threw:', err);
+      }
+    })();
+  }, [user?.id, user?.email_confirmed_at, queryClient]);
 
   return {
     session,

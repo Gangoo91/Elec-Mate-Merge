@@ -209,7 +209,7 @@ const faqs = [
   {
     question: 'Are near-misses RIDDOR reportable?',
     answer:
-      '"Near-miss" isn\'t a RIDDOR category. Some near-misses ARE reportable as "dangerous occurrences" (Schedule 2) — e.g. uncontrolled electrical short circuit causing 24+ hour plant stoppage. Most near-misses are internal-only; check Schedule 2 each time.',
+      '"Near-miss" isn’t a RIDDOR category. Some near-misses ARE reportable as "dangerous occurrences" (Schedule 2) — e.g. uncontrolled electrical short circuit causing 24+ hour plant stoppage. Most near-misses are internal-only; check Schedule 2 each time.',
   },
   {
     question: "How does RIDDOR interact with the firm's insurance?",
@@ -290,7 +290,7 @@ export default function Sub5() {
         <ConceptBlock
           title="Five categories with different timescales"
           plainEnglish="RIDDOR has five reportable buckets: fatalities, specified injuries, over-7-day injuries, dangerous occurrences and diseases. Each has its own form and timescale. Knowing which applies to the incident in front of you is the first L3 judgement call."
-          onSite="The L3 reflex when an incident happens: identify the casualty\'s injury or the event, check it against the four schedules (1 specified injuries, 2 dangerous occurrences, 3 diseases) and decide which form / which timescale. When in doubt, escalate immediately and let the responsible person decide."
+          onSite="The L3 reflex when an incident happens: identify the casualty’s injury or the event, check it against the four schedules (1 specified injuries, 2 dangerous occurrences, 3 diseases) and decide which form / which timescale. When in doubt, escalate immediately and let the responsible person decide."
         >
           <p>Quick-reference table:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -364,8 +364,8 @@ export default function Sub5() {
         <ContentEyebrow>Responsible person and the report mechanics</ContentEyebrow>
         <ConceptBlock
           title="Reg 3 responsible person"
-          plainEnglish="RIDDOR Reg 3 defines the \'responsible person' for each category. Usually the employer for employee incidents; the self-employed person for themselves; the person in control of premises in some cases. For an electrical contractor working on a customer\'s site, the contractor employer is usually the responsible person for incidents to their employees. Where the incident affects a member of the public on the customer’s premises, the contractor employer and the premises occupier may BOTH have separate responsible-person duties; the F2508 should be coordinated to avoid duplicate or inconsistent reports."
-          onSite="Knowing your firm\'s RIDDOR responsible person is essential — usually the H&S manager, contracts manager or director. Escalate to them immediately when a reportable trigger occurs. In multi-contractor scenarios (e.g. CDM project) the Principal Contractor often coordinates the RIDDOR response across the trades on site."
+          plainEnglish="RIDDOR Reg 3 defines the ‘responsible person' for each category. Usually the employer for employee incidents; the self-employed person for themselves; the person in control of premises in some cases. For an electrical contractor working on a customer’s site, the contractor employer is usually the responsible person for incidents to their employees. Where the incident affects a member of the public on the customer’s premises, the contractor employer and the premises occupier may BOTH have separate responsible-person duties; the F2508 should be coordinated to avoid duplicate or inconsistent reports."
+          onSite="Knowing your firm’s RIDDOR responsible person is essential — usually the H&S manager, contracts manager or director. Escalate to them immediately when a reportable trigger occurs. In multi-contractor scenarios (e.g. CDM project) the Principal Contractor often coordinates the RIDDOR response across the trades on site."
         >
           <p>The escalation flow:</p>
           <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
@@ -412,7 +412,7 @@ export default function Sub5() {
         <ConceptBlock
           title="3-year statutory retention; longer practice"
           plainEnglish="RIDDOR Reg 12 requires records to be retained for 3 years from the date the record was made. In practice many firms retain indefinitely, particularly residential incidents — the BSA 2022 / Defective Premises Act extension to 30-year retrospective limitation makes long retention prudent. Professional indemnity insurers often expect 6+ year retention to align with their own claims-handling cycle. Major framework clients commonly ask for 5+ years on PQQs."
-          onSite="Records are typically the F2508 PDF, the firm\'s internal incident form, photos, witness statements, RIDDOR acknowledgement email, any HSE correspondence, root-cause analysis, corrective action register. Stored on the firm\'s H&S system or document management; backed up daily; access-controlled."
+          onSite="Records are typically the F2508 PDF, the firm’s internal incident form, photos, witness statements, RIDDOR acknowledgement email, any HSE correspondence, root-cause analysis, corrective action register. Stored on the firm’s H&S system or document management; backed up daily; access-controlled."
         >
           <p>What HSE follow-up typically looks like:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -668,7 +668,7 @@ export default function Sub5() {
         />
 
         <CommonMistake
-          title="Late reporting because \'we wanted to wait and see how serious it was\'"
+          title="Late reporting because ‘we wanted to wait and see how serious it was’"
           whatHappens={
             <>
               Casualty injured Monday; firm decides to &quot;see how it develops&quot; before

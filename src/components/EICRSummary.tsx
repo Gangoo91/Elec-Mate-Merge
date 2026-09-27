@@ -36,11 +36,14 @@ import AIEstimatorSheet from '@/components/inspection/eicr/AIEstimatorSheet';
 import ObservationCodeHelpSheet from '@/components/inspection/ObservationCodeHelpSheet';
 import { openOrDownloadPdf } from '@/utils/pdf-download';
 import QsReviewPanel from '@/components/inspection/shared/QsReviewPanel';
+import HandoutPrompt from '@/components/inspection/shared/HandoutPrompt';
 import { useQsReviewStatus } from '@/hooks/useQsReview';
 import { useEICRValidation } from '@/hooks/useEICRValidation';
 import RaiseRemedialItemsSheet from '@/components/inspection/RaiseRemedialItemsSheet';
 import { normaliseScheme, schemeDisplayLabel } from '@/utils/registrationScheme';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
+import { isKnownNonDwelling, PART_P_NOT_APPLICABLE } from '@/utils/partP';
+import { issueCertificateNumber } from '@/utils/certificateNumbering';
 
 const cardCn =
   '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
@@ -510,7 +513,7 @@ const EICRSummary = ({
       const formattedJson = await formatEICRJson(
         {
           ...latestFormData,
-          certificateNumber: latestFormData?.certificateNumber || `EICR-${Date.now()}`,
+          certificateNumber: await issueCertificateNumber(latestFormData?.certificateNumber, 'eicr'),
         },
         reportIdForEmail
       );
@@ -982,6 +985,11 @@ const EICRSummary = ({
               ))}
             </div>
           </div>
+          {/* ELE-1662 — Part P is for dwellings; a known commercial/industrial
+              property gets the sentence instead of the chips. See utils/partP. */}
+          {isKnownNonDwelling(formData.propertyType) ? (
+            <p className="text-[12px] leading-snug text-white">{PART_P_NOT_APPLICABLE}</p>
+          ) : (
           <div>
             <Label className={labelCn}>Building regs compliance</Label>
             <div className="grid grid-cols-3 gap-2">
@@ -1006,6 +1014,7 @@ const EICRSummary = ({
               ))}
             </div>
           </div>
+          )}
         </div>
       </CollapsibleSection>
 
@@ -1333,7 +1342,29 @@ const EICRSummary = ({
         </div>
       </CollapsibleSection>
 
-      {/* Report authorised by */}
+      {/*
+        Report authorised by.
+
+        ELE-1722 — a sole trader (Craig Soper) asked for this section to go,
+        because the Qualifying Supervisor review directly below it asks him to
+        sign the same certificate a second time. It stays, collapsed, because
+        the BS 7671 model form keeps "Report authorised by" as a role distinct
+        from "Inspected and tested by", and a firm with a separate authoriser
+        still needs it. What changes is that when a QS review is in play we SAY
+        so here, instead of presenting an empty section that looks compulsory:
+        the QS countersignature is the authorisation, and the PDF already falls
+        back to the inspector's signature when these boxes are left blank.
+      */}
+      {qsReviewStatus && qsReviewStatus.status !== 'cancelled' && !authorisedByOpen && (
+        <p className="-mb-3 px-1 text-[12px] leading-snug text-white">
+          {qsReviewStatus.status === 'approved'
+            ? 'This certificate has been countersigned by a Qualifying Supervisor — that authorises the report.'
+            : qsReviewStatus.status === 'returned'
+              ? 'The Qualifying Supervisor returned this certificate with comments; once resubmitted and approved, that countersignature authorises the report.'
+              : 'A Qualifying Supervisor review is in progress — that countersignature will authorise the report.'}{' '}
+          Only fill in the section below if someone other than the QS is authorising it.
+        </p>
+      )}
       <CollapsibleSection
         title="Report authorised by"
         isOpen={authorisedByOpen}
@@ -1657,6 +1688,8 @@ const EICRSummary = ({
                 <CheckCircle className="h-5 w-5" />
                 <span className="text-sm">Certificate generated successfully</span>
               </div>
+              {/* ELE-1556 — offer the matching client handout at the one moment it is relevant */}
+              <HandoutPrompt reportType="eicr" />
               <Button
                 className="w-full h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold rounded-xl touch-manipulation"
                 onClick={async () => {

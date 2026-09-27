@@ -365,7 +365,7 @@ export default function Sub1() {
             </li>
             <li>
               <strong>Electrician / Approved Electrician</strong> &mdash; the bulk of the workforce.
-              Doing the install, signing the apprentice\'s portfolio, completing test certs.
+              Doing the install, signing the apprentice’s portfolio, completing test certs.
             </li>
             <li>
               <strong>Charge Hand</strong> &mdash; senior Approved Electrician leading a small gang.
@@ -429,7 +429,7 @@ export default function Sub1() {
               </div>
               <p className="text-[13.5px] text-white/85 leading-relaxed">
                 Sources materials and equipment to the spec. Manages supplier relationships,
-                negotiates trade discounts, manages the project\'s purchase orders. Office-based.
+                negotiates trade discounts, manages the project’s purchase orders. Office-based.
                 Often a route from technical Estimator into the commercial side.
               </p>
             </div>
@@ -449,9 +449,9 @@ export default function Sub1() {
         <ContentEyebrow>The wider BSE landscape</ContentEyebrow>
 
         <ConceptBlock
-          title="Trades you\'ll work alongside — mechanical, public health, fire, security, BMS"
-          plainEnglish="On any commercial project you\'re one of several building services trades. The mechanical sub-contractor handles heating, ventilation, air-conditioning and chilled water. Public Health handles potable and grey water and drainage. Fire Detection and Alarm specialists handle the fire system. Security sub-contractors handle CCTV, access control and intruder alarms. BMS specialists handle the central building control system. Lifts, escalators and renewables (solar, EV, heat pumps) are typically separate specialist sub-packages."
-          onSite="Knowing what each trade does is essential for sequencing on site. The mechanical trades typically run their main pipework first; you run cable trays and containment around theirs (or vice versa, depending on the design). Fire alarm and BMS often piggy-back on your containment. Coordination meetings with the other trades' Foremen are part of the Foreman\'s job — and a good apprentice quietly absorbs how those conversations work."
+          title="Trades you’ll work alongside — mechanical, public health, fire, security, BMS"
+          plainEnglish="On any commercial project you’re one of several building services trades. The mechanical sub-contractor handles heating, ventilation, air-conditioning and chilled water. Public Health handles potable and grey water and drainage. Fire Detection and Alarm specialists handle the fire system. Security sub-contractors handle CCTV, access control and intruder alarms. BMS specialists handle the central building control system. Lifts, escalators and renewables (solar, EV, heat pumps) are typically separate specialist sub-packages."
+          onSite="Knowing what each trade does is essential for sequencing on site. The mechanical trades typically run their main pipework first; you run cable trays and containment around theirs (or vice versa, depending on the design). Fire alarm and BMS often piggy-back on your containment. Coordination meetings with the other trades' Foremen are part of the Foreman’s job — and a good apprentice quietly absorbs how those conversations work."
         >
           <p>The other building services disciplines and what they install:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -614,7 +614,7 @@ export default function Sub1() {
         <ContentEyebrow>Where it goes wrong</ContentEyebrow>
 
         <CommonMistake
-          title="Treating \'electrical' as the only career option"
+          title="Treating ‘electrical' as the only career option"
           whatHappens={
             <>
               Apprentice finishes AM2, takes an Electrician role with their training employer, stays
@@ -639,7 +639,7 @@ export default function Sub1() {
         />
 
         <Scenario
-          title="You\'re two years post-AM2 — what\'s the next move?"
+          title="You’re two years post-AM2 — what’s the next move?"
           situation={
             <>
               You finished your apprenticeship two years ago, you&apos;re on the standard

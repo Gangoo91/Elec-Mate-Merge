@@ -171,7 +171,7 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      'Prove-test-prove is the standard safe isolation method. Step 1 — confirm the indicator works (on a proving unit or a known live circuit). Step 2 — test the conductors at the work point. Step 3 — re-prove the indicator on the known source to confirm it didn\'t fail (battery die, internal fault) between Steps 1 and 2. Without Step 3, a "dead" reading could just mean a broken indicator. This three-step sequence is the routine for every dead-prove activity.',
+      'Prove-test-prove is the standard safe isolation method. Step 1 — confirm the indicator works (on a proving unit or a known live circuit). Step 2 — test the conductors at the work point. Step 3 — re-prove the indicator on the known source to confirm it didn’t fail (battery die, internal fault) between Steps 1 and 2. Without Step 3, a "dead" reading could just mean a broken indicator. This three-step sequence is the routine for every dead-prove activity.',
   },
 ];
 
@@ -278,7 +278,7 @@ export default function Sub5() {
           clause="Test equipment, including leads, probes and clips, should be such that their selection and use will minimise the risk to the user and to other persons. Probes should be insulated to leave no more than 4 mm of exposed metal at the tip; leads should be fused; clips should not be used to connect to live conductors. The prove-test-prove sequence using a known good supply is essential to confirm voltage indicator integrity."
           meaning={
             <>
-              GS38 is HSE\'s definitive guidance on test equipment. Compliant kit: 4 mm max exposed
+              GS38 is HSE’s definitive guidance on test equipment. Compliant kit: 4 mm max exposed
               metal at the probe tip (or shrouded retractable tips), fused leads, no crocodile clip
               terminations on live conductors, finger barriers on probes. Plus the prove-test-prove
               method using a known-good source. Non-compliant kit (unfused leads, exposed probe
@@ -296,7 +296,7 @@ export default function Sub5() {
         <ConceptBlock
           title="Solar PV, generators, UPS — every source must be isolated"
           plainEnglish="Modern installations often have multiple sources of supply. Solar PV can backfeed the consumer circuits via the inverter even when the main switch is off (depending on inverter type and isolators). Standby generators auto-start on supply loss. UPS systems hold their stored energy even with mains gone. You must isolate ALL sources before working."
-          onSite="Look at the single-line diagram. Identify every source. Isolate each one at its own isolator. Lock off each. THEN prove dead at the work location. The order matters because backfeed makes \'dead at the consumer side of the main switch' meaningless if the PV inverter is still pushing voltage in from the generation side."
+          onSite="Look at the single-line diagram. Identify every source. Isolate each one at its own isolator. Lock off each. THEN prove dead at the work location. The order matters because backfeed makes ‘dead at the consumer side of the main switch' meaningless if the PV inverter is still pushing voltage in from the generation side."
         >
           <p>Isolation procedure for multi-source installations:</p>
           <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
@@ -390,18 +390,18 @@ export default function Sub5() {
               three-phase with TPN feeders. You identify the breaker labelled "kitchen ring" and
               switch it off. Without locking it off you go to the kitchen to investigate. Meanwhile
               the owner returns, sees a tripped breaker (your "off" looks the same as a trip on this
-              board) and resets it. You\'re at the back of a socket pulling conductors out when the
+              board) and resets it. You’re at the back of a socket pulling conductors out when the
               supply comes back on at 230 V via the L1 conductor. The shock pathway is hand-to-hand
-              or hand-to-foot depending on what you\'re touching. You\'re lucky to walk away.
+              or hand-to-foot depending on what you’re touching. You’re lucky to walk away.
             </>
           }
           doInstead={
             <>
-              Always lock off — even on a quick job, even when "no one\'s around". Padlock the
+              Always lock off — even on a quick job, even when "no one’s around". Padlock the
               breaker handle in the off position. Tag with your name and date. If the board has no
-              lock-off provision, fit a temporary lock-off device or escalate (don\'t work without
+              lock-off provision, fit a temporary lock-off device or escalate (don’t work without
               it). If you must leave the work for any reason — even briefly — re-prove dead when you
-              return. The "I\'ll only be a minute" mindset has killed and injured a lot of
+              return. The "I’ll only be a minute" mindset has killed and injured a lot of
               electricians. The lock-off + tag is the cheapest safety device you own.
             </>
           }
@@ -616,7 +616,7 @@ export default function Sub5() {
           }
           whatToDo={
             <>
-              Brief the customer at quoting stage. Schedule the work for daytime (so CPAP isn\'t
+              Brief the customer at quoting stage. Schedule the work for daytime (so CPAP isn’t
               affected). Plan for at least 4-5 hours of supply loss. Recommend the customer save
               files, shut down the PC properly, switch off non-essential equipment in advance. For
               the fish tank, bring a small inverter generator or UPS for the air pump and heater to
@@ -630,7 +630,7 @@ export default function Sub5() {
           }
           whyItMatters={
             <>
-              Safe isolation is not just about the worker. It\'s about managing downstream
+              Safe isolation is not just about the worker. It’s about managing downstream
               consequences for everyone affected. Five minutes of planning and a 30-second
               conversation at quoting stage prevents 4 hours of emergency calls about a dying fish
               tank, a complaint about lost work, or worse — a customer relying on critical equipment

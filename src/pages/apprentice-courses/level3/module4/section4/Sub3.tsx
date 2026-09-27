@@ -437,17 +437,17 @@ export default function Sub3() {
           title="Recording 'pass' on a borderline reading without flagging"
           whatHappens={
             <>
-              Apprentice tests IR on an older domestic circuit; reads 2 MΩ. Records 'PASS' (it\'s
-              above 1 MΩ). Customer\'s certificate shows the circuit as compliant. Six months later
+              Apprentice tests IR on an older domestic circuit; reads 2 MΩ. Records 'PASS' (it’s
+              above 1 MΩ). Customer’s certificate shows the circuit as compliant. Six months later
               the insulation has degraded further to 0.3 MΩ; the circuit fails an EICR; the
-              customer\'s solicitor argues the previous certificate was inaccurate. The 2 MΩ reading
+              customer’s solicitor argues the previous certificate was inaccurate. The 2 MΩ reading
               was a developing fault that should have been flagged at the time as a Code 3
               (Improvement Recommended) finding.
             </>
           }
           doInstead={
             <>
-              Record the reading value AND the assessment. \'IR 2 MΩ — passes minimum but well below
+              Record the reading value AND the assessment. ‘IR 2 MΩ — passes minimum but well below
               expected for modern installation; recommend investigation' is the right entry. The
               customer can decide whether to authorise further work; the firm has a defensible
               record of having flagged the developing fault.
@@ -456,21 +456,21 @@ export default function Sub3() {
         />
 
         <CommonMistake
-          title="Walking away from a Code 1 finding because it\'s outside the call-out scope"
+          title="Walking away from a Code 1 finding because it’s outside the call-out scope"
           whatHappens={
             <>
               Apprentice is at a property to investigate a tripped breaker. During the work they
               notice a junction box in the loft with disconnected CPC — Code 1 (Danger Present).
-              They think 'not my job, here for the breaker' and ignore it. Customer\'s child takes a
-              shock from a metal lamp two months later. HSE investigation finds the apprentice\'s
-              job sheet noted the loft inspection; the customer\'s solicitor argues the apprentice
+              They think 'not my job, here for the breaker' and ignore it. Customer’s child takes a
+              shock from a metal lamp two months later. HSE investigation finds the apprentice’s
+              job sheet noted the loft inspection; the customer’s solicitor argues the apprentice
               had a duty to act on what they saw.
             </>
           }
           doInstead={
             <>
               Code 1 found mid-job triggers immediate action regardless of original call-out scope.
-              Make safe, DCN to customer, escalate to supervisor, document. The \'not my job'
+              Make safe, DCN to customer, escalate to supervisor, document. The ‘not my job'
               approach is a regulatory minefield. HSE / Building Regs / professional indemnity
               insurers all expect operatives to act on what they find.
             </>
@@ -481,9 +481,9 @@ export default function Sub3() {
           title="Borderline IR reading on an old conservatory circuit"
           situation={
             <>
-              You\'re investigating a different fault on a 25-year-old domestic property. As part of
-              the visit you do a quick IR test on the conservatory\'s lighting circuit — reads 1.8
-              MΩ. The minimum is 1 MΩ. The customer is asking whether you\'ve found anything else.
+              You’re investigating a different fault on a 25-year-old domestic property. As part of
+              the visit you do a quick IR test on the conservatory’s lighting circuit — reads 1.8
+              MΩ. The minimum is 1 MΩ. The customer is asking whether you’ve found anything else.
             </>
           }
           whatToDo={
@@ -491,13 +491,13 @@ export default function Sub3() {
               (1) Verify — repeat the test; reading stabilises at 1.8 MΩ. Verify with backup
               instrument if available. (2) Identify failure mode — borderline IR suggests insulation
               degradation in progress (moisture, contamination, ageing); typical for a 25-year-old
-              conservatory exposed to humidity. (3) Discuss with customer — \'This circuit passes
+              conservatory exposed to humidity. (3) Discuss with customer — ‘This circuit passes
               the safety standard but the reading is close to the limit. It suggests something is
               starting to degrade. Could be water in a junction box, ageing insulation, or
-              contamination. I\'d recommend further investigation now rather than wait for it to
-              fail completely\'. (4) Customer decides — if they authorise further investigation,
+              contamination. I’d recommend further investigation now rather than wait for it to
+              fail completely’. (4) Customer decides — if they authorise further investigation,
               isolate and dismantle to find the source; if they decline, document the recommendation
-              and the customer\'s choice. (5) Document on job sheet — IR value, recommendation,
+              and the customer’s choice. (5) Document on job sheet — IR value, recommendation,
               customer decision. Issue a written advisory if customer declines further work,
               recording your recommendation.
             </>
@@ -507,7 +507,7 @@ export default function Sub3() {
               Borderline readings are diagnostic signals. The L3 apprentice flags them as developing
               faults rather than dismissing as pass. The customer makes the commercial decision; the
               firm has a defensible record of having identified and reported the developing issue.
-              Without the L3 \'pass vs healthy' thinking, the borderline reading becomes invisible
+              Without the L3 ‘pass vs healthy' thinking, the borderline reading becomes invisible
               until the circuit fails.
             </>
           }

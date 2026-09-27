@@ -46,7 +46,6 @@ import { DiaryEntriesDetailSheet } from '@/components/apprentice/stats-detail/Di
 import { StudyStreakDetailSheet } from '@/components/apprentice/stats-detail/StudyStreakDetailSheet';
 import { ProgressDetailSheet } from '@/components/apprentice/stats-detail/ProgressDetailSheet';
 import { cn } from '@/lib/utils';
-import { ReferralRaceCard } from '@/components/referrals/ReferralRaceCard';
 
 // ─────────────────────────────────────────────────────────────────────────
 // Editorial helpers
@@ -458,7 +457,6 @@ export default function ApprenticeHub() {
       <HubBody>
         {/* August Referral Race — everyone, whole campaign, not dismissible.
             Self-hides after 31 Aug. */}
-        <ReferralRaceCard />
 
         {/* Start something first — see the other hubs. */}
         <HubQuickStart label="Start something" items={quickStart} />

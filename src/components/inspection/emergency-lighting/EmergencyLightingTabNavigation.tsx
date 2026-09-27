@@ -26,6 +26,7 @@ import CertShellFooter, {
   certFooterNeutralButton,
 } from '@/components/inspection/shared/CertShellFooter';
 import { readEdgeFunctionError } from '@/lib/edgeFunctionError';
+import { issueCertificateNumber } from '@/utils/certificateNumbering';
 
 interface EmergencyLightingTabNavigationProps {
   currentTab: string;
@@ -100,7 +101,10 @@ const EmergencyLightingTabNavigation: React.FC<EmergencyLightingTabNavigationPro
       let formattedData: Record<string, unknown> | undefined;
       try {
         if (formData) {
-          const certificateNumber = formData.certificateNumber || `EL-${Date.now()}`;
+          const certificateNumber = await issueCertificateNumber(
+            formData.certificateNumber,
+            'emergency-lighting'
+          );
           if (!formData.certificateNumber) {
             // Persist the minted number so the emailed PDF and a later
             // Generate share the same certificate number.

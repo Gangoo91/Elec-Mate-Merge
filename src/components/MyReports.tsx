@@ -101,6 +101,7 @@ const TYPE_GROUPS: { label: string; types: { value: string; label: string }[] }[
       { value: 'fire-alarm-commissioning', label: 'FA G2' },
       { value: 'fire-alarm-inspection', label: 'FA G7' },
       { value: 'fire-alarm-modification', label: 'FA G4' },
+      { value: 'fire-alarm-design', label: 'FA G1 design' },
     ],
   },
   {
@@ -130,14 +131,35 @@ const TYPE_GROUPS: { label: string; types: { value: string; label: string }[] }[
       { value: 'visual-condition', label: 'Visual' },
       { value: 'routine-inspection', label: 'Routine' },
       { value: 'pre-purchase-survey', label: 'Survey' },
+      /*
+       * Testing-only is the FOURTH most common certificate in the database and
+       * had no chip at all — the same omission as the two above, on a type
+       * fifty-odd users actually hold. The rest are here for completeness so
+       * that "what does the user have?" and "what can the user filter to?"
+       * are the same question again.
+       */
+      { value: 'testing-only', label: 'Testing' },
+      { value: 'board-schedule', label: 'Board' },
+      { value: 'lightning-protection', label: 'Lightning' },
+      { value: 'g98-commissioning', label: 'G98' },
+      { value: 'g99-commissioning', label: 'G99' },
     ],
   },
   {
     label: 'Notices',
     types: [
       { value: 'danger-notice', label: 'Danger' },
+      /* ⚠️ `isolation-cert`, not `isolation-certificate` — this must match the
+         value STORED in reports.report_type, which the report_id prefix yields
+         as the short form. The ROUTE is the long one; certificate-href aliases
+         between them. */
       { value: 'isolation-cert', label: 'Isolation' },
       { value: 'permit-to-work', label: 'Permit' },
+      { value: 'safe-isolation', label: 'Safe isolation' },
+      { value: 'limitation-notice', label: 'Limitation' },
+      { value: 'non-compliance-notice', label: 'Non-compliance' },
+      { value: 'completion-notice', label: 'Completion' },
+      { value: 'disconnection', label: 'Disconnection' },
     ],
   },
 ];

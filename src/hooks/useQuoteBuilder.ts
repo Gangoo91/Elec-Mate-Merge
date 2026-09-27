@@ -10,6 +10,12 @@ import { supabase } from '@/integrations/supabase/client';
 import { logger, generateRequestId } from '@/utils/logger';
 import { computeQuoteTotals } from '@/utils/quote-calculations';
 import { moveLineItemUp, moveLineItemDown } from '@/utils/lineItemReorder';
+import {
+  labourForTimeAllowance,
+  reconcileDerivedLabour,
+  detachDerivedLabour,
+  takesOwnershipOfDerived,
+} from '@/utils/timeAllowance';
 import { openOrDownloadPdf } from '@/utils/pdf-download';
 
 export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Quote) => {
@@ -65,42 +71,102 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
     setQuote((prev) => ({ ...prev, settings, updatedAt: new Date() }));
   }, []);
 
-  const addItem = useCallback((item: Omit<QuoteItem, 'id' | 'totalPrice'>) => {
-    const base = item.quantity * item.unitPrice;
+  /*
+   * ELE-1780 — derived labour lives HERE, not in the components.
+   *
+   * The Price Book path emits its labour line from `EnhancedQuoteItemsStep`
+   * and nothing owns it afterwards, so deleting the material leaves the
+   * labour behind on the quote. Doing it in the hook means every one of the
+   * twelve places that build quote items gets the behaviour, and none of them
+   * can forget the cleanup.
+   */
+  const rateSources = useMemo(
+    () => ({
+      workerRates: companyProfile?.worker_rates ?? null,
+      hourlyRate: companyProfile?.hourly_rate ?? null,
+    }),
+    [companyProfile?.worker_rates, companyProfile?.hourly_rate]
+  );
+
+  const priceItem = (item: Omit<QuoteItem, 'id' | 'totalPrice'>, id: string): QuoteItem => {
+    const base = (item.quantity || 0) * (item.unitPrice || 0);
     const adj = item.itemAdjustmentPercent;
-    const totalPrice = typeof adj === 'number' && adj !== 0 ? base * (1 + adj / 100) : base;
-    const newItem: QuoteItem = {
+    return {
       ...item,
-      id: uuidv4(),
-      totalPrice,
+      id,
+      totalPrice: typeof adj === 'number' && adj !== 0 ? base * (1 + adj / 100) : base,
     };
+  };
 
-    setQuote((prev) => ({
-      ...prev,
-      items: [...(prev.items || []), newItem],
-      updatedAt: new Date(),
-    }));
-  }, []);
+  /** The derived labour a parent should now have, priced and identified. */
+  const derivedFor = useCallback(
+    (parent: QuoteItem): QuoteItem[] =>
+      labourForTimeAllowance(parent, rateSources).map((line) => priceItem(line, uuidv4())),
+    [rateSources]
+  );
 
-  const updateItem = useCallback((itemId: string, updates: Partial<QuoteItem>) => {
-    setQuote((prev) => ({
-      ...prev,
-      items: prev.items?.map((item) => {
-        if (item.id !== itemId) return item;
-        const merged = { ...item, ...updates };
-        const base = (merged.quantity || 0) * (merged.unitPrice || 0);
-        const adj = merged.itemAdjustmentPercent;
-        merged.totalPrice = typeof adj === 'number' && adj !== 0 ? base * (1 + adj / 100) : base;
-        return merged;
-      }),
-      updatedAt: new Date(),
-    }));
-  }, []);
+  const addItem = useCallback(
+    (item: Omit<QuoteItem, 'id' | 'totalPrice'>) => {
+      // Minted up front: the derived labour has to point at it.
+      const newItem = priceItem(item, uuidv4());
+
+      setQuote((prev) => ({
+        ...prev,
+        items: [...(prev.items || []), newItem, ...derivedFor(newItem)],
+        updatedAt: new Date(),
+      }));
+    },
+    [derivedFor]
+  );
+
+  const updateItem = useCallback(
+    (itemId: string, updates: Partial<QuoteItem>) => {
+      setQuote((prev) => {
+        let parent: QuoteItem | undefined;
+        const items = prev.items?.map((item) => {
+          if (item.id !== itemId) return item;
+          const merged = { ...item, ...updates };
+          const base = (merged.quantity || 0) * (merged.unitPrice || 0);
+          const adj = merged.itemAdjustmentPercent;
+          merged.totalPrice = typeof adj === 'number' && adj !== 0 ? base * (1 + adj / 100) : base;
+          parent = merged;
+          return merged;
+        });
+
+        // The estimator edited the money or the time on a DERIVED line, so it
+        // is theirs now — detach it and clear the parent's allowance rather
+        // than regenerating over a deliberate correction.
+        if (parent?.derivedFromItemId && takesOwnershipOfDerived(updates)) {
+          return {
+            ...prev,
+            items: detachDerivedLabour(items ?? [], itemId),
+            updatedAt: new Date(),
+          };
+        }
+
+        // Quantity and grade both feed the allowance, so recompute on any edit
+        // to the parent rather than trying to guess which fields mattered.
+        const next =
+          parent && !parent.derivedFromItemId
+            ? reconcileDerivedLabour(items ?? [], itemId, derivedFor(parent))
+            : items;
+
+        return { ...prev, items: next, updatedAt: new Date() };
+      });
+    },
+    [derivedFor]
+  );
 
   const removeItem = useCallback((itemId: string) => {
     setQuote((prev) => ({
       ...prev,
-      items: prev.items?.filter((item) => item.id !== itemId),
+      // Remove the line, then its derived labour — `reconcileDerivedLabour`
+      // sees the parent is gone and drops the children with it.
+      items: reconcileDerivedLabour(
+        (prev.items ?? []).filter((item) => item.id !== itemId),
+        itemId,
+        []
+      ),
       updatedAt: new Date(),
     }));
   }, []);

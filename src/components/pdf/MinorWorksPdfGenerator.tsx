@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useCreateReportKey } from '@/hooks/useCreateReportKey';
 import { Button } from '@/components/ui/button';
 import {
   Sheet,
@@ -27,6 +28,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { Capacitor } from '@capacitor/core';
 import QsReviewPanel from '@/components/inspection/shared/QsReviewPanel';
+import HandoutPrompt from '@/components/inspection/shared/HandoutPrompt';
 import { sharePdfBytesFromUrlToWhatsAppWeb } from '@/utils/share-pdf-to-whatsapp-web';
 import { sharePdfFileNative, canShareFilesToWhatsApp } from '@/utils/share-pdf-file-native';
 import { importWithRetry } from '@/utils/lazyWithRetry';
@@ -64,6 +66,8 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
   userId,
 }) => {
   const [isExporting, setIsExporting] = useState(false);
+  // ELE-1603 — Generate and Email both create when the form was never saved; one key covers both.
+  const createKey = useCreateReportKey('minor-works');
   const [exportProgress, setExportProgress] = useState(0);
   const [exportStatus, setExportStatus] = useState<
     'preparing' | 'generating' | 'complete' | 'error'
@@ -262,7 +266,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
       let savedReportId = reportId;
 
       if (!existingReport) {
-        const createResult = await reportCloud.createReport(user.id, 'minor-works', formData);
+        const createResult = await reportCloud.createReport(user.id, 'minor-works', formData, undefined, false, createKey.take());
         if (!createResult.success || !createResult.reportId) {
           throw new Error('Failed to save report before generating PDF');
         }
@@ -270,7 +274,12 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
         onReportIdChange?.(savedReportId);
       } else {
         if (savedReportId) {
-          await reportCloud.updateReport(savedReportId, user.id, formData);
+          // Same treatment as the create branch above: a refused write must not
+          // let the PDF generate from data that never reached the row.
+          const updated = await reportCloud.updateReport(savedReportId, user.id, formData, undefined, false, 'minor-works');
+          if (!updated.success) {
+            throw new Error('Failed to save report before generating PDF');
+          }
         }
       }
 
@@ -459,17 +468,20 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
 
       const { reportCloud } = await importWithRetry(() => import('@/utils/reportCloud'));
       let savedReportId = reportId;
+      // The number the row is created with, when this email is the first save (ELE-1592).
+      let filedUnder: string | undefined;
       const existingReport = reportId
         ? await reportCloud.getReportByReportId(reportId, user.id)
         : null;
       if (existingReport && savedReportId) {
-        await reportCloud.updateReport(savedReportId, user.id, formData);
+        await reportCloud.updateReport(savedReportId, user.id, formData, undefined, false, 'minor-works');
       } else {
-        const createResult = await reportCloud.createReport(user.id, 'minor-works', formData);
+        const createResult = await reportCloud.createReport(user.id, 'minor-works', formData, undefined, false, createKey.take());
         if (!createResult.success || !createResult.reportId) {
           throw new Error('Failed to save the certificate before emailing.');
         }
         savedReportId = createResult.reportId;
+        filedUnder = createResult.certificateNumber;
         onReportIdChange?.(savedReportId);
       }
 
@@ -479,7 +491,12 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
       try {
         formattedData = await buildFormattedPayload(savedReportId);
         if (!formattedData.certificateNumber) {
-          formattedData.certificateNumber = `MW-${Date.now()}`;
+          // Never an invented number on a certificate (ELE-1592): the row's own,
+          // else one from the account's counter.
+          const { issueCertificateNumber } = await importWithRetry(
+            () => import('@/utils/certificateNumbering')
+          );
+          formattedData.certificateNumber = await issueCertificateNumber(filedUnder, 'minor-works');
         }
       } catch {
         formattedData = undefined; // fall back to server-side pdf_payload
@@ -778,6 +795,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
         pdfFilename={pdfFilenameForDialog}
         errorMessage={generationError}
         documentLabel="Certificate"
+        afterActions={<HandoutPrompt reportType="minor-works" className="w-full text-left" />}
       />
     </>
   );

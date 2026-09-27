@@ -51,6 +51,7 @@ import { cn } from '@/lib/utils';
 import { generateCertificateNumber } from '@/utils/certificateNumbering';
 import { scrollToTopForStepChange } from '@/utils/scroll';
 import { coverKeysFromFormData } from '@/utils/certCoverPayload';
+import { useEngineerVerify } from '@/utils/engineerVerify';
 
 const REPORT_TYPE = 'fire-alarm' as const;
 
@@ -73,6 +74,8 @@ export default function FireAlarmCertificate() {
 
   // State
   const [formData, setFormData] = useState<Record<string, any>>(getDefaultFireAlarmFormData());
+  // ELE-1453 — Elec-ID verify QR for the signature box; {} when the user has none.
+  const engineerVerify = useEngineerVerify();
   const [isSaving, setIsSaving] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [showGenerationDialog, setShowGenerationDialog] = useState(false);
@@ -121,8 +124,12 @@ export default function FireAlarmCertificate() {
     formData,
     enabled: !isLoading && !isLocked,
     isHydrating: isLoading, // Gate autosave while loading from cloud — prevents blank-overwrite race.
-    onReportCreated: (newId) => {
+    onReportCreated: (newId: string, certificateNumber?: string) => {
       setSavedReportId(newId);
+      // ELE-1592 — keep the number the row was filed under; without this the
+      // form stayed blank and the PDF printed an invented timestamp.
+      if (certificateNumber)
+        setFormData((prev) => (prev.certificateNumber ? prev : { ...prev, certificateNumber }));
       window.history.replaceState(null, '', `/electrician/inspection-testing/fire-alarm/${newId}`);
     },
   });
@@ -182,7 +189,7 @@ export default function FireAlarmCertificate() {
     (photos: string[]): Record<string, any> => {
       let merged: Record<string, any> = {
         ...formData,
-        certificateNumber: formData.certificateNumber || `FA-${Date.now()}`,
+        certificateNumber: formData.certificateNumber,
         photos: [...(Array.isArray(formData.photos) ? formData.photos : []), ...photos],
       };
 
@@ -238,7 +245,7 @@ export default function FireAlarmCertificate() {
   const emailFormattedData = useMemo(() => {
     if (!showEmailDialog) return undefined;
     try {
-      return formatFireAlarmJson(buildPdfFormData(generalPhotoUrls));
+      return { ...formatFireAlarmJson(buildPdfFormData(generalPhotoUrls)), ...engineerVerify };
     } catch {
       return undefined; // fall back to server-side pdf_payload
     }
@@ -282,7 +289,7 @@ export default function FireAlarmCertificate() {
           }
 
           const localDraft = draftStorage.loadDraft(REPORT_TYPE, id);
-          const report = await reportCloud.getReportData(id, authUser.id);
+          const report = await reportCloud.getReportData(id, authUser.id, 'fire-alarm');
 
           if (report) {
             if (localDraft && draftStorage.isLocalDraftNewer(REPORT_TYPE, id, report.updated_at)) {
@@ -401,7 +408,7 @@ export default function FireAlarmCertificate() {
 
       const dataWithCertNumber = buildPdfFormData(generalPhotos);
 
-      const pdfData = formatFireAlarmJson(dataWithCertNumber);
+      const pdfData = { ...formatFireAlarmJson(dataWithCertNumber), ...engineerVerify };
 
       // Save formatted payload for email/reports page reuse
       if (savedReportId) {

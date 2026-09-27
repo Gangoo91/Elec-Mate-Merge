@@ -172,7 +172,7 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      'The inspector sets the next-inspection date based on the GN3 frequency table and professional judgement. The decision must be a "reasonable and informed" one — based on the installation type, its environment, how it will be used, and any specific risks identified. The reasoning must be recorded on the EIC or EICR so it can be justified if challenged. This is the inspector\'s decision, not the client\'s.',
+      'The inspector sets the next-inspection date based on the GN3 frequency table and professional judgement. The decision must be a "reasonable and informed" one — based on the installation type, its environment, how it will be used, and any specific risks identified. The reasoning must be recorded on the EIC or EICR so it can be justified if challenged. This is the inspector’s decision, not the client’s.',
   },
 ];
 
@@ -203,11 +203,11 @@ const faqs = [
     question:
       'Can I sign the EIC if I personally completed the dead tests but my colleague did the live tests?',
     answer:
-      'Generally no, unless the colleague also signs (or the test record clearly attributes which person did which tests). The "Inspection & Testing" signature is your declaration that YOU did the I&T. If two competent persons split the work, both should sign or the form should be annotated to make the split clear. Otherwise you are signing for work you didn\'t personally verify.',
+      'Generally no, unless the colleague also signs (or the test record clearly attributes which person did which tests). The "Inspection & Testing" signature is your declaration that YOU did the I&T. If two competent persons split the work, both should sign or the form should be annotated to make the split clear. Otherwise you are signing for work you didn’t personally verify.',
   },
   {
     question:
-      'What\'s the difference between an EIC and a "Building Regulations Compliance Certificate"?',
+      'What’s the difference between an EIC and a "Building Regulations Compliance Certificate"?',
     answer:
       'The EIC is the BS 7671 verification document — confirms the installation meets the wiring standard. The Building Regulations Compliance Certificate is issued by the scheme provider after notification to confirm the work has been notified and meets the Building Regulations. Both are required for notifiable Part P work. The EIC comes from you; the Compliance Certificate comes from the scheme. Hand both to the client.',
   },
@@ -369,40 +369,40 @@ export default function Sub4() {
         <ConceptBlock
           title="Three signature blocks, three distinct duties"
           plainEnglish="The EIC has separate signature blocks for Design, Construction, and Inspection & Testing because three different competences are at play. On a small job one person covers all three. On larger jobs they may be split between organisations — and each signature carries its own legal responsibility."
-          onSite="Sign only for what you personally did or directly supervised. Signing for someone else\'s design or someone else\'s construction without verification is professional misconduct."
+          onSite="Sign only for what you personally did or directly supervised. Signing for someone else’s design or someone else’s construction without verification is professional misconduct."
         >
           <p>The three competences:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
               <strong>Design.</strong> Per BS 7671 Part 4 (protection) and Part 5 (selection and
               erection). Sized the cables, picked the protective devices, designed the ADS,
-              specified RCDs and AFDDs where required, addressed special locations. The designer\'s
+              specified RCDs and AFDDs where required, addressed special locations. The designer’s
               signature confirms the design meets BS 7671.
             </li>
             <li>
               <strong>Construction.</strong> Per BS 7671 Part 5 in execution. Installed per the
               design, used compliant materials, terminated per manufacturer instructions, followed
-              installation methods. The constructor\'s signature confirms what is on site matches
+              installation methods. The constructor’s signature confirms what is on site matches
               the design.
             </li>
             <li>
               <strong>Inspection & Testing.</strong> Per BS 7671 Part 6. Verified the install via
-              the Reg 642 visual checks and Reg 643 test sequence. The inspector\'s signature
+              the Reg 642 visual checks and Reg 643 test sequence. The inspector’s signature
               confirms the verification is complete and the installation is safe to energise.
             </li>
           </ul>
         </ConceptBlock>
 
         <CommonMistake
-          title="One competent person signing all three blocks for someone else\'s work"
+          title="One competent person signing all three blocks for someone else’s work"
           whatHappens={
             <>
               You arrive at a job to do "just the testing" for a contractor friend. The work was
-              done by them and an apprentice over the past week. You\'ve seen none of it under
+              done by them and an apprentice over the past week. You’ve seen none of it under
               construction. You complete the dead-test sequence and the live tests — readings all
               pass. Your friend asks you to sign all three blocks "to make the paperwork simpler"
-              because they aren\'t scheme-registered themselves. You sign. Six months later a fault
-              traces to a dodgy termination you couldn\'t have seen during testing. The
+              because they aren’t scheme-registered themselves. You sign. Six months later a fault
+              traces to a dodgy termination you couldn’t have seen during testing. The
               investigation discovers you signed for design and construction without personal
               involvement. Your scheme suspends you for false certification.
             </>
@@ -411,7 +411,7 @@ export default function Sub4() {
             <>
               Sign only what you actually did. If you did only inspection and testing, sign only
               that block. Your friend signs design and construction (and is responsible for them).
-              If they aren\'t scheme-registered, that\'s their problem — they need to join a scheme
+              If they aren’t scheme-registered, that’s their problem — they need to join a scheme
               or notify building control themselves for Part P work. Helping them bypass
               certification by ghost-signing exposes you legally and professionally for no benefit.
               The EIC three-signature structure exists precisely to keep these responsibilities
@@ -642,7 +642,7 @@ export default function Sub4() {
           title="Hand-over conversation on a CU change"
           situation={
             <>
-              You\'ve just completed a consumer unit upgrade in a domestic property. EIC and
+              You’ve just completed a consumer unit upgrade in a domestic property. EIC and
               schedules generated, all RCBOs tested and pass, AFDDs (recommended in this case)
               fitted to two bedroom circuits. Building Regulations Compliance Certificate is queued
               on the scheme portal awaiting your sign-off. Time to hand over to the homeowner.
@@ -665,7 +665,7 @@ export default function Sub4() {
             <>
               A 5-minute hand-over is the difference between a confused client who calls weekly with
               "what does this mean?" questions and a client who feels supported and understood.
-              It\'s also the moment the duty cascade transfers — they need to understand they are
+              It’s also the moment the duty cascade transfers — they need to understand they are
               now the duty holder for ongoing maintenance. Doing this well protects both you and
               them, and dramatically increases the likelihood of repeat custom and referrals.
             </>

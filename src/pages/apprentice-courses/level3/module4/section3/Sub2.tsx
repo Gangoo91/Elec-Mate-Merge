@@ -278,7 +278,7 @@ export default function Sub2() {
           <p>The six questions in order:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
-              <strong>WHAT exactly happens?</strong> In customer's own words. Don\'t paraphrase or
+              <strong>WHAT exactly happens?</strong> In customer's own words. Don’t paraphrase or
               interpret yet.
             </li>
             <li>
@@ -349,15 +349,15 @@ export default function Sub2() {
 
         <ConceptBlock
           title="Customer language vs engineering interpretation"
-          onSite="Each common symptom maps to a small set of engineering hypotheses. The customer\'s other answers (when, where, what changed) narrow which hypothesis is most likely."
+          onSite="Each common symptom maps to a small set of engineering hypotheses. The customer’s other answers (when, where, what changed) narrow which hypothesis is most likely."
         >
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
-              <strong>\'Lights flicker when X starts'</strong> — voltage drop on supply path during
+              <strong>‘Lights flicker when X starts'</strong> — voltage drop on supply path during
               X's inrush; HRJ on supply tails or undersized supply cable.
             </li>
             <li>
-              <strong>\'Smell of burning plastic'</strong> — HRJ at char point; fire-risk; immediate
+              <strong>‘Smell of burning plastic'</strong> — HRJ at char point; fire-risk; immediate
               isolation + investigation.
             </li>
             <li>
@@ -479,10 +479,10 @@ export default function Sub2() {
           title="Skipping the customer interview"
           whatHappens={
             <>
-              Apprentice arrives at a \'lights flickering' job, immediately starts testing the
+              Apprentice arrives at a ‘lights flickering' job, immediately starts testing the
               lighting circuits. Spends 90 minutes investigating, finds no fault on the lighting
               circuits. Customer mentions in passing 'oh, it only flickers when the heat pump turns
-              on\'. Apprentice realises they\'ve been investigating the wrong circuit — the issue is
+              on’. Apprentice realises they’ve been investigating the wrong circuit — the issue is
               on the supply tail to the heat pump, dropping voltage on every cycle. 90 minutes
               wasted; customer charged for time; customer dissatisfied.
             </>
@@ -490,7 +490,7 @@ export default function Sub2() {
           doInstead={
             <>
               Always run the structured interview before opening any enclosure. Five minutes of
-              interview saves thirty minutes of misdirected testing. The customer\'s \'oh by the
+              interview saves thirty minutes of misdirected testing. The customer’s ‘oh by the
               way' details are usually the clue that points to the actual fault.
             </>
           }
@@ -512,7 +512,7 @@ export default function Sub2() {
             <>
               Burning plastic smell is always immediate. Reschedule lower-priority jobs if needed;
               isolate at the main switch on arrival to remove the heat source; investigate, find,
-              rectify before leaving site. The \'we\'ll come back' approach is wrong for any
+              rectify before leaving site. The ‘we’ll come back' approach is wrong for any
               fire-risk symptom.
             </>
           }
@@ -523,20 +523,20 @@ export default function Sub2() {
           situation={
             <>
               Customer is vague — 'the lights have been a bit weird for months, sometimes they
-              flicker, sometimes they\'re dim, my husband says it\'s nothing but I\'m worried\'.
-              They don\'t know which lights, when, or what triggers it.
+              flicker, sometimes they’re dim, my husband says it’s nothing but I’m worried’.
+              They don’t know which lights, when, or what triggers it.
             </>
           }
           whatToDo={
             <>
-              Run the structured interview methodically. (1) WHAT — \'tell me about the most recent
+              Run the structured interview methodically. (1) WHAT — ‘tell me about the most recent
               time you noticed it; what exactly happened?' (Customer recalls: dimming in the kitchen
               yesterday evening). (2) WHEN — 'what time, what was happening?' (7pm, kettle was
               boiling). (3) WHERE — 'just the kitchen, or other rooms?' (Mostly kitchen, sometimes
               hallway). (4) HOW LONG — 'when did you first notice?' (Six months ago, after they had
               the kitchen extension built). (5) WHAT TRIED — 'have you tried anything?' (Replaced
-              the bulbs, didn't help). (6) WHAT CHANGED — \'kitchen extension built' answers it.
-              Investigation focuses on the kitchen extension\'s wiring — likely an HRJ at the
+              the bulbs, didn't help). (6) WHAT CHANGED — ‘kitchen extension built' answers it.
+              Investigation focuses on the kitchen extension’s wiring — likely an HRJ at the
               junction where the new wiring meets the existing circuit, exposed under high-current
               loads (kettle inrush). Thermal imaging at the kitchen junction box during a controlled
               kettle test confirms the hotspot. Open box, find loose terminal, re-terminate, retest,
@@ -545,10 +545,10 @@ export default function Sub2() {
           }
           whyItMatters={
             <>
-              The customer\'s vague initial description hid a clear engineering picture — recent
+              The customer’s vague initial description hid a clear engineering picture — recent
               building work introduced a high-resistance termination, exposed under load. Without
-              the structured interview the apprentice would have wasted hours chasing \'lights are
-              dim\'. With the interview, the building-work clue points directly to the fault
+              the structured interview the apprentice would have wasted hours chasing ‘lights are
+              dim’. With the interview, the building-work clue points directly to the fault
               location. This is the L3 step-up — using the interview as the primary diagnostic tool,
               not an optional preamble.
             </>

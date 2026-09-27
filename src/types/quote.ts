@@ -20,6 +20,38 @@ export interface QuoteItem {
   // ELE-888 — per-item adjustment. Signed percent: +10 = 10% markup, -20 = 20% off.
   itemAdjustmentPercent?: number;
   itemAdjustmentLabel?: string;
+
+  /*
+   * ELE-1780 — time allowance on ANY line, not just labour lines.
+   *
+   * Deliberately NOT `hours`. `generate-pdf-monkey:765-781` decides a line's
+   * printed unit with `hours > 0 || hourlyRate > 0 || category === 'labour'`,
+   * so putting hours on a material line makes the PDF print "Socket outlet —
+   * 0.5 hour". ELE-1076 and ELE-1406 are both that normaliser going wrong;
+   * a separate field keeps it out of the argument entirely.
+   *
+   * PER UNIT, like the Price Book's `labour_hours` — `labourLinesFor`
+   * multiplies by quantity. 0.5 on a line of 10 sockets is 5 hours.
+   *
+   * An ARRAY, and the same `{ grade, hours }` shape the Price Book already
+   * uses (`labourGrades.LabourAllocation`). Real jobs are not one trade: a
+   * board change is an electrician AND an apprentice on site together, and
+   * pricing it at one rate is wrong whichever rate you pick — which is the
+   * argument `labourAllocations` already makes for price-book items. A
+   * free-typed line deserves the same, or the estimator adds the line twice
+   * to say a thing the model should be able to hold.
+   */
+  timeAllowance?: { grade: string; hours: number }[];
+  /**
+   * Set on an auto-emitted labour line, pointing at the item whose time
+   * allowance produced it.
+   *
+   * Without this a derived line is indistinguishable from one the estimator
+   * typed, so deleting the parent orphans it — which is what happens today
+   * with Price Book labour (`EnhancedQuoteItemsStep.tsx:861-873` emits from
+   * the component and nothing ever cleans up).
+   */
+  derivedFromItemId?: string;
 }
 
 export interface WorkerType {
@@ -74,7 +106,15 @@ export interface JobDetails {
 }
 
 export interface QuoteSettings {
-  labourRate: number;
+  /*
+   * ELE-1780 — `labourRate` REMOVED.
+   *
+   * A vestigial "one global labour rate". `computeQuoteTotals` never read it;
+   * two builders set it and nothing consumed it. Labour has been per-item for
+   * a long time (`QuoteItem.hours` / `hourlyRate`, and the grade rates in
+   * `company_profiles.worker_rates`), so a field promising a single rate was
+   * a trap for anyone looking for the live input.
+   */
   overheadPercentage: number;
   profitMargin: number;
   vatRate: number;

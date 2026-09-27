@@ -5,6 +5,8 @@ import { Badge } from '@/components/ui/badge';
 import { MobileInput } from '@/components/ui/mobile-input';
 import { Trash2, Copy, Wrench, Package, Zap } from 'lucide-react';
 import { QuoteItem } from '@/types/quote';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
+import TimeAllowanceField from './TimeAllowanceField';
 
 interface MobileQuoteItemCardProps {
   item: QuoteItem;
@@ -19,6 +21,8 @@ export const MobileQuoteItemCard = ({
   onRemove,
   onDuplicate,
 }: MobileQuoteItemCardProps) => {
+  // React-Query cached on a shared key, so a list of cards is one fetch.
+  const { companyProfile } = useCompanyProfile();
   const [qtyDraft, setQtyDraft] = useState(item.quantity === 0 ? '' : String(item.quantity));
   const [priceDraft, setPriceDraft] = useState(item.unitPrice === 0 ? '' : String(item.unitPrice));
 
@@ -121,6 +125,14 @@ export const MobileQuoteItemCard = ({
           unit="£"
         />
       </div>
+
+      {/* ELE-1780 — time allowance on this line, rolled into labour. */}
+      <TimeAllowanceField
+        item={item}
+        onUpdate={onUpdate}
+        workerRates={companyProfile?.worker_rates ?? null}
+        hourlyRate={companyProfile?.hourly_rate ?? null}
+      />
 
       {/* Notes if any */}
       {item.notes && (

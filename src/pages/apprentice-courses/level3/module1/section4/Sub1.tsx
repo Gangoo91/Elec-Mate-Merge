@@ -188,7 +188,7 @@ const faqs = [
       'No — the old EU CHIP scheme orange-square symbols were replaced by CLP red-diamond pictograms from 2015. Anything still using the old symbols is out of date; treat with caution and verify the SDS.',
   },
   {
-    question: 'What\'s the difference between "Danger" and "Warning" signal words?',
+    question: 'What’s the difference between "Danger" and "Warning" signal words?',
     answer:
       'Both appear on CLP labels. Danger = more severe hazard categories. Warning = less severe. Plus the same pictogram can carry either signal word depending on category.',
   },
@@ -225,7 +225,7 @@ const faqs = [
   {
     question: "What happens with substances that don't have a WEL?",
     answer:
-      'COSHH still applies. Reg 7 requires exposure to be adequately controlled; absence of a specific WEL doesn\'t mean unlimited exposure. The duty is to control to a level "compatible with what is known of the substance" — manufacturer\'s recommendations, scientific literature, occupational hygiene judgement.',
+      'COSHH still applies. Reg 7 requires exposure to be adequately controlled; absence of a specific WEL doesn’t mean unlimited exposure. The duty is to control to a level "compatible with what is known of the substance" — manufacturer’s recommendations, scientific literature, occupational hygiene judgement.',
   },
   {
     question: 'How does waste segregation work for hazardous waste from electrical work?',
@@ -993,7 +993,7 @@ export default function Sub1() {
               Your firm is starting a 6-week commercial fit-out. The team will bring contact
               cleaners, silicone sprays, mastics, copper grease, FR sealant, isopropyl alcohol
               cleaning wipes, lithium drill batteries, and a small bottle of solder flux. You're the
-              L3 supervisor. The customer\'s site manager asks for your COSHH register before work
+              L3 supervisor. The customer’s site manager asks for your COSHH register before work
               starts.
             </>
           }

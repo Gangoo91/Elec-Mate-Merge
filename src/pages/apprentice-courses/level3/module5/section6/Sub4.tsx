@@ -629,12 +629,12 @@ export default function Sub4() {
               <strong>Part J — Combustion appliances and fuel storage systems.</strong>
               Electrical work near gas appliances (interlocks, flue gas analysers, smart gas
               meters); CO alarms; ventilation interlocks. The electrical contractor typically
-              interfaces with the gas safe engineer\'s scope.
+              interfaces with the gas safe engineer’s scope.
             </li>
             <li>
               <strong>Part F — Ventilation.</strong> Mechanical ventilation systems (extract fans,
               MVHR, MEV) — typically the electrical contractor wires the fan / control / sensors per
-              the ventilation designer\'s spec.
+              the ventilation designer’s spec.
             </li>
             <li>
               <strong>Part S — Infrastructure for charging electric vehicles.</strong> New build
@@ -645,7 +645,7 @@ export default function Sub4() {
           </ul>
           <p>
             The wider Building Control submission for a project typically aggregates all applicable
-            Parts. Your electrical EIC + CPS notification covers Part P; the principal contractor\'s
+            Parts. Your electrical EIC + CPS notification covers Part P; the principal contractor’s
             submission covers the other Parts. On a one-trade alteration job (CU swap, new circuit)
             only Part P is normally in scope from your side; on a project where you are part of a
             wider build, confirm with the principal contractor which Parts your work feeds into.
@@ -663,7 +663,7 @@ export default function Sub4() {
               You install a new EV charger circuit on an existing dwelling for a customer who pays
               cash and asks you to keep things informal. You issue an EIC but skip the NICEIC upload
               to save the per-notification fee. Three years later the customer sells the property;
-              the buyer\'s solicitor requests the Building Control Compliance Certificate; you
+              the buyer’s solicitor requests the Building Control Compliance Certificate; you
               cannot produce one because there was no notification. The local authority becomes
               aware and issues an enforcement notice. The customer turns on you for the cost of
               regularising the installation (typically requires an EICR and possibly remedial work
@@ -676,7 +676,7 @@ export default function Sub4() {
               Notify every Part P notifiable job. Same-day upload is best; within the 30-day window
               is required. If you really cannot use the CPS route for a particular job, the customer
               has to apply to LABC directly before the work starts. There is no third option of
-              \"just don\'t notify\". Unnotified notifiable work is unlawful; it surfaces at sale,
+              \"just don’t notify\". Unnotified notifiable work is unlawful; it surfaces at sale,
               at insurance claim, at EICR; it costs both you and the customer significantly more to
               regularise later than to notify properly at the time.
             </>

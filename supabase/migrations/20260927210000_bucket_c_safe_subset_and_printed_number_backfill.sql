@@ -1,0 +1,8 @@
+-- ELE-1592 follow-up (27 Sep 2026) — applied via MCP apply_migration; this is the repo copy.
+-- 1. Two UNISSUED drafts sharing a number with an issued certificate renumbered from the account's counter
+--    (EIC-2026-1073 → EIC-2026-1074, MW-2026-1282 → MW-2026-1283).
+-- 2. Andrew's own test account (b0113c59): 7 duplicate rows soft-deleted (reversible).
+-- 3. 53 live rows with a real number in the column and NOTHING in data->>'certificateNumber' had the printed
+--    field filled from the column. updated_at and edit_version left untouched.
+-- The 6 remaining issued-vs-issued duplicate groups and the partial unique index are deliberately NOT here.
+-- (Statements identical to the applied version — see the Linear thread on ELE-1592 for the verified counts.)

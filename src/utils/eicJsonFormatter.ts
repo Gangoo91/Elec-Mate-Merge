@@ -17,6 +17,9 @@ import { getBoardWays,
 import { formatDesignStandard } from '@/data/standards';
 import type { EICPayload } from '@/types/eic-payload';
 import { importWithRetry } from '@/utils/lazyWithRetry';
+import { isKnownNonDwelling } from '@/utils/partP';
+import { buildingRegsAddressed, buildingRegsAnswered } from '@/components/inspection/shared/BuildingRegsNotification';
+import { resolveEngineerVerify } from '@/utils/engineerVerify';
 
 /* ------------------------------------------------------------------ */
 /*  Normaliser helpers                                                  */
@@ -357,7 +360,10 @@ export async function formatEicJson(
 
     standards_compliance: {
       design_standard: formatDesignStandard(formData.designStandard),
-      part_p_compliance: normalisePartPCompliance(formData.partPCompliance || ''),
+      // ELE-1662 — a known non-dwelling never prints a Part P status. See utils/partP.
+      part_p_compliance: isKnownNonDwelling(formData.installationType)
+        ? 'Not Applicable' // the explicit value, not the blank one — see normalisePartPCompliance
+        : normalisePartPCompliance(formData.partPCompliance || ''),
     },
 
     supply_characteristics: {
@@ -791,6 +797,19 @@ export async function formatEicJson(
     next_inspection: {
       interval_months: formData.nextInspectionInterval || '',
       recommended_date: formData.nextInspectionDate || '',
+      /*
+       * ELE-1632 — the change-of-occupancy recommendation, as the finished
+       * sentence, so the template cannot paraphrase it. Identical wording and
+       * source to the EICR (`reinspect_on_occupancy_change_note` there): IET
+       * Guidance Note 3, 3.1. Guidance, NOT a BS 7671 regulation — do not add
+       * a 65x citation. ⚠️ The live EIC template on PDFMonkey must print
+       * `next_inspection.reinspect_on_occupancy_change_note` before this
+       * reaches paper; the key is emitted here so that patch is one line.
+       */
+      reinspect_on_occupancy_change: formData.reinspectOnOccupancyChange ? 'Yes' : '',
+      reinspect_on_occupancy_change_note: formData.reinspectOnOccupancyChange
+        ? 'Further inspection is recommended on a change of occupancy or change of use of the premises, in addition to the interval above.'
+        : '',
     },
 
     existing_installation_comments: formData.existingInstallationComments || '',
@@ -875,11 +894,38 @@ export async function formatEicJson(
         membership_no: formData.reportAuthorisedByMembershipNo || '',
       },
       bs7671_compliance: formData.bs7671Compliance ?? false,
-      building_regs_compliance: formData.buildingRegsCompliance ?? false,
+      // ELE-1663 — derived from the notification answer (shared with the EV);
+      // a legacy row that only ever had the tick keeps it.
+      building_regs_compliance: isKnownNonDwelling(formData.installationType)
+        ? false
+        : buildingRegsAddressed(formData, formData.installationType) ||
+          (!buildingRegsAnswered(formData) && (formData.buildingRegsCompliance ?? false)),
       competent_person_scheme: formData.competentPersonScheme ?? false,
+      /*
+       * Same block the EV template prints (SECTION M2). ⚠️ The live EIC V2
+       * PDFMonkey template does not print it yet — see ELE-1663 for the Liquid.
+       */
+      building_regs_notification: (() => {
+        const applies = !isKnownNonDwelling(formData.installationType);
+        const yn = (v: unknown) => (!applies ? 'N/A' : v ? 'Yes' : 'No');
+        return {
+          applies,
+          answered: applies && buildingRegsAnswered(formData),
+          required: applies && !!formData.buildingRegsRequired,
+          required_display: yn(formData.buildingRegsRequired),
+          via_scheme: applies && !!formData.buildingRegsViaScheme,
+          via_scheme_display: yn(formData.buildingRegsViaScheme),
+          submitted: applies && !!formData.buildingRegsSubmitted,
+          submitted_display: yn(formData.buildingRegsSubmitted),
+          reference: (formData.buildingRegsReference as string) || '',
+        };
+      })(),
     },
 
     observations: await formatObservationsWithPhotos(formData.observations || [], reportId),
+
+    // ELE-1453 — "Verify this engineer": Elec-ID QR + address in the signature block.
+    ...(await resolveEngineerVerify()),
 
     // Company branding (nested for template sections that use company_details.*)
     company_details: {

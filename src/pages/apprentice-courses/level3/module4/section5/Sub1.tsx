@@ -322,11 +322,11 @@ export default function Sub1() {
 
         <SectionRule />
 
-        <ContentEyebrow>What\'s repairable vs replacement-only</ContentEyebrow>
+        <ContentEyebrow>What’s repairable vs replacement-only</ContentEyebrow>
 
         <ConceptBlock
-          title="The boundary is usually \'is this a single field-replaceable unit?'"
-          onSite="Sealed devices (RCBOs, drivers, AFDDs, electronic boards) are replacement-only. Assembled devices with field-accessible components (cable terminations, accessory faceplates, switch modules) are repairable. Manufacturer\'s design choice typically determines the boundary."
+          title="The boundary is usually ‘is this a single field-replaceable unit?'"
+          onSite="Sealed devices (RCBOs, drivers, AFDDs, electronic boards) are replacement-only. Assembled devices with field-accessible components (cable terminations, accessory faceplates, switch modules) are repairable. Manufacturer’s design choice typically determines the boundary."
         >
           <p>Typically REPAIRABLE:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -376,7 +376,7 @@ export default function Sub1() {
             </li>
             <li>
               <strong>Documented:</strong> the chosen option, the recommendation if the customer
-              chose a less-preferred option, the customer\'s signed acceptance.
+              chose a less-preferred option, the customer’s signed acceptance.
             </li>
           </ul>
         </ConceptBlock>
@@ -594,7 +594,7 @@ export default function Sub1() {
               Apprentice diagnoses a fault and quotes only the most expensive solution (full CU
               replacement). Customer feels overcharged; gets second opinion from another firm;
               second firm quotes the cheaper compliant option (single RCBO replacement). Customer
-              dismisses the original firm; bad reputation; lost work. The original quote wasn\'t
+              dismisses the original firm; bad reputation; lost work. The original quote wasn’t
               wrong — but presenting only one option felt like upsell to the customer.
             </>
           }
@@ -602,28 +602,28 @@ export default function Sub1() {
             <>
               For non-trivial decisions, quote 2–3 options with trade-offs explained. Customer feels
               respected as a decision-maker; firm preserves trust; commercial relationship
-              continues. Multi-option quoting takes 5 more minutes and prevents the \'they tried to
+              continues. Multi-option quoting takes 5 more minutes and prevents the ‘they tried to
               upsell me' complaint.
             </>
           }
         />
 
         <CommonMistake
-          title="Accepting a customer\'s request for non-compliant repair"
+          title="Accepting a customer’s request for non-compliant repair"
           whatHappens={
             <>
-              Customer can't afford the recommended fix and asks the apprentice to \'just patch it'
+              Customer can't afford the recommended fix and asks the apprentice to ‘just patch it'
               below BS 7671 spec. Apprentice (under pressure) does the patch. Six months later the
               patch fails, causes a fire. Insurance investigates; finds the work was below BS 7671;
-              firm\'s professional indemnity refuses cover; the apprentice is named in the
+              firm’s professional indemnity refuses cover; the apprentice is named in the
               prosecution alongside the firm.
             </>
           }
           doInstead={
             <>
-              Below BS 7671 is non-compliance, not engineering. If the customer can\'t afford the
+              Below BS 7671 is non-compliance, not engineering. If the customer can’t afford the
               right fix: (1) Decline the work (better than installing unsafe). (2) Quote a smaller
-              compliant scope. (3) Escalate to senior to make the call. The customer\'s budget is
+              compliant scope. (3) Escalate to senior to make the call. The customer’s budget is
               not your professional duty; BS 7671 is.
             </>
           }
@@ -633,7 +633,7 @@ export default function Sub1() {
           title="25-year-old CU with a failing RCD"
           situation={
             <>
-              You\'re at a property to investigate an RCD that\'s failing the trip-time test (350 ms
+              You’re at a property to investigate an RCD that’s failing the trip-time test (350 ms
               at I∆n vs 300 ms maximum). The CU is a 25-year-old Wylex Standard. Customer asks about
               repair vs replace.
             </>
@@ -658,9 +658,9 @@ export default function Sub1() {
           whyItMatters={
             <>
               The structured six-factor analysis gives the customer a defensible engineering
-              decision. Both options are BS 7671 compliant; the customer\'s commercial choice is
+              decision. Both options are BS 7671 compliant; the customer’s commercial choice is
               informed; the firm has documented its recommendation for future reference. The L3
-              apprentice\'s role is option presentation + trade-off explanation; the customer makes
+              apprentice’s role is option presentation + trade-off explanation; the customer makes
               the commercial call.
             </>
           }

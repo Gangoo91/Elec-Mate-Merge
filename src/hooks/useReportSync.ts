@@ -8,6 +8,7 @@ import * as Sentry from '@sentry/react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { reportCloud, VersionConflict, ReportType } from '@/utils/reportCloud';
+import { certificateTypeLabel } from '@/utils/certificate-href';
 import { draftStorage } from '@/utils/draftStorage';
 import { syncQueue, SyncOperation } from '@/utils/syncQueue';
 import { trackFeatureUse } from '@/components/ActivityTracker';
@@ -32,7 +33,8 @@ interface UseReportSyncOptions {
   enabled?: boolean;
   customerId?: string;
   onConflict?: (conflict: VersionConflict, localData: any) => void;
-  onReportCreated?: (reportId: string) => void; // Called when auto-sync creates a new report
+  /** Called when auto-sync creates a new report — with the certificate number the row was created with, for the form to adopt (ELE-1592). */
+  onReportCreated?: (reportId: string, certificateNumber?: string) => void;
   /**
    * When true, skip cloud autosave. Use while the report is hydrating from the cloud
    * to prevent the initial blank React state from being committed before load completes.
@@ -91,10 +93,110 @@ function getCloudSyncDebounce(): number {
   return 3000;
 }
 
+/**
+ * The array(s) that carry each certificate type's BODY — the rows a user spends
+ * a visit filling in. Keys verified against what live reports actually store,
+ * not against the form's TypeScript defaults: `fire-alarm` was being checked for
+ * `devices` and `testSchedule`, and `solar-pv` for `panels`, none of which any
+ * saved report has ever had.
+ *
+ * 🔴 WHY THIS TABLE EXISTS
+ *
+ * The three guards below used to be switch statements listing five types —
+ * pat-testing, emergency-lighting, the fire-alarm family, ev-charging and
+ * solar-pv — and sending EVERYTHING ELSE to a `default` branch that counts
+ * circuits, schedule-of-test rows and distribution boards. Those are EICR
+ * fields. No Smoke & CO alarm certificate has ever had one.
+ *
+ * So for smoke-co-alarm, and for every other specialist type, the two tests
+ * were not merely inaccurate, they were INVERTED:
+ *
+ *   isSubstantiallyPopulated  a cert with 21 alarms on it counted 0 circuits
+ *                             and returned FALSE — never "populated".
+ *   isNearEmpty               that same full cert counted 0 circuits and
+ *                             returned TRUE — always "near empty".
+ *
+ * The blank-overwrite guard fires only on populated-then-near-empty, so on
+ * those types it could never fire at all. That guard is the thing standing
+ * between a remount holding blank form state and a completed certificate. A
+ * user reported the result as "I filled it out once and then when I went back
+ * into it, it deleted everything I input and I had to start again."
+ *
+ * A type absent from this table keeps the EICR body fields, which is right for
+ * eicr / eic / minor-works / testing-only and harmless for the single-page
+ * notices that have no body rows at all (both tests then disagree, so the guard
+ * stays dormant exactly as it does today).
+ */
+const BODY_ARRAYS: Record<string, string[]> = {
+  'pat-testing': ['appliances'],
+  'emergency-lighting': ['luminaires', 'luxReadings'],
+  'fire-alarm': [
+    'detectors', 'zones', 'callPoints', 'sounders',
+    'interfaceEquipment', 'aspiratingUnits', 'repeaterPanels',
+  ],
+  'fire-alarm-design': ['zones', 'interfaceEquipment', 'drawings'],
+  'fire-alarm-commissioning': ['detectors', 'zones', 'callPoints', 'sounders', 'interfaceEquipment'],
+  'fire-alarm-inspection': ['defectsFound', 'previousDefects', 'sampledDevices'],
+  'fire-alarm-modification': ['detectors', 'zones', 'callPoints', 'sounders', 'interfaceEquipment'],
+  'ev-charging': ['testResults'],
+  'solar-pv': ['arrays', 'inverters'],
+  'smoke-co-alarm': ['alarms'],
+  'lightning-protection': [
+    'visualInspection', 'earthElectrodeTests', 'downConductorTests',
+    'bondingTests', 'spdChecks', 'separationChecks', 'observations',
+  ],
+  'plug-in-solar': ['remedialItems'],
+  'visual-condition': ['inspectionItems', 'observations'],
+  'routine-inspection': ['inspectionItems', 'observations', 'spotChecks'],
+  'pre-purchase-survey': ['findings'],
+  'danger-notice': ['dangers'],
+  'limitation-notice': ['limitations'],
+  'non-compliance-notice': ['items'],
+  'completion-notice': ['workItems', 'materialsUsed'],
+  'board-schedule': ['circuits'],
+};
+
+/** Rows on the biggest body array this type has. 0 when the type has none. */
+function bodyRowCount(reportType: string, data: any): number {
+  const keys = BODY_ARRAYS[reportType];
+  if (!keys) return 0;
+  return keys.reduce((max, k) => Math.max(max, Array.isArray(data?.[k]) ? data[k].length : 0), 0);
+}
+
+/**
+ * Does this payload still say WHOSE certificate it is?
+ *
+ * This is what separates the two cases that both end up with few body rows:
+ * a user deliberately deleting rows (address still there — allow the save) and
+ * a component remounting into blank state (everything gone — block it). Without
+ * it, a "populated → few rows" rule would block anyone who removed an alarm.
+ */
+const IDENTITY_FIELDS = [
+  'clientName', 'installationAddress', 'propertyAddress',
+  'premisesAddress', 'siteAddress', 'clientAddress',
+];
+function hasIdentity(data: any): boolean {
+  return IDENTITY_FIELDS.some((f) => typeof data?.[f] === 'string' && data[f].trim() !== '');
+}
+
+/**
+ * Types whose body is not only rows. An EV charging certificate is mostly one
+ * charge point described in scalar fields, so its make and model say the form
+ * has been worked on even when no test rows exist yet.
+ */
+const SCALAR_TELLS: Record<string, (d: any) => boolean> = {
+  'ev-charging': (d) => !!(d?.chargerMake && d?.chargerModel),
+};
+
 /** Type-aware minimum data check for cloud sync. Local saves have NO gate — save everything. */
 function hasMinimumDataForCloud(reportType: string, data: any): boolean {
   if (!data) return false;
   if (data.clientName || data.installationAddress || data.propertyAddress) return true;
+  // Real body rows count as "started", whatever the type. Without this a
+  // specialist certificate filled in before the address was typed fell to the
+  // EICR `default` below, found no circuits, and never reached the cloud at all
+  // — work that existed only in that browser's local draft.
+  if (bodyRowCount(reportType, data) >= 2) return true;
   switch (reportType) {
     case 'pat-testing':
       return !!(data.siteAddress || data.appliances?.length > 0);
@@ -127,25 +229,15 @@ function hasMinimumDataForCloud(reportType: string, data: any): boolean {
  */
 function isSubstantiallyPopulated(reportType: string, data: any): boolean {
   if (!data) return false;
+  if (BODY_ARRAYS[reportType]) {
+    // Two rows, or one row on a certificate that also knows whose it is. One
+    // row alone is not enough: most of these forms seed a single blank row
+    // (SmokeCOAlarmCertificate opens with `alarms: [newAlarm()]`), so a
+    // >= 1 rule would call an untouched form populated.
+    const rows = bodyRowCount(reportType, data);
+    return rows >= 2 || (rows >= 1 && hasIdentity(data)) || !!SCALAR_TELLS[reportType]?.(data);
+  }
   switch (reportType) {
-    case 'pat-testing':
-      return (data.appliances?.length ?? 0) >= 1;
-    case 'emergency-lighting':
-      return (data.luminaires?.length ?? 0) >= 1;
-    case 'fire-alarm':
-    case 'fire-alarm-design':
-    case 'fire-alarm-commissioning':
-    case 'fire-alarm-inspection':
-    case 'fire-alarm-modification':
-      return (
-        (data.devices?.length ?? 0) >= 1 ||
-        (data.zones?.length ?? 0) >= 1 ||
-        (data.testSchedule?.length ?? 0) >= 1
-      );
-    case 'ev-charging':
-      return !!(data.chargerMake && data.chargerModel) || (data.testResults?.length ?? 0) >= 1;
-    case 'solar-pv':
-      return (data.panels?.length ?? 0) >= 1 || (data.inverters?.length ?? 0) >= 1;
     default:
       // EICR, EIC, minor-works — consider >=3 circuits/SoT rows OR >=2 distribution boards as "populated"
       // ELE-875 — also consider an EICR with >=10 inspection items having outcomes as
@@ -171,25 +263,15 @@ function isSubstantiallyPopulated(reportType: string, data: any): boolean {
  */
 function isNearEmpty(reportType: string, data: any): boolean {
   if (!data) return true;
+  if (BODY_ARRAYS[reportType]) {
+    // No rows at all, or the one seeded blank row AND nothing identifying the
+    // property. The identity half is what keeps a deliberate deletion (the user
+    // removed an alarm; the address is still typed in) out of the guard.
+    if (SCALAR_TELLS[reportType]?.(data)) return false;
+    const rows = bodyRowCount(reportType, data);
+    return rows === 0 || (rows <= 1 && !hasIdentity(data));
+  }
   switch (reportType) {
-    case 'pat-testing':
-      return (data.appliances?.length ?? 0) === 0;
-    case 'emergency-lighting':
-      return (data.luminaires?.length ?? 0) === 0;
-    case 'fire-alarm':
-    case 'fire-alarm-design':
-    case 'fire-alarm-commissioning':
-    case 'fire-alarm-inspection':
-    case 'fire-alarm-modification':
-      return (
-        (data.devices?.length ?? 0) === 0 &&
-        (data.zones?.length ?? 0) === 0 &&
-        (data.testSchedule?.length ?? 0) === 0
-      );
-    case 'ev-charging':
-      return !data.chargerMake && (data.testResults?.length ?? 0) === 0;
-    case 'solar-pv':
-      return (data.panels?.length ?? 0) === 0 && (data.inverters?.length ?? 0) === 0;
     default:
       /*
        * These thresholds MUST match `prevent_blank_report_overwrite` in the
@@ -648,7 +730,11 @@ export const useReportSync = ({
             operation.reportId,
             userId,
             operation.data,
-            customerId
+            customerId,
+            false,
+            // A queued write replayed hours later must still be checked: the
+            // row it targets is not necessarily the one it was queued against.
+            reportType
           );
           if (result.success) {
             await syncQueue.complete(operation.id);
@@ -757,7 +843,7 @@ export const useReportSync = ({
       forceOverwrite: boolean = false,
       isAutoSync: boolean = false,
       dataOverride?: any
-    ): Promise<{ success: boolean; reportId: string | null }> => {
+    ): Promise<{ success: boolean; reportId: string | null; certificateNumber?: string }> => {
       if (isSyncingRef.current) {
         return { success: false, reportId: currentReportIdRef.current };
       }
@@ -776,6 +862,33 @@ export const useReportSync = ({
       // CRITICAL FIX: Use dataOverride if provided (e.g. from syncNowImmediate),
       // otherwise use the ref to get the absolute latest form data
       const currentFormData = dataOverride || latestFormDataRef.current;
+
+      /*
+       * reportCloud refused the write: this form is not the kind of certificate
+       * that row holds. Never retry and never queue — every attempt would be the
+       * same wrong write. Say so plainly instead; the original incident ran for
+       * weeks precisely because the corruption was silent.
+       */
+      const refuseCrossType = (
+        mismatch: { stored: string; caller: string },
+        id: string | null,
+        withToast: boolean
+      ) => {
+        setStatus((prev) => ({
+          ...prev,
+          cloud: 'error' as const,
+          errorMessage: 'This form does not match the saved certificate',
+        }));
+        if (withToast) {
+          toast({
+            title: 'Save blocked — wrong certificate type',
+            description: `This is a ${certificateTypeLabel(mismatch.stored)} certificate and you have it open in the ${certificateTypeLabel(mismatch.caller)} form. Nothing has been changed — open it from My Reports instead.`,
+            variant: 'destructive',
+          });
+        }
+        isSyncingRef.current = false;
+        return { success: false, reportId: id };
+      };
 
       // Check minimum data (type-aware)
       if (!hasMinimumDataForCloud(reportType, currentFormData)) {
@@ -846,6 +959,7 @@ export const useReportSync = ({
 
       try {
         let savedReportId = currentReportIdRef.current;
+        let createdCertificateNumber: string | undefined;
 
         if (savedReportId) {
           // Update existing report with version check (unless forcing overwrite)
@@ -856,8 +970,16 @@ export const useReportSync = ({
               userId,
               currentFormData,
               customerId,
-              false
+              false,
+              reportType
             );
+            /*
+             * ⚠️ forceOverwrite deliberately bypasses the BLANK-overwrite guard
+             * — an explicit user save may legitimately empty a form. It does NOT
+             * bypass the CROSS-TYPE guard: no amount of user intent makes an
+             * EICR form the right thing to write into a smoke alarm record.
+             */
+            if (result.typeMismatch) return refuseCrossType(result.typeMismatch, savedReportId, showToast);
             if (!result.success) throw result.error ?? new Error('Update failed');
             // Fetch new version after successful update
             const newVersion = await reportCloud.getEditVersion(savedReportId, userId);
@@ -872,8 +994,20 @@ export const useReportSync = ({
               currentFormData,
               expectedVersionRef.current,
               customerId,
-              isAutoSync // Pass through auto-sync flag
+              isAutoSync, // Pass through auto-sync flag
+              // Which EDITOR is writing. Lets the write be refused when this
+              // form is not the kind of certificate the row holds — see the
+              // cross-type write guard in reportCloud.
+              reportType
             );
+
+            /*
+             * The row belongs to a different kind of certificate. Never retry,
+             * never queue: every attempt would be the same wrong write. Tell the
+             * user plainly — a silent failure here is what let the original
+             * incident run for weeks.
+             */
+            if (result.typeMismatch) return refuseCrossType(result.typeMismatch, savedReportId, showToast);
 
             if (result.conflict) {
               // Version conflict detected
@@ -989,6 +1123,7 @@ export const useReportSync = ({
           );
           if (!result.success || !result.reportId) throw result.error ?? new Error('Create failed');
           savedReportId = result.reportId;
+          createdCertificateNumber = result.certificateNumber;
           // CRITICAL: Update the ref so subsequent syncs update this report instead of creating duplicates
           currentReportIdRef.current = savedReportId;
           expectedVersionRef.current = 1;
@@ -1000,7 +1135,7 @@ export const useReportSync = ({
 
           // Notify parent component so it can update its state
           if (onReportCreated) {
-            onReportCreated(savedReportId);
+            onReportCreated(savedReportId, createdCertificateNumber);
           }
         }
 
@@ -1034,7 +1169,7 @@ export const useReportSync = ({
         }
 
         isSyncingRef.current = false;
-        return { success: true, reportId: savedReportId };
+        return { success: true, reportId: savedReportId, certificateNumber: createdCertificateNumber };
       } catch (error) {
         console.error('[ReportSync] Sync error:', error);
         isSyncingRef.current = false;
@@ -1330,7 +1465,13 @@ export const useReportSync = ({
     return {
       success: result.success,
       reportId: result.reportId,
-      data: dataToSync, // Return the data that was saved
+      // The data that was saved — carrying the certificate number the row was
+      // created with when the form had none yet (ELE-1592), so a PDF generated
+      // in the same tick prints the number the certificate is filed under.
+      data:
+        result.certificateNumber && !dataToSync.certificateNumber
+          ? { ...dataToSync, certificateNumber: result.certificateNumber }
+          : dataToSync,
     };
   }, [syncToCloud, debouncedCloudSync]);
 

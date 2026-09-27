@@ -8,7 +8,7 @@ import { useMaterialsLists, type MaterialsListItem } from '@/hooks/useMaterialsL
 import { useSaveToPriceBook } from '@/hooks/useSaveToPriceBook';
 import { usePriceList } from '@/hooks/usePriceList';
 import { supabase } from '@/integrations/supabase/client';
-import { PANEL } from '@/components/electrician/shared/surfaces';
+import { PANEL, FIELD_UNDERLINE } from '@/components/electrician/shared/surfaces';
 import { toast } from '@/hooks/use-toast';
 import { JobTemplates } from '@/components/electrician/quote-builder/JobTemplates';
 import { cn } from '@/lib/utils';
@@ -854,7 +854,7 @@ export const InvoiceItemsStep = ({
                             itemAdjustmentPercent: val === 0 ? undefined : val,
                           })
                         }
-                        className="w-20 h-11 px-2 text-center text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation"
+                        className={cn(FIELD_UNDERLINE, 'w-20 text-center')}
                       />
                       <input
                         type="text"
@@ -865,7 +865,7 @@ export const InvoiceItemsStep = ({
                             itemAdjustmentLabel: e.target.value || undefined,
                           })
                         }
-                        className="flex-1 h-11 px-2.5 text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation placeholder:text-white/25"
+                        className={cn(FIELD_UNDERLINE, 'flex-1')}
                       />
                       <button
                         type="button"
@@ -1782,7 +1782,7 @@ export const InvoiceItemsStep = ({
                           itemAdjustmentPercent: val === 0 ? undefined : val,
                         })
                       }
-                      className="w-20 h-11 px-2 text-center text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation"
+                      className={cn(FIELD_UNDERLINE, 'w-20 text-center')}
                     />
                     <input
                       type="text"
@@ -1793,7 +1793,7 @@ export const InvoiceItemsStep = ({
                           itemAdjustmentLabel: e.target.value || undefined,
                         })
                       }
-                      className="flex-1 h-11 px-2.5 text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation placeholder:text-white/25"
+                      className={cn(FIELD_UNDERLINE, 'flex-1')}
                     />
                     <button
                       type="button"

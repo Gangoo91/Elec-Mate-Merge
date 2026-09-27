@@ -380,7 +380,7 @@ export default function Sub2() {
             <li>Signature of the calibration engineer and the lab's quality manager.</li>
           </ul>
           <p>
-            The chain of traceability runs: your MFT → calibration lab\'s reference standards →
+            The chain of traceability runs: your MFT → calibration lab’s reference standards →
             UKAS-accredited primary lab → NPL primary standards. Each step documented. Without the
             chain, the measurement is technically arbitrary.
           </p>
@@ -437,7 +437,7 @@ export default function Sub2() {
         >
           <p>Standard fields in a fleet register:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>Instrument ID (firm\'s internal asset number).</li>
+            <li>Instrument ID (firm’s internal asset number).</li>
             <li>Type (MFT, multimeter, two-pole, clamp, socket tester, etc.).</li>
             <li>Make / model / serial.</li>
             <li>Purchase date / supplier / cost.</li>
@@ -460,11 +460,11 @@ export default function Sub2() {
           whatHappens={
             <>
               Apprentice notices the sticker is two months out of date but uses the instrument
-              anyway because there\'s no spare and the job is booked. They take IR readings —
-              instrument has drifted, reads 200 MΩ on a circuit that\'s actually 0.3 MΩ. Sign off as
-              compliant. Two weeks later the wet fault grows, customer\'s RCD trips repeatedly, firm
-              gets called back. The customer\'s complaint says they paid for a fault investigation
-              that didn\'t find the fault — refund + remedial costs. Insurance excludes claim
+              anyway because there’s no spare and the job is booked. They take IR readings —
+              instrument has drifted, reads 200 MΩ on a circuit that’s actually 0.3 MΩ. Sign off as
+              compliant. Two weeks later the wet fault grows, customer’s RCD trips repeatedly, firm
+              gets called back. The customer’s complaint says they paid for a fault investigation
+              that didn’t find the fault — refund + remedial costs. Insurance excludes claim
               because instrument was out of calibration.
             </>
           }
@@ -481,9 +481,9 @@ export default function Sub2() {
           title="Skipping the function check because the instrument was working yesterday"
           whatHappens={
             <>
-              Apprentice grabs the two-pole tester from the toolbox, doesn\'t function-check, drives
+              Apprentice grabs the two-pole tester from the toolbox, doesn’t function-check, drives
               to site. The PP3 battery has corroded overnight (left with low charge in a damp van).
-              Tester reads zero on EVERY input — every circuit appears dead. Apprentice \'proves
+              Tester reads zero on EVERY input — every circuit appears dead. Apprentice ‘proves
               dead' a circuit that's actually live, takes a 230 V shock. The function check on the
               GVD2 at the start of the shift would have shown the tester was dead.
             </>
@@ -501,14 +501,14 @@ export default function Sub2() {
           title="Out-of-calibration MFT at a customer site"
           situation={
             <>
-              You\'re at a customer\'s house investigating a fault. Mid-test, you notice the MFT
+              You’re at a customer’s house investigating a fault. Mid-test, you notice the MFT
               calibration sticker is dated 14 months ago — out of calibration by two months. The job
-              is half done, you\'ve already taken some IR and continuity readings.
+              is half done, you’ve already taken some IR and continuity readings.
             </>
           }
           whatToDo={
             <>
-              (1) Stop using the MFT. Tag it \'OUT OF CAL — not for service'. Inform the supervisor
+              (1) Stop using the MFT. Tag it ‘OUT OF CAL — not for service'. Inform the supervisor
               by phone. (2) Determine which readings were taken with the out-of-cal MFT. Those
               readings are inadmissible — they have to be retaken with a calibrated instrument
               before sign-off. (3) Backup options: borrow a calibrated MFT from another operative on
@@ -522,8 +522,8 @@ export default function Sub2() {
           whyItMatters={
             <>
               This scenario is more common than apprentices expect — calibration cycles slip when
-              the firm doesn\'t have proactive scheduling. Honest handling of the situation protects
-              the customer (no void certificate), protects the apprentice (didn\'t sign off invalid
+              the firm doesn’t have proactive scheduling. Honest handling of the situation protects
+              the customer (no void certificate), protects the apprentice (didn’t sign off invalid
               readings), protects the firm (no come-back from a future EICR finding the readings
               were wrong). The discipline of the visual-check-finds-the-sticker pays back the moment
               it catches a drift.

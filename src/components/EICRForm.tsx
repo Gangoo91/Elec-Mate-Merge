@@ -8,6 +8,7 @@ import { SectionSkeleton } from '@/components/ui/page-skeleton';
 import { draftStorage } from '@/utils/draftStorage';
 import CertShellHeader, { type CertShellStep } from './inspection/shared/CertShellHeader';
 import CertShellFooter, { certFooterNeutralButton } from './inspection/shared/CertShellFooter';
+import BackToTopButton from './inspection/shared/BackToTopButton';
 import type { SyncStatus } from '@/hooks/useReportSync';
 import CertLockBar from './inspection/CertLockBar';
 import DuplicatedFromBanner from './certificates/DuplicatedFromBanner';
@@ -398,6 +399,8 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
 
   return (
     <div className="bg-background min-h-screen prevent-shortcuts">
+      {/* ELE-1532 — floating back-to-top for the long inspection step */}
+      <BackToTopButton />
       {/* v3 shell header — back · title/cert no · save word · progress ring · step tabs */}
       <CertShellHeader
         onBack={onBack}

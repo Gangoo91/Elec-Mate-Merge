@@ -28,6 +28,16 @@ const CONTENT_MARKER = /(^|[/-])(section|subsection|lesson|topic|unit|part)[-\d]
 /** A module landing page — `/module4`, `-module-2` — with nothing after it. */
 const MODULE_TAIL = /(^|[/-])modules?[-]?\d*$/i;
 
+/**
+ * A section landing page — `/section1`, `-section-2` — with nothing after it.
+ * Same reasoning as MODULE_TAIL, and the same trap: CONTENT_MARKER matches the
+ * word `section` wherever it appears, so without this a section index counted
+ * as study in both dialects and Continue dropped the learner on the menu they
+ * had just left. A lesson always has something after the section — `/1-1` in
+ * the nested dialect, `-2` in the flat one — so neither is caught here.
+ */
+const SECTION_TAIL = /(^|[/-])sections?[-]?\d*$/i;
+
 /** Reference pages. Real content, but not somewhere to "resume" a course. */
 const REFERENCE = /(^|\/)(glossary|resources?|downloads?|reference|overview|index)$/i;
 
@@ -50,6 +60,7 @@ export function isStudyContentPath(pathname: string): boolean {
   // A module landing page is a menu even though it sits deep in the tree.
   // Checked before CONTENT_MARKER so `/module-1` cannot match on its digits.
   if (MODULE_TAIL.test(tail)) return false;
+  if (SECTION_TAIL.test(tail)) return false;
 
   return CONTENT_MARKER.test(path);
 }

@@ -439,11 +439,26 @@ serve(async (req) => {
       const { data: authEmails } = await supabase.rpc('get_auth_user_emails');
       const emailMap = new Map<string, string>();
       (authEmails || []).forEach((u: { id: string; email: string | null }) => {
-        if (u.email) emailMap.set(u.id, u.email.toLowerCase());
+        if (u.email) emailMap.set(u.id, u.email.trim().toLowerCase());
       });
 
-      const { data: suppressed } = await supabase.from('email_suppressions').select('email');
-      const suppressedSet = new Set((suppressed ?? []).map((s) => s.email.toLowerCase()));
+      // Ranged, not unbounded: PostgREST caps an unbounded select at 1000 rows
+      // and this list is 6663, so the offer was being checked against a
+      // seventh of the suppression list. Fail closed if the read errors —
+      // an empty set here means mailing everyone who ever unsubscribed. The
+      // null guard matters too: a single null email threw the whole run.
+      const { data: suppressed, error: suppressedError } = await supabase
+        .from('email_suppressions')
+        .select('email')
+        .range(0, 49999);
+      if (suppressedError) {
+        throw new Error(
+          `Refusing to send: could not read email_suppressions (${suppressedError.message})`
+        );
+      }
+      const suppressedSet = new Set(
+        (suppressed ?? []).map((s) => (s.email || '').trim().toLowerCase()).filter(Boolean)
+      );
 
       const { data: alreadySent } = await supabase
         .from('trial_emails_sent')

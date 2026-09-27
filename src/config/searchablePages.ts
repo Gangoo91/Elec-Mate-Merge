@@ -593,6 +593,22 @@ export const searchablePages: SearchablePage[] = [
     category: 'Apprentice Courses',
   },
   {
+    name: 'Welsh Level 3 Electrotechnical Installation',
+    path: '/study-centre/apprentice/welsh-level3',
+    keywords: [
+      'welsh',
+      'wales',
+      'cymru',
+      'building services engineering',
+      'bse',
+      'electrotechnical',
+      'level 3',
+      'eal',
+    ],
+    icon: BookOpen,
+    category: 'Apprentice Courses',
+  },
+  {
     name: 'MOET Course',
     path: '/study-centre/apprentice/moet',
     keywords: ['moet', 'maintenance', 'operations', 'electrical', 'technician'],

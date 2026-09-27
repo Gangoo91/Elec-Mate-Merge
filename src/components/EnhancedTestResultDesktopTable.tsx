@@ -11,6 +11,7 @@ import { toast } from 'sonner';
 import { getMaxZsFromDeviceDetails } from '@/utils/zsCalculations';
 import { bsStandardRequiresCurve, curveFillApplies } from '@/types/protectiveDeviceTypes';
 import { planColumnFill, describeColumnFill, type ColumnFillMode } from '@/utils/columnFill';
+import { planThreePhaseSiblings, DECLINE_MESSAGE } from '@/utils/threePhaseSiblings';
 import { handleGridKeyDown } from '@/utils/scheduleGridNavigation';
 
 interface EnhancedTestResultDesktopTableProps {
@@ -472,6 +473,48 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
     }
   }, [onBulkUpdate]);
 
+  /**
+   * ELE-1770 — setting a circuit to 3P carries the DEVICE across the two ways
+   * it also occupies, so the electrician specifies a three-pole circuit once
+   * instead of three times. Readings are never copied: see the reasoning in
+   * `utils/threePhaseSiblings.ts`. Silent when the following ways already hold
+   * other circuits, because then the board is not laid out three-in-a-row and
+   * we would be guessing.
+   */
+  const handleThreePhaseSelected = useCallback(
+    (id: string) => {
+      if (!onBulkUpdate) return;
+      const rows = resultsRef.current;
+      const index = rows.findIndex((r) => r.id === id);
+      if (index < 0) return;
+
+      const { links, declined } = planThreePhaseSiblings(rows, index);
+
+      // Say why nothing happened rather than appearing to ignore the change —
+      // the row is still marked 3P, the other two ways just are not ours.
+      if (declined) {
+        toast.info('Marked as three-pole', { description: DECLINE_MESSAGE[declined] });
+        return;
+      }
+
+      let filled = 0;
+      links.forEach((link) => {
+        if (Object.keys(link.updates).length > 0) {
+          onBulkUpdate(link.id, link.updates);
+          filled++;
+        }
+      });
+
+      if (filled > 0) {
+        const ways = links.map((l) => l.line).join(' and ');
+        toast.success(`Three-pole circuit: ${ways} filled from this device`, {
+          description: 'Device, RCD and cable copied. Readings are per line — enter those yourself.',
+        });
+      }
+    },
+    [onBulkUpdate]
+  );
+
   const isEmpty = testResults.length === 0;
 
   return (
@@ -612,6 +655,7 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
                         isSelected={isRowSelected ? isRowSelected(result.id) : false}
                         onToggleSelect={onToggleRowSelect}
                         onOpenWarning={onOpenWarning}
+                        onThreePhaseSelected={handleThreePhaseSelected}
                 zsBasis={zsBasis}
                 showChecks={showChecks}
                       />

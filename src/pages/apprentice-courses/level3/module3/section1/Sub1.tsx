@@ -247,7 +247,7 @@ export default function Sub1() {
           </ul>
           <p>
             On a Casio fx-85 you enter scientific notation with the <code>×10ˣ</code> key. Typing
-            1.72 <code>×10ˣ</code> −8 gives 1.72 × 10⁻⁸. It\'s quicker, and the calculator keeps
+            1.72 <code>×10ˣ</code> −8 gives 1.72 × 10⁻⁸. It’s quicker, and the calculator keeps
             full precision instead of rounding zeros.
           </p>
         </ConceptBlock>
@@ -297,7 +297,7 @@ export default function Sub1() {
             <>
               Appendix 4 gives you a formula in mV/A/m. To get the actual voltage drop in volts you
               transpose: V<sub>drop</sub> = (mV/A/m × I × L) / 1000. Get the transposition wrong and
-              you\'ll oversize or undersize a cable, which fails the design at the next EICR.
+              you’ll oversize or undersize a cable, which fails the design at the next EICR.
             </>
           }
           cite="Source: BS 7671:2018+A4:2026 — Appendix 4."
@@ -343,7 +343,7 @@ export default function Sub1() {
 
         <ConceptBlock
           title="SOH-CAH-TOA, and Pythagoras"
-          plainEnglish="In a right-angled triangle, the three sides are labelled by their position relative to the angle you\'re working with: opposite (across from the angle), adjacent (next to the angle, not the hypotenuse), and hypotenuse (the long one opposite the right angle)."
+          plainEnglish="In a right-angled triangle, the three sides are labelled by their position relative to the angle you’re working with: opposite (across from the angle), adjacent (next to the angle, not the hypotenuse), and hypotenuse (the long one opposite the right angle)."
         >
           <p>The three trig ratios:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -375,7 +375,7 @@ export default function Sub1() {
 
         <ConceptBlock
           title="Using the calculator — DEG vs RAD"
-          plainEnglish="Calculators measure angles in degrees (DEG) or radians (RAD). Electrical L3 always uses degrees. If your sin 30° gives -0.988 instead of 0.5, you\'re in radians."
+          plainEnglish="Calculators measure angles in degrees (DEG) or radians (RAD). Electrical L3 always uses degrees. If your sin 30° gives -0.988 instead of 0.5, you’re in radians."
           onSite="Press MODE on a Casio and select Deg. The display will show a small D in the top corner. Get this wrong on the AM2 and every angle calculation falls apart."
         >
           <p>The numbers worth remembering by heart for the AM2:</p>
@@ -385,7 +385,7 @@ export default function Sub1() {
             <li>tan 0° = 0, tan 45° = 1, tan 90° = undefined (vertical line)</li>
           </ul>
           <p>
-            The 0.707 is significant — it\'s 1/√2 and shows up in RMS calculations, single-phase vs
+            The 0.707 is significant — it’s 1/√2 and shows up in RMS calculations, single-phase vs
             3-phase voltage and power factor tables. 0.866 is √3/2 and shows up in 3-phase
             line-to-phase voltage maths.
           </p>
@@ -406,7 +406,7 @@ export default function Sub1() {
           <p>Regulation = (232 − 220) / 232 × 100 = 12 / 232 × 100 = 5.17 %.</p>
           <p>
             The 232 V is the open-circuit (no-load) value — the reference. Always divide by the
-            starting or reference figure. Get that backwards (12/220) and you\'ll get 5.45 %, which
+            starting or reference figure. Get that backwards (12/220) and you’ll get 5.45 %, which
             is the wrong number.
           </p>
         </ConceptBlock>
@@ -448,7 +448,7 @@ export default function Sub1() {
           </p>
           <p>
             Ratios stay constant when you scale both sides equally — which is why you can simplify
-            them. Don\'t add or subtract numbers from one side without doing it to the other.
+            them. Don’t add or subtract numbers from one side without doing it to the other.
           </p>
         </ConceptBlock>
 
@@ -458,7 +458,7 @@ export default function Sub1() {
             <>
               Sum says: voltage drop = (mV/A/m × I × L) / 1000. Apprentice plugs in 18 mV/A/m, 32 A,
               25 m — gets V<sub>drop</sub> = 14.4. Forgets the divide-by-1000 because they already
-              think they\'re in volts. Reports 14.4 V drop and oversizes the cable to 10 mm².
+              think they’re in volts. Reports 14.4 V drop and oversizes the cable to 10 mm².
             </>
           }
           doInstead={
@@ -474,7 +474,7 @@ export default function Sub1() {
           title="Calculating cable size for a 25 m, 32 A radial — full transposition"
           situation={
             <>
-              You\'re sizing a 32 A cooker circuit, run length 25 m. The voltage drop limit is 3 %
+              You’re sizing a 32 A cooker circuit, run length 25 m. The voltage drop limit is 3 %
               of 230 V (final circuits). Cable is 6 mm² PVC twin-and-earth. Appendix 4 gives mV/A/m
               = 7.3 for that cable.
             </>

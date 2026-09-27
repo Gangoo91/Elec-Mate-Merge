@@ -212,7 +212,7 @@ const faqs = [
     question:
       'On a phased project (multiple commissioning stages), how does the documentation chain work?',
     answer:
-      'Each phase is its own commissioning event with its own EIC and its own O&M section. Phase 1 hands over a defined extent — say, the basement plant room and Floor 1 — with a phase-1 EIC covering only that scope. Phase 2 then adds Floor 2 with its own phase-2 EIC. The customer\'s master O&M is updated to add each phase\'s documentation as it completes. Each phase EIC clearly states its extent ("Floor 1 only" or "Basement plant room only") to avoid ambiguity. Final commissioning at project completion may issue a project-wide EIC covering the whole installation, or may rely on the phased EICs as the certification record.',
+      'Each phase is its own commissioning event with its own EIC and its own O&M section. Phase 1 hands over a defined extent — say, the basement plant room and Floor 1 — with a phase-1 EIC covering only that scope. Phase 2 then adds Floor 2 with its own phase-2 EIC. The customer’s master O&M is updated to add each phase’s documentation as it completes. Each phase EIC clearly states its extent ("Floor 1 only" or "Basement plant room only") to avoid ambiguity. Final commissioning at project completion may issue a project-wide EIC covering the whole installation, or may rely on the phased EICs as the certification record.',
   },
   {
     question: 'What if the design changes during construction?',
@@ -413,7 +413,7 @@ export default function Sub3() {
 
         <ConceptBlock
           title="What the design pack contains and why it matters at site"
-          plainEnglish="The design pack is the installer\'s reference for what was specified — what to fit, where to fit it, what cable to use, what protective device, what earthing arrangement. Without it the installer is reverse-engineering the design from a verbal brief."
+          plainEnglish="The design pack is the installer’s reference for what was specified — what to fit, where to fit it, what cable to use, what protective device, what earthing arrangement. Without it the installer is reverse-engineering the design from a verbal brief."
           onSite="On a small domestic CU swap, the design pack is typically a one-page Zs/RCBO/earthing review held in the contractor file. On a commercial fit-out it can run to hundreds of drawings plus calculation books. Either way, the principle is the same — written specification that the installer can build to and the certifier can verify against."
         >
           <p>Standard design pack contents:</p>
@@ -466,7 +466,7 @@ export default function Sub3() {
         <ConceptBlock
           title="As-built mark-ups, materials register, dead-test record"
           plainEnglish="The installer hands the tester a marked-up version of the design pack showing what was actually built (rarely identical to what was designed), a list of materials actually fitted, and the dead-test readings captured during installation."
-          onSite="As-built mark-ups are critical. Construction never matches the design 100% — a cable route changes around an unforeseen obstacle, a circuit is added under a Design Change Note, an accessory is repositioned at the customer\'s request. The tester needs to test what is actually there, not what was designed. Mark-ups bridge the gap."
+          onSite="As-built mark-ups are critical. Construction never matches the design 100% — a cable route changes around an unforeseen obstacle, a circuit is added under a Design Change Note, an accessory is repositioned at the customer’s request. The tester needs to test what is actually there, not what was designed. Mark-ups bridge the gap."
         >
           <p>Standard installer-to-tester deliverables:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -522,7 +522,7 @@ export default function Sub3() {
         <ConceptBlock
           title="Schedule of Test Results, witness sheets, anomaly log"
           plainEnglish="The tester hands the certifier the completed Schedule of Test Results plus any contract-mandated witness sheets, an anomaly log of values that were unexpected, and a defect register of items requiring rectification under Reg 644.1.1."
-          onSite="On a commercial project the witness sheets often dwarf the Schedule of Test Results in volume — every safety-critical test (RCD trip, Zs, IR) gets its own counter-signed sheet. On domestic the Schedule of Test Results alone is the standard. Either way, the tester\'s deliverable is the per-circuit measurement evidence base that the certifier signs against."
+          onSite="On a commercial project the witness sheets often dwarf the Schedule of Test Results in volume — every safety-critical test (RCD trip, Zs, IR) gets its own counter-signed sheet. On domestic the Schedule of Test Results alone is the standard. Either way, the tester’s deliverable is the per-circuit measurement evidence base that the certifier signs against."
         >
           <p>Standard tester-to-certifier deliverables:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -750,7 +750,7 @@ export default function Sub3() {
               for clarity at the CU. All of it goes on the as-built mark-up. Five minutes per change
               at the time saves hours of forensic tracing years later. On commercial work the
               principal designer typically requires as-built returns before accepting completion; on
-              domestic it is the contractor\'s responsibility to maintain the standard.
+              domestic it is the contractor’s responsibility to maintain the standard.
             </>
           }
         />
@@ -772,7 +772,7 @@ export default function Sub3() {
             <>
               Certifier reviews every Schedule of Test Results row before signing the EIC. Anomalies
               investigated. Defects rectified per Reg 644.1.1. Only then does the certifier sign.
-              Verbal "all good" from the tester is not sufficient — the certifier\'s signature
+              Verbal "all good" from the tester is not sufficient — the certifier’s signature
               carries personal liability and the certifier needs to see the data they are
               certifying.
             </>

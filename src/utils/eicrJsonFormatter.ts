@@ -13,6 +13,9 @@ import { formatBsAmendment, formatDesignStandard } from '@/data/standards';
 import type { EICRPayload } from '@/types/eicr-payload';
 import { normaliseRcdRating } from '@/utils/rcdRating';
 import { importWithRetry } from '@/utils/lazyWithRetry';
+import { isKnownNonDwelling } from '@/utils/partP';
+import { bs7671InspectionSections } from '@/data/bs7671ChecklistData';
+import { resolveEngineerVerify } from '@/utils/engineerVerify';
 
 const toSnakeCase = (str: string): string =>
   str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`);
@@ -790,6 +793,72 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
   };
 
   // Format defect observations with photo evidence from database
+  const formatPhotoAppendix = async (): Promise<{
+    photo_appendix: Array<{ url: string; caption: string; item_ref: string; fault_code: string }>;
+    has_photo_appendix: boolean;
+    photo_appendix_count: number;
+  }> => {
+    const empty = { photo_appendix: [], has_photo_appendix: false, photo_appendix_count: 0 };
+    try {
+      const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+      let reportUuid = reportId;
+      if (!uuidRegex.test(reportId)) {
+        const { data: report } = await supabase
+          .from('reports')
+          .select('id')
+          .eq('report_id', reportId)
+          .is('deleted_at', null)
+          .maybeSingle();
+        reportUuid = report?.id || '';
+      }
+      if (!uuidRegex.test(reportUuid)) return empty;
+      const { data: photos } = await supabase
+        .from('inspection_photos')
+        .select('item_id, observation_id, fault_code, fault_description, file_path, uploaded_at')
+        .eq('report_id', reportUuid)
+        .order('uploaded_at', { ascending: true });
+      if (!photos?.length) return empty;
+
+      // Label each photo by the checklist item it was taken against.
+      const itemLabel = new Map<string, string>();
+      for (const section of bs7671InspectionSections) {
+        for (const item of section.items) {
+          itemLabel.set(item.id, `${item.number ?? item.id} ${item.item}`.trim());
+        }
+      }
+      const defects: any[] = Array.isArray(formData['defectObservations'])
+        ? formData['defectObservations']
+        : [];
+      const items: any[] = Array.isArray(formData['inspectionItems']) ? formData['inspectionItems'] : [];
+
+      const rows = photos.map((p) => {
+        const defect = defects.find((d) => d.id === p.observation_id);
+        const inspected = items.find((i) => i.id === p.item_id);
+        const caption =
+          defect?.description ||
+          p.fault_description ||
+          inspected?.notes ||
+          itemLabel.get(p.item_id || '') ||
+          '';
+        const {
+          data: { publicUrl },
+        } = supabase.storage.from('inspection-photos').getPublicUrl(p.file_path, {
+          transform: { width: 800, height: 1100, resize: 'contain', quality: 60 },
+        });
+        return {
+          url: publicUrl,
+          caption,
+          item_ref: defect?.item || itemLabel.get(p.item_id || '')?.split(' ')[0] || p.item_id || '',
+          fault_code: p.fault_code || '',
+        };
+      });
+      return { photo_appendix: rows, has_photo_appendix: true, photo_appendix_count: rows.length };
+    } catch (err) {
+      console.warn('[formatPhotoAppendix] skipped:', err);
+      return empty;
+    }
+  };
+
   const formatDefects = async () => {
     const defects = formData['defectObservations'] || [];
     console.log('[formatDefects] Number of defects:', defects.length);
@@ -1133,7 +1202,8 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       // printed "BS7671" with no amendment at all. Formatted the same way the
       // EIC does, from the shared helper.
       design_standard: formatDesignStandard(get('designStandard')),
-      part_p_compliance: get('partPCompliance') || 'N/A',
+      // ELE-1662 — a known non-dwelling never prints a Part P status. See utils/partP.
+      part_p_compliance: isKnownNonDwelling(get('propertyType')) ? 'N/A' : get('partPCompliance') || 'N/A',
     },
 
     supply_characteristics: {
@@ -1588,7 +1658,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       },
       // 3-state — 'na' passes through so N/A doesn't print as "No"
       bs7671_compliance: getTriState('bs7671Compliance'),
-      building_regs_compliance: getTriState('buildingRegsCompliance'),
+      building_regs_compliance: isKnownNonDwelling(get('propertyType')) ? 'na' : getTriState('buildingRegsCompliance'),
       competent_person_scheme: getBool('competentPersonScheme'),
       overall_assessment: get('overallAssessment'),
       satisfactory_for_continued_use: get('satisfactoryForContinuedUse'),
@@ -1619,6 +1689,19 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     },
 
     observations: await formatDefects(),
+
+    /*
+     * ELE-1617 — every photo on the report, compiled once at the end. Defect
+     * photos already print inline with their observation; this is the place
+     * for the rest: "condition of intake satisfactory", a looped supply, a
+     * missing meter seal — evidence with no pass/fail attached. ⚠️ The live
+     * EICR V2 PDFMonkey template must print `photo_appendix` — see the ticket
+     * for the Liquid block.
+     */
+    ...(await formatPhotoAppendix()),
+
+    // ELE-1453 — "Verify this engineer": Elec-ID QR + address in the signature block.
+    ...(await resolveEngineerVerify()),
 
     // ============================================
     // TOP-LEVEL COPIES FOR PDF TEMPLATE COMPATIBILITY

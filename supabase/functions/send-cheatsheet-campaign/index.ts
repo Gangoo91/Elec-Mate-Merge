@@ -243,9 +243,23 @@ serve(async (req) => {
 
     // PECR: never send marketing to suppressed (unsubscribed/bounced) addresses.
     // Bulk-fetch the suppression list once — same pattern as send-lifetime-offer.
-    const { data: suppressedRows } = await sb.from('email_suppressions').select('email');
+    // Ranged: an unbounded select stops at PostgREST's 1000-row cap and the
+    // list is 6663, so "bulk-fetch the suppression list once" was fetching a
+    // seventh of it. Fail closed rather than filtering against an empty set,
+    // and tolerate a null email instead of throwing on it.
+    const { data: suppressedRows, error: suppressedError } = await sb
+      .from('email_suppressions')
+      .select('email')
+      .range(0, 49999);
+    if (suppressedError) {
+      throw new Error(
+        `Refusing to send: could not read email_suppressions (${suppressedError.message})`
+      );
+    }
     const suppressedSet = new Set(
-      ((suppressedRows ?? []) as { email: string }[]).map((s) => s.email.toLowerCase())
+      ((suppressedRows ?? []) as { email: string | null }[])
+        .map((s) => (s.email || '').trim().toLowerCase())
+        .filter(Boolean)
     );
     const eligible = all.filter((r) => !suppressedSet.has(r.email.trim().toLowerCase()));
     const suppressedSkipped = all.length - eligible.length;

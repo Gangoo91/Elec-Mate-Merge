@@ -55,7 +55,16 @@ export const useQsTeamContext = () => {
       } = await supabase.auth.getUser();
       if (!user) return { is_team_member: false };
 
-      // Link employer-created roster rows matching this account's email
+      /*
+       * Link employer-created roster rows matching this account's email.
+       *
+       * ⚠️ NOT the primary claim any more — `useAuthSession` does it at
+       * sign-in, because this hook only runs on the EICR / EIC / Minor Works
+       * forms and the QS screens, and a member who never opened one stayed
+       * unlinked indefinitely. Kept as a cheap backstop (idempotent, and
+       * throttled by this query's 10-minute staleTime): do not delete it
+       * without checking `npm run check:team-linking` still passes.
+       */
       await supabase.rpc('claim_employee_records');
 
       const { data, error } = await supabase.rpc('get_my_qs_team_context');

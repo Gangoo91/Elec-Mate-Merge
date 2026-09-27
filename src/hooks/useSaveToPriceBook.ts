@@ -73,10 +73,29 @@ export function useSaveToPriceBook(allItems: PriceBookSourceLine[]) {
     (item: PriceBookSourceLine) => {
       const name = item.description!.trim();
       const qty = item.quantity || 1;
-      const paired = allItems.find(
-        (l) => l.category === 'labour' && l.description?.trim() === `Labour — ${name}`
-      );
-      const pairedHours = paired ? (paired.hours ?? paired.quantity ?? 0) : 0;
+      /*
+       * Match on the PREFIX, and sum every grade.
+       *
+       * This was an exact match on `Labour — <name>`, and nothing has ever
+       * matched it. Both emitters append the grade —
+       * `Labour — Double socket outlet (Electrician)` — so `pairedHours` was
+       * always 0 and `labour_hours` always `undefined`. The comment above
+       * promised the time carried across; it never did, on any item, since
+       * the feature shipped.
+       *
+       * Summing is deliberate: `labourLinesFor` emits ONE LINE PER GRADE, so
+       * a two-man task is two lines. `labour_hours` is the legacy
+       * single-grade field, and the honest reduction of "1h electrician +
+       * 1h apprentice" into it is 2h, not the first one found.
+       */
+      const prefix = `Labour — ${name}`;
+      const pairedHours = allItems
+        .filter((l) => {
+          if (l.category !== 'labour') return false;
+          const d = l.description?.trim() ?? '';
+          return d === prefix || d.startsWith(`${prefix} (`);
+        })
+        .reduce((sum, l) => sum + (l.hours ?? l.quantity ?? 0), 0);
       const supplier = item.notes?.match(/Supplier:\s*(.+)/i)?.[1]?.trim();
 
       return {

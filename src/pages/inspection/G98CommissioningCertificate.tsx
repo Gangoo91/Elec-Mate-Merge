@@ -54,6 +54,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { issueCertificateNumber } from '@/utils/certificateNumbering';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -98,6 +99,8 @@ const G98_DEFAULTS = {
 };
 
 interface G98Data {
+  /** The number the row is filed under (ELE-1592) — adopted from the created row, printed as the certificate number. */
+  certificateNumber?: string;
   referenceNumber: string;
   commissioningDate: string;
   notificationDate: string;
@@ -168,7 +171,7 @@ interface G98Data {
 }
 
 const defaultData = (): G98Data => ({
-  referenceNumber: `G98-${Date.now().toString(36).toUpperCase()}`,
+  referenceNumber: '', // filled from the number the row is filed under (ELE-1592)
   commissioningDate: new Date().toISOString().split('T')[0],
   notificationDate: new Date().toISOString().split('T')[0],
   dnoName: '',
@@ -355,8 +358,14 @@ const {
     formData: data,
     enabled: !isLoading && !isLocked,
     isHydrating: isLoading, // Gate autosave while loading from cloud — prevents blank-overwrite race.
-    onReportCreated: (newId) => {
+    onReportCreated: (newId: string, certificateNumber?: string) => {
       setSavedReportId(newId);
+      // ELE-1592 — keep the number the row was filed under; without this the
+      // form stayed blank and the PDF printed an invented timestamp.
+      if (certificateNumber) setData((prev) => (prev.certificateNumber ? prev : { ...prev, certificateNumber }));
+      // The printed reference IS the filed number unless the electrician typed their own.
+      if (certificateNumber)
+        setData((prev) => (prev.referenceNumber ? prev : { ...prev, referenceNumber: certificateNumber }));
       window.history.replaceState(
         null,
         '',
@@ -390,7 +399,7 @@ const {
           setIsLoading(false);
           return;
         }
-        const reportData = await reportCloud.getReportData(editId, user.id);
+        const reportData = await reportCloud.getReportData(editId, user.id, 'g98-commissioning');
         if (reportData) {
           setData((prev) => ({ ...defaultData(), ...prev, ...(reportData as any) }));
           setSavedReportId(editId);
@@ -497,7 +506,7 @@ const {
       try {
         formattedData = formatG98Json({
           ...data,
-          referenceNumber: data.referenceNumber || `G98-${Date.now()}`,
+          referenceNumber: await issueCertificateNumber(data.referenceNumber || data.certificateNumber, 'g98-commissioning'),
         });
       } catch {
         formattedData = undefined; // fall back to server-side pdf_payload
@@ -539,7 +548,14 @@ const {
     setGenerationError(null);
     setShowGenerationDialog(true);
     try {
-      await syncNowImmediate();
+      const synced = await syncNowImmediate();
+      // ELE-1592 — the reference printed is the number the certificate is filed under, never invented.
+      const referenceNumber = await issueCertificateNumber(
+        data.referenceNumber || data.certificateNumber || synced.data?.certificateNumber,
+        'g98-commissioning'
+      );
+      if (referenceNumber !== data.referenceNumber)
+        setData((prev) => ({ ...prev, referenceNumber, certificateNumber: prev.certificateNumber || referenceNumber }));
       const {
         data: { user },
       } = await supabase.auth.getUser();
@@ -564,7 +580,7 @@ const {
         companyEmail: resolved.companyEmail || data.installerEmail,
       };
 
-      const payload = formatG98Json(data, branding);
+      const payload = formatG98Json({ ...data, referenceNumber }, branding);
 
       const { data: pdfResult, error: pdfError } = await supabase.functions.invoke(
         'generate-g98-commissioning-pdf',
@@ -574,9 +590,10 @@ const {
       if (pdfError) throw new Error(pdfError.message || 'PDF generation failed');
       if (!pdfResult?.download_url) throw new Error('No PDF URL returned');
 
-      const filename = `G98-${data.referenceNumber}.pdf`;
+      const filename = `G98-${referenceNumber}.pdf`;
       let url = pdfResult.download_url;
-      const reportId = savedReportId || data.referenceNumber;
+      // The id the sync just created is what the closure cannot see — use it before the state copy.
+      const reportId = synced.reportId || savedReportId || referenceNumber;
       try {
         const { saveCertificatePdf } = await import('@/utils/certificate-pdf-storage');
         const { permanentUrl, storagePath } = await saveCertificatePdf(
@@ -623,6 +640,7 @@ const {
         <Field label="Reference No.">
           <Input
             value={data.referenceNumber}
+            placeholder="Allocated on first save"
             onChange={(e) => update('referenceNumber', e.target.value)}
             className={inputCn}
           />

@@ -17,6 +17,8 @@ export type AutomationMode = 'off' | 'ask' | 'auto';
 /** Known automation keys. Server jobs match on these strings — never rename. */
 export const AUTOMATION_KEYS = {
   clientRenewalEmails: 'client_renewal_emails',
+  /** ELE-1636 — a separate consent: nudge certificates already past their date (up to 90 days), once. */
+  clientOverdueEmails: 'client_overdue_emails',
 } as const;
 
 export function useAutomation(key: string) {

@@ -50,6 +50,7 @@ import CertLockBar from '@/components/inspection/CertLockBar';
 import { cn } from '@/lib/utils';
 import { ConflictResolutionDialog } from '@/components/inspection/ConflictResolutionDialog';
 import { scrollToTopForStepChange } from '@/utils/scroll';
+import { issueCertificateNumber } from '@/utils/certificateNumbering';
 
 const REPORT_TYPE = 'emergency-lighting' as const;
 
@@ -111,8 +112,11 @@ const {
     formData,
     enabled: !isLoading && !isLocked,
     isHydrating: isLoading, // Gate autosave while loading from cloud — prevents blank-overwrite race.
-    onReportCreated: (newId) => {
+    onReportCreated: (newId: string, certificateNumber?: string) => {
       setSavedReportId(newId);
+      // ELE-1592 — keep the number the row was filed under; without this the
+      // form stayed blank and the PDF printed an invented timestamp.
+      if (certificateNumber) setFormData((prev) => (prev.certificateNumber ? prev : { ...prev, certificateNumber }));
       window.history.replaceState(
         null,
         '',
@@ -170,7 +174,7 @@ const {
           }
 
           const localDraft = draftStorage.loadDraft(REPORT_TYPE, id);
-          const report = await reportCloud.getReportData(id, authUser.id);
+          const report = await reportCloud.getReportData(id, authUser.id, 'emergency-lighting');
 
           if (report) {
             if (localDraft && draftStorage.isLocalDraftNewer(REPORT_TYPE, id, report.updated_at)) {
@@ -262,12 +266,12 @@ const {
     setShowGenerationDialog(true);
     try {
       // Sync latest data to cloud before PDF generation
-      await syncNowImmediate();
+      const synced = await syncNowImmediate();
 
       // Generate certificate number if not set
       let dataWithCertNumber: Partial<EmergencyLightingFormData> = {
         ...formData,
-        certificateNumber: formData.certificateNumber || `EL-${Date.now()}`,
+        certificateNumber: await issueCertificateNumber(formData.certificateNumber || synced.data?.certificateNumber, REPORT_TYPE),
       };
 
       // Merge company branding from Business Settings if available

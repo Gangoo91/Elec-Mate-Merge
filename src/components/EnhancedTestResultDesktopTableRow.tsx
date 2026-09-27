@@ -69,6 +69,12 @@ interface EnhancedTestResultDesktopTableRowProps {
   zsBasis?: ZsBasis;
   /** When false the row carries no compliance marking. Findings are unaffected. */
   showChecks?: boolean;
+  /**
+   * Called when this row is set to three-pole, so the two ways it also
+   * occupies can be filled from its device (ELE-1770). Optional — a surface
+   * that does not pass it keeps the old behaviour of setting the flag alone.
+   */
+  onThreePhaseSelected?: (id: string) => void;
 }
 
 const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTableRowProps> = ({
@@ -89,6 +95,7 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
   onOpenWarning,
   zsBasis,
   showChecks = true,
+  onThreePhaseSelected,
 }) => {
   const [showRegulationWarning, setShowRegulationWarning] = useState(false);
 
@@ -330,7 +337,11 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
         </TableCell>
 
         {/* Phase Type - Always visible */}
-        <PhaseTypeCell result={result} onUpdate={onUpdate} />
+        <PhaseTypeCell
+          result={result}
+          onUpdate={onUpdate}
+          onThreePhaseSelected={onThreePhaseSelected}
+        />
 
         {/* Circuit Details */}
         {!isGroupCollapsed('circuit') && (

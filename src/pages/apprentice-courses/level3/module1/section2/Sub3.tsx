@@ -136,7 +136,7 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question: 'What\'s a "designated competent person" under MHSWR Reg 7?',
+    question: 'What’s a "designated competent person" under MHSWR Reg 7?',
     options: [
       'The most senior electrician on site, automatically appointed by virtue of holding the highest qualification.',
       'A person appointed by the employer to assist in undertaking measures to comply with H&S duties, with appropriate training and experience.',
@@ -202,12 +202,12 @@ const faqs = [
   {
     question: "What if I genuinely don't know whether a task is within my competence?",
     answer:
-      'Default to "no" until you\'ve checked with someone competent. EAWR Reg 16 second-limb supervision is the appropriate route — work alongside someone competent, ask, observe, learn. The "I had a go" approach is what creates incidents.',
+      'Default to "no" until you’ve checked with someone competent. EAWR Reg 16 second-limb supervision is the appropriate route — work alongside someone competent, ask, observe, learn. The "I had a go" approach is what creates incidents.',
   },
   {
     question: 'How do I escalate without burning bridges with my supervisor?',
     answer:
-      'Frame it as "I want to make sure I\'m doing this safely — can you help me think through it?". Most supervisors respond well to honesty. The minority who don\'t are the ones you needed to escalate around anyway. ERA s.44 gives you cover.',
+      'Frame it as "I want to make sure I’m doing this safely — can you help me think through it?". Most supervisors respond well to honesty. The minority who don’t are the ones you needed to escalate around anyway. ERA s.44 gives you cover.',
   },
   {
     question: 'Is there a tribunal time limit for an ERA s.44 claim?',
@@ -382,7 +382,7 @@ export default function Sub3() {
         <ConceptBlock
           title="Documenting the refusal"
           plainEnglish="Every refusal goes in writing at the time. State what was asked, what you said, why (regulation or risk). Time-stamped. Sent to the supervisor and a senior manager."
-          onSite="A simple text \'Just to confirm what we discussed at 14:20: you asked me to live-work the DB; I declined under EAWR Reg 14; please confirm next steps' is enough. Email is better. The contemporaneous record is the evidence that makes ERA s.44 work in your favour later if needed."
+          onSite="A simple text ‘Just to confirm what we discussed at 14:20: you asked me to live-work the DB; I declined under EAWR Reg 14; please confirm next steps' is enough. Email is better. The contemporaneous record is the evidence that makes ERA s.44 work in your favour later if needed."
         >
           <p>Elements of a defensible refusal record:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -783,7 +783,7 @@ export default function Sub3() {
         </ConceptBlock>
 
         <CommonMistake
-          title="Following an unsafe instruction because 'I was told to\'"
+          title="Following an unsafe instruction because 'I was told to’"
           whatHappens={
             <>
               Apprentice told by supervisor to live-work a small commercial DB; complies; arc-flash
@@ -801,7 +801,7 @@ export default function Sub3() {
         />
 
         <CommonMistake
-          title="Doing F-Gas / gas / asbestos work because \'it's only a small job\'"
+          title="Doing F-Gas / gas / asbestos work because ‘it's only a small job’"
           whatHappens={
             <>
               Apprentice disconnects a small refrigerant line on an old AC unit during electrical
@@ -854,7 +854,7 @@ export default function Sub3() {
         />
 
         <Scenario
-          title="The 'just sign here\' EIC pressure"
+          title="The 'just sign here’ EIC pressure"
           situation={
             <>
               You&apos;ve been the productive operative on a 12-circuit CU change on a Friday

@@ -257,6 +257,9 @@ export interface EVChargingFormData {
   buildingRegsRequired: boolean;
   buildingRegsViaScheme: boolean;
   buildingRegsSubmitted: boolean;
+  /** ELE-1663 — a 'No' is an answer; an untouched form is not. */
+  buildingRegsAnswered?: boolean;
+  buildingRegsReference?: string;
 
   // Verification checklist
   chargerPowerUpVerified: boolean;

@@ -31,7 +31,7 @@ const subsections = [
     number: '2.4',
     title: 'Equality Act 2010 — fair treatment on site',
     description:
-      'Level 2 awareness — nine protected characteristics, reasonable adjustments for disabled workers, harassment, the banter trap and the apprentice\'s own legal exposure.',
+      'Level 2 awareness — nine protected characteristics, reasonable adjustments for disabled workers, harassment, the banter trap and the apprentice’s own legal exposure.',
     icon: Users,
     href: '2-4',
   },

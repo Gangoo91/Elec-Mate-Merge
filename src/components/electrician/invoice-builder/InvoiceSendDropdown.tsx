@@ -236,7 +236,7 @@ export const InvoiceSendDropdown = ({
               <Button
                 size="sm"
                 variant="outline"
-                className="border-indigo-500/30 hover:bg-indigo-500/10"
+                className="border-elec-yellow/30 hover:bg-elec-yellow/10"
                 onClick={() => navigate('/settings?tab=billing')}
               >
                 <CreditCard className="h-4 w-4 mr-1" />
@@ -614,7 +614,7 @@ ${companyName}`;
         className="w-72 bg-[#111214]/95 backdrop-blur-xl border border-white/[0.08] shadow-2xl rounded-2xl z-50 p-1.5"
         sideOffset={8}
       >
-        <DropdownMenuLabel className="text-[11px] font-semibold text-white/45 px-3 pt-2 pb-1 uppercase tracking-[0.08em]">
+        <DropdownMenuLabel className="text-[11px] font-semibold text-white px-3 pt-2 pb-1 uppercase tracking-[0.08em]">
           Send invoice
         </DropdownMenuLabel>
         <DropdownMenuItem
@@ -629,7 +629,7 @@ ${companyName}`;
           )}
           <div className="flex min-w-0 flex-col">
             <span className="text-[14px] font-semibold text-white leading-tight">Email to client</span>
-            <span className="text-[12px] text-white/50 leading-snug">
+            <span className="text-[12px] text-white leading-snug">
               PDF attached, with payment link
             </span>
           </div>
@@ -652,7 +652,7 @@ ${companyName}`;
               <span className="text-[14px] font-semibold text-white leading-tight">
                 Share via WhatsApp
               </span>
-              <span className="text-[12px] text-white/50 leading-snug">
+              <span className="text-[12px] text-white leading-snug">
                 Opens your share sheet with the PDF attached
               </span>
             </div>
@@ -663,7 +663,7 @@ ${companyName}`;
         {!accountingLoading && (
           <>
             <DropdownMenuSeparator className="my-2 bg-border/30" />
-            <DropdownMenuLabel className="text-[10px] font-semibold text-white px-3 py-1 uppercase tracking-wider">
+            <DropdownMenuLabel className="text-[11px] font-semibold text-white px-3 py-1 uppercase tracking-wider">
               Accounting Software
             </DropdownMenuLabel>
             {/* Already synced - show green tick */}
@@ -743,37 +743,37 @@ ${companyName}`;
         {stripeStatus === 'not_connected' && (
           <>
             <DropdownMenuSeparator className="my-2 bg-border/30" />
-            <DropdownMenuLabel className="text-[10px] font-semibold text-white px-3 py-1 uppercase tracking-wider">
+            <DropdownMenuLabel className="text-[11px] font-semibold text-white px-3 py-1 uppercase tracking-wider">
               Accept Card Payments
             </DropdownMenuLabel>
             {/* Primary: Connect existing Stripe via OAuth (INSTANT!) */}
             <DropdownMenuItem
               onClick={handleConnectStripeOAuth}
               disabled={isConnectingStripe}
-              className="cursor-pointer rounded-xl h-16 px-3 my-1 focus:bg-indigo-500/10 touch-manipulation bg-gradient-to-r from-indigo-500/15 to-purple-500/15 border border-indigo-500/30"
+              className="cursor-pointer rounded-xl h-16 px-3 my-1 focus:bg-elec-yellow/10 touch-manipulation bg-elec-yellow/[0.10] border border-elec-yellow/30"
             >
-              <div className="h-10 w-10 rounded-xl bg-indigo-500/20 flex items-center justify-center mr-3 flex-shrink-0">
+              <div className="h-10 w-10 rounded-xl bg-elec-yellow/[0.18] flex items-center justify-center mr-3 flex-shrink-0">
                 {isConnectingStripe ? (
-                  <Loader2 className="h-5 w-5 text-indigo-400 animate-spin" />
+                  <Loader2 className="h-5 w-5 text-elec-yellow animate-spin" />
                 ) : (
-                  <Zap className="h-5 w-5 text-indigo-400" />
+                  <Zap className="h-5 w-5 text-elec-yellow" />
                 )}
               </div>
               <div className="flex flex-col">
-                <span className="font-semibold text-sm text-foreground">Connect Stripe</span>
-                <span className="text-[10px] text-green-400 font-medium">
-                  Instant - just log in
+                <span className="font-semibold text-sm text-white">Connect Stripe</span>
+                <span className="text-[11px] text-white font-medium">
+                  Instant — just log in
                 </span>
               </div>
             </DropdownMenuItem>
             {/* Secondary: Small link for users without Stripe */}
-            <div className="px-3 py-2">
+            <div className="px-3">
               <button
                 onClick={handleConnectStripeExpress}
                 disabled={isConnectingStripe}
-                className="text-[11px] text-white hover:text-foreground underline underline-offset-2 touch-manipulation"
+                className="flex min-h-[44px] w-full items-center text-left text-[11px] text-white underline underline-offset-2 touch-manipulation"
               >
-                Don't have Stripe? Create free account
+                Don&rsquo;t have Stripe? Create free account
               </button>
             </div>
           </>

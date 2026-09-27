@@ -19,6 +19,14 @@
     "lint:bias": "node scripts/check-answer-bias.mjs",
     "preview": "vite preview",
     "test": "playwright test",
+    "check:certificate-number-integrity": "node scripts/check-certificate-number-integrity.mjs",
+    "check:blank-overwrite-parity": "node scripts/check-blank-overwrite-parity.mjs",
+    "check:part-p": "node scripts/check-part-p.mjs",
+    "check:hook-duplicates": "node scripts/check-hook-duplicates.mjs",
+    "check:sync-queue-identity": "node scripts/check-sync-queue-identity.mjs",
+    "check:team-linking": "node scripts/check-team-linking.mjs",
+    "check:report-sync-guards": "node scripts/check-report-sync-guards.mjs",
+    "check:certificate-routing": "node scripts/check-certificate-routing.mjs",
     "check:cert-cover": "node scripts/check-cert-cover-chain.mjs",
     "check:schedule-calc": "node scripts/check-schedule-autocalc.mjs",
     "check:test-placeholders": "node scripts/check-test-grid-placeholders.mjs",
@@ -85,7 +93,11 @@
     "check:bank-categories": "node scripts/check-bank-categories.mjs",
     "check:bank-categories:ci": "node scripts/check-bank-categories.mjs --ci",
     "check:report-conflict": "npx tsx scripts/check-report-conflict.mjs",
-    "check:invoice-deposit": "npx tsx scripts/check-invoice-deposit.mjs"
+    "check:invoice-deposit": "npx tsx scripts/check-invoice-deposit.mjs",
+    "check:three-phase": "node scripts/check-three-phase-siblings.mjs",
+    "check:invoice-prompts": "node scripts/check-invoice-prompts.mjs",
+    "check:time-allowance": "node scripts/check-time-allowance.mjs",
+    "check:quote-lifecycle": "node scripts/check-quote-lifecycle.mjs"
   },
   "dependencies": {
     "@capacitor-community/contacts": "^7.2.0",

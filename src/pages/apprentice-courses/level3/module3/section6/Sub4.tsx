@@ -156,7 +156,7 @@ const faqs = [
       'Daylight harvesting (dim when daylight is sufficient), occupancy sensing (off when room empty), time control. CIBSE LG7 recommends 30-50% energy savings vs no controls. Often required by Building Regs Part L for new commercial fit-outs.',
   },
   {
-    question: 'What\'s a "Type B" lamp efficacy?',
+    question: 'What’s a "Type B" lamp efficacy?',
     answer:
       "Confusing — commercial language varies. Always check the actual lm/W and quoted lumens on the spec sheet. Marketing labels (A++, B, etc.) are SAVE-Energy classifications and don't directly tell you the lighting design figures.",
   },
@@ -478,7 +478,7 @@ export default function Sub4() {
           whyItMatters={
             <>
               The lumen method gives a defensible design that meets BS EN 12464-1 and Building Regs
-              Part L. Without it, you\'re guessing — and customers complain about gloomy or glaring
+              Part L. Without it, you’re guessing — and customers complain about gloomy or glaring
               rooms.
             </>
           }

@@ -139,7 +139,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'Section 514 covers identification and warning notices — including the mixed-cable-colours notice (514.14), the periodic inspection notice (514.12), the RCD test notice (514.12.2) and the bonding label (514.13). The inspection step verifies these notices are present, legible and correct for the install.',
+      'Section 514 covers identification and warning notices — including the periodic inspection notice (514.12), the RCD test notice (514.12.2) and the bonding label (514.13). The inspection step verifies these notices are present, legible and correct for the install.',
   },
   {
     id: 6,

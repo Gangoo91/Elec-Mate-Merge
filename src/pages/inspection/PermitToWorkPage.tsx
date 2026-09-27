@@ -21,6 +21,7 @@ import { formatPermitToWorkPayload } from '@/utils/permit-to-work-formatter';
 import { pageInputCn as inputCn, pageTextareaCn as textareaCn } from '@/components/forms/pageStyles';
 
 import { PageHeader } from '@/components/forms/PageHeader';
+import { useCreateReportKey } from '@/hooks/useCreateReportKey';
 
 const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.04 } } };
 const itemVariants = { hidden: { opacity: 0, y: 8 }, visible: { opacity: 1, y: 0, transition: { duration: 0.25 } } };
@@ -199,6 +200,7 @@ export default function PermitToWorkPage() {
   const { id: editId } = useParams<{ id: string }>();
   const [isSaving, setIsSaving] = useState(false);
   const [existingReportId, setExistingReportId] = useState<string | null>(null);
+  const createKey = useCreateReportKey('permit-to-work'); // ELE-1603 — a retry adopts, never duplicates
   const photoInputRef = useRef<HTMLInputElement>(null);
 
   const [data, setData] = useState<PermitData>(() => {
@@ -210,7 +212,7 @@ export default function PermitToWorkPage() {
     if (!editId) return;
     supabase.auth.getUser().then(async ({ data: { user } }) => {
       if (!user) return;
-      const result = await reportCloud.getReportData(editId, user.id);
+      const result = await reportCloud.getReportData(editId, user.id, 'permit-to-work');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       if (result) { setData((prev) => ({ ...prev, ...(result as any) })); setExistingReportId(editId); }
     });
@@ -299,14 +301,21 @@ export default function PermitToWorkPage() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { toast.error('Please sign in'); setIsSaving(false); return; }
 
-      const savedReportId = existingReportId || data.permitNumber;
+      let savedReportId = existingReportId || data.permitNumber;
       if (existingReportId) {
+        // A refused write (wrong certificate type, RLS, network) used to fall through
+        // to "Saved". Check it the way the create path below already does.
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        await reportCloud.updateReport(existingReportId, user.id, data as any);
+        const updated = await reportCloud.updateReport(existingReportId, user.id, data as any, undefined, false, 'permit-to-work');
+        if (!updated.success) { toast.error('Failed to save'); setIsSaving(false); return; }
       } else {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const result = await reportCloud.createReport(user.id, 'permit-to-work', data as any);
+        const result = await reportCloud.createReport(user.id, 'permit-to-work', data as any, undefined, false, createKey.take());
         if (!result.success) { toast.error('Failed to save'); setIsSaving(false); return; }
+        if (result.reportId) {
+          savedReportId = result.reportId;
+          setExistingReportId(result.reportId);
+        }
       }
 
       toast.success('Saved — generating PDF...');

@@ -8,6 +8,7 @@ import {
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { certificateHref } from '@/utils/certificate-href';
 
 interface CustomerTimelineTabProps {
   customerId: string;
@@ -115,10 +116,11 @@ export const CustomerTimelineTab = ({ customerId }: CustomerTimelineTabProps) =>
                     )}
                     onClick={() => {
                       if (openable) {
+                        // Path form only — so eicr/eic/minor-works, which are
+                        // `?section=` and have no `<type>/:id` route, matched
+                        // the router's catch-all and opened the dashboard.
                         const reportType = activity.metadata.reportType || 'eicr';
-                        navigate(
-                          `/electrician/inspection-testing/${reportType}/${activity.metadata.reportId}`
-                        );
+                        navigate(certificateHref(reportType, activity.metadata.reportId));
                       }
                     }}
                   >

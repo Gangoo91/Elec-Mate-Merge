@@ -31,6 +31,7 @@ import {
 } from '@/components/electrician/MaintenanceContractsSection';
 import { cn } from '@/lib/utils';
 import { certificateHref } from '@/utils/certificate-href';
+import { useCreateReportKey } from '@/hooks/useCreateReportKey';
 
 type TimeFilter = 'all' | 'overdue' | '30days' | '60days' | '90days';
 
@@ -102,6 +103,7 @@ export default function CertificateExpiryPage() {
 
   const { toast } = useToast();
   const [timeFilter, setTimeFilter] = useState<TimeFilter>('all');
+  const createKey = useCreateReportKey('eicr'); // ELE-1603 — retrying one reminder adopts its own draft, never another's
   const [selectedReminder, setSelectedReminder] = useState<ExpiryReminder | null>(null);
   const [contractPrefill, setContractPrefill] = useState<ContractPrefill | null>(null);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -206,7 +208,7 @@ export default function CertificateExpiryPage() {
       if (source?.clientPhone) seed.clientPhone = source.clientPhone;
       if (source?.clientEmail) seed.clientEmail = source.clientEmail;
 
-      const res = await reportCloud.createReport(user.id, 'eicr', seed);
+      const res = await reportCloud.createReport(user.id, 'eicr', seed, undefined, false, createKey.take(String(reminder.id)));
       if (res.success && res.reportId) {
         setSelectedReminder(null);
         openCert('eicr', res.reportId);

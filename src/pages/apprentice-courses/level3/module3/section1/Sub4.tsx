@@ -441,7 +441,7 @@ export default function Sub4() {
           situation={
             <>
               Site has a 22 kW IE2 pump motor at 89 % efficiency, running 16 hours/day, 350
-              days/year, average load 70 % of full. You\'re costing a replacement with an IE4 motor
+              days/year, average load 70 % of full. You’re costing a replacement with an IE4 motor
               (94 % efficiency) plus a VFD that lets it run at the actual load instead of full
               speed.
             </>

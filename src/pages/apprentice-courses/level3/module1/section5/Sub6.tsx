@@ -380,7 +380,7 @@ export default function Sub6() {
         <ConceptBlock
           title="Refuse, document, escalate, frame, protect"
           plainEnglish="The five-step toolkit for legal-vs-commercial conflicts. Refuse the unsafe action; document in writing same time; escalate up the firm chain in writing; frame the consequence cascade for senior management; rely on ERA s.44 + PIDA 1998 protection."
-          onSite="The toolkit isn\'t adversarial. Most senior management responds well when consequences are clearly framed. The protection mechanisms (ERA s.44, PIDA 1998) make refusal sustainable when the response isn\'t reasonable."
+          onSite="The toolkit isn’t adversarial. Most senior management responds well when consequences are clearly framed. The protection mechanisms (ERA s.44, PIDA 1998) make refusal sustainable when the response isn’t reasonable."
         >
           <p>Toolkit elements:</p>
           <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">

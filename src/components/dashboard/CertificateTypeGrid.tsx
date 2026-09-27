@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { certificateNewHref } from '@/utils/certificate-href';
 
 interface CertificateTypeGridProps {
   onNavigate: (section: string, reportId?: string, reportType?: string) => void;
@@ -200,7 +201,7 @@ const CertificateTypeGrid = ({ onNavigate }: CertificateTypeGridProps) => {
 
   const handleClick = (cert: CertDef) => {
     if (cert.useRouter) {
-      navigate(`/electrician/inspection-testing/${cert.id}/new`);
+      navigate(certificateNewHref(cert.id));
     } else {
       onNavigate(cert.id);
     }

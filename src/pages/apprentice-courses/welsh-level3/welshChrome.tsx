@@ -1,40 +1,42 @@
 /**
  * Shared bits for the Welsh Level 3 course.
  *
- * Cards come from `@/components/apprentice-courses/ModuleCard` — the same
- * component every Level 3 section landing renders — so this course sits in the
- * existing design language rather than beside it. That card takes a free-text
- * eyebrow, which is what lets this course say "Unit 304E" where the rest say
- * "Module 3" without touching a shared component.
+ * Cards come from the same components every English Level 3 landing renders,
+ * so this course sits inside the existing design language rather than beside
+ * it. Those cards take a free-text eyebrow, which is what lets a lesson say
+ * "Unit 304E · 2.3" while the module and section cards read the same as
+ * anywhere else in the Study Centre.
  */
 
-import { Compass, HardHat, ShieldCheck, Zap } from 'lucide-react';
+import { Compass, HardHat, ShieldCheck, Wrench, Zap } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
-import type { UnitKind, WelshUnit } from '@/data/study-centre/welshLevel3';
+import type { WelshModule } from '@/data/study-centre/welshLevel3Tree';
 
-export function unitKindLabel(kind: UnitKind): string {
-  if (kind === 'wales') return 'Wales core';
-  if (kind === 'safety') return 'Health and safety';
-  return 'Electrical';
-}
-
-export function unitIcon(unit: WelshUnit): LucideIcon {
-  if (unit.status === 'practical') return HardHat;
-  if (unit.kind === 'wales') return Compass;
-  if (unit.kind === 'safety') return ShieldCheck;
-  return Zap;
-}
-
-/** The line under a unit's title on its card. Facts, not build status. */
-export function unitSummary(unit: WelshUnit): string {
-  if (unit.status === 'practical') {
-    return 'Signed off at work through your practical project — there is no written test for this unit.';
+/**
+ * A module's icon, chosen from what it teaches. Keyed on the module number
+ * rather than a stored field, because the grouping is ours and the icon is
+ * part of that editorial decision.
+ */
+export function moduleIcon(module: WelshModule): LucideIcon {
+  switch (module.number) {
+    case 1:
+      return Compass; // Working practice and the industry
+    case 2:
+      return ShieldCheck; // Health, safety and environment
+    case 3:
+    case 4:
+      return Zap; // Electrical science
+    case 5:
+      return HardHat; // Planning, coordination and evaluation
+    default:
+      return Wrench; // Installation, inspection, fault diagnosis
   }
-  const outcomes = unit.sections.length;
-  const pages = unit.sections.reduce((n, s) => n + s.subsections.length, 0);
-  return `${unit.glh} GLH · ${outcomes} ${outcomes === 1 ? 'outcome' : 'outcomes'} · ${pages} ${pages === 1 ? 'page' : 'pages'}`;
 }
 
-/** Shown on a unit that is part-evidenced at work. Says that it happens, no more. */
+/**
+ * Shown where part of a unit is signed off at work rather than by a test.
+ * Says that it happens, and no more — reproducing the assessment is not what
+ * a study centre is for.
+ */
 export const EVIDENCED_AT_WORK =
-  'Part of this unit is signed off at work through your practical project rather than by sitting a test. What you study here is the knowledge behind it.';
+  'Part of this qualification is signed off at work through your practical project rather than by sitting a test. What you study here is the knowledge behind it.';

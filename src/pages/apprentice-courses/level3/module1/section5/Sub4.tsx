@@ -55,7 +55,7 @@ const checks = [
   },
   {
     id: 'l3-m1-s5-sub4-asphyx',
-    question: 'What\'s an "enclosed-space injury" under Schedule 1?',
+    question: 'What’s an "enclosed-space injury" under Schedule 1?',
     options: [
       'Any injury to a worker who was working alone, regardless of whether the space was enclosed.',
       'An enclosed-space injury causing hypothermia, heat illness, resuscitation or 24h+ hospital.',
@@ -103,7 +103,7 @@ const quizQuestions = [
   },
   {
     id: 4,
-    question: 'What\'s a "scalping requiring hospital treatment"?',
+    question: 'What’s a "scalping requiring hospital treatment"?',
     options: [
       'Detachment of skin from the head or scalp requiring hospital treatment.',
       'A deep cut to the scalp that bleeds heavily but heals fully once stitched, needing no graft.',
@@ -116,7 +116,7 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question: 'What\'s "loss of consciousness from head injury or asphyxia"?',
+    question: 'What’s "loss of consciousness from head injury or asphyxia"?',
     options: [
       'Feeling faint or dizzy after a minor shock, where the casualty stays on their feet throughout.',
       'Unconsciousness arising from head impact or from asphyxiation — a specified injury.',
@@ -142,7 +142,7 @@ const quizQuestions = [
   },
   {
     id: 7,
-    question: 'What\'s "crush injury leading to internal organ damage"?',
+    question: 'What’s "crush injury leading to internal organ damage"?',
     options: [
       'A deep bruise to a limb from a heavy object, where the skin is intact and no organ is affected.',
       'A trapped hand between two surfaces causing pain and swelling but no lasting tissue damage.',
@@ -187,7 +187,7 @@ const faqs = [
   {
     question: 'What if hospital says "no fracture" but X-ray weeks later finds one?',
     answer:
-      'Once aware, report. The responsible person\'s "without delay" duty kicks in when they become aware. Document the diagnostic timeline.',
+      'Once aware, report. The responsible person’s "without delay" duty kicks in when they become aware. Document the diagnostic timeline.',
   },
   {
     question: "Does the operative's choice not to seek treatment affect RIDDOR?",
@@ -330,21 +330,21 @@ export default function Sub4() {
         <ContentEyebrow>L3 operative's role at the scene</ContentEyebrow>
         <ConceptBlock
           title="Provide facts to the responsible person promptly"
-          plainEnglish="The operative isn\'t the report-maker (responsible person is). But the operative is often the first to see the injury and the first to know the basic facts. Match observed symptoms to Schedule 1 categories; phone the responsible person immediately if a match seems likely."
-          onSite="The faster the responsible person knows, the better positioned they are to make the immediate phone notification within the without-delay window. Don\'t wait for hospital diagnosis to escalate; escalate based on apparent injury and update later if confirmed differently."
+          plainEnglish="The operative isn’t the report-maker (responsible person is). But the operative is often the first to see the injury and the first to know the basic facts. Match observed symptoms to Schedule 1 categories; phone the responsible person immediately if a match seems likely."
+          onSite="The faster the responsible person knows, the better positioned they are to make the immediate phone notification within the without-delay window. Don’t wait for hospital diagnosis to escalate; escalate based on apparent injury and update later if confirmed differently."
         >
           <p>Operative-to-responsible-person flow:</p>
           <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
             <li>Render first aid; arrange ambulance / transport.</li>
             <li>Note observed symptoms and possible Schedule 1 match.</li>
             <li>
-              Phone responsible person (firm\'s H&amp;S manager / contracts manager) IMMEDIATELY.
+              Phone responsible person (firm’s H&amp;S manager / contracts manager) IMMEDIATELY.
             </li>
             <li>Brief them factually: &quot;possible specified injury — appears to be X&quot;.</li>
             <li>Preserve scene; document.</li>
             <li>Update responsible person as diagnosis confirms.</li>
             <li>Provide written witness account same day.</li>
-            <li>Cooperate with any HSE follow-up via the firm\'s legal / H&amp;S team.</li>
+            <li>Cooperate with any HSE follow-up via the firm’s legal / H&amp;S team.</li>
           </ol>
         </ConceptBlock>
 
@@ -545,9 +545,9 @@ export default function Sub4() {
           title="Treating a finger fracture as not reportable"
           whatHappens={
             <>
-              Apprentice fractures finger; firm assumes RIDDOR doesn\'t apply (correct — finger
-              excluded from Schedule 1) and doesn\'t consider over-7-day. Apprentice is off normal
-              duties for 12 days. The over-7-day F2508A IS due within 15 days but the firm doesn\'t
+              Apprentice fractures finger; firm assumes RIDDOR doesn’t apply (correct — finger
+              excluded from Schedule 1) and doesn’t consider over-7-day. Apprentice is off normal
+              duties for 12 days. The over-7-day F2508A IS due within 15 days but the firm doesn’t
               submit. Late reporting offence under Reg 6.
             </>
           }
@@ -564,7 +564,7 @@ export default function Sub4() {
           situation={
             <>
               L2 mate falls from a step-up onto the floor at the start of a job. Visible deformity
-              in lower leg. Says they think it\'s broken. Ambulance called. You\'re the L3
+              in lower leg. Says they think it’s broken. Ambulance called. You’re the L3
               supervisor on site.
             </>
           }
@@ -580,17 +580,17 @@ export default function Sub4() {
               (5) Witness statements - yourself, customer if present. (6) Pull other equipment from
               same fleet if equipment defect is suspected — internal recall. (7) Update responsible
               person on hospital diagnosis when confirmed. (8) Document everything in writing same
-              day. (9) Cooperate with HSE follow-up via firm\'s H&S team. (10) RIDDOR record
+              day. (9) Cooperate with HSE follow-up via firm’s H&S team. (10) RIDDOR record
               retention 3 years (in practice longer for residential / Defective Premises Act
               considerations).
             </>
           }
           whyItMatters={
             <>
-              The L3 supervisor\'s prompt categorisation and escalation enables the responsible
+              The L3 supervisor’s prompt categorisation and escalation enables the responsible
               person to discharge the without-delay duty. The phone notification is what RIDDOR
               demands for Schedule 1; the F2508 follows. Late phone notification is the
-              most-prosecuted RIDDOR-procedure failure. The L3\'s decision to phone immediately
+              most-prosecuted RIDDOR-procedure failure. The L3’s decision to phone immediately
               based on observed symptoms (rather than wait for hospital confirmation) is what makes
               timely notification possible.
             </>

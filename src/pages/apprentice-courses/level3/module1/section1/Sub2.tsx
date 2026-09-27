@@ -388,7 +388,7 @@ export default function Sub2() {
           <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
             <li>
               <strong>Unreasonable to be dead</strong> — there's a credible reason why isolation
-              isn\'t possible. &quot;Customer doesn&apos;t want power off&quot; is not unreasonable.
+              isn’t possible. &quot;Customer doesn&apos;t want power off&quot; is not unreasonable.
               &quot;Hospital ICU on this circuit, no UPS, immediate patient risk if isolated&quot;
               is.
             </li>
@@ -443,8 +443,8 @@ export default function Sub2() {
 
         <ConceptBlock
           title="Two limbs — own knowledge OR appropriate supervision"
-          plainEnglish="Reg 16 is the competence regulation. It bans engagement in work requiring technical knowledge or experience to prevent danger UNLESS you possess that knowledge yourself, OR you\'re under appropriate supervision. At L3 you sit between the two limbs."
-          onSite="The L3 step: \'am I competent for this task?' becomes a real question, not a pro-forma. Honesty about what you can and can't do safely without supervision is the difference between an L3 ready to qualify and one who\'s about to cause a Reg 16 incident. Refusing a job because you don\'t yet have the competence is a Reg 16-discharging act, not a failure."
+          plainEnglish="Reg 16 is the competence regulation. It bans engagement in work requiring technical knowledge or experience to prevent danger UNLESS you possess that knowledge yourself, OR you’re under appropriate supervision. At L3 you sit between the two limbs."
+          onSite="The L3 step: ‘am I competent for this task?' becomes a real question, not a pro-forma. Honesty about what you can and can't do safely without supervision is the difference between an L3 ready to qualify and one who’s about to cause a Reg 16 incident. Refusing a job because you don’t yet have the competence is a Reg 16-discharging act, not a failure."
         >
           <p>Where you sit on the Reg 16 spectrum at L3:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -512,8 +512,8 @@ export default function Sub2() {
 
         <ConceptBlock
           title="Statute vs code of practice — and why both matter"
-          plainEnglish="EAWR is statute; breach is criminal. BS 7671 is non-statutory; it\'s the IET\'s wiring code. The courts treat compliance with BS 7671 as evidence of having discharged the EAWR duty — that\'s the \'safe harbour'. Following the regs book is your defence; departing from it puts the burden on you to show the alternative is at least as safe."
-          onSite="The current edition is BS 7671:2018 + Amendment 4:2026 (A4:2026). Earlier installs to earlier amendments are still legitimate — BS 7671 isn't retrospective — but new work and significant alterations should follow the current edition. This matters at L3 because customers ask \'why is my install non-compliant?' and the answer is sometimes 'it complied with the edition in force at the time' (a Code C3 not a C2)."
+          plainEnglish="EAWR is statute; breach is criminal. BS 7671 is non-statutory; it’s the IET’s wiring code. The courts treat compliance with BS 7671 as evidence of having discharged the EAWR duty — that’s the ‘safe harbour'. Following the regs book is your defence; departing from it puts the burden on you to show the alternative is at least as safe."
+          onSite="The current edition is BS 7671:2018 + Amendment 4:2026 (A4:2026). Earlier installs to earlier amendments are still legitimate — BS 7671 isn't retrospective — but new work and significant alterations should follow the current edition. This matters at L3 because customers ask ‘why is my install non-compliant?' and the answer is sometimes 'it complied with the edition in force at the time' (a Code C3 not a C2)."
         >
           <p>How the safe-harbour works in court:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">

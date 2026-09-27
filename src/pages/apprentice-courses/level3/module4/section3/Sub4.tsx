@@ -491,7 +491,7 @@ export default function Sub4() {
             <>
               For RCD nuisance trips, always use the clamp meter differential isolation method first
               (Sub 3.4). Find the actual leakage source. Replace the RCD only if testing shows the
-              RCD is genuinely faulty (slow trip-time on MFT). Replacing a working RCD doesn\'t fix
+              RCD is genuinely faulty (slow trip-time on MFT). Replacing a working RCD doesn’t fix
               a leakage source; the source has to go.
             </>
           }
@@ -502,8 +502,8 @@ export default function Sub4() {
           whatHappens={
             <>
               Apprentice installs a domestic EV charger. CU has Type A RCBO covering the relevant
-              circuit. Charger appears to work fine for weeks. Then one of the EV\'s batteries
-              develops a smooth DC leakage to chassis (rare but happens). The Type A RCD doesn\'t
+              circuit. Charger appears to work fine for weeks. Then one of the EV’s batteries
+              develops a smooth DC leakage to chassis (rare but happens). The Type A RCD doesn’t
               see smooth DC; the leakage continues unprotected. Eventually a fault path opens
               (dampness in the charging cable, EV chassis to ground), customer takes a shock.
               Investigation finds the wrong RCD type.
@@ -524,7 +524,7 @@ export default function Sub4() {
           situation={
             <>
               Three-month-old new-build. Customer reports the kitchen RCBO trips two or three times
-              per week. Always reset works. They\'ve had two firms out; both replaced the RCBO;
+              per week. Always reset works. They’ve had two firms out; both replaced the RCBO;
               problem persists.
             </>
           }
@@ -535,11 +535,11 @@ export default function Sub4() {
               machine is on. (2) Hypothesis: cumulative leakage. (3) Clamp meter L+N together at the
               RCBO output. With dishwasher off: 4 mA. With dishwasher running (rinse cycle): 7 mA.
               With washing machine also running: 14 mA. With kettle plugged in too: 22 mA. Threshold
-              is 30 mA — they\'re operating at 70% of threshold under normal cooking-time load. (4)
+              is 30 mA — they’re operating at 70% of threshold under normal cooking-time load. (4)
               Add the LED downlighters that come on at 7pm (12 lights, ~3 mA cumulative): now at 25
-              mA. (5) Diagnosis: cumulative leakage from the modern kitchen\'s load mix is
+              mA. (5) Diagnosis: cumulative leakage from the modern kitchen’s load mix is
               approaching the 30 mA threshold. The RCBO is correctly reporting an over-threshold
-              leakage; it\'s not faulty. (6) Solutions: split the kitchen circuit into two RCBOs
+              leakage; it’s not faulty. (6) Solutions: split the kitchen circuit into two RCBOs
               (one for the appliances, one for the lighting/sockets); replace LED drivers with
               lower-leakage models; or upgrade the CU to all-RCBO with the kitchen on a dedicated 30
               mA RCBO (no shared circuits adding leakage). (7) Recommend the all-RCBO CU upgrade as
@@ -548,11 +548,11 @@ export default function Sub4() {
           }
           whyItMatters={
             <>
-              Cumulative leakage is invisible without the clamp meter — the customer\'s symptoms are
+              Cumulative leakage is invisible without the clamp meter — the customer’s symptoms are
               real but the root cause is design (one RCBO covering too many leaky loads), not a
-              faulty component. Two previous firms replaced the wrong thing; the L3 apprentice\'s
+              faulty component. Two previous firms replaced the wrong thing; the L3 apprentice’s
               clamp meter approach finds the actual cause and recommends the right fix. The economic
-              answer (CU upgrade) is bigger than the customer expected, but it\'s the correct
+              answer (CU upgrade) is bigger than the customer expected, but it’s the correct
               answer.
             </>
           }

@@ -15,6 +15,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { formatLightningProtectionJson } from '@/utils/lightningProtectionJsonFormatter';
 import { useLightningProtectionSmartForm } from '@/hooks/inspection/useLightningProtectionSmartForm';
 import { readEdgeFunctionError } from '@/lib/edgeFunctionError';
+import { issueCertificateNumber } from '@/utils/certificateNumbering';
 
 interface Props {
   currentTabIndex: number;
@@ -76,7 +77,7 @@ export default function LPTabNavigation({
               {
                 ...formData,
                 certificateNumber:
-                  formData.certificateNumber || `LP-${Date.now().toString(36).toUpperCase()}`,
+                  await issueCertificateNumber(formData.certificateNumber, 'lightning-protection'),
               },
               loadCompanyBranding() || undefined
             )

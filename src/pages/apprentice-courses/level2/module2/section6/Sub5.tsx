@@ -125,7 +125,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'A "polyswitch" or PPTC is a polymer PTC. Normal current = low resistance, normal operation. Fault current heats it, the resistance rises sharply, current is choked off. When the fault clears and it cools, it resets. You\'ll find them in USB ports, alarm panels, motor windings.',
+      'A "polyswitch" or PPTC is a polymer PTC. Normal current = low resistance, normal operation. Fault current heats it, the resistance rises sharply, current is choked off. When the fault clears and it cools, it resets. You’ll find them in USB ports, alarm panels, motor windings.',
   },
   {
     id: 6,
@@ -188,7 +188,7 @@ const faqs = [
       'With a multimeter on resistance. Compare the reading at room temperature to the value printed on the part or the spec sheet — for a 10 kΩ NTC at 25 °C you should see close to 10 kΩ. Warm it gently in your hand and watch the value drop (NTC) or rise (PTC). Open-circuit or way out of spec = replace.',
   },
   {
-    question: 'What\'s a "PTC thermistor" inside a single-phase motor for?',
+    question: 'What’s a "PTC thermistor" inside a single-phase motor for?',
     answer:
       'Modern motors often have one or three PTC thermistors embedded in the stator windings. They feed a small relay (a "thermistor protection relay") which opens the motor contactor coil if any winding gets too hot. Far more accurate than a thermal overload, because it senses the actual winding temperature rather than estimating it from current.',
   },

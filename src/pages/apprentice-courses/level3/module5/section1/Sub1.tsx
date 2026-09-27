@@ -142,7 +142,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'HSR25 — "Memorandum of Guidance on the Electricity at Work Regulations 1989" — is the HSE\'s official guidance on how the regulations are interpreted and enforced. It is not law itself, but it indicates how HSE will apply the law. It explicitly references compliance with BS 7671 as a way of meeting the EAWR precautions duty. Worth reading in full as a Level 3 apprentice.',
+      'HSR25 — "Memorandum of Guidance on the Electricity at Work Regulations 1989" — is the HSE’s official guidance on how the regulations are interpreted and enforced. It is not law itself, but it indicates how HSE will apply the law. It explicitly references compliance with BS 7671 as a way of meeting the EAWR precautions duty. Worth reading in full as a Level 3 apprentice.',
   },
   {
     id: 6,
@@ -453,7 +453,7 @@ export default function Sub1() {
             <>
               Treat BS 7671 as the technical floor, not the ceiling. Use the EAWR test — "is this
               system in safe condition for the use it will be put to?" — alongside the BS 7671
-              checklist. If something doesn\'t look right but BS 7671 doesn\'t have a specific
+              checklist. If something doesn’t look right but BS 7671 doesn’t have a specific
               clause for it, raise it as an observation on the EIC or as a C2/C3 on the EICR.
               Document the concern. EAWR cares about danger; BS 7671 codifies the main paths to
               preventing it but does not cover every possible danger.
@@ -531,8 +531,8 @@ export default function Sub1() {
 
         <ConceptBlock
           title="Signing the certificate is a legal act"
-          plainEnglish="Putting your signature on an EIC isn\'t paperwork — it\'s a formal statutory declaration that the installation meets BS 7671 at certification. It transfers the maintenance duty to the recipient AND keeps a continuing duty on you if defects are later found."
-          onSite="Treat every signature like a deed. If you wouldn\'t be comfortable defending it in court, don\'t sign it. If a colleague pressures you to sign for work you didn\'t fully verify, refuse — the EAWR consequences land on you, not them."
+          plainEnglish="Putting your signature on an EIC isn’t paperwork — it’s a formal statutory declaration that the installation meets BS 7671 at certification. It transfers the maintenance duty to the recipient AND keeps a continuing duty on you if defects are later found."
+          onSite="Treat every signature like a deed. If you wouldn’t be comfortable defending it in court, don’t sign it. If a colleague pressures you to sign for work you didn’t fully verify, refuse — the EAWR consequences land on you, not them."
         >
           <p>The legal cascade triggered by signing an EIC:</p>
           <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">

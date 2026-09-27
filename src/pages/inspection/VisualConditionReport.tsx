@@ -83,8 +83,11 @@ export default function VisualConditionReport() {
     // Gates autosave while loading from cloud — without it the empty default
     // state races the fetch and overwrites the stored report with blanks.
     isHydrating: isLoading,
-    onReportCreated: (newId: string) => {
+    onReportCreated: (newId: string, certificateNumber?: string) => {
       setSavedReportId(newId);
+      // ELE-1592 — keep the number the row was filed under; without this the
+      // form stayed blank and the PDF printed an invented timestamp.
+      if (certificateNumber) setFormData((prev) => (prev.certificateNumber ? prev : { ...prev, certificateNumber }));
       window.history.replaceState(null, '', `${BASE}/${newId}`);
     },
   });
@@ -102,7 +105,7 @@ export default function VisualConditionReport() {
           data: { user },
         } = await supabase.auth.getUser();
         if (!user) return;
-        const stored = await reportCloud.getReportData(id, user.id);
+        const stored = await reportCloud.getReportData(id, user.id, 'visual-condition');
         if (stored && !cancelled) {
           const loaded = {
             ...getDefaultVisualConditionFormData(),

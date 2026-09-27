@@ -56,7 +56,7 @@ const checks = [
   {
     id: 'l3-m2-s5-sub1-customer-expectations',
     question:
-      'A customer asks "when will my new heat pump be running and how warm will the house be?". The MCS designer hasn\'t finished the heat-loss calc and the property has marginal insulation. What\'s the responsible answer?',
+      'A customer asks "when will my new heat pump be running and how warm will the house be?". The MCS designer hasn’t finished the heat-loss calc and the property has marginal insulation. What’s the responsible answer?',
     options: [
       'Reassure them it will be warm and give a firm date. Tell the customer the heat pump will hold the house at 21 degrees from the commissioning day, since that is the standard design temperature for all heat pumps; the heat-loss calc only affects the running cost, not the comfort, so a confident answer now builds trust.',
       'Tell them a heat pump can never make the house as warm as their old gas boiler. Set expectations low by explaining that heat pumps run cooler, so they should accept a cooler home; the heat-loss calc is only paperwork for the grant and does not change the comfort outcome.',

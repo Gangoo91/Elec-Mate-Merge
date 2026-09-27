@@ -433,6 +433,119 @@ export function effectiveSpotChecks(
   return (d.spotChecks ?? []).filter((c) => c?.type && stored(c.value) !== '');
 }
 
+
+/* ── Alarm register (landlord visits) ──────────────────────────────────── */
+
+/**
+ * The alarms found in the dwelling, one row each.
+ *
+ * 🔴 WHY THIS IS HERE AND NOT ONLY ON THE SMOKE & CO CERTIFICATE
+ *
+ * `landlordInspectionItems.ts` already asks whether alarms are present, sited,
+ * tested, interlinked and in date — and item 3.6 says "replacement date on each
+ * alarm head checked and not passed". Until now there was nowhere to write the
+ * dates down, so the answer was a tick with no evidence behind it. A register
+ * turns that tick into a record, and it is the thing a landlord is actually
+ * asked for: which alarm, where, and when does it expire.
+ *
+ * ⚠️ IT STAYS AN INVENTORY, NOT A CERTIFICATE. Grade (A–F) and category
+ * (LD1–LD3) to BS 5839-6 are deliberately absent, exactly as they are absent
+ * from the schedule. Declaring a system's grade is a design statement, it
+ * belongs on the Smoke & CO Alarm certificate, and `smokeCOJsonFormatter.ts`
+ * records the same decision. Two documents that can both declare a grade are
+ * two documents that can disagree about it in front of a coroner.
+ *
+ * `alarmType` values are the Smoke & CO certificate's own, verbatim, so the
+ * same alarm described on both documents describes itself the same way.
+ */
+export type RoutineAlarmType =
+  | ''
+  | 'optical-smoke'
+  | 'heat'
+  | 'multi-sensor-smoke-heat'
+  | 'CO'
+  | 'multi-sensor-heat-co';
+
+export const ROUTINE_ALARM_TYPES: { value: Exclude<RoutineAlarmType, ''>; label: string }[] = [
+  { value: 'optical-smoke', label: 'Optical smoke' },
+  { value: 'heat', label: 'Heat' },
+  { value: 'multi-sensor-smoke-heat', label: 'Multi-sensor (smoke + heat)' },
+  { value: 'CO', label: 'CO alarm' },
+  { value: 'multi-sensor-heat-co', label: 'Multi-sensor (heat + CO)' },
+];
+
+export interface RoutineAlarm {
+  id: string;
+  /** Where it is. A register with no locations is a count, not a record. */
+  location: string;
+  alarmType: RoutineAlarmType;
+  powerSource: '' | 'mains-battery-backup' | 'mains-no-backup' | 'sealed-battery' | 'replaceable-battery';
+  /**
+   * Printed on the head, usually as a month and year. Free text on purpose:
+   * heads show it half a dozen different ways and a date picker that refuses
+   * "03/19" is a date that does not get written down.
+   */
+  dateOfManufacture: string;
+  /**
+   * When it must be replaced. Prefilled from the manufacture date — 10 years
+   * for smoke and heat, 7 for anything detecting CO — and then editable,
+   * because the manufacturer's own marking wins over our arithmetic.
+   */
+  replacementDue: string;
+  /** Did it sound on its own test button, on the day. */
+  testedOk: '' | 'yes' | 'no' | 'not-tested';
+  notes: string;
+}
+
+export const getDefaultAlarm = (): RoutineAlarm => ({
+  id: crypto.randomUUID(),
+  location: '',
+  alarmType: '',
+  powerSource: '',
+  dateOfManufacture: '',
+  replacementDue: '',
+  testedOk: '',
+  notes: '',
+});
+
+export const ROUTINE_ALARM_POWER_SOURCES: { value: string; label: string }[] = [
+  { value: 'mains-battery-backup', label: 'Mains with battery backup' },
+  { value: 'mains-no-backup', label: 'Mains, no backup' },
+  { value: 'sealed-battery', label: 'Sealed long-life battery' },
+  { value: 'replaceable-battery', label: 'Replaceable battery' },
+];
+
+/**
+ * Replacement date from the manufacture date.
+ *
+ * 10 years for smoke and heat, 7 where the head detects CO — the intervals the
+ * Smoke & CO certificate uses, kept identical here on purpose. A suggestion
+ * only: the field stays editable because the marking on the head is what counts.
+ *
+ * Returns '' for anything it cannot parse, INCLUDING a bare "MM/YYYY", which is
+ * how most heads are marked. Never guess a date onto a document.
+ */
+export function alarmReplacementDue(dateOfManufacture: string, alarmType: RoutineAlarmType): string {
+  const raw = stored(dateOfManufacture);
+  if (!raw) return '';
+  const d = new Date(raw);
+  if (Number.isNaN(d.getTime())) return '';
+  const years = alarmType === 'CO' || alarmType === 'multi-sensor-heat-co' ? 7 : 10;
+  d.setFullYear(d.getFullYear() + years);
+  return d.toISOString().split('T')[0];
+}
+
+/**
+ * Alarm rows with something actually in them.
+ *
+ * ⚠️ `stored`, not `.trim()` — same reason as `effectiveSpotChecks`: these come
+ * back out of a JSON column where a key can hold null, and this runs during
+ * render, where a throw white-screens the report.
+ */
+export function effectiveAlarms(d: Pick<RoutineInspectionFormData, 'alarms'>): RoutineAlarm[] {
+  return (d.alarms ?? []).filter((a) => a?.alarmType || stored(a?.location) !== '');
+}
+
 export interface RoutineObservation {
   id: string;
   location: string;
@@ -542,6 +655,16 @@ export interface RoutineInspectionFormData {
   supplyType: '' | 'single-phase' | 'three-phase';
   /** Free text — a maintenance visit may cover several boards. */
   boardsCovered: string;
+
+  /* ── Alarm register (landlord visits) ─────────────────────────────── */
+  /**
+   * Which alarms are in the dwelling, where, and when they expire.
+   *
+   * Landlord visits only — a commercial maintenance visit's detection is a
+   * BS 5839-1 system with its own certificate and its own log book, and putting
+   * a domestic head register on it would misdescribe both. See `RoutineAlarm`.
+   */
+  alarms: RoutineAlarm[];
 
   /* ── Maintenance schedule ─────────────────────────────────────────── */
   inspectionItems: RoutineInspectionItem[];
@@ -773,6 +896,7 @@ export function getDefaultRoutineInspectionFormData(): RoutineInspectionFormData
     observations: [],
     sitePhotos: [],
 
+    alarms: [],
     spotChecksCarriedOut: false,
     testInstrument: '',
     testInstrumentSerial: '',

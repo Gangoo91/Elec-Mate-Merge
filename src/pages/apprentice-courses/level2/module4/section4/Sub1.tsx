@@ -149,7 +149,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'Domestic 100 A single-phase PME supplies typically have 16 mm² or 25 mm² PEN (well under 35 mm²) → Table 54.8 minimum is 10 mm². So 10 mm² is the routine answer for domestic. Commercial supplies have larger PEN, larger bonding. The local DNO can require larger still — Table 54.8 says "Local distributor\'s network conditions may require a larger conductor."',
+      'Domestic 100 A single-phase PME supplies typically have 16 mm² or 25 mm² PEN (well under 35 mm²) → Table 54.8 minimum is 10 mm². So 10 mm² is the routine answer for domestic. Commercial supplies have larger PEN, larger bonding. The local DNO can require larger still — Table 54.8 says "Local distributor’s network conditions may require a larger conductor."',
   },
   {
     id: 8,

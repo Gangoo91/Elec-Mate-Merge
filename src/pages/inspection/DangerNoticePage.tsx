@@ -20,6 +20,7 @@ import { DangerNoticeSignoffCard } from '@/components/certificates/DangerNoticeS
 import { pageInputCn as inputCn, pageTextareaCn as textareaCn } from '@/components/forms/pageStyles';
 
 import { PageHeader } from '@/components/forms/PageHeader';
+import { useCreateReportKey } from '@/hooks/useCreateReportKey';
 
 // --- Constants ---
 
@@ -101,7 +102,7 @@ const newDangerEntry = (): DangerEntry => ({
 });
 
 const defaultData = (): DangerNoticeData => ({
-  referenceNumber: `DN-${Date.now().toString(36).toUpperCase()}`,
+  referenceNumber: '', // filled from the number the row is filed under on first save (ELE-1592)
   date: new Date().toISOString().split('T')[0],
   time: new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }),
   linkedEicrId: '',
@@ -195,6 +196,7 @@ export default function DangerNoticePage() {
   const photoInputRefs = useRef<Record<string, HTMLInputElement | null>>({});
   const [isSaving, setIsSaving] = useState(false);
   const [existingReportId, setExistingReportId] = useState<string | null>(null);
+  const createKey = useCreateReportKey('danger-notice'); // ELE-1603 — a retry adopts, never duplicates
 
   // EICR pre-fill — supports single observation OR multiple observations array
   const eicrState = location.state as {
@@ -287,7 +289,7 @@ export default function DangerNoticePage() {
     if (!editId) return;
     supabase.auth.getUser().then(async ({ data: { user } }) => {
       if (!user) return;
-      const result = await reportCloud.getReportData(editId, user.id);
+      const result = await reportCloud.getReportData(editId, user.id, 'danger-notice');
       if (result) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         setData((prev) => ({ ...prev, ...(result as any) }));
@@ -390,21 +392,40 @@ export default function DangerNoticePage() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { toast.error('Please sign in'); setIsSaving(false); return; }
 
+      // The reference the certificate prints IS the number it is filed under (ELE-1592);
+
+      // createReport allocates it, and the electrician can still overtype it later.
+
+      let referenceNumber = data.referenceNumber;
+
       // Save to Supabase
+      // The id the create returns — state set above is not visible in this closure (ELE-1603).
+      let createdReportId: string | null = null;
       if (existingReportId) {
+        // A refused write (wrong certificate type, RLS, network) used to fall through
+        // to "Saved". Check it the way the create path below already does.
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        await reportCloud.updateReport(existingReportId, user.id, data as any);
+        const updated = await reportCloud.updateReport(existingReportId, user.id, data as any, undefined, false, 'danger-notice');
+        if (!updated.success) { toast.error('Failed to save'); setIsSaving(false); return; }
       } else {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const result = await reportCloud.createReport(user.id, 'danger-notice', data as any);
+        const result = await reportCloud.createReport(user.id, 'danger-notice', data as any, undefined, false, createKey.take());
         if (!result.success) { toast.error('Failed to save'); setIsSaving(false); return; }
+        if (!referenceNumber && result.certificateNumber) {
+          referenceNumber = result.certificateNumber;
+          update('referenceNumber', referenceNumber);
+        }
+        if (result.reportId) {
+          createdReportId = result.reportId;
+          setExistingReportId(result.reportId);
+        }
       }
 
       // Generate PDF
       toast.success('Saved — generating PDF...');
-      const savedReportId = existingReportId || data.referenceNumber;
+      const savedReportId = existingReportId || createdReportId || referenceNumber;
       try {
-        const payload = formatDangerNoticePayload(data);
+        const payload = formatDangerNoticePayload({ ...data, referenceNumber });
         const { data: pdfResult, error: pdfError } = await supabase.functions.invoke(
           'generate-danger-notice-pdf',
           { body: { formData: payload } }
@@ -422,7 +443,7 @@ export default function DangerNoticePage() {
               pdfResult.download_url,
               user.id,
               savedReportId,
-              data.referenceNumber
+              referenceNumber
             );
             permanentPdfUrl = permanentUrl;
             await supabase
@@ -439,7 +460,7 @@ export default function DangerNoticePage() {
 
           // Download/share via native-aware utility
           const { openOrDownloadPdf } = await import('@/utils/pdf-download');
-          await openOrDownloadPdf(permanentPdfUrl, `Danger-Notice-${data.referenceNumber}.pdf`);
+          await openOrDownloadPdf(permanentPdfUrl, `Danger-Notice-${referenceNumber}.pdf`);
           toast.success('Danger notice issued');
         }
       } catch (pdfErr) {
@@ -490,7 +511,7 @@ export default function DangerNoticePage() {
         {/* Reference */}
         <Section>
           <SectionHeading title="Reference" />
-          <Field label="Record No."><Input value={data.referenceNumber} onChange={(e) => update('referenceNumber', e.target.value)} className={inputCn} /></Field>
+          <Field label="Record No."><Input value={data.referenceNumber} placeholder="Allocated on first save" onChange={(e) => update('referenceNumber', e.target.value)} className={inputCn} /></Field>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Field label="Date"><Input type="date" value={data.date} onChange={(e) => update('date', e.target.value)} className={inputCn} /></Field>
             <Field label="Time"><Input type="time" value={data.time} onChange={(e) => update('time', e.target.value)} className={inputCn} /></Field>

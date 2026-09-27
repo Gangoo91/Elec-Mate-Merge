@@ -253,7 +253,7 @@ export default function Sub3() {
 
         <ConceptBlock
           title="Left hand for motors, right hand for generators"
-          plainEnglish="A current-carrying conductor in a magnetic field feels a force. The direction is given by Fleming\'s LEFT-hand rule (FBI). A conductor moving through a field induces an EMF — direction by Fleming\'s RIGHT-hand rule. Same fingers, different hand."
+          plainEnglish="A current-carrying conductor in a magnetic field feels a force. The direction is given by Fleming’s LEFT-hand rule (FBI). A conductor moving through a field induces an EMF — direction by Fleming’s RIGHT-hand rule. Same fingers, different hand."
         >
           <p>
             <strong>Left-hand rule (motors):</strong>
@@ -264,7 +264,7 @@ export default function Sub3() {
             <li>I (thumB) = motion / force direction</li>
           </ul>
           <p>
-            <strong>Right-hand rule (generators):</strong> same finger assignments, but you\'ve
+            <strong>Right-hand rule (generators):</strong> same finger assignments, but you’ve
             applied the motion (thumb) and the rule tells you which way the induced current flows.
             The hand simply reflects cause-and-effect.
           </p>
@@ -281,8 +281,8 @@ export default function Sub3() {
 
         <ConceptBlock
           title="EMF is generated when flux through a coil changes"
-          plainEnglish="Faraday\'s law: the EMF induced in a coil equals the number of turns times the rate of change of magnetic flux through the coil. Lenz\'s law: the induced EMF drives a current whose magnetic effect opposes the original change."
-          onSite="In a transformer, the primary\'s alternating flux changes 100 times a second (50 Hz, two zero-crossings per cycle), inducing an EMF in the secondary. More turns on the secondary = more induced EMF — that\'s how the ratio sets the output voltage."
+          plainEnglish="Faraday’s law: the EMF induced in a coil equals the number of turns times the rate of change of magnetic flux through the coil. Lenz’s law: the induced EMF drives a current whose magnetic effect opposes the original change."
+          onSite="In a transformer, the primary’s alternating flux changes 100 times a second (50 Hz, two zero-crossings per cycle), inducing an EMF in the secondary. More turns on the secondary = more induced EMF — that’s how the ratio sets the output voltage."
         >
           <p>
             <strong>EMF = −N × (dΦ / dt)</strong>
@@ -291,7 +291,7 @@ export default function Sub3() {
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>N = number of turns in the coil</li>
             <li>dΦ/dt = rate of change of magnetic flux (Wb/s = V)</li>
-            <li>Negative sign = Lenz\'s law (induced EMF opposes the cause)</li>
+            <li>Negative sign = Lenz’s law (induced EMF opposes the cause)</li>
           </ul>
           <p>
             Worked example: a 500-turn coil sees flux changing from 0 to 0.02 Wb in 0.1 s. Average
@@ -411,7 +411,7 @@ export default function Sub3() {
 
         <ConceptBlock
           title="Frequency from poles and speed"
-          plainEnglish="A synchronous generator\'s frequency depends on how many magnetic poles it has and how fast it spins. UK mains is 50 Hz — set by the rev/min of the alternators in every power station."
+          plainEnglish="A synchronous generator’s frequency depends on how many magnetic poles it has and how fast it spins. UK mains is 50 Hz — set by the rev/min of the alternators in every power station."
         >
           <p>
             <strong>f = (P × N) / 120</strong>
@@ -419,7 +419,7 @@ export default function Sub3() {
           <p>P = number of poles (always even); N = rev/min.</p>
           <p>
             For 50 Hz: a 2-pole machine spins at 3000 rev/min; a 4-pole at 1500 rev/min; a 6-pole at
-            1000 rev/min. Synchronous motors at L3 work the same way in reverse — you\'ll meet them
+            1000 rev/min. Synchronous motors at L3 work the same way in reverse — you’ll meet them
             in §5.
           </p>
         </ConceptBlock>
@@ -504,7 +504,7 @@ export default function Sub3() {
               LEFT hand for MOTORS (you provide current, the field does work, you get motion). RIGHT
               hand for GENERATORS (you provide motion, the field does work, you get current).
               Mnemonic: LEFT for L for "Load" (motor drives a load); RIGHT for R for "Rotate"
-              (you\'re rotating the generator).
+              (you’re rotating the generator).
             </>
           }
         />
@@ -513,7 +513,7 @@ export default function Sub3() {
           title="Wiring a 3-phase induction motor for the right rotation"
           situation={
             <>
-              Customer\'s pump motor needs to spin clockwise viewed from the shaft end. You\'ve
+              Customer’s pump motor needs to spin clockwise viewed from the shaft end. You’ve
               connected L1, L2, L3 — motor spins anticlockwise. How do you reverse it without
               tearing the wiring apart?
             </>
@@ -521,7 +521,7 @@ export default function Sub3() {
           whatToDo={
             <>
               Swap any two of the three line connections. The phase rotation reverses, the rotating
-              magnetic field reverses, and so does the rotor. (Don\'t touch the neutral or earth.)
+              magnetic field reverses, and so does the rotor. (Don’t touch the neutral or earth.)
               Most contactors and isolators have phase-rotation labels — always check rotation
               BEFORE coupling to the load.
             </>

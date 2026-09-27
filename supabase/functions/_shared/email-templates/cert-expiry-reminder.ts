@@ -13,7 +13,7 @@ import {
   type BrandedCompany,
 } from '../email-template.ts';
 
-export type ExpiryTier = '30-day' | '14-day' | '7-day';
+export type ExpiryTier = '30-day' | '14-day' | '7-day' | 'overdue';
 
 export interface CertExpiryReminderData {
   company: BrandedCompany;
@@ -58,17 +58,22 @@ export function buildCertExpiryReminderEmail(
   const addrShort = (data.installationAddress || '').split(',')[0]?.trim() || '';
   const days = Math.max(0, Math.floor(data.daysUntilExpiry));
   const dayWord = days === 1 ? 'day' : 'days';
+  // ELE-1636 — the overdue nudge: how long PAST the date, in whole days.
+  const overdueDays = Math.max(1, Math.floor(-data.daysUntilExpiry));
+  const overdueWord = overdueDays === 1 ? 'day' : 'days';
 
   // Subject + preheader per tier.
   const subjects: Record<ExpiryTier, string> = {
     '30-day': `Your ${certType} is due for renewal`,
     '14-day': `Reminder: your ${certType} expires in ${days} ${dayWord}`,
     '7-day': `Urgent: your ${certType} expires in ${days} ${dayWord}`,
+    overdue: `Your ${certType} was due ${overdueDays} ${overdueWord} ago`,
   };
   const preheaders: Record<ExpiryTier, string> = {
     '30-day': `${certType} ${data.certificateNumber} expires ${expiryStr} — time to plan your re-inspection`,
     '14-day': `${certType} ${data.certificateNumber} expires in ${days} ${dayWord} (${expiryStr})`,
     '7-day': `${certType} ${data.certificateNumber} expires in ${days} ${dayWord} — please book your re-inspection now`,
+    overdue: `${certType} ${data.certificateNumber} passed its re-inspection date on ${expiryStr} — book when you are ready`,
   };
 
   // Tone-aware body.
@@ -76,6 +81,7 @@ export function buildCertExpiryReminderEmail(
     '30-day': `Your <strong style="color:#0f172a">${certType}</strong> certificate for ${addrShort ? `<strong style="color:#0f172a">${addrShort}</strong>` : 'your property'} expires on <strong style="color:#0f172a">${expiryStr}</strong>. There's no rush yet, but it's a good time to think about booking a re-inspection so you stay compliant.`,
     '14-day': `Just a nudge — your <strong style="color:#0f172a">${certType}</strong> certificate for ${addrShort ? `<strong style="color:#0f172a">${addrShort}</strong>` : 'your property'} expires in <strong style="color:#0f172a">${days} ${dayWord}</strong>. Best to get a re-inspection booked in so it doesn't lapse.`,
     '7-day': `Your <strong style="color:#0f172a">${certType}</strong> certificate for ${addrShort ? `<strong style="color:#0f172a">${addrShort}</strong>` : 'your property'} expires in <strong style="color:#0f172a">${days} ${dayWord}</strong>. Once it lapses you won't have valid documentation for your insurer / lender / letting agent — please get in touch so we can book a re-inspection straight away.`,
+    overdue: `The <strong style="color:#0f172a">${certType}</strong> certificate for ${addrShort ? `<strong style="color:#0f172a">${addrShort}</strong>` : 'your property'} reached its recommended re-inspection date on <strong style="color:#0f172a">${expiryStr}</strong>. Nothing has changed at your end — this is a gentle reminder that the installation is now past the date on the certificate, and a re-inspection keeps it covered. Book when it suits you.`,
   };
 
   // Pill — subtle escalation: neutral / amber / red.
@@ -92,6 +98,11 @@ export function buildCertExpiryReminderEmail(
     },
     '7-day': {
       text: days === 0 ? 'Expires today' : `Expires in ${days} ${dayWord}`,
+      background: '#fee2e2',
+      color: '#991b1b',
+    },
+    overdue: {
+      text: `Due ${overdueDays} ${overdueWord} ago`,
       background: '#fee2e2',
       color: '#991b1b',
     },

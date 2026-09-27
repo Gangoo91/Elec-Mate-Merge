@@ -44,7 +44,7 @@ const checks = [
     ],
     correctIndex: 1,
     explanation:
-      'BS 7671 Reg 643.2.1 says "by measurement of resistance" — you need an instrument that injects a controlled test current (typically 200 mA) and resolves down to milliohm range. Megger MFT1741, Fluke 1664FC, Kewtech KT64+, Metrel MI3155 are common trade choices. A standard multimeter on 200 ohm doesn\'t resolve the small differences that matter — bond readings are typically 0.01 to 0.10 ohm.',
+      'BS 7671 Reg 643.2.1 says "by measurement of resistance" — you need an instrument that injects a controlled test current (typically 200 mA) and resolves down to milliohm range. Megger MFT1741, Fluke 1664FC, Kewtech KT64+, Metrel MI3155 are common trade choices. A standard multimeter on 200 ohm doesn’t resolve the small differences that matter — bond readings are typically 0.01 to 0.10 ohm.',
   },
   {
     id: 'm4-s4-sub4-null',
@@ -58,7 +58,7 @@ const checks = [
     ],
     correctIndex: 1,
     explanation:
-      'Test leads have their own resistance — typically 0.10 to 0.20 ohm depending on length and connector type. Every continuity reading you take includes the lead resistance plus the actual circuit you\'re testing. The null function (sometimes labelled "ZERO", "REL" or "NULL") subtracts the current reading so the displayed value is the bond resistance only. Always null before testing a new circuit.',
+      'Test leads have their own resistance — typically 0.10 to 0.20 ohm depending on length and connector type. Every continuity reading you take includes the lead resistance plus the actual circuit you’re testing. The null function (sometimes labelled "ZERO", "REL" or "NULL") subtracts the current reading so the displayed value is the bond resistance only. Always null before testing a new circuit.',
   },
   {
     id: 'm4-s4-sub4-isolate',
@@ -195,7 +195,7 @@ const faqs = [
   {
     question: 'Does BS 7671 give an absolute maximum continuity value for main bonding?',
     answer:
-      'Not directly. Reg 643.2.1 says "verified by a measurement of resistance" — it requires the test but doesn\'t set a numerical limit. The trade rule of thumb is < 0.05 ohm for a typical domestic main bond; readings above 0.10 ohm warrant investigation. Where the bond is part of an earth fault loop, the relevant limit is the maximum Zs from Tables 41.3 or 41.5 — the bond contributes to Zs and an excessive bond resistance pushes Zs above the limit.',
+      'Not directly. Reg 643.2.1 says "verified by a measurement of resistance" — it requires the test but doesn’t set a numerical limit. The trade rule of thumb is < 0.05 ohm for a typical domestic main bond; readings above 0.10 ohm warrant investigation. Where the bond is part of an earth fault loop, the relevant limit is the maximum Zs from Tables 41.3 or 41.5 — the bond contributes to Zs and an excessive bond resistance pushes Zs above the limit.',
   },
   {
     question: 'Why null the test leads — surely the lead resistance is small?',
@@ -221,7 +221,7 @@ const faqs = [
     question:
       'My MFT has different test current options (200 mA vs 10 mA). Which do I use for continuity?',
     answer:
-      'Use the higher test current (typically 200 mA) for protective conductor continuity. Higher current "burns through" surface oxide on terminations and gives a more reliable reading of the actual joint resistance. The lower-current ranges are for sensitive equipment testing (won\'t damage electronic components) but are less suited to bonding continuity where you want to confirm the joint can carry real fault current.',
+      'Use the higher test current (typically 200 mA) for protective conductor continuity. Higher current "burns through" surface oxide on terminations and gives a more reliable reading of the actual joint resistance. The lower-current ranges are for sensitive equipment testing (won’t damage electronic components) but are less suited to bonding continuity where you want to confirm the joint can carry real fault current.',
   },
 ];
 
@@ -272,7 +272,7 @@ export default function Sub4() {
         >
           <p>
             The bond can fail visually-undetectable in three ways. (1) Loose terminal screw — looks
-            tightened from outside but isn\'t actually pressing the conductor against the terminal.
+            tightened from outside but isn’t actually pressing the conductor against the terminal.
             (2) Oxidised contact face — paint or scale or oxide between the clamp jaw and the pipe.
             (3) Damaged conductor inside the insulation — strands nicked during stripping, cable
             crushed during installation. None of these show on a visual inspection but all of them
@@ -283,7 +283,7 @@ export default function Sub4() {
             across the installation — not just that someone fitted a clamp on the gas pipe but that
             the bonding cable physically connects from the MET to the clamp with an unbroken
             metallic path. Without the test, an installation could pass visual inspection with bonds
-            that don\'t actually connect anywhere.
+            that don’t actually connect anywhere.
           </p>
         </ConceptBlock>
 
@@ -382,7 +382,7 @@ export default function Sub4() {
         <ConceptBlock
           title="Step-by-step — testing a main bond from MET to BS 951 clamp"
           plainEnglish="Isolate, prove dead, disconnect one end of the bond, null the leads, take the reading, reconnect, retest in-circuit, document."
-          onSite="Total time: about 5 minutes per bond once practiced. Worth doing carefully — the reading you record on the Schedule is the legal record of the bond\'s condition at sign-off."
+          onSite="Total time: about 5 minutes per bond once practiced. Worth doing carefully — the reading you record on the Schedule is the legal record of the bond’s condition at sign-off."
         >
           <ol className="space-y-2 list-decimal pl-5 marker:text-elec-yellow/70">
             <li>
@@ -406,7 +406,7 @@ export default function Sub4() {
             <li>
               <strong>Connect across the bond</strong> — one clip on the disconnected MET end of the
               bond conductor, the other clip on the conductor end at the BS 951 clamp (or on the BS
-              951 clamp body if the cable end isn\'t accessible).
+              951 clamp body if the cable end isn’t accessible).
             </li>
             <li>
               <strong>Read and record</strong> — note the value. Healthy bond on 10 mm² Cu over 4-5
@@ -530,7 +530,7 @@ export default function Sub4() {
           meaning={
             <>
               Same family of continuity tests as the main bonding tests of Reg 643.2.1. Mentioned
-              here as a cross-reference — when you\'re doing initial verification you typically work
+              here as a cross-reference — when you’re doing initial verification you typically work
               through every continuity test on the installation in one pass with the same MFT. Ring
               final circuits get the additional r1, rn, r2 loop measurements covered separately in
               Section 6 of this Module.
@@ -663,7 +663,7 @@ export default function Sub4() {
           title="Forgetting to null the test leads — every bond reads 0.20 ohm"
           whatHappens={
             <>
-              You\'ve set up your MFT, connected the leads, started testing every bond on the
+              You’ve set up your MFT, connected the leads, started testing every bond on the
               install. Every reading comes back at about 0.20 to 0.25 ohm — well above the 0.05 ohm
               trade benchmark. You start chasing nonexistent contact issues, opening bonds,
               re-making terminations, retesting, getting the same readings. Eventually you realise
@@ -686,9 +686,9 @@ export default function Sub4() {
           title="Testing main bond continuity from MET to gas BS 951 clamp under the kitchen sink"
           situation={
             <>
-              You\'re commissioning a domestic install. The main bonding cable to the gas service
+              You’re commissioning a domestic install. The main bonding cable to the gas service
               runs 4.5 m from the MET in the meter cabinet under the stairs to a BS 951 clamp on the
-              steel pipe under the kitchen sink. You\'re ready to do the continuity test. Walk the
+              steel pipe under the kitchen sink. You’re ready to do the continuity test. Walk the
               procedure end-to-end and identify what reading would make you happy and what would
               prompt investigation.
             </>
@@ -716,10 +716,10 @@ export default function Sub4() {
           whyItMatters={
             <>
               The continuity test is the moment the bond proves itself. Up to this point the bond
-              exists physically — cable in place, clamp on the pipe, label fitted — but you don\'t
-              know it\'s electrically sound until the MFT confirms it. A disciplined test routine
+              exists physically — cable in place, clamp on the pipe, label fitted — but you don’t
+              know it’s electrically sound until the MFT confirms it. A disciplined test routine
               (isolate, disconnect one end, null, measure, document) gives you a reliable reading
-              every time. Skip any step and you\'re either getting a misleading reading (parallel
+              every time. Skip any step and you’re either getting a misleading reading (parallel
               paths) or a corrupted reading (lead resistance not nulled) or risking a shock (not
               isolated).
             </>

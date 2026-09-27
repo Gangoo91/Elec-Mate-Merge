@@ -47,7 +47,7 @@ const checks = [
     ],
     correctIndex: 2,
     explanation:
-      'BS 7671 Part 2 — extraneous-conductive-part is "a conductive part liable to introduce a potential, generally earth potential, and not forming part of the electrical installation." Plastic doesn\'t conduct → can\'t introduce a potential → not an extraneous-conductive-part → no bonding required. The metal consumer-side pipework downstream is still extraneous and gets bonded normally.',
+      'BS 7671 Part 2 — extraneous-conductive-part is "a conductive part liable to introduce a potential, generally earth potential, and not forming part of the electrical installation." Plastic doesn’t conduct → can’t introduce a potential → not an extraneous-conductive-part → no bonding required. The metal consumer-side pipework downstream is still extraneous and gets bonded normally.',
   },
   {
     id: 'm4-s4-sub6-structural-steel',
@@ -324,13 +324,13 @@ export default function Sub6() {
               (usually 15-28 mm in domestic).
             </li>
             <li>
-              Plastic incoming water supply (modern blue MDPE pipe) doesn\'t need bonding. Bond the
+              Plastic incoming water supply (modern blue MDPE pipe) doesn’t need bonding. Bond the
               consumer-side metal pipework only.
             </li>
           </ul>
           <p>
             On a TT installation, the buried water main can sometimes provide a useful parallel
-            earth path back to the local water board\'s buried network — but BS 7671 specifically
+            earth path back to the local water board’s buried network — but BS 7671 specifically
             does NOT permit using a water main as the only or primary earth electrode (Reg 542.2.5
             and the IET Wiring Regulations historically restricted this after PE upgrades elsewhere
             broke the assumption). Bond it for protection, but install a proper local rod electrode
@@ -408,7 +408,7 @@ export default function Sub6() {
             <li>Mechanically continuous across the building via welded/bolted connections.</li>
             <li>
               Often has substantial ground contact via concrete-encased foundations — this acts as a
-              parallel earth electrode and can dominate the installation\'s earth impedance.
+              parallel earth electrode and can dominate the installation’s earth impedance.
             </li>
             <li>
               Large surface area exposed throughout the building — anyone touching a steel column is
@@ -451,7 +451,7 @@ export default function Sub6() {
 
         <ConceptBlock
           title="LPS earth network — bonded to MET per BS EN 62305"
-          plainEnglish="A lightning protection system has its own earth electrode network (down-conductors to ground rods at the building perimeter). That network is bonded to the building\'s electrical MET to prevent large potential differences during a strike."
+          plainEnglish="A lightning protection system has its own earth electrode network (down-conductors to ground rods at the building perimeter). That network is bonded to the building’s electrical MET to prevent large potential differences during a strike."
           onSite="On commercial/industrial buildings with a Type I, II, III or IV LPS per BS EN 62305 — the lightning designer specifies the bonding arrangement (direct bond or via spark gap / isolating SPD). The electrician implements the connection to the MET."
         >
           <p>
@@ -461,7 +461,7 @@ export default function Sub6() {
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
               <strong>Non-isolated LPS</strong> — the LPS earth is directly bonded to the
-              building\'s electrical MET. Simplest, common on most commercial buildings. Works
+              building’s electrical MET. Simplest, common on most commercial buildings. Works
               because the electrical and lightning earth networks reach the same potential during a
               strike — no flashover, no equipment damage.
             </li>
@@ -470,7 +470,7 @@ export default function Sub6() {
               from the electrical system, with bonding only via a controlled spark gap (isolating
               SPD) at the MET. Used where direct bonding could transmit lightning energy into
               sensitive electronic equipment (e.g. data centres, broadcast towers). The spark gap
-              conducts only when potential difference reaches the gap\'s breakdown voltage.
+              conducts only when potential difference reaches the gap’s breakdown voltage.
             </li>
           </ul>
           <p>
@@ -488,18 +488,18 @@ export default function Sub6() {
         <ConceptBlock
           title="PV arrays — Section 712 plus manufacturer instructions"
           plainEnglish="The aluminium frame of a PV array is bonded back to the inverter or to a dedicated earthing terminal — protective bonding for DC fault scenarios plus surge mitigation for nearby lightning."
-          onSite="Domestic rooftop PV is increasingly common. Section 712 of BS 7671 covers PV systems specifically; the manufacturer\'s installation manual is normative per Reg 134.1. The frame bonding is independent of the AC-side main bonding which still applies to the building."
+          onSite="Domestic rooftop PV is increasingly common. Section 712 of BS 7671 covers PV systems specifically; the manufacturer’s installation manual is normative per Reg 134.1. The frame bonding is independent of the AC-side main bonding which still applies to the building."
         >
           <p>PV system bonding considerations:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
               <strong>DC-side frame bonding</strong> — aluminium panel frames and steel mounting
               rails bonded together and back to the inverter or to a dedicated PV earthing terminal.
-              Sized per the system designer\'s specification (often 6 mm² or 10 mm² Cu).
+              Sized per the system designer’s specification (often 6 mm² or 10 mm² Cu).
             </li>
             <li>
-              <strong>AC-side bonding</strong> — the inverter\'s AC output is part of the
-              building\'s normal electrical install and is governed by standard BS 7671 bonding (Reg
+              <strong>AC-side bonding</strong> — the inverter’s AC output is part of the
+              building’s normal electrical install and is governed by standard BS 7671 bonding (Reg
               411.3.1.2 etc.) and main bonding at the MET.
             </li>
             <li>
@@ -525,7 +525,7 @@ export default function Sub6() {
           </p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>Battery enclosure exposed-conductive-parts bonded back to system earth.</li>
-            <li>DC switchgear and isolators rated for the battery\'s short-circuit current.</li>
+            <li>DC switchgear and isolators rated for the battery’s short-circuit current.</li>
             <li>
               AC-coupled inverter complies with the standard AC ADS framework (Reg 411.3.2
               disconnection times, Reg 415.1.1 RCD additional protection).
@@ -615,22 +615,22 @@ export default function Sub6() {
               The DNO has replaced the old galvanised steel gas service with a modern polyethylene
               (PE) supply that runs in plastic right up to the meter. You see the visible exposed PE
               pipe and reflexively fit a BS 951 clamp on it, terminating a 10 mm² G/Y bond back to
-              the MET. The bond does nothing electrically (plastic doesn\'t conduct, no current can
+              the MET. The bond does nothing electrically (plastic doesn’t conduct, no current can
               flow through it), but the install passes visual inspection because the cable looks
               correct. Six months later an EICR engineer codes it as an observation — not C1 or C2
-              because there\'s no danger created, but the install includes a non-functional bond
-              that suggests the electrician didn\'t understand the requirement.
+              because there’s no danger created, but the install includes a non-functional bond
+              that suggests the electrician didn’t understand the requirement.
             </>
           }
           doInstead={
             <>
               Identify whether the incoming pipe is metal or plastic before fitting any bond. BS
               7671 Part 2 — extraneous-conductive-part requires conductive material. Plastic
-              doesn\'t qualify. The metal CONSUMER-SIDE pipework downstream of the meter still does
+              doesn’t qualify. The metal CONSUMER-SIDE pipework downstream of the meter still does
               (typically the steel or copper internal pipework). Bond there per the standard 600 mm
               / before branch / consumer side rules. On modern installs where everything is plastic
               until well inside the building, the bond goes wherever the first metal pipework
-              appears — could be at the boiler, could be at a branch — provided it\'s before any
+              appears — could be at the boiler, could be at a branch — provided it’s before any
               further branch.
             </>
           }
@@ -640,7 +640,7 @@ export default function Sub6() {
           title="Commercial unit — structural steel + steel roof + gas + water + LPS — full bonding scheme"
           situation={
             <>
-              You\'re commissioning a new commercial unit (warehouse with attached office).
+              You’re commissioning a new commercial unit (warehouse with attached office).
               Steel-frame structure, steel-clad roof and walls, gas service for the office heating,
               water service for office and warehouse washroom, lightning protection system per BS EN
               62305 Class III on the roof, TN-C-S supply with 95 mm² PEN. Design the multi-service
@@ -661,7 +661,7 @@ export default function Sub6() {
               to the MET, plus 2-3 additional accessible columns/beams at strategic points around
               the building. 25 mm² G/Y from each bond point back to the MET (no daisy-chain). BS 951
               clamps suited to the steel section (purpose-made structural bonding clamps for large
-              sections). (6) LPS bonding: per BS EN 62305 designer\'s spec — Class III LPS is
+              sections). (6) LPS bonding: per BS EN 62305 designer’s spec — Class III LPS is
               typically non-isolated, so direct bond from the LPS earth electrode network to the
               MET. 25 mm² Cu cable. (7) Document on the EIC: every bond point, cable size,
               continuity reading, photo of the install. (8) Continuity test every bond from MET to
@@ -672,7 +672,7 @@ export default function Sub6() {
           whyItMatters={
             <>
               A multi-service commercial bonding scheme is the most complex application of Reg
-              411.3.1.2 + 544.1.2 + Table 54.8 + BS EN 62305 you\'ll encounter on a routine
+              411.3.1.2 + 544.1.2 + Table 54.8 + BS EN 62305 you’ll encounter on a routine
               commercial install. The principle is simple: every extraneous- conductive-part gets
               its own dedicated cable back to the MET. The complexity is in the count — typically
               6-12 bond points on a small commercial unit, more on larger sites. Each one tested,

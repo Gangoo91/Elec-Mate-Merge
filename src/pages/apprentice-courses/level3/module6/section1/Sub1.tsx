@@ -213,12 +213,12 @@ const faqs = [
   {
     question: 'How does the L3 design role interact with Building Control?',
     answer:
-      'For dwellings in England, work that is "notifiable" under Building Regulations Part P (consumer-unit replacement, new circuits, special-location installs) must either be self-certified by a registered competent-person scheme member (NICEIC, NAPIT, ELECSA, etc.) or formally notified to Building Control before commencement. The L3 designer\'s name often goes on the self-certification or the Building Notice. For commercial work, Building Control concerns itself more with Part B (fire safety), Part L (energy efficiency) and Part M (accessibility) — the electrical design touches all three.',
+      'For dwellings in England, work that is "notifiable" under Building Regulations Part P (consumer-unit replacement, new circuits, special-location installs) must either be self-certified by a registered competent-person scheme member (NICEIC, NAPIT, ELECSA, etc.) or formally notified to Building Control before commencement. The L3 designer’s name often goes on the self-certification or the Building Notice. For commercial work, Building Control concerns itself more with Part B (fire safety), Part L (energy efficiency) and Part M (accessibility) — the electrical design touches all three.',
   },
   {
     question: 'What does the Building Safety Act 2022 change for me?',
     answer:
-      'For higher-risk residential buildings (HRRBs — broadly, residential buildings 18 m or seven storeys and above), the Act introduces the Building Safety Regulator and a much stricter design / construction approval gateway. Designers on these buildings must demonstrate competence, hold up-to-date qualifications, and produce a "golden thread" of design documentation that survives the building\'s lifetime. AFDD recommendations (Reg 421.1.7) are likely to harden into requirements for HRRB final circuits well ahead of general use. If you intend to design on HRRBs, you will need higher qualifications and structured CPD; the Act treats that work as a different category from your normal commercial fit-out.',
+      'For higher-risk residential buildings (HRRBs — broadly, residential buildings 18 m or seven storeys and above), the Act introduces the Building Safety Regulator and a much stricter design / construction approval gateway. Designers on these buildings must demonstrate competence, hold up-to-date qualifications, and produce a "golden thread" of design documentation that survives the building’s lifetime. AFDD recommendations (Reg 421.1.7) are likely to harden into requirements for HRRB final circuits well ahead of general use. If you intend to design on HRRBs, you will need higher qualifications and structured CPD; the Act treats that work as a different category from your normal commercial fit-out.',
   },
 ];
 
@@ -337,7 +337,7 @@ export default function Sub1() {
             </li>
           </ul>
           <p>
-            Each declaration is signed, dated, and accompanied by the competent person\'s name,
+            Each declaration is signed, dated, and accompanied by the competent person’s name,
             position and qualifications. On a small CU swap the three signatures are all yours. On a
             multi-discipline commercial fit-out the three are different people, possibly from
             different organisations. The EIC asks you to be honest about which work you personally
@@ -509,12 +509,12 @@ export default function Sub1() {
             </li>
             <li>
               <strong>Fire-stopping</strong> — every penetration through a fire compartment must be
-              fire-stopped to the wall\'s rating. Reg 527.2 requires this and the documentation must
+              fire-stopped to the wall’s rating. Reg 527.2 requires this and the documentation must
               record where penetrations are and what fire-stop product is used.
             </li>
             <li>
               <strong>Access</strong> — DBs, isolators and inspection chambers must remain
-              accessible after the architect\'s finishes are in. A DB behind a fixed wardrobe is a
+              accessible after the architect’s finishes are in. A DB behind a fixed wardrobe is a
               Regulation 132.13 (accessibility) failure.
             </li>
             <li>
@@ -548,7 +548,7 @@ export default function Sub1() {
               apply for a load-management connection or a supply upgrade now while the drive is
               open. Specify an EV charger with O-PEN protection and a Type B (or Type A + DC
               monitor) RCD, future-proof the PV inverter location and string-cable route to the
-              loft, allow battery cabling capacity, and reserve a way for the heat pump\'s 16 A or
+              loft, allow battery cabling capacity, and reserve a way for the heat pump’s 16 A or
               20 A radial. Document everything, including the staging plan, in the design pack so
               the next contractor knows what was anticipated.
             </>
@@ -558,7 +558,7 @@ export default function Sub1() {
               Designing the end-state up front turns three separate disruptive jobs into one
               installation plus three small commissioning visits. It saves the customer money across
               the project, prevents the second-fit electrician from having to rip out the
-              first-fit\'s consumer unit, and produces documentation that scales as the load grows.
+              first-fit’s consumer unit, and produces documentation that scales as the load grows.
               This is exactly the kind of design thinking the L3 role is built for — and exactly
               what an L2 install-only mindset does not produce.
             </>
@@ -573,7 +573,7 @@ export default function Sub1() {
           title="Signing the design declaration on a pre-existing design you did not produce"
           whatHappens={
             <>
-              You arrive on site to install someone else\'s design — drawings handed over, cable
+              You arrive on site to install someone else’s design — drawings handed over, cable
               schedule done. You install it competently, sign the construction declaration, and the
               customer asks you to \"sign the lot\" because the original designer is unreachable.
               You sign the design box too. Six months later a Vd complaint becomes a claim. You are
@@ -582,7 +582,7 @@ export default function Sub1() {
           }
           doInstead={
             <>
-              Never sign the design declaration on someone else\'s design unless you have re-checked
+              Never sign the design declaration on someone else’s design unless you have re-checked
               the calculations and accepted the design as your own. If the original designer is
               unreachable, you have two honest options: re-do the design from scratch and sign your
               version, or refuse to sign the design box and explain the gap to the customer. A blank
@@ -700,7 +700,7 @@ export default function Sub1() {
             'Reg 132.13 makes documentation part of the design product — drawings, calculations, protective-device specs and operating notes that any future competent person can pick up and extend safely.',
             'Coordination with other services and personnel (AC 1.1) is design work that does not show up in the calc — routing, fire-stopping, access, sequencing and matching tasks to operative competence.',
             'Professional indemnity insurance is essential infrastructure for paid design work. £1m floor for small jobs, scaling to £5m+ for HRRB and major projects. Insurers want competence evidence before quoting.',
-            'Higher-risk residential buildings under the Building Safety Act 2022 have a stricter design competence floor and require a "golden thread" of design documentation to survive the building\'s lifetime.',
+            'Higher-risk residential buildings under the Building Safety Act 2022 have a stricter design competence floor and require a "golden thread" of design documentation to survive the building’s lifetime.',
             'Never sign a design declaration on a design you did not produce or have not personally re-checked and accepted as your own. A blank design signature is always preferable to a fraudulent one.',
           ]}
         />

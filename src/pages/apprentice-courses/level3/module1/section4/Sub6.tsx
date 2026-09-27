@@ -56,7 +56,7 @@ const checks = [
   },
   {
     id: 'l3-m1-s4-sub6-licensed',
-    question: 'What\'s "licensed asbestos work" vs "non-licensed"?',
+    question: 'What’s "licensed asbestos work" vs "non-licensed"?',
     options: [
       'Licensed means any work touching asbestos; non-licensed means work merely in a building containing it.',
       'Licensed — high-risk activities (friable insulation, large AIB) needing an HSE-licensed contractor under Reg 8; non-licensed — lower-risk work by trained operatives.',
@@ -111,7 +111,7 @@ const quizQuestions = [
   },
   {
     id: 4,
-    question: 'What\'s a "refurbishment survey"?',
+    question: 'What’s a "refurbishment survey"?',
     options: [
       'An asbestos survey carried out before refurbishment or demolition, locating ACMs in areas to be disturbed.',
       'A minimally intrusive survey carried out during occupation to keep the register up to date.',
@@ -426,8 +426,8 @@ export default function Sub6() {
         <ContentEyebrow>Discovery procedure and disposal</ContentEyebrow>
         <ConceptBlock
           title="Found suspect material — what to do"
-          plainEnglish="Stop, don\'t disturb, evacuate area, escalate. The L3 supervisor reflex on discovery: protect the team, document, escalate to dutyholder + firm + principal contractor where applicable, await confirmation before proceeding."
-          onSite="Photograph the material from a safe distance; don\'t touch; close off the area; brief the team to stay clear. Phone the firm\'s H&S manager and the customer\'s responsible person. Don\'t speculate on type or risk — let the surveyor determine."
+          plainEnglish="Stop, don’t disturb, evacuate area, escalate. The L3 supervisor reflex on discovery: protect the team, document, escalate to dutyholder + firm + principal contractor where applicable, await confirmation before proceeding."
+          onSite="Photograph the material from a safe distance; don’t touch; close off the area; brief the team to stay clear. Phone the firm’s H&S manager and the customer’s responsible person. Don’t speculate on type or risk — let the surveyor determine."
         >
           <p>Discovery procedure:</p>
           <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
@@ -453,7 +453,7 @@ export default function Sub6() {
         <ConceptBlock
           title="Disposal of asbestos waste"
           plainEnglish="Asbestos waste is hazardous waste. Double-bagged in heavy-duty asbestos bags (red inner, clear outer with label), labelled, accompanied by Hazardous Waste Consignment Note, transported by licensed asbestos waste carrier, disposed of at permitted asbestos waste facility."
-          onSite="The L3 supervisor doesn\'t handle asbestos waste personally (that\'s licensed work). But knowing the regime exists informs the customer conversation about why the disposal is more involved than \'a skip\'."
+          onSite="The L3 supervisor doesn’t handle asbestos waste personally (that’s licensed work). But knowing the regime exists informs the customer conversation about why the disposal is more involved than ‘a skip’."
         >
           <p>Disposal regime:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -642,9 +642,9 @@ export default function Sub6() {
           title="Suspected asbestos found mid-job"
           situation={
             <>
-              You\'re partway through a small electrical alteration in a 1970s commercial unit.
+              You’re partway through a small electrical alteration in a 1970s commercial unit.
               Drilling a fixing hole in the ceiling has revealed what looks like AIB above the
-              suspended ceiling tiles. You weren\'t expecting it; the customer\'s site manager
+              suspended ceiling tiles. You weren’t expecting it; the customer’s site manager
               thought it had all been removed years ago.
             </>
           }

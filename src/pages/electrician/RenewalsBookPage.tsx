@@ -26,6 +26,17 @@ import { useSparkProjects } from '@/hooks/useSparkProjects';
 import { toast } from '@/hooks/use-toast';
 import { PANEL } from '@/components/electrician/shared/surfaces';
 import { cn } from '@/lib/utils';
+import { useCreateReportKey } from '@/hooks/useCreateReportKey';
+import { certificateHref } from '@/utils/certificate-href';
+
+/** ELE-1636 — an issued EICR/EIC with no re-test date anywhere: it can never be chased. */
+interface Undated {
+  id: string;
+  report_id: string;
+  report_type: string;
+  client_name: string | null;
+  installation_address: string | null;
+}
 
 interface Renewal {
   id: string;
@@ -59,6 +70,8 @@ const RenewalsBookPage = () => {
   const navigate = useNavigate();
   const { createProject } = useSparkProjects('all');
   const [renewals, setRenewals] = useState<Renewal[]>([]);
+  const [undated, setUndated] = useState<Undated[]>([]);
+  const createKey = useCreateReportKey('eicr'); // ELE-1603 — retrying one renewal adopts its own draft, never another's
   const [loading, setLoading] = useState(true);
   const [busyId, setBusyId] = useState<string | null>(null);
   const [contractPrefill, setContractPrefill] = useState<ContractPrefill | null>(null);
@@ -108,6 +121,37 @@ const RenewalsBookPage = () => {
         .in('report_type', ['eicr', 'eic', 'fire-alarm-inspection', 'fire-alarm', 'pat-testing', 'emergency-lighting', 'smoke-co-alarm', 'ev-charging', 'bess', 'routine-inspection'])
         .or('next_inspection_due.not.is.null,expiry_date.not.is.null,data->>nextInspectionDate.not.is.null,data->>nextAnnualTestDue.not.is.null');
       if (error) throw error;
+
+      /*
+       * ELE-1636 — the certificates this page can NOT chase. 419 issued EICR/EIC
+       * carried no next-inspection date in any of the four places above. They
+       * are surfaced here so the electrician can open each and set it — the
+       * form now insists on the date at issue, so this list only shrinks.
+       */
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data: undatedRows } = await (supabase as any)
+        .from('reports')
+        .select('id, report_id, report_type, client_name, installation_address, next_due_json:data->>nextInspectionDate')
+        .eq('user_id', user.id)
+        .eq('status', 'completed')
+        .is('deleted_at', null)
+        .in('report_type', ['eicr', 'eic'])
+        .is('next_inspection_due', null)
+        .is('expiry_date', null)
+        .order('created_at', { ascending: false })
+        .limit(200);
+      setUndated(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ((undatedRows || []) as any[])
+          .filter((r) => !/^\d{4}-\d{2}-\d{2}/.test(r.next_due_json || ''))
+          .map((r) => ({
+            id: r.id,
+            report_id: r.report_id,
+            report_type: r.report_type,
+            client_name: r.client_name,
+            installation_address: r.installation_address,
+          }))
+      );
 
       /*
        * Ledger overlay — the automation writes its outcomes to
@@ -228,7 +272,7 @@ const RenewalsBookPage = () => {
       };
       if (r.customer_phone) seed.clientPhone = r.customer_phone;
       if (r.customer_email) seed.clientEmail = r.customer_email;
-      const res = await reportCloud.createReport(user.id, 'eicr', seed);
+      const res = await reportCloud.createReport(user.id, 'eicr', seed, undefined, false, createKey.take(String(r.id)));
       if (res.success && res.reportId) {
         navigate(
           `/electrician/inspection-testing?section=eicr&reportId=${res.reportId}&reportType=eicr`
@@ -494,6 +538,53 @@ const RenewalsBookPage = () => {
         {/* ELE-430 — the electrician-defined half of repeat work. Certs below
             imply their own renewals; contracts are the ones you set up. */}
         <MaintenanceContractsSection prefill={contractPrefill} />
+
+        {/* ELE-1636 — certificates that cannot be chased until a date is set */}
+        {!loading && undated.length > 0 && (
+          <div className={cn(PANEL, 'px-4 py-3 sm:px-5 space-y-3')}>
+            <div className="flex items-start gap-3">
+              <span className="h-9 w-9 rounded-xl bg-orange-500/[0.12] border border-orange-500/30 flex items-center justify-center shrink-0">
+                <CalendarClock className="h-4 w-4 text-orange-300" />
+              </span>
+              <div className="min-w-0">
+                <p className="text-[13px] font-semibold text-white leading-snug">
+                  {undated.length} certificate{undated.length === 1 ? '' : 's'} with no re-test date
+                </p>
+                <p className="text-[12px] text-white leading-snug">
+                  These were issued without a next-inspection date, so no renewal can be prompted for
+                  them. Open each one, set the date on the certificate tab, and it joins the list above.
+                </p>
+              </div>
+            </div>
+            <ul className="divide-y divide-white/[0.08]">
+              {undated.slice(0, 12).map((u) => (
+                <li key={u.id} className="flex items-center gap-3 py-2">
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-[13px] font-medium text-white">
+                      {u.client_name || 'No client name'}
+                    </p>
+                    <p className="truncate text-[12px] text-white">
+                      {typeLabel(u.report_type)}
+                      {u.installation_address ? ` · ${u.installation_address}` : ''}
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => navigate(certificateHref(u.report_type, u.report_id))}
+                    className="h-10 shrink-0 rounded-lg border border-white/[0.12] bg-white/[0.06] px-3 text-[12px] font-semibold text-white touch-manipulation"
+                  >
+                    Set date
+                  </button>
+                </li>
+              ))}
+            </ul>
+            {undated.length > 12 && (
+              <p className="text-[12px] text-white">
+                Showing the 12 most recent of {undated.length}.
+              </p>
+            )}
+          </div>
+        )}
 
         {loading ? (
           <div className="flex justify-center py-16">

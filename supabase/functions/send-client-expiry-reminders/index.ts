@@ -64,6 +64,15 @@ const corsHeaders = {
 };
 
 const AUTOMATION_KEY = 'client_renewal_emails';
+/*
+ * ELE-1636 — the overdue nudge is its OWN opt-in. "Your certificate is due" and
+ * "your certificate is 40 days overdue" are different messages to send in
+ * somebody's name; an electrician who wants the first may not want the second.
+ * Look-back is capped at 90 days: past that it is a lapsed customer, not a
+ * reminder, and the renewals book is the place for that.
+ */
+const OVERDUE_AUTOMATION_KEY = 'client_overdue_emails';
+const OVERDUE_LOOKBACK_DAYS = 90;
 
 /*
  * Only certificates that RENEW belong in the book. A minor works cert or an
@@ -275,6 +284,12 @@ async function runReminders(req: Request): Promise<Response> {
     }
 
     const enabledUsers = new Set((enabledRows ?? []).map((r) => r.user_id as string));
+    const { data: overdueRows } = await supabase
+      .from('user_automations')
+      .select('user_id')
+      .eq('key', OVERDUE_AUTOMATION_KEY)
+      .eq('mode', 'auto');
+    const overdueUsers = new Set((overdueRows ?? []).map((r) => r.user_id as string));
 
     // ── 3. SEND — certs inside 30 days, opted-in electricians only ─────────
     // No early return when the gate is empty: maintenance-contract visit
@@ -298,6 +313,31 @@ async function runReminders(req: Request): Promise<Response> {
         return json({ error: 'Failed to read ledger', details: dueError.message }, 500);
       }
       candidates = (dueSoon ?? []).filter((c) => enabledUsers.has(c.user_id as string));
+    }
+
+    // ── 3b. OVERDUE — past the date, up to 90 days, once, own consent ─────────
+    if (overdueUsers.size > 0) {
+      const lookback = new Date(today);
+      lookback.setDate(lookback.getDate() - OVERDUE_LOOKBACK_DAYS);
+      const yesterday = new Date(today);
+      yesterday.setDate(yesterday.getDate() - 1);
+      const { data: overdue, error: overdueError } = await supabase
+        .from('certificate_expiry_reminders')
+        .select(
+          'id, user_id, report_id, certificate_number, client_name, installation_address, expiry_date, reminder_status, customer_id, client_email_30_day_sent_at, client_email_14_day_sent_at, client_email_7_day_sent_at, client_email_overdue_sent_at'
+        )
+        .not('reminder_status', 'in', '("completed","cancelled","booked")')
+        .is('client_email_overdue_sent_at', null)
+        .gte('expiry_date', lookback.toISOString().split('T')[0])
+        .lte('expiry_date', yesterday.toISOString().split('T')[0]);
+      if (overdueError) {
+        return json({ error: 'Failed to read overdue ledger', details: overdueError.message }, 500);
+      }
+      candidates.push(
+        ...(overdue ?? [])
+          .filter((c) => overdueUsers.has(c.user_id as string))
+          .map((c) => ({ ...c, _overdue: true }))
+      );
     }
 
     /*
@@ -444,7 +484,10 @@ async function runReminders(req: Request): Promise<Response> {
       // Escalating tiers, each sent once, ledger-stamped.
       let tier: ExpiryTier | null = null;
       let sentAtField: string | null = null;
-      if (daysUntilExpiry <= 7 && !cert.client_email_7_day_sent_at) {
+      if (cert._overdue) {
+        tier = 'overdue';
+        sentAtField = 'client_email_overdue_sent_at';
+      } else if (daysUntilExpiry <= 7 && !cert.client_email_7_day_sent_at) {
         tier = '7-day';
         sentAtField = 'client_email_7_day_sent_at';
       } else if (daysUntilExpiry <= 14 && !cert.client_email_14_day_sent_at) {
@@ -465,6 +508,7 @@ async function runReminders(req: Request): Promise<Response> {
         cert.client_email_30_day_sent_at,
         cert.client_email_14_day_sent_at,
         cert.client_email_7_day_sent_at,
+        cert.client_email_overdue_sent_at,
       ]
         .filter(Boolean)
         .map((ts) => new Date(ts as string).getTime());

@@ -735,6 +735,73 @@
 </div>
 {% endif %}
 
+<!--
+  ── ALARM REGISTER (landlord visits) ──────────────────────────────────────
+
+  Which alarms are in the dwelling, where, and when they expire. It is the
+  evidence behind schedule item 3.6 ("replacement date on each alarm head
+  checked and not passed"), which until now was a tick with nothing under it.
+
+  🔴 NOT A SMOKE & CO ALARM CERTIFICATE. No grade (A–F), no category (LD1–LD3),
+  no statement of compliance with BS 5839-6 — those are design declarations and
+  they belong on the certificate that owns them. Do not add a "complies" column
+  here: two documents able to declare a grade are two able to disagree about it.
+
+  `expired` and `failed` are computed in the formatter, not here — Liquid cannot
+  compare dates, and an expiry that silently fails to flag is worse than none.
+-->
+{% if has_alarms %}
+<div class="section">
+  <div class="section-title">Alarm register</div>
+  <table class="grid">
+    <thead>
+      <tr>
+        <!--
+          A4 portrait with 10mm side margins = 190mm of content. These fixed
+          widths total 139mm, leaving ~51mm for Location, which also carries the
+          notes line. An earlier cut of this table left it 33mm and wrapped
+          "Ground floor hallway, ceiling" onto three lines.
+        -->
+        <th style="width:9mm;">No.</th>
+        <th style="width:34mm;">Type</th>
+        <th>Location</th>
+        <th style="width:30mm;">Power</th>
+        <th style="width:20mm;">Made</th>
+        <th style="width:24mm;">Replace by</th>
+        <th style="width:22mm;">On test</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for a in alarms %}
+        <tr>
+          <td class="c-num">{{ a.number }}</td>
+          <td>{% if a.type != blank %}{{ a.type }}{% else %}Not stated{% endif %}</td>
+          <td>
+            {{ a.location }}
+            {% if a.notes != blank %}<span class="note">{{ a.notes }}</span>{% endif %}
+          </td>
+          <td>{{ a.power_source }}</td>
+          <td style="text-align:center;">{{ a.manufactured }}</td>
+          <td style="text-align:center;{% if a.expired %}font-weight:bold;{% endif %}">
+            {{ a.replacement_due }}{% if a.expired %}<br><span style="font-size:6.5pt;">PAST DATE</span>{% endif %}
+          </td>
+          <td style="text-align:center;{% if a.failed %}font-weight:bold;{% endif %}">{{ a.tested }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div style="font-size:7pt;color:#475569;margin-top:1.5mm;">
+    A record of the alarms found and operated on the day of this visit. It is not
+    a Smoke &amp; CO Alarm certificate and states no grade or category of system
+    under BS 5839-6. Replacement dates are as marked on each head, or calculated
+    from the date of manufacture where the head carries no expiry.
+    {% if alarms_expired_count > 0 %}
+      Alarms shown as past their replacement date require replacement.
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+
 <!-- ══ Spot checks ═══════════════════════════════════════════════════
   🔴 NOT a Schedule of Test Results, and the heading and the note both say so.
 

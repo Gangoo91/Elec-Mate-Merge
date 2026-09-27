@@ -37,7 +37,7 @@ const subsections = [
   {
     number: 'Subsection 4',
     title: 'First-aid facilities and supervision',
-    description: 'L3 first-aid provision — what\\',
+    description: 'First-aid provision — what’s required on site and who supervises it.',
     icon: AlertTriangle,
     href: '/study-centre/apprentice/level3-module1-section3-4',
   },

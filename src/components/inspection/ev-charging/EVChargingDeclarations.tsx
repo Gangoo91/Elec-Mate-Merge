@@ -9,6 +9,7 @@ import { LoadInstallerButton } from './LoadInstallerButton';
 import { EVSectionHeader } from './EVSectionHeader';
 import { cn } from '@/lib/utils';
 import { inputCn, cardCn, labelCn, textareaCn, checkboxCn } from '@/components/forms/fieldStyles';
+import BuildingRegsNotification from '@/components/inspection/shared/BuildingRegsNotification';
 import {
   useEVChargingSmartForm,
   InstallerDetails,
@@ -283,11 +284,9 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
               sub: '18th Edition Wiring Regulations',
             },
             { id: 'ietCopCompliance', label: 'IET CoP for EV Charging', sub: '5th Edition' },
-            {
-              id: 'buildingRegsCompliance',
-              label: 'Building Regulations Part P',
-              sub: 'Electrical safety in dwellings',
-            },
+            // ELE-1663 — Part P is no longer a tick here. It is answered once, in
+            // the Building Regulations section below, and the certificate
+            // derives its Part P statement from that answer.
           ].map((item) => (
             <label key={item.id} htmlFor={item.id} className={checkRowCn}>
               <Checkbox
@@ -393,41 +392,8 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
         <div className={cardCn}>
           <EVSectionHeader title="Building Regulations" />
 
-          <label htmlFor="buildingRegsRequired" className={checkRowCn}>
-            <Checkbox
-              id="buildingRegsRequired"
-              checked={formData.buildingRegsRequired || false}
-              onCheckedChange={(checked) => onUpdate('buildingRegsRequired', checked)}
-              className={checkboxCn}
-            />
-            <span className="text-sm text-white">Building regulations notification required</span>
-          </label>
-
-          {formData.buildingRegsRequired && (
-            <>
-              <label htmlFor="buildingRegsViaScheme" className={checkRowCn}>
-                <Checkbox
-                  id="buildingRegsViaScheme"
-                  checked={formData.buildingRegsViaScheme || false}
-                  onCheckedChange={(checked) => onUpdate('buildingRegsViaScheme', checked)}
-                  className={checkboxCn}
-                />
-                <span className="text-sm text-white">Submitted via competent person scheme</span>
-              </label>
-
-              {!formData.buildingRegsViaScheme && (
-                <label htmlFor="buildingRegsSubmitted" className={checkRowCn}>
-                  <Checkbox
-                    id="buildingRegsSubmitted"
-                    checked={formData.buildingRegsSubmitted || false}
-                    onCheckedChange={(checked) => onUpdate('buildingRegsSubmitted', checked)}
-                    className={checkboxCn}
-                  />
-                  <span className="text-sm text-white">Submitted to building control</span>
-                </label>
-              )}
-            </>
-          )}
+          {/* ELE-1663 — one section, shared with the EIC. See shared/BuildingRegsNotification. */}
+          <BuildingRegsNotification formData={formData} onUpdate={onUpdate} />
         </div>
 
         {/* Final Status */}

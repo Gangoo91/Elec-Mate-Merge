@@ -25,6 +25,39 @@ interface QueueStats {
   oldestTimestamp: Date | null;
 }
 
+/**
+ * The certificate a queued operation belongs to — or null when we cannot know.
+ *
+ * ELE-1600. Two queued operations with the same identity are two snapshots of
+ * the same certificate, and only the newest is worth sending. Two operations
+ * with DIFFERENT identities, or with no identity at all, must never be merged:
+ * that would be two people's certificates, or two brand-new certificates from
+ * one person, collapsed into one — and one of them silently lost.
+ *
+ *   update  → the report_id. Non-null by definition of an update.
+ *   create  → `_clientCertId`, the stable per-certificate identity that the
+ *             EICR / EIC / Minor Works forms carry from first keystroke and that
+ *             ELE-1592 derives the idempotency key from.
+ *
+ * ⚠️ NOT `reportId` for a create — it is null for every create, so keying on it
+ * would merge every pending new certificate into one. And NOT
+ * `__createReportId` on its own: without `_clientCertId` behind it that key is
+ * minted fresh on every attempt, so it identifies an attempt, not a certificate.
+ * A create with neither returns null and is queued as its own row, exactly as
+ * before this change. Conservative by design — it is the user's data.
+ */
+export function syncIdentity(
+  op: Pick<SyncOperation, 'type' | 'reportType' | 'reportId' | 'data' | 'userId'>
+): string | null {
+  if (op.type === 'update') {
+    return op.reportId ? `update:${op.userId}:${op.reportId}` : null;
+  }
+  const cert = op.data?._clientCertId;
+  return typeof cert === 'string' && cert.trim()
+    ? `create:${op.userId}:${op.reportType}:${cert.trim()}`
+    : null;
+}
+
 class SyncQueueManager {
   private dbPromise: Promise<IDBDatabase> | null = null;
 
@@ -85,28 +118,64 @@ class SyncQueueManager {
   ): Promise<string> {
     try {
       const db = await this.getDB();
-      const tx = db.transaction(STORE_NAME, 'readwrite');
-      const store = tx.objectStore(STORE_NAME);
 
-      const id = this.generateId();
+      /*
+       * ELE-1600 — one queued row per certificate, holding the newest snapshot.
+       *
+       * Under an outage every failed autosave used to add another row, so the
+       * drain sent N creates or N updates for one certificate: N round trips,
+       * N chances to fail, and a badge telling the user N things were pending
+       * when one was. If a pending operation is already this certificate, its
+       * payload is replaced in place. It keeps its id and its place in the
+       * queue (timestamp), because it has been waiting longer than the new
+       * data has, but it does NOT keep its retry count — a fresh payload must
+       * not inherit an exhausted backoff and be given up on unsent.
+       *
+       * Only when `syncIdentity` can name the certificate. See its note for
+       * why anything it cannot name still gets its own row.
+       */
+      const identity = syncIdentity(operation);
+      /*
+       * Two transactions, not one. An IDB transaction auto-commits the moment
+       * it has no pending request and control returns to the event loop, and
+       * whether an `await` in between counts has differed by browser (Safari
+       * in particular). A readonly lookup then a fresh readwrite for the write
+       * never depends on that. The worst a race can do is queue one extra row.
+       */
+      const existing = identity
+        ? await new Promise<SyncOperation | undefined>((resolve, reject) => {
+            const request = db.transaction(STORE_NAME, 'readonly').objectStore(STORE_NAME).getAll();
+            request.onsuccess = () =>
+              resolve(
+                (request.result as SyncOperation[]).find(
+                  (op) => op.type === operation.type && syncIdentity(op) === identity
+                )
+              );
+            request.onerror = () => reject(request.error);
+          })
+        : undefined;
+
+      const id = existing?.id ?? this.generateId();
       const queueOp: SyncOperation = {
         ...operation,
         id,
-        timestamp: Date.now(),
+        timestamp: existing?.timestamp ?? Date.now(),
         retryCount: 0,
         lastRetry: null,
       };
 
       await new Promise<void>((resolve, reject) => {
-        const request = store.add(queueOp);
+        const store = db.transaction(STORE_NAME, 'readwrite').objectStore(STORE_NAME);
+        const request = existing ? store.put(queueOp) : store.add(queueOp);
         request.onsuccess = () => resolve();
         request.onerror = () => reject(request.error);
       });
 
-      console.log('[SyncQueue] Operation queued:', {
+      console.log(existing ? '[SyncQueue] Operation replaced:' : '[SyncQueue] Operation queued:', {
         id,
         type: operation.type,
         reportType: operation.reportType,
+        ...(existing ? { supersededRetries: existing.retryCount } : {}),
       });
       return id;
     } catch (error) {

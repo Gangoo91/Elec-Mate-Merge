@@ -33,6 +33,7 @@ import CertShellFooter, {
   certFooterNeutralButton,
 } from '@/components/inspection/shared/CertShellFooter';
 import { readEdgeFunctionError } from '@/lib/edgeFunctionError';
+import { issueCertificateNumber } from '@/utils/certificateNumbering';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -53,6 +54,8 @@ const pickerTrigger =
 const INSTRUMENT_MAKES = ['Megger', 'Fluke', 'Metrel', 'Kewtech', 'Seaward', 'Robin', 'Di-Log', 'Other'];
 
 interface TestingOnlyData {
+  /** The number the row is filed under (ELE-1592) — adopted from the created row, printed as the certificate number. */
+  certificateNumber?: string;
   referenceNumber: string;
   testDate: string;
   testerName: string;
@@ -81,7 +84,7 @@ interface TestingOnlyData {
 }
 
 const defaultData = (): TestingOnlyData => ({
-  referenceNumber: `TOC-${Date.now().toString(36).toUpperCase()}`,
+  referenceNumber: '', // filled from the number the row is filed under (ELE-1592)
   testDate: new Date().toISOString().split('T')[0],
   testerName: '', testerQualifications: '', testerPhone: '', testerEmail: '',
   clientName: '', declarationConfirmed: false,
@@ -173,8 +176,14 @@ const {
     formData: data,
     enabled: !isLoading && !isLocked,
     isHydrating: isLoading, // Gate autosave while loading from cloud — prevents blank-overwrite race.
-    onReportCreated: (newId) => {
+    onReportCreated: (newId: string, certificateNumber?: string) => {
       setSavedReportId(newId);
+      // ELE-1592 — keep the number the row was filed under; without this the
+      // form stayed blank and the PDF printed an invented timestamp.
+      if (certificateNumber) setData((prev) => (prev.certificateNumber ? prev : { ...prev, certificateNumber }));
+      // The printed reference IS the filed number unless the electrician typed their own.
+      if (certificateNumber)
+        setData((prev) => (prev.referenceNumber ? prev : { ...prev, referenceNumber: certificateNumber }));
       window.history.replaceState(null, '', `/electrician/inspection-testing/testing-only/${newId}`);
     },
   });
@@ -196,7 +205,7 @@ const {
       try {
         const { data: { user } } = await supabase.auth.getUser();
         if (!user) { setIsLoading(false); return; }
-        const reportData = await reportCloud.getReportData(editId, user.id);
+        const reportData = await reportCloud.getReportData(editId, user.id, 'testing-only');
         if (reportData) {
           setData((prev) => ({ ...defaultData(), ...prev, ...(reportData as any) }));
           setSavedReportId(editId);
@@ -302,7 +311,7 @@ const {
         formattedData = formatTestingOnlyJson(
           {
             ...data,
-            referenceNumber: data.referenceNumber || `TOC-${Date.now().toString(36).toUpperCase()}`,
+            referenceNumber: await issueCertificateNumber(data.referenceNumber || data.certificateNumber, 'testing-only'),
           },
           await fetchCertBranding(TESTING_ONLY_ACCENT),
         );
@@ -360,6 +369,13 @@ const {
       // Production evidence: 0 of 63 testing-only rows had a pdf_payload.
       const syncResult = await syncNowImmediate();
       const reportId = syncResult?.reportId || savedReportId;
+      // ELE-1592 — the reference printed is the number the certificate is filed under, never invented.
+      const referenceNumber = await issueCertificateNumber(
+        data.referenceNumber || data.certificateNumber || syncResult?.data?.certificateNumber,
+        'testing-only'
+      );
+      if (referenceNumber !== data.referenceNumber)
+        setData((prev) => ({ ...prev, referenceNumber, certificateNumber: prev.certificateNumber || referenceNumber }));
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Please sign in');
       if (!reportId) throw new Error('Could not save the certificate — check your connection and try again');
@@ -368,7 +384,7 @@ const {
         '@/utils/testingOnlyJsonFormatter'
       );
       const { fetchCertBranding } = await import('@/utils/certBranding');
-      const payload = formatTestingOnlyJson(data, await fetchCertBranding(TESTING_ONLY_ACCENT));
+      const payload = formatTestingOnlyJson({ ...data, referenceNumber }, await fetchCertBranding(TESTING_ONLY_ACCENT));
 
       // Persist the formatted payload so server-side email/regeneration uses
       // the boards/circuits arrays the template needs (raw form_data lacks them).
@@ -378,13 +394,13 @@ const {
       if (pdfError) throw new Error(pdfError.message || 'PDF generation failed');
       if (!pdfResult?.success || !pdfResult?.pdfUrl) throw new Error(pdfResult?.error || 'No PDF URL returned');
 
-      const filename = `Testing-Only-${data.referenceNumber}.pdf`;
+      const filename = `Testing-Only-${referenceNumber}.pdf`;
 
       // Save to permanent storage
       let permanentPdfUrl = pdfResult.pdfUrl;
       try {
         const { saveCertificatePdf } = await import('@/utils/certificate-pdf-storage');
-        const { permanentUrl, storagePath } = await saveCertificatePdf(pdfResult.pdfUrl, user.id, reportId, data.referenceNumber);
+        const { permanentUrl, storagePath } = await saveCertificatePdf(pdfResult.pdfUrl, user.id, reportId, referenceNumber);
         permanentPdfUrl = permanentUrl;
         await supabase.from('reports').update({ storage_path: storagePath, pdf_url: permanentPdfUrl, pdf_generated_at: new Date().toISOString(), status: 'completed' }).eq('report_id', reportId);
       } catch {
@@ -434,7 +450,7 @@ const {
           <Field label="Email"><Input type="email" value={data.testerEmail} onChange={(e) => update('testerEmail', e.target.value)} className={inputCn} /></Field>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
-          <Field label="Ref No."><Input value={data.referenceNumber} onChange={(e) => update('referenceNumber', e.target.value)} className={inputCn} /></Field>
+          <Field label="Ref No."><Input value={data.referenceNumber} placeholder="Allocated on first save" onChange={(e) => update('referenceNumber', e.target.value)} className={inputCn} /></Field>
           <Field label="Test Date"><Input type="date" value={data.testDate} onChange={(e) => update('testDate', e.target.value)} className={inputCn} /></Field>
         </div>
       </section>

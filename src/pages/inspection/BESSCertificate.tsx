@@ -40,6 +40,7 @@ import CertLockBar from '@/components/inspection/CertLockBar';
 import { cn } from '@/lib/utils';
 import { ConflictResolutionDialog } from '@/components/inspection/ConflictResolutionDialog';
 import { scrollToTopForStepChange } from '@/utils/scroll';
+import { issueCertificateNumber } from '@/utils/certificateNumbering';
 
 const REPORT_TYPE = 'bess' as const;
 
@@ -97,8 +98,11 @@ const {
     enabled: !isLoading && !isLocked,
     isHydrating: isLoading, // Gate autosave while loading from cloud — prevents blank-overwrite race.
     customerId,
-    onReportCreated: (newId) => {
+    onReportCreated: (newId: string, certificateNumber?: string) => {
       setSavedReportId(newId);
+      // ELE-1592 — keep the number the row was filed under; without this the
+      // form stayed blank and the PDF printed an invented timestamp.
+      if (certificateNumber) setFormData((prev) => (prev.certificateNumber ? prev : { ...prev, certificateNumber }));
       window.history.replaceState(null, '', `/electrician/inspection-testing/bess/${newId}`);
     },
   });
@@ -126,7 +130,7 @@ const {
       try {
         const { data: { user } } = await supabase.auth.getUser();
         if (!user) { setIsLoading(false); return; }
-        const reportData = await reportCloud.getReportData(id, user.id);
+        const reportData = await reportCloud.getReportData(id, user.id, 'bess');
         if (reportData) {
           setFormData((prev: any) => ({ ...getDefaultBESSFormData(), ...prev, ...(reportData as any) }));
           setSavedReportId(id);
@@ -188,7 +192,7 @@ const {
     setGenerationError(null);
 
     try {
-      await syncNowImmediate();
+      const synced = await syncNowImmediate();
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Not signed in');
 
@@ -199,7 +203,7 @@ const {
       const dataWithCertNumber = {
         ...formData,
         photos,
-        certificateNumber: formData.certificateNumber || `BESS-${Date.now().toString(36).toUpperCase()}`,
+        certificateNumber: await issueCertificateNumber(formData.certificateNumber || synced.data?.certificateNumber, REPORT_TYPE),
       };
 
       const branding = hasSavedCompanyBranding ? loadCompanyBranding() : null;

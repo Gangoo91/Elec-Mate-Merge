@@ -12,6 +12,13 @@ import {
 interface PhaseTypeCellProps {
   result: TestResult;
   onUpdate: (id: string, field: keyof TestResult, value: string) => void;
+  /**
+   * Fired when this row becomes three-pole, so the table can carry the device
+   * across the two ways it also occupies (ELE-1770). Only on the transition
+   * INTO 3P — re-picking the value the row already has must not re-fill, or
+   * an electrician who reopened the selector would have edits overwritten.
+   */
+  onThreePhaseSelected?: (id: string) => void;
 }
 
 /**
@@ -76,12 +83,23 @@ const labelFor = (v: PhaseValue): string => {
   return '—';
 };
 
-export const PhaseTypeCell: React.FC<PhaseTypeCellProps> = ({ result, onUpdate }) => {
+export const PhaseTypeCell: React.FC<PhaseTypeCellProps> = ({
+  result,
+  onUpdate,
+  onThreePhaseSelected,
+}) => {
   const value = decode(result);
+
+  const handleChange = (next: PhaseValue) => {
+    apply(next, onUpdate, result.id);
+    if (next === 'L1+L2+L3' && value !== 'L1+L2+L3') {
+      onThreePhaseSelected?.(result.id);
+    }
+  };
 
   return (
     <TableCell className="p-0 h-8 align-middle w-20 min-w-[78px] max-w-[78px]">
-      <Select value={value} onValueChange={(v) => apply(v as PhaseValue, onUpdate, result.id)}>
+      <Select value={value} onValueChange={(v) => handleChange(v as PhaseValue)}>
         <SelectTrigger
           className={[
             'h-8 w-full text-sm bg-transparent border-0 rounded-none px-1.5 gap-1',

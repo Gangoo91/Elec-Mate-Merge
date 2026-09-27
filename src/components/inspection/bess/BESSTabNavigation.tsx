@@ -18,6 +18,7 @@ import CertShellFooter, {
   certFooterNeutralButton,
 } from '@/components/inspection/shared/CertShellFooter';
 import { readEdgeFunctionError } from '@/lib/edgeFunctionError';
+import { issueCertificateNumber } from '@/utils/certificateNumbering';
 
 interface Props {
   currentTabIndex: number;
@@ -82,7 +83,7 @@ export default function BESSTabNavigation({
             ...formData,
             photos,
             certificateNumber:
-              formData.certificateNumber || `BESS-${Date.now().toString(36).toUpperCase()}`,
+              await issueCertificateNumber(formData.certificateNumber, 'bess'),
           });
         }
       } catch {

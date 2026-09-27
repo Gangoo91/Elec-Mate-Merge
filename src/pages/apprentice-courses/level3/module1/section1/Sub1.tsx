@@ -280,8 +280,8 @@ export default function Sub1() {
             </li>
             <li>
               <strong>s.3 (employer to non-employees)</strong> — the customer, their family,
-              visitors, other trades. The s.3 duty is what makes \'I can\'t isolate this circuit
-              because the customer\'s elderly relative is on a stair lift' a real conversation, not
+              visitors, other trades. The s.3 duty is what makes ‘I can’t isolate this circuit
+              because the customer’s elderly relative is on a stair lift' a real conversation, not
               just an inconvenience.
             </li>
             <li>
@@ -292,7 +292,7 @@ export default function Sub1() {
             </li>
             <li>
               <strong>s.37 (director and senior manager personal liability)</strong> — a route you
-              didn't see at L2 because L2 didn\'t deal with director-level conduct. At L3 you may
+              didn't see at L2 because L2 didn’t deal with director-level conduct. At L3 you may
               speak to directors about why a job stops; knowing s.37 exists changes the
               conversation.
             </li>
@@ -305,7 +305,7 @@ export default function Sub1() {
 
         <ConceptBlock
           title="One incident — multiple simultaneous duties"
-          plainEnglish="The prosecution doesn\'t pick one duty. A real incident usually breaches two or three at once. The dutyholders are layered (firm → director → supervisor → operative) and the duties stack across them."
+          plainEnglish="The prosecution doesn’t pick one duty. A real incident usually breaches two or three at once. The dutyholders are layered (firm → director → supervisor → operative) and the duties stack across them."
           onSite="Knowing this matters because it changes who you escalate to. If the issue is genuinely a s.2 (system) problem, raising it to your immediate supervisor may not be enough — the duty sits at director level. Documenting the raise in writing means the cascade is on record."
         >
           <p>Worked example — apprentice falls from a step-up that failed inspection:</p>
@@ -316,14 +316,14 @@ export default function Sub1() {
               out of service.
             </li>
             <li>
-              <strong>s.3 breach</strong> — if the fall happens in a customer\'s home and the
+              <strong>s.3 breach</strong> — if the fall happens in a customer’s home and the
               customer (or their child) witnesses it or is at risk from the falling apprentice or
               tools, the s.3 duty to non-employees is also engaged.
             </li>
             <li>
               <strong>s.7 breach (potentially)</strong> — the operative who used a piece of kit they
               knew or should have known was unsafe carries some s.7 responsibility, particularly if
-              there\'s a culture of \'just crack on'.
+              there’s a culture of ‘just crack on'.
             </li>
             <li>
               <strong>s.37 breach (potentially)</strong> — if the director knew the inspection
@@ -397,8 +397,8 @@ export default function Sub1() {
 
         <ConceptBlock
           title="The reverse burden of proof"
-          plainEnglish="'So far as is reasonably practicable' isn't 'whatever you fancy\'. Edwards v NCB [1949] set the test — implement controls until the cost (money, time, trouble) becomes grossly disproportionate to the residual risk. Once the prosecution proves a risk existed, the burden shifts to the dutyholder to prove they did everything SFAIRP."
-          onSite="That reverse burden is the reason your firm\'s RAMS, training records, toolbox talks and near-miss logs matter. They are the defence evidence. No paperwork = no defence. Inspectors call it 'documenting your way out of court\'."
+          plainEnglish="'So far as is reasonably practicable' isn't 'whatever you fancy’. Edwards v NCB [1949] set the test — implement controls until the cost (money, time, trouble) becomes grossly disproportionate to the residual risk. Once the prosecution proves a risk existed, the burden shifts to the dutyholder to prove they did everything SFAIRP."
+          onSite="That reverse burden is the reason your firm’s RAMS, training records, toolbox talks and near-miss logs matter. They are the defence evidence. No paperwork = no defence. Inspectors call it 'documenting your way out of court’."
         >
           <p>Practical SFAIRP factors a court weighs:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -406,7 +406,7 @@ export default function Sub1() {
               <strong>Probability of harm</strong> — how likely was the incident?
             </li>
             <li>
-              <strong>Severity of harm</strong> — what\'s the worst credible outcome?
+              <strong>Severity of harm</strong> — what’s the worst credible outcome?
             </li>
             <li>
               <strong>Cost of further controls</strong> — money, time, disruption.
@@ -417,7 +417,7 @@ export default function Sub1() {
             </li>
             <li>
               <strong>State of knowledge at the time</strong> — what was reasonably known? You
-              aren\'t held to a 2030 standard for a 2026 incident.
+              aren’t held to a 2030 standard for a 2026 incident.
             </li>
           </ul>
         </ConceptBlock>
@@ -437,7 +437,7 @@ export default function Sub1() {
         <ConceptBlock
           title="Why fines went up — and personal sentences with them"
           plainEnglish="In 2016 the Sentencing Council published the Definitive Guideline for Health and Safety Offences, Corporate Manslaughter and Food Safety and Hygiene Offences. It gave courts a structured matrix — culpability × harm category × company turnover — that produces a starting fine and range. Fines went up dramatically for large companies. Individuals also got a structured matrix that includes custody at the top end."
-          onSite="At L3 you don\'t need to memorise the bands, but you should know the framework exists and that \'we got off with a fine' isn't a given any more. A serious incident at a £50m turnover firm with high culpability now starts at £2.4m — and that\'s before aggravating factors."
+          onSite="At L3 you don’t need to memorise the bands, but you should know the framework exists and that ‘we got off with a fine' isn't a given any more. A serious incident at a £50m turnover firm with high culpability now starts at £2.4m — and that’s before aggravating factors."
         >
           <p>The matrix in outline:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -450,7 +450,7 @@ export default function Sub1() {
               <strong>Harm category</strong> — Level 1 (death, life-threatening, permanent), Level 2
               (physical or psychological harm not life-threatening), Level 3 (harm short of category
               2). Adjusted up for risk of multiple persons or risk of higher harm even where it
-              didn\'t materialise.
+              didn’t materialise.
             </li>
             <li>
               <strong>Turnover band</strong> — Large (£50m+), Medium (£10m–£50m), Small (£2m–£10m),
@@ -486,7 +486,7 @@ export default function Sub1() {
         />
 
         <CommonMistake
-          title="Thinking \'I was told to do it' is a defence to s.7"
+          title="Thinking ‘I was told to do it' is a defence to s.7"
           whatHappens={
             <>
               Apprentice is instructed by a supervisor to bypass an MCB to keep a circuit running
@@ -507,7 +507,7 @@ export default function Sub1() {
         />
 
         <Scenario
-          title="Director\'s instruction vs your s.7 duty"
+          title="Director’s instruction vs your s.7 duty"
           situation={
             <>
               You&apos;re an L3 apprentice on the second week of a new contract for a manufacturing

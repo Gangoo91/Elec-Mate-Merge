@@ -12,7 +12,15 @@
  * mode: a missing label is a cosmetic bug, a missing field is a lost value.
  */
 
-export type CertImportType = 'eicr' | 'eic' | 'minor-works';
+export type CertImportType =
+  | 'eicr'
+  | 'eic'
+  | 'minor-works'
+  | 'emergency-lighting'
+  | 'fire-alarm-log-book';
+
+/** Types whose paper form has a schedule of test results (a second, per-page read). Mirrors the edge schema. */
+export const CERT_IMPORT_WITH_SCHEDULE: CertImportType[] = ['eicr', 'eic'];
 
 export const CERT_IMPORT_OPTIONS: {
   value: CertImportType;
@@ -22,7 +30,8 @@ export const CERT_IMPORT_OPTIONS: {
   {
     value: 'eicr',
     title: 'EICR',
-    subtitle: 'Electrical Installation Condition Report — an inspection of an existing installation',
+    subtitle:
+      'Electrical Installation Condition Report — an inspection of an existing installation',
   },
   {
     value: 'eic',
@@ -32,11 +41,39 @@ export const CERT_IMPORT_OPTIONS: {
   {
     value: 'minor-works',
     title: 'Minor Works',
-    subtitle: 'Minor Electrical Installation Works Certificate — work not extending to a new circuit',
+    subtitle:
+      'Minor Electrical Installation Works Certificate — work not extending to a new circuit',
+  },
+  {
+    value: 'emergency-lighting',
+    title: 'Emergency lighting',
+    subtitle:
+      'BS 5266-1 completion or periodic test certificate — luminaires, duration test, next test due',
+  },
+  {
+    value: 'fire-alarm-log-book',
+    title: 'Fire alarm log book',
+    subtitle:
+      'A paper log book — the premises and panel, plus every dated entry, into a digital log book',
   },
 ];
 
 export const IMPORT_FIELD_LABEL: Record<string, string> = {
+  /* Emergency lighting (ELE-1657) */
+  premisesName: 'Premises',
+  premisesAddress: 'Premises address',
+  premisesType: 'Type of premises',
+  testDate: 'Date of test',
+  nextAnnualTestDue: 'Next annual test due',
+  systemType: 'System type',
+  luminaireCount: 'Emergency luminaires',
+  exitSignCount: 'Exit signs',
+  testDurationMinutes: 'Duration tested (minutes)',
+  durationTestResult: 'Duration test result',
+  defectsFoundText: 'Defects found',
+  recommendations: 'Recommendations',
+  testerCompany: 'Testing company',
+
   /* Identity */
   certificateNumber: 'Reference on the original',
   clientName: 'Client',

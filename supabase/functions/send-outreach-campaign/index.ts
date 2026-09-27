@@ -805,9 +805,20 @@ Deno.serve(async (req) => {
         // winback-unsubscribed / Resend-bounced / admin-suppressed addresses
         // are filtered out even if outreach_contacts.is_suppressed wasn't
         // flipped. This is the authoritative list.
-        const { data: suppressedRows } = await supabaseAdmin
+        // An unbounded select stops at PostgREST's 1000-row cap, which this
+        // list passed long ago — it read 1000 of 6663 and called that
+        // authoritative, so ~85% of suppressions were invisible on every run.
+        // Range explicitly, and refuse to send if the read fails rather than
+        // filtering against an empty list.
+        const { data: suppressedRows, error: suppressedError } = await supabaseAdmin
           .from('email_suppressions')
-          .select('email');
+          .select('email')
+          .range(0, 49999);
+        if (suppressedError) {
+          throw new Error(
+            `Refusing to send: could not read email_suppressions (${suppressedError.message})`
+          );
+        }
         const suppressedSet = new Set(
           (suppressedRows || []).map((r) => (r.email || '').trim().toLowerCase())
         );

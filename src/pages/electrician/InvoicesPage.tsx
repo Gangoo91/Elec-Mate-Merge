@@ -18,6 +18,7 @@ import { cn } from '@/lib/utils';
 import { VoiceHeaderButton } from '@/components/electrician/VoiceHeaderButton';
 import { QuoteInvoiceAnalytics } from '@/components/electrician/analytics';
 import StripeConnectBanner from '@/components/electrician/StripeConnectBanner';
+import UninvoicedQuotesCard from '@/components/electrician/UninvoicedQuotesCard';
 import { InvoiceCard } from '@/components/electrician/invoice-builder/InvoiceCard';
 import { isInvoiceOverdue } from '@/utils/invoice-status';
 import { useAccountingIntegrations } from '@/hooks/useAccountingIntegrations';
@@ -711,6 +712,10 @@ const InvoicesPage = () => {
       <main className="px-4 py-4 space-y-6 pb-24">
         {/* Stripe Connect Banner */}
         <StripeConnectBanner refreshKey={stripeRefreshKey} outstandingAmount={stats.outstandingValue} />
+
+        {/* Work the client agreed to that was never billed through the app.
+            Renders nothing when there is none. */}
+        <UninvoicedQuotesCard />
 
         {/* 01 · REVENUE — panel, mirrors QuotesPage pipeline */}
         <div className="space-y-3">

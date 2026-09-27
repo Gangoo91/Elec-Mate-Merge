@@ -318,7 +318,7 @@ export default function Sub3() {
 
         <ConceptBlock
           title="BS 7671 522.6 + Approved Document B"
-          onSite="Cables in chased walls within 50 mm of the surface must be in a \'safe zone' OR mechanically protected. The L3 apprentice ensures cables run in safe zones (above socket level, vertical from sockets / switches, near edges) with capping / channel protection over the cable before plastering."
+          onSite="Cables in chased walls within 50 mm of the surface must be in a ‘safe zone' OR mechanically protected. The L3 apprentice ensures cables run in safe zones (above socket level, vertical from sockets / switches, near edges) with capping / channel protection over the cable before plastering."
         >
           <p>Safe zones (cables &lt; 50 mm depth):</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -343,7 +343,7 @@ export default function Sub3() {
 
         <ConceptBlock
           title="Intumescent materials at compartment penetrations"
-          plainEnglish="Fire-stopping seals cable / conduit / fitting penetrations through fire-rated walls and floors with intumescent materials. The sealant maintains the fire rating of the element — fire / smoke can't spread through the cable hole. Without it, the building\'s compartmentation strategy is defeated."
+          plainEnglish="Fire-stopping seals cable / conduit / fitting penetrations through fire-rated walls and floors with intumescent materials. The sealant maintains the fire rating of the element — fire / smoke can't spread through the cable hole. Without it, the building’s compartmentation strategy is defeated."
         >
           <p>Standard fire-stopping products:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -383,15 +383,15 @@ export default function Sub3() {
 
         <ConceptBlock
           title="Three-point upfront brief prevents post-work dispute"
-          onSite="Most disputes about \'unfinished work' come from unclear scope at the start. The clear brief at quote stage + the visual confirmation at the end manages expectations."
+          onSite="Most disputes about ‘unfinished work' come from unclear scope at the start. The clear brief at quote stage + the visual confirmation at the end manages expectations."
         >
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
-              <strong>WHAT\'S INCLUDED</strong> — make-good (no holes, no exposed cable, accessories
+              <strong>WHAT’S INCLUDED</strong> — make-good (no holes, no exposed cable, accessories
               refitted, fire-stopping). Basic patching of small areas if your firm includes this.
             </li>
             <li>
-              <strong>WHAT\'S NOT INCLUDED</strong> — full restoration (re-plaster / re-paint /
+              <strong>WHAT’S NOT INCLUDED</strong> — full restoration (re-plaster / re-paint /
               re-tile / re-floor). The customer needs a separate trade.
             </li>
             <li>
@@ -565,13 +565,13 @@ export default function Sub3() {
         <ContentEyebrow>Where it goes wrong</ContentEyebrow>
 
         <CommonMistake
-          title="Skipping fire-stopping because 'it\'s only domestic\'"
+          title="Skipping fire-stopping because 'it’s only domestic’"
           whatHappens={
             <>
-              Apprentice runs a new cable through a party wall between two terraced houses. Doesn\'t
-              fit fire-stop because \'it\'s only domestic\'. Eight months later there\'s a fire in
-              next door\'s lounge; smoke and flames travel through the unsealed cable hole into the
-              customer\'s loft, igniting stored materials. Fire damage to the customer\'s property;
+              Apprentice runs a new cable through a party wall between two terraced houses. Doesn’t
+              fit fire-stop because ‘it’s only domestic’. Eight months later there’s a fire in
+              next door’s lounge; smoke and flames travel through the unsealed cable hole into the
+              customer’s loft, igniting stored materials. Fire damage to the customer’s property;
               insurance investigation finds the unsealed penetration; the firm is liable for failing
               to fit fire-stop required by BS 7671 527.2 + Approved Document B.
             </>
@@ -580,27 +580,27 @@ export default function Sub3() {
             <>
               Always fire-stop penetrations through compartment walls / floors. The Hilti CP 606
               cartridge is £15 and takes 2 minutes to apply. Cheap insurance against a fire-spread
-              incident. Document the fire-stopping on the job sheet AND on the building\'s
+              incident. Document the fire-stopping on the job sheet AND on the building’s
               fire-safety log if applicable.
             </>
           }
         />
 
         <CommonMistake
-          title="Leaving make-good \'for the customer to sort out\'"
+          title="Leaving make-good ‘for the customer to sort out’"
           whatHappens={
             <>
               Apprentice completes electrical rectification work, leaves a 200 mm hole in the
               kitchen wall where they accessed a junction box. Customer is shocked — they thought
               the work would include making the wall good. Customer complaint to the firm; firm has
               to send the apprentice back to patch the hole; customer charged again or work done at
-              firm\'s cost. Either way, customer is unhappy; firm\'s reputation suffers. The
+              firm’s cost. Either way, customer is unhappy; firm’s reputation suffers. The
               30-minute patch at the end of the original visit would have prevented the comeback.
             </>
           }
           doInstead={
             <>
-              Make-good is the electrician\'s responsibility. Carry the kit; do the make-good before
+              Make-good is the electrician’s responsibility. Carry the kit; do the make-good before
               leaving. The 30-minute investment at the end of the job is part of the work, not
               optional polish.
             </>
@@ -619,11 +619,11 @@ export default function Sub3() {
           whatToDo={
             <>
               (1) Brief the customer BEFORE work — explain the access requirement, the tile removal,
-              the restoration scope: \'I\'ll need to remove 2–3 tiles to access the junction box.
-              I\'ll do the electrical work and the make-good (chase, cable, junction box, fire-stop,
+              the restoration scope: ‘I’ll need to remove 2–3 tiles to access the junction box.
+              I’ll do the electrical work and the make-good (chase, cable, junction box, fire-stop,
               basic plaster fill). The tiles need to be re-fit by a specialist tiler — I can
-              recommend one if you don\'t have one. The tiler may need 1–2 days lead time to source
-              matching tiles if yours aren\'t in stock\'. (2) Get customer agreement to the scope
+              recommend one if you don’t have one. The tiler may need 1–2 days lead time to source
+              matching tiles if yours aren’t in stock’. (2) Get customer agreement to the scope
               and timing. (3) Photograph the area before work (insurance / dispute protection). (4)
               Score around the affected tiles carefully (Bahco BK60 tile cutter or similar); remove
               tiles intact where possible; save them for re-fit. (5) Chase the wall to access the
@@ -636,9 +636,9 @@ export default function Sub3() {
           whyItMatters={
             <>
               The structured approach manages the multi-trade nature of the work. Customer knows
-              what to expect; the electrician\'s scope is clear; the tiler\'s role is identified;
+              what to expect; the electrician’s scope is clear; the tiler’s role is identified;
               the documentation supports both trades. Without the upfront brief, the customer would
-              be shocked at \'unfinished' work; with it, they\'re a partner in the multi-trade
+              be shocked at ‘unfinished' work; with it, they’re a partner in the multi-trade
               coordination.
             </>
           }

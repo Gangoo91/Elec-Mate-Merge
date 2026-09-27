@@ -547,14 +547,14 @@ export default function Sub5() {
           whatHappens={
             <>
               Conditions diverge significantly from RAMS; L3 patches the dynamic with successive
-              notes; assessment becomes a layered mess that doesn\'t reflect the work being done.
-              Inspector finds the assessment isn\'t suitable and sufficient. Reg 3 breach.
+              notes; assessment becomes a layered mess that doesn’t reflect the work being done.
+              Inspector finds the assessment isn’t suitable and sufficient. Reg 3 breach.
             </>
           }
           doInstead={
             <>
               Recognise the threshold for fresh RAMS - significant divergence, scope change, new
-              hazards. Escalate; don\'t patch. The 30-minute delay for a fresh RAMS is far better
+              hazards. Escalate; don’t patch. The 30-minute delay for a fresh RAMS is far better
               than the hours of patching that follow an inadequate one.
             </>
           }
@@ -573,13 +573,13 @@ export default function Sub5() {
             <>
               Pause. The scope change creates new hazards - new room not surveyed; possibly
               different fabric; possibly different occupancy; possibly different services concealed.
-              The RAMS doesn\'t cover the additional room. Three options: (1) refuse the additional
+              The RAMS doesn’t cover the additional room. Three options: (1) refuse the additional
               work today; complete original scope; new room added to a fresh RAMS for a future
               visit. (2) Phone contracts manager; agree extension to scope; request fresh RAMS /
               addendum delivered today. (3) Dynamic-assessment a contained portion only if cleanly
               separable from the unsurveyed work. Recommend option 1 or 2 to customer in writing -
-              explains why the work can\'t be added on the fly. Document the decision. ERA s.44
-              protects refusal. Customer pressure isn\'t a Reg 3 override.
+              explains why the work can’t be added on the fly. Document the decision. ERA s.44
+              protects refusal. Customer pressure isn’t a Reg 3 override.
             </>
           }
           whyItMatters={
@@ -587,7 +587,7 @@ export default function Sub5() {
               Scope change is the most common path to RA inadequacy. The L3 supervisor recognising
               it and escalating - rather than trying to patch via dynamic - is what keeps the firm
               on the right side of Reg 3 and protects the team. Customer pressure is real but
-              commercial; safety is regulatory; the L3 supervisor\'s judgement on the priority is
+              commercial; safety is regulatory; the L3 supervisor’s judgement on the priority is
               what discharges the duty.
             </>
           }

@@ -41,11 +41,12 @@ import { useReportSync } from '@/hooks/useReportSync';
 import { useCertLock } from '@/hooks/useCertLock';
 import CertLockBar from '@/components/inspection/CertLockBar';
 import { cn } from '@/lib/utils';
-import { generateCertificateNumber } from '@/utils/certificateNumbering';
+import { generateCertificateNumber, issueCertificateNumber } from '@/utils/certificateNumbering';
 import { formatFireAlarmG7Json } from '@/utils/fireAlarmG7JsonFormatter';
 import { createInvoiceFromCertificate } from '@/utils/certificateToQuote';
 import { scrollToTopForStepChange } from '@/utils/scroll';
 import { readEdgeFunctionError } from '@/lib/edgeFunctionError';
+import { useEngineerVerify } from '@/utils/engineerVerify';
 
 const REPORT_TYPE = 'fire-alarm-modification' as const;
 
@@ -58,6 +59,9 @@ export default function FireAlarmModificationCertificate() {
     ...getDefaultFireAlarmFormData(),
     certificateType: 'modification',
   });
+
+  // ELE-1453 — Elec-ID verify QR for the signature box; {} when the user has none.
+  const engineerVerify = useEngineerVerify();
   const [isSaving, setIsSaving] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [showGenerationDialog, setShowGenerationDialog] = useState(false);
@@ -105,8 +109,11 @@ const {
     formData,
     enabled: !isLoading && !isLocked,
     isHydrating: isLoading, // Gate autosave while loading from cloud — prevents blank-overwrite race.
-    onReportCreated: (newId) => {
+    onReportCreated: (newId: string, certificateNumber?: string) => {
       setSavedReportId(newId);
+      // ELE-1592 — keep the number the row was filed under; without this the
+      // form stayed blank and the PDF printed an invented timestamp.
+      if (certificateNumber) setFormData((prev) => (prev.certificateNumber ? prev : { ...prev, certificateNumber }));
       window.history.replaceState(
         null,
         '',
@@ -233,14 +240,14 @@ const {
   const buildFormattedPayload = useCallback(async () => {
     let data = {
       ...formData,
-      certificateNumber: formData.certificateNumber || `FA/G7-${Date.now()}`,
+      certificateNumber: await issueCertificateNumber(formData.certificateNumber, REPORT_TYPE),
     };
     if (hasSavedCompanyBranding) {
       const b = loadCompanyBranding();
       if (b) data = { ...data, ...b };
     }
     const photos = await fetchReportPhotos();
-    return formatFireAlarmG7Json({ ...data, photos });
+    return { ...formatFireAlarmG7Json({ ...data, photos }), ...engineerVerify };
   }, [formData, hasSavedCompanyBranding, loadCompanyBranding, fetchReportPhotos]);
 
   const handleGenerateCertificate = async () => {

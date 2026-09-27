@@ -31,11 +31,11 @@ const quickCheckQuestions = [
       'Level 2 Diploma in Electrical Installations (2365) &mdash; this covers all inspection work',
       'City &amp; Guilds 2396 Design and Verification of Electrical Installations',
       'City &amp; Guilds 2391 Inspection and Testing of Electrical Installations',
-      'City &amp; Guilds 5357 PAT Testing &mdash; this covers all types of electrical testing',
+      'City &amp; Guilds 2377 PAT Testing &mdash; this covers all types of electrical testing',
     ],
     correctIndex: 2,
     explanation:
-      'The City &amp; Guilds 2391 (full title: Level 3 Award in Inspection and Testing of Electrical Installations, now often referred to as the 2391-52) is the industry-standard qualification for inspection and testing. It covers the theory, practical skills, and documentation required to carry out initial verification of new installations and periodic inspection of existing installations, including completing Electrical Installation Certificates (EICs) and Electrical Installation Condition Reports (EICRs). While the Level 2 and Level 3 Diplomas include some testing content, they do not provide the depth of inspection and testing knowledge required for independent inspection work. The 2396 covers design and verification, not periodic inspection. The 5357 covers only portable appliance testing, which is a much narrower discipline. The 2391 is widely regarded as one of the most challenging qualifications in the electrical industry, but it is essential for anyone wanting to specialise in inspection and testing or to work towards Qualified Supervisor status with a competent person scheme.',
+      'The City &amp; Guilds 2391 (full title: Level 3 Award in Inspection and Testing of Electrical Installations, now often referred to as the 2391-52) is the industry-standard qualification for inspection and testing. It covers the theory, practical skills, and documentation required to carry out initial verification of new installations and periodic inspection of existing installations, including completing Electrical Installation Certificates (EICs) and Electrical Installation Condition Reports (EICRs). While the Level 2 and Level 3 Diplomas include some testing content, they do not provide the depth of inspection and testing knowledge required for independent inspection work. The 2396 covers design and verification, not periodic inspection. The 2377 covers only portable appliance testing, which is a much narrower discipline. The 2391 is widely regarded as one of the most challenging qualifications in the electrical industry, but it is essential for anyone wanting to specialise in inspection and testing or to work towards Qualified Supervisor status with a competent person scheme.',
   },
   {
     id: 'gs-2-3-check3',
@@ -133,13 +133,13 @@ const quizQuestions = [
       'An electrician wants to specialise in periodic inspection and testing of existing installations. They already hold the Level 3 Diploma. What is the most appropriate next qualification?',
     options: [
       'City &amp; Guilds 2396 Design and Verification &mdash; this covers all testing work',
-      'City &amp; Guilds 5357 PAT Testing &mdash; this covers all types of testing',
+      'City &amp; Guilds 2377 PAT Testing &mdash; this covers all types of testing',
       'City &amp; Guilds 2919 Electric Vehicle Charging Equipment Installation',
       'City &amp; Guilds 2391 Inspection and Testing of Electrical Installations',
     ],
     correctAnswer: 3,
     explanation:
-      'The City &amp; Guilds 2391 (Level 3 Award in Inspection and Testing of Electrical Installations) is the specific qualification designed for electricians who want to carry out initial verification of new installations and periodic inspection of existing installations. It covers the theory and practical skills required to inspect, test, and report on electrical installations in accordance with BS 7671, including understanding the sequence of tests, interpreting results, identifying defects, coding observations, and completing Electrical Installation Certificates (EICs) and Electrical Installation Condition Reports (EICRs). The 2396 covers design and verification, which is a different discipline focused on designing installations rather than inspecting existing ones. The 5357 covers only portable appliance testing, which is a narrow specialism. The 2919 covers EV charging installation, which is unrelated to periodic inspection. The 2391 is widely considered one of the most important qualifications an electrician can hold after the Level 3 Diploma and AM2, because inspection and testing work is in high demand and commands premium rates.',
+      'The City &amp; Guilds 2391 (Level 3 Award in Inspection and Testing of Electrical Installations) is the specific qualification designed for electricians who want to carry out initial verification of new installations and periodic inspection of existing installations. It covers the theory and practical skills required to inspect, test, and report on electrical installations in accordance with BS 7671, including understanding the sequence of tests, interpreting results, identifying defects, coding observations, and completing Electrical Installation Certificates (EICs) and Electrical Installation Condition Reports (EICRs). The 2396 covers design and verification, which is a different discipline focused on designing installations rather than inspecting existing ones. The 2377 covers only portable appliance testing, which is a narrow specialism. The 2919 covers EV charging installation, which is unrelated to periodic inspection. The 2391 is widely considered one of the most important qualifications an electrician can hold after the Level 3 Diploma and AM2, because inspection and testing work is in high demand and commands premium rates.',
   },
   {
     id: 5,
@@ -298,7 +298,7 @@ export default function GSModule2Section3() {
               'Describe the full JIB grading structure from Electrical Labourer to Senior Technician',
               'Identify the key ECS card types and what each colour and grade represents',
               'Explain the role of the AM2 practical assessment as the gateway to Approved Electrician status',
-              'List the major qualification milestones including 2391, 2396, 2919, 5357, and BS 7671',
+              'List the major qualification milestones including 2391, 2396, 2919, 2377, and BS 7671',
               'Describe the IET professional registration pathway from EngTech through IEng to CEng',
               'Compare competent person schemes (NICEIC, NAPIT, ELECSA) and explain their purpose',
               'Identify at least six specialisation paths available to qualified electricians',
@@ -663,9 +663,9 @@ export default function GSModule2Section3() {
 
               <p>
                 <strong>
-                  City &amp; Guilds 5357 PAT Testing &mdash; Portable Appliance Testing:
+                  City &amp; Guilds 2377-77 PAT Testing &mdash; Portable Appliance Testing:
                 </strong>{' '}
-                The 5357 (Level 3 Award in the In-Service Inspection and Testing of Electrical
+                The 2377-77 (Level 3 Award in the In-Service Inspection and Testing of Electrical
                 Equipment) covers the inspection and testing of portable and transportable
                 electrical equipment &mdash; commonly known as PAT testing. While sometimes
                 dismissed as a basic qualification, PAT testing is a legitimate and profitable
@@ -720,7 +720,7 @@ export default function GSModule2Section3() {
                   The most effective approach to qualifications is strategic sequencing. A common
                   and well-proven pathway is: Level 2 &rarr; Level 3 &rarr; AM2 &rarr; BS 7671
                   &rarr; 2391 Inspection &amp; Testing &rarr; then one or more specialist
-                  qualifications (2396 Design, 2919 EV, 5357 PAT) depending on your chosen career
+                  qualifications (2396 Design, 2919 EV, 2377 PAT) depending on your chosen career
                   direction. Each qualification builds on the previous one, and completing them in
                   this order ensures you have the foundation needed for each subsequent step.
                   Setting a target date for each qualification creates a clear, measurable career
@@ -1366,7 +1366,7 @@ export default function GSModule2Section3() {
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>
                     <strong>Key qualification milestones</strong> &mdash; Level 2, Level 3, AM2,
-                    2391, 2396, 2919, 5357, BS 7671 &mdash; form a strategic sequence for career
+                    2391, 2396, 2919, 2377, BS 7671 &mdash; form a strategic sequence for career
                     development.
                   </span>
                 </li>

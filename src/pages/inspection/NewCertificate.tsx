@@ -5,6 +5,7 @@ import { ArrowLeft, Zap, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useUiPreferences } from '@/hooks/useUiPreferences';
+import { certificateNewHref } from '@/utils/certificate-href';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -124,12 +125,16 @@ export default function NewCertificate() {
     // Started from a job or the diary? Carry who and where on to the form —
     // this picker used to drop them here (ELE-1755).
     const prefill = certificatePrefillQuery();
-    // Core certs use section-based routing
-    if (['eicr', 'eic', 'minor-works'].includes(cert.id)) {
-      navigate(`/electrician/inspection-testing?section=${cert.id}${prefill ? `&${prefill}` : ''}`);
-    } else {
-      navigate(`/electrician/inspection-testing/${cert.id}/new${prefill ? `?${prefill}` : ''}`);
-    }
+    /*
+     * `certificateNewHref` knows which types have a `/new` route and which
+     * start at their bare path. The branch that was here sent every non-core
+     * type to `<type>/new`, which for the seven notice pages matches their
+     * `:id` route instead — so a new Danger Notice opened trying to load a
+     * saved report literally called "new".
+     */
+    const base = certificateNewHref(cert.id);
+    const sep = base.includes('?') ? '&' : '?';
+    navigate(prefill ? `${base}${sep}${prefill}` : base);
   };
 
   return (

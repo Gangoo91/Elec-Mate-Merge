@@ -108,7 +108,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'Series wiring (which is what "string" means) adds voltages but the current through every panel in the string is identical — same as series resistors in Module 2. Ten panels at 45 V each gives roughly 450 V open-circuit, with the string current capped at about 11 A — the Isc of any single panel. The inverter\'s MPPT then operates the string at its peak power point (usually 35–40 V per panel under load), pulling close to the rated 400 W from each.',
+      'Series wiring (which is what "string" means) adds voltages but the current through every panel in the string is identical — same as series resistors in Module 2. Ten panels at 45 V each gives roughly 450 V open-circuit, with the string current capped at about 11 A — the Isc of any single panel. The inverter’s MPPT then operates the string at its peak power point (usually 35–40 V per panel under load), pulling close to the rated 400 W from each.',
   },
   {
     id: 3,
@@ -163,7 +163,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'If the grid drops out and a PV inverter keeps energising the local conductors, you have created an unintended "island" of live network. The DNO\'s linesman, expecting dead cables, can be killed. Inverters meeting BS EN 50549-1 (the standard called up by ENA G98 for ≤ 16 A per phase generators and by Reg 551.7.4) detect the loss of mains by frequency, voltage and impedance shifts and disconnect within roughly 200 ms. This is the most safety-critical software in the inverter.',
+      'If the grid drops out and a PV inverter keeps energising the local conductors, you have created an unintended "island" of live network. The DNO’s linesman, expecting dead cables, can be killed. Inverters meeting BS EN 50549-1 (the standard called up by ENA G98 for ≤ 16 A per phase generators and by Reg 551.7.4) detect the loss of mains by frequency, voltage and impedance shifts and disconnect within roughly 200 ms. This is the most safety-critical software in the inverter.',
   },
   {
     id: 7,

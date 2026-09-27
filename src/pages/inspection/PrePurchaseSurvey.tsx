@@ -84,8 +84,11 @@ export default function PrePurchaseSurvey() {
     formData,
     enabled: !isLoading,
     isHydrating: isLoading,
-    onReportCreated: (newId: string) => {
+    onReportCreated: (newId: string, certificateNumber?: string) => {
       setSavedReportId(newId);
+      // ELE-1592 — keep the number the row was filed under; without this the
+      // form stayed blank and the PDF printed an invented timestamp.
+      if (certificateNumber) setFormData((prev) => (prev.certificateNumber ? prev : { ...prev, certificateNumber }));
       window.history.replaceState(null, '', `${BASE}/${newId}`);
     },
   });
@@ -139,7 +142,7 @@ export default function PrePurchaseSurvey() {
           data: { user },
         } = await supabase.auth.getUser();
         if (!user) return;
-        const stored = await reportCloud.getReportData(id, user.id);
+        const stored = await reportCloud.getReportData(id, user.id, 'pre-purchase-survey');
         if (stored && !cancelled) {
           const loaded = {
             ...getDefaultPrePurchaseSurveyFormData(),

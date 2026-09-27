@@ -6,6 +6,25 @@ import { trackUserEvent } from '@/hooks/useActivityTracking';
 import { logger } from '@/utils/logger';
 import { describeCustomerDeleteError, customerDeleteErrorContext } from '@/lib/customerDeleteError';
 
+/**
+ * ⚠️ TWO HOOKS SHARE THIS NAME, ON PURPOSE (ELE-1601).
+ *
+ * `@/hooks/inspection/useCustomers` is the CRM hook: paginated (50 a page),
+ * sortable, searchable, with `useCustomer`, `mergeCustomers` and the risk /
+ * campaign fields. This one is the plain list: EVERY customer the account has,
+ * unpaged, plus `createOrFindCustomer` for booking someone in over the phone.
+ *
+ * They are not interchangeable and were deliberately NOT consolidated when the
+ * other 27 duplicated hooks were. Repointing the calendar, booking and
+ * assistant pickers at the paginated hook would silently cap them at the first
+ * fifty customers — a customer beyond that would simply vanish from a booking
+ * dropdown. Repointing the CRM at this one would drop pagination on accounts
+ * with hundreds of customers.
+ *
+ * If you need pagination, import the inspection one. If you need everyone, or
+ * `createOrFindCustomer`, import this one. Do not add a third.
+ */
+
 export interface Customer {
   id: string;
   name: string;

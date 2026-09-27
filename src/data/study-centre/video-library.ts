@@ -234,6 +234,44 @@ export const videos = {
     'Insulation resistance readings — what they mean and where they mislead',
     ['I-M7S7']
   ),
+
+  /* ── Added for the Welsh Level 3 course. Topic labels carry no
+     qualification codes, because this library is shared between courses
+     that number their units differently. ───────────────────────────── */
+  currentAcDc: lookup('kcL2_D33k3o', 'Current explained — a.c., d.c., fuses and breakers'),
+  powerFactor: lookup('Tv_7XWf96gg', 'Power factor explained'),
+  powerFactorBill: lookup('NIrKOVZrqnU', 'Power factor, reactive power and the bill'),
+  whyThreePhase: lookup('c9gm_NL7KyE', 'How three-phase power works'),
+  starDelta: lookup('h89TTwlNnpY', 'Star-delta starter explained'),
+  vfdBasics: lookup('yEPe7RDtkgo', 'Variable frequency drives explained'),
+  thermistorBasics: lookup('SaQBD0NMT04', 'Thermistors — NTC and PTC'),
+  solenoidBasics: lookup('BbmocfETTFo', 'Solenoids — working principle'),
+  stepperMotor: lookup('fQsdUhRwCU4', 'Stepper motors explained'),
+  servoMotor: lookup('tHOH-bYjR4k', 'Servo motors explained'),
+  brushlessMotor: lookup('yiD5nCfmbV0', 'Brushless motors — BLDC and ESC'),
+  plcBasics: lookup('uOtdWHMKhnw', 'Programmable logic controllers explained'),
+  ipRatings: lookup('Dl982L_MO4A', 'IP ratings explained'),
+  regsLanguage: lookup('nCtNqXMuA6A', 'Shall, should, must and may — the language of the Regs'),
+  partTwoDefinitions: lookup('G1QTK0TexuE', 'BS 7671 Part 2 — definitions'),
+  fireSupports: lookup('V1dUdzUszdo', 'Fire supports — what changed'),
+  supportMythBusted: lookup('0HxB5vx5QdI', 'Regulation 521.10.202 — myth busted'),
+  circuitDesignSeries: lookup('fhO2LC8o_Zw', 'Designing a circuit — worked example'),
+  showerCircuitDesign: lookup('HM7YUVIqb5s', 'Designing a shower circuit'),
+  threePhaseMotorDesign: lookup('P3n4qlyRIdo', 'Designing a three-phase motor circuit'),
+  evChargerDesign: lookup('ow9eU23VpaU', 'Designing an EV charger circuit'),
+  cableLength: lookup('5k13SbwbiKU', 'Working out cable length'),
+  twoWaySwitching: lookup('opoEswRp_jg', 'Two-way switching explained'),
+  houseWiring: lookup('0ydD5bpgmss', 'UK house wiring — circuits, cables and routing'),
+  lightingCircuitMistake: lookup('4csv_ofVcwA', 'The most common lighting circuit mistake'),
+  consumerUnitExplained: lookup('J6w-ASh6eKw', 'The consumer unit explained'),
+  ringFinalSimple: lookup('NNfyTU1QoYI', 'Ring final test — as simple as it gets'),
+  zeHiTrip: lookup('oHOoq3hV2NA', 'Ze and the no-trip setting'),
+  sequenceOfTests: lookup('qUJ8carxtIM', 'Sequence of tests — getting the order right'),
+  testingGuide: lookup('TfeH9uUjz78', 'Testing guide — revision walkthrough'),
+  ladderRatio: lookup('Hu2uCcYElzQ', 'Ladder ratio'),
+  wiringMistakeFire: lookup('50bXZPtDpmU', 'A wiring mistake that causes fires'),
+  dangerousWork: lookup('EueC1GC3_i0', 'Jobs bad electricians made dangerous'),
+  deadlyShortcuts: lookup('wRfN4aygyoU', 'Deadly electrical shortcuts'),
 } as const satisfies Record<string, VideoLibraryEntry>;
 
 export type VideoKey = keyof typeof videos;

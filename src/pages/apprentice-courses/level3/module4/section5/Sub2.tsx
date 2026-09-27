@@ -367,7 +367,7 @@ export default function Sub2() {
         <ContentEyebrow>The customer hand-back</ContentEyebrow>
 
         <ConceptBlock
-          title="Five steps that turn 'work done' into 'customer satisfied\'"
+          title="Five steps that turn 'work done' into 'customer satisfied’"
           plainEnglish="The hand-back is what the customer remembers. The technical work was the value; the hand-back is the evidence. Skipping it leaves customer uncertain and creates the post-job complaints."
         >
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -593,8 +593,8 @@ export default function Sub2() {
           whatHappens={
             <>
               Apprentice rectifies an HRJ at a socket terminal — re-stripped, re-terminated, looks
-              perfect. They don't retest because \'it\'s obvious\'. Customer plugs in the kettle
-              five minutes after the apprentice leaves; the new termination wasn\'t quite tight
+              perfect. They don't retest because ‘it’s obvious’. Customer plugs in the kettle
+              five minutes after the apprentice leaves; the new termination wasn’t quite tight
               enough; immediate trip. Customer calls back; apprentice returns; 30-minute drive each
               way; firm bears the cost. The retest would have caught the marginal termination in 30
               seconds.
@@ -615,17 +615,17 @@ export default function Sub2() {
           whatHappens={
             <>
               Apprentice completes the rectification, retest passes, packs up and leaves. Customer
-              is in another room and didn\'t see the work. They go back to the kitchen and see no
-              obvious change; they\'re not sure if it\'s fixed. They call the office to query;
+              is in another room and didn’t see the work. They go back to the kitchen and see no
+              obvious change; they’re not sure if it’s fixed. They call the office to query;
               office calls the apprentice; the apprentice has to explain over the phone. Customer
-              satisfaction down; firm\'s call-handling time up; relationship at risk. The 30-second
-              \'come and look' before leaving would have prevented all this.
+              satisfaction down; firm’s call-handling time up; relationship at risk. The 30-second
+              ‘come and look' before leaving would have prevented all this.
             </>
           }
           doInstead={
             <>
               Five-step hand-back, every job. The 30 seconds of demonstration converts the customer
-              from uncertain bystander to verified beneficiary. Customer\'s confidence is what
+              from uncertain bystander to verified beneficiary. Customer’s confidence is what
               generates repeat work and referrals.
             </>
           }
@@ -635,31 +635,31 @@ export default function Sub2() {
           title="Hand-back after kitchen circuit rectification"
           situation={
             <>
-              You\'ve rectified a recurring kitchen RCBO trip by replacing a leaking dishwasher
+              You’ve rectified a recurring kitchen RCBO trip by replacing a leaking dishwasher
               heater element. Retest passes. Customer is in the lounge.
             </>
           }
           whatToDo={
             <>
-              Five-step hand-back. (1) Invite customer to the kitchen. \'Come and have a look — I\'d
-              like to show you what I did and confirm it\'s working\'. (2) Demonstrate. \'Watch the
-              breaker — I\'ll switch on the dishwasher\'. Switch on; breaker holds. \'And the kettle
-              on top\'. Switch on; breaker holds. \'There you go — no trip even with both running\'.
-              (3) Walk through. \'Your old dishwasher heater had developed a small earth leak —
+              Five-step hand-back. (1) Invite customer to the kitchen. ‘Come and have a look — I’d
+              like to show you what I did and confirm it’s working’. (2) Demonstrate. ‘Watch the
+              breaker — I’ll switch on the dishwasher’. Switch on; breaker holds. ‘And the kettle
+              on top’. Switch on; breaker holds. ‘There you go — no trip even with both running’.
+              (3) Walk through. ‘Your old dishwasher heater had developed a small earth leak —
               about 18 mA when it was on heat cycle. Combined with the everyday electronics in your
-              kitchen, that pushed the total earth leakage past the breaker\'s 30 mA threshold and
-              tripped it. I\'ve replaced the heater; the leak\'s gone; the breaker\'s no longer at
-              risk of nuisance trips\'. (4) Provide docs. \'Here\'s your job sheet, the test results
+              kitchen, that pushed the total earth leakage past the breaker’s 30 mA threshold and
+              tripped it. I’ve replaced the heater; the leak’s gone; the breaker’s no longer at
+              risk of nuisance trips’. (4) Provide docs. ‘Here’s your job sheet, the test results
               showing the breaker is now well within spec, and a one-page summary in plain English.
               The dishwasher heater is covered by a 12-month parts warranty; the workmanship is
-              covered by my firm\'s standard 2-year warranty\'. (5) Next steps. \'No further work
+              covered by my firm’s standard 2-year warranty’. (5) Next steps. ‘No further work
               needed unless you notice trips returning. Any questions, call us anytime; the
-              number\'s at the bottom of the summary\'. Job done.
+              number’s at the bottom of the summary’. Job done.
             </>
           }
           whyItMatters={
             <>
-              The hand-back closes the loop with the customer. They\'ve seen the fix, understood
+              The hand-back closes the loop with the customer. They’ve seen the fix, understood
               what was wrong, got the documentation, know the warranty, know how to contact you. The
               5-minute hand-back generates 5-star reviews, repeat work, and referrals. Skipping it
               loses all that.

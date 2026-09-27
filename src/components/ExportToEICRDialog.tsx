@@ -38,6 +38,7 @@ import {
 import { generateCertificateNumber } from '@/utils/certificateNumbering';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { useCreateReportKey } from '@/hooks/useCreateReportKey';
 
 interface ExportToEICRDialogProps {
   open: boolean;
@@ -58,6 +59,7 @@ export const ExportToEICRDialog: React.FC<ExportToEICRDialogProps> = ({
   // tells us which source we're converting from.
   const isMinorWorks = reportId.toUpperCase().startsWith('MINOR-WORKS');
   const [isLoading, setIsLoading] = useState(true);
+  const createKey = useCreateReportKey('eicr'); // ELE-1603 — a retry adopts, never duplicates; keyed per SOURCE certificate so one dialog instance reused for another export never adopts the first one's row
   const [isExporting, setIsExporting] = useState(false);
   const [eicData, setEicData] = useState<EICFormData | null>(null);
   const [validation, setValidation] = useState<{
@@ -99,6 +101,7 @@ export const ExportToEICRDialog: React.FC<ExportToEICRDialogProps> = ({
         description: 'Failed to load report data',
         variant: 'destructive',
       });
+      createKey.release(reportId);
       onOpenChange(false);
     } finally {
       setIsLoading(false);
@@ -133,7 +136,7 @@ export const ExportToEICRDialog: React.FC<ExportToEICRDialogProps> = ({
       };
 
       // Create new EICR report
-      const result = await reportCloud.createReport(user.id, 'eicr', eicrDataWithMeta);
+      const result = await reportCloud.createReport(user.id, 'eicr', eicrDataWithMeta, undefined, false, createKey.take(reportId));
 
       if (!result.success || !result.reportId) {
         throw new Error(result.error || 'Failed to create EICR report');

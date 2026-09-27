@@ -20,9 +20,12 @@
  * between this saving time and merely moving the typing around.
  */
 
-export type CertImportType = 'eicr' | 'eic' | 'minor-works';
+export type CertImportType = 'eicr' | 'eic' | 'minor-works' | 'emergency-lighting';
 
-export const CERT_IMPORT_TYPES: CertImportType[] = ['eicr', 'eic', 'minor-works'];
+export const CERT_IMPORT_TYPES: CertImportType[] = ['eicr', 'eic', 'minor-works', 'emergency-lighting'];
+
+/** Types whose paper form carries a schedule of test results worth a second, per-page read. */
+export const CERT_IMPORT_WITH_SCHEDULE: CertImportType[] = ['eicr', 'eic'];
 
 /**
  * Short names, for warning copy. "This looks like an EICR, not a Minor Works
@@ -34,12 +37,14 @@ export const CERT_IMPORT_SHORT: Record<CertImportType, string> = {
   eicr: 'an EICR',
   eic: 'an EIC',
   'minor-works': 'a Minor Works Certificate',
+  'emergency-lighting': 'an Emergency Lighting Certificate',
 };
 
 export const CERT_IMPORT_LABEL: Record<CertImportType, string> = {
   eicr: 'Electrical Installation Condition Report',
   eic: 'Electrical Installation Certificate',
   'minor-works': 'Minor Electrical Installation Works Certificate',
+  'emergency-lighting': 'Emergency Lighting Completion / Periodic Inspection and Testing Certificate (BS 5266-1)',
 };
 
 /** A field the model is asked to find. `key` matches the form's own field name. */
@@ -118,6 +123,27 @@ const PER_TYPE: Record<CertImportType, ImportField[]> = {
     { key: 'rcdOperatingTime', label: 'Measured RCD operating time, in milliseconds' },
     { key: 'comments', label: 'Comments on the existing installation' },
   ],
+  /*
+   * ELE-1657 — the BS 5266-1 certificate is not a BS 7671 form: no supply
+   * block, no BS 7671 signatory block. Keys are the emergency lighting form's
+   * own so an extracted value lands on the field directly.
+   */
+  'emergency-lighting': [
+    { key: 'premisesName', label: 'Name of the premises' },
+    { key: 'premisesAddress', label: 'Address of the premises', hint: 'The building the emergency lighting serves.' },
+    { key: 'premisesType', label: 'Type of premises', hint: 'Office, HMO, school, hotel, retail and so on, as written.' },
+    { key: 'testDate', label: 'Date of the test or inspection', hint: 'ISO format, YYYY-MM-DD.' },
+    { key: 'nextAnnualTestDue', label: 'Date the next annual test is due' },
+    { key: 'systemType', label: 'Type of system', hint: 'Self-contained luminaires, central battery, or both — as printed.' },
+    { key: 'luminaireCount', label: 'Number of emergency luminaires' },
+    { key: 'exitSignCount', label: 'Number of exit signs' },
+    { key: 'testDurationMinutes', label: 'Rated duration tested, in minutes', hint: 'A 3-hour duration test is 180.' },
+    { key: 'durationTestResult', label: 'Result of the duration test', hint: 'Whether every luminaire remained lit for the full rated duration.' },
+    { key: 'defectsFoundText', label: 'Defects or faults found, as written' },
+    { key: 'recommendations', label: 'Recommendations' },
+    { key: 'testerName', label: 'Name of the person who carried out the test' },
+    { key: 'testerCompany', label: 'Company carrying out the test' },
+  ],
 };
 
 export function fieldsFor(type: CertImportType): ImportField[] {
@@ -126,8 +152,10 @@ export function fieldsFor(type: CertImportType): ImportField[] {
    * printed form has no Ze/Ipf block. Asking for fields the paper cannot
    * contain invites the model to invent them, so they are simply not requested.
    */
-  const supply = type === 'minor-works' ? [] : SUPPLY;
-  return [...IDENTITY, ...supply, ...PER_TYPE[type], ...SIGNATORY];
+  const supply = type === 'minor-works' || type === 'emergency-lighting' ? [] : SUPPLY;
+  // The BS 5266-1 form carries its own tester block (in PER_TYPE), not the BS 7671 signatory block.
+  const signatory = type === 'emergency-lighting' ? [] : SIGNATORY;
+  return [...IDENTITY, ...supply, ...PER_TYPE[type], ...signatory];
 }
 
 /**
@@ -160,7 +188,7 @@ export function responseSchemaFor(type: CertImportType) {
        */
       detected_document_type: {
         type: 'string',
-        enum: ['eicr', 'eic', 'minor-works', 'other', 'unreadable'],
+        enum: ['eicr', 'eic', 'minor-works', 'emergency-lighting', 'other', 'unreadable'],
         description:
           'What this document actually is, judged from its printed title and layout alone — ignore what you were told it is.',
       },
@@ -560,4 +588,111 @@ export function schedulePageSchema() {
     },
     required: ['pages'],
   };
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * FIRE ALARM LOG BOOK (ELE-1781)
+ *
+ * Not a certificate: a BOOK (premises, panel, responsible person) plus a table
+ * of dated events, usually handwritten, often several pages. Read the book
+ * header from the whole document and the entries one page at a time — the
+ * same shape as the schedule of test results, and for the same reason: a
+ * page-sized task finishes; a document-sized one truncates.
+ *
+ * Entry types are the app's own (`LogEntryType` in useFireAlarmLogBook), so
+ * a read row drops straight into `fire_alarm_log_entries.entry_type`.
+ */
+export const LOG_BOOK_ENTRY_TYPES = [
+  'weekly_test',
+  'monthly_check',
+  'fault',
+  'false_alarm',
+  'fire_event',
+  'drill',
+  'service',
+  'battery',
+  'panel_event',
+  'variation',
+] as const;
+
+export function logBookHeaderSchema() {
+  const str = (description: string) => ({ type: 'string', description });
+  return {
+    type: 'object',
+    properties: {
+      log_book_found: { type: 'boolean', description: 'Whether this is a fire alarm log book at all.' },
+      book: {
+        type: 'object',
+        properties: {
+          building_name: str('Name of the premises or building'),
+          building_address: str('Address of the premises'),
+          system_category: str('System category, e.g. L1, L2, L3, L4, L5, M, P1, P2, as printed'),
+          panel_make: str('Control panel manufacturer'),
+          panel_model: str('Control panel model'),
+          panel_location: str('Where the panel is'),
+          responsible_person: str('Responsible person named in the book'),
+          servicing_org: str('Servicing organisation or maintenance contractor'),
+          installation_date: str('Date of installation, ISO YYYY-MM-DD if given'),
+        },
+      },
+    },
+    required: ['log_book_found', 'book'],
+  };
+}
+
+export function logBookHeaderPrompt(): string {
+  return `The attached pages are from a UK fire alarm LOG BOOK (BS 5839-1). Read the front matter — the premises, the panel, the responsible person and the servicing organisation.
+
+Rules:
+- Transcribe verbatim. Do not tidy or expand. A blank is an empty string. NEVER guess.
+- Dates: ISO YYYY-MM-DD. UK forms are day/month/year.
+- If these pages are not a fire alarm log book, set log_book_found false and leave book empty.`;
+}
+
+export function logBookEntriesSchema() {
+  const str = (description: string) => ({ type: 'string', description });
+  return {
+    type: 'object',
+    properties: {
+      entries: {
+        type: 'array',
+        description: 'One entry per dated ROW in the log, in the order written.',
+        items: {
+          type: 'object',
+          properties: {
+            entry_date: str('Date of the entry, ISO YYYY-MM-DD'),
+            entry_type: {
+              type: 'string',
+              enum: [...LOG_BOOK_ENTRY_TYPES],
+              description:
+                'weekly_test = weekly call point test; monthly_check = monthly checks; fault = a fault logged; false_alarm = a false or unwanted alarm; fire_event = a real fire; drill = evacuation drill; service = maintenance visit; battery = battery replacement; panel_event = a panel event or reset; variation = a recorded variation from the standard.',
+            },
+            zone: str('Zone number or name, if written'),
+            location: str('Call point number, device or location, if written'),
+            description: str('What was written — the event, fault, or work done, verbatim'),
+            result: str('Result or outcome, if written (Pass / Fail / rectified …)'),
+            tester_name: str('Who signed or initialled the row'),
+          },
+          required: ['entry_date', 'entry_type', 'description'],
+        },
+      },
+      entries_seen: {
+        type: 'number',
+        description: 'How many dated rows are on this page in total, including any you could not read.',
+      },
+    },
+    required: ['entries', 'entries_seen'],
+  };
+}
+
+export function logBookEntriesPrompt(): string {
+  return `This page is from a UK fire alarm LOG BOOK (BS 5839-1). Transcribe every dated row on THIS page into entries.
+
+Rules, all of which matter more than completeness:
+- One entry per written row, in the order written. Do not merge, reorder or invent rows.
+- Transcribe verbatim. Blank cell → empty string. NEVER guess a date, a zone or a result.
+- Pick entry_type from the list; when a row does not fit, use panel_event for panel matters and fault for anything reported as wrong.
+- Dates: ISO YYYY-MM-DD. UK books are day/month/year — 03/04/2024 is 3 April 2024.
+- Set entries_seen to the number of dated rows on the page, even where you could not read them all.
+- 🔴 Return EVERY row. entries.length must equal entries_seen. Do not stop early.`;
 }

@@ -290,6 +290,20 @@ const TYPE_SPECIFIC_FIELDS_TO_STRIP: Partial<Record<DuplicableReportType, readon
     // would be a measured value that nobody measured.
     'spotChecks',
     'spotChecksCarriedOut',
+    /*
+     * The alarm register. Tempting to carry — the heads, their locations and
+     * their replacement dates barely change between annual visits, and a
+     * portfolio landlord re-types the lot.
+     *
+     * It is stripped anyway, because each row also records whether that alarm
+     * SOUNDED ON ITS TEST BUTTON. Duplicating the register would put "Sounded"
+     * against a visit nobody has made yet, on a document that will be signed.
+     * That is the same objection that strips `spotChecks`, and a false test
+     * result on a fire-safety record is a worse thing to carry than a table is
+     * to re-enter. If this is ever revisited, carry the inventory and blank
+     * `testedOk` — do not carry the row whole.
+     */
+    'alarms',
     'overallAssessment',
     'generalCondition',
     'recommendations',

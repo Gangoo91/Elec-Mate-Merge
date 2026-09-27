@@ -761,6 +761,7 @@ const EICRInspectionChecklist = ({
           onBulkMarkNotApplicable={bulkMarkNotApplicable}
           onBulkClearSection={bulkClearSection}
           quickMarkMode={quickMarkMode}
+          reportId={effectiveReportId}
         />
       </div>
 

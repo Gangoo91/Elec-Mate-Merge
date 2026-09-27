@@ -1,5 +1,7 @@
+import * as Sentry from '@sentry/react';
 import { supabase } from '@/integrations/supabase/client';
 import { isServerContainedInLocal } from '@/utils/reportConflict';
+import { isHouseCertificateNumber } from '@/utils/certificateNumbering';
 
 // All supported certificate types
 export type ReportType =
@@ -144,6 +146,34 @@ const reportInspectionDate = (data: Record<string, any>): string | null =>
   data.modificationDate ||    // fire alarm G7
   data.notificationDate ||    // G98 / G99
   null;
+
+/**
+ * The date a certificate says its installation is next due — as a column.
+ *
+ * ELE-1636. `reports.next_inspection_due` was null on every one of 1,262
+ * EICR/EIC rows: no write path ever set it, so every consumer (the renewals
+ * book, the expiry cron, the dashboard card) grew its own JSON fallback and
+ * the column sat there looking canonical and always empty. This derives it
+ * on every save, from whichever key each form actually stores the date in —
+ * the keys below are the ones live rows carry, not the ones the types claim.
+ *
+ * ⚠️ STRICT ISO `YYYY-MM-DD` ONLY. The column is a `date`. The form fields
+ * are text, and a value like "5 years" or "TBC" that a user could type would
+ * turn every subsequent autosave into a 400 — so anything not shaped like a
+ * date is treated as no date, and the JSON keeps whatever was typed.
+ */
+const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const reportNextInspectionDue = (data: Record<string, any>): string | null => {
+  const raw =
+    data.nextInspectionDate ||   // eicr, eic, ev-charging, smoke/CO, routine inspection
+    data.nextInspectionDue ||    // minor works, fire alarm G1/G7
+    data.nextAnnualTestDue ||    // emergency lighting
+    data.nextTestDue ||          // PAT
+    data.nextServiceDue ||       // fire alarm service, solar PV
+    null;
+  return typeof raw === 'string' && ISO_DATE.test(raw.trim()) ? raw.trim() : null;
+};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const reportInspectorName = (data: Record<string, any>): string | null =>
@@ -407,6 +437,58 @@ const calculateReportStatus = ({
     data.installationAddress ||
     data.propertyAddress;
   return hasContent ? 'in-progress' : 'draft';
+};
+
+/**
+ * Is `stored` the same certificate type as the editor that asked for it?
+ *
+ * Used by getReportData / getReportDataWithId to refuse a row belonging to a
+ * different kind of certificate. This exists because of a live incident: a
+ * routing fallback opened saved Smoke & CO alarm certificates in the EICR form,
+ * the EICR form loaded the row happily because nothing checked, and autosave
+ * then merged the EICR's own blank field set into that certificate's data. The
+ * routing is fixed, but an editor must not be the only thing standing between a
+ * stale bookmark and someone's record.
+ *
+ * Spelling differences that are known and harmless are normalised here rather
+ * than treated as a mismatch — `isolation-cert` is what the report_id prefix
+ * yields for the isolation certificate.
+ */
+const NORMALISED_TYPE = new Map<string, string>([
+  ['isolation-cert', 'isolation-certificate'],
+  ['fire-alarm-log-book', 'fire-alarm-log-books'],
+]);
+
+const sameReportType = (stored: string | null | undefined, expected: string): boolean => {
+  const norm = (t: string) => {
+    const lc = (t || '').toLowerCase();
+    return NORMALISED_TYPE.get(lc) ?? lc;
+  };
+  return norm(stored ?? '') === norm(expected);
+};
+
+/**
+ * ELE-1592 — a loaded form must carry the number its row is filed under.
+ *
+ * 203 live rows (88 of them issued) had a certificate number in the column
+ * and none in `data`: createReport minted the number, the specialist pages
+ * never adopted it, every autosave then stored the form's blank, and the PDF
+ * printed an invented `EVC-<timestamp>`. Filling the gap at load makes the
+ * form, the PDF and the certificate list agree from the next save on.
+ *
+ * Legacy raw-timestamp columns (pre-ELE-1542) are deliberately NOT copied in:
+ * they are not certificate numbers, and leaving the form blank lets the
+ * issue-time allocator give the certificate a proper one instead.
+ */
+const withFiledCertificateNumber = <T extends Record<string, unknown>>(
+  data: T | null | undefined,
+  filedUnder: string | null | undefined
+): T | null => {
+  if (!data) return null;
+  const printed = data.certificateNumber;
+  if (typeof printed === 'string' && printed.trim()) return data;
+  if (!isHouseCertificateNumber(filedUnder)) return data;
+  return { ...data, certificateNumber: filedUnder };
 };
 
 export const reportCloud = {
@@ -805,7 +887,13 @@ export const reportCloud = {
      * When omitted, one is generated as before.
      */
     presetReportId?: string
-  ): Promise<{ success: boolean; reportId?: string; error?: unknown }> => {
+  ): Promise<{
+    success: boolean;
+    reportId?: string;
+    /** The number the row was created with — the form must adopt it (ELE-1592). */
+    certificateNumber?: string;
+    error?: unknown;
+  }> => {
     try {
       /*
        * ELE-1592 — strip the queue's idempotency marker unconditionally.
@@ -887,16 +975,52 @@ export const reportCloud = {
         installation_address:
           data.installationAddress || data.propertyAddress || data.premisesAddress || null,
         inspection_date: reportInspectionDate(data),
+        next_inspection_due: reportNextInspectionDue(data),
         inspector_name: reportInspectorName(data),
         data: data,
         last_synced_at: new Date().toISOString(),
       };
 
-      const { data: newReport, error } = await supabase
-        .from('reports')
-        .insert(reportData)
-        .select('report_id')
-        .single();
+      /*
+       * ELE-1592 — a copied certificate number gets a FRESH one, never a merge.
+       *
+       * The branch this replaces "handled" a duplicate-number violation by
+       * finding the existing certificate with that number and UPDATING IT with
+       * this certificate's data. Two different jobs sharing a number — which
+       * is what actually happens (a recovered draft carrying a saved
+       * certificate's number onto the next one) — would therefore have
+       * overwritten a customer's issued certificate with another property's
+       * results the moment the unique index went live. The index was never
+       * applied, so the branch was dead; now that the index is coming, the
+       * only safe response to "that number is taken" is "take the next one".
+       *
+       * One retry. If the second number collides too something is badly wrong
+       * and the error surfaces.
+       */
+      let insertResult = await supabase.from('reports').insert(reportData).select('report_id').single();
+      if (
+        insertResult.error?.code === '23505' &&
+        insertResult.error.message.includes('uniq_reports_user_cert_active')
+      ) {
+        const { generateCertificateNumber } = await import('@/utils/certificateNumbering');
+        const freshNumber = await generateCertificateNumber(reportType);
+        console.warn('[reportCloud] Certificate number already in use — renumbering', {
+          reportType,
+          taken: certificateNumber,
+          fresh: freshNumber,
+        });
+        Sentry.captureMessage('certificate number collision renumbered', {
+          level: 'warning',
+          tags: { reportType },
+          extra: { taken: certificateNumber, fresh: freshNumber },
+        });
+        certificateNumber = freshNumber;
+        data = { ...data, certificateNumber: freshNumber };
+        reportData.certificate_number = freshNumber;
+        reportData.data = data;
+        insertResult = await supabase.from('reports').insert(reportData).select('report_id').single();
+      }
+      const { data: newReport, error } = insertResult;
 
       if (error) {
         /*
@@ -927,36 +1051,22 @@ export const reportCloud = {
             '[reportCloud] Create retry — report already exists, adopting:',
             presetReportId
           );
-          return { success: true, reportId: presetReportId };
-        }
-
-        // Handle duplicate certificate number (unique constraint violation)
-        if (error.code === '23505' && error.message.includes('uniq_reports_user_cert_active')) {
-          // Find existing report by certificate number
-          const existingReport = await reportCloud.findReportByCertificateNumber(
-            userId,
-            reportData.certificate_number
-          );
-
-          if (existingReport) {
-            // Update the existing report
-            const updateResult = await reportCloud.updateReport(
-              existingReport.report_id,
-              userId,
-              data,
-              customerId
-            );
-
-            if (updateResult.success) {
-              return { success: true, reportId: existingReport.report_id };
-            }
-          }
+          return { success: true, reportId: presetReportId, certificateNumber };
         }
 
         throw error;
       }
 
-      return { success: true, reportId: newReport.report_id };
+      /*
+       * ELE-1592 — hand the allocated number back. When the form's own
+       * allocator has not landed before the first autosave, THIS is where the
+       * certificate's number is minted, into a local copy of `data` that React
+       * state never sees. The form's allocator then fires (it keys off the new
+       * report id), finds state still blank, and allocates AGAIN — so the row
+       * carried N in the column while the PDF printed N+1. 222 live rows show
+       * exactly that offset. The caller adopts this number into state.
+       */
+      return { success: true, reportId: newReport.report_id, certificateNumber };
     } catch (error) {
       console.error('[reportCloud] Failed to create report:', error);
       return { success: false, error };
@@ -972,8 +1082,18 @@ export const reportCloud = {
     userId: string,
     data: Record<string, unknown>,
     customerId?: string,
-    isAutoSync: boolean = false
-  ): Promise<{ success: boolean; error?: unknown }> => {
+    isAutoSync: boolean = false,
+    /**
+     * The certificate type of the EDITOR making this write. See the cross-type
+     * write guard below. Optional — callers that omit it write as before.
+     */
+    callerReportType?: string
+  ): Promise<{
+    success: boolean;
+    error?: unknown;
+    /** Set when the write was refused because the editor is the wrong type. */
+    typeMismatch?: { stored: string; caller: string };
+  }> => {
     try {
       const reportType = reportTypeFromId(reportId);
 
@@ -983,11 +1103,58 @@ export const reportCloud = {
       // report_edit_log trigger attributes the change (Team Certificates).
       const { data: currentReport } = await supabase
         .from('reports')
-        .select('status')
+        .select('status, report_type')
         .eq('report_id', reportId)
         .single();
 
       const currentStatus = currentReport?.status;
+
+      /*
+       * 🔴 CROSS-TYPE WRITE GUARD — the last line before someone's record.
+       *
+       * A routing fallback in InspectionIndex opened saved specialist
+       * certificates in the EICR form, pointed at their own row. The EICR form
+       * loaded the row happily, and THIS function then merged the EICR's blank
+       * field set into a finished Smoke & CO alarm certificate. Ten rows across
+       * six users were written that way before it was found, because nothing
+       * anywhere asked whether the editor doing the writing was the same kind of
+       * certificate as the row being written.
+       *
+       * The routing is fixed and the read path refuses a foreign row, but both
+       * of those are upstream and can be bypassed by a stale bookmark. This is
+       * the choke point every autosave passes through, so the check belongs
+       * here, where it cannot be routed around.
+       *
+       * It also closes the mirror hazard the read-side refusal creates: a form
+       * that was refused its data sits blank holding that report id, and its
+       * first autosave would write the blank over the row. That write is itself
+       * cross-type, so it lands here and is refused too.
+       *
+       * ⚠️ Refuses, never "corrects". Rewriting `report_type` to match the
+       * editor would turn a smoke certificate into an EICR in the list, on the
+       * renewals book and in the expiry reminders. Nothing legitimately changes
+       * a report's type through this path — amendments and duplicates INSERT a
+       * new row rather than retyping an old one.
+       */
+      if (
+        callerReportType &&
+        currentReport?.report_type &&
+        !sameReportType(currentReport.report_type, callerReportType)
+      ) {
+        console.error('[reportCloud] BLOCKED cross-type write', {
+          reportId,
+          stored: currentReport.report_type,
+          caller: callerReportType,
+        });
+        Sentry.captureMessage('report cross-type write blocked', {
+          level: 'error',
+          extra: { reportId, stored: currentReport.report_type, caller: callerReportType },
+        });
+        return {
+          success: false,
+          typeMismatch: { stored: currentReport.report_type, caller: callerReportType },
+        };
+      }
 
       // Calculate status - same logic as createReport
       const status = calculateReportStatus({ data, reportType, isAutoSync, currentStatus });
@@ -1006,6 +1173,7 @@ export const reportCloud = {
         installation_address:
           data.installationAddress || data.propertyAddress || data.premisesAddress || null,
         inspection_date: reportInspectionDate(data),
+        next_inspection_due: reportNextInspectionDue(data),
         inspector_name: reportInspectorName(data),
         /*
          * `certificate_number` is a denormalised copy of `data.certificateNumber`,
@@ -1105,18 +1273,35 @@ export const reportCloud = {
    */
   getReportData: async (
     reportId: string,
-    userId: string
+    userId: string,
+    /** Refuse the row if it is not this type. See `sameReportType`. */
+    expectedType?: string
   ): Promise<Record<string, unknown> | null> => {
     try {
       const { data: report, error } = await supabase
         .from('reports')
-        .select('data')
+        .select('data, report_type, certificate_number')
         .eq('report_id', reportId) // no user filter — RLS grants owner + team QS (Team Certificates)
         .is('deleted_at', null)
         .maybeSingle();
 
       if (error) throw error;
-      return report?.data || null;
+      /* `report.report_type` must be KNOWN before it can disagree. No live row
+         has a null or blank type, but refusing on one would turn a data oddity
+         into a blank form — the exact failure this guard exists to prevent. The
+         write guard already tests it this way; keep the two identical. */
+      if (report?.report_type && expectedType && !sameReportType(report.report_type, expectedType)) {
+        console.error('[reportCloud] Refused cross-type load', {
+          reportId,
+          stored: report.report_type,
+          expected: expectedType,
+        });
+        return null;
+      }
+      return withFiledCertificateNumber(
+        (report?.data as Record<string, unknown> | null) ?? null,
+        report?.certificate_number
+      );
     } catch (error) {
       console.error('[reportCloud] Failed to fetch report data:', error);
       return null;
@@ -1129,7 +1314,9 @@ export const reportCloud = {
    */
   getReportDataWithId: async (
     reportId: string,
-    userId: string
+    userId: string,
+    /** Refuse the row if it is not this type. See `sameReportType`. */
+    expectedType?: string
   ): Promise<{
     data: Record<string, unknown>;
     databaseId: string;
@@ -1141,16 +1328,29 @@ export const reportCloud = {
       // (Team Certificates: the QS opens the member's cert in the editor).
       const { data: report, error } = await supabase
         .from('reports')
-        .select('id, data, updated_at, last_synced_at')
+        .select('id, data, updated_at, last_synced_at, report_type, certificate_number')
         .eq('report_id', reportId)
         .is('deleted_at', null)
         .maybeSingle();
 
       if (error) throw error;
       if (!report) return null;
+      /* Known type only — see the note in getReportData. */
+      if (report.report_type && expectedType && !sameReportType(report.report_type, expectedType)) {
+        console.error('[reportCloud] Refused cross-type load', {
+          reportId,
+          stored: report.report_type,
+          expected: expectedType,
+        });
+        return null;
+      }
 
       return {
-        data: report.data || {},
+        data:
+          withFiledCertificateNumber(
+            (report.data as Record<string, unknown> | null) ?? null,
+            report.certificate_number
+          ) || {},
         databaseId: report.id,
         updatedAt: report.updated_at,
         lastSyncedAt: report.last_synced_at,
@@ -1256,7 +1456,11 @@ export const reportCloud = {
         .single();
 
       if (error) throw error;
-      return data as CloudReport;
+      const row = data as CloudReport;
+      return {
+        ...row,
+        data: withFiledCertificateNumber(row.data as Record<string, unknown> | null, row.certificate_number) || row.data,
+      } as CloudReport;
     } catch (error) {
       console.error('[reportCloud] Failed to fetch report:', error);
       return null;
@@ -1411,10 +1615,22 @@ export const reportCloud = {
     data: Record<string, unknown>,
     expectedVersion: number,
     customerId?: string,
-    isAutoSync: boolean = false
+    isAutoSync: boolean = false,
+    /**
+     * The certificate type of the EDITOR making this write.
+     *
+     * Not derivable here: `reportTypeFromId` reads the report_id prefix, which
+     * in the incident below said "smoke-co-alarm" for both the row AND the id —
+     * it was the FORM that was the wrong kind. Only the caller knows which
+     * editor it is. Optional so existing callers are unaffected; when given, a
+     * mismatch against the stored type refuses the write.
+     */
+    callerReportType?: string
   ): Promise<{
     success: boolean;
     conflict?: VersionConflict;
+    /** Set when the write was refused because the editor is the wrong type. */
+    typeMismatch?: { stored: string; caller: string };
     error?: unknown;
     /** The server's edit_version after this write — adopt it, don't guess it. */
     version?: number;
@@ -1453,11 +1669,37 @@ export const reportCloud = {
       // report_edit_log trigger attributes the change (Team Certificates).
       const { data: currentReport } = await supabase
         .from('reports')
-        .select('status')
+        .select('status, report_type')
         .eq('report_id', reportId)
         .single();
 
       const currentStatus = currentReport?.status;
+
+      /*
+       * 🔴 CROSS-TYPE WRITE GUARD — see the full note on `updateReport`.
+       *
+       * This is the path EVERY autosave writes through, so it matters more than
+       * the one on updateReport. Refuses, never re-types the row.
+       */
+      if (
+        callerReportType &&
+        currentReport?.report_type &&
+        !sameReportType(currentReport.report_type, callerReportType)
+      ) {
+        console.error('[reportCloud] BLOCKED cross-type write (autosave path)', {
+          reportId,
+          stored: currentReport.report_type,
+          caller: callerReportType,
+        });
+        Sentry.captureMessage('report cross-type write blocked', {
+          level: 'error',
+          extra: { reportId, stored: currentReport.report_type, caller: callerReportType },
+        });
+        return {
+          success: false,
+          typeMismatch: { stored: currentReport.report_type, caller: callerReportType },
+        };
+      }
 
       // Calculate status - keep auto-draft if auto-sync and currently auto-draft
       // Single source of truth — see calculateReportStatus at the top of this file.
@@ -1472,6 +1714,7 @@ export const reportCloud = {
         installation_address:
           data.installationAddress || data.propertyAddress || data.premisesAddress || null,
         inspection_date: reportInspectionDate(data),
+        next_inspection_due: reportNextInspectionDue(data),
         inspector_name: reportInspectorName(data),
         // Mirror the number the certificate prints — see the note in updateReport.
         // This is the path every autosave writes, so it is the one that matters.

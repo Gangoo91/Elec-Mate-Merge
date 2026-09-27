@@ -157,6 +157,82 @@ serve(async (req) => {
       }
     }
 
+    // ── Churn record, same definition as the Stripe side ─────────────────
+    // Written on EXPIRATION only. On the stores, CANCELLATION means auto-renew
+    // was switched off and access continues to the end of the paid period —
+    // nothing has been lost yet, and an UNCANCELLATION can still follow.
+    // EXPIRATION is the moment the subscription actually ends, so that is churn.
+    //
+    // `ever_paid` is the same test as Stripe's: did real money ever land. Here
+    // that is `period_type` — NORMAL or INTRO means a paid period expired, TRIAL
+    // means a trial lapsed and they never paid us a penny. Store leavers were a
+    // 40% blind spot in churn reporting: 149 store subscriptions ended between
+    // 26 May and 27 Sep 2026 and exactly 2 of those people ever gave a reason.
+    if (type === 'EXPIRATION') {
+      try {
+        const rcStore = String(store ?? '').toUpperCase();
+        const normalisedSource =
+          rcStore === 'APP_STORE' ? 'app_store' : rcStore === 'PLAY_STORE' ? 'play_store' : 'store';
+
+        // RevenueCat puts the reason on `expiration_reason` for this event and
+        // on `cancel_reason` for CANCELLATION. Accept either.
+        const rawReason = String(
+          (event as { expiration_reason?: string; cancel_reason?: string }).expiration_reason ??
+            cancel_reason ??
+            ''
+        ).toUpperCase();
+        // BILLING_ERROR is a card that failed — nobody chose that, exactly like
+        // Stripe's payment_failed. Anything we cannot place stays null rather
+        // than being guessed at.
+        const voluntary =
+          rawReason === 'BILLING_ERROR'
+            ? false
+            : rawReason === 'UNSUBSCRIBE' || rawReason === 'PRICE_INCREASE'
+              ? true
+              : null;
+
+        const pt = String(period_type ?? '').toUpperCase();
+        const everPaid = pt === 'NORMAL' || pt === 'INTRO' ? true : pt === 'TRIAL' ? false : null;
+
+        const endedAt = expiration_at_ms
+          ? new Date(Number(expiration_at_ms)).toISOString()
+          : new Date().toISOString();
+
+        const amount =
+          typeof price_in_purchased_currency === 'number'
+            ? Math.round(price_in_purchased_currency * 100)
+            : null;
+
+        const { error: cancErr } = await supabase.from('subscription_cancellations').insert({
+          user_id: app_user_id,
+          source: normalisedSource,
+          // The store transaction id — unique per billing transaction, so a
+          // customer who churns, resubscribes and churns again produces two
+          // rows rather than colliding on one.
+          subscription_id: transaction_id ?? null,
+          event_id: (event as { id?: string }).id ?? null,
+          store: rcStore || null,
+          product_id: product_id ?? null,
+          stripe_reason: rawReason || null,
+          voluntary,
+          ever_paid: everPaid,
+          died_in_trial: pt === 'TRIAL',
+          amount_pence: amount,
+          currency: currency ?? null,
+          canceled_at: endedAt,
+          period_end: endedAt,
+          detail: { revenuecat: { type, period_type, reason: rawReason || null, store: rcStore } },
+        });
+        // 23505 = the unique on subscription_id. RevenueCat retries webhooks, so
+        // a repeat delivery landing here is correct behaviour.
+        if (cancErr && (cancErr as { code?: string }).code !== '23505') {
+          console.warn('subscription_cancellations insert failed (non-blocking):', cancErr.message);
+        }
+      } catch (cancEx) {
+        console.warn('subscription_cancellations threw (non-blocking):', cancEx);
+      }
+    }
+
     // Determine subscription state based on event type
     // See: https://www.revenuecat.com/docs/integrations/webhooks/event-types-and-fields
     const activeEvents = ['INITIAL_PURCHASE', 'RENEWAL', 'PRODUCT_CHANGE', 'UNCANCELLATION'];

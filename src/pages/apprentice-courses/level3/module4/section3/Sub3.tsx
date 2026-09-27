@@ -304,8 +304,8 @@ export default function Sub3() {
           meaning={
             <>
               Three requirements: durable continuity (low resistance over time), mechanical strength
-              (doesn't loosen), protection (doesn\'t expose live parts). The L3 fault
-              diagnostician\'s most-often-cited regulation — every HRJ is a 526.1 failure on at
+              (doesn't loosen), protection (doesn’t expose live parts). The L3 fault
+              diagnostician’s most-often-cited regulation — every HRJ is a 526.1 failure on at
               least one of the three legs.
             </>
           }
@@ -488,7 +488,7 @@ export default function Sub3() {
             <>
               Apprentice finds a melted socket. Replaces socket. Retests, all fine, leaves. Three
               months later same socket melts again. Real fault: the upstream cable has an HRJ inside
-              the wall (where it joins a previous extension) that\'s progressively damaging the
+              the wall (where it joins a previous extension) that’s progressively damaging the
               downstream socket terminal. The accessory was the symptom; the cable joint was the
               cause. Replacing accessories without finding the upstream fault creates a repeating
               call-out cycle.
@@ -496,7 +496,7 @@ export default function Sub3() {
           }
           doInstead={
             <>
-              For any termination-failure fault, ask \'why?' before replacing. Inspect the upstream
+              For any termination-failure fault, ask ‘why?' before replacing. Inspect the upstream
               cable end for signs of heat damage. If the conductor is discoloured, the heat is
               coming from upstream. Trace back along the circuit (sequential continuity / IR /
               thermal) until you find the source of the heat.
@@ -539,9 +539,9 @@ export default function Sub3() {
           whatToDo={
             <>
               Knowing SWA fault locations cluster at glands: (1) Visual inspection of both glands
-              (house end and garage end). At the garage end, find the gland\'s earth-tag is loose —
+              (house end and garage end). At the garage end, find the gland’s earth-tag is loose —
               corrosion between the brass gland body and the steel adapter back-box has reduced the
-              armour-earth path. (2) Test continuity from the SWA armour to the garage CU\'s CPC bar
+              armour-earth path. (2) Test continuity from the SWA armour to the garage CU’s CPC bar
               — reads 8 Ω instead of expected near zero. (3) Diagnose: bad earth-tag at gland; the
               armour is providing intermittent CPC return; on certain fault conditions the path
               opens entirely and the RCD trips on residual current that has no return path. (4)
@@ -552,11 +552,11 @@ export default function Sub3() {
           }
           whyItMatters={
             <>
-              Two previous firms replaced the wrong component because they didn\'t recognise the SWA
-              gland as the most likely fault location. The brand and category knowledge (\'SWA
+              Two previous firms replaced the wrong component because they didn’t recognise the SWA
+              gland as the most likely fault location. The brand and category knowledge (‘SWA
               glands fail at the earth-tag') would have led to the right diagnosis on visit one.
               Building this kind of pattern recognition is what separates the L3 apprentice's
-              diagnostic speed from a beginner\'s hit-and-miss approach.
+              diagnostic speed from a beginner’s hit-and-miss approach.
             </>
           }
         />

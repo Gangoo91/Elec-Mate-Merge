@@ -321,3 +321,26 @@ jobs:
       - name: Key integrity
         run: npm run check:key-integrity
         continue-on-error: true
+
+      # ── Inspection & Testing guards (27 Sep 2026) ────────────────────────
+      # Each one encodes a defect that reached users this month, and each was
+      # mutation-tested when written: break the rule it protects and it fails.
+      # tsc and eslint are clean on every one of those faults.
+      - name: Certificate routing (a cert opened in the wrong form — ELE-1600 incident)
+        run: npm run check:certificate-routing
+      - name: Report sync guards (blank remount overwrote a saved certificate)
+        run: npm run check:report-sync-guards
+      - name: Blank-overwrite parity (client guard and DB trigger agree key for key)
+        run: npm run check:blank-overwrite-parity
+      - name: Certificate number integrity (no copied, invented or double-allocated numbers — ELE-1592)
+        run: npm run check:certificate-number-integrity
+      - name: Sync queue identity (one queued create per certificate — ELE-1600)
+        run: npm run check:sync-queue-identity
+      - name: Hook duplicates (no forked copies across src/hooks — ELE-1601)
+        run: npm run check:hook-duplicates
+      - name: Part P gate (never printed for a known non-dwelling — ELE-1662/1663)
+        run: npm run check:part-p
+      - name: Team linking (roster claim runs at sign-in)
+        run: npm run check:team-linking
+      - name: Three-phase sibling fill (ELE-1770)
+        run: npm run check:three-phase

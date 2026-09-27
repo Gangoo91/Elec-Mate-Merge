@@ -9,6 +9,7 @@ import { useCustomerProperties } from '@/hooks/inspection/useCustomerProperties'
 import { useSparkProjects } from '@/hooks/useSparkProjects';
 import { Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { certificateNewHref } from '@/utils/certificate-href';
 
 interface StartCertificateDialogProps {
   open: boolean;
@@ -284,26 +285,22 @@ export const StartCertificateDialog = ({
       return;
     }
 
-    if (isStandalone) {
-      navigate(`/electrician/inspection-testing/${selectedType}/new`, {
-        state: {
-          customerId: customer.id,
-          customerData: customer,
-          propertyId: selectedPropertyId || undefined,
-          address,
-        },
-      });
-    } else {
-      navigate(`/electrician/inspection-testing?section=${selectedType}`, {
-        state: {
-          section: selectedType,
-          customerId: customer.id,
-          customerData: customer,
-          propertyId: selectedPropertyId || undefined,
-          address,
-        },
-      });
-    }
+    /*
+     * `STANDALONE_CERT_TYPES` happens to name exactly the path-routed members of
+     * `ActionType` today, so this was correct — but only by coincidence of two
+     * lists agreeing, and it would break silently the first time a type is added
+     * to ActionType and not to that list. `certificateNewHref` also knows that
+     * some types start at their bare path rather than `/new`.
+     */
+    navigate(certificateNewHref(selectedType), {
+      state: {
+        ...(isStandalone ? {} : { section: selectedType }),
+        customerId: customer.id,
+        customerData: customer,
+        propertyId: selectedPropertyId || undefined,
+        address,
+      },
+    });
     onOpenChange(false);
   };
 

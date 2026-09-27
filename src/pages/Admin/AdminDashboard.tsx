@@ -124,7 +124,10 @@ interface StripeStats {
     canceledLast30Days: number;
     tierCounts: Record<string, number>;
     trialingTierCounts: Record<string, number>;
+    /** List price, before coupons. Kept for the "given away" comparison only. */
     mrr: number;
+    /** What the same subscribers are actually billed, after their coupons. */
+    mrrNetOfDiscounts: number;
     projectedMrr: number;
   };
   /** Cached trial + churn analysis; null until the invoice walk has run once. */
@@ -530,7 +533,23 @@ export default function AdminDashboard() {
 
   /* ── derived: money ─────────────────────────────────── */
 
-  const stripeMrr = stripeStats?.stripe.mrr || 0;
+  /*
+    MRR is what is actually billed, not list price.
+
+    `stripe.mrr` sums list price and ignores coupons entirely, so the headline
+    read £143.51/mo above what the same subscribers are charged — 33 of them
+    are on a win-back, college or employer offer, and 25 of those are "forever"
+    coupons that never lapse. Quoting list price as MRR overstates the money
+    coming in by the exact size of the offers we chose to run.
+
+    `stripe.mrrNetOfDiscounts` is the same subscribers after their coupons.
+    Neither figure deducts tax: Stripe invoices carry none (tax = 0 on every
+    one), and the store rail is counted at what the customer pays, before
+    Apple's and Google's commission.
+  */
+  const stripeMrrList = stripeStats?.stripe.mrr || 0;
+  const stripeMrr = stripeStats?.stripe.mrrNetOfDiscounts ?? stripeMrrList;
+  const discountGiven = Math.max(0, stripeMrrList - stripeMrr);
   const rcLoaded = !!rcStats;
   const rcMrr = rcStats?.revenuecat?.mrr || 0;
   const mrr = stripeMrr + rcMrr;
@@ -567,7 +586,15 @@ export default function AdminDashboard() {
     let lastRc: number | null = null;
     const pts: MrrPoint[] = [];
     for (const r of rows) {
-      if (r.stripe_mrr != null) lastStripe = Number(r.stripe_mrr);
+      /*
+        Billed, not list price — the same basis as the figure above the chart,
+        so the line ends where the headline says it does. `stripe_mrr_net` is
+        backfilled to 17 May 2026, the first day any coupon was in force;
+        before that the two are identical, so falling back to `stripe_mrr`
+        loses nothing rather than drawing a step that never happened.
+      */
+      const billed = r.stripe_mrr_net ?? r.stripe_mrr;
+      if (billed != null) lastStripe = Number(billed);
       if (r.rc_mrr != null) lastRc = Number(r.rc_mrr);
       // Stripe is where the business starts; nothing before its first reading.
       if (lastStripe == null) continue;
@@ -1503,6 +1530,20 @@ export default function AdminDashboard() {
                       )}
                     </span>
                   </div>
+                  {/*
+                    The offers, stated rather than netted away silently.
+
+                    MRR above is what is actually billed, so every live coupon
+                    has already been taken off it. Without this line the money
+                    simply is not there and nothing on the page says why.
+                  */}
+                  {discountGiven > 0 && (
+                    <div className="mt-2 text-[12px] text-white">
+                      After <b className="font-semibold tabular-nums">{gbp(discountGiven)}</b> a
+                      month of live offers — list price would be{' '}
+                      <span className="tabular-nums">{gbp(stripeMrrList + rcMrr)}</span>
+                    </div>
+                  )}
                 </div>
 
                 {plans.length > 0 && (

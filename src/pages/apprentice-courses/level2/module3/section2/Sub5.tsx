@@ -90,7 +90,7 @@ const quizQuestions = [
   {
     id: 1,
     question:
-      'You have been handed a drawing pack labelled "Rev C" and another print of the same drawing labelled "Rev D" sat on the foreman\'s desk. Which one do you work from?',
+      'You have been handed a drawing pack labelled "Rev C" and another print of the same drawing labelled "Rev D" sat on the foreman’s desk. Which one do you work from?',
     options: [
       'Rev C — older drawings have been checked more',
       'Rev D — the higher revision letter is the most recent issue',

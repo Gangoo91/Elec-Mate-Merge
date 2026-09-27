@@ -10,6 +10,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
+import { reportCloud } from '@/utils/reportCloud';
+import { generateCertificateNumber } from '@/utils/certificateNumbering';
+import { useCreateReportKey } from '@/hooks/useCreateReportKey';
 import { toast } from 'sonner';
 import { SolarPVFormData, UK_DNOS, SUPPLY_FUSE_RATINGS } from '@/types/solar-pv';
 import { useSolarPVSmartForm } from '@/hooks/inspection/useSolarPVSmartForm';
@@ -441,6 +444,7 @@ function G98G99CertActions({
   onReferenceLinked: (ref: string) => void;
 }) {
   const [isCreating, setIsCreating] = useState(false);
+  const createKey = useCreateReportKey('grid-connection');
   const [createdRef, setCreatedRef] = useState<string | null>(null);
   const [isLinking, setIsLinking] = useState(false);
   const [existingCerts, setExistingCerts] = useState<any[]>([]);
@@ -474,7 +478,9 @@ function G98G99CertActions({
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      const refNumber = `${certLabel}-${Date.now().toString(36).toUpperCase()}`;
+      // ELE-1592 — the reference is the number the certificate is filed under, from the
+      // account's counter, never a random stamp; ELE-1603 — keyed so a retry adopts.
+      const refNumber = await generateCertificateNumber(certType);
       const inverter = formData.inverters?.[0];
 
       // Map Solar PV data → G98/G99 fields
@@ -509,17 +515,15 @@ function G98G99CertActions({
         notes: `Auto-created from Solar PV certificate. System: ${formData.totalCapacity?.toFixed(1) || '?'}kWp.`,
       };
 
-      const reportId = crypto.randomUUID();
-      const { error } = await supabase.from('reports').insert({
-        report_id: reportId,
-        user_id: user.id,
-        report_type: certType,
-        certificate_number: refNumber,
-        data: certData,
-        status: 'draft',
-      });
-
-      if (error) throw error;
+      const created = await reportCloud.createReport(
+        user.id,
+        certType,
+        { ...certData, certificateNumber: refNumber },
+        undefined,
+        false,
+        createKey.take(certType)
+      );
+      if (!created.success) throw created.error ?? new Error('create failed');
 
       setCreatedRef(refNumber);
       onReferenceLinked(refNumber);

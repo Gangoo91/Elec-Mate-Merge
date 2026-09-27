@@ -20,6 +20,7 @@ import { formatLimitationNoticePayload } from '@/utils/limitation-notice-formatt
 import { pageInputCn as inputCn, pageTextareaCn as textareaCn } from '@/components/forms/pageStyles';
 
 import { PageHeader } from '@/components/forms/PageHeader';
+import { useCreateReportKey } from '@/hooks/useCreateReportKey';
 
 const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.04 } } };
 const itemVariants = { hidden: { opacity: 0, y: 8 }, visible: { opacity: 1, y: 0, transition: { duration: 0.25 } } };
@@ -89,7 +90,7 @@ const newLimitation = (): LimitationEntry => ({
 });
 
 const defaultData = (): LimitationData => ({
-  referenceNumber: `LIM-${Date.now().toString(36).toUpperCase()}`,
+  referenceNumber: '', // filled from the number the row is filed under on first save (ELE-1592)
   date: new Date().toISOString().split('T')[0],
   linkedReportRef: '', linkedReportType: 'eicr',
   contractorName: '', contractorCompany: '', contractorPhone: '', contractorEmail: '',
@@ -201,6 +202,7 @@ export default function LimitationNoticePage() {
   const { id: editId } = useParams<{ id: string }>();
   const [isSaving, setIsSaving] = useState(false);
   const [existingReportId, setExistingReportId] = useState<string | null>(null);
+  const createKey = useCreateReportKey('limitation-notice'); // ELE-1603 — a retry adopts, never duplicates
   const [showReasonPicker, setShowReasonPicker] = useState<string | null>(null);
   const photoInputRef = useRef<HTMLInputElement>(null);
 
@@ -213,7 +215,7 @@ export default function LimitationNoticePage() {
     if (!editId) return;
     supabase.auth.getUser().then(async ({ data: { user } }) => {
       if (!user) return;
-      const result = await reportCloud.getReportData(editId, user.id);
+      const result = await reportCloud.getReportData(editId, user.id, 'limitation-notice');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       if (result) { setData((prev) => ({ ...prev, ...(result as any) })); setExistingReportId(editId); }
     });
@@ -294,19 +296,35 @@ export default function LimitationNoticePage() {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { toast.error('Please sign in'); setIsSaving(false); return; }
+      // The reference the certificate prints IS the number it is filed under (ELE-1592);
+      // createReport allocates it, and the electrician can still overtype it later.
+      let referenceNumber = data.referenceNumber;
+      // The id the create returns — state set above is not visible in this closure (ELE-1603).
+      let createdReportId: string | null = null;
       if (existingReportId) {
+        // A refused write (wrong certificate type, RLS, network) used to fall through
+        // to "Saved". Check it the way the create path below already does.
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        await reportCloud.updateReport(existingReportId, user.id, data as any);
+        const updated = await reportCloud.updateReport(existingReportId, user.id, data as any, undefined, false, 'limitation-notice');
+        if (!updated.success) { toast.error('Failed to save'); setIsSaving(false); return; }
       } else {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const result = await reportCloud.createReport(user.id, 'limitation-notice' as any, data as any);
+        const result = await reportCloud.createReport(user.id, 'limitation-notice' as any, data as any, undefined, false, createKey.take());
         if (!result.success) { toast.error('Failed to save'); setIsSaving(false); return; }
+        if (!referenceNumber && result.certificateNumber) {
+          referenceNumber = result.certificateNumber;
+          update('referenceNumber', referenceNumber);
+        }
+        if (result.reportId) {
+          createdReportId = result.reportId;
+          setExistingReportId(result.reportId);
+        }
       }
       // Generate PDF
       toast.success('Saved — generating PDF...');
-      const savedReportId = existingReportId || data.referenceNumber;
+      const savedReportId = existingReportId || createdReportId || referenceNumber;
       try {
-        const payload = formatLimitationNoticePayload(data);
+        const payload = formatLimitationNoticePayload({ ...data, referenceNumber });
         const { data: pdfResult, error: pdfError } = await supabase.functions.invoke('generate-limitation-notice-pdf', { body: { formData: payload } });
         if (pdfError) {
           console.error('PDF error:', pdfError);
@@ -315,12 +333,12 @@ export default function LimitationNoticePage() {
           let permanentPdfUrl = pdfResult.download_url;
           try {
             const { saveCertificatePdf } = await import('@/utils/certificate-pdf-storage');
-            const { permanentUrl, storagePath } = await saveCertificatePdf(pdfResult.download_url, (await supabase.auth.getUser()).data.user!.id, savedReportId, data.referenceNumber);
+            const { permanentUrl, storagePath } = await saveCertificatePdf(pdfResult.download_url, (await supabase.auth.getUser()).data.user!.id, savedReportId, referenceNumber);
             permanentPdfUrl = permanentUrl;
             await supabase.from('reports').update({ storage_path: storagePath, pdf_url: permanentPdfUrl, pdf_generated_at: new Date().toISOString() }).eq('report_id', savedReportId);
           } catch (e) { console.warn('Storage failed:', e); }
           const { openOrDownloadPdf } = await import('@/utils/pdf-download');
-          await openOrDownloadPdf(permanentPdfUrl, `Limitation-Notice-${data.referenceNumber}.pdf`);
+          await openOrDownloadPdf(permanentPdfUrl, `Limitation-Notice-${referenceNumber}.pdf`);
           toast.success('Limitation notice issued');
         }
       } catch (e) { console.error('PDF error:', e); toast.error('Saved but PDF failed'); }
@@ -345,7 +363,7 @@ export default function LimitationNoticePage() {
 
         {/* Reference */}
         <Section title="Reference">
-          <Field label="Record No."><Input value={data.referenceNumber} onChange={(e) => update('referenceNumber', e.target.value)} className={inputCn} /></Field>
+          <Field label="Record No."><Input value={data.referenceNumber} placeholder="Allocated on first save" onChange={(e) => update('referenceNumber', e.target.value)} className={inputCn} /></Field>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Field label="Date"><Input type="date" value={data.date} onChange={(e) => update('date', e.target.value)} className={inputCn} /></Field>
             <Field label="Linked Report Ref"><Input value={data.linkedReportRef} onChange={(e) => update('linkedReportRef', e.target.value)} className={inputCn} placeholder="e.g. EICR-2026-001" /></Field>

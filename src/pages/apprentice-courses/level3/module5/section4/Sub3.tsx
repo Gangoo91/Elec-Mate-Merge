@@ -161,7 +161,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'Each RCBO is its own RCD. Verification requires testing each individually. The schedule has a row per circuit; the RCD test result goes in the appropriate column. Skipping circuits because "the others passed" is a verification gap. Most modern MFTs auto-pair with certification software (Megger CertSuite, Fluke FlukeView, Kewtech KEWPRO) and prompt for each circuit\'s test in turn.',
+      'Each RCBO is its own RCD. Verification requires testing each individually. The schedule has a row per circuit; the RCD test result goes in the appropriate column. Skipping circuits because "the others passed" is a verification gap. Most modern MFTs auto-pair with certification software (Megger CertSuite, Fluke FlukeView, Kewtech KEWPRO) and prompt for each circuit’s test in turn.',
   },
   {
     id: 7,
@@ -188,7 +188,7 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      'The test button is the customer\'s tool for ongoing assurance. The handover documentation under Reg 132.13 should include the test method ("press T quarterly, breaker should trip; reset by switching back on") and a note to call an electrician if the RCD fails to trip. The instrument test at EICR intervals is the inspector\'s verification — different role, different tool. Both are needed for full lifecycle assurance.',
+      'The test button is the customer’s tool for ongoing assurance. The handover documentation under Reg 132.13 should include the test method ("press T quarterly, breaker should trip; reset by switching back on") and a note to call an electrician if the RCD fails to trip. The instrument test at EICR intervals is the inspector’s verification — different role, different tool. Both are needed for full lifecycle assurance.',
   },
 ];
 
@@ -207,7 +207,7 @@ const faqs = [
   {
     question: 'How do I test a time-delayed (S) RCD?',
     answer:
-      'Same single AC test at 1 x I delta n, but the trip time will be longer because the device is intentionally delayed. Typical S-type at 1 x I delta n trips in 130-500 ms (within the device\'s rated delay). Table 41.1 / 41.5 give the system-level requirements for time-delayed devices. The MFT may have a separate "S" test mode that adjusts the timing window — check the manual. The principle is the same as standard RCD test, just with longer permitted trip time.',
+      'Same single AC test at 1 x I delta n, but the trip time will be longer because the device is intentionally delayed. Typical S-type at 1 x I delta n trips in 130-500 ms (within the device’s rated delay). Table 41.1 / 41.5 give the system-level requirements for time-delayed devices. The MFT may have a separate "S" test mode that adjusts the timing window — check the manual. The principle is the same as standard RCD test, just with longer permitted trip time.',
   },
   {
     question: 'What about Type B RCDs — different test method?',
@@ -272,9 +272,9 @@ export default function Sub3() {
         <ContentEyebrow>The A4:2026 simplification — what changed</ContentEyebrow>
 
         <ConceptBlock
-          title="Single AC test at 1 x I delta n — and that\'s it"
+          title="Single AC test at 1 x I delta n — and that’s it"
           plainEnglish="A4:2026 simplified the in-service RCD test from a three-test sequence (1/2, 1, 5 x I delta n) to a single AC test at 1 x I delta n. The trip time recorded against Table 41.1 system limits and the device product spec (typically 300 ms for general-purpose 30 mA RCD) is the verification. The older multi-test sequence is deleted from BS 7671 — including the 5 x I delta n test, which no longer exists in the standard."
-          onSite="Be alert to the change. Older textbooks, training materials and instrument menus still reference the multi-test sequence. Switch your MFT to single-test mode. Document the result against Table 41.1 and the product spec — that\'s the A4:2026-aligned verification."
+          onSite="Be alert to the change. Older textbooks, training materials and instrument menus still reference the multi-test sequence. Switch your MFT to single-test mode. Document the result against Table 41.1 and the product spec — that’s the A4:2026-aligned verification."
         >
           <p>The simplification in detail:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -299,7 +299,7 @@ export default function Sub3() {
             </li>
             <li>
               <strong>What still applies:</strong> Trip time at 1 x I delta n must be within Table
-              41.1 system limit (TN final 0.4 s, TT final 0.2 s) AND the device manufacturer\'s
+              41.1 system limit (TN final 0.4 s, TT final 0.2 s) AND the device manufacturer’s
               declared limit (typically 300 ms for general-purpose 30 mA RCD).
             </li>
           </ul>
@@ -408,7 +408,7 @@ NOTE: Regardless of RCD Type, effectiveness is deemed to have been verified wher
 
         <ConceptBlock
           title="The system-level disconnection time requirements"
-          plainEnglish="Table 41.1 specifies the maximum disconnection times that the protective device (overcurrent or RCD) must achieve under fault conditions. The values depend on the supply system (TN or TT), the circuit type (final or distribution), and the system voltage. For a 230 V final circuit up to 32 A: TN = 0.4 s, TT = 0.2 s. The RCD\'s actual trip time at 1 x I delta n (typically under 100 ms for a healthy device) easily satisfies these limits."
+          plainEnglish="Table 41.1 specifies the maximum disconnection times that the protective device (overcurrent or RCD) must achieve under fault conditions. The values depend on the supply system (TN or TT), the circuit type (final or distribution), and the system voltage. For a 230 V final circuit up to 32 A: TN = 0.4 s, TT = 0.2 s. The RCD’s actual trip time at 1 x I delta n (typically under 100 ms for a healthy device) easily satisfies these limits."
           onSite="Table 41.1 is the system-level requirement; the device product spec (300 ms typical for general-purpose 30 mA RCD per BS EN 61008) is the device-level performance. Both should be satisfied for a compliant installation. The verification compares measured trip time against both, with the tighter limit being the binding constraint."
         >
           <p>Table 41.1 max disconnection times (key values):</p>
@@ -456,7 +456,7 @@ NOTE: Regardless of RCD Type, effectiveness is deemed to have been verified wher
           <p>The Ra x I delta n test in detail:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
-              <strong>Measure Ra.</strong> The earth electrode resistance, measured with the MFT\'s
+              <strong>Measure Ra.</strong> The earth electrode resistance, measured with the MFT’s
               earth electrode resistance test mode (3-terminal fall-of-potential method or
               2-terminal stake-less for typical UK soils). Reading typically 30-200 Omega for a
               single rod electrode in average soil.
@@ -516,13 +516,13 @@ NOTE: Regardless of RCD Type, effectiveness is deemed to have been verified wher
         <SectionRule />
 
         <ContentEyebrow>
-          The manufacturer test button — what it does and doesn\'t verify
+          The manufacturer test button — what it does and doesn’t verify
         </ContentEyebrow>
 
         <ConceptBlock
           title="Test button = mechanical functional check, NOT performance verification"
           plainEnglish="The manufacturer test button on every RCD / RCBO injects a small simulated residual current through an internal resistor that bypasses the load side. Pressing it exercises the trip mechanism and confirms the device operates mechanically. It does NOT measure trip time or trip current accuracy. The instrument test at 1 x I delta n is the performance verification; the test button is the periodic functional check."
-          onSite="Reg 132.13 documentation should brief the customer to operate the test button quarterly. If the device fails to trip on the button, call an electrician. The customer\'s test-button discipline + the inspector\'s instrument test at EICR intervals = the complete lifecycle assurance for the RCD."
+          onSite="Reg 132.13 documentation should brief the customer to operate the test button quarterly. If the device fails to trip on the button, call an electrician. The customer’s test-button discipline + the inspector’s instrument test at EICR intervals = the complete lifecycle assurance for the RCD."
         >
           <p>The two-test discipline:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -537,7 +537,7 @@ NOTE: Regardless of RCD Type, effectiveness is deemed to have been verified wher
             </li>
             <li>
               <strong>Why both:</strong> Test button catches a stuck mechanism between EICR visits;
-              instrument test catches gradual performance drift that the test button can\'t detect
+              instrument test catches gradual performance drift that the test button can’t detect
               (a device may operate mechanically on the test button but be too slow under fault
               conditions).
             </li>
@@ -566,7 +566,7 @@ NOTE: Regardless of RCD Type, effectiveness is deemed to have been verified wher
               impedance (Zs) and RCD trip-time tests are the headline verifications. Each test feeds
               into confirming the protective devices will disconnect within the Table 41.1 limits
               for the earthing system and circuit type. Skipping or under-doing these tests
-              undermines the verification\'s core purpose.
+              undermines the verification’s core purpose.
             </>
           }
           cite="Source: IET Guidance Note 3 — Inspection and Testing, periodic inspection emphasis."
@@ -590,7 +590,7 @@ NOTE: Regardless of RCD Type, effectiveness is deemed to have been verified wher
               <strong>RCD type.</strong> AC, A, F or B. Add (S) suffix if time-delayed.
             </li>
             <li>
-              <strong>Rated I delta n.</strong> The RCD\'s rated residual operating current — 30 mA
+              <strong>Rated I delta n.</strong> The RCD’s rated residual operating current — 30 mA
               for general-purpose additional protection, 100 mA / 300 mA for fire-protection
               devices, etc.
             </li>
@@ -619,7 +619,7 @@ NOTE: Regardless of RCD Type, effectiveness is deemed to have been verified wher
 
         <ConceptBlock
           title="Time-delayed (S) RCDs — selectivity and longer trip times"
-          plainEnglish="Time-delayed (S type) RCDs have an intentional delay built in for selectivity coordination — they wait briefly to give downstream non-delayed RCDs time to clear faults on their own circuits. Typical S-type at 1 x I delta n trips in 130-500 ms (within the device\'s rated delay band). Used as upstream RCD with downstream non-delayed RCDs on individual circuits."
+          plainEnglish="Time-delayed (S type) RCDs have an intentional delay built in for selectivity coordination — they wait briefly to give downstream non-delayed RCDs time to clear faults on their own circuits. Typical S-type at 1 x I delta n trips in 130-500 ms (within the device’s rated delay band). Used as upstream RCD with downstream non-delayed RCDs on individual circuits."
           onSite="S-type RCDs are common on TT installations as the main switch upstream of split RCDs or RCBOs. They give the downstream devices a chance to clear circuit faults before the upstream device trips the entire installation. Verify the S-type trip time against the device product spec — typically longer than general-purpose but still within the system requirement (1 s for TT distribution)."
         >
           <p>Time-delayed (S) RCD verification:</p>
@@ -653,7 +653,7 @@ NOTE: Regardless of RCD Type, effectiveness is deemed to have been verified wher
         <ConceptBlock
           title="Type B RCDs for EV charging — additional verification"
           plainEnglish="Type B RCDs detect smooth DC residual current up to 6 mA in addition to AC and pulsating DC. They are mandatory for EV charging per Section 722 because EV chargers can produce smooth DC fault current that lower-type RCDs cannot detect. Verification at 1 x I delta n AC is the primary BS 7671 test (Reg 643.7.3); some MFTs offer an additional DC test specifically for Type B devices."
-          onSite="Section 722.531.3.101 requires Type B (or Type B-equivalent via DC residual current monitoring) for EV charge points. Some EV chargers have a built-in DC residual current monitoring device (RDC-DD) that allows a Type A upstream RCD; the manufacturer\'s instructions specify which combination is acceptable. Document the chosen approach on the EIC."
+          onSite="Section 722.531.3.101 requires Type B (or Type B-equivalent via DC residual current monitoring) for EV charge points. Some EV chargers have a built-in DC residual current monitoring device (RDC-DD) that allows a Type A upstream RCD; the manufacturer’s instructions specify which combination is acceptable. Document the chosen approach on the EIC."
         >
           <p>Type B RCD verification specifics:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -674,7 +674,7 @@ NOTE: Regardless of RCD Type, effectiveness is deemed to have been verified wher
             </li>
             <li>
               <strong>PV inverters.</strong> Some grid-tie inverters have transformerless designs
-              that can produce smooth DC fault current. Manufacturer\'s installation manual
+              that can produce smooth DC fault current. Manufacturer’s installation manual
               specifies the required RCD type — typically Type B for transformerless, Type A
               acceptable for transformer-isolated.
             </li>
@@ -693,11 +693,11 @@ NOTE: Regardless of RCD Type, effectiveness is deemed to have been verified wher
           title="Using the old multi-test sequence and recording the 5 x I delta n result"
           whatHappens={
             <>
-              You\'re testing RCDs on a domestic and your MFT defaults to the legacy multi-test
+              You’re testing RCDs on a domestic and your MFT defaults to the legacy multi-test
               sequence. You run all three tests and record all three readings on the schedule. The
-              audit picks up the 5 x I delta n result and queries why you\'re using a test that was
+              audit picks up the 5 x I delta n result and queries why you’re using a test that was
               deleted in A4:2026. The answer is "habit" — but the firm now has to explain to the
-              scheme provider why current test methodology wasn\'t followed. The certificate may be
+              scheme provider why current test methodology wasn’t followed. The certificate may be
               flagged for re-issue with the correct single-test result. Inconvenience plus
               reputation hit.
             </>
@@ -708,7 +708,7 @@ NOTE: Regardless of RCD Type, effectiveness is deemed to have been verified wher
               A4:2026-aligned method per Reg 643.7.3. Document the trip time once against Table 41.1
               and the device product spec (300 ms general-purpose). Done. The legacy multi-test mode
               still exists in instrument menus but is no longer required by BS 7671 — using it
-              isn\'t wrong, but it\'s redundant and out of step with current practice.
+              isn’t wrong, but it’s redundant and out of step with current practice.
             </>
           }
         />
@@ -747,8 +747,8 @@ NOTE: Regardless of RCD Type, effectiveness is deemed to have been verified wher
           }
           whatToDo={
             <>
-              Brief the customer — "I\'ll be testing each RCBO in turn. Each will briefly trip and
-              I\'ll reset it. Takes about a minute per circuit, total 12-15 minutes." Set the Fluke
+              Brief the customer — "I’ll be testing each RCBO in turn. Each will briefly trip and
+              I’ll reset it. Takes about a minute per circuit, total 12-15 minutes." Set the Fluke
               1664FC to RCD test mode, single test (A4:2026 method) at 1 x I delta n, AC waveform,
               30 mA. Test each RCBO in label order: kitchen ring 28 ms, kitchen lights 32 ms,
               upstairs sockets 25 ms, downstairs sockets 27 ms, upstairs lights 30 ms, downstairs

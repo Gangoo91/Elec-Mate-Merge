@@ -38,6 +38,7 @@ import CertLockBar from '@/components/inspection/CertLockBar';
 import { cn } from '@/lib/utils';
 import { ConflictResolutionDialog } from '@/components/inspection/ConflictResolutionDialog';
 import { scrollToTopForStepChange } from '@/utils/scroll';
+import { issueCertificateNumber } from '@/utils/certificateNumbering';
 
 const REPORT_TYPE = 'lightning-protection' as const;
 
@@ -85,8 +86,11 @@ const {
     formData,
     enabled: !isLoading && !isLocked,
     isHydrating: isLoading, // Gate autosave while loading from cloud — prevents blank-overwrite race.
-    onReportCreated: (newId) => {
+    onReportCreated: (newId: string, certificateNumber?: string) => {
       setSavedReportId(newId);
+      // ELE-1592 — keep the number the row was filed under; without this the
+      // form stayed blank and the PDF printed an invented timestamp.
+      if (certificateNumber) setFormData((prev) => (prev.certificateNumber ? prev : { ...prev, certificateNumber }));
       window.history.replaceState(null, '', `/electrician/inspection-testing/lightning-protection/${newId}`);
     },
   });
@@ -113,7 +117,7 @@ const {
       try {
         const { data: { user } } = await supabase.auth.getUser();
         if (!user) { setIsLoading(false); return; }
-        const reportData = await reportCloud.getReportData(id, user.id);
+        const reportData = await reportCloud.getReportData(id, user.id, 'lightning-protection');
         if (reportData) { setFormData((prev: any) => ({ ...getDefaultLightningProtectionFormData(), ...prev, ...(reportData as any) })); setSavedReportId(id); }
       } catch (err) { console.error('Failed to load LP cert:', err); }
       finally { setIsLoading(false); }
@@ -151,11 +155,11 @@ const {
     setGenerationError(null);
 
     try {
-      await syncNowImmediate();
+      const synced = await syncNowImmediate();
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Not signed in');
 
-      let dataWithCertNumber = { ...formData, certificateNumber: formData.certificateNumber || `LP-${Date.now().toString(36).toUpperCase()}` };
+      let dataWithCertNumber = { ...formData, certificateNumber: await issueCertificateNumber(formData.certificateNumber || synced.data?.certificateNumber, REPORT_TYPE) };
       if (hasSavedCompanyBranding) { const branding = loadCompanyBranding(); if (branding) dataWithCertNumber = { ...dataWithCertNumber, ...branding }; }
 
       // Single payload builder — same formatter as bulk export and email, so

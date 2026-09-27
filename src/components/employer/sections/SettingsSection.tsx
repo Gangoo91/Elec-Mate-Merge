@@ -121,8 +121,7 @@ export function SettingsSection() {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) return;
-      // owner_is_qs is a newly-added column not yet in the generated types — cast.
-      const { data } = await (supabase as any)
+      const { data } = await supabase
         .from('company_profiles')
         .select('qs_approval_required, owner_is_qs')
         .eq('user_id', user.id)
@@ -183,8 +182,7 @@ export function SettingsSection() {
       } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      // owner_is_qs is not yet in the generated types — cast the writes.
-      const { data: updated, error } = await (supabase as any)
+      const { data: updated, error } = await supabase
         .from('company_profiles')
         .update({ owner_is_qs: checked })
         .eq('user_id', user.id)
@@ -192,7 +190,7 @@ export function SettingsSection() {
       if (error) throw error;
 
       if (!updated || updated.length === 0) {
-        const { error: insertError } = await (supabase as any)
+        const { error: insertError } = await supabase
           .from('company_profiles')
           .insert({ user_id: user.id, company_name: '', owner_is_qs: checked });
         if (insertError) throw insertError;

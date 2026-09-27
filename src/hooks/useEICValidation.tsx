@@ -102,6 +102,15 @@ const REQUIRED_FIELDS: {
     regulation: 'Part 6',
     tab: 'declarations',
   },
+  // ELE-1636 — without this date the certificate can never prompt its own
+  // renewal. The interval presets fill it in one tap.
+  {
+    field: 'nextInspectionDate',
+    message: 'Next inspection date',
+    severity: 'error',
+    regulation: '653.4',
+    tab: 'declarations',
+  },
 ];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -51,7 +51,7 @@ const checks = [
     ],
     correctIndex: 0,
     explanation:
-      'Modern multifunction testers (Megger MFT1741+, Fluke 1664FC, Kewtech KT64+) all offer a no-trip / low-current Zs mode specifically for RCD-protected circuits. The instrument limits its test current and may apply a DC bias technique to suppress the AC RCD\'s sensing. The slight loss of accuracy is acceptable; the RCD stays in. Disconnecting an RCD to test "more accurately" is bad practice — you change the circuit you\'re trying to verify and you risk leaving the install without RCD protection if you forget to reconnect.',
+      'Modern multifunction testers (Megger MFT1741+, Fluke 1664FC, Kewtech KT64+) all offer a no-trip / low-current Zs mode specifically for RCD-protected circuits. The instrument limits its test current and may apply a DC bias technique to suppress the AC RCD’s sensing. The slight loss of accuracy is acceptable; the RCD stays in. Disconnecting an RCD to test "more accurately" is bad practice — you change the circuit you’re trying to verify and you risk leaving the install without RCD protection if you forget to reconnect.',
   },
   {
     id: 'm5-s4-sub2-touch-voltage',
@@ -123,7 +123,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'Full trip-current mode trips the RCBO but gives the most accurate reading. On a borderline result it\'s the right tool to use — provided you prepare for the trip. The standard procedure on a domestic install: brief the customer ("the breaker will briefly trip during a more accurate test, that\'s normal"), switch off any sensitive electronics on the same circuit, run the test, reset the breaker, document both readings. The customer sees professional confidence; the firm has higher-quality data.',
+      'Full trip-current mode trips the RCBO but gives the most accurate reading. On a borderline result it’s the right tool to use — provided you prepare for the trip. The standard procedure on a domestic install: brief the customer ("the breaker will briefly trip during a more accurate test, that’s normal"), switch off any sensitive electronics on the same circuit, run the test, reset the breaker, document both readings. The customer sees professional confidence; the firm has higher-quality data.',
   },
   {
     id: 4,
@@ -284,8 +284,8 @@ export default function Sub2() {
             <li>
               <strong>No-trip / low-current mode.</strong> Test current limited to under 15 mA peak.
               Often combined with a brief DC bias to suppress AC RCD sensing during the pulse, or a
-              fast pulse shorter than the RCD\'s response time. Reading accuracy typically plus or
-              minus 10 percent. RCD stays in. Supply not interrupted. Customer doesn\'t notice
+              fast pulse shorter than the RCD’s response time. Reading accuracy typically plus or
+              minus 10 percent. RCD stays in. Supply not interrupted. Customer doesn’t notice
               anything.
             </li>
             <li>
@@ -323,7 +323,7 @@ export default function Sub2() {
               During the test the instrument briefly draws current through the L-E loop. That
               current creates a voltage drop along the CPC equal to I_test x R_CPC. Any
               exposed-conductive-part connected to that CPC briefly rises above true earth by that
-              voltage. For a 25 A test current and a 0.4 Omega CPC, that\'s 10 V — small but real.
+              voltage. For a 25 A test current and a 0.4 Omega CPC, that’s 10 V — small but real.
               In domestic single-occupier work the risk is low because you control access. In
               commercial / public installations (shop floors, schools, hospitals) you may need to
               physically restrict access during testing — barriers, signage, an assistant.
@@ -346,8 +346,8 @@ export default function Sub2() {
 
         <ConceptBlock
           title="The voltage GN3 wants you to think about"
-          plainEnglish="During a Zs test, current flows briefly through the CPC. That current creates a voltage drop along the CPC, which means every exposed-conductive-part connected to the CPC briefly rises above true earth by that voltage. It\'s the same physics as a real earth fault — but at instrument-controlled current and for a few milliseconds. Small voltage, brief duration — but real."
-          onSite="On a domestic install you typically control who\'s in the room. On a commercial install with the public around (a school corridor, a hospital ward, a shop floor), you may need to physically restrict access to the test area. The right answer depends on the test current, the CPC resistance, and who can touch the metalwork during the test."
+          plainEnglish="During a Zs test, current flows briefly through the CPC. That current creates a voltage drop along the CPC, which means every exposed-conductive-part connected to the CPC briefly rises above true earth by that voltage. It’s the same physics as a real earth fault — but at instrument-controlled current and for a few milliseconds. Small voltage, brief duration — but real."
+          onSite="On a domestic install you typically control who’s in the room. On a commercial install with the public around (a school corridor, a hospital ward, a shop floor), you may need to physically restrict access to the test area. The right answer depends on the test current, the CPC resistance, and who can touch the metalwork during the test."
         >
           <p>The math behind the touch-voltage:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -410,8 +410,8 @@ export default function Sub2() {
 
         <ConceptBlock
           title="What BS EN 61557-3 conformance buys you"
-          plainEnglish="BS EN 61557-3 is the international standard for loop impedance testers. An instrument conforming to this standard meets specified safety, performance and accuracy requirements — verified by the manufacturer\'s declaration of conformity. UK MFTs from reputable brands (Megger, Fluke, Kewtech, Metrel) all conform. The standard is what underpins the trust we put in test readings."
-          onSite="When buying or specifying a Zs tester, look for BS EN 61557-3 conformance on the datasheet. When the firm\'s certification software pre-fills the instrument record, the certificate cites the instrument identifier; the conformance is implicit but worth verifying once for each instrument in the firm\'s register."
+          plainEnglish="BS EN 61557-3 is the international standard for loop impedance testers. An instrument conforming to this standard meets specified safety, performance and accuracy requirements — verified by the manufacturer’s declaration of conformity. UK MFTs from reputable brands (Megger, Fluke, Kewtech, Metrel) all conform. The standard is what underpins the trust we put in test readings."
+          onSite="When buying or specifying a Zs tester, look for BS EN 61557-3 conformance on the datasheet. When the firm’s certification software pre-fills the instrument record, the certificate cites the instrument identifier; the conformance is implicit but worth verifying once for each instrument in the firm’s register."
         >
           <p>What BS EN 61557-3 covers:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -469,7 +469,7 @@ export default function Sub2() {
             For borderline readings (within 10 percent of the limit), the accuracy band matters
             most. A reading of 1.05 Omega on a 1.10 Omega limit looks like a 5 percent margin — but
             with plus or minus 10 percent accuracy the true value could be 0.945-1.155 Omega.
-            That\'s the practical reason to retest borderline readings in full trip mode (typically
+            That’s the practical reason to retest borderline readings in full trip mode (typically
             tighter accuracy) or to investigate the underlying installation.
           </p>
         </ConceptBlock>
@@ -484,7 +484,7 @@ export default function Sub2() {
 
         <RegsCallout
           source="IET Guidance Note 3 — Loop impedance test instrument range and resolution"
-          clause="When performing loop impedance measurements, inspectors shall ensure the instrument\'s measurement range includes the expected Zs values; otherwise readings may be inaccurate. Confirm instrument range before carrying out loop impedance tests. The resolution of an instrument is the smallest increment that the instrument can detect and display."
+          clause="When performing loop impedance measurements, inspectors shall ensure the instrument’s measurement range includes the expected Zs values; otherwise readings may be inaccurate. Confirm instrument range before carrying out loop impedance tests. The resolution of an instrument is the smallest increment that the instrument can detect and display."
           meaning={
             <>
               GN3 puts the duty on the inspector to verify instrument range matches the expected Zs
@@ -528,7 +528,7 @@ export default function Sub2() {
             </li>
             <li>
               <strong>Check on each visit.</strong> Visual inspection of the leads, continuity check
-              on the meter\'s own continuity range against a known low resistance (proves lead +
+              on the meter’s own continuity range against a known low resistance (proves lead +
               fuse intact).
             </li>
             <li>
@@ -536,7 +536,7 @@ export default function Sub2() {
               case. Replacing in field is a 30-second job.
             </li>
             <li>
-              <strong>Don\'t over-fuse.</strong> Fitting a 16 A fuse "to make the leads more robust"
+              <strong>Don’t over-fuse.</strong> Fitting a 16 A fuse "to make the leads more robust"
               defeats the protection. Stay within the specified rating range.
             </li>
             <li>
@@ -561,7 +561,7 @@ export default function Sub2() {
 
         <ConceptBlock
           title="Standard order — Ze first, then circuits in turn"
-          plainEnglish="There\'s a standard order to live Zs verification across a board. Ze at the supply origin first — establishes the supply impedance baseline. Then each circuit at its furthest point in label / RCD-group order. Borderline / failing readings investigated before moving on. The order isn\'t arbitrary — it gives you the data in the sequence that lets you sanity-check each reading as you go."
+          plainEnglish="There’s a standard order to live Zs verification across a board. Ze at the supply origin first — establishes the supply impedance baseline. Then each circuit at its furthest point in label / RCD-group order. Borderline / failing readings investigated before moving on. The order isn’t arbitrary — it gives you the data in the sequence that lets you sanity-check each reading as you go."
           onSite={`Walk into the board, set up the MFT, take Ze. Note it on the schedule. Then circuit by circuit. Modern certification software has a "next circuit" workflow that prompts each test in order — useful but not a substitute for understanding why the order matters.`}
         >
           <p>The standard sequence in detail:</p>
@@ -573,7 +573,7 @@ export default function Sub2() {
             </li>
             <li>
               <strong>Ze at the supply origin.</strong> 3-lead Zs at the incoming meter tails or the
-              main switch. Reading is the supplier\'s loop impedance from the test point back to the
+              main switch. Reading is the supplier’s loop impedance from the test point back to the
               transformer. Typically 0.1-0.35 Omega for TN-C-S, 0.2-0.5 Omega for TN-S, 30-200+
               Omega for TT.
             </li>
@@ -594,10 +594,10 @@ export default function Sub2() {
             </li>
             <li>
               <strong>Failing readings — investigate.</strong> Check terminations, route length, CPC
-              size, parallel paths. Don\'t proceed past a failing circuit without addressing it.
+              size, parallel paths. Don’t proceed past a failing circuit without addressing it.
             </li>
             <li>
-              <strong>Compile readings on the Schedule of Test Results.</strong> Each circuit\'s Zs
+              <strong>Compile readings on the Schedule of Test Results.</strong> Each circuit’s Zs
               against its row, with the protective device and the Table 41.3 limit alongside for
               cross-check.
             </li>
@@ -683,12 +683,12 @@ export default function Sub2() {
         <ContentEyebrow>Where it goes wrong</ContentEyebrow>
 
         <CommonMistake
-          title="Using full trip-current mode on every circuit and tripping the customer\'s freezer"
+          title="Using full trip-current mode on every circuit and tripping the customer’s freezer"
           whatHappens={
             <>
-              You\'re testing a domestic with all-RCBO consumer unit. Forgot to switch the MFT to
+              You’re testing a domestic with all-RCBO consumer unit. Forgot to switch the MFT to
               no-trip mode. Press TEST on the kitchen ring — RCBO trips, freezer goes off. You
-              don\'t notice (you\'re still working through the schedule). Two days later customer
+              don’t notice (you’re still working through the schedule). Two days later customer
               phones in: "all the food has spoiled". Firm pays for the food replacement plus an
               awkward apology. The reading you took during the trip is also invalid because the
               supply was interrupted.
@@ -709,11 +709,11 @@ export default function Sub2() {
           title="Testing without verifying the instrument range"
           whatHappens={
             <>
-              Old habit — auto-range MFT, never thought about range. You\'re asked to test a TT
+              Old habit — auto-range MFT, never thought about range. You’re asked to test a TT
               installation with expected Zs in the 50-200 Omega range. Auto-range works fine on TN
               values (under 2 Omega) but on a manual-range instrument set to the low range, the TT
               reading saturates or reads inaccurately. You record "0 Omega" or "out of range" and
-              don\'t know why. Time wasted; results unusable. Worst case — instrument damaged if
+              don’t know why. Time wasted; results unusable. Worst case — instrument damaged if
               test current exceeds the low-range capacity.
             </>
           }
@@ -740,10 +740,10 @@ export default function Sub2() {
           }
           whatToDo={
             <>
-              Brief the customer first — "I\'ll be doing live tests for about an hour. The supply
+              Brief the customer first — "I’ll be doing live tests for about an hour. The supply
               will be on throughout. Can you keep the dog away from the kitchen metalwork (sink,
-              taps, washing machine) for the next hour? If anything goes off briefly that\'s normal
-              — I\'ll get to it." Set the MFT1741+ to Zs no-trip mode, BS EN 61557-3 conformance
+              taps, washing machine) for the next hour? If anything goes off briefly that’s normal
+              — I’ll get to it." Set the MFT1741+ to Zs no-trip mode, BS EN 61557-3 conformance
               verified on the meter case, last calibration 2025-09-12 (within 12 months). Lead fuses
               checked — both 10 A, intact. Test Ze at the main switch: 0.32 Omega — agrees with dead
               test. Note. Move through the circuits in order: kitchen ring 0.62 Omega (calc 0.60

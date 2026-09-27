@@ -284,7 +284,7 @@ export default function Sub3() {
             </li>
             <li>
               <strong>Commissioning sensors</strong> — some units include CO₂ sensors, humidity
-              sensors or temperature probes that feed back to the unit\'s controls.
+              sensors or temperature probes that feed back to the unit’s controls.
             </li>
             <li>
               <strong>Smart-home integration</strong> — Cat5e/Cat6 to the unit increasingly common
@@ -294,7 +294,7 @@ export default function Sub3() {
           </ul>
           <p>
             The ducting, terminal placement and air-flow commissioning is the ventilation
-            specialist\'s domain. Your scope is the unit supply, the boost network, the isolation
+            specialist’s domain. Your scope is the unit supply, the boost network, the isolation
             and any commissioning sensor wiring.
           </p>
         </ConceptBlock>
@@ -315,7 +315,7 @@ export default function Sub3() {
               Part F is the regulatory home for ventilation. It applies regardless of whether the
               ventilation is natural, mechanical extract (MEV) or mechanical-with-recovery (MVHR).
               The commissioning records — air-flow rates at every supply and extract terminal — are
-              part of the Building Regs hand- over pack. As the electrician you\'re not the lead
+              part of the Building Regs hand- over pack. As the electrician you’re not the lead
               trade on Part F compliance but you need to recognise where it sits in the regulatory
               map.
             </>
@@ -337,8 +337,8 @@ export default function Sub3() {
 
         <ConceptBlock
           title="Domestic-scale wind turbines and where they actually work"
-          plainEnglish="Wind turbines convert moving air into rotational energy via the rotor and into electrical energy via the generator. Domestic-scale turbines (sub-10 kW) need clean laminar wind to deliver their rated output. Suburban back gardens deliver turbulent air shed by surrounding houses; the turbine spends most of its time below cut-in wind speed or cycling wildly. Real-world yields are usually a fraction of the manufacturer\'s wind-tunnel claim."
-          onSite="Where wind genuinely works — open rural sites with tall masts (15-30 m hub height) and clean wind — domestic-scale wind can deliver useful baseload renewable. The capital cost, planning timeline, noise assessment and ongoing maintenance are all non-trivial. As the electrician on a wind install you\'d see a similar electrical chain to PV: turbine → rectifier (for DC turbines) or AC output → inverter (where required) → grid-connection isolator → consumer unit. ENA G98 (≤16 A per phase) or G99 (>16 A per phase) applies as for PV."
+          plainEnglish="Wind turbines convert moving air into rotational energy via the rotor and into electrical energy via the generator. Domestic-scale turbines (sub-10 kW) need clean laminar wind to deliver their rated output. Suburban back gardens deliver turbulent air shed by surrounding houses; the turbine spends most of its time below cut-in wind speed or cycling wildly. Real-world yields are usually a fraction of the manufacturer’s wind-tunnel claim."
+          onSite="Where wind genuinely works — open rural sites with tall masts (15-30 m hub height) and clean wind — domestic-scale wind can deliver useful baseload renewable. The capital cost, planning timeline, noise assessment and ongoing maintenance are all non-trivial. As the electrician on a wind install you’d see a similar electrical chain to PV: turbine → rectifier (for DC turbines) or AC output → inverter (where required) → grid-connection isolator → consumer unit. ENA G98 (≤16 A per phase) or G99 (>16 A per phase) applies as for PV."
         >
           <p>The typical electrical interface:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -416,7 +416,7 @@ export default function Sub3() {
 
         <ConceptBlock
           title="Biomass boilers and stoves"
-          plainEnglish="Biomass appliances burn sustainably-sourced wood (logs, pellets, chips) to drive a wet heating system (boiler) or to heat a single room (stove). Counts as \'low-carbon' under conventional accounting because the CO₂ released during combustion is offset by what the trees absorbed during growth — though the timing mismatch is debated. Best fit: rural off-gas-grid properties with space for a fuel store and ash handling. Worst fit: urban smoke-control areas with poor air quality."
+          plainEnglish="Biomass appliances burn sustainably-sourced wood (logs, pellets, chips) to drive a wet heating system (boiler) or to heat a single room (stove). Counts as ‘low-carbon' under conventional accounting because the CO₂ released during combustion is offset by what the trees absorbed during growth — though the timing mismatch is debated. Best fit: rural off-gas-grid properties with space for a fuel store and ash handling. Worst fit: urban smoke-control areas with poor air quality."
           onSite="The electrical interface is straightforward — typically 13 A or 16 A supply on a 6 A or 10 A MCB to the boiler / stove location, with controls integration into the wet system pumps, three-port valves and thermostats. The fuel auger, ignition element, fan and ash-handling motor are all electrically driven and the controller manages the start-stop / modulation cycle. Building Regs Part J covers combustion appliances, flues and combustion-air provision; Clean Air Act compliance covers smoke-control area restrictions; MCS MIS 3004 (boilers) / 3006 (stoves) covers installer competence."
         >
           <p>Practical considerations:</p>

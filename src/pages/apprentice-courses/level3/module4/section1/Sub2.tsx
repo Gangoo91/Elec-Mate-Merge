@@ -303,7 +303,7 @@ export default function Sub2() {
               and GS38 compliance noted.
             </li>
             <li>
-              <strong>PPE matrix</strong> — what\'s worn for what part of the work.
+              <strong>PPE matrix</strong> — what’s worn for what part of the work.
             </li>
             <li>
               <strong>Emergency response</strong> — first aider on site, nearest A&E, defibrillator
@@ -326,13 +326,13 @@ export default function Sub2() {
 
         <ConceptBlock
           title="Six steps, in order, every time, no shortcuts"
-          onSite="The JIB six-step is the industry standard and it\'s tested on every L3 practical exam. The \'prove the tester before AND after' is the step apprentices skip and the step that actually catches a faulty tester — if the tester reads zero on the circuit you\'ve isolated, you don\'t yet know whether the circuit is dead or the tester is broken until you re-prove it on the known live source."
+          onSite="The JIB six-step is the industry standard and it’s tested on every L3 practical exam. The ‘prove the tester before AND after' is the step apprentices skip and the step that actually catches a faulty tester — if the tester reads zero on the circuit you’ve isolated, you don’t yet know whether the circuit is dead or the tester is broken until you re-prove it on the known live source."
         >
           <p>The six steps:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
               <strong>1. Identify the circuit</strong> — using the schedule, the labels, the
-              customer\'s information. This is your hypothesis only.
+              customer’s information. This is your hypothesis only.
             </li>
             <li>
               <strong>2. Isolate</strong> — operate the breaker, switch, fuse-link or isolator.
@@ -386,7 +386,7 @@ export default function Sub2() {
               Two requirements packed in. First &mdash; physical probe design: finger barriers (the
               moulded shroud at the back of the probe shaft), exposed tip no more than 4&nbsp;mm.
               Second &mdash; instrument characteristic: low impedance for proving dead. A multimeter
-              has neither (long uninsulated tips, high impedance) which is why it doesn\'t satisfy
+              has neither (long uninsulated tips, high impedance) which is why it doesn’t satisfy
               GS38 for live or proving-dead work.
             </>
           }
@@ -443,7 +443,7 @@ export default function Sub2() {
 
         <ConceptBlock
           title="Most fault diagnosis is some form of lone working"
-          onSite="The L3 apprentice who\'s sent solo to a remote unmanned site — water treatment kiosk, telecoms cabinet, lift motor room, broiler shed — needs the same protective framework as the apprentice on a busy commercial site. HSE INDG73 sets the bar. The firm without a documented lone-working procedure is the firm whose insurance won\'t cover the missing apprentice."
+          onSite="The L3 apprentice who’s sent solo to a remote unmanned site — water treatment kiosk, telecoms cabinet, lift motor room, broiler shed — needs the same protective framework as the apprentice on a busy commercial site. HSE INDG73 sets the bar. The firm without a documented lone-working procedure is the firm whose insurance won’t cover the missing apprentice."
         >
           <p>Standard lone-working controls:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -466,7 +466,7 @@ export default function Sub2() {
             </li>
             <li>
               <strong>Pre-arranged response</strong> — if check-in is missed, the office calls the
-              operative, then the operative\'s emergency contact, then site security / police as
+              operative, then the operative’s emergency contact, then site security / police as
               appropriate.
             </li>
           </ul>
@@ -490,7 +490,7 @@ export default function Sub2() {
           title="Where the L3 apprentice meets the next layer of hazards"
           plainEnglish="Beyond the standard shock and arc hazards, fault diagnosis at L3 brings the apprentice into contact with environments and equipment that need their own precautions — electronic control panels (ESD), IT equipment (graceful shutdown), battery banks (DC + chemical hazards), ATEX zones (ignition risk), hot-work areas (fire risk)."
         >
-          <p>The five \'special environment' categories on the 2357 syllabus:</p>
+          <p>The five ‘special environment' categories on the 2357 syllabus:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
               <strong>ESD-sensitive electronics</strong> — wrist strap, anti-static mat, edge
@@ -514,7 +514,7 @@ export default function Sub2() {
             <li>
               <strong>HF or capacitive circuits</strong> — induction heaters, RF welders, high-power
               transmitters. Standby fields can couple to your body; capacitor banks store lethal
-              charge. Manufacturer\'s manual for the specific equipment is the only reliable source.
+              charge. Manufacturer’s manual for the specific equipment is the only reliable source.
             </li>
           </ul>
         </ConceptBlock>
@@ -566,14 +566,14 @@ export default function Sub2() {
         <ContentEyebrow>Where it goes wrong</ContentEyebrow>
 
         <CommonMistake
-          title="Skipping the second \'prove the tester' step"
+          title="Skipping the second ‘prove the tester' step"
           whatHappens={
             <>
               Apprentice does the JIB procedure correctly through step 5 &mdash; tester proved on
               the proving unit, circuit shows zero. They start work without re-proving the tester
               (step 6). Halfway through the job a battery cell in the Martindale fails and the
               tester now reads zero on EVERYTHING &mdash; live or dead. The apprentice returns to
-              the cut-out, tests another circuit they think is dead, the tester says zero (it\'s
+              the cut-out, tests another circuit they think is dead, the tester says zero (it’s
               broken), they put their hand on a live busbar and take a 230&nbsp;V shock. The
               procedure had a working tester at step 4 but a broken one at the moment that mattered.
               Step 6 would have caught it.
@@ -591,24 +591,24 @@ export default function Sub2() {
         />
 
         <CommonMistake
-          title="Working alone on a high-risk task because 'the customer\'s right there\'"
+          title="Working alone on a high-risk task because 'the customer’s right there’"
           whatHappens={
             <>
-              Apprentice is sent solo to a domestic call-out. Customer says they\'re going to stay
-              in the house while the work happens, so the apprentice doesn\'t follow the
+              Apprentice is sent solo to a domestic call-out. Customer says they’re going to stay
+              in the house while the work happens, so the apprentice doesn’t follow the
               lone-working procedure (no check-in, no man-down alarm). Customer goes upstairs to
-              make a phone call. Apprentice takes a shock from a borrowed neutral they didn\'t
-              expect, drops to the floor unconscious. Customer doesn\'t realise for 20 minutes.
+              make a phone call. Apprentice takes a shock from a borrowed neutral they didn’t
+              expect, drops to the floor unconscious. Customer doesn’t realise for 20 minutes.
               CPR-window missed, brain damage. The lone-working procedure would have triggered an
               office check-in at 30 minutes; the man-down alarm would have triggered at the fall.
             </>
           }
           doInstead={
             <>
-              Treat \'customer present' as a bystander, not a safety control. Bystanders aren't
-              trained, can\'t help, and may not even notice an incident in time. The lone-working
+              Treat ‘customer present' as a bystander, not a safety control. Bystanders aren't
+              trained, can’t help, and may not even notice an incident in time. The lone-working
               procedure assumes you are functionally alone &mdash; check-ins, man-down, escalation
-              &mdash; even when there\'s another human on site. The HSE doesn\'t accept 'the
+              &mdash; even when there’s another human on site. The HSE doesn’t accept 'the
               customer was there' as a substitute for documented lone-working controls.
             </>
           }
@@ -618,7 +618,7 @@ export default function Sub2() {
           title="Solo call-out to a remote pumping station"
           situation={
             <>
-              You\'re an L3 apprentice. The firm dispatches you solo to a Severn Trent pumping
+              You’re an L3 apprentice. The firm dispatches you solo to a Severn Trent pumping
               station to investigate why the duty pump keeps tripping. Site is unmanned. Mobile
               signal is one bar. The site H&amp;S file is in a kiosk at the gate.
             </>
@@ -645,7 +645,7 @@ export default function Sub2() {
               man-down alarm, operative pressed on without the framework. The framework is what
               keeps you alive when something goes wrong &mdash; and on a pumping station,
               &quot;something&quot; can be a methane release, a slip into standing water, a
-              high-voltage motor, or a confined-space entry that hadn\'t been planned.
+              high-voltage motor, or a confined-space entry that hadn’t been planned.
             </>
           }
         />

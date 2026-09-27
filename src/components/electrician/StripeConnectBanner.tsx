@@ -213,10 +213,14 @@ const StripeConnectBanner: React.FC<StripeConnectBannerProps> = ({ className, re
                 ? `${fmtMoney(outstandingAmount)} waiting to be paid`
                 : 'Get paid by card'}
           </p>
-          <p className="text-[12px] text-white/60 mt-0.5">
+          <p className="text-[12px] text-white mt-0.5">
+            {/* Kept short on purpose: the icon and the Set up button leave this
+                column about 40% of a 390px phone, so a longer line wraps to
+                four and doubles the height of the banner. Measured in
+                `npm run check:stripe-prompts`. */}
             {status === 'pending'
-              ? 'Complete setup and every invoice gets a Pay now button'
-              : 'Connect Stripe to add Card and Apple Pay to every invoice — clients pay the same day'}
+              ? 'Finish setup to add a Pay now button'
+              : 'Card and Apple Pay on every invoice'}
           </p>
         </div>
 
@@ -245,7 +249,7 @@ const StripeConnectBanner: React.FC<StripeConnectBannerProps> = ({ className, re
       <button
         onClick={handleDismiss}
         aria-label="Hide for two weeks"
-        className="absolute top-2 right-2 h-7 w-7 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors"
+        className="absolute top-0.5 right-0.5 h-11 w-11 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors touch-manipulation"
       >
         <X className="h-3.5 w-3.5 text-white/60" />
       </button>

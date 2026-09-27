@@ -33,10 +33,27 @@ export const LABOUR_GRADE_SHORT: Record<string, string> = {
   labourer: 'Labourer',
   designer: 'Designer',
   owner: 'Owner',
+  // `testing` is a real worker type (Testing Engineer) and was missing here,
+  // so it fell through to the default below and every testing line printed
+  // "(Electrician)" — on the quote and on the PDF the customer receives.
+  testing: 'Tester',
 };
 
-export const shortGradeLabel = (id?: string | null) =>
-  (id && LABOUR_GRADE_SHORT[id]) || LABOUR_GRADE_SHORT.electrician;
+/**
+ * Short label for a grade.
+ *
+ * ⚠️ An UNKNOWN grade falls back to its own name, never to "Electrician".
+ *
+ * This used to end `|| LABOUR_GRADE_SHORT.electrician`, so any worker type
+ * absent from the map above was silently relabelled as an electrician. That
+ * is not a cosmetic default: it renamed the trade on a customer-facing
+ * document, and in a grade picker it produced two options both reading
+ * "Electrician" at different rates. Mislabelling is worse than a long label.
+ */
+export const shortGradeLabel = (id?: string | null): string => {
+  if (!id) return LABOUR_GRADE_SHORT.electrician;
+  return LABOUR_GRADE_SHORT[id] || LABOUR_GRADES.find((g) => g.id === id)?.name || id;
+};
 
 /** The grade used when an item does not name one. */
 export const DEFAULT_LABOUR_GRADE = 'electrician';

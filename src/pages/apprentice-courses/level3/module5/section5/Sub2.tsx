@@ -51,7 +51,7 @@ const checks = [
     ],
     correctIndex: 3,
     explanation:
-      'BPG4 (Best Practice Guide 4 — Electrical Safety First) defines C1 as danger present, risk of injury, immediate remedial action required. Exposed live parts that a person could touch under reasonably foreseeable conditions sit squarely in C1. "Reasonably foreseeable" includes the next time anyone removes the accessory front — so don\'t argue "the front was on, no one would touch it". The right action on site is to make safe immediately (isolate the circuit, advise the duty holder, secure the location) before leaving — that obligation flows from EAWR Reg 4 plus your continuing duty as the inspector who found the danger.',
+      'BPG4 (Best Practice Guide 4 — Electrical Safety First) defines C1 as danger present, risk of injury, immediate remedial action required. Exposed live parts that a person could touch under reasonably foreseeable conditions sit squarely in C1. "Reasonably foreseeable" includes the next time anyone removes the accessory front — so don’t argue "the front was on, no one would touch it". The right action on site is to make safe immediately (isolate the circuit, advise the duty holder, secure the location) before leaving — that obligation flows from EAWR Reg 4 plus your continuing duty as the inspector who found the danger.',
   },
   {
     id: 's5-sub2-c2-test',

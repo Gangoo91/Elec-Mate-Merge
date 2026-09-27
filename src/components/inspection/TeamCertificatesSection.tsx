@@ -16,6 +16,7 @@ import { useInspectorProfiles } from '@/hooks/useInspectorProfiles';
 import { useApproveQsReview, useReturnQsReview } from '@/hooks/useQsReviewQueue';
 import { useQsTeamContext } from '@/hooks/useQsReview';
 import { supabase } from '@/integrations/supabase/client';
+import { certificateHref } from '@/utils/certificate-href';
 
 /**
  * Team Certificates — the QS's working stack (Craig, 2026-07-17).
@@ -261,19 +262,15 @@ const TeamCertificatesSection: React.FC = () => {
       .sort((a, b) => b.pending - a.pending || b.total - a.total);
   }, [data, user?.id]);
 
-  // Two live conventions (verified against InspectionRoutes/InspectionIndex):
-  // eicr/eic/minor-works are query-param sections; pat-testing/testing-only
-  // are path routes — BOTH keyed on the report_id STRING, never the row uuid.
+  /*
+   * `certificateHref` knows both conventions and every type. The list that was
+   * here named five of them and sent the rest to the reports index, so a QS
+   * clicking a team member's Smoke & CO alarm certificate got a list instead of
+   * the certificate. Its comment said it had been verified against the router;
+   * it had drifted anyway, which is the argument for one shared helper.
+   */
   const openReport = (r: TeamReportRow) => {
-    if (['eicr', 'eic', 'minor-works'].includes(r.report_type)) {
-      navigate(
-        `/electrician/inspection-testing?section=${r.report_type}&reportId=${encodeURIComponent(r.report_id)}`
-      );
-    } else if (['pat-testing', 'testing-only'].includes(r.report_type)) {
-      navigate(`/electrician/inspection-testing/${r.report_type}/${encodeURIComponent(r.report_id)}`);
-    } else {
-      navigate('/electrician/inspection-testing?section=my-reports');
-    }
+    navigate(certificateHref(r.report_type, r.report_id));
   };
 
   const handleApprove = async (r: TeamReportRow) => {

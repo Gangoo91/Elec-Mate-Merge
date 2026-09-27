@@ -329,7 +329,7 @@ export default function Sub1() {
         <ConceptBlock
           title="DC isolation is a separate problem from AC isolation"
           plainEnglish="On a typical 3-6 kW domestic PV install the DC string voltage sits at 300-600 V whenever the panels see daylight. That voltage is independent of the AC side — switching off the inverter, isolating the AC at the consumer unit, even pulling the main switch on the property does nothing to the DC voltage on the array conductors. You isolate the DC by operating the DC string isolator and locking it off, then verifying dead with a tested meter at each end of the string."
-          onSite="DC arc behaviour is different from AC. Without the AC zero-crossing to extinguish an arc, a DC arc once started will continue burning until the conductors physically separate. That\'s why DC isolators are constructed differently from AC isolators (multiple breaks, magnetic blow-out, designed for the DC interrupting duty). Never use an AC-rated isolator on a DC circuit."
+          onSite="DC arc behaviour is different from AC. Without the AC zero-crossing to extinguish an arc, a DC arc once started will continue burning until the conductors physically separate. That’s why DC isolators are constructed differently from AC isolators (multiple breaks, magnetic blow-out, designed for the DC interrupting duty). Never use an AC-rated isolator on a DC circuit."
         >
           <p>Safe isolation procedure for PV:</p>
           <ol className="space-y-2 list-decimal pl-5 marker:text-elec-yellow/70">
@@ -338,7 +338,7 @@ export default function Sub1() {
             <li>DC isolator at the inverter off and locked-off.</li>
             <li>DC isolator at the array (rooftop or accessible location) off and locked-off.</li>
             <li>
-              Wait for the inverter dwell time per manufacturer\'s instructions (allows internal DC
+              Wait for the inverter dwell time per manufacturer’s instructions (allows internal DC
               capacitors to discharge — typically 5-15 minutes).
             </li>
             <li>
@@ -369,7 +369,7 @@ export default function Sub1() {
         <ConceptBlock
           title="ENA G98 fast-track vs G99 pre-application"
           plainEnglish="Every parallel-connected generator in the UK — PV, battery, micro-CHP, micro-wind — connects under one of two ENA Engineering Recommendations. G98 is a fast-track notification process for inverters at or below 16 A per phase per inverter (3.68 kW single-phase). G99 is a pre-application process for anything bigger; the DNO will assess local network capacity and either approve, request modifications, or in rare cases require network reinforcement before connection."
-          onSite="The MCS-certified installer submits the G98 / G99 paperwork — not the apprentice. But you should know which scheme applies and what the timeline is. G98 is essentially a \'fit and tell' (notify within 28 days of commissioning) and is the default for most domestic PV. G99 can take weeks to months and the customer\'s commission date depends on DNO approval."
+          onSite="The MCS-certified installer submits the G98 / G99 paperwork — not the apprentice. But you should know which scheme applies and what the timeline is. G98 is essentially a ‘fit and tell' (notify within 28 days of commissioning) and is the default for most domestic PV. G99 can take weeks to months and the customer’s commission date depends on DNO approval."
         >
           <p>The 16 A per phase boundary in numbers:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -660,7 +660,7 @@ export default function Sub1() {
         <ContentEyebrow>Where it goes wrong</ContentEyebrow>
 
         <CommonMistake
-          title="Treating DC isolation as \'AC off = safe\'"
+          title="Treating DC isolation as ‘AC off = safe’"
           whatHappens={
             <>
               Apprentice arrives to a PV-equipped property to do an unrelated electrical job. They
@@ -668,8 +668,8 @@ export default function Sub1() {
               continues generating; the DC string conductors between the array and the inverter
               remain live at 300-600 V. If the apprentice opens the inverter or touches the DC
               terminals, they can take a 400 V DC shock — serious injury or fatality. The
-              post-incident report finds \'inadequate isolation procedure for PV-equipped
-              property\'.
+              post-incident report finds ‘inadequate isolation procedure for PV-equipped
+              property’.
             </>
           }
           doInstead={
@@ -685,7 +685,7 @@ export default function Sub1() {
         />
 
         <CommonMistake
-          title="Promising the customer they\'ll have power during a grid outage"
+          title="Promising the customer they’ll have power during a grid outage"
           whatHappens={
             <>
               Customer asks &quot;so when there&apos;s a power cut my solar still works,

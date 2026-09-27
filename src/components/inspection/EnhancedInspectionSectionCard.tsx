@@ -39,6 +39,8 @@ interface EnhancedInspectionSectionCardProps {
   onBulkClearSection?: (sectionId: string) => void;
   onBulkMarkNotApplicable?: (sectionId: string) => void;
   quickMarkMode?: boolean;
+  /** The report the photos belong to (ELE-1617) — the EICR is not routed by id, so it is passed, not read from the URL. */
+  reportId?: string;
 }
 
 // Data titles are ALL CAPS with trailing regulation refs in parentheses.
@@ -75,6 +77,7 @@ const EnhancedInspectionSectionCard = ({
   onBulkClearSection,
   onBulkMarkNotApplicable,
   quickMarkMode,
+  reportId,
 }: EnhancedInspectionSectionCardProps) => {
   const isMobile = useIsMobile();
   const haptic = useHaptic();
@@ -289,6 +292,7 @@ const EnhancedInspectionSectionCard = ({
                     onUpdateItem={onUpdateItem}
                     onOutcomeChange={handleOutcomeChange}
                     onNavigateToObservations={onNavigateToObservations}
+                    reportId={reportId}
                   />
                 );
               })}
@@ -307,6 +311,7 @@ const EnhancedInspectionSectionCard = ({
                     onOutcomeChange={handleOutcomeChange}
                     onNavigateToObservations={onNavigateToObservations}
                     quickMarkMode={quickMarkMode}
+                    reportId={reportId}
                   />
                 );
               })}

@@ -45,6 +45,7 @@ import { useCertificateEmail } from '@/hooks/useCertificateEmail';
 import { EmailCertificateDialog } from '@/components/certificate-completion/EmailCertificateDialog';
 import { scrollToTopForStepChange } from '@/utils/scroll';
 import { coverKeysFromFormData } from '@/utils/certCoverPayload';
+import { useEngineerVerify } from '@/utils/engineerVerify';
 
 const REPORT_TYPE = 'fire-alarm-design' as const;
 
@@ -64,6 +65,9 @@ export default function FireAlarmDesignCertificate() {
     ...getDefaultFireAlarmFormData(),
     certificateType: 'design',
   });
+
+  // ELE-1453 — Elec-ID verify QR for the signature box; {} when the user has none.
+  const engineerVerify = useEngineerVerify();
   const [isSaving, setIsSaving] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [showGenerationDialog, setShowGenerationDialog] = useState(false);
@@ -109,8 +113,12 @@ export default function FireAlarmDesignCertificate() {
     formData,
     enabled: !isLoading && !isLocked,
     isHydrating: isLoading, // Gate autosave while loading from cloud — prevents blank-overwrite race.
-    onReportCreated: (newId) => {
+    onReportCreated: (newId: string, certificateNumber?: string) => {
       setSavedReportId(newId);
+      // ELE-1592 — keep the number the row was filed under; without this the
+      // form stayed blank and the PDF printed an invented timestamp.
+      if (certificateNumber)
+        setFormData((prev) => (prev.certificateNumber ? prev : { ...prev, certificateNumber }));
       window.history.replaceState(
         null,
         '',
@@ -141,7 +149,7 @@ export default function FireAlarmDesignCertificate() {
   const buildPdfPayload = useCallback(() => {
     let dataWithBranding: Record<string, any> = {
       ...formData,
-      certificateNumber: formData.certificateNumber || `FA/G1-${Date.now()}`,
+      certificateNumber: formData.certificateNumber,
     };
     if (hasSavedCompanyBranding) {
       const branding = loadCompanyBranding();
@@ -158,7 +166,7 @@ export default function FireAlarmDesignCertificate() {
         };
       }
     }
-    return formatFireAlarmG1Json(dataWithBranding);
+    return { ...formatFireAlarmG1Json(dataWithBranding), ...engineerVerify };
   }, [formData, hasSavedCompanyBranding, loadCompanyBranding]);
 
   // Formatted payload for email sends — try/catch so a formatter error falls

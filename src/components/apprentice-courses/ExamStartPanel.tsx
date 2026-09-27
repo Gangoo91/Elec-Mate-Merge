@@ -17,7 +17,7 @@
 import { ArrowLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
-import { CARD_PRIMARY, CARD_SURFACE, SURFACE_DEPTH } from '@/components/ui/card-recipe';
+import { CARD_PRIMARY, CARD_SURFACE } from '@/components/ui/card-recipe';
 import type { MockExamHistory } from '@/hooks/useMockExamHistory';
 
 export interface ExamStartPanelProps {
@@ -203,8 +203,8 @@ export function ExamStartPanel({
                 <span
                   key={t}
                   className={cn(
-                    'rounded-full border border-elec-yellow/35 px-3 py-1.5 text-[12px] font-medium text-white',
-                    SURFACE_DEPTH
+                    'rounded-full border border-white/12 px-3 py-1.5 text-[12px] font-medium text-white',
+                    CARD_SURFACE
                   )}
                 >
                   {t}
@@ -214,13 +214,18 @@ export function ExamStartPanel({
           </section>
         )}
 
-        {/* Volt EDGE — the original carried this in blue, which is off-brand
-            and read as a system message rather than exam guidance. */}
+        {/*
+          Was a full-strength volt ring with no fill, so on the dark page it
+          read as a yellow outline drawn around raw black — `SURFACE_DEPTH` is
+          the highlight and shadow only, it carries no background. It now sits
+          on the standard card surface with the ring softened, so it reads as
+          a card with something to say rather than a warning box.
+        */}
         {note && (
           <p
             className={cn(
-              'mt-5 rounded-xl border border-elec-yellow px-4 py-3 text-[13px] font-medium leading-relaxed text-white',
-              SURFACE_DEPTH
+              'mt-5 rounded-xl border border-elec-yellow/30 px-4 py-3 text-[13px] font-medium leading-relaxed text-white',
+              CARD_SURFACE
             )}
           >
             {note}

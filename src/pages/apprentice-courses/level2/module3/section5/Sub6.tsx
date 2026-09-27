@@ -105,7 +105,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'Scheme bodies treat seal breaking as a serious breach. The cut-out fuse is not yours to touch; pulling it is a "theft of seal" offence even if no electricity is abstracted, and an abstraction charge under the Theft Act 1968 follows if any unmetered supply is taken. Loss of scheme membership effectively ends a contractor\'s ability to certify domestic work in the UK.',
+      'Scheme bodies treat seal breaking as a serious breach. The cut-out fuse is not yours to touch; pulling it is a "theft of seal" offence even if no electricity is abstracted, and an abstraction charge under the Theft Act 1968 follows if any unmetered supply is taken. Loss of scheme membership effectively ends a contractor’s ability to certify domestic work in the UK.',
   },
   {
     id: 3,
@@ -200,7 +200,7 @@ const faqs = [
   {
     question: 'What is the difference between SMETS1 and SMETS2 smart meters?',
     answer:
-      'SMETS1 (the original 2011-onwards spec) communicated directly with the original supplier — change supplier and the meter often went "dumb" until adopted by the DCC. SMETS2 (current spec since 2018) communicates via the DCC WAN, so any supplier can read it. Most SMETS1 meters have been migrated onto the DCC by now. From the electrician\'s point of view they look the same in the cabinet; the difference is invisible until you change supplier.',
+      'SMETS1 (the original 2011-onwards spec) communicated directly with the original supplier — change supplier and the meter often went "dumb" until adopted by the DCC. SMETS2 (current spec since 2018) communicates via the DCC WAN, so any supplier can read it. Most SMETS1 meters have been migrated onto the DCC by now. From the electrician’s point of view they look the same in the cabinet; the difference is invisible until you change supplier.',
   },
   {
     question: 'Can I work on the customer-side meter tails without isolating the supply?',

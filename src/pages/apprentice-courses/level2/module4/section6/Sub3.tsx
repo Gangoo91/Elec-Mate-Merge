@@ -184,14 +184,14 @@ const quizQuestions = [
     question:
       'A circuit reads >999 MΩ (off the top of the MFT scale, often shown as OL or > 999 MΩ) on the IR test. Pass or fail?',
     options: [
-      'Pass — the reading is above the meter\'s measurement range, which means the actual IR is at least the top of scale. Healthy new T&E and similar wiring should always read like this. Document on the STR as ">999 MΩ" or the equivalent symbol the form specifies.',
+      'Pass — the reading is above the meter’s measurement range, which means the actual IR is at least the top of scale. Healthy new T&E and similar wiring should always read like this. Document on the STR as ">999 MΩ" or the equivalent symbol the form specifies.',
       'Fail — a reading off the top of the scale means the meter has lost contact with the circuit, so no valid measurement was taken and the test must be repeated.',
       'Fail — insulation resistance must fall within a measurable band (1 to 100 MΩ); a reading above the scale indicates an open conductor rather than good insulation.',
       'Inconclusive — record it as "infinite" and re-test at 1000 V DC, because the 500 V test cannot resolve very high resistances accurately.',
     ],
     correctAnswer: 0,
     explanation:
-      'A reading above the MFT scale (typically 999 MΩ or 200 GΩ depending on instrument range) is exactly what you want to see. It means the leakage current through the insulation is below the meter\'s detection threshold — i.e. the insulation is doing its job perfectly. On the schedule of test results record it as ">999 MΩ" or ">200 GΩ" or whatever the form requires for "above range". Do not record it as "0" or "infinite" — both are misleading for any future inspector reading the form.',
+      'A reading above the MFT scale (typically 999 MΩ or 200 GΩ depending on instrument range) is exactly what you want to see. It means the leakage current through the insulation is below the meter’s detection threshold — i.e. the insulation is doing its job perfectly. On the schedule of test results record it as ">999 MΩ" or ">200 GΩ" or whatever the form requires for "above range". Do not record it as "0" or "infinite" — both are misleading for any future inspector reading the form.',
   },
 ];
 
@@ -281,7 +281,7 @@ export default function Sub3() {
         <ConceptBlock
           title="The point of the IR test"
           plainEnglish="Cable insulation degrades over time and can be damaged during installation. The IR test stresses the insulation with a high DC voltage and measures the leakage current. A high leakage = low resistance = failing insulation."
-          onSite="On a fresh install, IR confirms you didn\'t damage the cable during routing — no nicks against sharp edges, no pinched conductors at back-boxes, no twisted-pair shorts at terminations. On periodic inspection it tracks insulation aging."
+          onSite="On a fresh install, IR confirms you didn’t damage the cable during routing — no nicks against sharp edges, no pinched conductors at back-boxes, no twisted-pair shorts at terminations. On periodic inspection it tracks insulation aging."
         >
           <p>
             Insulation systems on a typical UK cable include the conductor sheath (the thermoplastic
@@ -419,7 +419,7 @@ export default function Sub3() {
           meaning={
             <>
               Test each distribution circuit separately — testing the whole installation as one
-              gives a false low reading because every circuit\'s leakage adds in parallel. For each
+              gives a false low reading because every circuit’s leakage adds in parallel. For each
               test, all final circuits should be connected but current-using equipment (appliances)
               disconnected. Modern A4:2026 also references the 250 V DC follow-up test under Reg
               643.3.3 for cases where electronics had to be disconnected.
@@ -441,7 +441,7 @@ export default function Sub3() {
         <ContentEyebrow>The disconnect-and-retest rule (A4:2026 update)</ContentEyebrow>
 
         <ConceptBlock
-          title="Why you can\'t leave the electronics in"
+          title="Why you can’t leave the electronics in"
           plainEnglish="500 V DC will damage or false-trigger most modern electronic devices that rely on internal capacitive coupling, surge clamping, or isolation monitoring. Disconnect them, test the cabling, then reconnect and run a gentler 250 V test."
           onSite="The disconnect list grew significantly with A4:2026: SPDs, AFDDs, LED drivers, dimmers, smart switches, EV charger control modules, induction hob driver boards, fixed-wire EMC filters."
         >
@@ -505,7 +505,7 @@ export default function Sub3() {
               The two-step test was added in A4:2026 to close a gap: previously, you would
               disconnect electronics, test the cabling, reconnect, and walk away — the electronics
               themselves were never tested. Now, after reconnection, the gentler 250 V DC test
-              confirms the equipment\'s own insulation between live and CPC is sound. 1 MΩ minimum
+              confirms the equipment’s own insulation between live and CPC is sound. 1 MΩ minimum
               applies to both tests.
             </>
           }
@@ -784,7 +784,7 @@ export default function Sub3() {
               You start the IR test on a CU with an SPD installed at the incoming side. You forget
               to lift the SPD module out of its base. Every circuit reading comes in at around 0.05
               MΩ — well below the 1.0 MΩ minimum. You panic, suspect every cable in the house is
-              failing, start tracing faults that don\'t exist. Eventually somebody notices the SPD
+              failing, start tracing faults that don’t exist. Eventually somebody notices the SPD
               and you remove it, retest, and every circuit reads above 999 MΩ.
             </>
           }
@@ -806,7 +806,7 @@ export default function Sub3() {
               On a 12-circuit CU you decide to save time by linking all the L and N conductors at
               the bus and running one test L+N to E. Reading: 6 MΩ. You think there is a fault. You
               spend 30 minutes localising and find that every individual circuit reads above 800 MΩ.
-              The 6 MΩ was just twelve good circuits in parallel — Ohm\'s law on paralleled leakage
+              The 6 MΩ was just twelve good circuits in parallel — Ohm’s law on paralleled leakage
               paths.
             </>
           }
@@ -838,7 +838,7 @@ export default function Sub3() {
               Pre-test prep: verify isolation across the whole CU; identify the SPD module and lift
               it out of its base; identify the three dimmers and switch them at the wall so they are
               in the off position (or remove and replace with temporary blanks if they are
-              removable); identify the EV charger sub-circuit and isolate at the charger\'s own
+              removable); identify the EV charger sub-circuit and isolate at the charger’s own
               isolator; switch every functional switch on so all downstream cabling is included.
               <br />
               <br />

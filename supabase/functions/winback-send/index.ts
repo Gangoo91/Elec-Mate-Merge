@@ -207,10 +207,21 @@ serve(async (req) => {
     //     would never match a queued `foo@bar.com` and the suppression would
     //     silently do nothing. Same explicit range as above, for the same
     //     reason — an unbounded select stops at 1000 rows.
-    const { data: suppressedRows } = await supabase
+    //     And it FAILS CLOSED. Taking `data` without the error meant a failed
+    //     read yielded null, an empty Set, and the whole batch mailed with no
+    //     suppression applied — silently, the run still reporting ok. That is
+    //     how info@danrobelectrical.co.uk was mailed on 22 Sep 2026, 23 days
+    //     after unsubscribing and two days after this guard went live. There
+    //     is no safe way to send without the list, so abort the run instead.
+    const { data: suppressedRows, error: suppressedError } = await supabase
       .from('email_suppressions')
       .select('email')
       .range(0, 49999);
+    if (suppressedError) {
+      throw new Error(
+        `Refusing to send: could not read email_suppressions (${suppressedError.message})`
+      );
+    }
     const suppressed = new Set(
       (suppressedRows ?? []).map((s) => (s.email || '').trim().toLowerCase()).filter(Boolean)
     );

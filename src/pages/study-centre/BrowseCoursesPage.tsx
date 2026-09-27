@@ -23,7 +23,6 @@ import { useCourseProgress } from '@/hooks/useCourseProgress';
 import { completedSectionsForCourse } from '@/lib/courseProgressMatch';
 import useSEO from '@/hooks/useSEO';
 import { cn } from '@/lib/utils';
-import { useAuth } from '@/contexts/AuthContext';
 
 import { HubPage, HubBody, HubMasthead, HubSectionHeading } from '@/components/hub/HubPrimitives';
 import { CARD_BASE, CARD_NEUTRAL } from '@/components/ui/card-recipe';
@@ -48,8 +47,6 @@ const FILTERS: { key: Filter; label: string }[] = [
 
 export default function BrowseCoursesPage() {
   const navigate = useNavigate();
-  const { profile } = useAuth();
-  const isAdmin = profile?.admin_role === 'super_admin' || profile?.admin_role === 'admin';
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState<Filter>('all');
   const { allProgress } = useCourseProgress();
@@ -104,7 +101,7 @@ export default function BrowseCoursesPage() {
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search 45 courses — try “2391”, “EV”, “cherry picker”"
+              placeholder={`Search ${TOTAL_COURSES} courses — try “2391”, “EV”, “cherry picker”`}
               aria-label="Search courses"
               className="h-12 w-full rounded-xl border border-white/10 bg-white/[0.05] pl-11 pr-11 text-base text-white placeholder:text-white/40 caret-elec-yellow transition-colors hover:border-white/20 focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation [color-scheme:dark] [&::-webkit-search-cancel-button]:hidden"
             />
@@ -182,31 +179,26 @@ export default function BrowseCoursesPage() {
             <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] sm:gap-3">
               {results.map((c) => {
                 const done = progressFor[c.id] ?? 0;
-                const locked = Boolean(c.inDevelopment) && !isAdmin;
+                const inDev = Boolean(c.inDevelopment);
                 return (
                   <button
                     key={c.id}
                     type="button"
-                    disabled={locked}
-                    aria-disabled={locked || undefined}
-                    onClick={() => {
-                      if (locked) return;
-                      navigate(c.path);
-                    }}
+                    onClick={() => navigate(c.path)}
                     className={cn(
                       CARD_BASE,
                       CARD_NEUTRAL,
                       'p-4 text-left',
-                      locked ? 'cursor-not-allowed opacity-70' : 'lg:hover:-translate-y-0.5'
+                      'lg:hover:-translate-y-0.5'
                     )}
                   >
-                    <span className="flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.14em] text-white">
+                    <span className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] font-medium uppercase tracking-[0.14em] text-white">
                       {TRACKS[c.track].short}
                       <span className="h-2.5 w-px bg-white/20" aria-hidden />
                       {c.level}
-                      {locked && (
-                        <span className="ml-auto shrink-0 whitespace-nowrap rounded-full border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[9.5px] font-semibold tracking-wider text-amber-300">
-                          In development
+                      {inDev && (
+                        <span className="whitespace-nowrap rounded-full border border-elec-yellow/30 bg-elec-yellow/10 px-2 py-0.5 text-[9.5px] font-semibold tracking-wider text-elec-yellow">
+                          In review
                         </span>
                       )}
                     </span>
@@ -229,7 +221,7 @@ export default function BrowseCoursesPage() {
                           done > 0 ? 'text-elec-yellow' : 'text-white'
                         )}
                       >
-                        {locked ? 'Soon' : done > 0 ? `${done} done` : 'Start'}
+                        {done > 0 ? `${done} done` : 'Start'}
                       </span>
                     </span>
                   </button>

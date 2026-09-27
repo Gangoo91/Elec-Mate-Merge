@@ -62,7 +62,7 @@ const checks = [
   },
   {
     id: 'l3-m1-s3-sub1-five-steps',
-    question: 'What\'s HSE\'s "five steps to risk assessment"?',
+    question: 'What’s HSE’s "five steps to risk assessment"?',
     options: [
       'Plan, Do, Check, Act, Review — the continuous-improvement loop applied to safety management.',
       'Identify hazards, decide who might be harmed and how, evaluate risks and precautions, record and implement, then review.',
@@ -156,7 +156,7 @@ const quizQuestions = [
   },
   {
     id: 7,
-    question: 'What\'s "POCMR" in MHSWR Reg 5?',
+    question: 'What’s "POCMR" in MHSWR Reg 5?',
     options: [
       'Prepare, Operate, Calibrate, Measure, Record — the test-instrument procedure for inspection and testing.',
       "Protect, Observe, Communicate, Manage, Report — the supervisor's daily site-safety routine.",
@@ -211,7 +211,7 @@ const faqs = [
   {
     question: "What's the L3 add over L2 risk assessment?",
     answer:
-      'L2 followed RAMS. L3 reviews them, signs off the dynamic version, decides when they don\'t fit, escalates for fresh ones. The judgement on when the assessment is "suitable and sufficient" is the L3 step.',
+      'L2 followed RAMS. L3 reviews them, signs off the dynamic version, decides when they don’t fit, escalates for fresh ones. The judgement on when the assessment is "suitable and sufficient" is the L3 step.',
   },
   {
     question: 'How are risk assessments communicated to operatives who weren&apos;t at the survey?',
@@ -642,7 +642,7 @@ export default function Sub1() {
         <SectionRule />
         <ContentEyebrow>Common mistakes</ContentEyebrow>
         <CommonMistake
-          title="Generic \'standard electrical install' RAMS"
+          title="Generic ‘standard electrical install' RAMS"
           whatHappens={
             <>
               Firm uses identical generic RAMS for every job; HSE inspector reviews after near-miss;
@@ -724,10 +724,10 @@ export default function Sub1() {
               You arrive at a 1980s school for a small lighting upgrade. The RAMS says
               "single-storey building, no asbestos register required, occupied premises but work in
               school holidays". Walking the site you find: (1) the building is two-storey with the
-              ground floor being old kitchens you\'ll need to traverse; (2) the asbestos register IS
+              ground floor being old kitchens you’ll need to traverse; (2) the asbestos register IS
               available and shows AIB lining in the ceiling void where you need to run cable; (3)
-              it\'s term-time and there are children in the building because the school runs an
-              inset day. The supervisor isn\'t on site.
+              it’s term-time and there are children in the building because the school runs an
+              inset day. The supervisor isn’t on site.
             </>
           }
           whatToDo={

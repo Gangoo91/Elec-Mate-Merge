@@ -54,7 +54,7 @@ const checks = [
   },
   {
     id: 'l3-m1-s2-sub4-internal',
-    question: 'What\'s the difference between an "internal" and an "external" report?',
+    question: 'What’s the difference between an "internal" and an "external" report?',
     options: [
       "Internal goes to your firm's responsible person; external goes to a regulator such as HSE, the Environment Agency or a scheme body.",
       'Internal = a verbal report; external = a written report. The only difference is whether the report is spoken or written down.',
@@ -123,7 +123,7 @@ const quizQuestions = [
   },
   {
     id: 4,
-    question: 'What\'s a "near-miss" and why does it matter?',
+    question: 'What’s a "near-miss" and why does it matter?',
     options: [
       "An event that could have caused injury but didn't — and the leading indicator of where the next incident will happen.",
       'An injury that just falls short of being RIDDOR-reportable, such as a worker off for six days rather than seven.',
@@ -192,7 +192,7 @@ const faqs = [
   {
     question: "What if my firm doesn't have a named H&S manager?",
     answer:
-      'They\'re required to have one if 5+ employees (MHSWR Reg 7). Ask the contracts manager or director who the designated competent person is. If the answer is "no-one", that\'s itself a Reg 7 breach — escalate to a director and consider raising it externally if necessary.',
+      'They’re required to have one if 5+ employees (MHSWR Reg 7). Ask the contracts manager or director who the designated competent person is. If the answer is "no-one", that’s itself a Reg 7 breach — escalate to a director and consider raising it externally if necessary.',
   },
   {
     question: 'Can I report a concern anonymously?',
@@ -230,7 +230,7 @@ const faqs = [
       "Self-reporting and cooperation are explicit mitigating factors in the Sentencing Council Definitive Guideline for Health and Safety Offences (2016). They don't guarantee no prosecution, but they reduce the band considerably. The HSE Enforcement Management Model also gives weight to voluntary remediation. Honest self-reporting is almost always the lower-cost path.",
   },
   {
-    question: 'What\'s the "Concerns and Advice" line at HSE for?',
+    question: 'What’s the "Concerns and Advice" line at HSE for?',
     answer:
       "It's for members of the public, workers and other interested parties to raise safety concerns about workplaces. Phone 0300 003 1647 or web form at hse.gov.uk/contact/concerns. The HSE triages and decides whether to act. Useful when internal escalation has failed and external route is appropriate under PIDA 1998.",
   },
@@ -295,7 +295,7 @@ export default function Sub4() {
         <ConceptBlock
           title="MHSWR Reg 7 designated competent person"
           plainEnglish="Every firm with 5+ employees must have a designated competent person to assist in undertaking H&S measures. This is your first internal escalation address — usually the H&S manager, contracts manager, Qualified Supervisor or a director."
-          onSite="Find out who this is for YOUR firm on day one. The H&S policy will name them. If the policy doesn\'t exist or doesn\'t name them, that\'s itself a Reg 7 / s.2(3) breach to flag."
+          onSite="Find out who this is for YOUR firm on day one. The H&S policy will name them. If the policy doesn’t exist or doesn’t name them, that’s itself a Reg 7 / s.2(3) breach to flag."
         >
           <p>Internal report categories:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -324,8 +324,8 @@ export default function Sub4() {
 
         <ConceptBlock
           title="Near-miss culture"
-          plainEnglish="Near-misses are events that could have caused injury but didn\'t. Reporting them is the cheapest way to prevent the next incident — Heinrich\'s loose ratio of 300:30:1 (near-misses : minor : serious) is a memory aid."
-          onSite="Most firms have an electronic near-miss reporting form. If yours doesn\'t, write a short note in the job pack. Make it routine — if the only thing that gets reported is actual injury, the firm misses the leading indicators."
+          plainEnglish="Near-misses are events that could have caused injury but didn’t. Reporting them is the cheapest way to prevent the next incident — Heinrich’s loose ratio of 300:30:1 (near-misses : minor : serious) is a memory aid."
+          onSite="Most firms have an electronic near-miss reporting form. If yours doesn’t, write a short note in the job pack. Make it routine — if the only thing that gets reported is actual injury, the firm misses the leading indicators."
         >
           <p>What counts as a near-miss worth reporting:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -373,7 +373,7 @@ export default function Sub4() {
         <ConceptBlock
           title="Multiple regulators, multiple routes"
           plainEnglish="External reports go to the appropriate regulator depending on the issue type. RIDDOR-reportable injuries → HSE. Pollution → Environment Agency / SEPA / NRW. Safeguarding → local authority. Product safety → manufacturer + OPSS. Installation defects with scheme implications → NICEIC / NAPIT. Each has its own route and timescale."
-          onSite="The L3 mapping skill: when an issue arises, identify which regulator(s) and route(s) apply. Internal first; then external via the firm\'s responsible person; then direct external (PIDA-protected) only if internal has failed."
+          onSite="The L3 mapping skill: when an issue arises, identify which regulator(s) and route(s) apply. Internal first; then external via the firm’s responsible person; then direct external (PIDA-protected) only if internal has failed."
         >
           <p>External regulator quick-reference:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -422,7 +422,7 @@ export default function Sub4() {
         <ConceptBlock
           title="EICR — the formal report route for installation defects"
           plainEnglish="Electrical Installation Condition Reports are the L3-relevant formal route for reporting installation defects. The coding system (C1/C2/C3/FI) is the structured way to communicate severity to the dutyholder."
-          onSite="C1 = immediate danger; remedial action required immediately, often before leaving site. C2 = potentially dangerous; remedial action urgent. C3 = improvement recommended; not unsafe but doesn\'t comply with current edition. FI = further investigation needed. The EICR goes to the dutyholder; their EAWR Reg 4(2) duty drives the response."
+          onSite="C1 = immediate danger; remedial action required immediately, often before leaving site. C2 = potentially dangerous; remedial action urgent. C3 = improvement recommended; not unsafe but doesn’t comply with current edition. FI = further investigation needed. The EICR goes to the dutyholder; their EAWR Reg 4(2) duty drives the response."
         >
           <p>EICR coding shorthand:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -450,9 +450,9 @@ export default function Sub4() {
         <SectionRule />
         <ContentEyebrow>Safeguarding awareness</ContentEyebrow>
         <ConceptBlock
-          title="Care Act 2014 — raise the concern, don\'t make the assessment"
-          plainEnglish="Visiting electricians are sometimes the only outside contact a vulnerable adult has in a week. Recognising signs of abuse, neglect or undue pressure — and knowing how to raise it — is a real-world part of L3 trade work, even though it isn\'t the C&G syllabus headline."
-          onSite="If something doesn\'t feel right — bruising the customer doesn\'t explain, a relative who pushes the customer around verbally, evidence of self-neglect, signs of cognitive impairment with no support visible — raise it. Internally to your firm; externally to local authority adult social care if you believe there\'s a safeguarding need. You raise; they assess."
+          title="Care Act 2014 — raise the concern, don’t make the assessment"
+          plainEnglish="Visiting electricians are sometimes the only outside contact a vulnerable adult has in a week. Recognising signs of abuse, neglect or undue pressure — and knowing how to raise it — is a real-world part of L3 trade work, even though it isn’t the C&G syllabus headline."
+          onSite="If something doesn’t feel right — bruising the customer doesn’t explain, a relative who pushes the customer around verbally, evidence of self-neglect, signs of cognitive impairment with no support visible — raise it. Internally to your firm; externally to local authority adult social care if you believe there’s a safeguarding need. You raise; they assess."
         >
           <p>Practical signposting:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">

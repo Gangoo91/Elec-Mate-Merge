@@ -4,7 +4,10 @@ import { supabase } from '@/integrations/supabase/client';
 /** One row a day of the metric snapshots; store columns are null before 2026-08-03. */
 export interface MetricDay {
   day: string;
+  /** List price, before coupons — kept so the cost of the offers stays visible. */
   stripe_mrr: number | null;
+  /** What those subscribers are actually billed. Null before 2026-05-17. */
+  stripe_mrr_net: number | null;
   rc_mrr: number | null;
   stripe_paying: number | null;
   rc_paying: number | null;

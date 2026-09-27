@@ -200,7 +200,7 @@ const faqs = [
   },
   {
     question:
-      'My STR has a column for "Zs measured" but the live test for that circuit hasn\'t been done yet. What do I write?',
+      'My STR has a column for "Zs measured" but the live test for that circuit hasn’t been done yet. What do I write?',
     answer:
       'You can complete the dead-test portion of the STR before energisation and leave Zs measured blank, then add it after the live test phase. Or split the work: dead-test STR first, complete after live tests, single signed version. Either way the final STR before sign-off should have every applicable column filled. Some certification software has explicit dead-test and live-test phases that get merged on completion.',
   },
@@ -208,7 +208,7 @@ const faqs = [
     question:
       'On a CU swap-out where the existing wiring is retained, do I record cable data (CSA, reference method) per the existing wiring or per the new CU?',
     answer:
-      'Per the existing wiring as installed downstream of the new protective device. The STR documents the circuit as it now exists, not the new CU\'s expectations. Where the existing wiring data cannot be reliably determined (e.g. in walls, in ducts), record what you can verify and add a "Limitation" note to the STR — e.g. "Cable type assessed as T&E based on visible accessories; size and reference method estimated from voltage drop calculation".',
+      'Per the existing wiring as installed downstream of the new protective device. The STR documents the circuit as it now exists, not the new CU’s expectations. Where the existing wiring data cannot be reliably determined (e.g. in walls, in ducts), record what you can verify and add a "Limitation" note to the STR — e.g. "Cable type assessed as T&E based on visible accessories; size and reference method estimated from voltage drop calculation".',
   },
   {
     question:
@@ -629,14 +629,14 @@ export default function Sub8() {
               </div>
 
               <div>Recording polarity as "yes" instead of P or tick</div>
-              <div>Use the form\'s standard symbol (P/F or tick/cross); avoid free-text</div>
+              <div>Use the form’s standard symbol (P/F or tick/cross); avoid free-text</div>
 
               <div>Recording RCD result as "Pass" not the actual ms</div>
               <div>
                 Always record measured value (e.g. 28 ms); future drift comparison needs the number
               </div>
 
-              <div>Leaving Notes blank when there\'s a spur or limitation</div>
+              <div>Leaving Notes blank when there’s a spur or limitation</div>
               <div>
                 Document spurs (location + length), test limitations, equipment disconnected
               </div>
@@ -923,7 +923,7 @@ export default function Sub8() {
           title="Quoting old A2 max Zs values on a current-edition certificate"
           whatHappens={
             <>
-              You\'re using a certification template that hasn\'t been updated for A4:2026 — the
+              You’re using a certification template that hasn’t been updated for A4:2026 — the
               "Max Zs" column auto-populates with the old A2 figures (B32 = 1.44 Ω). Your test
               results pass against the displayed table value but actually fail against the current
               A4:2026 value (B32 = 1.37 Ω). The certificate is technically issued against an

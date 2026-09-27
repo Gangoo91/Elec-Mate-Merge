@@ -64,7 +64,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'A heating element converts ALL the electrical energy into heat — that\'s the whole point. From a "useful output" point of view, efficiency is 100%.',
+      'A heating element converts ALL the electrical energy into heat — that’s the whole point. From a "useful output" point of view, efficiency is 100%.',
   },
   {
     id: 2,

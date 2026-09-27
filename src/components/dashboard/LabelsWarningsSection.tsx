@@ -6,6 +6,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
 import { CARD_BASE, CARD_NEUTRAL, CARD_DISABLED } from '@/components/ui/card-recipe';
+import { certificateHref } from '@/utils/certificate-href';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -327,7 +328,11 @@ const LabelsWarningsSection = ({ onBack }: LabelsWarningsSectionProps) => {
                     onClick={() => {
                       if (!route) return;
                       haptic.light();
-                      navigate(`/electrician/inspection-testing/${route}/${doc.report_id}`);
+                      // `route` stays as the label/enabled test; the URL itself
+                      // comes from the shared helper, which applies the same
+                      // isolation-cert → isolation-certificate alias this map
+                      // discovered independently.
+                      navigate(certificateHref(doc.report_type, doc.report_id));
                     }}
                     className={cn(CARD_BASE, CARD_NEUTRAL, 'p-3.5 sm:p-4')}
                   >

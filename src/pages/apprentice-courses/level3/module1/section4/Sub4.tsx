@@ -43,7 +43,7 @@ const checks = [
   },
   {
     id: 'l3-m1-s4-sub4-confined',
-    question: 'What\'s a "confined space" under the Confined Spaces Regs 1997?',
+    question: 'What’s a "confined space" under the Confined Spaces Regs 1997?',
     options: [
       'Any space too small for a person to stand fully upright, regardless of ventilation or the presence of any hazard.',
       'Any enclosed room without a window, such as an internal plant room, cupboard or windowless office.',
@@ -72,7 +72,7 @@ const checks = [
 const quizQuestions = [
   {
     id: 1,
-    question: 'What\'s a "slip" hazard situation?',
+    question: 'What’s a "slip" hazard situation?',
     options: [
       'A tool or cable left projecting at low level across a walkway that catches the foot and causes a person to stumble forward.',
       'Underfoot conditions — water, oil, dust, polished surfaces or weather — that reduce friction below a safe level.',
@@ -124,7 +124,7 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question: 'What\'s "weather-related hazard" for an electrician?',
+    question: 'What’s "weather-related hazard" for an electrician?',
     options: [
       'Only the risk of lightning striking outdoor work — indoor and covered work is unaffected by weather conditions.',
       'Heat, cold, rain, wind and lightning — each affecting the task, the materials and the safety of working at height.',
@@ -137,7 +137,7 @@ const quizQuestions = [
   },
   {
     id: 6,
-    question: 'What\'s the "trip" hazard category?',
+    question: 'What’s the "trip" hazard category?',
     options: [
       'A loss of friction underfoot from a wet, oily or polished surface that causes the foot to slide.',
       'The unintended operation of a protective device such as an MCB or RCD when a circuit fault occurs.',
@@ -193,7 +193,7 @@ const faqs = [
       'Yes if the weather creates an unacceptable risk under MHSWR Reg 3. Document the assessment; escalate to supervisor; reschedule. ERA s.44 protection if pushback follows.',
   },
   {
-    question: 'What\'s a "working platform" under WAH Regs?',
+    question: 'What’s a "working platform" under WAH Regs?',
     answer:
       'Any platform from which a person could fall — scaffold, MEWP, hop-up, ladder rung, roof. Regs apply different inspection regimes by platform type (e.g. weekly scaffold inspection by competent person under WAH Sched 7).',
   },
@@ -642,7 +642,7 @@ export default function Sub4() {
               treated in cellar (still drying); kitchen being decorated by another trade (paint
               solvents in air); customer has 3 children at school but home from 3:30pm; loft access
               via fold-down ladder, no permanent handrail; service void in floor between ground and
-              first floor with joists at unknown spacing; outside it\'s raining and forecast for
+              first floor with joists at unknown spacing; outside it’s raining and forecast for
               storms; nearest A&E 25 minutes drive.
             </>
           }

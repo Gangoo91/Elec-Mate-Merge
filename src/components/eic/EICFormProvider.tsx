@@ -315,6 +315,9 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
     riskAssessmentAttached: false,
     nextInspectionInterval: '',
     nextInspectionDate: '',
+    /* ELE-1632 — off by default and never auto-set, exactly as on the EICR (ELE-882):
+       a recommendation the electrician did not make must not print over their signature. */
+    reinspectOnOccupancyChange: '',
     existingInstallationComments: '',
     bs7671Compliance: false,
     buildingRegsCompliance: false,
@@ -526,9 +529,19 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
   ]);
 
   // Cloud sync integration
-  const handleReportCreated = useCallback((newReportId: string) => {
-    console.log('[EIC] Auto-sync created report:', newReportId);
+  const handleReportCreated = useCallback((newReportId: string, certificateNumber?: string) => {
+    console.log('[EIC] Auto-sync created report:', newReportId, certificateNumber);
     setCurrentReportId(newReportId);
+    /*
+     * ELE-1592 — adopt the number the row was created with, and stand the
+     * mount-time allocator down. Without this the allocator (which keys off
+     * the report id we are setting right here) found state blank and minted a
+     * second number: column N, printed N+1, two numbers burnt per certificate.
+     */
+    if (certificateNumber) {
+      certNumberGenerated.current = true;
+      setFormData((prev) => (prev.certificateNumber ? prev : { ...prev, certificateNumber }));
+    }
   }, []);
 
   const {

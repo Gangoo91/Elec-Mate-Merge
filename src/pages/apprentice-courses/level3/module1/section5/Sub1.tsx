@@ -113,7 +113,7 @@ const quizQuestions = [
   },
   {
     id: 4,
-    question: 'What\'s "consent, connivance or neglect" under HASAWA s.37?',
+    question: 'What’s "consent, connivance or neglect" under HASAWA s.37?',
     options: [
       'Three prongs of director liability — knowing and agreeing, knowing and looking away, or culpable ignorance.',
       'Three grades of penalty — a caution for consent, a fine for connivance and custody for neglect, in order.',
@@ -631,10 +631,10 @@ export default function Sub1() {
           title="Dutyholder cascade in a real situation"
           situation={
             <>
-              You're an L3 apprentice on a small commercial site. You discover that the firm\'s
-              safe-isolation procedure isn\'t being followed by another team — they\'re routinely
+              You're an L3 apprentice on a small commercial site. You discover that the firm’s
+              safe-isolation procedure isn’t being followed by another team — they’re routinely
               skipping the second prove on the voltage indicator. Their supervisor has been told and
-              has done nothing. The behaviour is widespread. You\'re worried someone will get hurt.
+              has done nothing. The behaviour is widespread. You’re worried someone will get hurt.
             </>
           }
           whatToDo={

@@ -33,6 +33,8 @@ interface InspectionSectionCardProps {
   onBulkMarkNotApplicable?: (sectionId: string) => void;
   onBulkClearSection?: (sectionId: string) => void;
   quickMarkMode?: boolean;
+  /** The report the photos belong to (ELE-1617) — the EICR is not routed by id, so it is passed, not read from the URL. */
+  reportId?: string;
 }
 
 const InspectionSectionCard = ({
@@ -47,6 +49,7 @@ const InspectionSectionCard = ({
   onBulkMarkNotApplicable,
   onBulkClearSection,
   quickMarkMode,
+  reportId,
 }: InspectionSectionCardProps) => {
   return (
     <EnhancedInspectionSectionCard
@@ -61,6 +64,7 @@ const InspectionSectionCard = ({
       onBulkMarkNotApplicable={onBulkMarkNotApplicable}
       onBulkClearSection={onBulkClearSection}
       quickMarkMode={quickMarkMode}
+      reportId={reportId}
     />
   );
 };

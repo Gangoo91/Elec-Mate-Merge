@@ -124,7 +124,7 @@ const quizQuestions = [
   {
     id: 5,
     question:
-      'Designer\'s data should include declared compliance with BS 7671 plus any "departures". A departure is:',
+      'Designer’s data should include declared compliance with BS 7671 plus any "departures". A departure is:',
     options: [
       'A circuit that has been left disconnected and has not yet been commissioned.',
       'A design aspect that does not meet BS 7671 but achieves equivalent safety, recorded on the EIC.',
@@ -189,7 +189,7 @@ const faqs = [
       "Up to the consumer side of the cut-out fuse, yes. The cut-out fuse, meter, and supply cable belong to the DNO and are not part of the consumer's installation. Verify your installation from the consumer side of the cut-out outwards (or from the meter outwards if a separate meter), and record any visible defects in the DNO equipment as observations on the EIC for the client to raise with the DNO.",
   },
   {
-    question: 'What\'s the difference between "verification" and "inspection and testing"?',
+    question: 'What’s the difference between "verification" and "inspection and testing"?',
     answer:
       'Verification is the broader concept — confirming the installation meets requirements. Inspection and testing are the two practical methods for verifying: inspection (visual checks per Reg 642) and testing (measurements per Reg 643). All testing is verification; not all verification is testing (some is visual). The EIC has a "Verification" page that summarises both.',
   },
@@ -344,7 +344,7 @@ export default function Sub6() {
               current-carrying capacity.
             </li>
             <li>
-              <strong>Designer\'s declared compliance and any departures.</strong> Confirms what
+              <strong>Designer’s declared compliance and any departures.</strong> Confirms what
               design standard the install was built to and any specific exceptions (recorded on
               EIC).
             </li>
@@ -365,19 +365,19 @@ export default function Sub6() {
 
         <ConceptBlock
           title="Stop, escalate, document"
-          plainEnglish="If the design data is incomplete, your verification baseline is incomplete. Test results without context don\'t prove compliance — they\'re just numbers. Stop and get the missing data before proceeding."
-          onSite="The temptation is to push on. Don\'t. Half-verified installations get certified, defects don\'t get caught, and the certifier gets the call back later. Stop early and the conversation is \'I need this before I can certify\'. Stop late and the conversation is \'why did you certify with this defect?'."
+          plainEnglish="If the design data is incomplete, your verification baseline is incomplete. Test results without context don’t prove compliance — they’re just numbers. Stop and get the missing data before proceeding."
+          onSite="The temptation is to push on. Don’t. Half-verified installations get certified, defects don’t get caught, and the certifier gets the call back later. Stop early and the conversation is ‘I need this before I can certify’. Stop late and the conversation is ‘why did you certify with this defect?'."
         >
           <p>The escalation pathway when data is missing:</p>
           <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
             <li>
               <strong>Identify what is missing.</strong> Cable sizes? Protective device data?
-              Single-line diagram? Designer\'s departures?
+              Single-line diagram? Designer’s departures?
             </li>
             <li>
               <strong>Escalate to the responsible party.</strong> Designer for design data.
               Constructor for as-built. Contracts manager for project documents. Client for history
-              of the installation if it\'s an existing one.
+              of the installation if it’s an existing one.
             </li>
             <li>
               <strong>Set a reasonable timeframe.</strong> "I need this within 24 hours to proceed"
@@ -674,7 +674,7 @@ export default function Sub6() {
             <>
               Undocumented existing installations are common, especially after property changes
               hands. Verification is still possible, but it requires reverse-engineering the design
-              before doing the work. Skipping that step and "just testing whatever\'s there" leads
+              before doing the work. Skipping that step and "just testing whatever’s there" leads
               to incorrect protective device selection, inappropriate RCD types, and missed defects.
               The reverse-engineering effort is part of the job and should be priced in.
             </>

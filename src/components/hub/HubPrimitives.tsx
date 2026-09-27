@@ -463,6 +463,13 @@ export interface HubTool {
   locked?: boolean;
   /** The badge on a locked card. */
   lockedLabel?: string;
+  /**
+   * A badge on a card that IS openable — "In development" on a course that is
+   * published but still under review, for instance. Distinct from `locked`,
+   * which also disables the card. Ignored when `locked` is set, so the two
+   * cannot produce two badges.
+   */
+  badge?: string;
 }
 
 /**
@@ -586,9 +593,9 @@ export const HubToolGrid = ({
                   {card.eyebrow}
                 </span>
               )}
-              {card.locked && (
-                <span className="shrink-0 whitespace-nowrap rounded-full border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[9.5px] font-semibold uppercase tracking-wider text-amber-300">
-                  {card.lockedLabel ?? 'In development'}
+              {(card.locked || card.badge) && (
+                <span className="shrink-0 whitespace-nowrap rounded-full border border-elec-yellow/30 bg-elec-yellow/10 px-2 py-0.5 text-[9.5px] font-semibold uppercase tracking-wider text-elec-yellow">
+                  {card.locked ? (card.lockedLabel ?? 'In development') : card.badge}
                 </span>
               )}
             </span>

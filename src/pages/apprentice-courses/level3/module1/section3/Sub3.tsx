@@ -740,7 +740,7 @@ export default function Sub3() {
               You're scheduled to do an EICR on a small commercial switchroom — 400V three-phase
               distribution, 250A main switch, several sub-DBs. The work involves opening covers,
               observing terminations, taking insulation resistance readings (after isolation). Your
-              firm\'s standard PPE pack has hard hat, safety glasses, hi-vis, safety boots and FFP3
+              firm’s standard PPE pack has hard hat, safety glasses, hi-vis, safety boots and FFP3
               masks.
             </>
           }
@@ -755,13 +755,13 @@ export default function Sub3() {
               (synthetic melts in arc events); (5) insulating mat if working in front of the panel;
               (6) voltage indicator + GS38 leads. Brief the L2 mate on the additions and the
               reasons. Document the PPE selection on the dynamic risk assessment. The standard pack
-              isn\'t wrong; it\'s incomplete for this task.
+              isn’t wrong; it’s incomplete for this task.
             </>
           }
           whyItMatters={
             <>
               Switchgear arc-flash incidents are some of the highest-consequence electrical events.
-              Standard hi-vis + FFP3 pack offers no arc protection. The L3 supervisor\'s PPE
+              Standard hi-vis + FFP3 pack offers no arc protection. The L3 supervisor’s PPE
               selection literacy turns "we have PPE" into "we have the right PPE". The gap between
               the two is what kills people in switchroom incidents.
             </>

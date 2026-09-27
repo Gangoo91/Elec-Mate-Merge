@@ -307,7 +307,7 @@ export default function Sub1() {
           source="HSE Guidance Note GS38 (4th ed) — Probe design"
           clause={
             <>
-              "The instrument\'s probes should incorporate a finger barrier and an insulated tip
+              "The instrument’s probes should incorporate a finger barrier and an insulated tip
               with a maximum length of metal exposed of 4 mm or, where this is not practicable, an
               insulating shroud reducing the exposed metal tip to 4 mm or less."
             </>
@@ -330,7 +330,7 @@ export default function Sub1() {
 
         <ConceptBlock
           title="CAT II / III / IV — what they mean and where they apply"
-          plainEnglish="The CAT (measurement-category) rating tells you how much transient overvoltage the instrument\'s input protection can survive. The further upstream the work, the higher the prospective transient — and the higher the CAT rating you need."
+          plainEnglish="The CAT (measurement-category) rating tells you how much transient overvoltage the instrument’s input protection can survive. The further upstream the work, the higher the prospective transient — and the higher the CAT rating you need."
         >
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
@@ -364,13 +364,13 @@ export default function Sub1() {
 
         <ConceptBlock
           title="The non-contact tester is a first-look tool, not a proving instrument"
-          onSite="Apprentices reach for the volt-stick (Fluke 1AC-A1 II, Knipex VoltagePen) because it\'s quick. It IS quick, and it has a legitimate role — first-pass cable identification. But it is NEVER the instrument that confirms a circuit is dead. The two-pole tester is."
+          onSite="Apprentices reach for the volt-stick (Fluke 1AC-A1 II, Knipex VoltagePen) because it’s quick. It IS quick, and it has a legitimate role — first-pass cable identification. But it is NEVER the instrument that confirms a circuit is dead. The two-pole tester is."
         >
           <p>The technical difference:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
               <strong>Volt-stick (voltage detector)</strong> — non-contact, capacitive sensing of AC
-              voltage in the cable\'s electric field. Convenient. Inconsistent — depends on cable
+              voltage in the cable’s electric field. Convenient. Inconsistent — depends on cable
               shielding, sensor angle, battery, sensitivity setting. Misses high-impedance sources
               entirely.
             </li>
@@ -411,7 +411,7 @@ export default function Sub1() {
 
         <ConceptBlock
           title="What sits in an L3 fault-diagnosis toolbox"
-          onSite="Each instrument has one job it does better than any other. There\'s no overlap that means you can drop one. Build the kit over 18 months."
+          onSite="Each instrument has one job it does better than any other. There’s no overlap that means you can drop one. Build the kit over 18 months."
         >
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
@@ -462,7 +462,7 @@ export default function Sub1() {
           }
           meaning={
             <>
-              The CAT rating isn\'t a marketing claim — it\'s a safety-rated specification under BS
+              The CAT rating isn’t a marketing claim — it’s a safety-rated specification under BS
               EN 61010-1. CAT II in a CAT III location is a real injury risk. Match or exceed.
             </>
           }
@@ -478,7 +478,7 @@ export default function Sub1() {
           whatHappens={
             <>
               Apprentice probes incoming phase to neutral at the cut-out tails with a Fluke 117 (CAT
-              III 600 V). The 117\'s input protection isn\'t rated for the CAT IV transient
+              III 600 V). The 117’s input protection isn’t rated for the CAT IV transient
               overvoltage at the supply origin. Inputs explode, molten metal sprays from the case,
               eye injury. The 117 was the wrong instrument for that location.
             </>
@@ -498,13 +498,13 @@ export default function Sub1() {
               Apprentice waves a Fluke 1AC-A1 II over an isolated cable. No beep. They grab the
               cable bare-handed. The cable has a borrowed neutral and is at 230 V on the neutral.
               The volt-stick missed it because the apprentice waved from the wrong side and the
-              cable\'s sheath shielded the capacitive coupling. 230 V shock, fall from ladder,
+              cable’s sheath shielded the capacitive coupling. 230 V shock, fall from ladder,
               broken arm.
             </>
           }
           doInstead={
             <>
-              Volt-stick is first-look only — \'might be voltage here\'. Proving dead requires a
+              Volt-stick is first-look only — ‘might be voltage here’. Proving dead requires a
               low-impedance two-pole tester (Martindale, Fluke T130) proved on a known live source
               before AND after, applied directly to the conductor between L–N, L–E and N–E.
             </>
@@ -515,7 +515,7 @@ export default function Sub1() {
           title="Building the kit on a starter wage"
           situation={
             <>
-              You\'re three months into your L3 apprenticeship. The firm has issued you an MFT
+              You’re three months into your L3 apprenticeship. The firm has issued you an MFT
               (Kewtech KT64+) and a multimeter (Fluke 117). You need to supply your own two-pole
               tester, proving unit, VDE screwdrivers and basic PPE. Take-home pay is £1,400/month.
             </>
@@ -526,14 +526,14 @@ export default function Sub1() {
               7-piece VDE set (£60), Brady safety lockout padlock + tag (£30). Month 2–3: socket
               tester (£25), Class 0 insulated gloves (£40), arc-rated long-sleeve top (£50),
               high-vis (£10). Month 6: upgrade VDE drivers (Wera Kraftform Plus 15-piece £130),
-              Fluke T6-1000 contactless meter (£200). Year 2: personal MFT if firm doesn\'t issue
+              Fluke T6-1000 contactless meter (£200). Year 2: personal MFT if firm doesn’t issue
               (~£500 second-hand Kewtech KT64+).
             </>
           }
           whyItMatters={
             <>
               The right tools at the right time keep you safe AND productive. Skipping the GS38
-              two-pole to save £60 means you can\'t legally prove dead, can\'t safely do the work,
+              two-pole to save £60 means you can’t legally prove dead, can’t safely do the work,
               are a liability on site. Tools are an investment in employability — apprentices with
               their own kit get sent solo (under remote supervision) sooner.
             </>

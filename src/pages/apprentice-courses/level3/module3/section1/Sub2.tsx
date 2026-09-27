@@ -508,8 +508,8 @@ export default function Sub2() {
           }
           doInstead={
             <>
-              Capital M = mega = 10⁶. Lower-case m = milli = 10⁻³. They\'re a billion times apart.
-              Train yourself to read the symbol, not just the number. Use the calculator\'s ENG
+              Capital M = mega = 10⁶. Lower-case m = milli = 10⁻³. They’re a billion times apart.
+              Train yourself to read the symbol, not just the number. Use the calculator’s ENG
               button — it forces the answer onto a standard prefix step.
             </>
           }
@@ -539,7 +539,7 @@ export default function Sub2() {
           whyItMatters={
             <>
               Misreading the plate by one prefix turns a 1.6 MVA transformer into a 1.6 kVA supply,
-              undersizing every cable downstream by 1000×. SI prefixes aren\'t pedantry — they\'re
+              undersizing every cable downstream by 1000×. SI prefixes aren’t pedantry — they’re
               the difference between a working installation and an instant overload.
             </>
           }

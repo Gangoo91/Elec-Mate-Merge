@@ -1,0 +1,1281 @@
+/**
+ * Ported from the English course, combining:
+ *   level2/module4/section2/Sub3.tsx
+ *   level2/module1/section2/Sub4.tsx
+ *
+ * The Welsh Level 3 qualification covers this material, so the teaching is
+ * carried into this course rather than sending a learner out to read it in
+ * another one. The text is unchanged; only the page shell was removed.
+ *
+ * 🔴 Never describe this content as EAL-approved, EAL-mapped or endorsed.
+ */
+
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
+
+/* ── Inline checks ────────────────────────────────────────────────── */
+
+const checks = [
+  {
+    id: 'mod4-s2-sub3-hierarchy',
+    question:
+      "Under the Work at Height Regulations 2005 Reg 6, what's the order of priority for controlling work-at-height risk?",
+    options: [
+      'Select equipment by height band alone — under 2 m needs no control, 2 m to 6 m a tower, above 6 m a MEWP. The Reg works on fixed height bands, not a priority order.',
+      'Avoid work at height where practicable, then PREVENT a fall, then MINIMISE the distance and consequences of any fall — avoid, prevent, minimise.',
+      'Provide a harness and lanyard as the baseline for all above-ground work, then add a guarded platform only if the task runs over 30 minutes. Personal fall protection is the primary control.',
+      'Inspect the equipment, then train the operative, then issue a permit-to-work — the priority is paperwork and competence before the kit is used, not the type of access.',
+    ],
+    correctIndex: 1,
+    explanation:
+      "WAHR 2005 Reg 6 sets out the three-tier hierarchy. Avoid is the strongest control (do the work from ground level — use long-reach tools, telescopic poles, drop the cable from above instead of running across a ceiling). Prevent is next (a fully boarded scaffold or tower with guardrails — you physically can't fall). Minimise is last (fall arrest harness, soft landing system, MEWP basket — you might fall but the consequence is limited). A ladder is at the BOTTOM of the prevent tier — and only justifiable for short-duration, light-task work where the higher tiers aren't reasonably practicable.",
+  },
+  {
+    id: 'mod4-s2-sub3-ladder-angle',
+    question:
+      "You're setting up an extension ladder against a wall to access a junction box at 3.5m. What angle should the ladder sit at and what's the rule of thumb for getting it right?",
+    options: [
+      '75 degrees from the horizontal — the 1:4 rule. The base sits one unit out from the wall for every four units of vertical height. So for a ladder reaching 4m up the wall, the base sits 1m out. Steeper than 75 degrees and the ladder is liable to topple backwards; shallower and the feet can slip out.',
+      '60 degrees from the horizontal — the 1:2 rule. The base sits one unit out for every two units of height, giving a wide, stable spread that makes the feet much less likely to slip on a smooth floor.',
+      '80 degrees from the horizontal — the 1:6 rule. The base sits one unit out for every six units of height, keeping the ladder close to the wall so it cannot topple backwards while you climb.',
+      '70 degrees from the horizontal — the 1:3 rule. The base sits one unit out for every three units of height, a compromise angle that suits both leaning and stepladder use.',
+    ],
+    correctIndex: 0,
+    explanation:
+      '75 degrees / 1:4 ratio is the established safe angle for a leaning ladder. HSE INDG402 (Safe use of ladders and stepladders) gives this as the standard. Most professional ladders have a tilt-indicator strip on the side stile that aligns when the ladder is at the correct angle. Tying the top off (or footing the base if a second person is available) is required for any ladder being worked from for more than a few minutes. WAHR Schedule 6 sets out the requirements for ladder use.',
+  },
+  {
+    id: 'mod4-s2-sub3-mewp',
+    question:
+      "You're asked to work from a scissor lift in a warehouse to install lighting at 8m. You've never used one before. What's the right next step?",
+    options: [
+      'Ask the warehouse manager to brief you on the controls for ten minutes — a scissor lift only goes up and down, so a quick on-the-spot familiarisation is enough for one job.',
+      "Read the operator's manual on the machine and run it at low speed first — keep movements slow and stay within the guardrail and formal training isn't needed for a vertical-only lift.",
+      'Use the lift only to reach the height and work from a stepladder placed on the platform — your feet stay on a familiar stepladder so you never operate the controls at height.',
+      "Stop — MEWP operation needs IPAF (or equivalent) training, the machine needs a current LOLER thorough examination, and the work goes to a competent operator until that's in place.",
+    ],
+    correctIndex: 3,
+    explanation:
+      "MEWP work is a legally specific category. PUWER Reg 9 requires the operator to be adequately trained for the equipment they're using. IPAF (International Powered Access Federation) holds the de facto training standard in the UK — categories 1a (static vertical), 1b (static boom), 3a (mobile vertical / scissor), 3b (mobile boom / cherry picker). LOLER Reg 9 requires the MEWP to have a current thorough examination report (every 6 months for MEWPs lifting people). Without the licence and the inspection, the work simply doesn't proceed.",
+  },
+];
+
+/* ── End-of-page Quiz ─────────────────────────────────────────────── */
+
+const quizQuestions = [
+  {
+    id: 1,
+    question: "What's the legal basis for selecting access equipment for an electrician's task?",
+    options: [
+      'BS 7671 — the Wiring Regulations set the access requirements for a fixed installation, including which equipment is permitted at each height and the inspection intervals.',
+      'The Work at Height Regulations 2005 — covering any work where a person could fall a distance liable to cause injury, with PUWER and LOLER sitting underneath for the equipment.',
+      'The Manual Handling Operations Regulations 1992 — access kit is carried and positioned by hand, so the load-handling assessment governs whether one person can safely set it up.',
+      'The Construction (Design and Management) Regulations 2015 — CDM is the parent regulation for site work, so the principal contractor selects the access kit in the construction phase plan.',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "WAHR 2005 is the parent regulation for working at height. The 2003 fall-from-a-low-height case law (Hawes v Railtrack) is the reason 'liable to cause personal injury' isn't tied to a specific height — even falls from below 2m are caught if they could cause injury. The hierarchy in Reg 6 is the test the courts apply.",
+  },
+  {
+    id: 2,
+    question: 'Why is a ladder at the BOTTOM of the prevent tier in the WAHR hierarchy?',
+    options: [
+      'Because a ladder is the heaviest and slowest access option to position, so the regulations push it to the bottom to encourage operatives to choose quicker kit like podiums and towers wherever the task allows.',
+      'Because a ladder can only ever be used by one person at a time, whereas towers and MEWPs allow two operatives to work together — the hierarchy ranks equipment by how many workers it can protect at once.',
+      "Because a ladder has no guardrail and relies on the user's three-point contact for stability, giving minimal collective protection — so HSE guidance limits it to short, light, one-handed tasks.",
+      'Because a ladder cannot be subject to a LOLER thorough examination, so the regulations rank it below towers and MEWPs which have a formal six-monthly inspection record proving they are safe to use.',
+    ],
+    correctAnswer: 2,
+    explanation:
+      "Ladders are a permitted access option but they sit at the bottom of the 'prevent' tier because of the limited collective protection. HSE guidance is consistent — short duration, light task, low height, justified choice. A podium step or a tower offers a fully guarded platform; an MEWP offers a guarded basket. The ladder offers neither, which is why it gets the 30-minute / one-location / one-handed-work guidance.",
+  },
+  {
+    id: 3,
+    question:
+      'You need to install a 4m run of trunking up a stairwell at first-floor landing height. Choose between ladder, podium step, or tower scaffold — which justifies on the WAHR hierarchy?',
+    options: [
+      "An extension ladder leaned against the stairwell wall at 75 degrees, tied off at the top. The run is only 4m, and a tied ladder at the correct angle is stable enough, so the higher-cost options aren't justified.",
+      'A step ladder footed at the bottom of the stairs by a second person. With someone holding the base the stability problem is solved, and a step ladder reaches the full run without the cost of building a tower.',
+      'A combination ladder set in its stair-straddling configuration with one leg longer than the other. This is exactly what combination ladders are designed for, so it is the quickest justified choice for stairwell work.',
+      "Podium step or low tower scaffold — the work is two-handed and over 30 minutes at a height where a fall would injure, so a guarded platform is the prevent-a-fall control a ladder can't provide.",
+    ],
+    correctAnswer: 3,
+    explanation:
+      "Stairwell work is the textbook ladder-isn't-suitable scenario. Stairs are uneven, the work is two-handed, and the duration exceeds the 30-minute guidance. PASMA-trained tower assembly with the correct stair-edge configuration (often a podium with stair adjusters or a specially-rated stair tower) is the right call. The added cost in time and kit is well below the cost of a fall onto stairs.",
+  },
+  {
+    id: 4,
+    question: "What's PASMA training and when is it legally required?",
+    options: [
+      'PASMA is the recognised training standard for assembling, dismantling and using mobile tower scaffolds — not a statutory licence, but PUWER Reg 9 requires adequate training and most sites require the card for tower work.',
+      'PASMA is the statutory licence required by law to operate any MEWP — scissor lifts and cherry pickers alike — and the Work at Height Regulations 2005 make it a criminal offence to use a powered platform without a valid PASMA card.',
+      'PASMA is the training standard for erecting traditional tube-and-fitting scaffold, required by law for anyone building fixed scaffold over 2m; mobile towers and podiums fall outside its scope and need no specific card.',
+      "PASMA is a voluntary manufacturer's familiarisation course for a specific tower model, with no legal standing — the only legal requirement for tower work is the WAHR Reg 12 inspection, which anyone competent can carry out.",
+    ],
+    correctAnswer: 0,
+    explanation:
+      "PASMA card holders have been trained on tower assembly per the manufacturer's instruction manual and the WAHR requirements. PUWER Reg 9 is the statutory hook for the training requirement. WAHR Reg 12 then requires the assembled tower to be inspected before use and at intervals. The card on its own isn't legally mandatory but on a notifiable construction site the principal contractor's CDM-driven site rules will almost always require it.",
+  },
+  {
+    id: 5,
+    question: 'Under LOLER 1998 Reg 9, how often must a MEWP be subject to thorough examination?',
+    options: [
+      'Every 12 months, the same as all other lifting equipment under LOLER — a MEWP is examined annually by a competent person, with no shorter interval for platforms that lift people.',
+      'Every 6 months, because a MEWP lifts persons — Reg 9(3) sets 6-monthly for person-lifting equipment (12-monthly or an examination scheme for material-only kit), by a competent person with a written report.',
+      "Only before first use and then whenever the hire company decides — there is no fixed interval in LOLER for MEWPs, so the examination frequency is set entirely by the manufacturer's service schedule.",
+      'Every 3 months, because a MEWP carrying people is high-risk work equipment — the quarterly thorough examination matches the interval for portable-appliance testing of site tools.',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'LOLER 1998 Reg 9(3) sets the thorough examination intervals — 6-monthly for lifting equipment used to lift persons (MEWPs, lift platforms, scaffolding hoists carrying personnel), 12-monthly for other lifting equipment (chain blocks, manual hoists, anchor points used for material lifting only) OR in accordance with an examination scheme drawn up by a competent person. Pre-use inspection by the operator is daily before use. The thorough examination report is a controlled document — no current report, no use of the machine. Hire-supplied MEWPs come with the report; on a long-term hire the examination interval has to be tracked and re-examined when due.',
+  },
+  {
+    id: 6,
+    question:
+      "What's the daily pre-use inspection for a tower scaffold cover and who has to do it?",
+    options: [
+      'There is no daily check required for a tower — once it has passed its post-assembly inspection it is signed off for the whole job, and only a fresh build or major alteration triggers another inspection.',
+      'The daily check is a structural test of the castors and braces using a torque wrench, carried out by the PASMA-card holder who built the tower; an ordinary user is not permitted to inspect it at all.',
+      'WAHR Reg 12 requires inspection after assembly, after any affecting event and at intervals not exceeding 7 days — the user runs the daily check on stability, structure, guardrails and the current tag.',
+      'The daily check is a LOLER thorough examination by an independent examiner, the same regime that applies to MEWPs, because a tower lifts people to height and so falls under the lifting-equipment rules.',
+    ],
+    correctAnswer: 2,
+    explanation:
+      "WAHR Reg 12 + Schedule 7 set out the inspection regime. The 7-day interval for towers is the headline rule, with the daily / pre-use check by the user on top. The Form 91 / scaff tag system is the standard way of recording the formal inspection — the tag at the access point of the tower shows who inspected, when, and the next due date. No tag, or expired tag, the tower doesn't get used until re-inspected.",
+  },
+  {
+    id: 7,
+    question: "What does 'three-point contact' mean on a ladder?",
+    options: [
+      'The ladder must be supported at three points on the ground — the two feet plus a third stabiliser bar or outrigger — so that it cannot rock sideways on an uneven floor while in use.',
+      'Three people are involved in safe ladder use — one climbing, one footing the base, and one passing materials up — so that the climber never has to carry anything while moving on the ladder.',
+      'The ladder must be inspected at three points before use — the feet, the rungs and the locking latches — and any one of the three failing takes the ladder out of service.',
+      'The user keeps three points of contact at all times — two feet and a hand, or two hands and a foot — so two-handed work and carrying loads up the ladder are ruled out.',
+    ],
+    correctAnswer: 3,
+    explanation:
+      "Three-point contact is the foundational ladder safety rule — INDG402 and the manufacturer's guidance both reinforce it. The implication is that real two-handed work cannot be done from a ladder safely — and that's why ladders are limited to short, light, one-handed-work tasks where a higher tier of access (podium, tower, MEWP) isn't reasonably practicable.",
+  },
+  {
+    id: 8,
+    question:
+      "On a notifiable construction site, what does the PC's induction typically cover regarding access equipment?",
+    options: [
+      'Site rules on which access categories are permitted, the inspection / Form 91 regime for towers and MEWPs, storage and security of kit, and the permit-to-work and authorisation chain for specialised access.',
+      'A demonstration that each operative can erect and dismantle a tower scaffold unaided, assessed on the spot, because the principal contractor must verify competence directly rather than rely on a PASMA card.',
+      'Confirmation that the operative owns their own ladder and tower, since the principal contractor does not provide access equipment and every trade must bring and maintain their own kit on a CDM site.',
+      'A signed waiver accepting that the operative uses access equipment at their own risk, transferring the working-at-height duty from the principal contractor to the individual worker for the duration of the project.',
+    ],
+    correctAnswer: 0,
+    explanation:
+      "Access equipment is one of the most regulated areas of construction site work because it accounts for the largest single category of fatalities (falls from height are the leading cause of UK construction fatalities). The PC's induction will typically restrict ladder use, require PASMA cards for tower work, require IPAF for MEWPs, and lay out the inspection and tagging system. Skipping the induction or ignoring the site rules is the fastest way to be sent off site.",
+  },
+];
+
+/* ── FAQs ─────────────────────────────────────────────────────────── */
+
+const faqs = [
+  {
+    question: 'Are ladders banned from construction sites?',
+    answer:
+      "No, but they are heavily restricted. WAHR 2005 doesn't ban ladders — it requires them to be the right choice on the hierarchy (avoid > prevent > minimise). For short-duration (typically up to 30 minutes), light, one-handed-work tasks where a higher tier isn't reasonably practicable, a ladder is still acceptable. On most large construction sites the principal contractor's site rules require explicit permission to use a ladder for anything more than brief access.",
+  },
+  {
+    question: "What's the difference between a podium step and a tower scaffold?",
+    answer:
+      "A podium step is a small, free-standing aluminium platform (typically 0.5m to 1.5m platform height) with a fully guarded working area and integral steps. It's quick to set up and ideal for tasks where a step ladder would otherwise be used but with much better fall protection. A tower scaffold is a larger structure (multiple lifts, platform heights up to 12m for a typical mobile tower) with a boarded platform, guardrails, toeboards and brake-locking castors. Both eliminate the ladder-stability problem; the choice between them is height range and footprint.",
+  },
+  {
+    question: 'Do I need PASMA to use a tower somebody else has built?',
+    answer:
+      "If you're only using the platform — not assembling, altering or dismantling — you don't strictly need a PASMA card. But you DO need to know the basics: don't move the tower with people on it, don't overload the platform, don't climb on the outside, don't alter the configuration. Most construction sites require PASMA for users as well as assemblers, and the PASMA Tower User course (half-day) covers exactly this.",
+  },
+  {
+    question: "Who's responsible for inspecting a ladder before I use it?",
+    answer:
+      'You are. PUWER 1998 Reg 6 puts a duty on the employer to maintain work equipment, but the user has a personal duty under HASAWA s.7 to take reasonable care and check the equipment is fit for use before using it. The pre-use ladder check covers — stiles (no cracks, no impact damage), rungs (all present, none bent, non-slip surface intact), feet (not worn, anti-slip pads in place), latches/locks (engage fully on extension ladders), tilt indicator (where fitted, sights correctly at 75 degrees in use). Damaged ladder = take out of service, label, return to van.',
+  },
+  {
+    question: "What's the height limit for a free-standing mobile tower scaffold?",
+    answer:
+      "PASMA's standard guidance is 12m platform height for outdoor use and 12m for indoor use, subject to the tower manufacturer's specific limits and the working environment. Above that, the tower normally has to be tied to the building or use outriggers/stabilisers. For a stair landing tower the limit is lower (typically 2.5m platform height) because of the inherent instability of building on stairs. The manufacturer's instruction manual is the binding document for any specific tower model.",
+  },
+  {
+    question: "Can I use a ladder I've borrowed from the customer?",
+    answer:
+      "Risky. PUWER Reg 6 requires work equipment to be maintained — and you have no record of how the customer's ladder has been treated, what damage it's accumulated, or whether it meets the relevant product standard (EN 131 for professional ladders). Most firms require operatives to use only the firm's own ladders that are subject to a known inspection regime. Using a customer's ladder also puts the firm in a difficult position if the ladder fails — the equipment wasn't yours but the work-at-height was your activity.",
+  },
+];
+
+/* ── Inline check questions (preserved — wired into stats/streaks) ── */
+
+const checks2 = [
+  {
+    id: 'wahr-definition-check',
+    question: 'How do the Work at Height Regulations 2005 define "working at height"?',
+    options: [
+      'Any work carried out at least 2 metres above ground level',
+      'Any work above the height of an average stepladder',
+      'Anywhere you could fall a distance liable to cause personal injury',
+      'Any work on a scaffold, tower or MEWP platform',
+    ],
+    correctIndex: 2,
+    explanation:
+      'There’s no magic number. If you could fall and hurt yourself — even a metre off a podium step — the Regs apply. That’s why ladder falls in domestic jobs still get prosecuted.',
+  },
+  {
+    id: 'hierarchy-check',
+    question: 'What’s the order of the height hierarchy under WAHR 2005?',
+    options: [
+      'Plan, provide, train',
+      'Avoid, prevent, mitigate',
+      'Inspect, install, monitor',
+      'Assess, isolate, protect',
+    ],
+    correctIndex: 1,
+    explanation:
+      'Avoid the work at height if you can. If you can’t, prevent the fall with collective kit (towers, MEWPs, edge protection). Only as last resort, mitigate the fall with personal kit (harness, lanyard).',
+  },
+  {
+    id: 'confined-standby-check',
+    question: 'A mate goes down a manhole to dress some cables. What’s the standby person’s job?',
+    options: [
+      'Stay outside, keep contact, raise the alarm — don’t enter to rescue',
+      'Wait at the van and check on the radio every 20 mins',
+      'Go in with him in case he needs a hand',
+      'Test the atmosphere once at the start, then crack on with other work',
+    ],
+    correctIndex: 0,
+    explanation:
+      'Reg 5 of the Confined Spaces Regs requires emergency arrangements. The standby person stays out, keeps comms, raises the alarm. Most confined-space deaths are people who went in to rescue without proper kit.',
+  },
+];
+
+/* ── End-of-page Quiz (preserved — wires into stats/streaks) ──────── */
+
+const quizQuestions2 = [
+  {
+    id: 1,
+    question: 'Under the Work at Height Regulations 2005, when do the Regs kick in?',
+    options: [
+      'Only above 2 metres from the ground',
+      'Anywhere a fall could cause personal injury',
+      'Only when using a ladder or scaffold',
+      'Only above the height of one storey',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'There’s no height threshold. If a fall could hurt someone, you’re working at height — even on a hop-up changing a downlight.',
+  },
+  {
+    id: 2,
+    question: 'What’s the correct hierarchy under WAHR 2005?',
+    options: [
+      'Precautionary statements advising on handling, storage, and emergency response',
+      'Zinc oxide fume from the galvanised coating, which can cause metal fume fever',
+      'Avoid working at height → prevent the fall (collective) → mitigate the fall (personal)',
+      'Competent person scheme membership or building control notification',
+    ],
+    correctAnswer: 2,
+    explanation:
+      "Always start by asking 'do I even need to be up there?' Use poles, drop the fitting down, design out the work. If you must go up, use a tower or MEWP. Harness only when you can’t prevent the fall.",
+  },
+  {
+    id: 3,
+    question: 'What’s the right ladder angle, in trade terms?',
+    options: [
+      '1 out for every 5 up',
+      '1 out for every 3 up',
+      'Bolt upright against the wall',
+      '1 out for every 4 up (about 75°)',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The 1:4 rule. Roughly 75°. Too shallow and the feet kick out. Too steep and the top falls back. Most modern ladders have an angle indicator on the stile — use it.',
+  },
+  {
+    id: 4,
+    question: 'A leaning ladder is being used for short, light work. How long is "short"?',
+    options: ['Up to 30 minutes', 'Up to 5 minutes', 'Up to a full shift', 'No time limit'],
+    correctAnswer: 0,
+    explanation:
+      'HSE’s LA455 guidance: max 30 minutes at one position for a leaning ladder. Anything longer needs a tower, podium or MEWP. If you’re halfway through and the kettle goes on, you’re probably over the limit.',
+  },
+  {
+    id: 5,
+    question: 'Which of these is a confined space under the 1997 Regulations?',
+    options: [
+      'Any room without windows or natural ventilation',
+      'Any space substantially enclosed where there’s a foreseeable specified risk',
+      'Any space you have to crouch or crawl to enter',
+      'Any underground room such as a basement or cellar',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Two parts to the test. Substantially enclosed AND a specified risk — fire/explosion, loss of consciousness from gas/fumes/lack of O—, drowning, asphyxiation from solids, or temperature. Cable risers, plant rooms and floor voids can all qualify.',
+  },
+  {
+    id: 6,
+    question: 'Normal air is about 21% oxygen. At what level does it become a danger?',
+    options: [
+      'Only below 10% — anything above that is perfectly safe',
+      'Only above 25% — a slight drop below 21% does no harm',
+      'Below 19.5% (deficient) or above 23.5% (enriched)',
+      'Exactly at 21% — any change at all is immediately fatal',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Below 19.5% you start to get drowsy and uncoordinated — well before you collapse. Above 23.5% normally non-flammable stuff catches fire dangerously easy. Multi-gas detectors alarm at both ends.',
+  },
+  {
+    id: 7,
+    question: 'What’s the law on ladder pre-use checks2?',
+    options: [
+      'A recorded inspection once a year is enough — no daily check needed',
+      'Only brand-new ladders need checking; older ones are exempt',
+      'A formal written inspection is required before every single use',
+      'Visual pre-use check by the user, plus a recorded detailed inspection at intervals (typically every 3–12 months)',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'WAHR Reg 12 plus PUWER 1998. You eyeball it before each use — stiles, rungs, feet, locking bars. The company keeps a recorded inspection log. No record = the supervisor can’t prove the kit was fit for use.',
+  },
+  {
+    id: 8,
+    question: 'Three of these are duties under the Confined Spaces Regs 1997. Which is NOT?',
+    options: [
+      'Carry out the work alone to keep numbers down',
+      'Have suitable emergency arrangements before entry',
+      'Avoid entry if the work can be done another way',
+      'Have a safe system of work',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Regs 4, 4(2) and 5: avoid entry if you can, have a safe system if you can’t, and rescue arrangements ready BEFORE anyone goes in. Working alone in a confined space is a textbook bad idea — you need a standby person and comms.',
+  },
+];
+
+/* ── FAQs (apprentice voice) ──────────────────────────────────────── */
+
+const faqs2 = [
+  {
+    question:
+      'I’m only changing a light fitting on a podium step — do all these regs really apply?',
+    answer:
+      'Yes. The Work at Height Regulations 2005 don’t care that it’s only a couple of metres or a quick job. If you could fall and hurt yourself, the duties apply: pre-use check, right kit for the job, plan, supervision, training. The good news is for low-risk work like that, the controls are usually simple and quick — a properly inspected podium plus three points of contact does the job.',
+  },
+  {
+    question: 'When does a leaning ladder become not-ok and I should call for a tower?',
+    answer:
+      'Three triggers. (1) The job will take more than about 30 minutes at the same position. (2) You can’t maintain three points of contact — e.g. you need both hands free to land a heavy fitting. (3) You’re over-reaching, leaning beyond the stile. Any of those, get a tower or MEWP. The cost of hiring one is way less than the cost of falling.',
+  },
+  {
+    question: 'Is a cable riser, plant room or false floor a confined space?',
+    answer:
+      'It can be. Apply the two-part test: substantially enclosed AND a foreseeable specified risk (oxygen depletion, gases, fire, fumes, engulfment). A small basement plant room with poor ventilation and a gas main could be one. A floor void where you’re crawling around with cable spools — same. If in doubt, treat it as one until a proper risk assessment says otherwise.',
+  },
+  {
+    question: 'Can I just stick my head in to grab a cable end — surely that’s not ‘entry’?',
+    answer:
+      'Under the Confined Spaces Regs, ‘entry’ means breaking the plane of the opening with your head or upper body. If your head is in, you’re in — with all the duties that brings (atmosphere tested, standby person, rescue plan). Don’t try to play games with the definition; HSE inspectors and judges aren’t impressed.',
+  },
+  {
+    question: 'What kit do I need for a quick atmosphere test before going down a manhole?',
+    answer:
+      'A multi-gas detector — four-gas as a minimum: oxygen (O—), carbon monoxide (CO), hydrogen sulphide (H—S) and lower explosive limit (LEL) for flammable gas. Bump-test it daily, calibrate it on schedule, and lower the probe through the opening BEFORE you put your head in. Test top, middle and bottom — some gases settle, others rise.',
+  },
+  {
+    question: 'My foreman says we’ve always done it this way and the harness will do. What now?',
+    answer:
+      "The Regs put fall arrest (harness) BELOW collective protection (towers, MEWPs, edge protection) in the hierarchy. 'We’ve always done it' isn’t a defence. Politely ask why we’re not using the higher-tier control. If you’re still pushed, raise it up the chain and write it down — date, time, who said what. HASAWA s.7 puts the duty on you too.",
+  },
+];
+
+export default function Lesson303_10_1() {
+  return (
+    <div className="space-y-8">
+
+      <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+        Working at height is the leading cause of UK construction fatalities. The Work at Height
+        Regulations 2005 set the hierarchy — avoid, prevent, minimise — and force you to justify
+        the kit you pick rather than reach for the ladder by default.
+      </p>
+
+      <TLDR
+        points={[
+          'WAHR 2005 Reg 6 sets a three-tier hierarchy — avoid working at height where reasonably practicable, then PREVENT a fall (fully guarded platform), then MINIMISE the consequences (harness, soft landing). A ladder sits at the BOTTOM of the prevent tier.',
+          'Selection by task duration + height + load + competence. Short, light, one-handed work over 30 minutes? Ladder may be justifiable. Anything more substantial? Podium, tower, MEWP.',
+          'Tower scaffold = PASMA training. MEWP = IPAF training plus LOLER 6-monthly thorough examination. Both have a daily pre-use inspection on top of the formal regime.',
+        ]}
+      />
+
+      <LearningOutcomes
+        outcomes={[
+          "State the three-tier hierarchy in WAHR 2005 Reg 6 — avoid, prevent, minimise — and apply it to a typical electrician's working-at-height task.",
+          'Identify the common categories of access equipment used by electricians — ladders (extension, step, combination), podium steps, mobile tower scaffolds, MEWPs (scissor lifts and boom lifts), trestles, hop-ups.',
+          'Apply the selection criteria — duration, height, load, competence — to choose justifiable access equipment.',
+          'Recognise the training and competence requirements for PASMA (towers) and IPAF (MEWPs).',
+          'Carry out a pre-use inspection of ladders, podiums and towers; recognise the LOLER thorough examination interval for MEWPs (6 months for person-lifting).',
+          'Apply the 75 degree / 1:4 angle rule for leaning ladders and the three-point contact rule for ladder use.',
+        ]}
+        initialVisibleCount={3}
+      />
+
+      <ContentEyebrow>Why the hierarchy matters</ContentEyebrow>
+
+      <ConceptBlock
+        title="Falls from height — the leading cause of UK construction fatalities"
+        plainEnglish="Year on year, falls from height account for the largest single category of fatalities in UK construction (around a quarter of all fatal injuries). The HSE has prosecuted electricians and their firms more times for falls than for almost any other cause. The Work at Height Regulations 2005 are the response — a hierarchy that forces you to justify the kit you pick rather than reach for the ladder by default."
+        onSite="The hierarchy sounds like bureaucracy until you've seen the consequence. A 1.8m fall from a step ladder onto a hard floor — well below the height that an apprentice usually thinks of as 'working at height' — is enough to break a wrist or shatter a hip. The regulation is deliberately written without a height threshold because the consequence depends on what you fall onto."
+      >
+        <p>The hierarchy in plain terms:</p>
+        <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+          <li>
+            <strong>Avoid</strong> — can the work be done from ground level? Long-reach tools,
+            telescopic poles, drop the cable from above, design out the high-level fixings.
+          </li>
+          <li>
+            <strong>Prevent (collective)</strong> — fully boarded platform with guardrails and
+            toeboards, working from inside a MEWP basket. The user physically cannot fall.
+          </li>
+          <li>
+            <strong>Prevent (personal)</strong> — work-restraint harness preventing the user from
+            reaching the fall edge.
+          </li>
+          <li>
+            <strong>Minimise</strong> — fall arrest harness with shock-absorbing lanyard clipped
+            to a rated anchor, soft landing systems (airbags, nets) underneath. The user might
+            fall but the consequence is limited.
+          </li>
+        </ol>
+        <p>
+          A ladder sits at the bottom of the prevent tier — it provides some prevention
+          (you&apos;re standing on a stable platform) but no collective protection (no guardrail)
+          and depends entirely on three-point contact for safety.
+        </p>
+      </ConceptBlock>
+
+      <RegsCallout
+        source="Work at Height Regulations 2005 — Reg 6(2) and 6(3)"
+        clause={
+          <>
+            <p className="mb-2">
+              <strong>Reg 6(2)</strong> — &quot;Every employer shall ensure that work is not
+              carried out at height where it is reasonably practicable to carry out the work
+              safely otherwise than at height.&quot;
+            </p>
+            <p>
+              <strong>Reg 6(3)</strong> — &quot;Where work is carried out at height, every
+              employer shall take suitable and sufficient measures to prevent, so far as is
+              reasonably practicable, any person falling a distance liable to cause personal
+              injury.&quot;
+            </p>
+          </>
+        }
+        meaning={
+          <>
+            Reg 6(2) is the &apos;avoid&apos; rung — if the work can be done at ground level, it
+            must be done at ground level. Reg 6(3) is the &apos;prevent&apos; rung — where
+            avoidance isn&apos;t possible, the measures must prevent a fall liable to cause
+            injury. Reg 6(4) and 6(5) cover &apos;minimise&apos; — work equipment that minimises
+            fall distance and consequences. The duty cascades from top to bottom of the hierarchy
+            and you have to justify why the lower control was needed.
+          </>
+        }
+        cite="Source: Work at Height Regulations 2005 (SI 2005/735), Reg 6 — verbatim from legislation.gov.uk."
+      />
+
+      <InlineCheck
+        id={checks[0].id}
+        question={checks[0].question}
+        options={checks[0].options}
+        correctIndex={checks[0].correctIndex}
+        explanation={checks[0].explanation}
+      />
+
+      <SectionRule />
+
+      <ContentEyebrow>Categories of access equipment</ContentEyebrow>
+
+      <ConceptBlock
+        title="Step ladders, extension ladders, combination ladders"
+        plainEnglish="Step ladders are A-frame self-supporting ladders for low-level work. Extension ladders are leaning ladders with a sliding section for higher reach. Combination ladders convert between formats. All three are at the bottom of the prevent tier and have the same usage limits — short duration (up to 30 minutes at one location), light tasks, three-point contact at all times, one-handed work where reasonably practicable."
+        onSite="The most common ladder mistakes are: wrong angle (steeper or shallower than 75°), feet not on level ground (use stabilisers or shims, not bricks), top not tied or footed (a leaning ladder above 3m needs to be tied at the top or footed at the base), overreaching (belt buckle stays between the stiles), carrying materials up (use a tool belt or hauling line)."
+      >
+        <p>Ladder categories and their use cases:</p>
+        <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+          <li>
+            <strong>Step ladder</strong> — short access (up to 2.5m platform height typically),
+            two-handed if there&apos;s a platform top with a tool tray and the user keeps a free
+            hand on the spreader brace. Locking spreader required before use.
+          </li>
+          <li>
+            <strong>Extension ladder</strong> — leaning against a wall or scaffold for higher
+            access (up to 6m typical). 75° / 1:4 angle. Tied or footed for any extended use. Top
+            extending at least 1m above the working level for a hand-hold.
+          </li>
+          <li>
+            <strong>Combination ladder</strong> — converts between A-frame and extension.
+            Adjustable hinges. Useful for awkward access (over a stairwell, irregular ground). The
+            hinge mechanism is a wear point — pre-use check pays particular attention to the lock
+            action.
+          </li>
+        </ul>
+        <p>
+          All ladders should be EN 131 compliant for professional use. The old EN 131-2:2010 had
+          been superseded by EN 131-2:2017 which raised the strength and durability standards.
+          Ladders manufactured to the older standard can still be used while serviceable but new
+          purchases should be to the current standard.
+        </p>
+      </ConceptBlock>
+
+      <ConceptBlock
+        title="Podium steps and hop-ups — guarded low-level platforms"
+        plainEnglish="Podium steps are small free-standing aluminium platforms with integral guardrails and a built-in step access. Working platform heights are typically 0.5m to 1.5m. They eliminate the ladder-stability problem for low-level work — you stand on a fully boarded platform with rails on three or four sides, and you can do two-handed work safely."
+        onSite="Podiums are the right tool for kitchen and ceiling-installation work where the height range fits and the work is two-handed. Quick to set up, easy to move, no PASMA card required (though training on the specific make is required under PUWER). Cost is higher than a step ladder but the productivity gain on a typical install repays it within a job or two."
+      >
+        <p>The headline benefits of a podium over a step ladder:</p>
+        <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+          <li>
+            Fully guarded platform — three-point contact rule no longer applies because
+            you&apos;re inside a guardrail.
+          </li>
+          <li>Two-handed work permitted — chasing, fixing, drilling all possible.</li>
+          <li>Stable base with locking castors or feet — no overturn risk.</li>
+          <li>Tool tray for materials and tools at platform level.</li>
+        </ul>
+        <p>
+          Hop-ups are even simpler — small fixed-height platforms (typically 0.5m or so) for very
+          low-level access. Quick to deploy, no guardrail required at the low height, ideal for
+          socket-height work where a step ladder would be overkill.
+        </p>
+      </ConceptBlock>
+
+      <ConceptBlock
+        title="Mobile tower scaffolds — PASMA territory"
+        plainEnglish="A mobile tower scaffold is a free-standing structure built up from prefabricated frames, decks and braces, with locking castors at the base. Platform heights of 2m to 12m are typical for an indoor tower. Fully boarded platform with guardrails and toeboards — full collective fall prevention. Assembly, alteration and dismantling require PASMA-trained operatives."
+        onSite="Towers are the right answer for sustained work at height where a podium isn't tall enough and a MEWP isn't practical (interior work, narrow spaces, no power for a MEWP). The setup time is longer than a podium (15-30 minutes for a small tower) but you have a stable, guarded platform for the duration of the work. Outriggers / stabilisers are required above certain heights — manufacturer's instruction manual sets the limits."
+      >
+        <p>Tower scaffold key requirements:</p>
+        <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+          <li>
+            <strong>PASMA training</strong> for assemblers, alterers and dismantlers (PUWER Reg
+            9). Most sites require it for users too.
+          </li>
+          <li>
+            <strong>WAHR Reg 12 inspection</strong> after assembly, after any event affecting the
+            tower (high winds, impact), and at intervals not exceeding 7 days. Form 91 / scaff tag
+            at the access point.
+          </li>
+          <li>
+            <strong>Manufacturer&apos;s instruction manual</strong> — the binding document for
+            assembly. Each model has specific requirements for outriggers, ties, and maximum
+            platform heights.
+          </li>
+          <li>
+            <strong>Brakes locked</strong> before access. Don&apos;t move the tower with anyone or
+            any material on the platform.
+          </li>
+          <li>
+            <strong>Stair towers</strong> — specialised configuration with stair adjusters for
+            landings. Lower platform-height limit (typically 2.5m on stair landings).
+          </li>
+        </ul>
+      </ConceptBlock>
+
+      <ConceptBlock
+        title="MEWPs — scissor lifts and cherry pickers"
+        plainEnglish="Mobile Elevated Work Platforms (MEWPs) include scissor lifts (vertical only, larger basket) and boom lifts / cherry pickers (articulating arm, smaller basket). Used for high-level work in commercial and industrial environments where a tower isn't practical or quick enough. IPAF licensed operators only."
+        onSite="MEWPs are the right answer for warehouse lighting, high-level commercial cabling, and any work where the access needs to move around the building during the task. Cherry pickers in particular need fall arrest harness clipped to the basket anchor (not a guardrail) because of the catapult risk if the boom strikes an obstruction. Scissor lifts in fixed vertical configuration usually don't require harness but the site rules may differ."
+      >
+        <p>MEWP categories (IPAF):</p>
+        <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+          <li>
+            <strong>1a — Static vertical</strong> — push-around scissor or vertical mast,
+            outriggers required.
+          </li>
+          <li>
+            <strong>1b — Static boom</strong> — push-around boom MEWP (rare).
+          </li>
+          <li>
+            <strong>3a — Mobile vertical</strong> — self-propelled scissor lift. The most common
+            indoor MEWP for electrician work.
+          </li>
+          <li>
+            <strong>3b — Mobile boom</strong> — self-propelled boom / cherry picker. Outdoor work,
+            higher reach, basket-anchored harness required.
+          </li>
+        </ul>
+        <p>
+          LOLER 1998 Reg 9 requires MEWPs lifting people to be subject to thorough examination at
+          intervals of not more than 6 months. The current report must be available with the
+          machine. Daily pre-use inspection by the operator (Reg 9(3)) checks visible damage, tyre
+          condition, hydraulic leaks, controls operation, brake function and the certificate
+          validity.
+        </p>
+      </ConceptBlock>
+
+      <RegsCallout
+        source="Work at Height Regulations 2005 — Reg 12(1) and 12(3)"
+        clause={
+          <>
+            <p className="mb-2">
+              <strong>Reg 12(1)</strong> — &quot;Every employer shall ensure that, where the
+              safety of work equipment depends on how it is installed or assembled, it is not used
+              after installation or assembly in any position unless it has been inspected in that
+              position.&quot;
+            </p>
+            <p>
+              <strong>Reg 12(3)</strong> — &quot;Every employer shall ensure that work equipment
+              exposed to conditions causing deterioration which is liable to result in dangerous
+              situations is inspected at suitable intervals, and each time that exceptional
+              circumstances which are liable to jeopardise the safety of the work equipment have
+              occurred, to ensure that health and safety conditions are maintained and that any
+              deterioration can be detected and remedied in good time.&quot;
+            </p>
+          </>
+        }
+        meaning={
+          <>
+            Reg 12(1) is the post-assembly inspection rule — a tower scaffold or any other
+            assembled access kit must be inspected after build and before use. Reg 12(3) is the
+            in-service inspection rule — at intervals (typically 7 days for towers) and after any
+            exceptional event (impact, high winds, alteration). Schedule 7 to the Regulations sets
+            out the form and content of the inspection record. The Form 91 / scaff tag system is
+            the industry-standard way of meeting this.
+          </>
+        }
+        cite="Source: Work at Height Regulations 2005 (SI 2005/735), Reg 12 — verbatim from legislation.gov.uk."
+      />
+
+      <InlineCheck
+        id={checks[1].id}
+        question={checks[1].question}
+        options={checks[1].options}
+        correctIndex={checks[1].correctIndex}
+        explanation={checks[1].explanation}
+      />
+
+      <SectionRule />
+
+      <ContentEyebrow>Selection criteria — duration, height, load, competence</ContentEyebrow>
+
+      <ConceptBlock
+        title="Pick the kit by the task — not by what's in the van"
+        plainEnglish="The right access equipment for a task is determined by four factors — how long the work takes, how high it is, how much you need to carry up, and the competence available. Working through those four in order against the WAHR hierarchy gives you a defensible justification."
+        onSite="The temptation is to grab the ladder because it's already in the van. The discipline is to walk through the four factors against the hierarchy and only end up at the ladder if the higher controls aren't reasonably practicable. After an incident the inspector asks 'why this kit?' and the answer needs to be more than 'it was what we had'."
+      >
+        <p>The four selection factors:</p>
+        <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+          <li>
+            <strong>Duration</strong> — short (under 30 minutes at one location, light task,
+            one-handed) keeps a ladder in play. Anything sustained moves to podium, tower or MEWP.
+          </li>
+          <li>
+            <strong>Height</strong> — under 1.5m platform height = hop-up or podium. 1.5m to 4m =
+            podium or low tower. 4m to 12m = tower (PASMA) or MEWP. Above 12m = MEWP, scaffold or
+            rope access depending on the work type.
+          </li>
+          <li>
+            <strong>Load</strong> — what tools and materials need to be at platform level? A tower
+            has a higher SWL than a ladder and gives a tray for materials. A MEWP has a basket SWL
+            declared on the data plate.
+          </li>
+          <li>
+            <strong>Competence</strong> — who&apos;s available with the right training? No IPAF on
+            site = no MEWP work. No PASMA = no tower assembly. A job that needs a competent
+            operator who isn&apos;t available has to wait, get a competent person in, or use a
+            different category of access.
+          </li>
+        </ul>
+      </ConceptBlock>
+
+      <SectionRule />
+
+      <ContentEyebrow>Where it goes wrong</ContentEyebrow>
+
+      <CommonMistake
+        title="Setting a ladder at the wrong angle"
+        whatHappens={
+          <>
+            Apprentice props a 5m extension ladder against a wall, eyeballs it as &quot;about
+            right&quot;, climbs up to fit a junction box. Ladder is at about 65° from horizontal —
+            too shallow. The feet slip outwards, the ladder slides down the wall, apprentice falls
+            3m onto a concrete floor. Wrist and ribs broken. The ladder had a tilt-indicator strip
+            on the side stile (most professional ladders do) but the apprentice didn&apos;t look
+            at it. Investigation finds the training record on ladder use was last signed three
+            years ago and the firm hadn&apos;t refreshed it.
+          </>
+        }
+        doInstead={
+          <>
+            Apply the 1:4 rule every time. Base out one unit for every four units up. Use the
+            tilt-indicator strip on the ladder if fitted &mdash; it&apos;s built in for exactly
+            this reason. Tie the top off or have a second person foot the base for any extended
+            use. Refresh ladder training annually &mdash; it&apos;s not a once-and-done
+            qualification because complacency is the main risk.
+          </>
+        }
+      />
+
+      <CommonMistake
+        title="Using a tower scaffold without checking the inspection tag"
+        whatHappens={
+          <>
+            Apprentice arrives on a fit-out and finds a tower already built in the work area from
+            yesterday&apos;s shift. Climbs up and starts working. Tower&apos;s outrigger on one
+            side has been moved overnight by another trade and not re-deployed correctly. Tower
+            goes unstable when the apprentice shifts weight. Falls 3m onto an unfinished floor.
+            Investigation finds the Form 91 was last inspected three weeks earlier and there was
+            no daily pre-use check.
+          </>
+        }
+        doInstead={
+          <>
+            Every tower has a current Form 91 / scaff tag at the access point. Check it before you
+            climb. Has it been inspected within the last 7 days? Has anything significant happened
+            since (impact, alteration, high winds)? Daily pre-use walk-around &mdash; outriggers
+            deployed, brakes on, all components present, guardrails intact, platform fully
+            boarded. Two minutes before climbing.
+          </>
+        }
+      />
+
+      <InlineCheck
+        id={checks[2].id}
+        question={checks[2].question}
+        options={checks[2].options}
+        correctIndex={checks[2].correctIndex}
+        explanation={checks[2].explanation}
+      />
+
+      <Scenario
+        title="Bracket a 4m run of trunking up a stairwell — ladder, podium, or tower?"
+        situation={
+          <>
+            You&apos;re on a domestic conversion and need to run trunking from the first-floor
+            landing down to the ground-floor consumer unit. The vertical run is about 4m, the
+            bottom of the run reaches the stairwell floor, the top is at landing level. Work
+            involves measuring the run, marking, drilling brackets, fixing trunking sections,
+            joining sections, dropping cable in &mdash; all two-handed work, total expected
+            duration about three hours over the day. Stairwell is about 1m wide.
+          </>
+        }
+        whatToDo={
+          <>
+            Apply the four selection criteria against the WAHR hierarchy. Avoid? No &mdash; the
+            trunking has to be at this height. Prevent? The work is two-handed (drilling, cutting,
+            fixing, dropping cable), of substantial duration (three hours), at heights up to 4m. A
+            ladder fails the one-handed-work and short- duration tests. A podium step has the
+            platform-height range covered for the lower part but not the top of the run. A tower
+            scaffold (with stair-tower configuration) gives a fully boarded platform up the entire
+            stairwell with guardrails on three sides. The right answer is a stair tower &mdash;
+            PASMA training required for assembly, Form 91 inspection after build, daily pre-use
+            check. Yes, it adds 30-45 minutes for setup but the total task is three hours, so the
+            proportion is acceptable, and a fall onto stairs would be a serious injury. The ladder
+            is the wrong choice and the inspector would prosecute on a fall.
+          </>
+        }
+        whyItMatters={
+          <>
+            Stairwell work is the textbook scenario where ladder use is wrong but tempting. The
+            inclination is to use what&apos;s in the van and finish quickly. The discipline is to
+            walk through duration, height, load and competence against the hierarchy and arrive at
+            the right kit. After an incident the &quot;we used what we had&quot; defence collapses
+            immediately. After a successful job the stair-tower setup looks like overkill &mdash;
+            until you&apos;ve seen the consequence of a stairwell fall.
+          </>
+        }
+      />
+
+      <SectionRule />
+
+      <FAQ items={faqs} />
+
+      <SectionRule />
+
+      <KeyTakeaways
+        points={[
+          'Falls from height are the leading cause of UK construction fatalities. WAHR 2005 Reg 6 sets the three-tier hierarchy that forces you to justify the kit you pick — avoid, prevent, minimise.',
+          "A ladder is at the bottom of the prevent tier — short duration (up to 30 minutes at one location), light, one-handed work, where higher controls aren't reasonably practicable.",
+          '75 degree / 1:4 rule for leaning ladders. Three-point contact at all times. Tilt-indicator strips on the side stile of professional ladders confirm the angle.',
+          'Podium steps and hop-ups give a fully guarded low-level platform — eliminate the ladder-stability problem for two-handed work up to about 1.5m platform height.',
+          'Tower scaffolds need PASMA training for assembly, alteration and dismantling. WAHR Reg 12 requires inspection after build and at intervals not exceeding 7 days. Form 91 / scaff tag at the access point.',
+          'MEWPs need IPAF training for the operator (categories 1a, 1b, 3a, 3b) and LOLER 1998 Reg 9 thorough examination every 6 months for person-lifting equipment. Daily pre-use inspection on top.',
+          "Selection by duration + height + load + competence, walked against the WAHR hierarchy. The ladder is rarely the right answer for substantial work — the inclination to grab it because it's in the van is the prosecutable error.",
+          "Pre-use inspection of every access item is the user's daily duty under PUWER Reg 6 and HASAWA s.7. Damaged kit comes out of service before work starts, not after the fall.",
+        ]}
+      />
+
+      <Quiz title="Access equipment — knowledge check" questions={quizQuestions} />
+
+      {/* ── Prev / next nav ─────────────────────────────────── */}
+
+      <SectionRule />
+
+
+      <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+        Falls are still the biggest single killer on UK building sites. Bad atmospheres in
+        confined spaces aren’t far behind. Two sets of regs, one mindset: don’t go up, in or down
+        without thinking it through first.
+      </p>
+
+      <TLDR
+        points={[
+          "Work at Height Regs 2005 apply ANY time you could fall and get hurt — there’s no '2-metre rule'.",
+          'Hierarchy: avoid work at height → prevent the fall with collective kit (towers, MEWPs, edge protection) → mitigate it with personal kit (harness) only as a last resort.',
+          'A confined space is enclosed AND has a foreseeable specified risk. Don’t enter without atmosphere testing, a permit, and a standby person who never goes in to rescue.',
+        ]}
+      />
+
+      <LearningOutcomes
+        outcomes={[
+          'Define working at height and a confined space using the actual statutory wording.',
+          'Apply the WAHR 2005 hierarchy to a real on-site decision.',
+          'Pick the right access equipment for the job — and know when a leaning ladder isn’t it.',
+          'Run the four-step pre-entry routine for a confined space (test, ventilate, permit, standby).',
+          'Recognise the electrical add-ons that make height and confined-space work harder than the textbook says.',
+          'Know who carries the duty when something goes wrong — and what your s.7 obligation looks like in practice.',
+        ]}
+        initialVisibleCount={3}
+      />
+
+      <ContentEyebrow>Why this section matters</ContentEyebrow>
+
+      <ConceptBlock title="Falls and bad air kill more electricians than electricity does">
+        <p>
+          HSE figures every year tell the same story. Falls from height are the biggest single
+          cause of fatal injury on construction sites — usually from low heights, doing routine
+          jobs, on equipment that wasn’t right for the task. Confined-space fatalities are rarer
+          but tend to come in pairs: the worker who collapses, and the mate who runs in to help
+          without proper kit.
+        </p>
+        <p>
+          Both are easy to underestimate. A podium step "isn’t really high". A floor void "isn’t
+          really a confined space". That’s how people end up in court rooms and wheelchairs. The
+          Regs exist because the trade kept finding new ways to fall and to suffocate.
+        </p>
+      </ConceptBlock>
+
+      <SectionRule />
+
+      <ContentEyebrow>The law on height work</ContentEyebrow>
+
+      <ConceptBlock
+        title="There’s no '2-metre rule' — there never was"
+        plainEnglish="If a fall would hurt you, the Work at Height Regulations apply. Doesn’t matter if it’s 50cm off a hop-up or 5m up a tower."
+        onSite="People still say things like 'it’s only a step ladder, the height regs don’t kick in'. That’s wrong. They’ve always applied to anywhere a fall could cause injury."
+      >
+        <p>
+          The Work at Height Regulations 2005 (WAHR) replaced an older patchwork that did have
+          height thresholds. The 2005 Regs binned the threshold and made it about{' '}
+          <strong>risk of injury</strong>, not metres. An electrician falling backwards off a
+          two-rung hop-up onto a concrete floor breaks just as many bones as one falling off an
+          extension ladder.
+        </p>
+        <p>
+          The duty falls on whoever organises the work — your employer, the contractor, sometimes
+          you if you’re self-employed — and on you personally under HASAWA s.7.
+        </p>
+      </ConceptBlock>
+
+      <RegsCallout
+        source="Work at Height Regulations 2005 — Regulation 6(3)"
+        clause="Where work is carried out at height, every employer shall take suitable and sufficient measures to prevent, so far as is reasonably practicable, any person falling a distance liable to cause personal injury."
+        meaning={
+          <>
+            One sentence does most of the work. The duty is to <strong>prevent the fall</strong>,
+            not just pad the landing. That’s why the hierarchy puts towers and MEWPs ABOVE
+            harnesses — preventing is better than catching. "Reasonably practicable" is the same
+            balance you saw under HASAWA: the bigger the risk, the more you have to do.
+          </>
+        }
+        cite="Reference: legislation.gov.uk — The Work at Height Regulations 2005 (SI 2005/735)"
+      />
+
+      <ConceptBlock
+        title="The hierarchy: avoid → prevent → mitigate"
+        onSite="Tutors love to grill apprentices on this. Memorise the three words and what each one means — it comes up in college, on AM2 and on real RAMS forms."
+      >
+        <p>WAHR Reg 6 lays out the order you have to think in:</p>
+        <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+          <li>
+            <strong>1. Avoid.</strong> Can the job be done from the ground? Long poles for
+            lighting, drop the fitting down to test it, design the cable run differently, pre-fab
+            on a bench. If you don’t need to go up, don’t.
+          </li>
+          <li>
+            <strong>2. Prevent the fall (collective).</strong> Scaffold towers, MEWPs (cherry
+            pickers, scissor lifts), podium steps with guardrails, edge protection. These stop
+            anyone falling, not just the person wearing the kit. They protect everyone on the
+            platform at once.
+          </li>
+          <li>
+            <strong>3. Mitigate the fall (personal).</strong> Harness with lanyard to a proper
+            anchor, fall arrest nets, airbags. These don’t stop the fall — they reduce how badly
+            it ends. Last resort, not first choice.
+          </li>
+        </ul>
+        <p>
+          The order matters legally. If something goes wrong and the HSE asks why you used a
+          harness instead of a tower, "it was quicker" isn’t an answer they’re going to like.
+        </p>
+      </ConceptBlock>
+
+      <InlineCheck
+        id={checks2[0].id}
+        question={checks2[0].question}
+        options={checks2[0].options}
+        correctIndex={checks2[0].correctIndex}
+        explanation={checks2[0].explanation}
+      />
+
+      <SectionRule />
+
+      <ContentEyebrow>Picking the right access kit</ContentEyebrow>
+
+      <ConceptBlock
+        title="Ladders are for access and short, light work"
+        plainEnglish="Ladders aren’t banned. They’re fine for getting up to a platform, or for a quick job where you can keep three points of contact. They’re not workshops."
+        onSite="HSE’s 'LA455 — Safe use of ladders and stepladders' is the doc that gets quoted at inquests. Worth a 10-minute read."
+      >
+        <p>
+          The trade myth that "ladders are illegal" came from the older Regs being scrapped.
+          Ladders are still legal — but only if they’re the most suitable kit for the job, the job
+          is short and light, and you can work safely from them.
+        </p>
+        <p>The HSE rules of thumb:</p>
+        <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+          <li>
+            <strong>Time:</strong> max 30 minutes at one position for a leaning ladder. Longer =
+            get a tower.
+          </li>
+          <li>
+            <strong>Three points of contact:</strong> two feet and a hand, or two hands and a
+            foot, on the ladder at all times. If the job needs both hands free, it’s the wrong
+            kit.
+          </li>
+          <li>
+            <strong>1:4 angle (about 75°):</strong> 1 unit out for every 4 units up. Modern Class
+            1 ladders have a sticker on the stile.
+          </li>
+          <li>
+            <strong>Secure it.</strong> Tie the top to something solid, or use a stand-off bracket
+            and a footer at the base.
+          </li>
+          <li>
+            <strong>Pre-use check.</strong> Stiles straight, no missing rungs, feet not worn,
+            locking bars on extension ladders engaged.
+          </li>
+        </ul>
+      </ConceptBlock>
+
+      <ConceptBlock title="Towers, podiums and MEWPs — when each one earns its place">
+        <p>
+          <strong>Podium steps</strong> are the everyday upgrade from a stepladder for second-fix
+          work. Guardrail platform, both hands free, stable. If you’re doing more than half an
+          hour on a stepladder, the podium is almost always the right answer.
+        </p>
+        <p>
+          <strong>Mobile scaffold towers</strong> (PASMA-trained erector required) are for longer
+          work at moderate heights — long lighting runs in a warehouse, multiple ceiling points in
+          a corridor. Wheels locked, outriggers out, guardrails up, never moved with anyone on
+          board.
+        </p>
+        <p>
+          <strong>MEWPs</strong> (cherry pickers, scissor lifts — IPAF card needed) are for high
+          work, awkward angles, or when there’s no floor space for a tower. Always wear the
+          harness IN the basket — not for falling out, but for being thrown out by a sudden
+          movement.
+        </p>
+      </ConceptBlock>
+
+      <RegsCallout
+        source="Work at Height Regulations 2005 — Regulation 12(1)"
+        clause="Every employer shall ensure that, where the safety of any work equipment depends on how it is installed or assembled, it is not used after installation or assembly unless it has been inspected in that position."
+        meaning={
+          <>
+            In English: a tower has to be inspected (and the inspection recorded) before anyone
+            goes on it, after any alteration, and at intervals of no more than 7 days if it stays
+            up. The Scaffold Tag system on the bottom of the tower is how that gets recorded — if
+            there’s no current tag, don’t use it.
+          </>
+        }
+        cite="Reference: legislation.gov.uk — WAHR 2005 Reg 12; HSE INDG401 'Scaffold Inspection'"
+      />
+
+      <CommonMistake
+        title="Using the top of a stepladder as a workbench"
+        whatHappens={
+          <>
+            You’re balanced on the very top step (the one labelled "do not stand"), drilling into
+            a ceiling, leaning sideways to reach the next downlight. The step rocks slightly. Your
+            knee buckles. You go off the side, you don’t have time to grab anything, you land on
+            the consumer unit you just installed.
+          </>
+        }
+        doInstead={
+          <>
+            Top step is for the platform-style stepladders only — and only the ones designed for
+            it (with a railed platform and side guards). For everything else, your knees should
+            always be below the top of the steps. If you can’t reach without over-stretching, get
+            a podium or a taller stepladder. Costs nothing to swap kit; costs everything to fall.
+          </>
+        }
+      />
+
+      <SectionRule />
+
+      <ContentEyebrow>Confined spaces — the law</ContentEyebrow>
+
+      <ConceptBlock
+        title="What actually counts as a confined space"
+        plainEnglish="Two-part test. First: is the space substantially enclosed? Second: is there a foreseeable specified risk — fire/explosion, gas, lack of oxygen, drowning, engulfment, or heat?"
+      >
+        <p>
+          The Confined Spaces Regulations 1997 don’t list rooms by name. They give you a test:
+        </p>
+        <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+          <li>
+            <strong>Substantially enclosed:</strong> not necessarily fully sealed. A floor void
+            with one access hatch counts. So does a partly open trench if it’s deep enough.
+          </li>
+          <li>
+            <strong>Specified risk:</strong> at least one of — fire/explosion, loss of
+            consciousness from gases/fumes/lack of O—, drowning, asphyxiation by free-flowing
+            solids, dangerous heat.
+          </li>
+        </ul>
+        <p>
+          Electricians meet confined spaces all the time and don’t always clock it: cable risers,
+          floor voids, basement plant rooms, manholes for street lighting, transformer rooms,
+          ducts behind switchgear, lift pits. If both parts of the test are met, the Regs apply —
+          full stop.
+        </p>
+      </ConceptBlock>
+
+      <RegsCallout
+        source="Confined Spaces Regulations 1997 — Regulation 4(1)"
+        clause="No person at work shall enter a confined space to carry out work for any purpose unless it is not reasonably practicable to achieve that purpose without such entry."
+        meaning={
+          <>
+            The first duty is to <strong>avoid entry</strong> if you can. Drop a fish tape instead
+            of crawling in. Pre-fab the assembly outside. Use a remote camera. Only enter when
+            there’s genuinely no other way — and document why.
+          </>
+        }
+        cite="Reference: legislation.gov.uk — The Confined Spaces Regulations 1997 (SI 1997/1713)"
+      />
+
+      <ConceptBlock title="The four things that have to happen before anyone enters">
+        <p>
+          If avoidance isn’t reasonably practicable, the Confined Spaces Regs 1997 (Reg 4(2) and
+          Reg 5) require a safe system of work plus emergency arrangements. In practice that
+          means:
+        </p>
+        <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+          <li>
+            <strong>1. Test the atmosphere.</strong> Multi-gas detector (O—, CO, H—S, LEL). Test
+            top, middle, bottom — some gases sink, some rise. Bump-tested that day, calibrated on
+            schedule.
+          </li>
+          <li>
+            <strong>2. Ventilate.</strong> Mechanical ventilation in, fume extraction out.
+            Continuous monitoring throughout the work. If readings drift, evacuate.
+          </li>
+          <li>
+            <strong>3. Permit-to-work.</strong> Written authorisation by a competent person.
+            States who, what, where, when, the controls, the rescue plan, the time limit. Signed
+            in, signed out.
+          </li>
+          <li>
+            <strong>4. Standby person.</strong> Stays outside the entry point. Maintains comms.
+            Counts entrants in and out. Triggers the rescue plan if anything goes wrong. Never
+            goes in to attempt rescue without proper kit and training.
+          </li>
+        </ul>
+      </ConceptBlock>
+
+      <RegsCallout
+        source="Confined Spaces Regulations 1997 — Regulation 5(1)"
+        clause="No person at work shall enter or carry out work in a confined space unless there have been prepared in respect of that confined space suitable and sufficient arrangements for the rescue of persons in the event of an emergency, whether or not arising out of a specified risk."
+        meaning={
+          <>
+            Translation: rescue plan READY before entry, not invented when something goes wrong.
+            That includes rescue equipment on standby (tripod and winch, BA sets, resus kit), a
+            route for the casualty, and competent rescuers. The standby person isn’t the rescuer —
+            they raise the alarm.
+          </>
+        }
+        cite="Reference: legislation.gov.uk — Confined Spaces Regulations 1997; HSE L101 ACoP"
+      />
+
+      <InlineCheck
+        id={checks2[1].id}
+        question={checks2[1].question}
+        options={checks2[1].options}
+        correctIndex={checks2[1].correctIndex}
+        explanation={checks2[1].explanation}
+      />
+
+      <SectionRule />
+
+      <ContentEyebrow>The electrical add-ons</ContentEyebrow>
+
+      <ConceptBlock
+        title="What makes height and confined-space work harder for electricians"
+        plainEnglish="Wet, cramped, metal everywhere, often using power tools. The shock and arc-flash risks are higher than in a dry lounge."
+      >
+        <p>Two environments stack extra electrical risks on top of the obvious ones:</p>
+        <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+          <li>
+            <strong>Damp + metal:</strong> body resistance drops sharply when you’re sweaty or
+            kneeling on wet concrete in a basement. A shock that would just sting in ordinary
+            conditions can stop your heart in a confined space.
+          </li>
+          <li>
+            <strong>Reduced low-voltage (110V CTE) systems</strong> are required on construction
+            sites and strongly recommended in confined spaces. The 55V to earth means a fault
+            voltage is far less likely to be lethal.
+          </li>
+          <li>
+            <strong>Battery tools where you can.</strong> No trailing leads to trip on, nothing to
+            plug in, no extension reels to overheat in a hot, enclosed space.
+          </li>
+          <li>
+            <strong>IP-rated lighting:</strong> festoons or task lights rated for the environment.
+            Don’t use a domestic LED lamp on a flying lead in a flooded manhole.
+          </li>
+          <li>
+            <strong>Isolation discipline:</strong> lock-off and prove dead are even more critical.
+            You can’t step back if something goes live — there’s nowhere to go.
+          </li>
+        </ul>
+      </ConceptBlock>
+
+      <Scenario
+        title="Underfloor heating fault in a refurb — the floor void calls"
+        situation={
+          <>
+            You’re sent to fault-find an underfloor heating system in a converted Victorian house.
+            The mat’s gone short somewhere under the kitchen. Access is via a hatch in the corner
+            of the room — 1.2m drop, brick crawl space, single 600mm opening, old gas main running
+            along one wall.
+          </>
+        }
+        whatToDo={
+          <>
+            Stop. Apply the test: enclosed (yes), specified risk (gas main = potential
+            fire/explosion + possible O— displacement = yes). It’s a confined space. Don’t go in
+            until: gas detector deployed and reading clear, a permit raised, ventilation set up, a
+            standby person at the hatch, and a means of getting you out if you collapse. Use a
+            110V or battery insulation tester from outside the void where possible.
+          </>
+        }
+        whyItMatters={
+          <>
+            Refurb jobs are where this stuff bites — nobody talks about confined spaces in a
+            kitchen, until you’re kneeling next to a 1960s steel gas pipe with a resistance meter.
+            The Regs apply just the same as in a sewer.
+          </>
+        }
+      />
+
+      <InlineCheck
+        id={checks2[2].id}
+        question={checks2[2].question}
+        options={checks2[2].options}
+        correctIndex={checks2[2].correctIndex}
+        explanation={checks2[2].explanation}
+      />
+
+      <SectionRule />
+
+      <ContentEyebrow>Competence and what happens if it goes wrong</ContentEyebrow>
+
+      <ConceptBlock title="Who can do what — and what training looks like">
+        <p>
+          WAHR Reg 5 and Confined Spaces Reg 4(2) both put a competence duty on the employer. For
+          us on site that means specific tickets:
+        </p>
+        <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+          <li>
+            <strong>PASMA</strong> for erecting and using mobile aluminium scaffold towers.
+            Half-day course, valid 5 years.
+          </li>
+          <li>
+            <strong>IPAF</strong> for MEWPs (cherry pickers, scissor lifts). Categories 1a, 1b,
+            3a, 3b. PAL card valid 5 years.
+          </li>
+          <li>
+            <strong>Confined Spaces — low/medium/high risk</strong> training (typically City &
+            Guilds 6160 series). Higher risk = breathing apparatus + escape sets + extended rescue
+            training.
+          </li>
+          <li>
+            <strong>Working at Height Awareness</strong> (often delivered with safe ladder use and
+            harness inspection — free or low-cost from CITB).
+          </li>
+        </ul>
+        <p>
+          You don’t have to hold all these as an apprentice — but you DO have to know what you’re
+          not yet ticketed for, and not let yourself get pushed into doing it anyway.
+        </p>
+      </ConceptBlock>
+
+      <ConceptBlock
+        title="Real penalties — not just for the boss"
+        onSite="HSE prosecute under WAHR and the Confined Spaces Regs every year. They go after employers AND individual supervisors AND, less often, individual workers under HASAWA s.7."
+      >
+        <p>
+          Sentencing Council guidelines tie fines to company turnover and seriousness. For a fall
+          fatality, fines for the company can run into millions, with custodial sentences for
+          directors. For workers found to have ignored the safe system of work — unlimited fine
+          and up to 2 years inside under HASAWA s.7.
+        </p>
+        <p>
+          The CSCS card system also bites: serious safety incidents can get your card suspended or
+          pulled. No card, no site, no work.
+        </p>
+      </ConceptBlock>
+
+      <SectionRule />
+
+      <FAQ items={faqs2} />
+
+      <SectionRule />
+
+      <KeyTakeaways
+        points={[
+          'WAHR 2005 has no height threshold — if a fall could hurt you, the Regs apply.',
+          'Hierarchy: AVOID work at height → PREVENT the fall (collective kit) → MITIGATE it (personal kit). Order matters in court.',
+          'Leaning ladders — short, light work only (max 30 min at one position), 1:4 angle, three points of contact, secured.',
+          'Confined space = substantially enclosed AND a foreseeable specified risk. Cable risers, voids and plant rooms can qualify.',
+          'Before entry: test atmosphere, ventilate, permit-to-work, standby person who never enters to rescue.',
+          'Electrical work adds extra risk in both environments — use 110V CTE or battery tools, IP-rated lighting, and obsessive isolation discipline.',
+        ]}
+      />
+
+      {/* ── Quiz (preserved — links to streaks/stats) ───────── */}
+
+      <Quiz
+        title="Working at Height & Confined Spaces knowledge check"
+        questions={quizQuestions2}
+      />
+
+      {/* ── Prev / next nav ─────────────────────────────────── */}
+    </div>
+  );
+}

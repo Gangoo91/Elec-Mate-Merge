@@ -20,6 +20,8 @@ import {
 } from '@/hooks/useEICValidation';
 import { cn } from '@/lib/utils';
 import { readEdgeFunctionError } from '@/lib/edgeFunctionError';
+import HandoutPrompt from '@/components/inspection/shared/HandoutPrompt';
+import { issueCertificateNumber } from '@/utils/certificateNumbering';
 
 const cardCn =
   '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
@@ -357,7 +359,7 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
         formattedData = await formatEicJson(
           {
             ...formData,
-            certificateNumber: formData.certificateNumber || `EIC-${Date.now()}`,
+            certificateNumber: await issueCertificateNumber(formData.certificateNumber, 'eic'),
           },
           companyProfile,
           reportId
@@ -449,6 +451,11 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
             </div>
           ))}
         </div>
+
+        {/* ELE-1556 — once the PDF exists, offer the client the matching handout.
+            The EIC generates from the shell footer (actionsRef), so this card is
+            the one place that knows a certificate has just been produced. */}
+        {generatedPdfUrl && <HandoutPrompt reportType="eic" className="mt-3" />}
 
         {/* Validation hint — inline, tappable to open full sheet. Count comes
             from the same validation the panel above renders, so they agree. */}

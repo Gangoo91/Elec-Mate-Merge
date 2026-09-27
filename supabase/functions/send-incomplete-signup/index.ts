@@ -1198,7 +1198,7 @@ function generateV3EmailHTML(user: EligibleUser): string {
 
 <!-- Sign-off -->
 <tr><td style="padding:0 20px 16px"><div style="background:linear-gradient(135deg,rgba(251,191,36,0.08),rgba(251,191,36,0.02));border:1px solid rgba(251,191,36,0.15);border-radius:14px;padding:18px">
-<p style="margin:0 0 12px;font-size:14px;color:#fff;line-height:1.6">Got questions? Reply here or text me on WhatsApp: <strong style="color:#fff">07507 241303</strong>. I'm Andrew, I built this thing, and I'll answer you personally.</p>
+<p style="margin:0 0 12px;font-size:14px;color:#fff;line-height:1.6">Got questions? Reply here or text me on WhatsApp: <strong style="color:#fff">07506 026934</strong>. I'm Andrew, I built this thing, and I'll answer you personally.</p>
 <p style="margin:0 0 4px;font-size:15px;color:#fff">Cheers,</p>
 <p style="margin:0 0 2px;font-size:17px;color:#fbbf24;font-weight:700">Andrew</p>
 <p style="margin:0;font-size:13px;color:#fff">Founder &middot; Elec-Mate</p>

@@ -4,6 +4,9 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { InspectionItem as BaseInspectionItem } from '@/data/bs7671ChecklistData';
 import EnhancedInspectionOutcomeSelect from './EnhancedInspectionOutcomeSelect';
 import { cn } from '@/lib/utils';
+import { Camera } from 'lucide-react';
+import { useInspectionPhotos } from '@/hooks/useInspectionPhotos';
+import InspectionPhotoUpload from './InspectionPhotoUpload';
 
 // Left-edge accent per outcome — status at a glance without a tinted wash
 const outcomeBorderL: Record<string, string> = {
@@ -42,6 +45,8 @@ interface EnhancedInspectionItemRowProps {
   onUpdateItem: (id: string, field: keyof InspectionItem, value: any) => void;
   onOutcomeChange: (itemId: string, outcome: InspectionItem['outcome']) => void;
   onNavigateToObservations?: () => void;
+  /** The report the photos belong to (ELE-1617). Without it the camera is hidden. */
+  reportId?: string;
 }
 
 const EnhancedInspectionItemRow: React.FC<EnhancedInspectionItemRowProps> = ({
@@ -50,6 +55,7 @@ const EnhancedInspectionItemRow: React.FC<EnhancedInspectionItemRowProps> = ({
   onUpdateItem,
   onOutcomeChange,
   onNavigateToObservations,
+  reportId,
 }) => {
   const [localNotes, setLocalNotes] = React.useState(inspectionItem?.notes || '');
   const [debounceTimer, setDebounceTimer] = React.useState<NodeJS.Timeout | null>(null);
@@ -58,6 +64,25 @@ const EnhancedInspectionItemRow: React.FC<EnhancedInspectionItemRowProps> = ({
   const [showNotes, setShowNotes] = React.useState(!!inspectionItem?.notes);
 
   const currentOutcome = inspectionItem?.outcome || '';
+
+  /*
+   * ELE-1617 — evidence photo on any item, any outcome. This row replaced the
+   * old InspectionItemRow (which had a camera) without carrying it over, so
+   * desktop had no way to photograph a satisfactory item either.
+   */
+  const [showPhotoUpload, setShowPhotoUpload] = React.useState(false);
+  const { photos, isUploading, uploadPhoto } = useInspectionPhotos({
+    reportId: reportId || '',
+    reportType: 'eicr',
+    itemId: sectionItem.id,
+  });
+  const handlePhotoCapture = async (file: File) => {
+    const faultCode = ['C1', 'C2', 'C3', 'limitation'].includes(currentOutcome)
+      ? (currentOutcome as 'C1' | 'C2' | 'C3' | 'limitation')
+      : undefined;
+    await uploadPhoto(file, faultCode, localNotes);
+    setShowPhotoUpload(false);
+  };
 
   // Sync local notes when inspection item changes
   React.useEffect(() => {
@@ -152,8 +177,31 @@ const EnhancedInspectionItemRow: React.FC<EnhancedInspectionItemRowProps> = ({
           >
             Note
           </button>
+          {reportId && (
+            <button
+              type="button"
+              onClick={() => setShowPhotoUpload((v) => !v)}
+              aria-expanded={showPhotoUpload}
+              aria-label={
+                photos.length ? `Photo evidence (${photos.length})` : 'Add photo evidence'
+              }
+              className={cn(
+                'h-9 shrink-0 rounded-lg px-2 text-[12px] font-semibold transition-all touch-manipulation active:scale-[0.97] flex items-center gap-1',
+                showPhotoUpload || photos.length ? 'text-elec-yellow' : 'text-white'
+              )}
+            >
+              <Camera className="h-4 w-4" />
+              {photos.length > 0 && <span className="tabular-nums">{photos.length}</span>}
+            </button>
+          )}
         </div>
       </div>
+
+      {showPhotoUpload && reportId && (
+        <div className="mt-2 pl-11">
+          <InspectionPhotoUpload onPhotoCapture={handlePhotoCapture} isUploading={isUploading} />
+        </div>
+      )}
 
       {/* Notes — collapsed behind the toggle; open rows keep the soft area */}
       {showNotes && (

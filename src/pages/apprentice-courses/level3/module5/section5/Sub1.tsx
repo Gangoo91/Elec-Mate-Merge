@@ -193,7 +193,7 @@ const faqs = [
   {
     question: 'Why does the EICR exist as a separate document type from the EIC?',
     answer:
-      'Different jobs. The EIC certifies that new installation work was designed, installed, inspected and tested correctly and meets BS 7671 at the point of completion — three signatures (designer, constructor, inspector) per Reg 644.1, issued for any new installation or addition involving a new circuit. The EICR assesses an existing in-service installation and reports its condition — one signature (inspector) per BS 7671 Part 6 / GN3, issued at periodic intervals throughout the installation\'s life. EIC says "this is correct now". EICR says "this is the condition we found".',
+      'Different jobs. The EIC certifies that new installation work was designed, installed, inspected and tested correctly and meets BS 7671 at the point of completion — three signatures (designer, constructor, inspector) per Reg 644.1, issued for any new installation or addition involving a new circuit. The EICR assesses an existing in-service installation and reports its condition — one signature (inspector) per BS 7671 Part 6 / GN3, issued at periodic intervals throughout the installation’s life. EIC says "this is correct now". EICR says "this is the condition we found".',
   },
   {
     question: 'Can I refuse to issue an EICR if I cannot complete every test?',
@@ -203,7 +203,7 @@ const faqs = [
   {
     question: 'Does an EICR have a legal validity period?',
     answer:
-      'It has a recommended next-inspection date which is set by the inspector based on installation type, condition, age, use and (where applicable) licensing requirements. For PRS dwellings in England the statutory maximum is 5 years (or the inspector\'s recommendation, whichever is shorter). For commercial premises ESF guidance suggests 5 years for offices, shops; shorter for higher-risk environments (industrial, swimming pools, agricultural). The EICR itself does not "expire" but the duty-holder relies on it to evidence ongoing compliance — once the recommended date is past, evidential value drops sharply.',
+      'It has a recommended next-inspection date which is set by the inspector based on installation type, condition, age, use and (where applicable) licensing requirements. For PRS dwellings in England the statutory maximum is 5 years (or the inspector’s recommendation, whichever is shorter). For commercial premises ESF guidance suggests 5 years for offices, shops; shorter for higher-risk environments (industrial, swimming pools, agricultural). The EICR itself does not "expire" but the duty-holder relies on it to evidence ongoing compliance — once the recommended date is past, evidential value drops sharply.',
   },
   {
     question: 'What is the difference between an EICR and a "Visual Condition Report"?',
@@ -220,7 +220,7 @@ const faqs = [
     question:
       'Why does GN3 keep referring to "the inspector" in the singular when EICRs sometimes need multiple people?',
     answer:
-      'GN3 explicitly states that "the inspector" may denote one or more persons where the work being undertaken requires it — collectively they shall have the relevant education, experience, qualifications and skills for the scope of inspection and testing being performed. On a large commercial EICR you might have a lead inspector responsible for sign-off, plus assistants doing testing. The signature on the EICR is the responsible inspector\'s — they hold the competence accountability for the team\'s output.',
+      'GN3 explicitly states that "the inspector" may denote one or more persons where the work being undertaken requires it — collectively they shall have the relevant education, experience, qualifications and skills for the scope of inspection and testing being performed. On a large commercial EICR you might have a lead inspector responsible for sign-off, plus assistants doing testing. The signature on the EICR is the responsible inspector’s — they hold the competence accountability for the team’s output.',
   },
 ];
 

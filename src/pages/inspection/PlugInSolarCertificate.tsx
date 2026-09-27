@@ -146,8 +146,11 @@ const PlugInSolarCertificate = () => {
     enabled: !isLoading && !isLocked,
     // Gate autosave while hydrating or a blank form overwrites the saved one.
     isHydrating: isLoading,
-    onReportCreated: (newId: string) => {
+    onReportCreated: (newId: string, certificateNumber?: string) => {
       setSavedReportId(newId);
+      // ELE-1592 — keep the number the row was filed under; without this the
+      // form stayed blank and the PDF printed an invented timestamp.
+      if (certificateNumber) setData((prev) => (prev.certificateNumber ? prev : { ...prev, certificateNumber }));
       window.history.replaceState(null, '', `${ROUTE_BASE}/${newId}`);
     },
   });
@@ -190,7 +193,7 @@ const PlugInSolarCertificate = () => {
           setIsLoading(false);
           return;
         }
-        const reportData = await reportCloud.getReportData(editId, user.id);
+        const reportData = await reportCloud.getReportData(editId, user.id, 'plug-in-solar');
         if (reportData) {
           setData((prev) => ({ ...createEmptyPlugInSolarData(), ...prev, ...(reportData as any) }));
           setSavedReportId(editId);

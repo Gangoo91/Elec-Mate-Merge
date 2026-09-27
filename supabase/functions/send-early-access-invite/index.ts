@@ -2117,14 +2117,25 @@ Deno.serve(async (req) => {
             break;
           }
 
-          // Pre-check suppression list for the whole batch
-          const allEaEmails = eaV10Eligible.map((i) => i.email.toLowerCase().trim());
-          const { data: eaSuppressed } = await supabaseAdmin
+          // Pre-check the suppression list for the whole batch. Read whole
+          // rather than filtered with `.in()`: that filter is case-SENSITIVE,
+          // so a stored `Foo@Bar.com` never matched the lower-cased address
+          // asked about and the suppression silently did nothing. Ranged
+          // because an unbounded select stops at PostgREST's 1000 rows, and
+          // fail closed — no list means inviting people who opted out.
+          const { data: eaSuppressed, error: eaSuppressedError } = await supabaseAdmin
             .from('email_suppressions')
             .select('email')
-            .in('email', allEaEmails);
+            .range(0, 49999);
+          if (eaSuppressedError) {
+            throw new Error(
+              `Refusing to send: could not read email_suppressions (${eaSuppressedError.message})`
+            );
+          }
           const eaSuppressedSet = new Set<string>(
-            (eaSuppressed || []).map((r: any) => (r.email as string).toLowerCase())
+            (eaSuppressed || [])
+              .map((r: { email: string | null }) => (r.email || '').trim().toLowerCase())
+              .filter(Boolean)
           );
 
           const eaQueue = eaV10Eligible.filter(

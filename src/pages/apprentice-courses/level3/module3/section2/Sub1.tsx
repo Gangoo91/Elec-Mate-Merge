@@ -529,7 +529,7 @@ export default function Sub1() {
             <>
               Apprentice measures continuity (R1+R2 cold) on a 50 m run = 0.9 Ω. Plugs into
               voltage-drop calc using 32 A: V_drop = I × R = 32 × 0.9 = 28.8 V. Reports 12.5 % drop,
-              recommends 6 mm² upgrade. Wastes the customer\'s money.
+              recommends 6 mm² upgrade. Wastes the customer’s money.
             </>
           }
           doInstead={

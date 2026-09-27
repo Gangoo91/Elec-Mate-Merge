@@ -90,7 +90,6 @@ export function createQuoteFromCostOutput(
   // in `costOutput`. Adding a further 15% + 20% on top double-counted the
   // margin and produced a quote total the electrician could not account for.
   const defaultSettings: QuoteSettings = {
-    labourRate: costOutput.labour.rate || 45,
     overheadPercentage: 0,
     profitMargin: 0,
     vatRate: settings.vatRate || 20,

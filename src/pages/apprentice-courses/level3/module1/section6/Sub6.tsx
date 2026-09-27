@@ -29,7 +29,7 @@ const DESCRIPTION =
 const checks = [
   {
     id: 'l3-m1-s6-sub6-eqa',
-    question: 'What\'s the Equality Act 2010 "protected characteristics"?',
+    question: 'What’s the Equality Act 2010 "protected characteristics"?',
     options: [
       'Nine: age, disability, gender reassignment, marriage and civil partnership, pregnancy and maternity, race, religion or belief, sex, sexual orientation. Discrimination on these grounds unlawful.',
       'Five: age, disability, race, sex and religion — the original characteristics carried over from the earlier discrimination Acts.',
@@ -84,7 +84,7 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question: 'What\'s a "reasonable adjustment"?',
+    question: 'What’s a "reasonable adjustment"?',
     options: [
       'A small change to the wording of a method statement so it is easier for the team to read and understand.',
       'A discretionary pay rise offered to a disabled employee to compensate for any additional difficulty in their role.',
@@ -123,7 +123,7 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question: 'What\'s "Heinrich\'s pyramid" in safety?',
+    question: 'What’s "Heinrich’s pyramid" in safety?',
     options: [
       'A hierarchy of control measures, with elimination at the top and PPE at the base, applied in order of effectiveness.',
       'A loose ratio framework - many near-misses underlie fewer minor injuries, fewer serious injuries and rare fatalities.',
@@ -182,9 +182,9 @@ const faqs = [
       'Yes - applies to England, Scotland, Wales (Northern Ireland has separate but similar provisions). Workplace duties apply to all employers regardless of size.',
   },
   {
-    question: 'Who decides what\'s a "reasonable" adjustment?',
+    question: 'Who decides what’s a "reasonable" adjustment?',
     answer:
-      'Employer in consultation with the disabled person. Tribunal can ultimately decide if disputed. Cost, disruption, effectiveness all weighed. "Reasonable" is judged in context of the employer\'s resources and the adjustment\'s impact.',
+      'Employer in consultation with the disabled person. Tribunal can ultimately decide if disputed. Cost, disruption, effectiveness all weighed. "Reasonable" is judged in context of the employer’s resources and the adjustment’s impact.',
   },
   {
     question: 'Are L3 apprentices likely to encounter Equality Act issues?',
@@ -192,7 +192,7 @@ const faqs = [
       'Yes - workplace inclusion, customer accommodation, dealing with vulnerable customers, working alongside colleagues with various needs. The Act is operational on every site.',
   },
   {
-    question: 'What\'s the difference between near-miss and "no-harm event"?',
+    question: 'What’s the difference between near-miss and "no-harm event"?',
     answer:
       "Sometimes used interchangeably. Near-miss typically implies potential for harm that didn't materialise (the right cable was cut, but it was already isolated). No-harm event covers near-misses plus events where no harm was possible.",
   },
@@ -315,7 +315,7 @@ export default function Sub6() {
         <ConceptBlock
           title="Where Equality Act, fire safety and risk assessment meet"
           plainEnglish="PEEPs are required where someone can't use the standard evacuation route unaided. Three legal frameworks converge: Equality Act 2010 reasonable adjustment, RRFSO 2005 fire safety, MHSWR 1999 Reg 3 risk assessment. Failure to provide a PEEP for someone needing one breaches all three."
-          onSite="L3 supervisor checks: are PEEPs in place for anyone on site who needs one? On a customer site - the customer\'s responsible person handles. On a project site - the principal contractor / dutyholder. Operative cooperates with PEEP arrangements."
+          onSite="L3 supervisor checks: are PEEPs in place for anyone on site who needs one? On a customer site - the customer’s responsible person handles. On a project site - the principal contractor / dutyholder. Operative cooperates with PEEP arrangements."
         >
           <p>PEEP elements:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -327,7 +327,7 @@ export default function Sub6() {
             <li>Communication appropriate to the impairment.</li>
             <li>Re-entry sequence after all-clear.</li>
             <li>Regular drill participation to ensure plan works.</li>
-            <li>Updated as the person\'s needs change.</li>
+            <li>Updated as the person’s needs change.</li>
           </ul>
         </ConceptBlock>
 
@@ -337,7 +337,7 @@ export default function Sub6() {
         <ContentEyebrow>Near-miss culture</ContentEyebrow>
         <ConceptBlock
           title="The highest-impact preventive practice"
-          plainEnglish="Near-misses are events that could have caused injury but didn\'t. Heinrich\'s loose pyramid (300:30:1 near-misses to minor to serious) frames their importance: many near-misses underlie each serious incident. Reporting + analysing + learning from near-misses is the cheapest, most effective preventive activity available."
+          plainEnglish="Near-misses are events that could have caused injury but didn’t. Heinrich’s loose pyramid (300:30:1 near-misses to minor to serious) frames their importance: many near-misses underlie each serious incident. Reporting + analysing + learning from near-misses is the cheapest, most effective preventive activity available."
           onSite="L3 supervisor builds the culture by modelling - report own near-misses openly; encourage colleagues; analyse without blame; feed lessons forward; celebrate the report (not the near-miss). Cumulative culture change over months and years."
         >
           <p>Strong near-miss culture elements:</p>
@@ -352,7 +352,7 @@ export default function Sub6() {
               <strong>Structured analysis</strong> - 5-whys, simple root-cause framework.
             </li>
             <li>
-              <strong>Feedback to team</strong> - &quot;here\'s what we learned&quot;.
+              <strong>Feedback to team</strong> - &quot;here’s what we learned&quot;.
             </li>
             <li>
               <strong>Visible changes in practice</strong> driven by lessons.
@@ -568,7 +568,7 @@ export default function Sub6() {
           whatHappens={
             <>
               L2 apprentice has a disability requiring modified equipment / arrangements. Firm
-              doesn\'t provide; apprentice struggles; productivity / safety affected; eventual
+              doesn’t provide; apprentice struggles; productivity / safety affected; eventual
               tribunal claim under Equality Act + reputational damage.
             </>
           }
@@ -584,19 +584,19 @@ export default function Sub6() {
           title="Building near-miss culture in a small team"
           situation={
             <>
-              You\'re an L3 supervisor leading a small team (3 operatives). The firm has a near-miss
+              You’re an L3 supervisor leading a small team (3 operatives). The firm has a near-miss
               reporting system but reporting volume is low. You suspect operatives are reluctant to
               report. You want to build the culture.
             </>
           }
           whatToDo={
             <>
-              Lead by example. (1) At toolbox talk, share a near-miss you\'ve had recently - what
-              happened, what you noticed, what you\'d do differently. Sets tone that reporting is
+              Lead by example. (1) At toolbox talk, share a near-miss you’ve had recently - what
+              happened, what you noticed, what you’d do differently. Sets tone that reporting is
               normal and respected. (2) Encourage colleagues to share theirs - explicitly no-blame,
               focus on what we learn. (3) Analyse together using simple 5-whys - what was the root
-              cause? (4) Document in the firm\'s system; submit to H&amp;S manager. (5) Follow up at
-              next toolbox - &quot;here\'s what changed because of last week\'s near-miss
+              cause? (4) Document in the firm’s system; submit to H&amp;S manager. (5) Follow up at
+              next toolbox - &quot;here’s what changed because of last week’s near-miss
               reports&quot;. (6) Celebrate the act of reporting (not the near-miss) - public
               acknowledgement, perhaps small recognition. (7) Repeat consistently over months. (8)
               Track reporting volume as a leading indicator - increasing volume = healthier culture.
@@ -610,7 +610,7 @@ export default function Sub6() {
               Near-miss culture is one of the highest-leverage practices the L3 supervisor can
               build. Each report is a chance to prevent a future incident at almost zero cost. The
               cumulative effect over years is profound - both in safety outcomes and in team trust /
-              cohesion. The L3 supervisor\'s consistent modelling is what shifts team behaviour from
+              cohesion. The L3 supervisor’s consistent modelling is what shifts team behaviour from
               reluctance to engagement. This closing scenario for Module 1 captures the supervisor
               mindset: practical, leadership-oriented, focused on the system not the individual.
             </>

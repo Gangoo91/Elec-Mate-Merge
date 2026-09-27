@@ -285,7 +285,7 @@ export default function Sub5() {
               <strong>PEFC (Prospective Earth Fault Current).</strong> Measured by the MFT applying
               brief test current via the L-E loop. Represents the worst-case current that would flow
               in an L-E bolted earth fault at the test point. Typical UK domestic origin: 400-1200 A
-              (typically lower than PSCC because the L-E path includes the supplier\'s earthing
+              (typically lower than PSCC because the L-E path includes the supplier’s earthing
               arrangement which has higher impedance than the pure L-N path).
             </li>
             <li>
@@ -336,11 +336,11 @@ export default function Sub5() {
 
         <SectionRule />
 
-        <ContentEyebrow>The dwelling exemption — when you don\'t have to measure</ContentEyebrow>
+        <ContentEyebrow>The dwelling exemption — when you don’t have to measure</ContentEyebrow>
 
         <ConceptBlock
           title="The BS EN 61439-3 + 16 kA-declared shortcut"
-          plainEnglish="GN3 lets you skip the origin PFC measurement on typical UK domestic installations because the design is pre-matched to the supply. A BS EN 61439-3 consumer unit is rated 16 kA fault current; UK DNOs typically declare 16 kA maximum PFC for domestic supplies. The combination means PFC at the origin will not exceed the CU\'s breaking capacity by design — no measurement needed."
+          plainEnglish="GN3 lets you skip the origin PFC measurement on typical UK domestic installations because the design is pre-matched to the supply. A BS EN 61439-3 consumer unit is rated 16 kA fault current; UK DNOs typically declare 16 kA maximum PFC for domestic supplies. The combination means PFC at the origin will not exceed the CU’s breaking capacity by design — no measurement needed."
           onSite={`On the EIC for a typical domestic install with BS EN 61439-3 CU, fill the PFC field as "16 kA per distributor declaration" or similar. No instrument measurement needed. For larger supplies, commercial / industrial premises, or non-conforming CUs, direct measurement is required.`}
         >
           <p>The exemption conditions (all must be true):</p>
@@ -426,7 +426,7 @@ export default function Sub5() {
             </li>
             <li>
               <strong>Cross-check against device Icn.</strong> Every protective device upstream of
-              the test point must have Icn at least equal to the PFC. Verify each device\'s Icn
+              the test point must have Icn at least equal to the PFC. Verify each device’s Icn
               rating from the manufacturer datasheet.
             </li>
             <li>
@@ -449,7 +449,7 @@ export default function Sub5() {
           clause="To obtain the prospective fault current when using loop-impedance-based instruments, calculate the current by dividing the nominal mains voltage (expressed in volts) by the measured loop impedance value (expressed in ohms). The result is the prospective fault current in amperes. Test instruments used for loop impedance measurement may also offer additional facilities for deriving prospective fault current."
           meaning={
             <>
-              The PFC formula is straightforward Ohm\'s law — voltage divided by impedance. Modern
+              The PFC formula is straightforward Ohm’s law — voltage divided by impedance. Modern
               MFTs apply this automatically from the loop impedance reading. For UK 230 V at a
               measured 0.5 Omega loop = 460 A prospective. The reading is "prospective" because it
               represents the current that WOULD flow under a bolted (zero-impedance) fault at the
@@ -465,7 +465,7 @@ export default function Sub5() {
 
         <ConceptBlock
           title="The Reg 525 voltage drop limits and how to verify them"
-          plainEnglish="Reg 525 sets maximum voltage drop limits for normal operation: 3 percent for lighting, 5 percent for other circuits. The limits ensure lights don\'t flicker, motors run at design speed, and electronic loads operate within tolerance. Verify by calculation during design (cable size + length + load + GN1 Table A1 mV/A/m) and measure under load on long runs where the calculation is borderline."
+          plainEnglish="Reg 525 sets maximum voltage drop limits for normal operation: 3 percent for lighting, 5 percent for other circuits. The limits ensure lights don’t flicker, motors run at design speed, and electronic loads operate within tolerance. Verify by calculation during design (cable size + length + load + GN1 Table A1 mV/A/m) and measure under load on long runs where the calculation is borderline."
           onSite="For typical short domestic runs (under 20 m), voltage drop is rarely the limiting factor — overcurrent protection sets the cable size. For longer runs (above 30-40 m), voltage drop becomes the limiting factor and may require a larger cable than overcurrent alone dictates. EV chargers, garden offices, outbuildings on long radial runs are the typical cases."
         >
           <p>The Reg 525 limits in detail:</p>
@@ -523,7 +523,7 @@ export default function Sub5() {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 7671:2018+A4:2026 — Regulation 525.1 (Voltage drop in consumers\' installations)"
+          source="BS 7671:2018+A4:2026 — Regulation 525.1 (Voltage drop in consumers’ installations)"
           clause="In the absence of any other consideration, under normal service conditions the voltage at the terminals of any fixed current-using equipment shall be greater than the lower limit corresponding to the product standard relevant to the equipment."
           meaning={
             <>
@@ -540,7 +540,7 @@ export default function Sub5() {
         <ConceptBlock
           title="Breaking capacity (Icn) — what each device can interrupt"
           plainEnglish="Every protective device has a rated breaking capacity (Icn) — the maximum current it can safely interrupt without damage. The PFC at the device installation point must not exceed Icn. Modern UK domestic devices are typically 6 kA Icn; commercial / industrial devices range from 10 kA to 50 kA depending on application."
-          onSite="Check the manufacturer datasheet for Icn — it\'s usually stamped on the device case alongside other ratings. The numbering: 6000 means 6 kA Icn, 10000 means 10 kA, etc. For a typical UK domestic supply with 16 kA declared PFC at the origin, downstream devices have lower PFC (because of the downstream cable adding impedance) — 6 kA Icn is generally sufficient at the consumer-unit level."
+          onSite="Check the manufacturer datasheet for Icn — it’s usually stamped on the device case alongside other ratings. The numbering: 6000 means 6 kA Icn, 10000 means 10 kA, etc. For a typical UK domestic supply with 16 kA declared PFC at the origin, downstream devices have lower PFC (because of the downstream cable adding impedance) — 6 kA Icn is generally sufficient at the consumer-unit level."
         >
           <p>Typical Icn values by device class:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -575,7 +575,7 @@ export default function Sub5() {
             <strong>Cascading.</strong> Where downstream MCB Icn is exceeded by the local PFC, an
             upstream HRC fuse (or higher-Icn MCCB) can be used to current-limit the fault before it
             reaches the downstream device. The let-through energy from the upstream device must be
-            within the downstream device\'s capability — manufacturer cascade tables document the
+            within the downstream device’s capability — manufacturer cascade tables document the
             verified combinations.
           </p>
         </ConceptBlock>
@@ -597,7 +597,7 @@ export default function Sub5() {
               mm = 7.3, 10 mm = 4.4.
             </li>
             <li>
-              <strong>Identify current and length.</strong> Design current (typically the circuit\'s
+              <strong>Identify current and length.</strong> Design current (typically the circuit’s
               rated current — 16 A, 32 A, etc.) and the route length from origin to load.
             </li>
             <li>
@@ -636,10 +636,10 @@ export default function Sub5() {
               than three-phase. Each combination measured separately.
             </li>
             <li>
-              <strong>Phase to neutral (L1-N, L2-N, L3-N).</strong> Each phase\'s PSCC.
+              <strong>Phase to neutral (L1-N, L2-N, L3-N).</strong> Each phase’s PSCC.
             </li>
             <li>
-              <strong>Phase to earth (L1-E, L2-E, L3-E).</strong> Each phase\'s PEFC.
+              <strong>Phase to earth (L1-E, L2-E, L3-E).</strong> Each phase’s PEFC.
             </li>
             <li>
               <strong>The reported PFC.</strong> Highest of all readings — typically the three-phase
@@ -689,7 +689,7 @@ export default function Sub5() {
             <li>
               <strong>Voltage drop on long runs.</strong> Calculated value per circuit on the
               Schedule of Test Results notes, or in the design documentation pack. Borderline runs
-              (above 3 percent for any circuit) noted for the customer\'s awareness.
+              (above 3 percent for any circuit) noted for the customer’s awareness.
             </li>
           </ul>
         </ConceptBlock>
@@ -728,7 +728,7 @@ export default function Sub5() {
               30 m radial from CU to EV charger position. 6 mm cable was sized correctly for 32 A
               overcurrent protection (current-carrying capacity check passes). Apprentice installs
               and commissions. EV charger works but the customer notices charging takes longer than
-              the manufacturer\'s claimed time and voltage at the charger drops to 218 V under full
+              the manufacturer’s claimed time and voltage at the charger drops to 218 V under full
               load. Investigation finds voltage drop is approximately 7 V or 3 percent — within Reg
               525 5 percent socket limit but at the edge, and the EV charger is
               performance-degraded. Customer requests upgrade to bigger cable; firm has to re-pull

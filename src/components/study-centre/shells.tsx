@@ -37,6 +37,12 @@ interface CourseShellProps {
   eyebrow: string;
   title: string;
   description?: string;
+  /**
+   * A banner above the description — used for a status the learner needs
+   * before they start reading, such as a course still under review. Optional
+   * and absent on every other course, so nothing else changes shape.
+   */
+  notice?: ReactNode;
   tone?: Tone;
   modulesCount: number;
   pagesCount?: number | string;
@@ -81,6 +87,7 @@ export function CourseShell({
   eyebrow,
   title,
   description,
+  notice,
   tone: _tone = 'yellow',
   modulesCount,
   pagesCount = '200+',
@@ -92,6 +99,7 @@ export function CourseShell({
     <HubPage>
       <HubMasthead section={backLabel} title={title} backTo={backTo} />
       <HubBody>
+        {notice}
         {description && (
           <p className="max-w-3xl text-[13px] leading-relaxed text-white">{description}</p>
         )}

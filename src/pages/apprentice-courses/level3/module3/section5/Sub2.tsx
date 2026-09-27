@@ -617,7 +617,7 @@ export default function Sub2() {
             'Shaded-pole: cheapest, ~30 % efficient. Cooling fans, microwaves, small clocks.',
             'Universal: brushed series motor, runs AC or DC, high speed. Vacuum, drill, blender.',
             'Above ~7.5 kW, switch to 3-phase — single-phase practical limits become unworkable.',
-            'Failed run cap is the most common cause of "won\'t start" motors.',
+            'Failed run cap is the most common cause of "won’t start" motors.',
             'BS 7671 §552.1.2: every motor above 0.37 kW needs overload protection.',
           ]}
         />

@@ -165,7 +165,7 @@ const faqs = [
       'Only up to a point. Oversized transformer = lower copper loss at the actual load (because it runs at lower fraction of rated). But iron loss stays the same regardless of size. Sweet spot is usually 70-90 % of rated capacity for the typical operating load.',
   },
   {
-    question: 'What\'s an "amorphous" transformer?',
+    question: 'What’s an "amorphous" transformer?',
     answer:
       'Uses an amorphous metal alloy core instead of silicon steel. ~70 % lower iron loss, but slightly higher cost and slightly larger size. Pays back over the 30-year life of a continuously energised distribution transformer through lower no-load loss.',
   },

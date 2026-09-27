@@ -78,7 +78,7 @@ const checks = [
 const quizQuestions = [
   {
     id: 1,
-    question: 'What\'s the legal source of the "safe practices" duty?',
+    question: 'What’s the legal source of the "safe practices" duty?',
     options: [
       'BS 7671, which is the statutory standard for safe systems of work in electrical installations.',
       'HASAWA s.2(2)(a), backed by EAWR Reg 4, MHSWR Reg 5 and the activity-specific regulations.',
@@ -139,7 +139,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'The supervisor intervenes immediately, coaches to the correct method, documents and follows up. This is not a "checking up" exercise but part of the firm\'s monitoring under MHSWR Reg 5 — the M (Monitor) in the POCMR cycle, and how the firm\'s system actually functions in practice.',
+      'The supervisor intervenes immediately, coaches to the correct method, documents and follows up. This is not a "checking up" exercise but part of the firm’s monitoring under MHSWR Reg 5 — the M (Monitor) in the POCMR cycle, and how the firm’s system actually functions in practice.',
   },
   {
     id: 6,
@@ -156,7 +156,7 @@ const quizQuestions = [
   },
   {
     id: 7,
-    question: 'What\'s "near-miss culture"?',
+    question: 'What’s "near-miss culture"?',
     options: [
       'A culture where only serious injuries are recorded, since near-misses are too minor to track.',
       'A culture where the worker responsible for a near-miss is disciplined to deter repeat events.',
@@ -792,7 +792,7 @@ export default function Sub5() {
             <>
               You're leading a team of two L2 apprentices and one mate on a 5-day commercial
               small-power install. Day 1 you arrive on site with the customer-issued construction
-              phase plan and your firm\'s RAMS. The customer\'s site induction is complete. You need
+              phase plan and your firm’s RAMS. The customer’s site induction is complete. You need
               to run the safety system for the project.
             </>
           }

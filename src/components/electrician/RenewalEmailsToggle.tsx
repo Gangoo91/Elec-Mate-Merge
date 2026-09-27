@@ -14,27 +14,50 @@ import { useAutomation, AUTOMATION_KEYS } from '@/hooks/useUserAutomations';
 import { cn } from '@/lib/utils';
 
 export function RenewalEmailsToggle() {
-  const { mode, isLoading, setMode, saving } = useAutomation(
-    AUTOMATION_KEYS.clientRenewalEmails
-  );
+  const { mode, isLoading, setMode, saving } = useAutomation(AUTOMATION_KEYS.clientRenewalEmails);
   const on = mode === 'auto';
+  // ELE-1636 — the overdue nudge, its own switch: a different message in the
+  // electrician's name, so it is never implied by the first one.
+  const overdue = useAutomation(AUTOMATION_KEYS.clientOverdueEmails);
+  const overdueOn = overdue.mode === 'auto';
+  const overdueRow = (
+    <label className="mt-3 flex cursor-pointer items-center justify-between gap-4 rounded-2xl border border-white/[0.12] bg-white/[0.04] px-4 py-3">
+      <span className="min-w-0">
+        <span className="block text-[13px] font-semibold text-white">
+          Also nudge overdue certificates
+        </span>
+        <span className="mt-0.5 block text-[12px] leading-snug text-white">
+          One email, once, for a certificate up to 90 days past its date — "it was due on…, book
+          when you are ready". Nothing older.
+        </span>
+      </span>
+      <Switch
+        checked={overdueOn}
+        disabled={overdue.isLoading || overdue.saving}
+        onCheckedChange={(v) => overdue.setMode(v ? 'auto' : 'off')}
+      />
+    </label>
+  );
 
   // Once it's on, the pitch has done its job — a page shouldn't open on a
   // paragraph of settings copy. Collapse to a one-line confirmation; the
   // full card only shows while there's still a decision to sell.
   if (on) {
     return (
-      <div className="flex items-center justify-between gap-4 rounded-2xl border border-elec-yellow/40 bg-elec-yellow/[0.06] px-4 py-2.5">
-        <p className="min-w-0 truncate text-[12.5px] text-white">
-          <span className="font-semibold">Renewal reminders on</span> — customers get a
-          book-me-in email at 30, 14 and 7 days.
-        </p>
-        <Switch
-          checked
-          disabled={isLoading || saving}
-          onCheckedChange={(v) => setMode(v ? 'auto' : 'off')}
-        />
-      </div>
+      <>
+        <div className="flex items-center justify-between gap-4 rounded-2xl border border-elec-yellow/40 bg-elec-yellow/[0.06] px-4 py-2.5">
+          <p className="min-w-0 truncate text-[12.5px] text-white">
+            <span className="font-semibold">Renewal reminders on</span> — customers get a book-me-in
+            email at 30, 14 and 7 days.
+          </p>
+          <Switch
+            checked
+            disabled={isLoading || saving}
+            onCheckedChange={(v) => setMode(v ? 'auto' : 'off')}
+          />
+        </div>
+        {overdueRow}
+      </>
     );
   }
 
@@ -52,8 +75,8 @@ export function RenewalEmailsToggle() {
             Email customers their renewal reminders
           </span>
           <span className="mt-1 block text-[12.5px] leading-snug text-white">
-            When a certificate comes due, the customer gets a reminder in your name at 30, 14 and
-            7 days — with a button to book you for the renewal. Sent automatically each morning;
+            When a certificate comes due, the customer gets a reminder in your name at 30, 14 and 7
+            days — with a button to book you for the renewal. Sent automatically each morning;
             replies come to you.
           </span>
         </span>
@@ -63,6 +86,7 @@ export function RenewalEmailsToggle() {
           onCheckedChange={(v) => setMode(v ? 'auto' : 'off')}
         />
       </label>
+      {on && overdueRow}
     </div>
   );
 }

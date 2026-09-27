@@ -244,11 +244,16 @@ export const useEICRValidation = (formData: any): EICRValidationResult => {
         tab: 'certificate',
       });
     }
+    /*
+     * ELE-1636 — an error, not a warning. 419 issued EICR/EIC carried no next
+     * inspection date at all, so no renewal could ever be prompted for them.
+     * The form derives the date from the interval, so this costs one tap.
+     */
     if (!formData.nextInspectionDate) {
-      warnings.push({
+      errors.push({
         field: 'nextInspectionDate',
-        message: 'Next inspection date not set',
-        severity: 'warning',
+        message: 'Next inspection date',
+        severity: 'error',
         tab: 'certificate',
       });
     }

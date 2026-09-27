@@ -23,7 +23,7 @@ const subsections = [
   {
     number: 'Subsection 2',
     title: 'Resistance, resistivity and DC circuits (AC 2.1)',
-    description: 'R = ρL/A, Kirchhoff\\',
+    description: 'R = ρL/A, Kirchhoff’s laws and DC circuit analysis.',
     icon: ClipboardCheck,
     href: '/study-centre/apprentice/level3-module3-section2-2',
   },

@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import { useResumeDrafts, type ResumeDraftInfo } from '@/hooks/inspection/useResumeDrafts';
 import { useHaptic } from '@/hooks/useHaptic';
 import { CARD_NEUTRAL, CARD_DISABLED } from '@/components/ui/card-recipe';
+import { certificateHref, certificateNewHref } from '@/utils/certificate-href';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -389,11 +390,14 @@ const SpecialistSection = ({ onBack }: SpecialistSectionProps) => {
                     cert={cert}
                     draft={drafts?.[cert.id]}
                     onOpen={() =>
-                      navigate(cert.route ?? `/electrician/inspection-testing/${cert.id}/new`)
+                      // `cert.route` still wins (the log books have their own
+                      // landing page); otherwise the helper decides between
+                      // `<type>/new` and the bare path.
+                      navigate(cert.route ?? certificateNewHref(cert.id))
                     }
                     onResume={() =>
                       navigate(
-                        `/electrician/inspection-testing/${cert.id}/${drafts?.[cert.id]?.latestReportId}`
+                        certificateHref(cert.id, drafts?.[cert.id]?.latestReportId ?? '')
                       )
                     }
                   />

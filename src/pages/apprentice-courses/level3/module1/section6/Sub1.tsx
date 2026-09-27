@@ -516,7 +516,7 @@ export default function Sub1() {
           title="Treating an HRRB job as just another commercial site"
           whatHappens={
             <>
-              L3 doesn&apos;t recognise HRRB status; doesn\'t engage with PAP\'s safety case or
+              L3 doesn&apos;t recognise HRRB status; doesn’t engage with PAP’s safety case or
               golden thread; produces paper-only certs; gateway 3 review later finds gaps; project
               delayed.
             </>
@@ -534,7 +534,7 @@ export default function Sub1() {
           whatHappens={
             <>
               L2 mate substitutes a different brand of MCB &quot;to save a day&quot;; not flagged to
-              design team; gateway 3 review picks up the discrepancy; building can\'t be occupied;
+              design team; gateway 3 review picks up the discrepancy; building can’t be occupied;
               back-charged subcontractor.
             </>
           }
@@ -559,20 +559,20 @@ export default function Sub1() {
           whatToDo={
             <>
               Pause. Building meets HRRB threshold (22m, 7 storeys, multiple residential units).
-              Confirm with managing agent: is the building registered as HRRB? Who\'s the PAP? Has a
+              Confirm with managing agent: is the building registered as HRRB? Who’s the PAP? Has a
               safety case been prepared? Even small alterations to common parts may need PAP
-              approval. Phone firm\'s contracts manager; brief the situation. Action depends on the
+              approval. Phone firm’s contracts manager; brief the situation. Action depends on the
               work scope: routine domestic-side work in flat may need minimal HRRB integration;
               landlord-side common-parts work likely needs PAP awareness check + golden-thread
-              integration. Don\'t proceed with significant common-parts work without clarifying.
+              integration. Don’t proceed with significant common-parts work without clarifying.
               Document the HRRB identification in your dynamic risk assessment.
             </>
           }
           whyItMatters={
             <>
-              HRRB identification is the L3 supervisor\'s gateway to BSA 2022 compliance.
+              HRRB identification is the L3 supervisor’s gateway to BSA 2022 compliance.
               Misidentification skips the PAP awareness check and the golden-thread integration; the
-              work proceeds outside the building\'s safety case. After a future fire investigation
+              work proceeds outside the building’s safety case. After a future fire investigation
               this kind of gap is exactly what BSR enforcement targets.
             </>
           }

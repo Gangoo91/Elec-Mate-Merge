@@ -457,7 +457,7 @@ export default function Sub6() {
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
               Source — distribution transformer secondary, neutral point earthed at the substation
-              (via the substation\'s OWN earth electrode, separate from yours).
+              (via the substation’s OWN earth electrode, separate from yours).
             </li>
             <li>
               Line conductor through the overhead supply, through the meter and main switch, through
@@ -474,11 +474,11 @@ export default function Sub6() {
           </ul>
           <p>
             Loop closed — but the impedance is dominated by the two earth electrodes (yours + the
-            substation\'s) and the soil between them. Total Ze typically 21 ohm or much higher.
+            substation’s) and the soil between them. Total Ze typically 21 ohm or much higher.
             Fault current at 230 V is only ~10 A — nowhere near enough to trip a B32 RCBO on its
             overcurrent function in 0.2 s. The 30 mA RCD function does the disconnection (well
             within 40 ms at 5x I-delta-n). The 100 mA S-type at origin gives discrimination — only
-            the faulty circuit\'s RCD trips, not the whole installation.
+            the faulty circuit’s RCD trips, not the whole installation.
           </p>
         </ConceptBlock>
 

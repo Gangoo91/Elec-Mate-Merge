@@ -16,6 +16,11 @@ import {
   schedulePageSchema,
   type VerifyStatus,
   type CertImportType,
+  CERT_IMPORT_WITH_SCHEDULE,
+  logBookHeaderSchema,
+  logBookHeaderPrompt,
+  logBookEntriesSchema,
+  logBookEntriesPrompt,
 } from '../_shared/cert-import-schemas.ts';
 
 /**
@@ -128,6 +133,8 @@ interface ParseRequest {
   schedule?: boolean;
   /** Read ONLY the schedule — skips the header extraction's verify pass. */
   scheduleOnly?: boolean;
+  /** ELE-1781 — read a fire alarm log book (book header + dated rows) instead of a certificate. */
+  logBook?: boolean;
 }
 
 /** One Gemini call against the already-fetched pages. Returns parsed JSON or null. */
@@ -268,7 +275,8 @@ Deno.serve(async (req: Request) => {
         400
       );
     }
-    if (!certType || !CERT_IMPORT_TYPES.includes(certType)) {
+    const wantLogBook = body.logBook === true;
+    if (!wantLogBook && (!certType || !CERT_IMPORT_TYPES.includes(certType))) {
       return json(
         { success: false, error: `certType must be one of: ${CERT_IMPORT_TYPES.join(', ')}` },
         400
@@ -313,6 +321,44 @@ Deno.serve(async (req: Request) => {
     }
 
     const mimeType = mimeTypes[0];
+    /*
+     * ELE-1781 — a fire alarm log book. Header from the whole document, the
+     * dated rows one page at a time (a page-sized read finishes; a
+     * document-sized one truncates — see the schedule reader above).
+     */
+    if (wantLogBook) {
+      const header = await askGemini(logBookHeaderPrompt(), parts, logBookHeaderSchema(), 2_000, 45_000, 'log book header');
+      const pageReads = await Promise.all(
+        parts.slice(0, 6).map((part, i) =>
+          askGemini(logBookEntriesPrompt(), [part], logBookEntriesSchema(), 30_000, 100_000, `log book p${i + 1}`)
+        )
+      );
+      const entries: unknown[] = [];
+      let entriesSeen = 0;
+      for (const r of pageReads) {
+        if (!r) continue;
+        entriesSeen += Number(r.entries_seen) || 0;
+        if (Array.isArray(r.entries)) entries.push(...r.entries);
+      }
+      return json({
+        success: true,
+        logBook: {
+          found: header?.log_book_found !== false,
+          book: (header?.book as Record<string, string>) ?? {},
+          entries,
+          count: entries.length,
+          entriesSeen,
+          truncated: entriesSeen > entries.length,
+          pagesRead: Math.min(parts.length, 6),
+          pageCount: parts.length,
+        },
+      });
+    }
+    // Past the log book branch a certificate type is required — this narrows it for the reads below.
+    if (!certType) {
+      return json({ success: false, error: 'certType is required' }, 400);
+    }
+
     console.log(
       `[parse-certificate-import] ${certType}, ${urls.length} page(s), ${mimeTypes.join('/')}, ${(totalBytes / 1024).toFixed(0)}KB`
     );
@@ -403,7 +449,7 @@ Deno.serve(async (req: Request) => {
      * telling. `unreadable` warns at any confidence: if the model cannot tell
      * what the document is, nothing it extracted from it is worth trusting.
      */
-    const KNOWN = ['eicr', 'eic', 'minor-works'];
+    const KNOWN = ['eicr', 'eic', 'minor-works', 'emergency-lighting'];
     let mismatch = false;
     let mismatchReason = '';
     if (KNOWN.includes(detected) && detected !== certType && detectedConfidence >= 0.7) {
@@ -513,7 +559,7 @@ Deno.serve(async (req: Request) => {
     /* Minor works has no schedule of test results — its results are on the face
      * of the form and are already in the header fields above. */
     const wantSchedule =
-      (scheduleOnly || body.schedule === true) && certType !== 'minor-works';
+      (scheduleOnly || body.schedule === true) && CERT_IMPORT_WITH_SCHEDULE.includes(certType);
 
     const [verifyRes, scheduleRes] = await Promise.all([
       wantVerify

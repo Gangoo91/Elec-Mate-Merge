@@ -505,7 +505,7 @@ export default function Sub7() {
             <li>C8: &gt;999 MΩ</li>
           </ul>
           <p>
-            C4\'s 480 MΩ is a pass (above 1 MΩ) but the order of magnitude lower than peers warrants
+            C4’s 480 MΩ is a pass (above 1 MΩ) but the order of magnitude lower than peers warrants
             a quick investigation. You walk the circuit and find one back-box where the cable sheath
             has been pinched at a sharp metal edge — minor damage, no breach of insulation but
             presenting some leakage. Re-route, protect with grommet, re-test. New reading: &gt;999
@@ -516,7 +516,7 @@ export default function Sub7() {
           <p>
             Reconnect SPD, dimmers, EV charger. Apply 250 V DC follow-up between linked L+N and
             earth at the incoming side: reading 35 MΩ (lower than the 500 V test because of the
-            SPD\'s capacitive coupling, but well above 1 MΩ). Pass.
+            SPD’s capacitive coupling, but well above 1 MΩ). Pass.
           </p>
         </ConceptBlock>
 
@@ -620,7 +620,7 @@ export default function Sub7() {
           whatHappens={
             <>
               You think the cable came off a sealed drum direct from the supplier with a
-              manufacturer\'s test certificate, so you skip the post-installation continuity test on
+              manufacturer’s test certificate, so you skip the post-installation continuity test on
               the new ring final. You progress straight to IR (which passes), polarity (which
               passes), and energise. The customer reports a tripping RCBO three weeks later.
               Investigation reveals one of the back-box CPCs was pinched under a terminal screw and
@@ -651,7 +651,7 @@ export default function Sub7() {
               missed them on the disconnect-required walk). You disconnect, re-test the circuit
               cable: &gt;999 MΩ — pass. Reconnect the contactor and relay. Apply A4:2026 250 V DC
               follow-up: 8 MΩ — pass. But you also note from the instrument display that the AC
-              unit\'s built-in soft-start board indicated a fault when you energised it briefly
+              unit’s built-in soft-start board indicated a fault when you energised it briefly
               during the test — possibly damaged by the 500 V test exposure.
             </>
           }
@@ -659,13 +659,13 @@ export default function Sub7() {
             <>
               Stop. Per Reg 643.7.2, repeat the failed test (IR — done, now passes after
               disconnection) and any preceding tests that could have been influenced (continuity —
-              repeat on this circuit; the 500 V exposure may have compromised the AC unit\'s
+              repeat on this circuit; the 500 V exposure may have compromised the AC unit’s
               internal protection earth).
               <br />
               <br />
               Document everything: original failing IR with the contactor in (0.4 MΩ); disconnection
               action; corrected IR (&gt;999 MΩ); reconnection; 250 V DC follow-up reading (8 MΩ);
-              the AC fault indication. Bring the AC unit\'s manufacturer into the conversation —
+              the AC fault indication. Bring the AC unit’s manufacturer into the conversation —
               they may need to assess whether the 500 V DC test damaged the soft-start board. If
               damaged, the unit must be repaired or replaced before sign-off; per Reg 644.1.1 the
               EIC cannot be issued with a known defect.
@@ -673,7 +673,7 @@ export default function Sub7() {
               <br />
               Lesson learned: the disconnect-required walk is critical. Build a checklist for each
               install — every contactor, relay, electronic device gets ticked off the disconnect
-              list before the IR test starts. A4:2026\'s 250 V DC follow-up is designed to catch the
+              list before the IR test starts. A4:2026’s 250 V DC follow-up is designed to catch the
               equipment that was disconnected; it does not catch equipment that was wrongly left in
               for the 500 V DC test.
             </>

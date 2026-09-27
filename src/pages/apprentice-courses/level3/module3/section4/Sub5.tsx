@@ -166,7 +166,7 @@ const faqs = [
       'Hot windings → higher resistance → bigger copper loss. Hot cores → slight extra hysteresis. Most transformers are designed for 75-95 °C top-oil temperature; running cooler is fine, hotter shortens life dramatically.',
   },
   {
-    question: 'What\'s "load loss" on a test certificate?',
+    question: 'What’s "load loss" on a test certificate?',
     answer:
       'The full-load copper loss measured at the short-circuit test, corrected to standard temperature (usually 75 °C). Plus stray losses. This is the variable loss.',
   },
@@ -181,7 +181,7 @@ const faqs = [
       "Sometimes. Rewinding gives you copper savings (better pf at the windings) but doesn't fix iron losses (core stays the same). For very inefficient old units, replacement with a Tier 2 modern unit usually pays back in 5-7 years on the energy saving alone.",
   },
   {
-    question: 'What\'s a "no-load tap changer" and is it the same as an on-load tap changer?',
+    question: 'What’s a "no-load tap changer" and is it the same as an on-load tap changer?',
     answer:
       'No-load tap changer (NLTC, sometimes off-circuit tap changer) is operated only when the transformer is de-energised; common on distribution units. On-load tap changer (OLTC) operates under load via a transition impedance or vacuum switch; common on grid transformers (132/33 kV upwards) where supply voltage adjustment is needed without dropping load.',
   },

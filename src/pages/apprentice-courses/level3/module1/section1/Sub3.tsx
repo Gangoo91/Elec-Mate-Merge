@@ -319,7 +319,7 @@ export default function Sub3() {
 
         <ConceptBlock
           title="The Plan-Organise-Control-Monitor-Review cycle"
-          plainEnglish="Reg 3 says 'assess\'. Reg 5 says 'run the system that turns the assessment into actual on-site protection\'. POCMR — Plan, Organise, Control, Monitor, Review. This is the management system, not the paperwork. HSG65 'Managing for Health and Safety' is the HSE\'s go-to guide and ISO 45001 is the international standard."
+          plainEnglish="Reg 3 says 'assess’. Reg 5 says 'run the system that turns the assessment into actual on-site protection’. POCMR — Plan, Organise, Control, Monitor, Review. This is the management system, not the paperwork. HSG65 'Managing for Health and Safety' is the HSE’s go-to guide and ISO 45001 is the international standard."
           onSite="At L3 you become visible inside Reg 5 — your sign-off contributes to it, your near-miss reports feed the 'monitor' phase, your toolbox talk attendance is part of the 'control' phase. Knowing the cycle exists changes how you treat the routine paperwork."
         >
           <p>POCMR in practice for an electrical contracting firm:</p>
@@ -362,7 +362,7 @@ export default function Sub3() {
         <ConceptBlock
           title="The five CDM duties — and where you sit"
           plainEnglish="CDM 2015 stacks duties on five roles: Client, Designer, Principal Designer, Principal Contractor (only on multi-contractor projects), Contractor and Worker. On a small single-contractor job the Principal Designer and Principal Contractor duties don't apply, but the Contractor and Worker duties always do."
-          onSite="The L3 question to ask on every job: who's the client, who\'s the contractor, am I the worker or am I starting to act as the contractor\'s representative? The answer determines which duties apply to me directly today."
+          onSite="The L3 question to ask on every job: who's the client, who’s the contractor, am I the worker or am I starting to act as the contractor’s representative? The answer determines which duties apply to me directly today."
         >
           <p>The five CDM dutyholders:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -457,8 +457,8 @@ export default function Sub3() {
         </ContentEyebrow>
 
         <ConceptBlock
-          title="From \'just doing the job' to 'planning, managing, monitoring'"
-          plainEnglish="At L2 you carry the Reg 15 worker duty — co-operate, comply, report. At L3 your firm carries the Reg 9 contractor duty (plan, manage, monitor) and you increasingly act as the firm's eyes and ears on site. When you brief an L2 mate, you\'re inside Reg 9. When you sign off the dynamic risk assessment, you\'re inside Reg 9. When you decide whether the work can safely proceed today, you\'re inside Reg 9."
+          title="From ‘just doing the job' to 'planning, managing, monitoring'"
+          plainEnglish="At L2 you carry the Reg 15 worker duty — co-operate, comply, report. At L3 your firm carries the Reg 9 contractor duty (plan, manage, monitor) and you increasingly act as the firm's eyes and ears on site. When you brief an L2 mate, you’re inside Reg 9. When you sign off the dynamic risk assessment, you’re inside Reg 9. When you decide whether the work can safely proceed today, you’re inside Reg 9."
           onSite="The honest test: am I just executing what was planned, or am I now contributing to the planning, monitoring and control? At L3 the answer increasingly tilts towards the second. Recognising it is the start of supervisor competence."
         >
           <p>What Reg 9 contractor duties look like in L3 day-to-day terms:</p>
@@ -468,7 +468,7 @@ export default function Sub3() {
               checking the RAMS matches the conditions actually found.
             </li>
             <li>
-              <strong>Manage</strong> — running an L2 mate\'s work, deciding sequencing, allocating
+              <strong>Manage</strong> — running an L2 mate’s work, deciding sequencing, allocating
               tasks within competence, escalating where appropriate.
             </li>
             <li>
@@ -477,10 +477,10 @@ export default function Sub3() {
             </li>
             <li>
               <strong>Coordinate</strong> — talking to other trades, the principal contractor (where
-              one\'s appointed), the customer, raising issues to the supervisor.
+              one’s appointed), the customer, raising issues to the supervisor.
             </li>
             <li>
-              <strong>Report</strong> — feeding observations and near-misses up the firm\'s
+              <strong>Report</strong> — feeding observations and near-misses up the firm’s
               reporting chain. Reg 9 contains a coordination duty, Reg 15 has the personal reporting
               duty — at L3 both apply.
             </li>
@@ -634,7 +634,7 @@ export default function Sub3() {
         <ContentEyebrow>Where it goes wrong</ContentEyebrow>
 
         <CommonMistake
-          title="Assuming CDM doesn\'t apply because \'it\'s just a small job\'"
+          title="Assuming CDM doesn’t apply because ‘it’s just a small job’"
           whatHappens={
             <>
               Firm takes on a one-day socket installation in a high-street retail unit. No CDM

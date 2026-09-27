@@ -146,6 +146,25 @@ const GETTING_STARTED_PDF_URL =
   'https://jtwygbeceundfgnkirof.supabase.co/storage/v1/object/public/lead-magnets/onboarding/Elec-Mate-Getting-Started.pdf';
 const GETTING_STARTED_PDF_FILENAME = 'Elec-Mate-Getting-Started.pdf';
 
+/**
+ * Prefix stamped on `profiles.free_access_reason` when a paused subscription's
+ * already-paid-for period is honoured as dated free access.
+ *
+ * 🔴 This string is load-bearing in THREE places and they must agree:
+ *   1. written here, on the transition into paused
+ *   2. matched here, to clear the grant when the subscription resumes
+ *   3. matched in SQL by `expire_paused_subscription_access()`
+ *      (migration 20260927021500) — the nightly job that actually ends it
+ *
+ * Change the wording and the job silently stops matching, which does not throw
+ * anywhere: the grants simply never expire and paused customers keep the full
+ * product for free, indefinitely. If you edit this, edit the migration too.
+ *
+ * Deliberately short so it also matches grants written by hand during the
+ * 27 Sep 2026 incident ("Paused sub 27 Sep 2026 — …").
+ */
+const PAUSE_GRANT_PREFIX = 'Paused sub';
+
 // Fetch the Getting Started PDF as base64 for attachment. Never throws — a failed
 // fetch must not block the welcome email (the download button still works).
 async function fetchGettingStartedPdfBase64(): Promise<string | null> {
@@ -841,15 +860,101 @@ serve(async (req) => {
         ).cancellation_details ?? null;
 
         const reason = details?.reason ?? null;
-        // Only these two reasons say anything about intent. Anything else —
-        // including Stripe saying nothing at all — stays null rather than being
-        // guessed at, because "we don't know" is the finding we are trying to
-        // stop producing.
+        // Stripe's enum is cancellation_requested | payment_failed |
+        // payment_disputed. A dispute is a chargeback, so it is not a choice to
+        // leave any more than a failed card is. Anything else — including Stripe
+        // saying nothing at all — stays null rather than being guessed at,
+        // because "we don't know" is the finding we are trying to stop producing.
         const voluntary =
-          reason === 'cancellation_requested' ? true : reason === 'payment_failed' ? false : null;
+          reason === 'cancellation_requested'
+            ? true
+            : reason === 'payment_failed' || reason === 'payment_disputed'
+              ? false
+              : null;
 
         const item = subscription.items?.data?.[0];
         const price = item?.price;
+
+        // A trial that never converted is not a paying customer leaving, and
+        // roughly 53 trials come up for conversion in any given week — so
+        // without this the two would be indistinguishable in the same table and
+        // every churn figure built on it would be wrong from the first day.
+        //
+        // Derived rather than read: Stripe overwrites `status` with 'canceled'
+        // on deletion, so the trialing/active distinction is already gone by the
+        // time we see this event. `trial_end` survives, and a trial still in the
+        // future when the subscription was cancelled means it died in trial.
+        const trialEnd = subscription.trial_end
+          ? new Date(subscription.trial_end * 1000)
+          : null;
+        const canceledAt = subscription.canceled_at
+          ? new Date(subscription.canceled_at * 1000)
+          : null;
+        // A subscription that never had a trial definitively did not die in one,
+        // so that case is `false`, not null. Null is reserved for genuinely not
+        // knowing — here, a trial we cannot time against a cancellation.
+        const diedInTrial = !trialEnd
+          ? false
+          : canceledAt
+            ? trialEnd.getTime() >= canceledAt.getTime()
+            : null;
+
+        // Was a coupon live when it ended? That means a retention discount had
+        // already been applied and did not hold — which any honest save-rate
+        // measurement has to account for.
+        const discounts = (
+          subscription as Stripe.Subscription & { discounts?: unknown[] | null }
+        ).discounts;
+        const hadDiscount = Array.isArray(discounts)
+          ? discounts.length > 0
+          : subscription.discount
+            ? true
+            : null;
+
+        // ── The churn test ────────────────────────────────────────────────
+        // A churner is someone who made a real payment and then left. A trial
+        // that lapses never paid us, so it is a failed conversion and belongs to
+        // a different problem entirely — one that no retention work can fix.
+        //
+        // Ground truth is a paid invoice with amount_paid > 0. The £0.00 trial
+        // invoice also has status 'paid', which is exactly why the amount has to
+        // be checked rather than the status. `died_in_trial` above is only a
+        // proxy for this and gets two cases wrong: a subscription that converted
+        // and then failed its first real invoice, and one on a 100%-off coupon
+        // that bills £0.00 forever.
+        //
+        // Same test `admin-stripe-stats` uses, so this column and
+        // `admin_metric_daily.stripe_churned_paid` cannot disagree.
+        let everPaid: boolean | null = null;
+        let firstPaidAt: string | null = null;
+        try {
+          const paidInvoices = await stripe.invoices.list({
+            subscription: subscription.id,
+            status: 'paid',
+            limit: 100,
+          });
+          const real = (paidInvoices.data as Stripe.Invoice[]).filter(
+            (inv: Stripe.Invoice) => (inv.amount_paid || 0) > 0
+          );
+          everPaid = real.length > 0;
+          if (real.length) {
+            const earliest = real.reduce((min: number, inv: Stripe.Invoice) => {
+              const t = inv.status_transitions?.paid_at ?? inv.created;
+              return t < min ? t : min;
+            }, Number.MAX_SAFE_INTEGER);
+            if (earliest !== Number.MAX_SAFE_INTEGER) {
+              firstPaidAt = new Date(earliest * 1000).toISOString();
+            }
+          }
+        } catch (invErr: unknown) {
+          // Left null rather than guessed. `backfill-cancellations` fills in any
+          // row whose ever_paid is still null, so a blip here is recoverable —
+          // whereas a wrong value would silently miscount churn.
+          logger.warn('Could not establish whether the subscription ever paid', {
+            subscriptionId: subscription.id,
+            error: (invErr as Error)?.message,
+          });
+        }
 
         const { error } = await supabase.from('subscription_cancellations').insert({
           user_id: userId,
@@ -860,17 +965,34 @@ serve(async (req) => {
           feedback: details?.feedback ?? null,
           comment: details?.comment ?? null,
           voluntary,
-          tier: subscription.metadata?.planId ?? null,
+          // metadata.planId is absent on plenty of live subscriptions, so the
+          // price nickname is the fallback — and price_id is stored regardless,
+          // which makes the tier derivable even when both are missing.
+          tier: subscription.metadata?.planId ?? price?.nickname ?? null,
           price_id: price?.id ?? null,
           amount_pence: typeof price?.unit_amount === 'number' ? price.unit_amount : null,
           currency: price?.currency ?? subscription.currency ?? null,
           cancel_at_period_end: subscription.cancel_at_period_end ?? null,
-          canceled_at: subscription.canceled_at
-            ? new Date(subscription.canceled_at * 1000).toISOString()
+          canceled_at: canceledAt ? canceledAt.toISOString() : null,
+          // Via the shared helper, NOT `subscription.current_period_end`.
+          // Stripe moved that field onto the subscription ITEM, and a webhook
+          // payload is rendered at the version pinned to the endpoint rather
+          // than the version this client asks for — so reading the root
+          // directly returns undefined on a modern payload and this column
+          // would have been null on every real cancellation.
+          period_end: getSubscriptionPeriodEnd(subscription, logger, {
+            subscriptionId: subscription.id,
+            where: 'recordCancellation',
+          })?.toISOString() ?? null,
+          trial_end: trialEnd ? trialEnd.toISOString() : null,
+          died_in_trial: diedInTrial,
+          // Tenure without a round trip to Stripe.
+          started_at: subscription.start_date
+            ? new Date(subscription.start_date * 1000).toISOString()
             : null,
-          period_end: subscription.current_period_end
-            ? new Date(subscription.current_period_end * 1000).toISOString()
-            : null,
+          had_discount: hadDiscount,
+          ever_paid: everPaid,
+          first_paid_at: firstPaidAt,
           detail: { cancellation_details: details, metadata: subscription.metadata ?? null },
         });
 
@@ -1227,19 +1349,39 @@ serve(async (req) => {
           try {
             const { data: existing } = await supabase
               .from('profiles')
-              .select('free_access_granted, free_access_expires_at')
+              .select('free_access_granted')
               .eq('id', userId)
               .maybeSingle();
 
-            // Only on the transition in. If a pause grant is already running,
-            // leave it exactly as it is.
-            if (!existing?.free_access_granted || !existing?.free_access_expires_at) {
+            // Grant ONLY when the account carries no free access at all.
+            //
+            // 🔴 Never widen this to "…or it has no expiry date". 46 accounts
+            // hold free access alongside a Stripe customer id, and 26 of those
+            // are PERMANENT grants with a null expiry — lifetime purchases,
+            // beta testers, feedback partners. Treating a null expiry as
+            // "nothing here yet" would overwrite the reason, stamp an expiry
+            // on a lifetime account and let the nightly job revoke something
+            // somebody paid £300–£500 for.
+            //
+            // This shape is correct in every case:
+            //   • no free access          → grant it            ✓
+            //   • permanent grant         → untouched           ✓
+            //   • pause grant running     → untouched, and so   ✓
+            //     cannot be pushed further out by a re-pause
+            //   • earlier pause grant expired (job set it false)
+            //     → granted afresh at the new paid-through date ✓
+            //
+            // Edge case accepted knowingly: someone already holding a shorter
+            // dated grant (say a 30-day goodwill trial) keeps that end date
+            // rather than the longer paid-through one. Rare, and far safer
+            // than any rule that can extend an existing grant.
+            if (!existing?.free_access_granted) {
               await supabase
                 .from('profiles')
                 .update({
                   free_access_granted: true,
                   free_access_expires_at: periodEnd.toISOString(),
-                  free_access_reason: `Paused subscription ${subscription.id} — honouring the period already paid for. Expires ${periodEnd.toISOString().slice(0, 10)}.`,
+                  free_access_reason: `${PAUSE_GRANT_PREFIX} ${subscription.id} — honouring the period already paid for. Expires ${periodEnd.toISOString().slice(0, 10)}.`,
                   updated_at: new Date().toISOString(),
                 })
                 .eq('id', userId);
@@ -1274,6 +1416,47 @@ serve(async (req) => {
             trialEnd: subscription.trial_end ? new Date(subscription.trial_end * 1000) : null,
           }
         );
+
+        // Resumed. Clear the pause grant rather than waiting for the nightly
+        // job to time it out — otherwise a paying customer keeps
+        // `free_access_granted = true` and gets counted as a freebie by
+        // admin-stripe-stats and admin-revenuecat-stats, both of which branch
+        // on that flag. That understates real revenue for as long as the stale
+        // grant survives. Scoped by reason so no other grant is disturbed.
+        if (!isPaused && isActive) {
+          try {
+            // One conditional statement rather than read-then-write: no extra
+            // round trip on every renewal event, and no window in which a
+            // concurrent update could be clobbered. The filters are the guard
+            // — a row is only touched when it is genuinely carrying a live
+            // pause grant, so permanent and goodwill grants are never hit.
+            // `.eq(granted, true)` is exact here: the column is nullable, and
+            // a null means there is nothing to clear anyway.
+            const { data: cleared } = await supabase
+              .from('profiles')
+              .update({
+                free_access_granted: false,
+                free_access_expires_at: null,
+                updated_at: new Date().toISOString(),
+              })
+              .eq('id', userId)
+              .eq('free_access_granted', true)
+              .like('free_access_reason', `${PAUSE_GRANT_PREFIX}%`)
+              .select('id');
+
+            if (cleared && cleared.length > 0) {
+              logger.info('Subscription resumed — pause grant cleared', {
+                userId,
+                subscriptionId: subscription.id,
+              });
+            }
+          } catch (resumeErr) {
+            logger.warn('Failed to clear pause grant on resume (non-fatal)', {
+              userId,
+              error: resumeErr instanceof Error ? resumeErr.message : String(resumeErr),
+            });
+          }
+        }
 
         // Cancel any previous subscriptions for this customer (upgrade scenario)
         // e.g. user upgrading from Electrician (£9.99) to Business AI (£29.99)

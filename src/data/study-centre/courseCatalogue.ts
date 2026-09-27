@@ -35,8 +35,15 @@ export interface StudyCourse {
   routeKey: string;
   keywords: string[];
   /**
-   * Listed but not openable — the course is announced and being written. Only
-   * an Elec-Mate admin can open one; everyone else sees the badge.
+   * Open, but badged "In review" — the course is published and every page is
+   * written, and it is new enough that we are still reading back through it.
+   *
+   * This used to mean "listed but not openable", gated on isAdmin. That was
+   * right while the Welsh course was being written and wrong the moment the
+   * route was opened to learners: the routes let anyone in while the two
+   * listing pages still refused to navigate, so the course looked broken from
+   * the only two places you would look for it. The badge stayed, the lock
+   * went.
    */
   inDevelopment?: boolean;
 }
@@ -96,7 +103,7 @@ export const COURSE_CATALOGUE: StudyCourse[] = [
     id: 'welsh-level3',
     title: 'Welsh Level 3 Electrotechnical Installation',
     description:
-      'The Level 3 taught in Wales — the electrical spine plus planning, coordinating a work site and working in the sector in Wales, under its own unit codes.',
+      'The Level 3 taught in Wales — the electrical spine plus planning, coordinating a work site and working in the sector in Wales. Every lesson names its own unit and criterion.',
     track: 'apprentice',
     level: 'Intermediate',
     duration: '2 years',

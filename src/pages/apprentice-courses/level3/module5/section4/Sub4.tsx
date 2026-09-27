@@ -210,12 +210,12 @@ const faqs = [
   {
     question: 'Why is there no instrument test for AFDD trip time like there is for RCDs?',
     answer:
-      'AFDDs detect arc-fault waveform signatures using internal algorithms — the detection is sophisticated and proprietary to each manufacturer. There\'s no standardised "inject a signal that simulates an arc fault" test that an external instrument can perform reliably. The manufacturer test button injects a manufacturer-defined arc signature internally that the device should detect; external instrument testing isn\'t possible for the arc-detection function. This is unlike RCDs where the residual current test is well-defined (inject a known mA at 50 Hz, measure trip time) and can be standardised across instruments.',
+      'AFDDs detect arc-fault waveform signatures using internal algorithms — the detection is sophisticated and proprietary to each manufacturer. There’s no standardised "inject a signal that simulates an arc fault" test that an external instrument can perform reliably. The manufacturer test button injects a manufacturer-defined arc signature internally that the device should detect; external instrument testing isn’t possible for the arc-detection function. This is unlike RCDs where the residual current test is well-defined (inject a known mA at 50 Hz, measure trip time) and can be standardised across instruments.',
   },
   {
     question: 'My customer asks "are AFDDs reliable, or do they nuisance trip a lot?"',
     answer:
-      'Modern BS EN 62606 compliant AFDDs (post-2018 designs) have significantly better discrimination than first-generation devices. Nuisance tripping is rare on healthy installations with quality electrical accessories. Common nuisance-trip causes — damaged flex on a frequently-used appliance, marginal terminal on a worn socket, certain low-quality electronic loads (very cheap LED drivers, no-name PSUs). Stick to reputable AFDD brands (Hager, Schneider, Wylex, Eaton), use quality accessories, and the device performs well. For a customer worried about nuisance tripping, the most useful brief is — "if it trips, that\'s usually telling you something\'s wrong with a plug or appliance, not the device being faulty".',
+      'Modern BS EN 62606 compliant AFDDs (post-2018 designs) have significantly better discrimination than first-generation devices. Nuisance tripping is rare on healthy installations with quality electrical accessories. Common nuisance-trip causes — damaged flex on a frequently-used appliance, marginal terminal on a worn socket, certain low-quality electronic loads (very cheap LED drivers, no-name PSUs). Stick to reputable AFDD brands (Hager, Schneider, Wylex, Eaton), use quality accessories, and the device performs well. For a customer worried about nuisance tripping, the most useful brief is — "if it trips, that’s usually telling you something’s wrong with a plug or appliance, not the device being faulty".',
   },
   {
     question: 'Is the AFDD test button operated by the customer or the inspector?',
@@ -331,7 +331,7 @@ export default function Sub4() {
         <ConceptBlock
           title="Detecting the waveform signature of an arc fault"
           plainEnglish="An AFDD monitors the current flowing in the circuit and looks for waveform signatures consistent with arc faults — characteristic high-frequency content, rapid current changes, intermittent connection patterns. When the algorithm detects an arc-fault signature it trips the device, disconnecting the circuit before the arc can ignite a fire. The algorithm has to discriminate between dangerous arcing (loose connection in a damaged plug) and benign arcing (switching arcs from contactors, motor brush sparking)."
-          onSite="The detection is internal to the device — there\'s no external test signal that can verify the algorithm. The manufacturer test button is the only practical functional check. The device datasheet quotes BS EN 62606 conformance and the product\'s discrimination performance."
+          onSite="The detection is internal to the device — there’s no external test signal that can verify the algorithm. The manufacturer test button is the only practical functional check. The device datasheet quotes BS EN 62606 conformance and the product’s discrimination performance."
         >
           <p>What an AFDD detects (the dangerous arcs):</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -386,8 +386,8 @@ export default function Sub4() {
 
         <ConceptBlock
           title="No instrument test, only the test button"
-          plainEnglish="Unlike RCDs (where the multifunction tester injects a known residual current and measures trip time), AFDDs cannot be externally tested for performance. The arc-detection algorithm is internal and proprietary; there\'s no standardised external test signal. The manufacturer test button is the only practical functional check — pressing it injects a manufacturer-defined arc-fault signature internally that the device should detect."
-          onSite="Treat the manufacturer test button as the AFDD\'s equivalent of the RCD instrument test. Press at commissioning, press at every EICR, brief the customer to press quarterly. Failed test button = replace the device."
+          plainEnglish="Unlike RCDs (where the multifunction tester injects a known residual current and measures trip time), AFDDs cannot be externally tested for performance. The arc-detection algorithm is internal and proprietary; there’s no standardised external test signal. The manufacturer test button is the only practical functional check — pressing it injects a manufacturer-defined arc-fault signature internally that the device should detect."
+          onSite="Treat the manufacturer test button as the AFDD’s equivalent of the RCD instrument test. Press at commissioning, press at every EICR, brief the customer to press quarterly. Failed test button = replace the device."
         >
           <p>The verification protocol:</p>
           <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
@@ -413,7 +413,7 @@ export default function Sub4() {
           </ol>
           <p>
             <strong>Why no instrument test?</strong> The arc-detection algorithm is proprietary and
-            complex — different manufacturers use different signature analysis approaches. There\'s
+            complex — different manufacturers use different signature analysis approaches. There’s
             no standardised "inject this signal and measure response" test that external instruments
             can apply. The manufacturer test button is the only consistent functional check.
           </p>
@@ -433,7 +433,7 @@ export default function Sub4() {
 
         <ConceptBlock
           title="The locations the recommendation targets"
-          plainEnglish="Reg 421.1.7 enumerates specific location types where AFDD installation is recommended. The common thread is occupied premises where a fire would put people at risk — particularly where occupants may not be able to react quickly (sleeping, vulnerable, large numbers). The 32 A socket-outlet circuit is the canonical case because that\'s where most domestic / occupied-premises arc-fault fires originate."
+          plainEnglish="Reg 421.1.7 enumerates specific location types where AFDD installation is recommended. The common thread is occupied premises where a fire would put people at risk — particularly where occupants may not be able to react quickly (sleeping, vulnerable, large numbers). The 32 A socket-outlet circuit is the canonical case because that’s where most domestic / occupied-premises arc-fault fires originate."
           onSite="When specifying a new install or quoting a CU change, consider Reg 421.1.7 against the building type. Domestic dwelling — recommended. HMO or hotel — strongly recommended. Care home or similar — strongly recommended. Educational establishment — recommended. Office or retail — best practice but less specifically targeted. HRRB — mandatory under separate building regulations."
         >
           <p>Reg 421.1.7 location categories (paraphrased):</p>
@@ -601,7 +601,7 @@ export default function Sub4() {
               Wylex, Eaton).
             </li>
             <li>
-              <strong>Escalate if cause isn\'t locally diagnosable.</strong> Persistent nuisance
+              <strong>Escalate if cause isn’t locally diagnosable.</strong> Persistent nuisance
               trips with no identified cause may need manufacturer support or specialist diagnostic
               equipment.
             </li>
@@ -636,14 +636,14 @@ export default function Sub4() {
               switch off any plug-in equipment on the circuit, reset the device, and plug equipment
               back in one item at a time to identify which one caused the trip. The most common
               cause is a damaged flex on a frequently-used appliance — kettle, vacuum cleaner, hair
-              dryer. If you can\'t identify the cause, contact us."
+              dryer. If you can’t identify the cause, contact us."
             </li>
             <li>
               <strong>Lifespan and replacement.</strong> "AFDDs are designed for 10-15 year service
               life. Plan for replacement at consumer unit upgrade time."
             </li>
             <li>
-              <strong>Manufacturer literature.</strong> Include the device manufacturer\'s user
+              <strong>Manufacturer literature.</strong> Include the device manufacturer’s user
               information in the documentation pack.
             </li>
           </ul>
@@ -691,11 +691,11 @@ export default function Sub4() {
         <ContentEyebrow>Where it goes wrong</ContentEyebrow>
 
         <CommonMistake
-          title="Treating Reg 421.1.7 as mandatory and quoting too high on jobs the customer can\'t afford"
+          title="Treating Reg 421.1.7 as mandatory and quoting too high on jobs the customer can’t afford"
           whatHappens={
             <>
-              You\'re asked to quote a small CU upgrade for a customer on a tight budget. You quote
-              AFDD-RCBOs throughout because "BS 7671 says so". Customer can\'t afford the quote,
+              You’re asked to quote a small CU upgrade for a customer on a tight budget. You quote
+              AFDD-RCBOs throughout because "BS 7671 says so". Customer can’t afford the quote,
               gets a competitor who quotes RCBO-only at lower cost, you lose the work. Worse — the
               customer now thinks AFDD is required by law and views you as having tried to upsell.
               The reality is Reg 421.1.7 is a recommendation, not a mandate (outside HRRBs);
@@ -707,9 +707,9 @@ export default function Sub4() {
               Quote both options clearly. "Option A — RCBO protection only, fully BS 7671 compliant,
               total GBP X. Option B — AFDD-RCBO protection on socket and lighting circuits,
               additional fire protection beyond BS 7671 minimum, total GBP X + 600- 1000 GBP. BS
-              7671 recommends AFDDs but doesn\'t mandate them outside HRRBs; the choice is yours."
+              7671 recommends AFDDs but doesn’t mandate them outside HRRBs; the choice is yours."
               Customer makes an informed decision; many will choose AFDD when the value is
-              explained; some will choose RCBO-only on cost, and that\'s a legitimate choice. The
+              explained; some will choose RCBO-only on cost, and that’s a legitimate choice. The
               firm has presented both options professionally.
             </>
           }
@@ -721,9 +721,9 @@ export default function Sub4() {
             <>
               Routine commissioning IR test on a new install with AFDD-RCBOs. Apprentice connects
               the MFT at the line side of the device, runs 500 V IR test. Some of the AFDDs trip;
-              some show low IR readings. Apprentice doesn\'t realise the 500 V is potentially
+              some show low IR readings. Apprentice doesn’t realise the 500 V is potentially
               damaging the AFDD electronics on the line side. After commissioning the AFDDs nuisance
-              trip in service — they\'ve been partially damaged but not completely failed. Customer
+              trip in service — they’ve been partially damaged but not completely failed. Customer
               comes back complaining of trips; investigation reveals the IR test damaged the
               devices.
             </>
@@ -731,7 +731,7 @@ export default function Sub4() {
           doInstead={
             <>
               Disconnect AFDDs (and RCBOs and SPDs) before the 500 V IR test, OR test on the load
-              side only (so the test voltage doesn\'t reach the device electronics), OR use 250 V IR
+              side only (so the test voltage doesn’t reach the device electronics), OR use 250 V IR
               test if the device manufacturer permits. Most modern AFDD-RCBOs tolerate 500 V on the
               line side but the manufacturer manual is the source of truth — read it. GN3 explicitly
               identifies AFDDs, RCBOs, RCCBs and SPDs as devices that can be affected by IR test
@@ -757,7 +757,7 @@ export default function Sub4() {
               AFDD-RCBOs labelled and identified on the circuit chart, terminations torqued per
               Hager spec, manufacturer documentation included in the handover pack. (2) Dead test
               set — continuity (R1+R2), IR test on each circuit. For IR, use the 250 V range per
-              Hager\'s recommendation for AFDD-RCBO line-side testing — confirms no damage to
+              Hager’s recommendation for AFDD-RCBO line-side testing — confirms no damage to
               electronics. (3) Energise. (4) Live tests — Ze at the supply origin = 0.28 Omega. Per
               circuit Zs at the furthest point in no-trip mode (per A4:2026 Reg 643.7.3 method from
               Sub 2). All within Type B 32 A measured limit 1.10 Omega. (5) RCD trip-time test on

@@ -305,7 +305,7 @@ export default function Sub5() {
 
         <RegsCallout
           source="BS 7671:2018+A4:2026 — Regulation 643.10 (Functional testing) — verbatim, edited"
-          clause="Equipment shall be subjected to functional testing, as appropriate, to verify that it is properly mounted, adjusted and installed and operates correctly in accordance with the relevant requirements of BS 7671. Examples of such equipment are: (a) switchgear and controlgear assemblies, drives, controls and interlocks; (b) systems for emergency switching off and emergency stopping; (c) insulation monitoring. NOTE 1: This list is not exhaustive. Protective devices shall be submitted to a test of their function, as necessary, to check that they are properly installed and adjusted. Where fault protection and/or additional protection is provided by an RCD, the effectiveness of any test facility incorporated in the device shall be verified. Where an AFDD is installed the effectiveness of any manually operated test facility shall be verified in accordance with the manufacturers\' recommendations."
+          clause="Equipment shall be subjected to functional testing, as appropriate, to verify that it is properly mounted, adjusted and installed and operates correctly in accordance with the relevant requirements of BS 7671. Examples of such equipment are: (a) switchgear and controlgear assemblies, drives, controls and interlocks; (b) systems for emergency switching off and emergency stopping; (c) insulation monitoring. NOTE 1: This list is not exhaustive. Protective devices shall be submitted to a test of their function, as necessary, to check that they are properly installed and adjusted. Where fault protection and/or additional protection is provided by an RCD, the effectiveness of any test facility incorporated in the device shall be verified. Where an AFDD is installed the effectiveness of any manually operated test facility shall be verified in accordance with the manufacturers’ recommendations."
           meaning={
             <>
               The list is examples, not the complete scope — anything functional in the installation
@@ -407,7 +407,7 @@ export default function Sub5() {
 
         <SectionRule />
 
-        <ContentEyebrow>Why the test button alone isn\'t enough</ContentEyebrow>
+        <ContentEyebrow>Why the test button alone isn’t enough</ContentEyebrow>
 
         <ConceptBlock
           title="Test button versus instrument test — what each one proves"
@@ -744,7 +744,7 @@ export default function Sub5() {
           whatToDo={
             <>
               Plug the MFT RCD test lead into a downstream socket on the ring (any socket — the test
-              exercises the whole circuit\'s residual-current path back to the RCBO). Select RCD
+              exercises the whole circuit’s residual-current path back to the RCBO). Select RCD
               test mode on the MFT. Set test current = 30 mA AC (1 × IΔn). The MFT will typically
               run a 0.5 × IΔn pre-test (15 mA — RCBO must NOT trip) and then ramp to the full test
               current; if available, also a 1 × IΔn fixed-current test that records the trip time.

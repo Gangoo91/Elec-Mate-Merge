@@ -333,7 +333,7 @@ export default function Sub1() {
 
         <ConceptBlock
           title="The single biggest L3 step-up from L2 fault-finding"
-          plainEnglish="Without a hypothesis, you\'re running tests randomly and hoping a result jumps out. With a hypothesis, each test is designed to confirm or refute a specific candidate. The difference between 4 hours of testing and 30 minutes of testing."
+          plainEnglish="Without a hypothesis, you’re running tests randomly and hoping a result jumps out. With a hypothesis, each test is designed to confirm or refute a specific candidate. The difference between 4 hours of testing and 30 minutes of testing."
         >
           <p>
             The hypothesis stage is the reasoning step. You take the symptoms and ask 'what fault
@@ -375,8 +375,8 @@ export default function Sub1() {
           onSite="First hypotheses are usually wrong or incomplete. The test results refine them. Loop back to stage 2 with updated hypothesis based on what the tests revealed. Keep iterating until hypothesis explains all the evidence."
         >
           <p>
-            The iterative loop is normal and expected. The L3 apprentice\'s competence is partly
-            recognising \'the results don\'t match — what\'s the new hypothesis?' rather than
+            The iterative loop is normal and expected. The L3 apprentice’s competence is partly
+            recognising ‘the results don’t match — what’s the new hypothesis?' rather than
             forcing the data to fit. Senior electricians may iterate several times on a complex
             fault.
           </p>
@@ -390,7 +390,7 @@ export default function Sub1() {
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>Some symptoms not explained by current hypothesis.</li>
             <li>Test results that don't fit the prediction.</li>
-            <li>Proposed fix that doesn\'t logically address what\'s been found.</li>
+            <li>Proposed fix that doesn’t logically address what’s been found.</li>
           </ul>
         </ConceptBlock>
 
@@ -453,7 +453,7 @@ export default function Sub1() {
           title="Running every test without a hypothesis"
           whatHappens={
             <>
-              Apprentice arrives at a \'something\'s wrong with the wiring' job. Without forming a
+              Apprentice arrives at a ‘something’s wrong with the wiring' job. Without forming a
               hypothesis, they isolate the whole installation and run every BS 7671 643 test on
               every circuit. Three hours later they have a stack of readings, all within tolerance,
               and no diagnosis. Customer is impatient; supervisor is on the phone. Real fault was a
@@ -474,8 +474,8 @@ export default function Sub1() {
           title="Forcing the data to fit the first hypothesis"
           whatHappens={
             <>
-              Apprentice\'s first hypothesis is HRJ at the consumer unit. They run continuity tests;
-              readings are all normal. Instead of updating the hypothesis, they conclude \'it must
+              Apprentice’s first hypothesis is HRJ at the consumer unit. They run continuity tests;
+              readings are all normal. Instead of updating the hypothesis, they conclude ‘it must
               be intermittent HRJ' and start torque-testing every busbar terminal anyway. Two hours
               later, no fault found at the busbar. Real fault was an earth leakage from a degraded
               outdoor socket gasket — visible on the clamp meter but never tested because the
@@ -485,14 +485,14 @@ export default function Sub1() {
           doInstead={
             <>
               Treat hypotheses as falsifiable. If the test results don't match the prediction, the
-              hypothesis is wrong (or incomplete) — update it, don\'t force it. The professional
+              hypothesis is wrong (or incomplete) — update it, don’t force it. The professional
               discipline is to follow the evidence, not your initial guess.
             </>
           }
         />
 
         <Scenario
-          title="Diagnosing \'the kitchen lights flicker but only sometimes'"
+          title="Diagnosing ‘the kitchen lights flicker but only sometimes'"
           situation={
             <>
               Customer reports kitchen LED downlights flicker intermittently. They can't predict
@@ -508,10 +508,10 @@ export default function Sub1() {
               drivers, (B) cumulative leakage from smart hub causing brief RCD-edge events, (C)
               marginal HRJ at one of the downlight terminations. Stage 3 — plan tests. Most
               discriminating test: substitute known-good non-dimmable LED on a non-dimmed circuit;
-              if flicker stops, it\'s the dimmer/hub. If flicker persists with substituted lamp,
+              if flicker stops, it’s the dimmer/hub. If flicker persists with substituted lamp,
               escalate to clamp meter for cumulative leakage check; thermal imaging for HRJ. Stage 4
               — execute. Substitute test eliminates flicker. Stage 5 — analyse. Hypothesis A
-              confirmed; the smart hub\'s PWM signal isn't compatible with the cheap LED drivers
+              confirmed; the smart hub’s PWM signal isn't compatible with the cheap LED drivers
               used. Stage 6 — formulate fix. Replace LED downlight drivers with units rated for
               smart-hub compatibility (Lutron-certified or similar). Stage 7 — execute. Customer
               agrees, drivers replaced, smart-hub control restored, flicker eliminated. Document on

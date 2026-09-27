@@ -13,7 +13,7 @@
  * every value that reaches it.
  */
 
-import { useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   AlertTriangle,
@@ -35,11 +35,16 @@ import { inputCn, textareaCn, grid2Cn } from '@/components/forms/fieldStyles';
 import { reportCloud } from '@/utils/reportCloud';
 import { generateCertificateNumber } from '@/utils/certificateNumbering';
 import { isPdf, pdfToPageImages } from '@/utils/pdf-to-pages';
+import { certificateHref } from '@/utils/certificate-href';
 import {
   CERT_IMPORT_OPTIONS,
   IMPORT_FIELD_LABEL,
   type CertImportType,
+  CERT_IMPORT_WITH_SCHEDULE,
 } from '@/data/certImportFields';
+import LogBookImportReview, {
+  type ImportedLogBook,
+} from '@/components/inspection/import/LogBookImportReview';
 
 type Step = 'type' | 'upload' | 'review';
 
@@ -66,6 +71,8 @@ interface ParseResult {
   unreadableFields: string[];
   notes: string;
   detected: { type: string; confidence: number; mismatch: boolean; reason: string };
+  /** ELE-1781 — set instead of `fields` when a fire alarm log book was read. */
+  logBook?: ImportedLogBook;
 }
 
 /*
@@ -96,6 +103,32 @@ export default function CertificateImport() {
   const [result, setResult] = useState<ParseResult | null>(null);
   const [values, setValues] = useState<Record<string, string>>({});
   const [error, setError] = useState<string | null>(null);
+  /*
+   * ELE-1654 — what the processing screen can honestly show.
+   *
+   * There is no per-page progress to report: every page goes to the model in
+   * ONE request so it can read a field printed on one page and continued on
+   * another (see parse-certificate-import). What IS real: each page uploading,
+   * the header read landing, the schedule read landing, and the clock. So the
+   * screen shows those four things and a time expectation from the page count,
+   * rather than a spinner that looks identical at 2 seconds and 50.
+   */
+  const [progress, setProgress] = useState<{
+    uploaded: number;
+    total: number;
+    headerDone: boolean;
+    scheduleDone: boolean;
+    startedAt: number;
+  } | null>(null);
+  const [elapsed, setElapsed] = useState(0);
+  useEffect(() => {
+    if (!progress) return;
+    const t = setInterval(
+      () => setElapsed(Math.floor((Date.now() - progress.startedAt) / 1000)),
+      1000
+    );
+    return () => clearInterval(t);
+  }, [progress]);
 
   const reset = () => {
     setResult(null);
@@ -103,6 +136,7 @@ export default function CertificateImport() {
     setError(null);
     setFileName('');
     setPageNames([]);
+    setProgress(null);
   };
 
   /* ── Upload, then parse ───────────────────────────────────────────── */
@@ -179,6 +213,14 @@ export default function CertificateImport() {
         setPageNames(toUpload.map((f) => f.name));
       }
 
+      setProgress({
+        uploaded: 0,
+        total: toUpload.length,
+        headerDone: false,
+        scheduleDone: !CERT_IMPORT_WITH_SCHEDULE.includes(certType),
+        startedAt: Date.now(),
+      });
+      setElapsed(0);
       const fileUrls: string[] = [];
       for (const file of toUpload) {
         const ext = file.name.split('.').pop()?.toLowerCase() || 'bin';
@@ -192,6 +234,7 @@ export default function CertificateImport() {
           data: { publicUrl },
         } = supabase.storage.from('cert-imports').getPublicUrl(path);
         fileUrls.push(publicUrl);
+        setProgress((p) => (p ? { ...p, uploaded: p.uploaded + 1 } : p));
       }
 
       /*
@@ -203,16 +246,45 @@ export default function CertificateImport() {
        * came back silently empty on exactly the long documents this exists for.
        * Run together, the wait is the slower of the two.
        */
+      /*
+       * ELE-1781 — a log book is not a certificate: one request, book header
+       * plus every dated row, reviewed on its own screen.
+       */
+      if (certType === 'fire-alarm-log-book') {
+        const { data: lb, error: lbErr } = await supabase.functions.invoke(
+          'parse-certificate-import',
+          { body: { fileUrls, logBook: true } }
+        );
+        setProgress((p) => (p ? { ...p, headerDone: true, scheduleDone: true } : p));
+        if (lbErr) throw new Error(lbErr.message || 'Could not read the log book');
+        if (!lb?.success || !lb.logBook) throw new Error(lb?.error || 'Could not read the log book');
+        const imported = lb.logBook as ImportedLogBook;
+        setResult({ logBook: imported } as unknown as ParseResult);
+        setValues({});
+        setStep('review');
+        toast.success(`Read ${imported.count} entr${imported.count === 1 ? 'y' : 'ies'}`);
+        return;
+      }
+
       const [headerRes, scheduleRes] = await Promise.all([
-        supabase.functions.invoke('parse-certificate-import', { body: { fileUrls, certType } }),
-        certType === 'minor-works'
+        supabase.functions
+          .invoke('parse-certificate-import', { body: { fileUrls, certType } })
+          .then((r) => {
+            setProgress((p) => (p ? { ...p, headerDone: true } : p));
+            return r;
+          }),
+        !CERT_IMPORT_WITH_SCHEDULE.includes(certType)
           ? Promise.resolve(null)
           : supabase.functions
               .invoke('parse-certificate-import', {
                 body: { fileUrls, certType, scheduleOnly: true },
               })
               /* Never let a failed schedule lose a good header read. */
-              .catch(() => null),
+              .catch(() => null)
+              .then((r) => {
+                setProgress((p) => (p ? { ...p, scheduleDone: true } : p));
+                return r;
+              }),
       ]);
 
       const { data, error: fnErr } = headerRes;
@@ -232,6 +304,7 @@ export default function CertificateImport() {
       toast.error(msg);
     } finally {
       setIsWorking(false);
+      setProgress(null);
     }
   };
 
@@ -257,6 +330,13 @@ export default function CertificateImport() {
 
       const data: Record<string, unknown> = {
         ...values,
+        /*
+         * ELE-1657 — the emergency lighting form stores what the paper says as
+         * numbers and flags, not strings: counts as numbers, the system type as
+         * the two booleans, the duration test as its nested record. Everything
+         * else lands on the field of the same name.
+         */
+        ...(certType === 'emergency-lighting' ? emergencyLightingDraftFields(values) : {}),
         /*
          * 🔴 `scheduleOfTests` is the field the EICR schedule actually reads —
          * verified against 5,128 live circuit rows, not guessed. `circuits`
@@ -297,11 +377,10 @@ export default function CertificateImport() {
       if (!created?.success) throw new Error('The draft could not be saved');
 
       toast.success('Draft created — check it before issuing');
-      navigate(
-        `/electrician/inspection-testing?section=${certType}&reportId=${encodeURIComponent(
-          created.reportId ?? reportId
-        )}`
-      );
+      // `?section=<type>` is only a route for eicr/eic/minor-works — an
+      // imported certificate of any other type landed on the dashboard, with
+      // the freshly created draft nowhere in sight.
+      navigate(certificateHref(certType, created.reportId ?? reportId));
     } catch (err) {
       const msg = err instanceof Error ? err.message : 'Could not create the draft';
       toast.error(msg);
@@ -538,28 +617,37 @@ export default function CertificateImport() {
                 and the supply details usually sit on a later sheet. Get the whole
                 page in frame and as square-on as you can.
               </p>
-              <button
-                type="button"
-                disabled={isWorking}
-                onClick={() => fileRef.current?.click()}
-                className="flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-transform touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
-              >
-                {isWorking ? (
-                  <>
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                    Reading {fileName || 'the document'}…
-                  </>
-                ) : (
-                  <>
-                    <FileUp className="h-5 w-5" />
-                    Choose photos or a PDF
-                  </>
-                )}
-              </button>
-              {isWorking && (
-                <p className="text-[12px] leading-snug text-white">
-                  A multi-page scan can take up to a minute. Leave this screen open.
-                </p>
+              {isWorking && progress ? (
+                <ImportProgressPanel
+                  fileName={fileName}
+                  progress={progress}
+                  elapsed={elapsed}
+                  scheduleExpected={CERT_IMPORT_WITH_SCHEDULE.includes(certType)}
+                  detailsLabel={
+                    certType === 'fire-alarm-log-book'
+                      ? 'Reading the book and every dated entry'
+                      : 'Reading the certificate details'
+                  }
+                />
+              ) : (
+                <button
+                  type="button"
+                  disabled={isWorking}
+                  onClick={() => fileRef.current?.click()}
+                  className="flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-transform touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
+                >
+                  {isWorking ? (
+                    <>
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                      Preparing {fileName || 'the document'}…
+                    </>
+                  ) : (
+                    <>
+                      <FileUp className="h-5 w-5" />
+                      Choose photos or a PDF
+                    </>
+                  )}
+                </button>
               )}
               {error && (
                 <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-3">
@@ -602,8 +690,13 @@ export default function CertificateImport() {
           </div>
         )}
 
+        {/* ── Step 3 (log book): the book and its entries ─────────────── */}
+        {step === 'review' && result?.logBook && (
+          <LogBookImportReview imported={result.logBook} pageNames={pageNames} />
+        )}
+
         {/* ── Step 3: review ─────────────────────────────────────────── */}
-        {step === 'review' && result && Object.keys(values).length > 0 && (
+        {step === 'review' && result && !result.logBook && Object.keys(values).length > 0 && (
           <div className="space-y-5">
             {/*
               🔴 The mismatch guard, surfaced. Somebody working through a box of
@@ -896,7 +989,7 @@ export default function CertificateImport() {
         )}
       </main>
 
-      {step === 'review' && result && (
+      {step === 'review' && result && !result.logBook && (
         /*
          * 🔴 `right-0` + `left: var(--sidebar-width)`, NOT `inset-x-0`.
          *
@@ -923,4 +1016,154 @@ export default function CertificateImport() {
       )}
     </div>
   );
+}
+
+/* ── ELE-1654 — the processing screen ───────────────────────────────────────
+ * Every row is a real signal. The bar is time against an expectation from
+ * the page count (measured: header read ~35s; a schedule page ~20s, pages
+ * read concurrently), capped short of full until the reads actually land —
+ * a bar that reaches 100% and sits there is the "it's failed" moment this
+ * ticket exists to remove.
+ */
+function ImportProgressPanel({
+  fileName,
+  progress,
+  elapsed,
+  scheduleExpected,
+  detailsLabel = 'Reading the certificate details',
+}: {
+  fileName: string;
+  progress: { uploaded: number; total: number; headerDone: boolean; scheduleDone: boolean };
+  elapsed: number;
+  scheduleExpected: boolean;
+  detailsLabel?: string;
+}) {
+  const uploading = progress.uploaded < progress.total;
+  const expected = Math.max(35, 20 + 6 * progress.total);
+  const done = progress.headerDone && progress.scheduleDone;
+  const pct = done
+    ? 100
+    : uploading
+      ? Math.round((progress.uploaded / progress.total) * 15)
+      : Math.min(92, 15 + Math.round((elapsed / expected) * 77));
+  const overdue = !done && !uploading && elapsed > expected;
+  const mmss = (n: number) => `${Math.floor(n / 60)}:${String(n % 60).padStart(2, '0')}`;
+  const Row = ({
+    state,
+    label,
+    detail,
+  }: {
+    state: 'done' | 'active' | 'todo';
+    label: string;
+    detail?: string;
+  }) => (
+    <div className="flex items-start gap-3">
+      <span
+        className={cn(
+          'mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border text-[11px] font-bold',
+          state === 'done' && 'border-green-500 bg-green-500 text-black',
+          state === 'active' && 'border-elec-yellow text-elec-yellow',
+          state === 'todo' && 'border-white/[0.2] text-white'
+        )}
+      >
+        {state === 'done' ? '✓' : state === 'active' ? <Loader2 className="h-3 w-3 animate-spin" /> : ''}
+      </span>
+      <div className="min-w-0">
+        <p className="text-[13px] font-semibold leading-snug text-white">{label}</p>
+        {detail && <p className="text-[12px] leading-snug text-white">{detail}</p>}
+      </div>
+    </div>
+  );
+  const pages = `${progress.total} page${progress.total === 1 ? '' : 's'}`;
+  return (
+    <div
+      className="space-y-4 rounded-xl border border-elec-yellow/40 bg-elec-yellow/[0.06] p-4"
+      role="status"
+      aria-live="polite"
+    >
+      <div className="flex items-baseline justify-between gap-3">
+        <p className="text-[14px] font-semibold text-white">Reading {fileName || 'the document'}</p>
+        <p className="text-[12px] tabular-nums text-white">{mmss(elapsed)}</p>
+      </div>
+      <div className="h-2 w-full overflow-hidden rounded-full bg-white/[0.1]">
+        <div
+          className="h-full rounded-full bg-elec-yellow transition-[width] duration-700 ease-out"
+          style={{ width: `${pct}%` }}
+        />
+      </div>
+      <div className="space-y-2.5">
+        <Row
+          state={uploading ? 'active' : 'done'}
+          label={
+            uploading
+              ? `Uploading page ${Math.min(progress.uploaded + 1, progress.total)} of ${progress.total}`
+              : `${pages} uploaded`
+          }
+        />
+        <Row
+          state={progress.headerDone ? 'done' : uploading ? 'todo' : 'active'}
+          label={detailsLabel}
+          detail={
+            progress.headerDone
+              ? undefined
+              : 'All pages are read together, so a field split across two sheets still comes out whole.'
+          }
+        />
+        {scheduleExpected && (
+          <Row
+            state={progress.scheduleDone ? 'done' : uploading ? 'todo' : 'active'}
+            label="Reading the schedule of test results"
+            detail={
+              progress.scheduleDone
+                ? undefined
+                : 'Each schedule page is read on its own so no circuit rows are cut off.'
+            }
+          />
+        )}
+      </div>
+      <p className="text-[12px] leading-snug text-white">
+        {overdue
+          ? 'Still working — this one is taking longer than most. Nothing has failed; a large or faint scan just needs more time.'
+          : `Usually about ${mmss(expected)} for ${pages}. Leave this screen open.`}
+      </p>
+    </div>
+  );
+}
+
+/* ── ELE-1657 — paper → form shape for the emergency lighting certificate ── */
+function emergencyLightingDraftFields(values: Record<string, string>): Record<string, unknown> {
+  const num = (v: string | undefined) => {
+    const n = parseInt((v || '').replace(/[^0-9]/g, ''), 10);
+    return Number.isFinite(n) ? n : undefined;
+  };
+  const sys = (values.systemType || '').toLowerCase();
+  const out: Record<string, unknown> = {};
+  // The shared identity block asks for an installation address; the EL form calls it the premises address.
+  if (!values.premisesAddress && values.installationAddress) out.premisesAddress = values.installationAddress;
+  const lum = num(values.luminaireCount);
+  if (lum !== undefined) out.luminaireCount = lum;
+  const exits = num(values.exitSignCount);
+  if (exits !== undefined) out.exitSignCount = exits;
+  if (sys) {
+    out.selfContainedUnits = /self|contained|individual/.test(sys) || !/central/.test(sys);
+    out.centralBatterySystem = /central/.test(sys);
+  }
+  const minutes = num(values.testDurationMinutes);
+  const passed = /pass|satisf|yes|ok|all/.test((values.durationTestResult || '').toLowerCase());
+  if (minutes !== undefined || values.durationTestResult) {
+    out.annualDurationTest = {
+      date: values.testDate || '',
+      duration: minutes ?? 180,
+      allLuminairesOperational: passed,
+      batteryCondition: '',
+      faultsFound: values.defectsFoundText || '',
+      actionTaken: '',
+    };
+  }
+  // These were only ever strings for the model; the form does not have them.
+  out.systemType = undefined;
+  out.testDurationMinutes = undefined;
+  out.durationTestResult = undefined;
+  out.defectsFoundText = undefined;
+  return out;
 }

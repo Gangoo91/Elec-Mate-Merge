@@ -213,7 +213,7 @@ const faqs = [
   {
     question: "What's a smart RCBO and how is it different from a normal RCBO?",
     answer:
-      'A normal RCBO combines an MCB and an RCD in one module. A "smart" RCBO adds electronics — wireless or wired comms back to a central hub, energy monitoring, remote on/off, sometimes built-in arc fault detection. Inside you\'ve got a rectifier, a microcontroller, a small radio chip and a relay — every component family from this whole section, all packaged into one DIN-rail device.',
+      'A normal RCBO combines an MCB and an RCD in one module. A "smart" RCBO adds electronics — wireless or wired comms back to a central hub, energy monitoring, remote on/off, sometimes built-in arc fault detection. Inside you’ve got a rectifier, a microcontroller, a small radio chip and a relay — every component family from this whole section, all packaged into one DIN-rail device.',
   },
 ];
 

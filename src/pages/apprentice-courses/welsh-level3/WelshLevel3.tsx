@@ -1,95 +1,106 @@
 /**
  * Welsh Level 3 — course landing.
  *
- * Lists the qualification's own units, in the handbook's own order, under the
- * learner's own unit codes. That is the whole point of this course: a learner
- * in Wales should never have to translate a City & Guilds unit number into
- * theirs to find the page they were sent to.
+ * Built on `CourseShell`, the same shell every other Study Centre course
+ * landing uses. Navigation follows our own conventions rather than the
+ * qualification's shape — the handbook's sixteen units are wildly uneven —
+ * but the qualification reference is never lost: each module card names the
+ * units it draws on, and every lesson carries its unit code and criterion.
  *
  * 🔴 EAL qualification, no EAL mapping or endorsement held. Never describe this
  * course as EAL-approved, EAL-mapped or endorsed.
  */
 
-import {
-  HubPage,
-  HubBody,
-  HubMasthead,
-  HubSectionHeading,
-  HubKpi,
-  HubKpiRow,
-} from '@/components/hub/HubPrimitives';
+import { GraduationCap } from 'lucide-react';
 import { ModuleCard } from '@/components/upskilling/cards';
+import { CourseShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 import {
   WELSH_L3_BASE,
-  WELSH_L3_UNITS,
+  WELSH_L3_MODULES,
   WELSH_L3_TAUGHT_GLH,
   WELSH_L3_ASSESSMENT_GLH,
   WELSH_L3_PAGE_COUNT,
-} from '@/data/study-centre/welshLevel3';
-import { unitIcon, unitSummary } from './welshChrome';
+  unitsInModule,
+} from '@/data/study-centre/welshLevel3Tree';
+import {
+  welshLevel3MockExamConfig,
+  welshLevel3QuestionBank,
+} from '@/data/study-centre/welshLevel3MockExamData';
+import { moduleIcon } from './welshChrome';
 
 const TITLE = 'Welsh Level 3 Electrotechnical Installation | Elec-Mate';
 const DESCRIPTION =
-  'Building Services Engineering Level 3 — Electrotechnical Installation. Every unit, learning outcome and assessment criterion of the Welsh qualification, under its own unit codes.';
+  'Building Services Engineering Level 3 — Electrotechnical Installation. Every assessment criterion of the Welsh qualification, taught in full.';
 
 export default function WelshLevel3() {
   useSEO({ title: TITLE, description: DESCRIPTION, noindex: true });
 
   return (
-    <HubPage>
-      <HubMasthead
-        section="Welsh Level 3"
-        title="Building Services Engineering — Electrotechnical Installation"
-        backTo="/study-centre/apprentice"
-      />
-      <HubBody>
-        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
-          The Level 3 qualification taught in Wales. It carries the electrical content England
-          splits across Level 2 and Level 3, and adds a professional-practice core — planning and
-          evaluating work, coordinating a work site, and working in the sector in Wales — that the
-          English route has no equivalent of. Units, outcomes and criteria are the qualification's
-          own.
-        </p>
-
-        <HubKpiRow>
-          <HubKpi label="Units" value={String(WELSH_L3_UNITS.length)} context="Handbook order" />
-          <HubKpi label="Pages" value={String(WELSH_L3_PAGE_COUNT)} context="Reading material" />
-          <HubKpi label="Taught" value={`${WELSH_L3_TAUGHT_GLH} GLH`} context="Across the units" />
-          <HubKpi
-            label="Total"
-            value={`${WELSH_L3_TAUGHT_GLH + WELSH_L3_ASSESSMENT_GLH} GLH`}
-            context={`Plus ${WELSH_L3_ASSESSMENT_GLH} assessment`}
+    <CourseShell
+      backTo="/study-centre/apprentice"
+      backLabel="Apprentice courses"
+      eyebrow="Welsh Level 3"
+      title="Building Services Engineering — Electrotechnical Installation"
+      notice={
+        /*
+         * Deliberately the ordinary card recipe rather than an alert colour.
+         * The first version filled it amber, which against the dark ground
+         * reads as brown and looks like a warning about something dangerous —
+         * the course is fine, it is just still being read back. The volt label
+         * carries the signal; the surface stays the same as every other card
+         * on the page.
+         */
+        <div className="flex flex-col gap-1.5 rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] px-4 py-3.5 sm:flex-row sm:items-baseline sm:gap-4 sm:px-5">
+          <span className="shrink-0 text-[11px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
+            Still being checked
+          </span>
+          <p className="max-w-3xl text-[12.5px] leading-relaxed text-white">
+            Every page of this course is written. We are reading back through it against BS 7671
+            and the qualification, so some wording will still change. If something looks wrong to
+            you, tell us — that is exactly what this stage is for.
+          </p>
+        </div>
+      }
+      description="The Level 3 qualification taught in Wales. It carries the electrical content England splits across Level 2 and Level 3, and adds a professional-practice core — planning and evaluating work, coordinating a work site, and working in the sector in Wales. Every lesson names the unit and criterion it covers."
+      modulesCount={WELSH_L3_MODULES.length + 1}
+      pagesCount={WELSH_L3_PAGE_COUNT}
+      totalDuration={`${WELSH_L3_TAUGHT_GLH + WELSH_L3_ASSESSMENT_GLH} GLH`}
+      level="Level 3"
+    >
+      {WELSH_L3_MODULES.map((module, index) => {
+        const lessons = module.sections.reduce((n, s) => n + s.lessons.length, 0);
+        const units = unitsInModule(module);
+        return (
+          <ModuleCard
+            key={module.slug}
+            to={`${WELSH_L3_BASE}/${module.slug}`}
+            label="Module"
+            moduleNumber={String(module.number)}
+            duration={`${lessons} lessons`}
+            title={module.title}
+            description={`${module.sections.length} sections · Units ${units.join(', ')}`}
+            icon={moduleIcon(module)}
+            index={index}
           />
-        </HubKpiRow>
-
-        <section className="space-y-3">
-          <div className="flex items-center justify-between gap-3 px-0.5">
-            <HubSectionHeading>Units</HubSectionHeading>
-            <span className="text-[11px] text-white">{WELSH_L3_UNITS.length} total</span>
-          </div>
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {WELSH_L3_UNITS.map((unit, index) => (
-              <ModuleCard
-                key={unit.code}
-                to={`${WELSH_L3_BASE}/${unit.slug}`}
-                label="Unit"
-                moduleNumber={unit.code}
-                duration={`${unit.glh} GLH`}
-                title={unit.title}
-                description={unitSummary(unit)}
-                icon={unitIcon(unit)}
-                index={index}
-              />
-            ))}
-          </div>
-        </section>
-
-        <p className="max-w-3xl text-[11px] leading-relaxed text-white">
-          Assessed by externally-set multiple-choice tests, a Safety Critical Test, an employer-set
-          practical project and an externally-marked professional discussion.
-        </p>
-      </HubBody>
-    </HubPage>
+        );
+      })}
+      {/*
+        Module 9 is the final paper. It sits in the same grid as the teaching
+        modules because that is where a learner looks for it, and it is counted
+        in modulesCount because CourseShell's KPI reads "Including final".
+      */}
+      <ModuleCard
+        to={`${WELSH_L3_BASE}/mock-exam`}
+        label="Module"
+        moduleNumber="9"
+        duration="90 mins"
+        title="Final paper"
+        description={`${welshLevel3MockExamConfig.totalQuestions} questions drawn from a bank of ${welshLevel3QuestionBank.length}, balanced across all eight modules`}
+        icon={GraduationCap}
+        index={WELSH_L3_MODULES.length}
+        isExam
+      />
+    </CourseShell>
   );
 }

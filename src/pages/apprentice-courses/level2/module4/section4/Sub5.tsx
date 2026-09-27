@@ -86,7 +86,7 @@ const quizQuestions = [
     options: ['Reg 411.3.1.1', 'Reg 411.3.1.2', 'Reg 415.2', 'Reg 543.3'],
     correctAnswer: 1,
     explanation:
-      'Reg 411.3.1.2 — "In each consumer\'s installation within a building, extraneous-conductive-parts liable to introduce a dangerous potential difference shall be connected to the main earthing terminal by protective bonding conductors complying with Chapter 54." This is the regulation that mandates main bonding to gas, water and other extraneous services. Sizing rules then come from Chapter 54 (Reg 544.1.1 + Table 54.8 covered in Sub 1).',
+      'Reg 411.3.1.2 — "In each consumer’s installation within a building, extraneous-conductive-parts liable to introduce a dangerous potential difference shall be connected to the main earthing terminal by protective bonding conductors complying with Chapter 54." This is the regulation that mandates main bonding to gas, water and other extraneous services. Sizing rules then come from Chapter 54 (Reg 544.1.1 + Table 54.8 covered in Sub 1).',
   },
   {
     id: 2,
@@ -214,7 +214,7 @@ const faqs = [
     question:
       'Modern bathroom install: should I fit supplementary bonding or rely on the omission?',
     answer:
-      'It\'s a judgement call. Pure-omission saves 30-90 minutes and a few metres of cable per bathroom. The downsides: any future loss of RCD protection (e.g. a future occupant fitting a non-RCD board) leaves the bathroom without supplementary protection, and the install is "thinner" against unforeseen scenarios. Many trade electricians fit supplementary bonding as a defensive standard on first-fix even when omission would be permissible — particularly on rented properties, social housing and any install where you can\'t control future modifications. Document your choice in the EIC.',
+      'It’s a judgement call. Pure-omission saves 30-90 minutes and a few metres of cable per bathroom. The downsides: any future loss of RCD protection (e.g. a future occupant fitting a non-RCD board) leaves the bathroom without supplementary protection, and the install is "thinner" against unforeseen scenarios. Many trade electricians fit supplementary bonding as a defensive standard on first-fix even when omission would be permissible — particularly on rented properties, social housing and any install where you can’t control future modifications. Document your choice in the EIC.',
   },
 ];
 
@@ -287,7 +287,7 @@ export default function Sub5() {
             </li>
           </ul>
           <p>
-            That\'s why main bonding is universal — every install has it (or should have it). Sized
+            That’s why main bonding is universal — every install has it (or should have it). Sized
             to handle worst-case fault current including the broken-PEN scenario on PME. Tested for
             continuity at initial verification and at every periodic inspection.
           </p>
@@ -295,7 +295,7 @@ export default function Sub5() {
 
         <ConceptBlock
           title="Supplementary bonding — local equipotential at a high-risk location"
-          plainEnglish="In a bathroom, the user is wet, often barefoot, in close contact with metal pipes. Touch voltage thresholds are far lower than in a kitchen. Supplementary bonding ties metal items at the location to each other so the user can\'t touch two surfaces at different potentials."
+          plainEnglish="In a bathroom, the user is wet, often barefoot, in close contact with metal pipes. Touch voltage thresholds are far lower than in a kitchen. Supplementary bonding ties metal items at the location to each other so the user can’t touch two surfaces at different potentials."
           onSite="Older installs: 4 mm² G/Y from earth bar in consumer unit out to the bathroom, then short bonds between bath, towel rail, copper pipes. Modern installs with all-RCD protection: often omitted per Reg 701.415.2 — the RCD trip time replaces the need for local potential equalisation."
         >
           <p>
@@ -309,7 +309,7 @@ export default function Sub5() {
               (wet skin can be 10× lower resistance than dry skin).
             </li>
             <li>
-              The user is barefoot on a tiled floor that\'s often wet — body-to-ground impedance
+              The user is barefoot on a tiled floor that’s often wet — body-to-ground impedance
               drops.
             </li>
             <li>
@@ -327,7 +327,7 @@ export default function Sub5() {
           <p>
             The modern alternative: a 30 mA RCD that trips in 25-40 ms instead of 0.4 s. If the
             disconnection happens in under 40 ms, even wet-skin touch voltage is survivable, so the
-            local potential equalisation becomes unnecessary. That\'s the logic behind the Reg
+            local potential equalisation becomes unnecessary. That’s the logic behind the Reg
             701.415.2 omission permission.
           </p>
         </ConceptBlock>
@@ -355,14 +355,14 @@ export default function Sub5() {
         <ConceptBlock
           title="Three conditions, all met, supplementary may be omitted"
           plainEnglish="Modern bathroom + all RCDs + main bonding done = no need to install supplementary cable. Old bathroom or any condition not met = supplementary bonding required."
-          onSite="The omission isn\'t a free pass. You have to prove all three: (1) ADS compliance for every final circuit serving the location; (2) 30 mA RCD additional protection on every final circuit serving the location; (3) main bonding to all extraneous-conductive-parts of the location is in place AND verified by continuity test."
+          onSite="The omission isn’t a free pass. You have to prove all three: (1) ADS compliance for every final circuit serving the location; (2) 30 mA RCD additional protection on every final circuit serving the location; (3) main bonding to all extraneous-conductive-parts of the location is in place AND verified by continuity test."
         >
           <p>The three conditions in detail:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
               <strong>Condition (d) — ADS compliance.</strong> Every final circuit serving the
               bathroom must satisfy Reg 411.3.2 (disconnection times). On a TN final circuit at 230
-              V that\'s 0.4 s. Verified by Zs measurement against Table 41.3 (covered in Module 3 §4
+              V that’s 0.4 s. Verified by Zs measurement against Table 41.3 (covered in Module 3 §4
               Sub 5).
             </li>
             <li>
@@ -437,7 +437,7 @@ export default function Sub5() {
 
         <ConceptBlock
           title="Supplementary bonding sizing — Reg 544.2.x — different rules"
-          plainEnglish="Supplementary bonds are smaller and shorter. The sizing rule depends on what\'s being bonded to what — exposed-to-exposed, extraneous-to-exposed, or extraneous-to-extraneous."
+          plainEnglish="Supplementary bonds are smaller and shorter. The sizing rule depends on what’s being bonded to what — exposed-to-exposed, extraneous-to-exposed, or extraneous-to-extraneous."
         >
           <p>The three supplementary bonding cases:</p>
           <div className="bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-xl p-4 text-[14px]">
@@ -510,7 +510,7 @@ export default function Sub5() {
             </li>
             <li>
               <strong>For overcurrent devices:</strong> the 5 s operating current — for Type B MCBs
-              that\'s roughly 5×In, for Type C that\'s roughly 10×In.
+              that’s roughly 5×In, for Type C that’s roughly 10×In.
             </li>
           </ul>
           <p>Worked examples:</p>
@@ -535,9 +535,9 @@ export default function Sub5() {
           <p>
             The reason 30 mA RCD additional protection sits at the heart of Reg 701.415.2 omission:
             with an RCD, the resistance condition is so loose that supplementary bonding effectively
-            can\'t fail — and the fast disconnection time means equipotential bonding becomes
+            can’t fail — and the fast disconnection time means equipotential bonding becomes
             redundant. Without the RCD, you need both the supplementary bond AND a tight resistance,
-            and even then the protection isn\'t as fast.
+            and even then the protection isn’t as fast.
           </p>
         </ConceptBlock>
 
@@ -670,11 +670,11 @@ export default function Sub5() {
           title="Reflexively installing supplementary bonding cable in every modern bathroom"
           whatHappens={
             <>
-              You\'re first-fixing a new-build bathroom. By habit you run a 4 mm² G/Y supplementary
-              bonding cable from the consumer unit\'s earth bar to a junction box in the bathroom,
+              You’re first-fixing a new-build bathroom. By habit you run a 4 mm² G/Y supplementary
+              bonding cable from the consumer unit’s earth bar to a junction box in the bathroom,
               then short bonds from the JB to the bath, the towel rail, the copper pipes. The
-              bathroom\'s circuits are all RCBO-protected (30 mA), main bonding to gas and water is
-              in place and tested. You\'ve added 30+ minutes of labour and 8 m of cable to satisfy a
+              bathroom’s circuits are all RCBO-protected (30 mA), main bonding to gas and water is
+              in place and tested. You’ve added 30+ minutes of labour and 8 m of cable to satisfy a
               regulation that explicitly permits omission.
             </>
           }
@@ -686,7 +686,7 @@ export default function Sub5() {
               bathroom multiplies up over a 100-bathroom development. Belt-and-braces fitting is
               permissible (and many electricians do it for resilience), but reflexive fitting
               without considering the omission is wasted effort. On a refurb of an older bathroom
-              where existing supplementary bonding is in place, leave it — don\'t remove what\'s
+              where existing supplementary bonding is in place, leave it — don’t remove what’s
               already working.
             </>
           }
@@ -696,7 +696,7 @@ export default function Sub5() {
           title="Rewiring a bathroom in a 1960s house — supplementary bonding decision"
           situation={
             <>
-              You\'re rewiring a bathroom in a 1960s end-terrace. Existing install has supplementary
+              You’re rewiring a bathroom in a 1960s end-terrace. Existing install has supplementary
               bonding cable visible: a 4 mm² G/Y from an earth bar in the old consumer unit (being
               replaced), to a junction box behind the bath panel, with short bonds to the bath, the
               towel rail and the copper hot/cold pipes. The new consumer unit will be 18-way
@@ -714,9 +714,9 @@ export default function Sub5() {
               compliant — yes, being upgraded and will be tested. All three met → supplementary may
               be omitted on the new install. BUT — the existing supplementary bonding is functional,
               accessible, and adds no cost to leave in place. Most electricians on a refurb where
-              the bathroom isn\'t being torn out would leave the existing bonds: cost zero, removes
+              the bathroom isn’t being torn out would leave the existing bonds: cost zero, removes
               work, adds redundancy. If the bath panel is coming off and the JB is being disturbed
-              anyway, take the opportunity to inspect, clean and re-make the joints — but don\'t
+              anyway, take the opportunity to inspect, clean and re-make the joints — but don’t
               deliberately remove a working supplementary bond just because the omission permits it.
               Document in the EIC: "Supplementary bonding existing — retained as additional
               protection. Reg 701.415.2 omission conditions also met." Best of both worlds.

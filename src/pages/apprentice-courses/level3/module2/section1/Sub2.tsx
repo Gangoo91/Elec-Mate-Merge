@@ -40,7 +40,7 @@ const checks = [
   {
     id: 'l3-m2-s1-sub2-pv-vs-thermal',
     question:
-      'A customer has a south-facing roof and wants "solar". They\'re asking the difference between PV and solar thermal — what\'s the honest distinction?',
+      'A customer has a south-facing roof and wants "solar". They’re asking the difference between PV and solar thermal — what’s the honest distinction?',
     options: [
       'They are essentially the same technology with different names — PV is the trade term and solar thermal is the consumer term for a panel that makes electricity. The only real difference is the colour of the frame and the warranty length, so the customer can pick either on price alone.',
       'PV makes heat and solar thermal makes electricity. PV panels warm a fluid behind the cells that feeds the hot-water cylinder, while solar thermal collectors generate DC that an inverter converts to AC. Most UK customers want hot water, so PV is the usual choice.',
@@ -387,7 +387,7 @@ export default function Sub2() {
         <ConceptBlock
           title="MVHR — the recovery default in airtight new-build"
           plainEnglish="Mechanical ventilation with heat recovery supplies fresh air to bedrooms and living spaces, extracts stale air from kitchens and bathrooms, and recovers 80-90% of the heat in the extract air via a counter-flow exchanger. Standard kit on Future Homes Standard new-build, retrofit-feasible only in airtight, well-insulated properties. Building Regs Part F covers ventilation requirements; Part L credits MVHR with significant SAP improvements."
-          onSite="Electrical interface — dedicated 13 A or 16 A supply on a 6 A or 10 A MCB, local isolation, kitchen and bathroom boost wiring (sometimes via remote sensors, sometimes via switches). The ducting and commissioning is the ventilation specialist\'s domain; you wire the unit and the boost network."
+          onSite="Electrical interface — dedicated 13 A or 16 A supply on a 6 A or 10 A MCB, local isolation, kitchen and bathroom boost wiring (sometimes via remote sensors, sometimes via switches). The ducting and commissioning is the ventilation specialist’s domain; you wire the unit and the boost network."
         >
           <p>
             MVHR works only when the building is airtight enough that controlled ventilation is the
@@ -414,7 +414,7 @@ export default function Sub2() {
               material changes. The detailed application — RCD type selection, PEN-fault detection
               device choice, earthing arrangement decisions — is taught in the EV charging-specific
               qualification 2921 and applied by the MCS-certified installer. As an apprentice on an
-              EV install you read the manufacturer\'s instructions, follow Section 722, and let the
+              EV install you read the manufacturer’s instructions, follow Section 722, and let the
               certified installer make the regulatory judgement calls.
             </>
           }
@@ -467,12 +467,12 @@ export default function Sub2() {
 
         <SectionRule />
 
-        <ContentEyebrow>The less common family — recognise but don\'t overstate</ContentEyebrow>
+        <ContentEyebrow>The less common family — recognise but don’t overstate</ContentEyebrow>
 
         <ConceptBlock
           title="Solar thermal, micro-CHP, biomass, wind, micro-hydro"
           plainEnglish="These five technologies all exist and you may meet them in the field, but new domestic installs are uncommon. The market has consolidated around heat pumps, PV, EV, batteries and MVHR. Recognise each — purpose, scale, regulatory home — without overstating their current relevance."
-          onSite="On a 2026 install, treat heat pumps + PV + EV + battery + MVHR as the default family. Treat the rest as recognition-level — you should be able to identify them, describe what they do, and explain why they\'re less common, but you won\'t be designing or installing them as routine work."
+          onSite="On a 2026 install, treat heat pumps + PV + EV + battery + MVHR as the default family. Treat the rest as recognition-level — you should be able to identify them, describe what they do, and explain why they’re less common, but you won’t be designing or installing them as routine work."
         >
           <p>Quick reference:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -605,7 +605,7 @@ export default function Sub2() {
           whatHappens={
             <>
               Apprentice tells the customer their 4 kWp PV array will deliver 4 kWh a year. The
-              customer either thinks the system is hopeless (when actually it\'ll deliver around
+              customer either thinks the system is hopeless (when actually it’ll deliver around
               4000 kWh) or, more often, the apprentice means the right number but the customer reads
               back &quot;you said 4 kWh&quot;. The customer-facing number is annual kWh, not the
               nameplate kWp. Confusing the two undermines trust in the install before the panels go

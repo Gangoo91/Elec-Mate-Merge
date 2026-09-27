@@ -215,8 +215,8 @@ export default function RoutineInspectionSchedule({
               <div className="space-y-4 border-t border-white/[0.1] px-4 py-4 sm:px-5">
                 {/*
                   ── "Mark the rest OK" ──────────────────────────────────────
-                  The landlord schedule runs to 42 items and most of them are
-                  fine on most visits; forty-two taps to say so is the
+                  The landlord schedule runs to 49 items and most of them are
+                  fine on most visits; forty-nine taps to say so is the
                   difference between a form that gets used on site and one that
                   gets filled in afterwards from memory.
 

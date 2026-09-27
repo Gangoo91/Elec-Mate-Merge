@@ -17,6 +17,7 @@
 import { formatFieldForPdf } from '@/utils/minorWorksValidation';
 import { normalisePdfDates } from '@/utils/certDate';
 import { importWithRetry } from '@/utils/lazyWithRetry';
+import { resolveEngineerVerify } from '@/utils/engineerVerify';
 
 /** Company branding, already loaded by the caller. Null when none is saved. */
 export interface MinorWorksBranding {
@@ -144,6 +145,10 @@ export const formatMinorWorksJson = async (
   // `formatFieldForPdf` walks every key, and a hex colour is not something it
   // should get a chance to rewrite.
   Object.assign(formattedFormData, emCover);
+
+  // ELE-1453 — "Verify this engineer": Elec-ID QR + address in the signature
+  // block. After the formatting pass so a data URL is never "formatted".
+  Object.assign(formattedFormData, await resolveEngineerVerify());
 
   // ELE-1552 — formatFieldForPdf only formats four hard-coded field names
   // (the ELE-1167 fix), so testEquipmentCalDate and bsAmendmentDate still

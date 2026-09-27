@@ -10,6 +10,7 @@ import SignaturePad from '@/components/forms/SignaturePad';
 import RoutineInspectionSchedule from './RoutineInspectionSchedule';
 import SitePhotoGrid from './SitePhotoGrid';
 import SpotChecksSection from './SpotChecksSection';
+import AlarmRegisterSection from './AlarmRegisterSection';
 import ThermalSurveySection from './ThermalSurveySection';
 import {
   deriveRoutineAssessment,
@@ -687,6 +688,13 @@ export default function RoutineInspectionFormTabs({
           onObservationsChange={(obs) => onUpdate('observations', obs)}
           budgetBlockedReason={budgetBlockedReason}
         />
+
+        {/*
+          Landlord visits only. A commercial maintenance visit's detection is a
+          BS 5839-1 system with its own certificate and its own log book, and a
+          register of domestic alarm heads would misdescribe it.
+        */}
+        {isLandlord && <AlarmRegisterSection formData={formData} onUpdate={onUpdate} />}
 
         <SpotChecksSection formData={formData} onUpdate={onUpdate} />
 

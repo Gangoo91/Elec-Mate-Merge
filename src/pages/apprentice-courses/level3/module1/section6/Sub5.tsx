@@ -192,7 +192,7 @@ const faqs = [
       'Almost never. Standby person outside is fundamental control. Solo entry only in very specific low-risk cases with specific risk assessment supporting it.',
   },
   {
-    question: 'What\'s a "calibrated multi-gas detector"?',
+    question: 'What’s a "calibrated multi-gas detector"?',
     answer:
       'Portable instrument measuring oxygen, flammable (LEL), and one or more toxic gases (H2S, CO commonly). Calibrated periodically (typically 6-monthly bump test + annual calibration). Worn during entry.',
   },
@@ -546,7 +546,7 @@ export default function Sub5() {
           title="Treating a poorly-ventilated cellar as 'just a basement'"
           whatHappens={
             <>
-              Apprentice enters poorly-ventilated cellar in older property; doesn\'t recognise
+              Apprentice enters poorly-ventilated cellar in older property; doesn’t recognise
               potential confined-space context (asphyxiation risk from poor ventilation + radon /
               methane in some areas); becomes disoriented; lucky to escape. Confined Spaces Regs
               1997 should have applied.
@@ -555,7 +555,7 @@ export default function Sub5() {
           doInstead={
             <>
               Assess for confined-space criteria. Poor ventilation + foreseeable specified risk =
-              confined space. SSoW applies. If your firm doesn\'t have confined-space capability,
+              confined space. SSoW applies. If your firm doesn’t have confined-space capability,
               escalate / refer / refuse.
             </>
           }
@@ -572,7 +572,7 @@ export default function Sub5() {
           }
           doInstead={
             <>
-              Standby person mandatory. No solo entry. The standby person is the entrant\'s
+              Standby person mandatory. No solo entry. The standby person is the entrant’s
               lifeline.
             </>
           }
@@ -584,7 +584,7 @@ export default function Sub5() {
             <>
               Customer wants new electrical supply tested in an underground meter chamber serving a
               remote outbuilding. Chamber is roughly 1m x 1m x 1.5m deep, accessed via a manhole
-              cover. Limited ventilation; possible water seepage; you\'d need to enter to do the
+              cover. Limited ventilation; possible water seepage; you’d need to enter to do the
               work.
             </>
           }
@@ -594,13 +594,13 @@ export default function Sub5() {
               Foreseeable specified risk? Multiple - asphyxiation (oxygen deficiency from poor
               ventilation; possible methane / sewer gas if drainage nearby), drowning (water
               seepage), entrapment (single small access). Both conditions met = confined space. CS
-              Regs 1997 apply. Most general electrical firms don\'t have confined-space SSoW
+              Regs 1997 apply. Most general electrical firms don’t have confined-space SSoW
               capability. Options: (1) escalate to firm contracts manager - bring in specialist
               contractor for the entry work; (2) if firm has confined-space capability, follow full
               SSoW (permit + monitoring + standby + rescue + training); (3) refuse if neither
-              possible. Don\'t enter without proper SSoW; document; escalate; let firm decide
-              commercial response. The cellar-meter test work isn\'t worth the risk if procedure
-              can\'t be discharged.
+              possible. Don’t enter without proper SSoW; document; escalate; let firm decide
+              commercial response. The cellar-meter test work isn’t worth the risk if procedure
+              can’t be discharged.
             </>
           }
           whyItMatters={

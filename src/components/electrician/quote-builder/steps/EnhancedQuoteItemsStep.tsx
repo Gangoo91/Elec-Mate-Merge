@@ -81,6 +81,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { useDebounce } from '@/hooks/useDebounce';
 import { toast } from '@/hooks/use-toast';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
+import { FIELD_UNDERLINE } from '@/components/electrician/shared/surfaces';
+import TimeAllowanceField from '../TimeAllowanceField';
 import { labourLinesFor, labourAllocations, describeLabour, describeLines, shortGradeLabel, rateForGrade, DEFAULT_LABOUR_GRADE } from '@/utils/labourGrades';
 import { useMaterialsLists, MaterialsListItem } from '@/hooks/useMaterialsLists';
 import { useSaveToPriceBook } from '@/hooks/useSaveToPriceBook';
@@ -544,6 +546,20 @@ export const EnhancedQuoteItemsStep = ({
       materialCode: item.materialCode,
       equipmentCode: item.equipmentCode,
       notes: item.notes,
+      /*
+       * ELE-1780 — the time allowance copies; the derived LINK deliberately
+       * does not.
+       *
+       * Copying the allowance means a duplicated "socket, 0.5h" still prices
+       * its labour; without it the copy silently loses the time and quietly
+       * under-quotes. `addItem` emits fresh labour for the copy.
+       *
+       * `derivedFromItemId` is omitted on purpose: carried over, the copy
+       * would point at the ORIGINAL parent and be deleted the next time that
+       * parent changed. This allow-list is what makes that safe, so keep it
+       * an allow-list.
+       */
+      timeAllowance: item.timeAllowance,
     };
     onAdd(duplicate);
   };
@@ -1746,7 +1762,7 @@ export const EnhancedQuoteItemsStep = ({
                         onKeyDown={(e) => {
                           if (e.key === 'Escape') setEditingItemId(null);
                         }}
-                        className="flex-1 min-w-0 rounded-lg border border-elec-yellow/40 bg-[#1a1a1e] px-2.5 py-2 text-[15px] leading-snug text-white focus:border-elec-yellow focus:outline-none focus:ring-2 focus:ring-elec-yellow/15"
+                        className="flex-1 min-w-0 rounded-lg border border-elec-yellow/40 bg-white/[0.04] px-2.5 py-2 text-[15px] leading-snug text-white caret-elec-yellow focus:border-elec-yellow focus:bg-white/[0.06] focus:outline-none focus:ring-0"
                       />
                     ) : (
                       <button
@@ -1779,7 +1795,7 @@ export const EnhancedQuoteItemsStep = ({
                         style={{ colorScheme: 'dark' }}
                         value={item.quantity}
                         onChange={(quantity) => onUpdate(item.id, { quantity })}
-                        className="w-14 h-11 text-center text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation"
+                        className={cn(FIELD_UNDERLINE, 'w-14 text-center')}
                       />
                       <span className="text-[11px] text-white w-8 truncate">{item.unit}</span>
                       <span className="text-[12px] text-white">×</span>
@@ -1788,7 +1804,7 @@ export const EnhancedQuoteItemsStep = ({
                         style={{ colorScheme: 'dark' }}
                         value={item.unitPrice}
                         onChange={(unitPrice) => onUpdate(item.id, { unitPrice })}
-                        className="w-16 h-11 text-center text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation"
+                        className={cn(FIELD_UNDERLINE, 'w-16 text-center')}
                       />
                     </div>
 
@@ -1948,6 +1964,15 @@ export const EnhancedQuoteItemsStep = ({
                       </div>
                     )}
 
+                  {/* ELE-1780 — time allowance on this line, rolled into
+                      labour. Renders nothing on a labour or derived line. */}
+                  <TimeAllowanceField
+                    item={item}
+                    onUpdate={onUpdate}
+                    workerRates={companyProfile?.worker_rates ?? null}
+                    hourlyRate={companyProfile?.hourly_rate ?? null}
+                  />
+
                   {/* ELE-888 — adjustment editor */}
                   {adjustingItemId === item.id && (
                     <div className="mt-2 p-2 rounded-lg bg-white/[0.04] border border-white/[0.08] space-y-2">
@@ -1962,7 +1987,7 @@ export const EnhancedQuoteItemsStep = ({
                               itemAdjustmentPercent: val === 0 ? undefined : val,
                             })
                           }
-                          className="w-20 h-11 px-2 text-center text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation"
+                          className={cn(FIELD_UNDERLINE, 'w-20 text-center')}
                         />
                         <input
                           type="text"
@@ -1973,7 +1998,7 @@ export const EnhancedQuoteItemsStep = ({
                               itemAdjustmentLabel: e.target.value || undefined,
                             })
                           }
-                          className="flex-1 h-11 px-2.5 text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation placeholder:text-white/25"
+                          className={cn(FIELD_UNDERLINE, 'flex-1')}
                         />
                         <button
                           type="button"

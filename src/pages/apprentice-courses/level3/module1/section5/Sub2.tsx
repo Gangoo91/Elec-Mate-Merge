@@ -137,7 +137,7 @@ const quizQuestions = [
   },
   {
     id: 6,
-    question: 'What\'s "client awareness" under CDM Reg 9(1)?',
+    question: 'What’s "client awareness" under CDM Reg 9(1)?',
     options: [
       'The client must be told the price of the works in writing before the contractor starts on site.',
       'The contractor must make the client aware of every hazard discovered during the works as it arises.',
@@ -178,7 +178,7 @@ const quizQuestions = [
 
 const faqs = [
   {
-    question: 'If I\'m running a small job, am I "the contractor" or just "the worker"?',
+    question: 'If I’m running a small job, am I "the contractor" or just "the worker"?',
     answer:
       "You're the worker (Reg 15) personally. Your firm is the contractor (Reg 9). You act as the firm's representative on site — operationalising Reg 9 through your actions while still personally bound by Reg 15.",
   },
@@ -205,7 +205,7 @@ const faqs = [
   {
     question: "Can I refuse to act as the firm's contractor representative if I don't feel ready?",
     answer:
-      'Yes — EAWR Reg 16 competence applies. ERA s.44 protects refusal. The firm should match the role to actual L3 readiness; "you\'re L3 so you can run this" isn\'t automatic.',
+      'Yes — EAWR Reg 16 competence applies. ERA s.44 protects refusal. The firm should match the role to actual L3 readiness; "you’re L3 so you can run this" isn’t automatic.',
   },
   {
     question: 'What is the difference between a Method Statement and a RAMS?',
@@ -699,7 +699,7 @@ export default function Sub2() {
               single contractor (your firm), commercial client (small office). One L2 mate with you.
               The contracts manager says "you can run this — here's the RAMS, get on with it" and
               disappears. You realise no CPP exists; client awareness hasn't been confirmed; the L2
-              hasn\'t been briefed.
+              hasn’t been briefed.
             </>
           }
           whatToDo={

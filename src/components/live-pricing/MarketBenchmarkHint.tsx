@@ -53,8 +53,33 @@ const MarketBenchmarkHint = ({
   // A quote spanning 2+ job types shouldn't be judged against the solo-job
   // range — benchmarks separate the two because bundles price differently.
   const isBundled = countJobTypes(itemTexts ?? []) >= 2;
+  /*
+   * A quote can be ABOUT sockets without BEING a sockets job.
+   *
+   * `isBundled` catches a quote spanning two classified job types. It does not
+   * catch the commoner shape: a quote whose value is mostly generic labour
+   * with a couple of classifiable materials on it. Seen live on quote
+   * 2026/038 — six labour lines totalling £11,006 plus £23 of sockets. Only
+   * "sockets" classifies, so it counted as a single-job quote and the panel
+   * announced:
+   *
+   *   "This quote (£11,029) is above the typical range £91–£444"
+   *
+   * Technically true and completely useless: £11,029 against a £444 p75 is
+   * 25× — that is not a dear sockets job, it is not a sockets job at all.
+   * Printing a verdict there teaches the electrician the panel is noise, and
+   * the panel's whole value is being believed when it says something real.
+   *
+   * So the verdict is withheld beyond a sane multiple. A genuinely expensive
+   * job of the right type lands at 2–3× p75 and still gets told; a category
+   * error does not get a verdict it cannot support. The market rate itself
+   * still shows — that part is useful context either way.
+   */
+  const OUT_OF_SCALE = 5;
+  const outOfScale = hasTotal && currentTotal > shown.p75_price * OUT_OF_SCALE;
+
   const position =
-    hasTotal && !isBundled
+    hasTotal && !isBundled && !outOfScale
       ? currentTotal < shown.p25_price
         ? 'below'
         : currentTotal > shown.p75_price
@@ -72,7 +97,7 @@ const MarketBenchmarkHint = ({
     >
       <div className="flex items-center gap-3">
         <div className="flex-1 min-w-0">
-          <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
             Market rate · {regional ? region : 'UK'}
           </p>
           <p className="text-sm font-bold text-white truncate mt-0.5">{jobType}</p>
@@ -81,7 +106,7 @@ const MarketBenchmarkHint = ({
           <p className="text-xl font-black text-white tabular-nums leading-tight">
             {gbp(shown.median_price)}
           </p>
-          <p className="text-[10px] text-white">median</p>
+          <p className="text-[11px] text-white">median</p>
         </div>
       </div>
 
@@ -92,7 +117,7 @@ const MarketBenchmarkHint = ({
         className="mt-3"
       />
 
-      <p className="text-[10px] text-white mt-1.5">
+      <p className="text-[11px] text-white mt-1.5">
         {regional
           ? `${regional.sample_size} real quotes in ${region} · UK median ${gbp(national.median_price)}`
           : `${national.sample_size} real quotes from UK electricians`}
@@ -108,6 +133,16 @@ const MarketBenchmarkHint = ({
           {position === 'within'
             ? `This quote (${gbp(currentTotal!)}) is within the typical range for the job on its own`
             : `This quote (${gbp(currentTotal!)}) is ${position} the typical range ${gbp(shown.p25_price)}–${gbp(shown.p75_price)} for the job on its own`}
+        </p>
+      )}
+
+      {/* Say why there is no verdict. The bundled branch below explains
+          itself, and staying silent here just leaves the electrician to make
+          the bad comparison in their head. */}
+      {hasTotal && !isBundled && outOfScale && (
+        <p className="text-[11px] font-medium text-white mt-2 pt-2 border-t border-white/10">
+          This quote covers more than {jobType.toLowerCase()} on their own, so it is not
+          compared against the range above
         </p>
       )}
 

@@ -4,6 +4,15 @@ import { useToast } from '@/hooks/use-toast';
 import { logger } from '@/utils/logger';
 import { describeCustomerDeleteError, customerDeleteErrorContext } from '@/lib/customerDeleteError';
 
+/**
+ * ⚠️ TWO HOOKS SHARE THIS NAME, ON PURPOSE (ELE-1601).
+ *
+ * This is the CRM hook — paginated (50 a page), sortable, searchable. The
+ * plain `@/hooks/useCustomers` returns EVERY customer unpaged and carries
+ * `createOrFindCustomer`; the calendar, booking and assistant pickers depend on
+ * getting the whole list. See the note on that file before merging the two.
+ */
+
 export type CustomerStatus = 'lead' | 'active' | 'inactive';
 
 export interface Customer {

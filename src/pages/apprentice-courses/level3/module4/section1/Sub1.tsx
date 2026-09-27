@@ -295,16 +295,16 @@ export default function Sub1() {
               ballasts, UPS systems hold lethal charge for minutes after isolation.
             </li>
             <li>
-              <strong>Compromised protective conductors</strong> — a CPC that\'s broken or
-              high-resistance won\'t trigger an RCD on a fault but DOES allow exposed metalwork to
+              <strong>Compromised protective conductors</strong> — a CPC that’s broken or
+              high-resistance won’t trigger an RCD on a fault but DOES allow exposed metalwork to
               rise to phase voltage.
             </li>
             <li>
               <strong>Compromised supply earthing</strong> — open PEN on TN-C-S (PME) lifts customer
-              earth toward phase voltage. RCDs don\'t detect it.
+              earth toward phase voltage. RCDs don’t detect it.
             </li>
             <li>
-              <strong>Unverified circuit identification</strong> — a circuit labelled \'lights' may
+              <strong>Unverified circuit identification</strong> — a circuit labelled ‘lights' may
               actually feed the boiler. The label is a starting hypothesis, not a guarantee.
             </li>
           </ul>
@@ -322,13 +322,13 @@ export default function Sub1() {
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
               <strong>Reg 13 — dead working is the default.</strong> No work shall be carried out on
-              or near a conductor that\'s been or could become live unless \'either it is
+              or near a conductor that’s been or could become live unless ‘either it is
               disconnected from every source of electrical energy OR otherwise rendered electrically
-              safe\'.
+              safe’.
             </li>
             <li>
               <strong>Reg 14 — three conjoint tests for live working.</strong> Live work is
-              permitted only when (a) it\'s unreasonable for the conductor to be dead, AND (b) it\'s
+              permitted only when (a) it’s unreasonable for the conductor to be dead, AND (b) it’s
               reasonable in all the circumstances for the work to be carried out live, AND (c)
               suitable precautions are taken. ALL three.
             </li>
@@ -377,11 +377,11 @@ export default function Sub1() {
         <ContentEyebrow>Induced voltage — the silent ghost</ContentEyebrow>
 
         <ConceptBlock
-          title="Why a \'dead' cable can read 30–80 V on a multimeter"
-          plainEnglish="When two cables run in the same containment or joist void, the live cable couples electromagnetically and capacitively to its dead neighbour. The induced voltage is high impedance — there\'s no real source behind it — so a high-impedance multimeter (10 MΩ) reads it as a real voltage when it isn\'t a real shock hazard. A low-impedance two-pole tester loads it down to zero in a fraction of a second."
-          onSite="On a typical domestic landing where the lighting cable runs alongside the ring final and the shower cable, you\'ll routinely read 20–60 V on the dead lighting conductor with a Fluke 117. Switch to your Martindale VI-13800 and the indication drops to zero. That\'s the GS38 difference in practice."
+          title="Why a ‘dead' cable can read 30–80 V on a multimeter"
+          plainEnglish="When two cables run in the same containment or joist void, the live cable couples electromagnetically and capacitively to its dead neighbour. The induced voltage is high impedance — there’s no real source behind it — so a high-impedance multimeter (10 MΩ) reads it as a real voltage when it isn’t a real shock hazard. A low-impedance two-pole tester loads it down to zero in a fraction of a second."
+          onSite="On a typical domestic landing where the lighting cable runs alongside the ring final and the shower cable, you’ll routinely read 20–60 V on the dead lighting conductor with a Fluke 117. Switch to your Martindale VI-13800 and the indication drops to zero. That’s the GS38 difference in practice."
         >
-          <p>The danger isn\'t the induced voltage itself — it\'s three-fold:</p>
+          <p>The danger isn’t the induced voltage itself — it’s three-fold:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
               <strong>Misinterpretation</strong> — apprentice sees 60 V on the meter, assumes the
@@ -389,12 +389,12 @@ export default function Sub1() {
             </li>
             <li>
               <strong>Escalation under fault</strong> — if the parallel live circuit develops an L–E
-              fault while you\'re working, the induced trickle becomes a full-voltage path through
+              fault while you’re working, the induced trickle becomes a full-voltage path through
               your dead cable.
             </li>
             <li>
               <strong>False-positive isolation</strong> — apprentice sees 5 V on the meter,
-              dismisses it as \'induced', and starts work. But the 5 V is actually a real source
+              dismisses it as ‘induced', and starts work. But the 5 V is actually a real source
               from a borrowed neutral. The two-pole tester would have made the difference clear.
             </li>
           </ul>
@@ -435,7 +435,7 @@ export default function Sub1() {
             </li>
             <li>
               <strong>Drive capacitors (VSDs, soft starters)</strong> — much larger capacitance than
-              motor caps. Manufacturer\'s manual gives the bleed-down period (typically 5–15
+              motor caps. Manufacturer’s manual gives the bleed-down period (typically 5–15
               minutes). Pre-discharge bleed resistors are usually built in but verify with the
               meter.
             </li>
@@ -455,9 +455,9 @@ export default function Sub1() {
         <ContentEyebrow>Compromised supply earthing — TN-C-S open PEN</ContentEyebrow>
 
         <ConceptBlock
-          title="Why an open PEN on TN-C-S is the L3 hazard you didn\'t meet at L2"
-          plainEnglish="On TN-C-S (the most common UK supply arrangement), the neutral and protective earth share a combined PEN conductor between the transformer and your cut-out. If that PEN breaks anywhere upstream, your customer\'s earth bonding rises toward phase voltage relative to true earth. RCDs don\'t see it (no residual current). The first sign is a tingle on a metal kitchen tap or a 30+ V reading N–E at the cut-out."
-          onSite="A4:2026 reinforced the protective measures around TN-C-S precisely because of open PEN — Protective Equipotential Bonding (PEB) at the cut-out, S-type RCDs upstream of EV chargers (because the EV connects the customer\'s bonded metalwork to the chassis of a vehicle that someone might be touching from true earth). Knowing the hazard exists is half the protection."
+          title="Why an open PEN on TN-C-S is the L3 hazard you didn’t meet at L2"
+          plainEnglish="On TN-C-S (the most common UK supply arrangement), the neutral and protective earth share a combined PEN conductor between the transformer and your cut-out. If that PEN breaks anywhere upstream, your customer’s earth bonding rises toward phase voltage relative to true earth. RCDs don’t see it (no residual current). The first sign is a tingle on a metal kitchen tap or a 30+ V reading N–E at the cut-out."
+          onSite="A4:2026 reinforced the protective measures around TN-C-S precisely because of open PEN — Protective Equipotential Bonding (PEB) at the cut-out, S-type RCDs upstream of EV chargers (because the EV connects the customer’s bonded metalwork to the chassis of a vehicle that someone might be touching from true earth). Knowing the hazard exists is half the protection."
         >
           <p>The L3 fault diagnosis routine on TN-C-S installations:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -469,7 +469,7 @@ export default function Sub1() {
               If N–E reads more than 5 V — STOP. Possible PEN compromise. DNO call, not your job.
             </li>
             <li>
-              If voltages all check out, proceed — but log them on the job sheet so there\'s a
+              If voltages all check out, proceed — but log them on the job sheet so there’s a
               record of the supply state at the start of the visit.
             </li>
           </ul>
@@ -535,22 +535,22 @@ export default function Sub1() {
               wrong, opens the DB to investigate, and starts probing live conductors at the busbar
               to find which breaker is "really" the lighting. Now in unnecessary live work, in a
               live consumer unit, with no permit, no risk assessment, no supervision and an
-              instrument that doesn\'t meet GS38 for live work. EAWR Reg 14 breach wholesale.
+              instrument that doesn’t meet GS38 for live work. EAWR Reg 14 breach wholesale.
             </>
           }
           doInstead={
             <>
-              When a multimeter shows a small voltage on a circuit you\'ve isolated, repeat the test
+              When a multimeter shows a small voltage on a circuit you’ve isolated, repeat the test
               with a low-impedance two-pole tester. If the two-pole says zero, the multimeter was
               reading induced voltage and the circuit is genuinely dead. If the two-pole says
-              voltage, you have a real source &mdash; STOP, escalate to the supervisor, and don\'t
+              voltage, you have a real source &mdash; STOP, escalate to the supervisor, and don’t
               open the DB on your own initiative.
             </>
           }
         />
 
         <Scenario
-          title="The faulty downlight that\'s still live"
+          title="The faulty downlight that’s still live"
           situation={
             <>
               Customer reports a downlight in the kitchen has stopped working. You isolate the
@@ -564,8 +564,8 @@ export default function Sub1() {
               Stop. Do not touch the housing again. Re-test the connector and the housing with the
               two-pole tester &mdash; if it reads voltage, you have a parallel path. The most common
               cause: the lighting circuit shares a neutral with the under-cabinet LED strip on a
-              separate circuit that\'s still live, OR the housing is bonded to a gas / water service
-              that\'s at a different potential because of an open PEN upstream. Move the cable
+              separate circuit that’s still live, OR the housing is bonded to a gas / water service
+              that’s at a different potential because of an open PEN upstream. Move the cable
               safely to one side, test L&ndash;N, L&ndash;E and N&ndash;E at the cut-out. If
               anything other than the expected 230&nbsp;V L&ndash;E shows up, call the supervisor
               &mdash; this is a supply-side or cross-circuit-neutral problem, not an apprentice fix.
@@ -575,9 +575,9 @@ export default function Sub1() {
             <>
               The "dead circuit that gives you a tingle" is the canonical L3 fault-diagnosis hazard.
               Almost every reported electrocution of an electrician on diagnosis work comes back to
-              a parallel path the operative didn\'t know about &mdash; borrowed neutral, shared
+              a parallel path the operative didn’t know about &mdash; borrowed neutral, shared
               neutral, lost main earth, open PEN, or wrong circuit identification. Knowing to STOP
-              at the first unexpected reading, rather than push through assuming "it\'s just
+              at the first unexpected reading, rather than push through assuming "it’s just
               induced", is the competence test EAWR Reg 16 is actually checking.
             </>
           }

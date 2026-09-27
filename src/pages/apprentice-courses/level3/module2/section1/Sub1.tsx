@@ -155,7 +155,7 @@ const quizQuestions = [
   {
     id: 6,
     question:
-      'A customer wants a "renewable heating system" but lives in a leaky 1930s semi with single-glazed windows. What\'s the responsible recommendation?',
+      'A customer wants a "renewable heating system" but lives in a leaky 1930s semi with single-glazed windows. What’s the responsible recommendation?',
     options: [
       'Fit the largest heat pump that will fit the supply, so it can overcome the high heat loss of the leaky fabric. A bigger unit running at high flow temperature keeps the rooms warm regardless of insulation, and the customer can upgrade the windows later if they choose.',
       'Recommend a direct-acting electric heating system instead, since a heat pump cannot work at all in an uninsulated property. Electric panel heaters are 100% efficient at the point of use, so they sidestep the airtightness and emitter-sizing problems entirely.',
@@ -183,7 +183,7 @@ const quizQuestions = [
   {
     id: 8,
     question:
-      'What\'s the apprentice\'s correct framing when a customer asks "is this system actually green?"',
+      'What’s the apprentice’s correct framing when a customer asks "is this system actually green?"',
     options: [
       "Be honest: every environmental technology has a manufacturing carbon cost and an operating carbon benefit. The 'carbon payback time' is when the operating savings cover the manufacturing footprint. UK PV is roughly 1-3 years; heat pumps roughly 2-4 years on UK grid; MVHR varies hugely with airtightness. After payback, the system is in net-environmental-credit. As an apprentice, your job is the install — but the customer deserves an honest framing rather than greenwashed marketing.",
       'Yes, without qualification — once a renewable system is fitted the home is carbon-neutral, because the manufacturing emissions are offset by the grid the moment it is switched on. The carbon payback time is a marketing concept rather than a real measurement.',
@@ -307,7 +307,7 @@ export default function Sub1() {
           <p>
             Many real-world installs combine principles. A modern home might have PV (harvest), a
             heat pump (upgrade), MVHR (recovery) and LED lighting on smart controls (demand
-            reduction). Each principle does a different job; together they\'re how you get a
+            reduction). Each principle does a different job; together they’re how you get a
             new-build to Future Homes Standard compliance.
           </p>
         </ConceptBlock>
@@ -318,31 +318,31 @@ export default function Sub1() {
 
         <ConceptBlock
           title="PV converts photons to electrons in a silicon junction"
-          plainEnglish="A photovoltaic cell is a silicon p-n junction with contacts on both faces. Sunlight passing through the front contact reaches the depletion region in the silicon. Photons with enough energy knock electrons free; the cell\'s built-in electric field pushes free electrons toward the front contact and holes toward the back. That separation of charge is the DC voltage. Connect a load and current flows."
-          onSite="The electrical interface is where the unit\'s job ends and yours starts. The DC side runs from the panels through string fuses, an isolator and into the inverter. The AC side runs from the inverter through an AC isolator, a meter and an MCB into the consumer unit. BS 7671 Section 712 (extensively revised in A4:2026) is the regulatory anchor on the electrical side; MCS MIS 3002 governs the design and installation competence."
+          plainEnglish="A photovoltaic cell is a silicon p-n junction with contacts on both faces. Sunlight passing through the front contact reaches the depletion region in the silicon. Photons with enough energy knock electrons free; the cell’s built-in electric field pushes free electrons toward the front contact and holes toward the back. That separation of charge is the DC voltage. Connect a load and current flows."
+          onSite="The electrical interface is where the unit’s job ends and yours starts. The DC side runs from the panels through string fuses, an isolator and into the inverter. The AC side runs from the inverter through an AC isolator, a meter and an MCB into the consumer unit. BS 7671 Section 712 (extensively revised in A4:2026) is the regulatory anchor on the electrical side; MCS MIS 3002 governs the design and installation competence."
         >
           <p>What the apprentice needs to recognise on a PV install:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
-              <strong>kWp (kilowatt-peak)</strong> — the array\'s nameplate output under Standard
+              <strong>kWp (kilowatt-peak)</strong> — the array’s nameplate output under Standard
               Test Conditions (1000 W/m² irradiance, 25°C cell temperature, AM 1.5 solar spectrum).
               Real-world output is normally less.
             </li>
             <li>
               <strong>kWh per kWp per year</strong> — the annual yield ratio that converts the
-              array\'s peak rating to actual energy harvested. UK roofs typically deliver 800-1100
+              array’s peak rating to actual energy harvested. UK roofs typically deliver 800-1100
               depending on orientation, pitch and shading. The MCS yield calculator produces this
-              number for the SAP and the customer\'s expectations.
+              number for the SAP and the customer’s expectations.
             </li>
             <li>
               <strong>DC strings and the inverter</strong> — multiple panels are wired in series to
               build up DC voltage; the inverter clips, MPPTs and converts to AC. String design is
-              MCS-installer territory; you\'ll see it as a fait accompli.
+              MCS-installer territory; you’ll see it as a fait accompli.
             </li>
             <li>
               <strong>G98 vs G99</strong> — ENA Engineering Recommendation G98 governs grid
               connection up to 16 A per phase (most domestic systems); G99 covers larger systems.
-              The DNO notification is the installer\'s job, not the apprentice\'s, but it\'s where
+              The DNO notification is the installer’s job, not the apprentice’s, but it’s where
               the system becomes legally allowed to export.
             </li>
           </ul>
@@ -403,7 +403,7 @@ export default function Sub1() {
         <ConceptBlock
           title="Heat pumps move heat — they do not create it"
           plainEnglish="A heat pump runs a vapour-compression cycle. A refrigerant evaporates at low temperature in the outdoor coil, picking up heat from the air (or ground, or water). The compressor then squeezes that vapour, raising its pressure and temperature. The hot high-pressure vapour condenses in the indoor heat exchanger, releasing the heat into the wet system. The liquid refrigerant expands back to low pressure through the expansion valve and the cycle repeats."
-          onSite="The electrician\'s interface is the supply, isolation, controls and bonding — not the refrigerant circuit. F-Gas Regulations require refrigerant work to be done by F-Gas-certified personnel only. As the electrical installer on a heat pump install you size the supply (typically 32 A or 40 A radial for a domestic unit, on a Type C MCB), provide the means of isolation outside, bond the outdoor unit chassis if it\'s an extraneous-conductive-part, and integrate any smart controls."
+          onSite="The electrician’s interface is the supply, isolation, controls and bonding — not the refrigerant circuit. F-Gas Regulations require refrigerant work to be done by F-Gas-certified personnel only. As the electrical installer on a heat pump install you size the supply (typically 32 A or 40 A radial for a domestic unit, on a Type C MCB), provide the means of isolation outside, bond the outdoor unit chassis if it’s an extraneous-conductive-part, and integrate any smart controls."
         >
           <p>Three numbers the customer will ask about:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -441,7 +441,7 @@ export default function Sub1() {
         <ConceptBlock
           title="Recovery only works where there is something worth recovering"
           plainEnglish="Mechanical ventilation with heat recovery (MVHR) supplies fresh air to bedrooms and living rooms, extracts stale air from kitchens, bathrooms and utility rooms, and passes both streams through a counter-flow heat exchanger. 80-90% of the heat in the extract air transfers to the supply air without the two streams ever mixing. In an airtight, well-insulated building, MVHR delivers controlled ventilation with most of the ventilation heat loss recovered."
-          onSite="The electrical interface for MVHR is straightforward — a dedicated supply (typically 13 A on a 6 A or 10 A MCB), a means of isolation, and any boost switching from kitchens and bathrooms. The duct, terminal and commissioning side is the ventilation specialist\'s domain. As the electrician you size the cable for the unit\'s nameplate, provide the isolation and the local boost wiring, and verify continuity and Zs at handover."
+          onSite="The electrical interface for MVHR is straightforward — a dedicated supply (typically 13 A on a 6 A or 10 A MCB), a means of isolation, and any boost switching from kitchens and bathrooms. The duct, terminal and commissioning side is the ventilation specialist’s domain. As the electrician you size the cable for the unit’s nameplate, provide the isolation and the local boost wiring, and verify continuity and Zs at handover."
         >
           <p>
             Recovery systems share a key constraint: they only work if the host process is losing
@@ -472,10 +472,10 @@ export default function Sub1() {
 
         <ConceptBlock
           title="Net zero by 2050 is a statutory duty, not an industry preference"
-          plainEnglish="The Climate Change Act 2008 was amended in 2019 to commit the UK to net-zero greenhouse gas emissions by 2050. Buildings account for around 17% of UK emissions; transport another 22%. The Future Homes Standard, successive Part L revisions of the Building Regulations, the MCS scheme, the EV charging infrastructure regulations and the Smart Export Guarantee are all downstream of that 2050 number. Environmental technology isn\'t a niche — it\'s becoming the default."
-          onSite="As the electrician on the ground, you don\'t argue with the Act — you work within the framework it has produced. Part L compliance is a planning condition. MCS certification is a competence prerequisite for Smart Export Guarantee payments. ENA G98/G99 governs grid connection. BS 7671 Section 712 / 722 / 753 governs the electrical detail. The map is dense but the underlying logic is single-sourced from the 2050 target."
+          plainEnglish="The Climate Change Act 2008 was amended in 2019 to commit the UK to net-zero greenhouse gas emissions by 2050. Buildings account for around 17% of UK emissions; transport another 22%. The Future Homes Standard, successive Part L revisions of the Building Regulations, the MCS scheme, the EV charging infrastructure regulations and the Smart Export Guarantee are all downstream of that 2050 number. Environmental technology isn’t a niche — it’s becoming the default."
+          onSite="As the electrician on the ground, you don’t argue with the Act — you work within the framework it has produced. Part L compliance is a planning condition. MCS certification is a competence prerequisite for Smart Export Guarantee payments. ENA G98/G99 governs grid connection. BS 7671 Section 712 / 722 / 753 governs the electrical detail. The map is dense but the underlying logic is single-sourced from the 2050 target."
         >
-          <p>Why grid electrification matters for the customer\'s carbon footprint:</p>
+          <p>Why grid electrification matters for the customer’s carbon footprint:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
               UK grid carbon intensity has fallen from around 500 gCO₂/kWh in 2012 to around 200
@@ -489,10 +489,10 @@ export default function Sub1() {
             </li>
             <li>
               Every year the grid gets cleaner, every existing heat pump and EV gets cleaner with
-              it. A gas boiler doesn\'t.
+              it. A gas boiler doesn’t.
             </li>
             <li>
-              That asymmetry — electrified loads track grid progress, fossil-fuelled loads don\'t —
+              That asymmetry — electrified loads track grid progress, fossil-fuelled loads don’t —
               is the carbon argument for electrification. It is also why the Future Homes Standard
               takes fossil-fuel boilers off new-build from 2025.
             </li>
@@ -660,7 +660,7 @@ export default function Sub1() {
           whatHappens={
             <>
               Customer asks &quot;should I get solar or a heat pump?&quot; and the apprentice
-              answers as if they\'re alternatives. They aren\'t — they do different jobs. Solar
+              answers as if they’re alternatives. They aren’t — they do different jobs. Solar
               harvests electrical energy that the customer mainly uses in summer (sunny months); a
               heat pump consumes electrical energy in winter (cold months). The two are
               complementary, not competitive. The customer ends up with one system when the optimal
@@ -686,9 +686,9 @@ export default function Sub1() {
             <>
               Customer is told &quot;this heat pump is COP 4&quot; — they read that as &quot;every
               kWh in produces 4 kWh of heat all winter&quot;. In practice COP 4 is the
-              manufacturer\'s number at A7/W35 (a mild day driving low-temperature underfloor). The
+              manufacturer’s number at A7/W35 (a mild day driving low-temperature underfloor). The
               same unit driving 60°C radiators on a -2°C frost morning is running closer to COP 2.0.
-              The customer\'s actual seasonal performance is the SCOP — typically 3.0-3.5 for a
+              The customer’s actual seasonal performance is the SCOP — typically 3.0-3.5 for a
               properly designed UK system, lower for marginal installs. When the bills come in
               higher than the customer expected, the apprentice gets the phone call.
             </>
@@ -697,7 +697,7 @@ export default function Sub1() {
             <>
               Always quote SCOP, not COP, when discussing running costs with the customer.
               MCS-certified installations are required to provide a SCOP estimate based on the
-              actual building heat loss and emitter design. If you don\'t have SCOP, say &quot;COP
+              actual building heat loss and emitter design. If you don’t have SCOP, say &quot;COP
               at standard conditions — actual seasonal performance will be lower&quot; and refer
               them to the MCS designer for the realistic figure.
             </>
@@ -708,7 +708,7 @@ export default function Sub1() {
           title='New-build customer — "just give me the green package"'
           situation={
             <>
-              You\'re on a new-build estate handover. The customer asks you, as the electrician they
+              You’re on a new-build estate handover. The customer asks you, as the electrician they
               trust, what they should do to make their home &quot;as green as possible&quot;. The
               house already has an air-source heat pump (fitted by another contractor), MVHR (also
               already fitted), LED lighting throughout, and a 4 kWp PV array on the south-facing
@@ -730,11 +730,11 @@ export default function Sub1() {
           }
           whyItMatters={
             <>
-              Customers ask the trade they trust. As the electrician you don\'t sell the system, but
+              Customers ask the trade they trust. As the electrician you don’t sell the system, but
               your offhand advice has weight. The four-principle frame lets you give an honest
               answer that respects the physics — wind on a suburban site is a poor harvester,
               batteries upgrade the existing harvest, smart controls extend the existing upgrade.
-              You aren\'t doing the design — you\'re sending the customer to ask the right questions
+              You aren’t doing the design — you’re sending the customer to ask the right questions
               of the right designer.
             </>
           }

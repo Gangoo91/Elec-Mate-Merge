@@ -86,7 +86,7 @@ const quizQuestions = [
     options: [
       'Direct conversation with the individual, then their supervisor, then site manager, then formal written complaint, then contractual dispute mechanism (adjudication)',
       'Non-compliant — for 25 mm² PME tails the minimum main earthing conductor is 16 mm² (Table 54.7), so this is a visible verification failure to record on the schedule and remedy before energising.',
-      '"I\'ve identified some areas of the installation that do not meet current safety standards. I can provide a written report detailing the issues and recommended remedial work."',
+      '"I’ve identified some areas of the installation that do not meet current safety standards. I can provide a written report detailing the issues and recommended remedial work."',
       'An economic model that aims to keep resources in use for as long as possible, extracting maximum value, then recovering and regenerating products and materials at end of life',
     ],
     correctAnswer: 1,
@@ -331,7 +331,8 @@ export default function Sub1() {
             <li>
               <strong>Identification of conductors.</strong> Reg 514.3 — brown / black / grey for
               L1/L2/L3, blue for N, green/yellow for CPC. Mixed-colour warning notice on
-              pre-harmonised installations (Reg 514.14).
+              pre-harmonised installations — industry good practice since Regulation 514.14
+              was deleted by Amendment 2:2022.
             </li>
             <li>
               <strong>Routing of cables in safe zones.</strong> Reg 522.6 — within 50 mm of surface

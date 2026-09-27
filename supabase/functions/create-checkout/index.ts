@@ -225,6 +225,7 @@ serve(async (req) => {
 
     // Look up offer code if provided
     let discounts: { promotion_code: string }[] | undefined = undefined;
+    let appliedOfferId: string | undefined = undefined;
     if (offerCode) {
       logger.info('Looking up offer code', { offerCode });
 
@@ -235,7 +236,7 @@ serve(async (req) => {
 
         const { data: offer, error: offerError } = await supabaseAdmin
           .from('promo_offers')
-          .select('stripe_promotion_code_id, is_active, plan_id')
+          .select('id, stripe_promotion_code_id, is_active, plan_id')
           .eq('code', offerCode)
           .single();
 
@@ -248,6 +249,7 @@ serve(async (req) => {
           const planMatches = planId.startsWith(offer.plan_id);
           if (planMatches) {
             discounts = [{ promotion_code: offer.stripe_promotion_code_id }];
+            appliedOfferId = offer.id;
             logger.info('Applying promotion code', {
               stripePromoCodeId: offer.stripe_promotion_code_id,
             });
@@ -403,6 +405,8 @@ serve(async (req) => {
         planId: planId,
         ...(referralCode ? { referralCode } : {}),
         ...(isFounderCheckout ? { mate_founder: 'true' } : {}),
+        ...(appliedOfferId ? { offerId: appliedOfferId } : {}),
+        ...(offerCode ? { offerCode } : {}),
       },
       payment_method_types: ['card'],
       billing_address_collection: 'auto',

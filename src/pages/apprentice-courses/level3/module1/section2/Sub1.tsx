@@ -454,12 +454,12 @@ export default function Sub1() {
 
         <SectionRule />
 
-        <ContentEyebrow>The casualty's wishes vs the supervisor\'s duty</ContentEyebrow>
+        <ContentEyebrow>The casualty's wishes vs the supervisor’s duty</ContentEyebrow>
 
         <ConceptBlock
           title="Respect autonomy AND discharge the duty"
-          plainEnglish="Casualties commonly say \'I\'m fine, let me crack on\'. The L3 nuance: respect their autonomy on their own treatment, BUT don\'t waive your HASAWA s.2/s.7 duty to the firm and the workplace. Strong recommendation, documentation, escalation, and refusal to release them to safety-critical work without medical clearance is the supervisor\'s defensible position."
-          onSite="The casualty\'s preference doesn\'t reshape the law. If you let them carry on and they collapse in the afternoon, the HSE will look at your decision to permit continued work — not at the casualty\'s request. Document the recommendation, the response and the escalation chain in writing."
+          plainEnglish="Casualties commonly say ‘I’m fine, let me crack on’. The L3 nuance: respect their autonomy on their own treatment, BUT don’t waive your HASAWA s.2/s.7 duty to the firm and the workplace. Strong recommendation, documentation, escalation, and refusal to release them to safety-critical work without medical clearance is the supervisor’s defensible position."
+          onSite="The casualty’s preference doesn’t reshape the law. If you let them carry on and they collapse in the afternoon, the HSE will look at your decision to permit continued work — not at the casualty’s request. Document the recommendation, the response and the escalation chain in writing."
         >
           <p>Defensible supervisor sequence when casualty wants to continue:</p>
           <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">

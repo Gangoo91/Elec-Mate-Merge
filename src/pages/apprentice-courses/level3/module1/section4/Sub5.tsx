@@ -661,7 +661,7 @@ export default function Sub5() {
             <>
               Mid-morning install at a small commercial unit. You're working on the supply side;
               isolation is already in place at the meter. As you work, you hear a crackle from the
-              OTHER side of the building\'s main DB (separate circuit, not isolated). Walking over
+              OTHER side of the building’s main DB (separate circuit, not isolated). Walking over
               you see a small fire (size of a tennis ball) inside the lower portion of the DB; smoke
               starting to emerge.
             </>

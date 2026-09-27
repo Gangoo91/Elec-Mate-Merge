@@ -312,10 +312,10 @@ export default function Sub4() {
           }
           meaning={
             <>
-              Reg 134.1.1 captures the installer\'s professional duty — the work must reflect
+              Reg 134.1.1 captures the installer’s professional duty — the work must reflect
               competent decision-making, not just box-ticking. Engineering decisions about repair vs
               replace, design vs patch, are part of the 134.1.1 workmanship standard. The L3
-              apprentice\'s diagnostic decisions contribute to the firm\'s compliance with this
+              apprentice’s diagnostic decisions contribute to the firm’s compliance with this
               regulation.
             </>
           }
@@ -391,7 +391,7 @@ export default function Sub4() {
             <li>
               Re-using a damaged cable / accessory because the customer doesn't want to pay for new.
             </li>
-            <li>Skipping the EFLI test because 'it\'ll be fine\'.</li>
+            <li>Skipping the EFLI test because 'it’ll be fine’.</li>
             <li>Bypassing an RCD that nuisance-trips, instead of finding the cause.</li>
             <li>
               Using a Type AC RCD on a circuit that needs Type A or B — undetected non-protection.
@@ -462,8 +462,8 @@ export default function Sub4() {
             <>
               Always ask 'why?' once more after identifying the immediate cause. A burnt socket is
               the symptom; the cause is upstream. Inspect the upstream side; thermal-image under
-              load; identify and rectify the actual heat source. Customer\'s choice to authorise
-              both fixes — but the firm\'s duty is to identify and recommend both.
+              load; identify and rectify the actual heat source. Customer’s choice to authorise
+              both fixes — but the firm’s duty is to identify and recommend both.
             </>
           }
         />
@@ -473,8 +473,8 @@ export default function Sub4() {
           whatHappens={
             <>
               Customer can't afford the recommended kitchen rewire. Apprentice (under pressure to
-              keep customer happy) suggests 'we\'ll just add a Wago in-line connector at the suspect
-              HRJ, that\'ll fix it\'. The Wago doesn't address the root cause (undersized cable for
+              keep customer happy) suggests 'we’ll just add a Wago in-line connector at the suspect
+              HRJ, that’ll fix it’. The Wago doesn't address the root cause (undersized cable for
               the load); the new connection becomes the next failure point in 6 months; customer
               comes back with the same problem. Worse — if the Wago is rated below the load, the
               connector itself becomes a fire risk. The 'compromise' was actually below BS 7671 (Reg
@@ -498,7 +498,7 @@ export default function Sub4() {
             <>
               You diagnose a recurring kitchen RCBO trip on a 1995-built domestic. Root cause:
               undersized circuit for modern kitchen load. Customer is older, on a fixed income, and
-              has been managing by 'not running the kettle while the dishwasher is on\'.
+              has been managing by 'not running the kettle while the dishwasher is on’.
             </>
           }
           whatToDo={
@@ -509,20 +509,20 @@ export default function Sub4() {
               32 A radial for the high-load appliances (kettle, microwave, toaster); safe, full
               convenience, modest cost. (C) £2,200 — rewire kitchen with all-RCBO CU upgrade and
               additional circuits; safe, future-proofed, higher cost. (3) Explain trade-offs in
-              plain English: 'A is fine if you\'re happy managing the timing; B fixes the immediate
+              plain English: 'A is fine if you’re happy managing the timing; B fixes the immediate
               convenience issue; C addresses the root cause and prepares for future appliance
-              additions\'. (4) Customer chooses option B. Document choice and reasoning. (5) Issue
+              additions’. (4) Customer chooses option B. Document choice and reasoning. (5) Issue
               advisory note recommending option C as long-term plan. (6) Complete option B work;
-              retest; restore. The customer\'s commercial decision is fully-informed; the firm has
+              retest; restore. The customer’s commercial decision is fully-informed; the firm has
               documented its recommendation; the work is fully BS 7671 compliant.
             </>
           }
           whyItMatters={
             <>
-              The L3 engineering decision matches the fix to the customer\'s actual constraints
+              The L3 engineering decision matches the fix to the customer’s actual constraints
               (cost) while staying BS 7671 compliant AND documenting the recommended longer-term
               solution. The customer is treated as a partner in the engineering decision, not the
-              decision-maker on safety. The firm\'s reputation, insurance position, and ongoing
+              decision-maker on safety. The firm’s reputation, insurance position, and ongoing
               customer relationship are all served by the structured approach.
             </>
           }

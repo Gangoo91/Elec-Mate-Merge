@@ -75,7 +75,7 @@ const checks = [
     ],
     correctIndex: 0,
     explanation:
-      'Reg 644.1.1 verbatim: "For a new installation, any defect or omission revealed during the inspection and testing shall be corrected before the Certificate is issued." The EIC certifies the installation is safe at handover — issuing one for an installation with a known IR fault would be a misrepresentation. Find the fault, fix it, retest, then issue the certificate with all clean readings. The corrective work itself does not need a separate certificate; it\'s part of the original installation.',
+      'Reg 644.1.1 verbatim: "For a new installation, any defect or omission revealed during the inspection and testing shall be corrected before the Certificate is issued." The EIC certifies the installation is safe at handover — issuing one for an installation with a known IR fault would be a misrepresentation. Find the fault, fix it, retest, then issue the certificate with all clean readings. The corrective work itself does not need a separate certificate; it’s part of the original installation.',
   },
 ];
 
@@ -204,7 +204,7 @@ const faqs = [
   {
     question: 'The customer wants me to leave Zs blank because the test was not done. Is that OK?',
     answer:
-      'No — every required field must be filled. If a Zs measurement was genuinely not possible (e.g. circuit not yet energised, equipment that prevents the test), record "Not Tested" with a reason on the form, not blank. Leaving blanks creates ambiguity for future inspectors and may invalidate the certificate. Reg 644.1.1 also requires defects to be corrected before EIC issue — if Zs was not measured because the circuit isn\'t safe to energise, that\'s a defect that needs fixing first.',
+      'No — every required field must be filled. If a Zs measurement was genuinely not possible (e.g. circuit not yet energised, equipment that prevents the test), record "Not Tested" with a reason on the form, not blank. Leaving blanks creates ambiguity for future inspectors and may invalidate the certificate. Reg 644.1.1 also requires defects to be corrected before EIC issue — if Zs was not measured because the circuit isn’t safe to energise, that’s a defect that needs fixing first.',
   },
   {
     question: 'How long do records need to be kept?',
@@ -219,7 +219,7 @@ const faqs = [
   {
     question: 'Where does the AFDD test result go on the STR?',
     answer:
-      'A4:2026 introduced AFDD requirements for higher-risk installations. The IET model STR has been updated to include AFDD columns — typically a tick that the device test facility was operated per manufacturer\'s instructions, plus a free-text note for any abnormal result. Older STR forms may not have a dedicated AFDD column — in that case, document AFDD test in the Notes column or on the Schedule of Inspections under "Additional protection devices".',
+      'A4:2026 introduced AFDD requirements for higher-risk installations. The IET model STR has been updated to include AFDD columns — typically a tick that the device test facility was operated per manufacturer’s instructions, plus a free-text note for any abnormal result. Older STR forms may not have a dedicated AFDD column — in that case, document AFDD test in the Notes column or on the Schedule of Inspections under "Additional protection devices".',
   },
 ];
 
@@ -444,7 +444,7 @@ export default function Sub6() {
               instrument, though no longer regulatory acceptance under A4:2026).
             </li>
             <li>
-              <strong>AFDD test:</strong> tick or P/F that the manufacturer\'s test facility was
+              <strong>AFDD test:</strong> tick or P/F that the manufacturer’s test facility was
               operated successfully (where AFDDs are fitted).
             </li>
             <li>
@@ -570,7 +570,7 @@ export default function Sub6() {
               Cloud storage of PDFs is standard practice.
             </li>
             <li>
-              <strong>Competent Person Scheme:</strong> upload within scheme\'s notification window
+              <strong>Competent Person Scheme:</strong> upload within scheme’s notification window
               for Part P notifiable work (England / Wales). Typically 30 days. The scheme generates
               the Building Control Compliance Certificate that goes to the customer in addition to
               the EIC.
@@ -809,7 +809,7 @@ export default function Sub6() {
               reading of 0.8 MΩ (below the 1 MΩ minimum). The customer is pressing for the
               certificate so they can move in. You decide to issue the EIC with a comment in the
               notes section — "IR on circuit C7 below 1 MΩ; recommend further investigation". Three
-              months later the customer\'s insurance refuses a claim for an electrical fire on
+              months later the customer’s insurance refuses a claim for an electrical fire on
               circuit C7 because the EIC noted a known defect that was not corrected — and your
               professional indemnity is now in question because issuing a certificate for an
               installation with a known IR defect breaches Reg 644.1.1.
@@ -874,7 +874,7 @@ export default function Sub6() {
           whyItMatters={
             <>
               The certification pack is what survives the install. Five, ten, twenty years from now,
-              the customer\'s solicitor at sale, the next electrician\'s EICR, or an insurance
+              the customer’s solicitor at sale, the next electrician’s EICR, or an insurance
               investigator after an incident will pick up that EIC and need to make sense of it.
               Complete fields, sensible numbers, signed declarations, attached schedules — all of it
               has to be defensible.

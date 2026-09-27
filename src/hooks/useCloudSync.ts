@@ -14,7 +14,7 @@ interface CloudSyncOptions {
   data: any;
   enabled: boolean;
   customerId?: string;
-  onReportCreated?: (reportId: string) => void; // Called when auto-sync creates a new report
+  onReportCreated?: (reportId: string, certificateNumber?: string) => void; // Called when auto-sync creates a new report (with the number the row was created with)
   /**
    * When true, skip autosave while the form is loading from the cloud. Prevents the
    * initial blank React state from overwriting real data before hydration completes.

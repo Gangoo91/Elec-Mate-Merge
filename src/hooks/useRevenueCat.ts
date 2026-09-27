@@ -1,6 +1,11 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { Capacitor } from '@capacitor/core';
-import { Purchases, type PurchasesPackage, LOG_LEVEL } from '@revenuecat/purchases-capacitor';
+import {
+  Purchases,
+  type PurchasesPackage,
+  type PurchasesWinBackOffer,
+  LOG_LEVEL,
+} from '@revenuecat/purchases-capacitor';
 import { useHaptic } from '@/hooks/useHaptic';
 import { trackInitiateCheckout, trackSubscribe } from '@/lib/marketing-pixels';
 
@@ -271,9 +276,46 @@ export function useRevenueCat(userId?: string) {
       });
 
       try {
-        const { customerInfo } = await Purchases.purchasePackage({
-          aPackage: pkg,
-        });
+        // ── Apple win-back offers ─────────────────────────────────────────
+        // A win-back offer is Apple's own discount for someone who subscribed
+        // before, let it lapse, and has come back. Apple decides eligibility,
+        // so this can only ever fire for a genuine returning subscriber.
+        //
+        // Applied here rather than advertised on a screen, deliberately. It
+        // means there is no surface that can promise a price we then fail to
+        // honour — the discount is fetched and applied at the moment of
+        // purchase, or the purchase proceeds at full price. Nothing to
+        // maintain, nothing to go stale. (The offers themselves also have to
+        // be PROMOTED in App Store Connect for Apple to surface them in its
+        // own placements; that is separate from this path.)
+        //
+        // iOS 18+ with StoreKit 2 only: the call REJECTS on Android, on older
+        // iOS, and on iOS 18 if RevenueCat is still set to StoreKit 1 — so a
+        // rejection is the normal case, not an error worth surfacing.
+        let winBackOffer: PurchasesWinBackOffer | undefined;
+        try {
+          const { eligibleWinBackOffers } = await Purchases.getEligibleWinBackOffersForPackage({
+            aPackage: pkg,
+          });
+          if (eligibleWinBackOffers?.length) {
+            // Best for the customer: cheapest per period, and on a tie the one
+            // that runs for more billing cycles. Apple returns them in no
+            // guaranteed order, so pick rather than trust the first.
+            winBackOffer = eligibleWinBackOffers.reduce((best, o) => {
+              if (o.price !== best.price) return o.price < best.price ? o : best;
+              return (o.cycles ?? 0) > (best.cycles ?? 0) ? o : best;
+            });
+            console.log('[RevenueCat] applying win-back offer', winBackOffer.identifier);
+          }
+        } catch {
+          // Unsupported platform or none available — carry on at full price.
+        }
+
+        const { customerInfo } = winBackOffer
+          ? await Purchases.purchasePackageWithWinBackOffer({ aPackage: pkg, winBackOffer })
+          : await Purchases.purchasePackage({
+              aPackage: pkg,
+            });
 
         // Force-sync Play Billing / StoreKit → RevenueCat so the webhook fires
         // against the latest state before the UI declares success

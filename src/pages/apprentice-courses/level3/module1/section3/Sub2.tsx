@@ -58,12 +58,12 @@ const checks = [
     ],
     correctIndex: 3,
     explanation:
-      'Run the hierarchy: eliminate (surface-route in discrete trunking), substitute (different cable type/route), engineer (low-dust hand tools with on-tool extraction), administer (restricted area, time-box), PPE last. Surface mount on a listed wall is often the right answer, and listed-building consent considerations apply. The hierarchy reframes "drill the chase" as "what\'s the lowest-impact installation method?".',
+      'Run the hierarchy: eliminate (surface-route in discrete trunking), substitute (different cable type/route), engineer (low-dust hand tools with on-tool extraction), administer (restricted area, time-box), PPE last. Surface mount on a listed wall is often the right answer, and listed-building consent considerations apply. The hierarchy reframes "drill the chase" as "what’s the lowest-impact installation method?".',
   },
   {
     id: 'l3-m1-s3-sub2-engineer',
     question:
-      'A junior asks "why can\'t I just wear the mask, why do I need extraction too?". What\'s the L3 supervisor answer?',
+      'A junior asks "why can’t I just wear the mask, why do I need extraction too?". What’s the L3 supervisor answer?',
     options: [
       'The mask is uncomfortable, so extraction lets you take it off sooner.',
       "Engineering controls cut the dust at source, so you're not relying on the mask sealing perfectly every time.",
@@ -166,7 +166,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'PPE Regs 1992 Reg 4 require the employer to provide suitable PPE, and HASAWA s.9 prohibits any charge to employees in respect of statutory provisions. Charging apprentices for required "kit" is unlawful; only personal preferences (fancier kit) can be at the employee\'s expense by agreement.',
+      'PPE Regs 1992 Reg 4 require the employer to provide suitable PPE, and HASAWA s.9 prohibits any charge to employees in respect of statutory provisions. Charging apprentices for required "kit" is unlawful; only personal preferences (fancier kit) can be at the employee’s expense by agreement.',
   },
   {
     id: 8,
@@ -201,7 +201,7 @@ const faqs = [
   },
   {
     question:
-      'What\'s the difference between "general PPE" and "complex PPE" under the regulations?',
+      'What’s the difference between "general PPE" and "complex PPE" under the regulations?',
     answer:
       'Simple PPE = minor risks (mostly Cat I — sunglasses, light gloves). Complex PPE = serious or fatal risks (Cat III — fall arrest harnesses, RPE for hazardous substances, electrical insulating gloves). Cat III requires more rigorous certification and operator training.',
   },
@@ -631,7 +631,7 @@ export default function Sub2() {
         />
 
         <Scenario
-          title="Pushing back on 'just give them masks\'"
+          title="Pushing back on 'just give them masks’"
           situation={
             <>
               Contracts manager has scoped a week of masonry chasing across multiple domestic

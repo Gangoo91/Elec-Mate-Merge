@@ -42,7 +42,7 @@ const checks = [
   {
     id: 'l3-m2-s5-sub3-heat-pump-annual',
     question:
-      'A customer phones a year after their heat-pump install asking what "annual service" actually involves. What\'s the right answer?',
+      'A customer phones a year after their heat-pump install asking what "annual service" actually involves. What’s the right answer?',
     options: [
       'Nothing — heat pumps are maintenance-free for the first ten years. There is no annual service because the refrigerant circuit is sealed and the unit self-monitors; the customer can ignore it until a fault appears, and the warranty is unaffected by skipping any servicing.',
       'A multi-trade annual visit: an F-Gas engineer checks the refrigerant charge and leak-tests; a plumber checks wet-system pressure, inhibitor and flow; an electrician checks supply, isolation, RCD and controls; the outdoor unit is cleaned and performance verified. Manufacturer warranty usually requires it.',

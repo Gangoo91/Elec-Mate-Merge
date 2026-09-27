@@ -20,6 +20,7 @@ import { scrollToTopForStepChange } from '@/utils/scroll';
 import { CertPreviewSheet } from '@/components/inspection/shared/CertPreviewSheet';
 import { ReportPdfViewer } from '@/components/reports/ReportPdfViewer';
 import { readEdgeFunctionError } from '@/lib/edgeFunctionError';
+import { issueCertificateNumber } from '@/utils/certificateNumbering';
 
 interface EVChargingTabNavigationProps {
   currentTab: string;
@@ -120,7 +121,7 @@ const EVChargingTabNavigation: React.FC<EVChargingTabNavigationProps> = ({
         formattedData = formData
           ? formatEVChargingJson({
               ...formData,
-              certificateNumber: formData.certificateNumber || `EVC-${Date.now()}`,
+              certificateNumber: await issueCertificateNumber(formData.certificateNumber, 'ev-charging'),
             })
           : undefined;
       } catch {

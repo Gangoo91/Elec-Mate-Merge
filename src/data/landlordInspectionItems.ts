@@ -110,6 +110,14 @@ export const landlordInspectionItems: RoutineInspectionItem[] = [
     description: 'Access to the consumer unit unobstructed',
     outcome: '',
   },
+  {
+    id: 'lai_1_7',
+    group: 'Supply, meter and consumer unit',
+    itemNumber: '1.7',
+    description: 'No combustible material stored on or against the consumer unit or meter',
+    outcome: '',
+    hint: 'Coats, paint tins, newspapers, cleaning fluids. Distinct from 1.6: a cupboard can be perfectly reachable and still be a fire load sat against a board.',
+  },
 
   // ── B. Protective devices ───────────────────────────────────────────────
   {
@@ -275,6 +283,22 @@ export const landlordInspectionItems: RoutineInspectionItem[] = [
     outcome: '',
     hint: 'Matters most in a flat or a converted house, where a penetration breaches a compartment wall or floor.',
   },
+  {
+    id: 'lai_4_8',
+    group: 'Accessories, wiring and lighting',
+    itemNumber: '4.8',
+    description: 'No signs of overheating at socket-outlets, switches or lampholders',
+    outcome: '',
+    hint: 'Blackening, scorch marks, discolouration, a smell of hot plastic. Separate from 4.1 because an accessory can be mechanically sound and still be running hot.',
+  },
+  {
+    id: 'lai_4_9',
+    group: 'Accessories, wiring and lighting',
+    itemNumber: '4.9',
+    description: 'Flexible cables not run where they are likely to be damaged',
+    outcome: '',
+    hint: 'Under carpets or rugs, through a doorway or window opening, pinched behind furniture. The tenant\u2019s own leads count — record it and say so to them, even though the flex is not yours.',
+  },
 
   // ── E. Landlord-supplied equipment ──────────────────────────────────────
   {
@@ -320,6 +344,30 @@ export const landlordInspectionItems: RoutineInspectionItem[] = [
     description: 'EV charge point — condition noted',
     outcome: '',
     hint: 'Noted here, inspected under its own regime on its own certificate.',
+  },
+  {
+    id: 'lai_5_7',
+    group: 'Landlord-supplied equipment',
+    itemNumber: '5.7',
+    description: 'Appliance casings and covers in place and undamaged',
+    outcome: '',
+    hint: 'A cracked or missing casing can expose live parts. Still a visual check — this is not PAT.',
+  },
+  {
+    id: 'lai_5_8',
+    group: 'Landlord-supplied equipment',
+    itemNumber: '5.8',
+    description: 'Appliance flexes sound and securely attached at the plug and at the appliance',
+    outcome: '',
+    hint: 'Fraying, splitting, taped repairs, a flex pulling out of its plug or its cord grip.',
+  },
+  {
+    id: 'lai_5_9',
+    group: 'Landlord-supplied equipment',
+    itemNumber: '5.9',
+    description: 'Appliances checked against the product recall register',
+    outcome: '',
+    hint: 'Electrical Safety First publishes a recall list at electricalsafetyfirst.org.uk/recall. It takes a make, model and serial number from the rating plate, and a recalled appliance in a let is the landlord\u2019s problem the moment it is known about.',
   },
 
   // ── F. Outside and outbuildings ─────────────────────────────────────────
@@ -393,5 +441,13 @@ export const landlordInspectionItems: RoutineInspectionItem[] = [
     description: 'All rooms and areas accessed on this visit',
     outcome: '',
     hint: 'Answer Not seen where a room was locked, occupied or refused. It prints in the limitations, which is what protects you.',
+  },
+  {
+    id: 'lai_7_6',
+    group: 'Records, access and the tenancy',
+    itemNumber: '7.6',
+    description: 'Remedial work from the last EICR completed and evidenced',
+    outcome: '',
+    hint: 'C1, C2 and FI findings, and the written confirmation that they were put right. In England the 2020 Regulations give 28 days from the report, or sooner if the inspector said so. 7.1 asks whether there IS an EICR; this asks whether anyone acted on it.',
   },
 ];

@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { Textarea } from '@/components/ui/textarea';
-import { Check, ChevronRight } from 'lucide-react';
+import { Camera, Check, ChevronRight } from 'lucide-react';
+import { useParams } from 'react-router-dom';
+import { useInspectionPhotos } from '@/hooks/useInspectionPhotos';
+import InspectionPhotoUpload from './InspectionPhotoUpload';
 import { InspectionItem as BaseInspectionItem } from '@/data/bs7671ChecklistData';
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
@@ -71,6 +74,8 @@ interface EnhancedInspectionItemCardProps {
   onOutcomeChange: (itemId: string, outcome: InspectionItem['outcome']) => void;
   onNavigateToObservations?: () => void;
   quickMarkMode?: boolean;
+  /** Passed by the EICR (its route carries no id); other routes fall back to `:id`. */
+  reportId?: string;
 }
 
 const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
@@ -80,6 +85,7 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
   onOutcomeChange,
   onNavigateToObservations,
   quickMarkMode,
+  reportId: reportIdProp,
 }) => {
   const haptic = useHaptic();
   const [localNotes, setLocalNotes] = useState(inspectionItem?.notes || '');
@@ -88,6 +94,29 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
   const [isExpanded, setIsExpanded] = useState(false);
 
   const currentOutcome = inspectionItem?.outcome || '';
+
+  /*
+   * ELE-1617 — a photo is evidence, not a verdict. Alex's workaround was to
+   * mark an item LIM, set an observation to N/A, then mark it OK again just to
+   * reach the camera. On the phone there was no camera at all; the desktop
+   * row has had one for a while. Same hook, same storage (inspection_photos,
+   * keyed by report + item), so the PDF appendix picks these up too.
+   */
+  const { id: routeParamId } = useParams();
+  const routeReportId = reportIdProp || routeParamId;
+  const [showPhotoUpload, setShowPhotoUpload] = useState(false);
+  const { photos, isUploading, uploadPhoto } = useInspectionPhotos({
+    reportId: routeReportId || '',
+    reportType: 'eicr',
+    itemId: sectionItem.id,
+  });
+  const handlePhotoCapture = async (file: File) => {
+    const faultCode = ['C1', 'C2', 'C3', 'limitation'].includes(currentOutcome)
+      ? (currentOutcome as 'C1' | 'C2' | 'C3' | 'limitation')
+      : undefined;
+    await uploadPhoto(file, faultCode, localNotes);
+    setShowPhotoUpload(false);
+  };
 
   React.useEffect(() => {
     setLocalNotes(inspectionItem?.notes || '');
@@ -154,6 +183,12 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
       onOutcomeChange(sectionItem.id, '');
     } else {
       onOutcomeChange(sectionItem.id, outcome);
+      /*
+       * ELE-1529 — a classified item folds to its summary row. On a long EICR
+       * every item left open after coding is another screen of chips to scroll
+       * past; the code is now on the row, and a tap reopens it for notes.
+       */
+      setIsExpanded(false);
       if (outcome === 'C1') {
         haptic.warning();
         setFlashRed(true);
@@ -244,6 +279,18 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
             )}
           </div>
 
+          {/* ELE-1529 — the code, visible on the folded row */}
+          {!isExpanded && currentOutcome ? (
+            <span
+              className={cn(
+                'shrink-0 rounded-md px-2 py-1 text-[11px] font-bold leading-none',
+                outcomeChipOn[currentOutcome] || 'bg-white/[0.12] text-white'
+              )}
+            >
+              {outcomeOptions.find((o) => o.value === currentOutcome)?.label ?? currentOutcome}
+            </span>
+          ) : null}
+
           {/* Expand indicator */}
           <ChevronRight
             className={cn(
@@ -253,25 +300,28 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
           />
         </button>
 
-        {/* Outcome chips — full-width wrap row, solid when selected */}
-        <div className="px-3 pb-3 grid grid-cols-4 gap-1.5">
-          {outcomeOptions.map((option) => {
-            const isActive = currentOutcome === option.value;
-            return (
-              <button
-                key={option.value}
-                type="button"
-                onClick={() => handleOutcomeClick(option.value)}
-                className={cn(
-                  'h-11 rounded-lg text-[12px] font-semibold flex items-center justify-center transition-all touch-manipulation active:scale-[0.97]',
-                  isActive ? outcomeChipOn[option.value] : outcomeChipOff
-                )}
-              >
-                {option.label}
-              </button>
-            );
-          })}
-        </div>
+        {/* Outcome chips — full-width wrap row, solid when selected.
+            ELE-1529: hidden on a folded, classified row; the badge above carries the code. */}
+        {(isExpanded || !currentOutcome) && (
+          <div className="px-3 pb-3 grid grid-cols-4 gap-1.5">
+            {outcomeOptions.map((option) => {
+              const isActive = currentOutcome === option.value;
+              return (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => handleOutcomeClick(option.value)}
+                  className={cn(
+                    'h-11 rounded-lg text-[12px] font-semibold flex items-center justify-center transition-all touch-manipulation active:scale-[0.97]',
+                    isActive ? outcomeChipOn[option.value] : outcomeChipOff
+                  )}
+                >
+                  {option.label}
+                </button>
+              );
+            })}
+          </div>
+        )}
 
         {/* Expanded content */}
         {isExpanded && (
@@ -283,6 +333,27 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
               rows={2}
               className="textarea-soft min-h-[60px] resize-none rounded-xl border-0 bg-white/[0.05] px-3 py-2.5 text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none touch-manipulation"
             />
+
+            {/* ELE-1617 — evidence photo on any item, whatever its outcome */}
+            <button
+              type="button"
+              onClick={() => setShowPhotoUpload((v) => !v)}
+              disabled={!routeReportId}
+              className="h-11 w-full rounded-lg bg-white/[0.06] border border-white/[0.12] text-[12px] font-semibold text-white transition-all touch-manipulation active:scale-[0.97] flex items-center justify-center gap-2 disabled:opacity-60"
+            >
+              <Camera className="h-4 w-4" />
+              {routeReportId
+                ? photos.length > 0
+                  ? `Photo evidence (${photos.length})`
+                  : 'Add photo evidence'
+                : 'Save the report once to add photos'}
+            </button>
+            {showPhotoUpload && routeReportId && (
+              <InspectionPhotoUpload
+                onPhotoCapture={handlePhotoCapture}
+                isUploading={isUploading}
+              />
+            )}
 
             {/* View observations — only for C1/C2/C3 */}
             {isCriticalOutcome && onNavigateToObservations && (

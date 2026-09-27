@@ -321,7 +321,7 @@ export default function Sub4() {
 
         <ConceptBlock
           title="Physical separation between the work and the bystanders"
-          onSite="A reception, a corridor, a stockroom, a domestic kitchen with kids running through — every fault-diagnosis location has bystanders, and EAWR Reg 14(c) requires \'suitable precautions' to keep them safe. Verbal warnings alone don't satisfy it; physical separation does."
+          onSite="A reception, a corridor, a stockroom, a domestic kitchen with kids running through — every fault-diagnosis location has bystanders, and EAWR Reg 14(c) requires ‘suitable precautions' to keep them safe. Verbal warnings alone don't satisfy it; physical separation does."
         >
           <p>The standard work-area control:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -332,7 +332,7 @@ export default function Sub4() {
             </li>
             <li>
               <strong>Signage</strong> — BS EN ISO 7010 W012 (warning — electricity), prohibition
-              sign at access point, \'NO UNAUTHORISED ACCESS', firm name and operative contact.
+              sign at access point, ‘NO UNAUTHORISED ACCESS', firm name and operative contact.
             </li>
             <li>
               <strong>Briefing</strong> — verbal briefing to anyone in the area before opening the
@@ -363,13 +363,13 @@ export default function Sub4() {
         <ContentEyebrow>Witnessing — when a second person is required</ContentEyebrow>
 
         <ConceptBlock
-          title="The \'two-up' principle for higher-risk work"
-          plainEnglish="Working alone is acceptable for low-risk dead-circuit fault diagnosis. Working alone on live equipment, in confined spaces, at height, in remote locations, or on systems where a single fault could be fatal — is not. The accompanying person\'s role is not to do the work, but to observe, challenge, raise the alarm and assist with rescue."
+          title="The ‘two-up' principle for higher-risk work"
+          plainEnglish="Working alone is acceptable for low-risk dead-circuit fault diagnosis. Working alone on live equipment, in confined spaces, at height, in remote locations, or on systems where a single fault could be fatal — is not. The accompanying person’s role is not to do the work, but to observe, challenge, raise the alarm and assist with rescue."
         >
           <p>Second-person required when:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
-              Live working is planned at any voltage above 50 V AC where the operative can\'t safely
+              Live working is planned at any voltage above 50 V AC where the operative can’t safely
               self-rescue.
             </li>
             <li>
@@ -379,7 +379,7 @@ export default function Sub4() {
             <li>Work is in a confined space (cellar, void, plant room with single access).</li>
             <li>Work is at height where a fall would prevent self-rescue.</li>
             <li>Work is in a remote location with no immediate help available.</li>
-            <li>The firm\'s H&S policy specifies it for the task type.</li>
+            <li>The firm’s H&S policy specifies it for the task type.</li>
           </ul>
           <p>
             The second person must themselves be competent — typically an Approved Electrician or
@@ -403,7 +403,7 @@ export default function Sub4() {
 
         <ConceptBlock
           title="Visual / calibration / function — every instrument, every shift"
-          onSite="An instrument that gives a wrong reading is more dangerous than no instrument at all — it gives you false confidence. The three-step check takes 60 seconds per instrument and is non-negotiable. PUWER 1998 Reg 5 puts the duty on the employer; the operative\'s pre-use inspection is how it\'s discharged."
+          onSite="An instrument that gives a wrong reading is more dangerous than no instrument at all — it gives you false confidence. The three-step check takes 60 seconds per instrument and is non-negotiable. PUWER 1998 Reg 5 puts the duty on the employer; the operative’s pre-use inspection is how it’s discharged."
         >
           <p>The three-step:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -414,7 +414,7 @@ export default function Sub4() {
             </li>
             <li>
               <strong>Calibration</strong> — calibration label in date (annual for MFT, two-yearly
-              for two-pole testers, manufacturer\'s interval for multimeters); calibration
+              for two-pole testers, manufacturer’s interval for multimeters); calibration
               certificate available.
             </li>
             <li>
@@ -507,11 +507,11 @@ export default function Sub4() {
               Apprentice is at a domestic property to investigate a faulty kitchen socket. During
               the work they notice the loft junction box has a disconnected CPC. They think
               &quot;not my job, here for the kitchen&quot; and ignore it. They complete the kitchen
-              work, leave, send the invoice. Two months later the customer\'s child touches a metal
+              work, leave, send the invoice. Two months later the customer’s child touches a metal
               bedside lamp and takes a 230&nbsp;V shock through the lifted CPC. The HSE
-              investigation finds the apprentice\'s job sheet recorded the loft inspection; the
-              customer\'s solicitor argues the apprentice had a duty to act on what they saw. The
-              firm\'s professional indemnity insurer refuses cover (failure to act on known defect).
+              investigation finds the apprentice’s job sheet recorded the loft inspection; the
+              customer’s solicitor argues the apprentice had a duty to act on what they saw. The
+              firm’s professional indemnity insurer refuses cover (failure to act on known defect).
               The apprentice is named in the prosecution alongside the firm.
             </>
           }
@@ -522,23 +522,23 @@ export default function Sub4() {
               the affected circuit and label &quot;OUT OF SERVICE &mdash; DO NOT
               RE-ENERGISE&mdash;CPC FAULT&quot;, then document on the job sheet and on a Dangerous
               Condition Notification form to the customer. Most firms have a DCN template. The
-              customer can choose whether to authorise the additional work; what they can\'t do is
+              customer can choose whether to authorise the additional work; what they can’t do is
               have you withhold the warning.
             </>
           }
         />
 
         <CommonMistake
-          title="Trusting an instrument because it\'s the firm\'s only one"
+          title="Trusting an instrument because it’s the firm’s only one"
           whatHappens={
             <>
-              Apprentice arrives at a job with the firm\'s MFT &mdash; calibration sticker is two
-              months out of date. They use it anyway because there\'s no spare and the job is
+              Apprentice arrives at a job with the firm’s MFT &mdash; calibration sticker is two
+              months out of date. They use it anyway because there’s no spare and the job is
               booked. Insulation resistance reading shows 200&nbsp;M&Omega; on a circuit that&apos;s
-              actually got a wet fault giving 0.3&nbsp;M&Omega; (the MFT\'s IR circuit has drifted
+              actually got a wet fault giving 0.3&nbsp;M&Omega; (the MFT’s IR circuit has drifted
               out of spec). Apprentice signs the circuit off as compliant and leaves. Two weeks
-              later the wet fault grows, the customer\'s RCD trips repeatedly, the firm gets called
-              back. The customer\'s complaint says they paid for a fault investigation that didn\'t
+              later the wet fault grows, the customer’s RCD trips repeatedly, the firm gets called
+              back. The customer’s complaint says they paid for a fault investigation that didn’t
               find the fault &mdash; refund + remedial costs. Insurance excludes claim because the
               instrument was out of calibration at the time of test.
             </>
@@ -549,7 +549,7 @@ export default function Sub4() {
               when a calibrated instrument is available, OR a different instrument is obtained
               (rental, borrow from another office). The cost of one rescheduled job is trivial
               compared to the cost of an uncalibrated reading that misses a real fault. Most firms
-              have a \'no calibration, no work' rule and will pay for emergency calibration /
+              have a ‘no calibration, no work' rule and will pay for emergency calibration /
               instrument hire to avoid a re-visit.
             </>
           }
@@ -559,8 +559,8 @@ export default function Sub4() {
           title="Reception-area DB fault investigation during business hours"
           situation={
             <>
-              You\'re at a small accountancy firm to investigate a recurring nuisance trip on the
-              upstairs office RCBO. The DB is in the reception area, behind the receptionist\'s
+              You’re at a small accountancy firm to investigate a recurring nuisance trip on the
+              upstairs office RCBO. The DB is in the reception area, behind the receptionist’s
               desk. The reception is in normal use during the work &mdash; deliveries, clients,
               staff. The receptionist asks how long the work will take and whether they can stay at
               their desk.
@@ -574,9 +574,9 @@ export default function Sub4() {
               radius around the DB; place &quot;DANGER &mdash; ELECTRICAL WORK&quot; signage at all
               approaches. (3) Brief the office manager (the named responsible person) who agrees to
               keep clients clear of reception during the work. (4) Tell the receptionist they CAN
-              stay at their desk if it\'s outside the barrier; if they\'re inside the barrier they
+              stay at their desk if it’s outside the barrier; if they’re inside the barrier they
               need to relocate. (5) Apply isolation, lock-off, prove dead, work. (6) Throughout the
-              work, periodically check the barrier hasn\'t been moved by deliveries or clients
+              work, periodically check the barrier hasn’t been moved by deliveries or clients
               walking past. (7) On completion, retest, restore supply, remove barrier, document.
               Brief the office manager that work is complete.
             </>
@@ -586,7 +586,7 @@ export default function Sub4() {
               Real-world fault diagnosis is rarely in a quiet empty room. Public-area work requires
               deliberate work-area control AND deliberate communication with the people who share
               the space. The HSE investigates incidents where a bystander contacts live equipment in
-              a busy area &mdash; the firm\'s defence is &quot;we had barriers and briefed the
+              a busy area &mdash; the firm’s defence is &quot;we had barriers and briefed the
               responsible person&quot;, not &quot;we put a sign up&quot;. The discipline of physical
               separation + named responsible person + documented briefing is what makes the work
               defensible.

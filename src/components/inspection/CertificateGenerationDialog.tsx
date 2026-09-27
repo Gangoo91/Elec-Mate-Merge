@@ -47,6 +47,12 @@ interface CertificateGenerationDialogProps {
    * expected to offer its own, so the dialog does not show two.
    */
   actions?: React.ReactNode;
+  /**
+   * Rendered UNDER the download button (or the `actions` override) on success,
+   * for follow-ons that must not replace the download — ELE-1556's client
+   * handout offer. `actions` replaces the default; this appends.
+   */
+  afterActions?: React.ReactNode;
 }
 
 export default function CertificateGenerationDialog({
@@ -58,6 +64,7 @@ export default function CertificateGenerationDialog({
   errorMessage,
   documentLabel = 'Certificate',
   actions,
+  afterActions,
 }: CertificateGenerationDialogProps) {
   const handleDownload = async () => {
     if (!pdfUrl) return;
@@ -127,6 +134,7 @@ export default function CertificateGenerationDialog({
                   Download {documentLabel}
                 </Button>
               )}
+              {afterActions}
             </>
           )}
         </div>

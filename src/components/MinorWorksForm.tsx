@@ -355,9 +355,22 @@ const MinorWorksForm = ({
   } = useMinorWorksSmartForm();
 
   // Callback when auto-sync creates a new report - keeps component state in sync
-  const handleReportCreated = React.useCallback((newReportId: string) => {
-    console.log('[MinorWorks] Auto-sync created report:', newReportId);
+  /** True once a certificate number has been allocated (by the form or adopted from the created row). */
+  const certNumberGenerated = React.useRef(false);
+  const handleReportCreated = React.useCallback((newReportId: string, certificateNumber?: string) => {
+    console.log('[MinorWorks] Auto-sync created report:', newReportId, certificateNumber);
     setCurrentReportId(newReportId);
+    /*
+     * ELE-1592 — adopt the number the row was created with, and stand the
+     * mount-time allocator down. Without this the allocator (which keys off
+     * the report id we are setting right here) found state blank and minted a
+     * second number: column N, printed N+1, two numbers burnt per certificate.
+     */
+    if (certificateNumber) {
+      certNumberGenerated.current = true;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    setFormData((prev: any) => (prev.certificateNumber ? prev : { ...prev, certificateNumber }));
+    }
   }, []);
 
   // User preference: auto-save drafts (Settings → Preferences). Manual saves are unaffected.
@@ -774,13 +787,24 @@ const MinorWorksForm = ({
       // Auto-recover if form is empty and draft has meaningful data
       if (draft.data.clientName || draft.data.propertyAddress || draft.data.workDescription) {
         console.log('[MinorWorks] Auto-recovering draft for new report');
+        /*
+         * ELE-1592 — the recovered draft's certificate number is DISCARDED.
+         *
+         * This used to say the opposite ("the draft's original number is
+         * canonical"), and it is the copy path behind MW-2026-6383 sitting on
+         * three different jobs at three addresses over three weeks: the
+         * "new certificate" draft outlives the save of the certificate it
+         * belonged to, so its number is restored into the NEXT new certificate.
+         * A wasted number is a gap in a sequence; a copied one is two legal
+         * documents with the same reference. The EIC form already does this.
+         */
+        const draftWithoutNumber = { ...draft.data };
+        delete draftWithoutNumber.certificateNumber;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         setFormData((prev: any) => ({
           ...prev,
-          ...draft.data,
-          // The draft's original number is canonical — the mount-time generator
-          // may have already landed a fresh one (async race), which must lose.
-          certificateNumber: draft.data.certificateNumber || prev.certificateNumber,
+          ...draftWithoutNumber,
+          certificateNumber: prev.certificateNumber,
         }));
         toast({
           title: 'Draft recovered',
@@ -800,7 +824,7 @@ const MinorWorksForm = ({
    * rather than a platform-wide Postgres sequence. Waste is still waste, so
    * this still allocates late; it just no longer wastes OTHER firms' numbers.
    */
-  const certNumberGenerated = React.useRef(false);
+  // (declared above handleReportCreated — see there)
 
   const ensureCertificateNumber = React.useCallback(() => {
     if (certNumberGenerated.current) return;

@@ -9,6 +9,9 @@ import {
   effectiveSpotChecks,
   spotCheckLabel,
   spotCheckUnit,
+  effectiveAlarms,
+  ROUTINE_ALARM_TYPES,
+  ROUTINE_ALARM_POWER_SOURCES,
   thermalBandFor,
   THERMAL_PRIORITY_ACTION,
   THERMAL_SURVEY_LIMITATIONS,
@@ -92,6 +95,26 @@ const ukDate = (iso: string): string => {
     : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 };
 
+/**
+ * Is an alarm's replacement date already in the past?
+ *
+ * Computed here, not in the template: Liquid has no date comparison, so a
+ * template-side attempt would either not flag at all or flag on a string
+ * compare that breaks the moment a date is stored in another format. An expiry
+ * that silently fails to flag is worse than printing no flag.
+ *
+ * Returns false for anything unparseable — never assert that an alarm is out of
+ * date on a document because we could not read the field.
+ */
+const alarmExpired = (due: string): boolean => {
+  if (!due) return false;
+  const d = new Date(due);
+  if (Number.isNaN(d.getTime())) return false;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return d < today;
+};
+
 export function formatRoutineInspectionJson(
   form: RoutineInspectionFormData,
   company?: CompanyProfileLike | null
@@ -160,6 +183,17 @@ export function formatRoutineInspectionJson(
     }));
 
   const spotChecks = effectiveSpotChecks(form);
+  /* Landlord visits only — see `RoutineAlarm`. On a commercial visit the array
+     is empty anyway, but gating on the visit type as well means a report that
+     changed type after the register was filled in cannot print a domestic head
+     register under an EAWR 4(2) masthead. */
+  const alarms = form.visitType === 'landlord' ? effectiveAlarms(form) : [];
+  const alarmTypeLabel = (v: string) =>
+    ROUTINE_ALARM_TYPES.find((t) => t.value === v)?.label ?? '';
+  const alarmPowerLabel = (v: string) =>
+    ROUTINE_ALARM_POWER_SOURCES.find((t) => t.value === v)?.label ?? '';
+  const alarmTested = (v: string) =>
+    v === 'yes' ? 'Sounded' : v === 'no' ? 'DID NOT SOUND' : v === 'not-tested' ? 'Not tested' : '';
 
   const eicrState = eicrStatus(s(form.eicrNextDue));
 
@@ -422,6 +456,33 @@ export function formatRoutineInspectionJson(
       notes: s(c.notes),
     })),
     has_spot_checks: spotChecks.length > 0,
+
+    /*
+     * 🔴 A REGISTER, NOT A CERTIFICATE.
+     *
+     * No grade, no category, no statement of compliance with BS 5839-6 — those
+     * are design declarations and they live on the Smoke & CO Alarm
+     * certificate. What this prints is what was found: which alarm, where, how
+     * it is powered, when it must be replaced, and whether it sounded.
+     *
+     * `expired` is computed here rather than in the template because Liquid
+     * cannot compare dates, and an expiry that silently fails to flag is worse
+     * than no flag at all.
+     */
+    alarms: alarms.map((a, idx) => ({
+      number: String(idx + 1),
+      type: alarmTypeLabel(s(a.alarmType)),
+      location: s(a.location),
+      power_source: alarmPowerLabel(s(a.powerSource)),
+      manufactured: s(a.dateOfManufacture),
+      replacement_due: ukDate(a.replacementDue) || s(a.replacementDue),
+      expired: alarmExpired(s(a.replacementDue)),
+      tested: alarmTested(s(a.testedOk)),
+      failed: s(a.testedOk) === 'no',
+      notes: s(a.notes),
+    })),
+    has_alarms: alarms.length > 0,
+    alarms_expired_count: alarms.filter((a) => alarmExpired(s(a.replacementDue))).length,
     instrument: {
       name: s(form.testInstrument),
       serial: s(form.testInstrumentSerial),

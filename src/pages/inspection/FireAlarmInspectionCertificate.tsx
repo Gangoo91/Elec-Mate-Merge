@@ -32,10 +32,11 @@ import { useReportSync } from '@/hooks/useReportSync';
 import { useCertLock } from '@/hooks/useCertLock';
 import CertLockBar from '@/components/inspection/CertLockBar';
 import { cn } from '@/lib/utils';
-import { generateCertificateNumber } from '@/utils/certificateNumbering';
+import { generateCertificateNumber, issueCertificateNumber } from '@/utils/certificateNumbering';
 import { formatFireAlarmG6Json } from '@/utils/fireAlarmG6JsonFormatter';
 import { EmailCertificateDialog } from '@/components/certificate-completion/EmailCertificateDialog';
 import { scrollToTopForStepChange } from '@/utils/scroll';
+import { useEngineerVerify } from '@/utils/engineerVerify';
 
 const REPORT_TYPE = 'fire-alarm-inspection' as const;
 
@@ -48,6 +49,9 @@ export default function FireAlarmInspectionCertificate() {
     ...getDefaultFireAlarmFormData(),
     certificateType: 'inspection',
   });
+
+  // ELE-1453 — Elec-ID verify QR for the signature box; {} when the user has none.
+  const engineerVerify = useEngineerVerify();
   const [isSaving, setIsSaving] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [showGenerationDialog, setShowGenerationDialog] = useState(false);
@@ -94,8 +98,11 @@ const {
     formData,
     enabled: !isLoading && !isLocked,
     isHydrating: isLoading, // Gate autosave while loading from cloud — prevents blank-overwrite race.
-    onReportCreated: (newId) => {
+    onReportCreated: (newId: string, certificateNumber?: string) => {
       setSavedReportId(newId);
+      // ELE-1592 — keep the number the row was filed under; without this the
+      // form stayed blank and the PDF printed an invented timestamp.
+      if (certificateNumber) setFormData((prev) => (prev.certificateNumber ? prev : { ...prev, certificateNumber }));
       window.history.replaceState(
         null,
         '',
@@ -238,10 +245,10 @@ const {
     setGenerationError(null);
     setShowGenerationDialog(true);
     try {
-      await syncNowImmediate();
+      const synced = await syncNowImmediate();
       let data = {
         ...formData,
-        certificateNumber: formData.certificateNumber || `FA/G6-${Date.now()}`,
+        certificateNumber: await issueCertificateNumber(formData.certificateNumber || synced.data?.certificateNumber, REPORT_TYPE),
       };
       if (hasSavedCompanyBranding) {
         const b = loadCompanyBranding();
@@ -250,7 +257,7 @@ const {
       // Inject captured photos so they reach the PDF payload
       const photos = await fetchInspectionPhotos();
       data = { ...data, photos };
-      const pdfData = formatFireAlarmG6Json(data);
+      const pdfData = { ...formatFireAlarmG6Json(data), ...engineerVerify };
       if (savedReportId)
         await supabase
           .from('reports')
@@ -327,14 +334,14 @@ const {
       try {
         let data = {
           ...formData,
-          certificateNumber: formData.certificateNumber || `FA/G6-${Date.now()}`,
+          certificateNumber: await issueCertificateNumber(formData.certificateNumber, REPORT_TYPE),
           photos: await fetchInspectionPhotos(),
         };
         if (hasSavedCompanyBranding) {
           const b = loadCompanyBranding();
           if (b) data = { ...data, ...b };
         }
-        formattedData = formatFireAlarmG6Json(data);
+        formattedData = { ...formatFireAlarmG6Json(data), ...engineerVerify };
       } catch {
         formattedData = undefined;
       }

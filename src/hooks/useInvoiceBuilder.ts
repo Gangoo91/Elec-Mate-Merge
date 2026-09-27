@@ -159,7 +159,10 @@ const createEmptyInvoice = (): Partial<Invoice> => {
       description: '',
     },
     settings: {
-      labourRate: 50,
+      // ELE-1780 — `labourRate` removed. It was a global "one labour rate"
+      // that `computeQuoteTotals` never read; labour is per-item via
+      // `QuoteItem.hours`/`hourlyRate` and the grade rates on the company
+      // profile. A hard-coded 50 here was never reaching a single total.
       overheadPercentage: 0, // User enters final prices - no automatic overhead
       profitMargin: 0, // User enters final prices - no automatic profit
       vatRate: 20,

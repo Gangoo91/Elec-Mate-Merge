@@ -89,7 +89,7 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question: 'What\'s "notifiable work" under Approved Doc P?',
+    question: 'What’s "notifiable work" under Approved Doc P?',
     options: [
       'Any electrical work of any kind in a dwelling, however minor, including replacing a single accessory like a socket faceplate.',
       'Only the full rewire of a dwelling; alterations and additions to existing circuits are never notifiable.',
@@ -115,7 +115,7 @@ const quizQuestions = [
   },
   {
     id: 4,
-    question: 'What\'s a "fire stopping" requirement?',
+    question: 'What’s a "fire stopping" requirement?',
     options: [
       "Penetrations through fire-rated walls, floors or ceilings must be fire-stopped to maintain the compartment's fire integrity.",
       'A requirement to install a fire-rated isolating switch on every circuit so the supply can be cut quickly in an emergency.',
@@ -531,7 +531,7 @@ export default function Sub3() {
           title="Doing notifiable work without CPS registration or building control notification"
           whatHappens={
             <>
-              L3 (or supervising firm) does a CU change in a customer\'s house without CPS
+              L3 (or supervising firm) does a CU change in a customer’s house without CPS
               registration or building control notification. Approved Doc P / Building Regs breach.
               Customer&apos;s house insurance may be voided; future house sale may be problematic;
               LA can require remedial / re-inspection.
@@ -539,8 +539,8 @@ export default function Sub3() {
           }
           doInstead={
             <>
-              Verify firm\'s CPS registration covers the work. If not registered, building control
-              notification before starting (with fees). Don\'t skip the notification regime; it\'s
+              Verify firm’s CPS registration covers the work. If not registered, building control
+              notification before starting (with fees). Don’t skip the notification regime; it’s
               the operative compliance route.
             </>
           }

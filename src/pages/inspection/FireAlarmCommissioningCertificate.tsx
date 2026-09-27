@@ -34,12 +34,13 @@ import { useReportSync } from '@/hooks/useReportSync';
 import { useCertLock } from '@/hooks/useCertLock';
 import CertLockBar from '@/components/inspection/CertLockBar';
 import { cn } from '@/lib/utils';
-import { generateCertificateNumber } from '@/utils/certificateNumbering';
+import { generateCertificateNumber, issueCertificateNumber } from '@/utils/certificateNumbering';
 import { formatFireAlarmG3Json } from '@/utils/fireAlarmG3JsonFormatter';
 import { createInvoiceFromCertificate } from '@/utils/certificateToQuote';
 import { useCertificateEmail } from '@/hooks/useCertificateEmail';
 import { EmailCertificateDialog } from '@/components/certificate-completion/EmailCertificateDialog';
 import { scrollToTopForStepChange } from '@/utils/scroll';
+import { useEngineerVerify } from '@/utils/engineerVerify';
 
 const REPORT_TYPE = 'fire-alarm-commissioning' as const;
 
@@ -60,6 +61,9 @@ export default function FireAlarmCommissioningCertificate() {
     ...getDefaultFireAlarmFormData(),
     certificateType: 'commissioning',
   });
+
+  // ELE-1453 — Elec-ID verify QR for the signature box; {} when the user has none.
+  const engineerVerify = useEngineerVerify();
   const [isSaving, setIsSaving] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [showGenerationDialog, setShowGenerationDialog] = useState(false);
@@ -106,8 +110,11 @@ const {
     formData,
     enabled: !isLoading && !isLocked,
     isHydrating: isLoading, // Gate autosave while loading from cloud — prevents blank-overwrite race.
-    onReportCreated: (newId) => {
+    onReportCreated: (newId: string, certificateNumber?: string) => {
       setSavedReportId(newId);
+      // ELE-1592 — keep the number the row was filed under; without this the
+      // form stayed blank and the PDF printed an invented timestamp.
+      if (certificateNumber) setFormData((prev) => (prev.certificateNumber ? prev : { ...prev, certificateNumber }));
       window.history.replaceState(
         null,
         '',
@@ -165,11 +172,11 @@ const {
   // generate + attach the PDF even before the user ever taps Generate.
   let emailFormattedData: Record<string, any> | undefined;
   try {
-    emailFormattedData = formatFireAlarmG3Json({
+    emailFormattedData = { ...formatFireAlarmG3Json({
       ...formData,
-      certificateNumber: formData.certificateNumber || `FA/G3-${Date.now()}`,
+      certificateNumber: formData.certificateNumber,
       photos: emailPhotos,
-    });
+    }), ...engineerVerify };
   } catch {
     emailFormattedData = undefined; // fall back to server-side pdf_payload
   }
@@ -311,10 +318,10 @@ const {
     setGenerationError(null);
     setShowGenerationDialog(true);
     try {
-      await syncNowImmediate();
+      const synced = await syncNowImmediate();
       let data = {
         ...formData,
-        certificateNumber: formData.certificateNumber || `FA/G3-${Date.now()}`,
+        certificateNumber: await issueCertificateNumber(formData.certificateNumber || synced.data?.certificateNumber, REPORT_TYPE),
       };
       if (hasSavedCompanyBranding) {
         const b = loadCompanyBranding();
@@ -324,7 +331,7 @@ const {
       // merge them in so the PDF's photos section is populated.
       const photos = await fetchReportPhotos();
       data = { ...data, photos };
-      const pdfData = formatFireAlarmG3Json(data);
+      const pdfData = { ...formatFireAlarmG3Json(data), ...engineerVerify };
       if (savedReportId)
         await supabase
           .from('reports')

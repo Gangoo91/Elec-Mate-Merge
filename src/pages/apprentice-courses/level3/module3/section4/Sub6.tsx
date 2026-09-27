@@ -228,7 +228,7 @@ const faqs = [
       'Modern string inverters use transformerless designs with PV strings floating relative to earth. Larger commercial PV (>50 kW) typically uses a step-up transformer to match grid voltage and provide galvanic isolation per G99 ENA grid code requirements.',
   },
   {
-    question: 'What\'s a transformer "K-factor"?',
+    question: 'What’s a transformer "K-factor"?',
     answer:
       'A rating that indicates how much harmonic current the transformer can handle without overheating. K1 = pure 50 Hz only. K4, K13, K20 = increasing harmonic content tolerance. Heavy IT or VFD installs may specify K13 or K20 transformers.',
   },
@@ -263,7 +263,7 @@ const faqs = [
       "Possible but requires care — the unit must be drained of oil, transported on its own purpose-built skids, refilled with new (or refurbished) oil, electrically commissioned and re-tested. For pole-mounted small units it's relatively straightforward; for substation kiosks it's a major operation. Always involve the manufacturer or specialist transformer movers.",
   },
   {
-    question: 'What\'s a "DNO adoption" of a private substation?',
+    question: 'What’s a "DNO adoption" of a private substation?',
     answer:
       'Where a developer installs a new substation as part of a new commercial site, the DNO can adopt it as part of the public network — meaning the DNO takes ownership and maintenance responsibility, in exchange for the developer meeting design and commissioning standards (typically per ENA TS 41-24 or similar). Adoption commonly required where the substation feeds a multi-tenant development or where the site has variable / unpredictable demand growth.',
   },

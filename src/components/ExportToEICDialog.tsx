@@ -32,6 +32,7 @@ import {
 import { generateCertificateNumber } from '@/utils/certificateNumbering';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { useCreateReportKey } from '@/hooks/useCreateReportKey';
 
 interface ExportToEICDialogProps {
   open: boolean;
@@ -49,6 +50,7 @@ export const ExportToEICDialog: React.FC<ExportToEICDialogProps> = ({
   const navigate = useNavigate();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(true);
+  const createKey = useCreateReportKey('eic'); // ELE-1603 — a retry adopts, never duplicates; keyed per SOURCE certificate so one dialog instance reused for another export never adopts the first one's row
   const [isExporting, setIsExporting] = useState(false);
   const [eicrData, setEicrData] = useState<EICRFormData | null>(null);
   const [validation, setValidation] = useState<{
@@ -90,6 +92,7 @@ export const ExportToEICDialog: React.FC<ExportToEICDialogProps> = ({
         description: 'Failed to load report data',
         variant: 'destructive',
       });
+      createKey.release(reportId);
       onOpenChange(false);
     } finally {
       setIsLoading(false);
@@ -123,7 +126,14 @@ export const ExportToEICDialog: React.FC<ExportToEICDialogProps> = ({
       };
 
       // Create new EIC report
-      const result = await reportCloud.createReport(user.id, 'eic', eicDataWithMeta);
+      const result = await reportCloud.createReport(
+        user.id,
+        'eic',
+        eicDataWithMeta,
+        undefined,
+        false,
+        createKey.take(reportId)
+      );
 
       if (!result.success || !result.reportId) {
         throw new Error(result.error || 'Failed to create EIC report');

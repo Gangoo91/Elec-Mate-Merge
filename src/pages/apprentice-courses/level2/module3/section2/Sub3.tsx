@@ -123,7 +123,7 @@ const quizQuestions = [
     options: ['Black', 'Brown', 'Green/Yellow', 'Blue'],
     correctAnswer: 2,
     explanation:
-      'Green/Yellow has been the protective conductor identification since the harmonised colours came in. On a colour drawing you\'ll see green/yellow stripes on the CPC; on a mono drawing it might be labelled "PE" or "CPC" or shown with a distinctive symbol or hatching.',
+      'Green/Yellow has been the protective conductor identification since the harmonised colours came in. On a colour drawing you’ll see green/yellow stripes on the CPC; on a mono drawing it might be labelled "PE" or "CPC" or shown with a distinctive symbol or hatching.',
   },
   {
     id: 3,

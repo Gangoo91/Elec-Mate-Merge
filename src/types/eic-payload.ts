@@ -349,6 +349,18 @@ export interface EICPayload {
     bs7671_compliance: boolean;
     building_regs_compliance: boolean;
     competent_person_scheme: boolean;
+    /** ELE-1663 — Part P notification, same shape as the EV payload. */
+    building_regs_notification: {
+      applies: boolean;
+      answered: boolean;
+      required: boolean;
+      required_display: string;
+      via_scheme: boolean;
+      via_scheme_display: string;
+      submitted: boolean;
+      submitted_display: string;
+      reference: string;
+    };
   };
 
   company_details: {

@@ -73,7 +73,7 @@ const checks = [
     ],
     correctIndex: 2,
     explanation:
-      'Reg 514.13.1 — "A warning notice clearly and durably marked with the words \'Safety Electrical Connection — Do Not Remove\' shall be securely fixed in a visible position at or near (a) the point of connection of every earthing conductor to an earth electrode; and (b) the point of connection of every bonding conductor to an extraneous-conductive-part; and (c) the main earthing terminal, where separate from main switchgear." The yellow plastic label that comes with most BS 951 clamps is exactly this.',
+      'Reg 514.13.1 — "A warning notice clearly and durably marked with the words ‘Safety Electrical Connection — Do Not Remove’ shall be securely fixed in a visible position at or near (a) the point of connection of every earthing conductor to an earth electrode; and (b) the point of connection of every bonding conductor to an extraneous-conductive-part; and (c) the main earthing terminal, where separate from main switchgear." The yellow plastic label that comes with most BS 951 clamps is exactly this.',
   },
 ];
 
@@ -195,7 +195,7 @@ const faqs = [
   {
     question: 'Why brass for water but insulated brass for gas?',
     answer:
-      'Water clamps just need durable electrical contact and corrosion resistance — standard brass BS 951 fits the bill. Gas clamps must additionally meet DSEAR (Dangerous Substances and Explosive Atmospheres Regulations) — the clamp must not act as a potential ignition source in the rare event of a gas leak. The insulating insert on a gas-rated BS 951 limits the clamp\'s contact area to the bond connection point only, reducing the risk of a sparking joint elsewhere on the clamp body. Always check the BS 951 manufacturer datasheet — it will state "suitable for gas" or "water only".',
+      'Water clamps just need durable electrical contact and corrosion resistance — standard brass BS 951 fits the bill. Gas clamps must additionally meet DSEAR (Dangerous Substances and Explosive Atmospheres Regulations) — the clamp must not act as a potential ignition source in the rare event of a gas leak. The insulating insert on a gas-rated BS 951 limits the clamp’s contact area to the bond connection point only, reducing the risk of a sparking joint elsewhere on the clamp body. Always check the BS 951 manufacturer datasheet — it will state "suitable for gas" or "water only".',
   },
   {
     question: 'Can I daisy-chain bonding clamps from gas to water with a single conductor?',
@@ -210,7 +210,7 @@ const faqs = [
   {
     question: 'Do I bond the gas meter body itself?',
     answer:
-      'No. The gas meter is supplier equipment, not consumer pipework. Reg 544.1.2 requires bonding "on the consumer side of the meter, on the consumer\'s hard metal pipework". Bonding the meter directly is wrong on two counts: (a) you\'d be touching DNO/supplier kit you have no jurisdiction over, and (b) the bond would be on the wrong side of the meter for fault-protection purposes. Always bond on consumer-side pipework downstream of the meter.',
+      'No. The gas meter is supplier equipment, not consumer pipework. Reg 544.1.2 requires bonding "on the consumer side of the meter, on the consumer’s hard metal pipework". Bonding the meter directly is wrong on two counts: (a) you’d be touching DNO/supplier kit you have no jurisdiction over, and (b) the bond would be on the wrong side of the meter for fault-protection purposes. Always bond on consumer-side pipework downstream of the meter.',
   },
   {
     question: 'What if the gas service is internal but the water service is external (buried)?',
@@ -324,7 +324,7 @@ export default function Sub3() {
           </p>
           <p>
             Standard non-gas BS 951 clamps are entirely fine for water, oil and structural steel.
-            Don\'t fit a gas-rated clamp on water (waste of money) and never fit a water-only clamp
+            Don’t fit a gas-rated clamp on water (waste of money) and never fit a water-only clamp
             on gas (DSEAR breach plus potentially Code C2 on the next EICR).
           </p>
         </ConceptBlock>
@@ -362,7 +362,7 @@ export default function Sub3() {
             </li>
             <li>
               <strong>HARD: On consumer's hard metal pipework</strong> — copper, steel, lead.
-              Plastic doesn\'t qualify (it\'s not extraneous-conductive). Painted-over pipe still
+              Plastic doesn’t qualify (it’s not extraneous-conductive). Painted-over pipe still
               qualifies (you clean the paint off at the bond point) but a flexible plastic isolation
               hose breaks the metal continuity and changes the bonding requirement.
             </li>
@@ -373,7 +373,7 @@ export default function Sub3() {
             </li>
             <li>
               <strong>SOFT: Within 600 mm of the meter outlet union</strong> — aim for this. If site
-              conditions don\'t allow (no clean pipework, no clearance, fixtures in the way) the
+              conditions don’t allow (no clean pipework, no clearance, fixtures in the way) the
               regulation lets you go further. Document the deviation in the EIC.
             </li>
           </ul>
@@ -407,7 +407,7 @@ export default function Sub3() {
             </li>
           </ul>
           <p>
-            The point: don\'t try to fit the BS 951 inside the external meter cabinet (that\'s
+            The point: don’t try to fit the BS 951 inside the external meter cabinet (that’s
             supplier territory and likely sealed) — work from the inside of the building.
           </p>
         </ConceptBlock>
@@ -490,7 +490,7 @@ export default function Sub3() {
             </li>
           </ul>
           <p>
-            Apply a thin film on the cleaned pipe and on the inside of the clamp jaw. Don\'t
+            Apply a thin film on the cleaned pipe and on the inside of the clamp jaw. Don’t
             over-apply — the paste should coat the contact surfaces, not pool around the clamp. Wipe
             excess paste off the outside of the clamp after tightening.
           </p>
@@ -525,7 +525,7 @@ export default function Sub3() {
 
         <ConceptBlock
           title="Tighten clamp screws to manufacturer torque spec"
-          plainEnglish="Use a torque screwdriver or torque wrench. Read the value from the clamp data sheet. Click once. Don\'t over-tighten (cracks the brass), don\'t under-tighten (loose joint, high resistance)."
+          plainEnglish="Use a torque screwdriver or torque wrench. Read the value from the clamp data sheet. Click once. Don’t over-tighten (cracks the brass), don’t under-tighten (loose joint, high resistance)."
           onSite="Typical values for domestic 10-16 mm² rated BS 951 clamps: 4 to 6 Nm on the pipe-clamping nuts/screws, 4 to 6 Nm on the conductor-clamping screw. Bigger commercial clamps may go up to 10 Nm. Always read the spec sheet — every manufacturer is slightly different."
         >
           <p>Tightening sequence:</p>
@@ -544,7 +544,7 @@ export default function Sub3() {
             </li>
             <li>
               Land the bonding conductor (or compression lug) into the conductor terminal. Ferrule
-              the strands first if it\'s a screw-clamp aperture.
+              the strands first if it’s a screw-clamp aperture.
             </li>
             <li>Tighten the conductor-clamping screw to the manufacturer spec.</li>
             <li>
@@ -567,9 +567,9 @@ export default function Sub3() {
             or terminal.
           </p>
           <p>
-            The label\'s purpose: stop a future trade (plumber, gas engineer, or DIY-er) from
-            cutting the bonding cable thinking it\'s an unused old wire. Without the label, bonds
-            get inadvertently removed during pipework changes, and the next person doesn\'t notice
+            The label’s purpose: stop a future trade (plumber, gas engineer, or DIY-er) from
+            cutting the bonding cable thinking it’s an unused old wire. Without the label, bonds
+            get inadvertently removed during pipework changes, and the next person doesn’t notice
             the protection has been broken.
           </p>
         </ConceptBlock>
@@ -725,7 +725,7 @@ export default function Sub3() {
               Always clean the pipe to bright bare metal under the clamp jaw before fitting. Even a
               bond that initially passes a continuity test will fail over months/years if the
               contact face is paint, oxide, scale or tape residue. Five minutes with a file or wire
-              wool now saves an hour\'s rework when the EICR comes round. Apply jointing paste
+              wool now saves an hour’s rework when the EICR comes round. Apply jointing paste
               afterwards. Tighten to torque spec. Photograph the finished bond for the EIC.
             </>
           }
@@ -754,7 +754,7 @@ export default function Sub3() {
               copper, wipe clean. (6) Apply CuPro paste in a thin film to the cleaned band. (7)
               Position clamp body on top, U-bolt under, hand-snug the nuts evenly. (8) Torque
               pipe-clamping nuts to manufacturer spec (typically 4 Nm). (9) Strip 12 mm of 10 mm²
-              G/Y, fit ivory ferrule, hex-die crimp. (10) Insert ferrule into the clamp\'s conductor
+              G/Y, fit ivory ferrule, hex-die crimp. (10) Insert ferrule into the clamp’s conductor
               terminal, torque the screw (4 Nm). (11) Clip the yellow "Safety Electrical Connection
               — Do Not Remove" label around the cable at the clamp end. (12) Run the 10 mm² G/Y back
               to the MET via the most accessible route (through the cupboard wall, into the meter

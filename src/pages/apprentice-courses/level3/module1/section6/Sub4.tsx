@@ -359,12 +359,12 @@ export default function Sub4() {
               saw, the action that exposed it, surrounding materials.
             </li>
             <li>
-              <strong>ESCALATE</strong> - phone firm\'s H&amp;S manager / contracts manager; inform
+              <strong>ESCALATE</strong> - phone firm’s H&amp;S manager / contracts manager; inform
               dutyholder (building owner / managing agent / customer); inform principal contractor
               (if appointed).
             </li>
             <li>
-              <strong>DON\'T RESTART</strong> - in the affected area until: (a) lab test confirms
+              <strong>DON’T RESTART</strong> - in the affected area until: (a) lab test confirms
               non-asbestos, OR (b) licensed contractor takes over disturbance work, OR (c) NNLW /
               non-licensed pathway formally established with appropriate controls.
             </li>
@@ -548,7 +548,7 @@ export default function Sub4() {
           title="Trying to determine licensed-vs-non-licensed yourself"
           whatHappens={
             <>
-              L3 finds AIB-looking material; assumes &quot;it\'s a small piece, we can do it
+              L3 finds AIB-looking material; assumes &quot;it’s a small piece, we can do it
               ourselves under non-licensed&quot;; disturbs it; potential exposure incident. The
               categorisation was actually licensed-territory (size + friability + nature of work);
               CAR 2012 Reg 8 breach; firm prosecution.
@@ -556,8 +556,8 @@ export default function Sub4() {
           }
           doInstead={
             <>
-              Don\'t categorise yourself. Escalate to specialist; let them make the call. The L3
-              supervisor\'s role is to recognise the hazard and escalate, not to determine the
+              Don’t categorise yourself. Escalate to specialist; let them make the call. The L3
+              supervisor’s role is to recognise the hazard and escalate, not to determine the
               regulatory category.
             </>
           }
@@ -584,21 +584,21 @@ export default function Sub4() {
           title="Suspect AIB found mid-cable-pull in 1980s building"
           situation={
             <>
-              You\'re pulling cable through a ceiling void in a 1980s commercial building. Lifting a
+              You’re pulling cable through a ceiling void in a 1980s commercial building. Lifting a
               ceiling tile to access the void, you see what looks like AIB above the tiles. The
-              customer\'s site manager doesn\'t know if it\'s been surveyed. You\'ve already
+              customer’s site manager doesn’t know if it’s been surveyed. You’ve already
               disturbed the tile but no further action yet.
             </>
           }
           whatToDo={
             <>
-              Apply six-step procedure immediately. (1) STOP - don\'t lift any more tiles, don\'t
-              pull cable, don\'t enter the void. (2) DON\'T DISTURB - lower the tile back gently.
+              Apply six-step procedure immediately. (1) STOP - don’t lift any more tiles, don’t
+              pull cable, don’t enter the void. (2) DON’T DISTURB - lower the tile back gently.
               (3) VACATE - withdraw from the area; close off if possible. (4) DOCUMENT - photograph
               from distance through the partially lifted tile (what you saw); note location, time,
-              the lift that exposed it. (5) ESCALATE - phone your firm\'s H&amp;S manager + the
-              customer\'s site manager (dutyholder); request the asbestos register; if no register,
-              escalate to firm and customer for refurbishment survey of the void. (6) DON\'T RESTART
+              the lift that exposed it. (5) ESCALATE - phone your firm’s H&amp;S manager + the
+              customer’s site manager (dutyholder); request the asbestos register; if no register,
+              escalate to firm and customer for refurbishment survey of the void. (6) DON’T RESTART
               - cable pull stops until either non-asbestos confirmed by survey OR licensed
               contractor takes over any required disturbance. Record your potential exposure (brief
               contact with disturbed tile; report to firm for incident log). Update dynamic risk

@@ -45,7 +45,7 @@ const corsHeaders = {
 
 const FROM = 'Andrew at Elec-Mate <founder@elec-mate.com>';
 const SITE = 'https://www.elec-mate.com';
-const MOBILE = '07507 241303';
+const MOBILE = '07506 026934';
 
 type Role = 'electrician' | 'apprentice';
 

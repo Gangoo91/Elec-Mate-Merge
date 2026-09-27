@@ -501,7 +501,7 @@ export default function Sub2() {
           title="Producing paper-only certs for HRRB work"
           whatHappens={
             <>
-              L3 issues paper EIC for an alteration in HRRB common parts. PAP\'s document management
+              L3 issues paper EIC for an alteration in HRRB common parts. PAP’s document management
               system requires digital input. Cert needs scanning, indexing, manual integration -
               friction with PAP. Some PAPs may treat paper-only as inadequate for golden-thread
               purposes.
@@ -519,9 +519,9 @@ export default function Sub2() {
           title="Not flagging significant alterations to the PAP"
           whatHappens={
             <>
-              L3 completes alteration that affects fire-safety circuit; doesn\'t flag to PAP because
-              "it\'s a small change". Safety case isn\'t updated. After future incident, BSR
-              investigation finds the alteration wasn\'t in the safety case. PAP penalised for not
+              L3 completes alteration that affects fire-safety circuit; doesn’t flag to PAP because
+              "it’s a small change". Safety case isn’t updated. After future incident, BSR
+              investigation finds the alteration wasn’t in the safety case. PAP penalised for not
               maintaining safety case; contractor reputation damaged.
             </>
           }

@@ -59,7 +59,6 @@ import {
 import { MateBar } from '@/components/business-hub/MateBar';
 import { Assistant } from '@/components/business-hub/Assistant';
 import { useSparkTasks } from '@/hooks/useSparkTasks';
-import { ReferralRaceCard } from '@/components/referrals/ReferralRaceCard';
 
 import DiaryPanel from '@/components/calendar/DiaryPanel';
 
@@ -349,7 +348,6 @@ const ElectricalHubInner = () => {
       <HubBody>
         {/* August Referral Race — everyone, whole campaign, not dismissible.
             Self-hides after 31 Aug. */}
-        <ReferralRaceCard />
 
         {/* Mate first, exactly as on the Business Hub — same row, same ⌘K.
             The overdue alert line that used to sit here has gone: it printed

@@ -170,9 +170,9 @@ const quizQuestions = [
     question:
       'Why is digital recording (apps such as Tradify, Powered Now, Procore mobile) becoming common for apprentice records?',
     options: [
-      'Uses the words precisely. "There\'s a hazard here" means something has potential to cause harm — useful for hazard identification. "There\'s a high risk" means likelihood × severity is concerning — useful for control prioritisation. Mixing the terms loses clarity.',
+      'Uses the words precisely. "There’s a hazard here" means something has potential to cause harm — useful for hazard identification. "There’s a high risk" means likelihood × severity is concerning — useful for control prioritisation. Mixing the terms loses clarity.',
       'Apprentices complete practical tasks (Concrete Experience), reflect during the task (reflection-in-action), discuss afterwards (reflection-on-action and Reflective Observation), draw conclusions (Abstract Conceptualisation), and apply improvements on the next task (Active Experimentation)',
-      'Neuroscience research (including Antonio Damasio\'s "somatic marker hypothesis") demonstrates that emotions are essential to effective decision-making, and people who believe they are making purely rational decisions are simply unaware of the emotional influences operating below conscious awareness',
+      'Neuroscience research (including Antonio Damasio’s "somatic marker hypothesis") demonstrates that emotions are essential to effective decision-making, and people who believe they are making purely rational decisions are simply unaware of the emotional influences operating below conscious awareness',
       'Apps reduce the friction of recording — entries can be made on the phone in the moment, photos and locations can be attached automatically, the data is searchable later. They also make sharing with the supervisor and the training provider easier. Paper diaries still work fine if maintained; digital tools just lower the barrier to actually keeping them current.',
     ],
     correctAnswer: 3,

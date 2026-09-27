@@ -44,7 +44,7 @@ const checks = [
   {
     id: 'l3-m2-s4-sub1-part-l-vs-mcs',
     question:
-      'A customer asks "do I need MCS to install a heat pump?". What\'s the precise answer?',
+      'A customer asks "do I need MCS to install a heat pump?". What’s the precise answer?',
     options: [
       'Yes, MCS certification is a legal requirement for installing any heat pump. The Building Regulations make MCS sign-off mandatory for all renewable heating installations, and installing a heat pump without MCS is a criminal offence under Part L. There is no lawful route to install one outside the MCS scheme.',
       'Only if the heat pump is above a certain output. Units below 12 kW are exempt from MCS, but anything larger must be MCS-certified by law. The threshold is set by the Microgeneration Certification Scheme and applies regardless of whether the customer wants a grant.',

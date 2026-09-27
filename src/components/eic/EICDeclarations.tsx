@@ -13,6 +13,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
+import BuildingRegsNotification from '@/components/inspection/shared/BuildingRegsNotification';
 
 interface EICDeclarationsProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -748,6 +749,27 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
         </button>
       </div>
 
+      {/* ── BUILDING REGULATIONS (PART P) ── ELE-1663: the same section the EV form
+          uses, so an EIC now records whether the work was notified and how. */}
+      <div className={cardCn}>
+        <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">Building Regulations (Part P)</h2>
+        <BuildingRegsNotification
+          formData={formData}
+          onUpdate={(field, value) => {
+            onUpdate(field, value);
+            // Keep the Part P statement on the Details tab in step, so the two
+            // can no longer contradict each other. Only an unset or auto-set
+            // value is touched — a chip the electrician chose is theirs.
+            if (field === 'buildingRegsRequired') {
+              const current = (formData.partPCompliance as string) || '';
+              if (!current || current === 'nonNotifiable' || current === 'compliant') {
+                onUpdate('partPCompliance', value ? 'compliant' : 'nonNotifiable');
+              }
+            }
+          }}
+        />
+      </div>
+
       {/* ── NEXT INSPECTION ── */}
       <div className={cardCn}>
         <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">Next inspection</h2>
@@ -792,6 +814,43 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
             />
           </FormField>
         </div>
+
+        {/*
+          ELE-1632 — asked for by a user as "an auto-filled field that says if
+          the use of property changes or a tenant swap then this cert becomes
+          invalid". It is NOT auto-set and it does NOT say "invalid": nothing
+          in BS 7671 voids a certificate on a change of tenant, and printing
+          that would be an invented rule over the electrician's signature. What
+          IS defensible is the EICR's existing recommendation, same wording,
+          same source — IET Guidance Note 3, 3.1 — offered as a one-tap chip.
+        */}
+        <FormField label="Re-inspection on change of occupancy">
+          <button
+            type="button"
+            onClick={() => {
+              haptic.light();
+              onUpdate(
+                'reinspectOnOccupancyChange',
+                formData.reinspectOnOccupancyChange ? '' : 'yes'
+              );
+            }}
+            className={cn(
+              'h-11 w-full rounded-xl px-4 text-sm transition-all touch-manipulation active:scale-[0.98]',
+              formData.reinspectOnOccupancyChange ? chipOn : chipOff
+            )}
+          >
+            {formData.reinspectOnOccupancyChange
+              ? 'Recommended — will print on the certificate'
+              : 'Add this recommendation'}
+          </button>
+          {formData.reinspectOnOccupancyChange ? (
+            <span className="mt-1.5 block text-[11px] text-white">
+              Prints: “Further inspection is recommended on a change of occupancy or change of
+              use of the premises, in addition to the interval above.” (IET Guidance Note 3,
+              3.1)
+            </span>
+          ) : null}
+        </FormField>
       </div>
     </div>
   );

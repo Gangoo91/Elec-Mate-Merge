@@ -312,7 +312,7 @@ export default function Sub7() {
         <ConceptBlock
           title="The 18m / 7-storey + 2 residential threshold"
           plainEnglish="The Higher-Risk Buildings (Descriptions and Supplementary Provisions) Regulations 2023 set the HRRB definition: at least 18 metres in height OR at least 7 storeys, AND containing at least 2 residential units. Care homes and hospitals are also covered for the design and construction phase. Below the threshold, BSA 2022 still has effect (competence, gateway approach being mainstreamed) but the in-occupation regime focuses on the residential definition."
-          onSite="Practical L3 awareness: most apprentices won\'t work on an HRRB during training. But you may work on the construction phase of one (a tower block being built), and the rules during construction differ. Subcontractor competence is checked, design records are demanded, and the Building Safety Regulator can serve compliance notices that stop work."
+          onSite="Practical L3 awareness: most apprentices won’t work on an HRRB during training. But you may work on the construction phase of one (a tower block being built), and the rules during construction differ. Subcontractor competence is checked, design records are demanded, and the Building Safety Regulator can serve compliance notices that stop work."
         >
           <p>The duty-holder cascade for an HRRB during occupation:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -353,7 +353,7 @@ export default function Sub7() {
         <ConceptBlock
           title="Three gates the Building Safety Regulator holds"
           plainEnglish="HRRB construction goes through three gateways. Gateway 1 at planning — fire safety and access considered before planning approval. Gateway 2 before construction — BSR reviews the design and construction control plan; no construction can start without approval. Gateway 3 before occupation — BSR signs off the as-built building against the approved design and the golden thread; no occupation without approval."
-          onSite="For an electrical contractor on an HRRB project, the gateway regime means design records (calculations, design drawings, product specifications) become non-negotiable. A late design change can trigger a re-review at Gateway 2 with significant programme impact. The contractor\'s electrical competence needs to be evidenced; the firm\'s certifications, the operatives' qualifications and the supervisors' grading all feed in."
+          onSite="For an electrical contractor on an HRRB project, the gateway regime means design records (calculations, design drawings, product specifications) become non-negotiable. A late design change can trigger a re-review at Gateway 2 with significant programme impact. The contractor’s electrical competence needs to be evidenced; the firm’s certifications, the operatives' qualifications and the supervisors' grading all feed in."
         >
           <p>Practical operative-level effects of the gateway regime:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -387,7 +387,7 @@ export default function Sub7() {
 
         <ConceptBlock
           title="Digital, accurate, accessible, secure"
-          plainEnglish="The golden thread is the building\'s information record — design, construction, materials, products, fire strategy, evacuation, changes through the building\'s life. Held digitally by the Accountable Person during occupation. For electrical contractors, the EIC at original install, every EICR cycle, every alteration cert and every commissioning record becomes part of the golden thread."
+          plainEnglish="The golden thread is the building’s information record — design, construction, materials, products, fire strategy, evacuation, changes through the building’s life. Held digitally by the Accountable Person during occupation. For electrical contractors, the EIC at original install, every EICR cycle, every alteration cert and every commissioning record becomes part of the golden thread."
           onSite="Practical L3 takeaway: paper-only certificates are increasingly unacceptable for major work. Firms working on HRRBs increasingly use cloud-based certification platforms (NICEIC online, NAPIT online, NetWorking) that produce digitally-signed records suitable for golden-thread integration."
         >
           <p>Golden thread requirements at a high level:</p>
@@ -447,8 +447,8 @@ export default function Sub7() {
 
         <ConceptBlock
           title="Why BSA 2022 reaches further than HRRBs"
-          plainEnglish="BSA 2022\'s HRRB regime is the headline, but its wider effects touch every residential and a great deal of commercial work. The 30-year liability, the competence framework, the Building Regs amendments and the regulatory direction-of-travel all apply broadly. L3 awareness of the framework helps you understand why your firm is tightening procedures, demanding more paperwork and asking for evidence of competence."
-          onSite="If you\'re an L3 apprentice on a domestic CU change, BSA 2022 isn\'t directly in play. But the EIC you produce now might be examined in 25 years' time as part of a Defective Premises Act claim. The competence framework that\'s emerging will determine which firms can bid for major residential frameworks. Knowing the legal direction lets you make informed career choices."
+          plainEnglish="BSA 2022’s HRRB regime is the headline, but its wider effects touch every residential and a great deal of commercial work. The 30-year liability, the competence framework, the Building Regs amendments and the regulatory direction-of-travel all apply broadly. L3 awareness of the framework helps you understand why your firm is tightening procedures, demanding more paperwork and asking for evidence of competence."
+          onSite="If you’re an L3 apprentice on a domestic CU change, BSA 2022 isn’t directly in play. But the EIC you produce now might be examined in 25 years' time as part of a Defective Premises Act claim. The competence framework that’s emerging will determine which firms can bid for major residential frameworks. Knowing the legal direction lets you make informed career choices."
         >
           <p>How BSA 2022 indirectly reaches your day-to-day at L3:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">

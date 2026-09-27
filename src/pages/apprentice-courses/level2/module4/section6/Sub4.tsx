@@ -203,7 +203,7 @@ const faqs = [
   {
     question: "What's the difference between dead polarity testing and live polarity testing?",
     answer:
-      'Dead polarity test (this Sub) uses a low-resistance continuity instrument while the circuit is isolated. It verifies the wiring inside the installation — line at the CU goes to the L terminal at every accessory. Live polarity test happens after first energisation as part of the live test sequence. It uses an approved voltage indicator (or a multifunction tester\'s voltage range) at every accessory to confirm that what was called "line" at the CU is in fact the supply line carrying 230 V to earth — i.e. that the supply itself was not reversed at the meter tails. Both are required for full polarity verification.',
+      'Dead polarity test (this Sub) uses a low-resistance continuity instrument while the circuit is isolated. It verifies the wiring inside the installation — line at the CU goes to the L terminal at every accessory. Live polarity test happens after first energisation as part of the live test sequence. It uses an approved voltage indicator (or a multifunction tester’s voltage range) at every accessory to confirm that what was called "line" at the CU is in fact the supply line carrying 230 V to earth — i.e. that the supply itself was not reversed at the meter tails. Both are required for full polarity verification.',
   },
   {
     question: 'Do I need to test polarity at every single accessory, or can I sample?',
@@ -332,7 +332,7 @@ export default function Sub4() {
         <ConceptBlock
           title="The line connection at every common UK accessory"
           plainEnglish="At a 13 A socket: line on the right (looking at the face). At a single-pole switch: line on COM. At a BC lampholder: line on the centre contact."
-          onSite="Polarity test verifies the line connects to these specific terminals — anywhere else and it\'s a fail."
+          onSite="Polarity test verifies the line connects to these specific terminals — anywhere else and it’s a fail."
         >
           <p>The standard line connection points by accessory type:</p>
 
@@ -446,14 +446,14 @@ export default function Sub4() {
             </li>
             <li>
               <strong>At the CU:</strong> disconnect the line of the circuit from the protective
-              device. Leave the neutral and CPC connected (they\'re your reference paths to the
+              device. Leave the neutral and CPC connected (they’re your reference paths to the
               meter via the bus bars). Connect one MFT continuity lead to the disconnected line
               conductor at the circuit cable.
             </li>
             <li>
               <strong>At the first accessory:</strong> connect the second MFT lead to the L terminal
               of the accessory. Press TEST. Reading should be a low resistance (essentially R1 of
-              that section of cable) — proves continuity from the CU line to the accessory\'s L
+              that section of cable) — proves continuity from the CU line to the accessory’s L
               terminal.
             </li>
             <li>
@@ -671,11 +671,11 @@ export default function Sub4() {
 
         <SectionRule />
 
-        <ContentEyebrow>Plug-in socket testers — what they do (and don\'t do)</ContentEyebrow>
+        <ContentEyebrow>Plug-in socket testers — what they do (and don’t do)</ContentEyebrow>
 
         <ConceptBlock
           title="Why a plug-in socket tester is not a substitute for the continuity polarity test"
-          plainEnglish="A socket tester lights three LEDs based on which terminals are at what potential when plugged in live. It\'s a useful quick check — but it can be fooled by particular fault patterns and is not a verification instrument."
+          plainEnglish="A socket tester lights three LEDs based on which terminals are at what potential when plugged in live. It’s a useful quick check — but it can be fooled by particular fault patterns and is not a verification instrument."
           onSite="Use the socket tester for a fast first-pass after live testing. Use the dead continuity test for the certificate sign-off. Both have their place — they serve different purposes."
         >
           <p>
@@ -695,12 +695,12 @@ export default function Sub4() {
             <li>
               <strong>Reversed polarity at the supply.</strong> If the meter tails are swapped at
               installation, the whole installation runs reversed. A socket tester shows "OK" because
-              the L pin is at 230 V to earth — it just happens to be the supply neutral that\'s at
+              the L pin is at 230 V to earth — it just happens to be the supply neutral that’s at
               230 V because of the reversed tails. Live polarity test at the CU is the cure.
             </li>
             <li>
               <strong>Some test patterns are ambiguous.</strong> Particular combinations of multiple
-              defects can produce LED patterns that look like "OK" or that don\'t match any of the
+              defects can produce LED patterns that look like "OK" or that don’t match any of the
               documented fault codes.
             </li>
           </ul>

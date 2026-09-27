@@ -426,13 +426,26 @@ Deno.serve(async (req) => {
     }
 
     // ── Global block list ──────────────────────────────────────────
-    const emails = withEmail.map((c) => c.email!.toLowerCase().trim());
-    const { data: suppressed } = await supabase
+    // Read the list whole rather than filtering with `.in()`: the filter is
+    // case-SENSITIVE, so a stored `Foo@Bar.com` never matched the lower-cased
+    // address we asked about and the suppression silently did nothing. Ranged
+    // because an unbounded select stops at PostgREST's 1000 rows, and fail
+    // closed — an empty block list here means mailing people who opted out.
+    const { data: suppressed, error: suppressedError } = await supabase
       .from('email_suppressions')
       .select('email')
-      .in('email', emails);
+      .range(0, 49999);
+    if (suppressedError) {
+      throw new Error(
+        `Refusing to send: could not read email_suppressions (${suppressedError.message})`
+      );
+    }
 
-    const blocked = new Set((suppressed ?? []).map((s: { email: string }) => s.email.toLowerCase()));
+    const blocked = new Set(
+      (suppressed ?? [])
+        .map((s: { email: string | null }) => (s.email || '').trim().toLowerCase())
+        .filter(Boolean)
+    );
 
     // ── Dedupe window ──────────────────────────────────────────────
     const dedupeCutoff = new Date(Date.now() - DEDUPE_DAYS * 86_400_000).toISOString();

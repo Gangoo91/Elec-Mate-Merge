@@ -157,11 +157,11 @@ const quizQuestions = [
   {
     id: 8,
     question:
-      'A drawing of an old industrial site uses imperial scale 1/8\" = 1\'-0\" and you need to estimate a cable run of around 50 ft. Roughly how long is that on paper?',
+      'A drawing of an old industrial site uses imperial scale 1/8" = 1\'-0" and you need to estimate a cable run of around 50 ft. Roughly how long is that on paper?',
     options: ['About 6.25 inches', 'About 12.5 inches', 'About 25 mm', 'About 50 mm'],
     correctAnswer: 0,
     explanation:
-      '1/8" = 1 ft means each foot of real distance is drawn as 1/8 of an inch. 50 ft × (1/8") = 50/8 = 6.25 inches. You\'ll meet imperial scales on older drawings (pre-1970s and US-origin); the conversion principle is identical to metric — first number is paper, second number is real.',
+      '1/8" = 1 ft means each foot of real distance is drawn as 1/8 of an inch. 50 ft × (1/8") = 50/8 = 6.25 inches. You’ll meet imperial scales on older drawings (pre-1970s and US-origin); the conversion principle is identical to metric — first number is paper, second number is real.',
   },
 ];
 

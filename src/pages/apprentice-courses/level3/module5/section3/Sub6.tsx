@@ -270,7 +270,7 @@ export default function Sub6() {
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
               <strong>TN-C-S (PME / PNB):</strong> Supplier provides a combined PEN conductor. Ze
-              typically 0.10-0.35 Ω. Earth-fault current returns to supply via supplier\'s metallic
+              typically 0.10-0.35 Ω. Earth-fault current returns to supply via supplier’s metallic
               infrastructure. ADS via MCB or RCBO is straightforward; Zs values fit comfortably
               under Table 41.3 limits.
             </li>
@@ -474,7 +474,7 @@ export default function Sub6() {
               the safe isolation procedure. This is GN3-mandatory for safety.
             </li>
             <li>
-              Disconnect the earthing conductor from the electrode at the MET or the electrode\'s
+              Disconnect the earthing conductor from the electrode at the MET or the electrode’s
               test point.
             </li>
             <li>
@@ -611,8 +611,8 @@ export default function Sub6() {
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
               <strong>Standby generators</strong> running during a public-supply outage become the
-              supply for the installation. The supply earth is no longer the supplier\'s MET — it
-              must come from the building\'s own electrode arrangement.
+              supply for the installation. The supply earth is no longer the supplier’s MET — it
+              must come from the building’s own electrode arrangement.
             </li>
             <li>
               <strong>PV / battery / EVSE static converters</strong> with islanding capability (G98
@@ -638,7 +638,7 @@ export default function Sub6() {
             <li>Verify electrode resistance per E1 / E2 / EFLI as appropriate.</li>
             <li>
               Compute Ra × IΔn for the protective devices that act during islanded operation —
-              usually the inverter\'s integrated RCD or a separate device on the inverter output.
+              usually the inverter’s integrated RCD or a separate device on the inverter output.
             </li>
             <li>
               Document on the EIC: the earthing arrangement during normal and islanded operation,
@@ -726,12 +726,12 @@ export default function Sub6() {
             <>
               Plan the E1 three-stake test (the most accurate method, and you have plenty of space
               in the field next to the cottage). Safe isolation at the supplier cut-out, lock off,
-              prove dead. At the MET, disconnect the earthing conductor from the electrode\'s test
+              prove dead. At the MET, disconnect the earthing conductor from the electrode’s test
               clamp. Drive the C2 current stake into the field 40 m from the cottage in a straight
               line away from the electrode. Drive the P2 potential stake at 20 m (the midpoint).
               Connect to the Megger MFT1741+ in earth electrode test mode. Press TEST — reads 67 Ω.
               Move P2 to 15 m, re-test — 65 Ω. Move P2 to 25 m, re-test — 69 Ω. Three readings
-              within ±3 % — you\'re in the plateau, the true electrode resistance is approximately
+              within ±3 % — you’re in the plateau, the true electrode resistance is approximately
               67 Ω. Compute Ra × IΔn = 67 × 0.030 = 2.01 V. Well below the 50 V limit per Reg
               411.5.3(b) — pass with comfortable margin. Reconnect the earthing conductor at the
               MET, verify continuity from MET to electrode (R2 wander-lead test reads 0.04 Ω — clean

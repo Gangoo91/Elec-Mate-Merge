@@ -928,6 +928,10 @@ serve(async (req) => {
           {
             day: ukDay(),
             stripe_mrr: Math.round(mrr * 100) / 100,
+            // What those same subscribers are actually billed. `stripe_mrr` is
+            // list price and ignores coupons, which put the overview headline
+            // £143.51/mo above the real figure; this is the one the page reads.
+            stripe_mrr_net: Math.round(mrrNetOfDiscounts * 100) / 100,
             stripe_paying: activeSubscriptions.length,
             stripe_trialing: trialingSubscriptions.length,
             updated_at: new Date().toISOString(),

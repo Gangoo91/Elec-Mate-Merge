@@ -396,9 +396,21 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
   }, [formData]);
 
   // Callback when auto-sync creates a new report - keeps component state in sync
-  const handleReportCreated = React.useCallback((newReportId: string) => {
-    console.log('[EICR] Auto-sync created report:', newReportId);
+  /** True once a certificate number has been allocated (by the form or adopted from the created row). */
+  const certNumberGenerated = React.useRef(false);
+  const handleReportCreated = React.useCallback((newReportId: string, certificateNumber?: string) => {
+    console.log('[EICR] Auto-sync created report:', newReportId, certificateNumber);
     setCurrentReportId(newReportId);
+    /*
+     * ELE-1592 — adopt the number the row was created with, and stand the
+     * mount-time allocator down. Without this the allocator (which keys off
+     * the report id we are setting right here) found state blank and minted a
+     * second number: column N, printed N+1, two numbers burnt per certificate.
+     */
+    if (certificateNumber) {
+      certNumberGenerated.current = true;
+      setFormData((prev) => (prev.certificateNumber ? prev : { ...prev, certificateNumber }));
+    }
   }, []);
 
   // Cloud sync integration - primary persistence layer
@@ -813,11 +825,17 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
         (draft.data.scheduleOfTests && draft.data.scheduleOfTests.length > 0)
       ) {
         console.log('[EICR] Auto-recovering draft for new report');
+        // ELE-1592 — never take the recovered draft's certificate number: the
+        // "new certificate" draft can outlive the save of the certificate it
+        // belonged to, and its number would be copied onto this one. If the
+        // mount-time generator has not landed yet the field stays empty and
+        // the generator fills it. Same rule as the EIC and Minor Works forms.
+        const draftWithoutNumber = { ...draft.data };
+        delete draftWithoutNumber.certificateNumber;
         setFormData((prev) => ({
           ...prev,
-          ...draft.data,
-          // Preserve any existing certificate number
-          certificateNumber: prev.certificateNumber || draft.data.certificateNumber,
+          ...draftWithoutNumber,
+          certificateNumber: prev.certificateNumber,
         }));
         toast({
           title: 'Draft recovered',
@@ -864,7 +882,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
    * there is a certificate to attach it to, and doubles as a backfill for any
    * older report that never got one.
    */
-  const certNumberGenerated = React.useRef(false);
+  // (declared above handleReportCreated — see there)
 
   const ensureCertificateNumber = React.useCallback(() => {
     if (certNumberGenerated.current) return;

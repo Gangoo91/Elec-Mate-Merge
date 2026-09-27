@@ -305,7 +305,7 @@ const soiSections = [
       'Periodic inspection notice fitted (Reg 514.12)',
       'RCD test notice fitted (Reg 514.12.2) where RCDs are present',
       'BS 951 bonding labels at every clamp (Reg 514.13)',
-      'Mixed-cable-colours notice if applicable (Reg 514.14)',
+      'Mixed-cable-colours notice if applicable — industry good practice since Regulation 514.14 was deleted by Amendment 2:2022',
       'Surge protection device notice if SPD is fitted',
       'Photovoltaic / EV charging notices where applicable',
     ],

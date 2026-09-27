@@ -185,7 +185,7 @@ const faqs = [
       'Transistor (BJT, MOSFET, IGBT) controls continuously — gate voltage/current sets collector current. Thyristor latches — once on, stays on until current drops. Transistors used for amplifiers, switching converters; thyristors for phase-controlled dimming and SSRs.',
   },
   {
-    question: 'What\'s an "op-amp"?',
+    question: 'What’s an "op-amp"?',
     answer:
       'Operational amplifier — a differential amplifier with very high gain. With external feedback resistors, configures into precision amplifiers, comparators, integrators, filters. Inside every modern instrument and many sensor circuits.',
   },
@@ -553,12 +553,12 @@ export default function Sub3() {
               dimmers handle both.
               <br />
               Also check minimum load — many dimmers need a minimum 5-10 W load. With three 5W LEDs
-              that\'s only 15 W; flicker possible at the bottom of the dim range.
+              that’s only 15 W; flicker possible at the bottom of the dim range.
             </>
           }
           whyItMatters={
             <>
-              The semiconductor power electronics in LED drivers and dimmers don\'t magically work
+              The semiconductor power electronics in LED drivers and dimmers don’t magically work
               with all combinations. Understanding the underlying components (TRIAC vs MOSFET
               dimmers, switching vs linear drivers) tells you why and what to do.
             </>

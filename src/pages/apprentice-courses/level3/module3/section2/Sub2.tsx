@@ -334,11 +334,11 @@ export default function Sub2() {
 
         <SectionRule />
 
-        <ContentEyebrow>Kirchhoff\'s laws</ContentEyebrow>
+        <ContentEyebrow>Kirchhoff’s laws</ContentEyebrow>
 
         <ConceptBlock
-          title="KCL — junctions don\'t accumulate charge"
-          plainEnglish="At any junction (node), the total current flowing in equals the total current flowing out. Electrons can\'t pile up indefinitely."
+          title="KCL — junctions don’t accumulate charge"
+          plainEnglish="At any junction (node), the total current flowing in equals the total current flowing out. Electrons can’t pile up indefinitely."
         >
           <p>
             <strong>
@@ -348,7 +348,7 @@ export default function Sub2() {
           </p>
           <p>
             In a domestic ring final, the load current at any point splits between the two
-            directions of the ring inversely with the resistance back to the source. Same KCL you\'d
+            directions of the ring inversely with the resistance back to the source. Same KCL you’d
             apply to any junction.
           </p>
         </ConceptBlock>
@@ -377,7 +377,7 @@ export default function Sub2() {
 
         <ConceptBlock
           title="Three forms of the power equation"
-          plainEnglish="P = VI is the basic. Substitute Ohm\'s Law (V = IR) and you get two more forms — useful when you only know two of the three quantities."
+          plainEnglish="P = VI is the basic. Substitute Ohm’s Law (V = IR) and you get two more forms — useful when you only know two of the three quantities."
         >
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
@@ -391,7 +391,7 @@ export default function Sub2() {
             </li>
           </ul>
           <p>
-            All three give the same answer if you\'ve got consistent values. Use the form whose
+            All three give the same answer if you’ve got consistent values. Use the form whose
             variables you already have.
           </p>
         </ConceptBlock>
@@ -430,7 +430,7 @@ export default function Sub2() {
 
         <RegsCallout
           source="BS 7671:2018+A4:2026 — Section 525 (Voltage drop in consumers' installations)"
-          clause="In the absence of other considerations, in a consumer\'s installation, the voltage drop between the origin of the installation and any point shall not exceed 3 % of the nominal voltage for lighting circuits and 5 % for other uses."
+          clause="In the absence of other considerations, in a consumer’s installation, the voltage drop between the origin of the installation and any point shall not exceed 3 % of the nominal voltage for lighting circuits and 5 % for other uses."
           meaning={
             <>
               3 % of 230 V = 6.9 V for lighting; 5 % = 11.5 V for power. From the origin, not from
@@ -479,13 +479,13 @@ export default function Sub2() {
           whatHappens={
             <>
               Sum says: 100 m of 2.5 mm² copper. R = (1.72 × 10⁻⁸ × 100) / 2.5 = 6.88 × 10⁻⁷ Ω.
-              That\'s 0.688 microohms — clearly wrong. The CSA was treated as 2.5, not 2.5 × 10⁻⁶.
+              That’s 0.688 microohms — clearly wrong. The CSA was treated as 2.5, not 2.5 × 10⁻⁶.
             </>
           }
           doInstead={
             <>
               Always convert: 1 mm² = 10⁻⁶ m². So 2.5 mm² = 2.5 × 10⁻⁶ m². Re-doing: R = (1.72 ×
-              10⁻⁸ × 100) / (2.5 × 10⁻⁶) = 0.688 Ω. That\'s a sensible answer for a 100 m run.
+              10⁻⁸ × 100) / (2.5 × 10⁻⁶) = 0.688 Ω. That’s a sensible answer for a 100 m run.
             </>
           }
         />
@@ -494,7 +494,7 @@ export default function Sub2() {
           title="Sizing a 6 mm² T&E sub-main with downstream final circuits"
           situation={
             <>
-              You\'re feeding a garden room from the main DB. Sub-main is 6 mm² T&E, 30 m run,
+              You’re feeding a garden room from the main DB. Sub-main is 6 mm² T&E, 30 m run,
               design current 25 A. The garden room sub-DB then feeds two final circuits — a lighting
               circuit at 6 A and a 16 A radial socket. You need to confirm the total voltage drop
               from main DB origin to the furthest socket meets the 5 % power limit.

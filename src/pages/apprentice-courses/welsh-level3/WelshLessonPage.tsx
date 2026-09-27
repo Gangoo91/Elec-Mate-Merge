@@ -1,14 +1,14 @@
 /**
  * Welsh Level 3 — the lesson page.
  *
- * One route serves every page in the course; the unit, outcome and criterion
- * come from the URL. Until a page has its teaching written, it shows the
- * criterion it will cover and says so plainly — a learner should never tap into
- * a page that looks finished and is not.
+ * One route serves every lesson in the course; the module, section and lesson
+ * come from the URL. The masthead carries the qualification reference — unit
+ * code and criterion number — because the navigation above it is our grouping,
+ * not the handbook's, and a learner needs to be able to tie the two together.
  *
- * Content goes in per criterion, replacing the placeholder body below. The
- * route, the breadcrumb, the prev/next chain and the progress record all work
- * from the day the scaffold lands, so writing a page is only writing.
+ * Until a lesson has its teaching written, it shows the criterion it will
+ * cover and says so plainly. A learner should never tap into a page that looks
+ * finished and is not.
  */
 
 import { Suspense } from 'react';
@@ -22,49 +22,59 @@ import { CourseSkeleton } from '@/components/ui/page-skeleton';
 import { lessonContent } from './content/registry';
 import {
   WELSH_L3_BASE,
+  WELSH_L3_UNIT_TITLES,
+  findLesson,
+  findModule,
   findSection,
-  findSubsection,
-  findUnit,
   neighbours,
-} from '@/data/study-centre/welshLevel3';
+} from '@/data/study-centre/welshLevel3Tree';
 
 export default function WelshLessonPage() {
-  const { unitSlug, sectionSlug, subSlug } = useParams<{
-    unitSlug: string;
+  const { moduleSlug, sectionSlug, lessonSlug } = useParams<{
+    moduleSlug: string;
     sectionSlug: string;
-    subSlug: string;
+    lessonSlug: string;
   }>();
   const navigate = useNavigate();
 
-  const unit = findUnit(unitSlug);
-  const section = findSection(unit, sectionSlug);
-  const sub = findSubsection(section, subSlug);
+  const module = findModule(moduleSlug);
+  const section = findSection(module, sectionSlug);
+  const lesson = findLesson(section, lessonSlug);
 
   useSEO({
-    title: sub ? `${sub.title} | Unit ${unit?.code} | Welsh Level 3 | Elec-Mate` : 'Welsh Level 3',
-    description: sub?.title,
+    title: lesson
+      ? `${lesson.title} | Unit ${lesson.unit} | Welsh Level 3 | Elec-Mate`
+      : 'Welsh Level 3',
+    description: lesson?.title,
     noindex: true,
   });
 
-  if (!unit) return <Navigate to={WELSH_L3_BASE} replace />;
-  if (!section) return <Navigate to={`${WELSH_L3_BASE}/${unit.slug}`} replace />;
-  if (!sub) return <Navigate to={`${WELSH_L3_BASE}/${unit.slug}/${section.slug}`} replace />;
+  if (!module) return <Navigate to={WELSH_L3_BASE} replace />;
+  if (!section) return <Navigate to={`${WELSH_L3_BASE}/${module.slug}`} replace />;
+  if (!lesson) return <Navigate to={`${WELSH_L3_BASE}/${module.slug}/${section.slug}`} replace />;
 
-  const { prev, next } = neighbours(unit.slug, section.slug, sub.slug);
-  const Content = lessonContent(unit.slug, section.slug, sub.slug);
+  const { prev, next } = neighbours(module.slug, section.slug, lesson.slug);
+  const Content = lessonContent(module.slug, section.slug, lesson.slug);
+  const unitTitle = WELSH_L3_UNIT_TITLES[lesson.unit];
 
   return (
     <HubPage ground="reading">
       <HubMasthead
-        section={`Unit ${unit.code} · ${sub.code}`}
-        title={sub.title}
-        backTo={`${WELSH_L3_BASE}/${unit.slug}/${section.slug}`}
+        section={`Unit ${lesson.unit} · ${lesson.criterion}`}
+        title={lesson.title}
+        backTo={`${WELSH_L3_BASE}/${module.slug}/${section.slug}`}
       />
       <HubBody>
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-white">
-          <span>{unit.title}</span>
-          <span aria-hidden="true">·</span>
-          <span>Outcome {section.outcome}</span>
+          <span>{section.title}</span>
+          {unitTitle && (
+            <>
+              <span aria-hidden="true">·</span>
+              <span>
+                Unit {lesson.unit} — {unitTitle}
+              </span>
+            </>
+          )}
         </div>
 
         {Content ? (
@@ -80,13 +90,13 @@ export default function WelshLessonPage() {
             )}
           >
             <h2 className="text-[13px] font-semibold text-white">What this page covers</h2>
-            <p className="mt-2 max-w-3xl text-[13px] leading-relaxed text-white">{sub.title}</p>
+            <p className="mt-2 max-w-3xl text-[13px] leading-relaxed text-white">{lesson.title}</p>
 
             <div className="mt-4 border-t border-white/[0.1] pt-4">
               <h3 className="text-[13px] font-semibold text-white">Teaching on its way</h3>
               <p className="mt-2 max-w-3xl text-[13px] leading-relaxed text-white">
-                This page is being written. The unit, outcome and criterion above are the
-                qualification’s own, so what lands here will cover exactly this.
+                This page is being written. The unit and criterion above are the qualification’s
+                own, so what lands here will cover exactly this.
               </p>
             </div>
           </section>

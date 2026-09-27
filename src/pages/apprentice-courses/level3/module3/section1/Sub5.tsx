@@ -276,7 +276,7 @@ export default function Sub5() {
         <ConceptBlock
           title="Where in the system are you testing?"
           plainEnglish="The further upstream (closer to the supply transformer), the bigger the energy of any transient. CAT II is fixed loads behind a socket; CAT III is at the distribution board; CAT IV is at the meter and incoming supply."
-          onSite="Always check the CAT rating printed on the meter and the leads. A CAT II 600 V meter clamped onto a CAT IV location may explode in a transient — and that\'s not hyperbole, the IEC 61010 standard exists because meters DID explode."
+          onSite="Always check the CAT rating printed on the meter and the leads. A CAT II 600 V meter clamped onto a CAT IV location may explode in a transient — and that’s not hyperbole, the IEC 61010 standard exists because meters DID explode."
         >
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
@@ -307,7 +307,7 @@ export default function Sub5() {
           clause="Measuring circuits used for mains measurement shall be classified as CAT II, III or IV depending on the location of measurement. CAT IV applies at the source of the low-voltage installation."
           meaning={
             <>
-              The CAT rating isn\'t just marketing — it\'s a tested impulse withstand. Buy meters
+              The CAT rating isn’t just marketing — it’s a tested impulse withstand. Buy meters
               rated for the highest-CAT location you ever work at. CAT IV 1000 V is a sensible
               default for installation electricians; never use CAT II for fixed-wiring work.
             </>
@@ -363,7 +363,7 @@ export default function Sub5() {
         >
           <p>
             The shorthand on the meter is usually "True RMS" or "TRMS" printed near the model
-            number. If it doesn\'t say so, assume it\'s average-responding.
+            number. If it doesn’t say so, assume it’s average-responding.
           </p>
           <p>
             For modern installs (anything with LED, VFD, EV charging, inverter, computer load)
@@ -414,7 +414,7 @@ export default function Sub5() {
 
         <ConceptBlock
           title="Power-quality analyser — when the supply itself is the suspect"
-          plainEnglish="When customers complain that \'computers keep crashing' or 'lights flicker when the lift starts', a multimeter snapshot won't catch the cause. A PQ analyser logs voltage, current, harmonics and transients over hours or days."
+          plainEnglish="When customers complain that ‘computers keep crashing' or 'lights flicker when the lift starts', a multimeter snapshot won't catch the cause. A PQ analyser logs voltage, current, harmonics and transients over hours or days."
           onSite="Common findings: 7 % voltage dip when the air-con compressor starts (acceptable); 11th harmonic at 18 % from VFD loads (causes neutral overheating); transient overvoltages from a faulty lift contactor. The analyser provides the evidence for the remedial work."
         >
           <p>
@@ -491,7 +491,7 @@ export default function Sub5() {
           whatHappens={
             <>
               Apprentice tests the dead circuit, gets 0 V, removes the lock-off, starts work. Three
-              minutes in, they touch a \'dead' line conductor and get a shock. The meter had
+              minutes in, they touch a ‘dead' line conductor and get a shock. The meter had
               developed an internal fault during the test — common after a transient knocks the
               input protection.
             </>
@@ -510,7 +510,7 @@ export default function Sub5() {
           title="Choosing the right instrument for a power-quality investigation"
           situation={
             <>
-              Customer reports unexplained MCB trips on a kitchen ring (32 A type B). They\'ve added
+              Customer reports unexplained MCB trips on a kitchen ring (32 A type B). They’ve added
               two combi-microwaves, a coffee machine and a bank of LED downlights since the install.
               Multimeter reading at the DB shows 28 A line current. The MCB still trips
               intermittently.
@@ -530,7 +530,7 @@ export default function Sub5() {
           }
           whyItMatters={
             <>
-              Without the right instrument you\'d never see the inrush spike. The maths (rated ×
+              Without the right instrument you’d never see the inrush spike. The maths (rated ×
               multiplier = trip threshold) is the same as on every other circuit; you just need a
               logging meter to capture the transient.
             </>

@@ -39,6 +39,7 @@ import { usePATTestingTabs, PATTestingTabValue } from '@/hooks/usePATTestingTabs
 import { getDefaultPATTestingFormData, Appliance } from '@/types/pat-testing';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { formatPATTestingJson } from '@/utils/patTestingJsonFormatter';
+import { issueCertificateNumber } from '@/utils/certificateNumbering';
 import { useCertificateEmail } from '@/hooks/useCertificateEmail';
 import { EmailCertificateDialog } from '@/components/certificate-completion/EmailCertificateDialog';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
@@ -111,8 +112,12 @@ export default function PATTestingCertificate() {
     formData,
     enabled: !isLoading && !isLocked,
     isHydrating: isLoading, // Gate autosave while loading from cloud — prevents blank-overwrite race.
-    onReportCreated: (newId) => {
+    onReportCreated: (newId: string, certificateNumber?: string) => {
       setSavedReportId(newId);
+      // ELE-1592 — keep the number the row was filed under; without this the
+      // form stayed blank and the PDF printed an invented timestamp.
+      if (certificateNumber)
+        setFormData((prev) => (prev.certificateNumber ? prev : { ...prev, certificateNumber }));
       window.history.replaceState(null, '', `/electrician/inspection-testing/pat-testing/${newId}`);
     },
   });
@@ -326,30 +331,43 @@ export default function PATTestingCertificate() {
     setShowGenerationDialog(true);
     try {
       // Sync latest data to cloud before PDF generation
-      await syncNowImmediate();
+      const synced = await syncNowImmediate();
+      // ELE-1592 — print the number the certificate is filed under, never an
+      // invented one. The row created by the sync above carries it when the
+      // form had none yet.
+      const certificateNumber = await issueCertificateNumber(
+        formData.certificateNumber || synced.data?.certificateNumber,
+        'pat-testing'
+      );
+      if (certificateNumber !== formData.certificateNumber) {
+        setFormData((prev) => ({ ...prev, certificateNumber }));
+      }
 
       // Get company branding
       const branding = hasSavedCompanyBranding ? loadCompanyBranding() : null;
 
       // Prepare PDF data using dedicated formatter
-      const pdfData = formatPATTestingJson(formData, {
-        // ELE-1671 — the cover palette rides on the branding object. This merge is
-        // an EXPLICIT FIELD LIST, so without this line the em_* keys are silently
-        // dropped here and the whole cover-branding chain is inert for this
-        // certificate type. Spread, don't enumerate.
-        ...coverKeysFromFormData(branding as unknown as Record<string, unknown>),
-        companyLogo: branding?.companyLogo,
-        companyName: branding?.companyName,
-        companyAddress: branding?.companyAddress,
-        companyPhone: branding?.companyPhone,
-        companyEmail: branding?.companyEmail,
-        companyTagline: branding?.companyTagline,
-        companyAccentColor: branding?.companyAccentColor,
-        companyWebsite: branding?.companyWebsite,
-        registrationScheme: branding?.registrationScheme,
-        registrationNumber: branding?.registrationNumber,
-        registrationSchemeLogo: branding?.registrationSchemeLogo,
-      });
+      const pdfData = formatPATTestingJson(
+        { ...formData, certificateNumber },
+        {
+          // ELE-1671 — the cover palette rides on the branding object. This merge is
+          // an EXPLICIT FIELD LIST, so without this line the em_* keys are silently
+          // dropped here and the whole cover-branding chain is inert for this
+          // certificate type. Spread, don't enumerate.
+          ...coverKeysFromFormData(branding as unknown as Record<string, unknown>),
+          companyLogo: branding?.companyLogo,
+          companyName: branding?.companyName,
+          companyAddress: branding?.companyAddress,
+          companyPhone: branding?.companyPhone,
+          companyEmail: branding?.companyEmail,
+          companyTagline: branding?.companyTagline,
+          companyAccentColor: branding?.companyAccentColor,
+          companyWebsite: branding?.companyWebsite,
+          registrationScheme: branding?.registrationScheme,
+          registrationNumber: branding?.registrationNumber,
+          registrationSchemeLogo: branding?.registrationSchemeLogo,
+        }
+      );
 
       // Save formatted payload for email/reports page reuse
       if (savedReportId) {

@@ -32,6 +32,7 @@ import {
   HeatPumpFormData,
   getDefaultHeatPumpFormData,
 } from '@/types/heatPump';
+import { useCreateReportKey } from '@/hooks/useCreateReportKey';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -134,6 +135,7 @@ export default function HeatPumpCertificate() {
     return getDefaultHeatPumpFormData();
   });
   const [existingReportId, setExistingReportId] = useState<string | null>(null);
+  const createKey = useCreateReportKey(REPORT_TYPE); // ELE-1603 — a retry adopts, never duplicates
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(!isNew);
   const [currentTab, setCurrentTab] = useState<HeatPumpTab>('details');
@@ -145,7 +147,7 @@ export default function HeatPumpCertificate() {
     if (isNew || !editId) return;
     supabase.auth.getUser().then(async ({ data: { user } }) => {
       if (!user) return;
-      const result = await reportCloud.getReportData(editId, user.id);
+      const result = await reportCloud.getReportData(editId, user.id, 'heat-pump');
       if (result) {
         setData((prev) => ({ ...prev, ...(result as any) }));
         setExistingReportId(editId);
@@ -211,14 +213,18 @@ export default function HeatPumpCertificate() {
         inspectorName: data.technicianName || data.engineerName,
       };
       if (existingReportId) {
-        await reportCloud.updateReport(existingReportId, user.id, payload as any);
+        // A refused write (wrong certificate type, RLS, network) used to fall through
+        // to "Saved". Check it the way the create path below already does.
+        const updated = await reportCloud.updateReport(existingReportId, user.id, payload as any, undefined, false, 'heat-pump');
+        if (!updated.success) { toast.error('Failed to save'); setIsSaving(false); return; }
       } else {
-        const result = await reportCloud.createReport(user.id, REPORT_TYPE, payload as any);
+        const result = await reportCloud.createReport(user.id, REPORT_TYPE, payload as any, undefined, false, createKey.take());
         if (!result.success) {
           toast.error('Failed to save');
           setIsSaving(false);
           return;
         }
+        if (result.reportId) setExistingReportId(result.reportId);
       }
       storageRemoveSync(DRAFT_KEY);
       toast.success('Heat pump commissioning record saved');

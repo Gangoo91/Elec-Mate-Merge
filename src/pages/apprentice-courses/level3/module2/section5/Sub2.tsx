@@ -55,7 +55,7 @@ const checks = [
   {
     id: 'l3-m2-s5-sub2-customer-training',
     question:
-      'After heat-pump commissioning the customer asks "so do I just leave the thermostat at 21°C and forget about it?". What\'s the right answer?',
+      'After heat-pump commissioning the customer asks "so do I just leave the thermostat at 21°C and forget about it?". What’s the right answer?',
     options: [
       'Yes, exactly — set it to 21°C and switch it off completely whenever you go out. The most efficient way to run a heat pump is the same as a gas boiler: heat the house only when occupied and let it go cold otherwise, so the customer should turn the system off during the day and overnight to save energy.',
       'Yes, but run it as hot as possible. Set the flow temperature to 70°C like the old boiler so the house heats up quickly, then turn the thermostat down once warm; this gives the fastest comfort and the best efficiency from the heat pump.',

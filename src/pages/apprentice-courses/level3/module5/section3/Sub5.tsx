@@ -213,7 +213,7 @@ const faqs = [
   {
     question: 'Does polarity testing apply to FELV / SELV circuits?',
     answer:
-      'Polarity in the BS 7671 sense (single-pole devices in the line) applies to LV circuits where a "line" exists. SELV is by definition not earth-referenced for safety reasons, so the live conductors are identified rather than designated as "line". Some SELV applications (DC supplies) do have a defined polarity (positive / negative) for equipment compatibility — verify against the equipment manufacturer\'s instructions rather than BS 7671 polarity rules. FELV is treated as LV for safety purposes — verify polarity per the LV rules.',
+      'Polarity in the BS 7671 sense (single-pole devices in the line) applies to LV circuits where a "line" exists. SELV is by definition not earth-referenced for safety reasons, so the live conductors are identified rather than designated as "line". Some SELV applications (DC supplies) do have a defined polarity (positive / negative) for equipment compatibility — verify against the equipment manufacturer’s instructions rather than BS 7671 polarity rules. FELV is treated as LV for safety purposes — verify polarity per the LV rules.',
   },
 ];
 

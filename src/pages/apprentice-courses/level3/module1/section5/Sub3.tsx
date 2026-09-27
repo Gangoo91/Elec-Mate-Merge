@@ -202,7 +202,7 @@ const faqs = [
       'Yes — up to 1/3 reduction for guilty plea at first opportunity, sliding down to 1/4 at start of trial, 1/10 once trial begins. Significant; encourages early acceptance.',
   },
   {
-    question: 'What\'s a "publicity order"?',
+    question: 'What’s a "publicity order"?',
     answer:
       'Court order requiring the convicted firm to publish details of conviction. Used in CMCHA cases. Reputational impact often greater than the fine.',
   },
@@ -374,7 +374,7 @@ export default function Sub3() {
         <ContentEyebrow>Individual sentences</ContentEyebrow>
         <ConceptBlock
           title="Custody is on the table"
-          plainEnglish="Individual sentencing under HASAWA s.37 (director) or s.7 (operative) has its own matrix. High culpability + serious harm = immediate custody at the top end. Knowing this changes how the L3 communicates with senior management — 'this isn't just a fine, it's your liberty if it goes badly\'."
+          plainEnglish="Individual sentencing under HASAWA s.37 (director) or s.7 (operative) has its own matrix. High culpability + serious harm = immediate custody at the top end. Knowing this changes how the L3 communicates with senior management — 'this isn't just a fine, it's your liberty if it goes badly’."
           onSite="Personal sentences for directors have moved from rare to routine for serious cases. Custodial sentences in the news regularly. The L3 supervisor's observation to a director about safety issues now lands with potential personal-liberty consequences in mind."
         >
           <p>Individual sentence ranges (illustrative):</p>
@@ -562,7 +562,7 @@ export default function Sub3() {
             <>
               L3 doesn&apos;t bother understanding the consequence cascade; assumes fines are
               corporate; doesn't see the personal liability cascade. When pushed by a director to do
-              something unsafe, doesn\'t recognise that the director&apos;s order may be putting the
+              something unsafe, doesn’t recognise that the director&apos;s order may be putting the
               director themselves into custody-risk territory. Conversation goes badly.
             </>
           }
@@ -579,7 +579,7 @@ export default function Sub3() {
           title="Briefing a director on consequences"
           situation={
             <>
-              Your firm\'s director is pushing you to short-cut safe-isolation procedure on a
+              Your firm’s director is pushing you to short-cut safe-isolation procedure on a
               project. Customer is pressing for completion. You want to refuse but feel
               uncomfortable about the conversation.
             </>
@@ -591,7 +591,7 @@ export default function Sub3() {
               / 14, HASAWA s.2/s.3, MHSWR. You personally under s.37 if you authorised the shortcut.
               Sentencing Council guideline gives starting points in six figures for high culpability
               + serious harm + our turnover. Personal sentences include custody at top end.
-              Insurance doesn\'t cover criminal fines. Reputation damage on the public register
+              Insurance doesn’t cover criminal fines. Reputation damage on the public register
               affects future contracts. The cost of doing it right is small; the cost of doing it
               wrong is potentially the firm and your liberty." Refusal becomes much more grounded
               when the consequences are framed properly. Document the conversation; ERA s.44
@@ -602,8 +602,8 @@ export default function Sub3() {
             <>
               The Sentencing Council framework lets the L3 supervisor have the difficult
               conversation with weight. Without the framework the conversation is &quot;please
-              don\'t do this, it\'s unsafe&quot;. With the framework it&apos;s &quot;please don\'t
-              do this — here\'s the structured consequence cascade including potential custody for
+              don’t do this, it’s unsafe&quot;. With the framework it&apos;s &quot;please don’t
+              do this — here’s the structured consequence cascade including potential custody for
               you personally&quot;. Same refusal, much stronger basis. Senior management responses
               change when they understand personal exposure.
             </>

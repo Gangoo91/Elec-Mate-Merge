@@ -185,7 +185,9 @@ export const formatPATTestingJson = (
   return normalisePdfDates({
     // Metadata
     metadata: {
-      certificate_number: formData.certificateNumber || `PAT-${Date.now()}`,
+      // Never invented here (ELE-1592) — the page allocates a real number before
+      // it formats; a blank is a bug to notice, a timestamp was one to miss.
+      certificate_number: formData.certificateNumber || '',
       test_date: ukDate(formData.testDate),
       report_reference: formData.reportReference || '',
       standard: 'IET Code of Practice (5th Edition)',

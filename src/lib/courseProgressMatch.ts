@@ -42,14 +42,32 @@ const SHELL = new Set([
   'home',
 ]);
 
+/**
+ * Course names that contain another course's name and must not be split.
+ *
+ * `welsh-level3` tokenised to ['welsh', 'level3'], and the matcher below is
+ * bidirectional — a row is allowed to be a contiguous subsequence of the
+ * target as well as the other way round. So the English Level 3 row
+ * (`apprentice` / `level3` → ['level3']) matched EVERY Welsh module target
+ * ['welsh', 'level3', 'module', N], and the Welsh rows matched the English
+ * Level 3 modules in return. Both courses showed the other's progress.
+ *
+ * Collapsing the pair into one token fixes both directions and cannot affect
+ * any other course, because the rule only fires on strings that contain this
+ * exact name. Add to this list whenever a new course slug ends with, or
+ * contains, an existing one.
+ */
+const COMPOUND_COURSE_NAMES: [RegExp, string][] = [[/welsh-level3/g, 'welshlevel3']];
+
 // Split `module1`/`section3` into `module 1` / `section 3` so they tokenise the
 // same as `module-1` / `section-3`, while leaving course names (am2, bs7671,
 // elec2-04) intact.
 function normalize(s: string): string {
-  return String(s || '')
-    .toLowerCase()
-    .replace(/module(\d)/g, 'module-$1')
-    .replace(/section(\d)/g, 'section-$1');
+  let out = String(s || '').toLowerCase();
+  for (const [pattern, token] of COMPOUND_COURSE_NAMES) {
+    out = out.replace(pattern, token);
+  }
+  return out.replace(/module(\d)/g, 'module-$1').replace(/section(\d)/g, 'section-$1');
 }
 
 export function tokens(s: string | null | undefined): string[] {

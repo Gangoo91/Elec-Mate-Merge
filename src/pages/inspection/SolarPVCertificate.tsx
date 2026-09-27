@@ -59,6 +59,7 @@ import { cn } from '@/lib/utils';
 import { scrollToTopForStepChange } from '@/utils/scroll';
 import { coverKeysFromFormData } from '@/utils/certCoverPayload';
 import { readEdgeFunctionError } from '@/lib/edgeFunctionError';
+import { issueCertificateNumber } from '@/utils/certificateNumbering';
 
 const REPORT_TYPE = 'solar-pv' as const;
 
@@ -126,8 +127,12 @@ export default function SolarPVCertificate() {
     formData,
     enabled: !isLoading && !isLocked,
     isHydrating: isLoading, // Gate autosave while loading from cloud — prevents blank-overwrite race.
-    onReportCreated: (newId) => {
+    onReportCreated: (newId: string, certificateNumber?: string) => {
       setSavedReportId(newId);
+      // ELE-1592 — keep the number the row was filed under; without this the
+      // form stayed blank and the PDF printed an invented timestamp.
+      if (certificateNumber)
+        setFormData((prev) => (prev.certificateNumber ? prev : { ...prev, certificateNumber }));
       window.history.replaceState(null, '', `/electrician/inspection-testing/solar-pv/${newId}`);
     },
   });
@@ -232,7 +237,7 @@ export default function SolarPVCertificate() {
 
           // Check if local draft is newer than cloud
           const localDraft = draftStorage.loadDraft(REPORT_TYPE, id);
-          const report = await reportCloud.getReportData(id, authUser.id);
+          const report = await reportCloud.getReportData(id, authUser.id, 'solar-pv');
 
           if (report) {
             // Check if we have a newer local version
@@ -378,7 +383,7 @@ export default function SolarPVCertificate() {
         const photos = await fetchReportPhotos();
         formattedData = formatSolarPVJson({
           ...formData,
-          certificateNumber: formData.certificateNumber || `SPV-${Date.now()}`,
+          certificateNumber: await issueCertificateNumber(formData.certificateNumber, REPORT_TYPE),
           photos,
         } as any);
       } catch {
@@ -425,12 +430,15 @@ export default function SolarPVCertificate() {
     setGenerationError(null);
     setShowGenerationDialog(true);
     try {
-      await syncNowImmediate();
+      const synced = await syncNowImmediate();
 
       // Generate certificate number if not set
       let dataWithCertNumber = {
         ...formData,
-        certificateNumber: formData.certificateNumber || `SPV-${Date.now()}`,
+        certificateNumber: await issueCertificateNumber(
+          formData.certificateNumber || synced.data?.certificateNumber,
+          REPORT_TYPE
+        ),
       };
 
       // Merge company branding from Business Settings if available

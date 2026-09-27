@@ -21,6 +21,7 @@ import { formatIsolationCertPayload } from '@/utils/isolation-cert-formatter';
 import { pageInputCn as inputCn, pageTextareaCn as textareaCn } from '@/components/forms/pageStyles';
 
 import { PageHeader } from '@/components/forms/PageHeader';
+import { useCreateReportKey } from '@/hooks/useCreateReportKey';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -107,7 +108,7 @@ interface IsolationData {
 }
 
 const defaultData = (): IsolationData => ({
-  referenceNumber: `ISO-${Date.now().toString(36).toUpperCase()}`,
+  referenceNumber: '', // filled from the number the row is filed under on first save (ELE-1592)
   date: new Date().toISOString().split('T')[0],
   time: new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }),
   contractorName: '',
@@ -203,6 +204,7 @@ export default function IsolationCertificatePage() {
   const { id: editId } = useParams<{ id: string }>();
   const [isSaving, setIsSaving] = useState(false);
   const [existingReportId, setExistingReportId] = useState<string | null>(null);
+  const createKey = useCreateReportKey('isolation-cert'); // ELE-1603 — a retry adopts, never duplicates
   const photoInputRef = useRef<HTMLInputElement>(null);
 
   const [data, setData] = useState<IsolationData>(() => {
@@ -215,7 +217,7 @@ export default function IsolationCertificatePage() {
     if (!editId) return;
     supabase.auth.getUser().then(async ({ data: { user } }) => {
       if (!user) return;
-      const result = await reportCloud.getReportData(editId, user.id);
+      const result = await reportCloud.getReportData(editId, user.id, 'isolation-certificate');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       if (result) { setData((prev) => ({ ...prev, ...(result as any) })); setExistingReportId(editId); }
     });
@@ -292,21 +294,40 @@ export default function IsolationCertificatePage() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { toast.error('Please sign in'); setIsSaving(false); return; }
 
+      // The reference the certificate prints IS the number it is filed under (ELE-1592);
+
+      // createReport allocates it, and the electrician can still overtype it later.
+
+      let referenceNumber = data.referenceNumber;
+
       // Save to Supabase
-      const savedReportId = existingReportId || data.referenceNumber;
+      // The id the create returns is used for the PDF writes below — state set in the
+      // create branch is not visible in this closure (ELE-1603).
+      let savedReportId = existingReportId || data.referenceNumber;
       if (existingReportId) {
+        // A refused write (wrong certificate type, RLS, network) used to fall through
+        // to "Saved". Check it the way the create path below already does.
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        await reportCloud.updateReport(existingReportId, user.id, data as any);
+        const updated = await reportCloud.updateReport(existingReportId, user.id, data as any, undefined, false, 'isolation-certificate');
+        if (!updated.success) { toast.error('Failed to save'); setIsSaving(false); return; }
       } else {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const result = await reportCloud.createReport(user.id, 'isolation-cert', data as any);
+        const result = await reportCloud.createReport(user.id, 'isolation-cert', data as any, undefined, false, createKey.take());
         if (!result.success) { toast.error('Failed to save'); setIsSaving(false); return; }
+        if (!referenceNumber && result.certificateNumber) {
+          referenceNumber = result.certificateNumber;
+          update('referenceNumber', referenceNumber);
+        }
+        if (result.reportId) {
+          savedReportId = result.reportId;
+          setExistingReportId(result.reportId);
+        }
       }
 
       // Generate PDF
       toast.success('Saved — generating PDF...');
       try {
-        const payload = formatIsolationCertPayload(data);
+        const payload = formatIsolationCertPayload({ ...data, referenceNumber });
         const { data: pdfResult, error: pdfError } = await supabase.functions.invoke(
           'generate-isolation-cert-pdf',
           { body: { formData: payload } }
@@ -320,7 +341,7 @@ export default function IsolationCertificatePage() {
           try {
             const { saveCertificatePdf } = await import('@/utils/certificate-pdf-storage');
             const { permanentUrl, storagePath } = await saveCertificatePdf(
-              pdfResult.download_url, user.id, savedReportId, data.referenceNumber
+              pdfResult.download_url, user.id, savedReportId, referenceNumber
             );
             permanentPdfUrl = permanentUrl;
             await supabase.from('reports').update({ storage_path: storagePath, pdf_url: permanentPdfUrl, pdf_generated_at: new Date().toISOString() }).eq('report_id', savedReportId);
@@ -330,7 +351,7 @@ export default function IsolationCertificatePage() {
           }
 
           const { openOrDownloadPdf } = await import('@/utils/pdf-download');
-          await openOrDownloadPdf(permanentPdfUrl, `Isolation-Certificate-${data.referenceNumber}.pdf`);
+          await openOrDownloadPdf(permanentPdfUrl, `Isolation-Certificate-${referenceNumber}.pdf`);
           toast.success('Isolation certificate issued');
         }
       } catch (pdfErr) {
@@ -376,7 +397,7 @@ export default function IsolationCertificatePage() {
 
         {/* Reference */}
         <Section title="Reference">
-          <Field label="Record No."><Input value={data.referenceNumber} onChange={(e) => update('referenceNumber', e.target.value)} className={inputCn} /></Field>
+          <Field label="Record No."><Input value={data.referenceNumber} placeholder="Allocated on first save" onChange={(e) => update('referenceNumber', e.target.value)} className={inputCn} /></Field>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Field label="Date"><Input type="date" value={data.date} onChange={(e) => update('date', e.target.value)} className={dateTimeCn} /></Field>
             <Field label="Time"><Input type="time" value={data.time} onChange={(e) => update('time', e.target.value)} className={dateTimeCn} /></Field>

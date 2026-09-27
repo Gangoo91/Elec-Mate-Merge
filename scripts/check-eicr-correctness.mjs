@@ -51,11 +51,38 @@ writeFileSync(
   // reaches through `importWithRetry` (ELE-1750). It is never CALLED here —
   // nothing in the gate renders a component — so a passthrough is honest, and
   // the build stops failing on a missing export.
+  // `createElement` arrived the same way via `src/utils/engineerVerify.ts`
+  // (ELE-1453), which renders the Elec-ID QR for certificate PDFs. Also never
+  // called here, so it throws rather than quietly returning something the
+  // gate might go on to assert against.
   `export const useMemo = (fn: any) => fn();
    export const lazy = (fn: any) => fn;
    export const useState = () => { throw new Error('useState in the gate — this stub is no longer safe'); };
    export const useEffect = () => { throw new Error('useEffect in the gate — this stub is no longer safe'); };
-   export default { useMemo, lazy, useState, useEffect };`
+   export const createElement = () => { throw new Error('createElement in the gate — this stub is no longer safe'); };
+   export default { useMemo, lazy, useState, useEffect, createElement };`
+);
+
+/*
+ * `formatEICRJson` now awaits `resolveEngineerVerify` (ELE-1453), which pulls
+ * in the QR renderer — `react-dom/server` and `qrcode.react`. Neither is ever
+ * reached here: the resolve sits behind the stubbed Supabase client inside a
+ * try/catch that returns NONE, so no QR is built. esbuild still has to
+ * RESOLVE them to bundle, and react-dom/server's CJS build dynamically
+ * requires `stream`, which an ESM bundle cannot do. Stub both, throwing, so
+ * the gate fails loudly rather than quietly if a path ever does render.
+ */
+const renderStub = join(tmp, 'react-dom-server-stub.ts');
+writeFileSync(
+  renderStub,
+  `export const renderToStaticMarkup = () => { throw new Error('renderToStaticMarkup in the gate — nothing here renders'); };
+   export default { renderToStaticMarkup };`
+);
+const qrStub = join(tmp, 'qrcode-stub.ts');
+writeFileSync(
+  qrStub,
+  `export const QRCodeSVG = () => { throw new Error('QRCodeSVG in the gate — nothing here renders'); };
+   export default { QRCodeSVG };`
 );
 
 const stub = join(tmp, 'supabase-stub.ts');
@@ -99,7 +126,13 @@ await build({
   format: 'esm',
   outfile: out,
   logLevel: 'silent',
-  alias: { '@/integrations/supabase/client': stub, react: reactStub, '@': './src' },
+  alias: {
+    '@/integrations/supabase/client': stub,
+    react: reactStub,
+    'react-dom/server': renderStub,
+    'qrcode.react': qrStub,
+    '@': './src',
+  },
 });
 const {
   checkRegulationCompliance,

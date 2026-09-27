@@ -265,18 +265,18 @@ export default function Sub1() {
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
               <strong>TN-C-S (PME / PNB):</strong> Loop = transformer secondary → service cable line
-              → consumer line (R1) → fault → CPC (R2) → MET → consumer\'s neutral-earth bond →
-              supplier\'s combined PEN → transformer star point. Ze typically 0.10-0.35 Ω; total Zs
+              → consumer line (R1) → fault → CPC (R2) → MET → consumer’s neutral-earth bond →
+              supplier’s combined PEN → transformer star point. Ze typically 0.10-0.35 Ω; total Zs
               typically 0.3-1.0 Ω for short circuits.
             </li>
             <li>
               <strong>TN-S:</strong> Loop = transformer secondary → service cable line → consumer
-              line (R1) → fault → CPC (R2) → MET → supplier\'s separate earth conductor (typically
+              line (R1) → fault → CPC (R2) → MET → supplier’s separate earth conductor (typically
               the cable sheath) → transformer earth → star point. Ze typically 0.20-0.50 Ω.
             </li>
             <li>
               <strong>TT:</strong> Loop = transformer secondary → service cable line → consumer line
-              (R1) → fault → CPC (R2) → MET → consumer\'s earth electrode → soil mass → supplier\'s
+              (R1) → fault → CPC (R2) → MET → consumer’s earth electrode → soil mass → supplier’s
               transformer earth electrode → transformer earth → star point. The soil impedance
               dominates — Ze ≈ Ra, typically 30-200+ Ω.
             </li>
@@ -356,7 +356,7 @@ IET GN3 guidance (separate from BS 7671): A practical "rule of thumb" of Zs(meas
             </li>
             <li>
               Some testers use the L-N reading to give better RCD avoidance (the L-N measurement
-              doesn\'t involve the CPC so doesn\'t risk RCD trip).
+              doesn’t involve the CPC so doesn’t risk RCD trip).
             </li>
             <li>
               Supports both PFC (prospective fault current) calculation from L-N and PEFC
@@ -430,17 +430,17 @@ IET GN3 guidance (separate from BS 7671): A practical "rule of thumb" of Zs(meas
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
               <strong>Low-current pulse.</strong> The instrument limits the test current peak to
-              below the RCD\'s trip threshold — typically 15 mA peak for a 30 mA RCD. The tester
+              below the RCD’s trip threshold — typically 15 mA peak for a 30 mA RCD. The tester
               compensates for the small current by averaging over multiple cycles or using more
               sensitive voltage detection.
             </li>
             <li>
               <strong>DC bias technique.</strong> The instrument briefly applies a small DC offset
               to the test current. AC RCDs (Type AC) cannot detect DC residual current, so the brief
-              DC bias suppresses the RCD\'s sensing during the test pulse.
+              DC bias suppresses the RCD’s sensing during the test pulse.
             </li>
             <li>
-              <strong>Fast pulse.</strong> The test current pulse is shorter than the RCD\'s
+              <strong>Fast pulse.</strong> The test current pulse is shorter than the RCD’s
               response time, allowing the measurement before the RCD has time to react.
             </li>
           </ul>
@@ -462,7 +462,7 @@ IET GN3 guidance (separate from BS 7671): A practical "rule of thumb" of Zs(meas
             <strong>Caveat:</strong> some older RCDs (Type AC, lower sensitivity) trip on even
             no-trip mode test currents because their response is faster than expected or their
             threshold drift has reduced their nominal trip current. If a no-trip mode test trips the
-            RCD, switch off, reset, and try testing further upstream where RCD protection doesn\'t
+            RCD, switch off, reset, and try testing further upstream where RCD protection doesn’t
             apply (or accept the trip and reset between tests).
           </p>
         </ConceptBlock>
@@ -676,7 +676,7 @@ IET GN3 guidance (separate from BS 7671): A practical "rule of thumb" of Zs(meas
             <li>
               <strong>Consider parallel earth paths.</strong> If R1+R2 from dead testing gave a low
               value via a parallel path (metal back-boxes touching earthed steel, etc.), the live Zs
-              may be higher because the parallel path doesn\'t carry full fault current as
+              may be higher because the parallel path doesn’t carry full fault current as
               effectively. Re-do dead testing with R2-only wander method to isolate the cable CPC.
             </li>
             <li>
@@ -695,10 +695,10 @@ IET GN3 guidance (separate from BS 7671): A practical "rule of thumb" of Zs(meas
           title="Using high-current Zs mode on an RCD-protected circuit and tripping the whole RCD"
           whatHappens={
             <>
-              You\'re testing a kitchen ring on a domestic install with an all-RCBO board. You
+              You’re testing a kitchen ring on a domestic install with an all-RCBO board. You
               forget to switch to no-trip mode, press TEST, and the RCBO trips. Two problems: (a)
               the test result is invalid because the supply was interrupted during the measurement;
-              (b) you\'ve just tripped the customer\'s freezer, which they won\'t notice until the
+              (b) you’ve just tripped the customer’s freezer, which they won’t notice until the
               next day when the food spoils. The customer is cross. The verification work has to be
               redone with the right mode anyway.
             </>
@@ -707,7 +707,7 @@ IET GN3 guidance (separate from BS 7671): A practical "rule of thumb" of Zs(meas
             <>
               Always check the RCD protection status BEFORE pressing TEST. On a domestic install
               with all-RCBO board, default to no-trip mode for every Zs test. Look at the device
-              label or the schedule of inspections — if it\'s an RCBO, RCD or AFDD-RCBO, no-trip
+              label or the schedule of inspections — if it’s an RCBO, RCD or AFDD-RCBO, no-trip
               mode is the right choice. Many MFTs have a setting that defaults to no-trip until you
               explicitly select high-current — set this once and forget. The slight accuracy loss of
               no-trip mode is far outweighed by not inconveniencing the customer.
@@ -743,7 +743,7 @@ IET GN3 guidance (separate from BS 7671): A practical "rule of thumb" of Zs(meas
               with 6 mm² CPC. Recalculate expected R1+R2 from GN3 Table B1 — 35 × (3.08 + 3.08) mΩ/m
               = 0.215 Ω. Add Ze 0.28 = expected Zs 0.50 Ω at 20 °C. Measured 1.05 Ω is more than
               double expected — investigate. Check terminations at the EVSE position — find a
-              marginal crimp on the CPC at the charger\'s termination box. Re-make the crimp with a
+              marginal crimp on the CPC at the charger’s termination box. Re-make the crimp with a
               proper hydraulic crimp tool, retest Zs = 0.55 Ω. Pass with comfortable margin.
               Document everything: Zs per circuit, instrument used, no-trip mode applied, the EVSE
               remediation noted with before and after readings. Proceed to RCD trip-time tests in
@@ -753,12 +753,12 @@ IET GN3 guidance (separate from BS 7671): A practical "rule of thumb" of Zs(meas
           whyItMatters={
             <>
               The Zs test is the keystone live verification — it ties together the dead-test R1+R2
-              work and the live supply impedance Ze, and it\'s what the Table 41.3 comparison
-              fundamentally rests on. Borderline results aren\'t a fail to be rationalised away;
-              they\'re a finding to investigate. The EVSE example shows why: a slightly-passing Zs
+              work and the live supply impedance Ze, and it’s what the Table 41.3 comparison
+              fundamentally rests on. Borderline results aren’t a fail to be rationalised away;
+              they’re a finding to investigate. The EVSE example shows why: a slightly-passing Zs
               read prompted investigation, found a poor termination, allowed a remediation that
               brought the circuit comfortably within compliance. Without the live test, the
-              dead-test calculation would have looked fine (the marginal crimp wouldn\'t show in a
+              dead-test calculation would have looked fine (the marginal crimp wouldn’t show in a
               low-current continuity test) and the installation would have shipped with a latent
               fault that would degrade further under load. Live Zs catches what dead testing alone
               misses.

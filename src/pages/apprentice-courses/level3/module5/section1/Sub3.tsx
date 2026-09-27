@@ -378,8 +378,8 @@ export default function Sub3() {
 
         <ConceptBlock
           title="What you need to know BEFORE you can verify"
-          plainEnglish="Reg 642.1 requires the inspector to have specific information before starting verification — the supply characteristics, the ADS arrangement, the design data, the as-built records. Without it, you can\'t apply the correct acceptance criteria."
-          onSite="Get the design pack from the contractor: single-line diagram, schedule of circuits, designer\'s calculations for Ze and Zs, type-test data for protective devices. If you didn\'t design the install, you need this from whoever did."
+          plainEnglish="Reg 642.1 requires the inspector to have specific information before starting verification — the supply characteristics, the ADS arrangement, the design data, the as-built records. Without it, you can’t apply the correct acceptance criteria."
+          onSite="Get the design pack from the contractor: single-line diagram, schedule of circuits, designer’s calculations for Ze and Zs, type-test data for protective devices. If you didn’t design the install, you need this from whoever did."
         >
           <p>The information set required for initial verification:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -415,7 +415,7 @@ export default function Sub3() {
               verified — to compute expected R1+R2 and confirm Zs.
             </li>
             <li>
-              <strong>Designer\'s declared compliance arrangements</strong> — including any
+              <strong>Designer’s declared compliance arrangements</strong> — including any
               departures from BS 7671 with documented justification.
             </li>
             <li>
@@ -441,7 +441,7 @@ export default function Sub3() {
               duty holder calls. Investigation reveals the protective device rating was wrong for
               the load — a 32 A MCB on a 4 mm² cable run that actually only supports 27 A given the
               install method. The Zs measurement was technically a pass but the device was
-              incorrectly selected at design stage. Without the design data you couldn\'t catch the
+              incorrectly selected at design stage. Without the design data you couldn’t catch the
               design fault — you only verified the install matched what was on site, not that the
               design was right.
             </>
@@ -453,7 +453,7 @@ export default function Sub3() {
               calculations. Cross-check the data against what is installed BEFORE the dead-test
               sequence. If the design data is missing or inconsistent, escalate — do not proceed
               with a verification that cannot validate the design intent. The EIC has space for
-              "departures from BS 7671" but no space for "designer didn\'t provide the data so I
+              "departures from BS 7671" but no space for "designer didn’t provide the data so I
               made it up".
             </>
           }
@@ -645,8 +645,9 @@ export default function Sub3() {
               the test plan.
             </li>
             <li>
-              <strong>Found wrong conductor colours / mixed colours.</strong> Reg 514.14 notice
-              check, polarity verification, careful documentation.
+              <strong>Found wrong conductor colours / mixed colours.</strong> Mixed-colours notice
+              check — good practice rather than a requirement since Regulation 514.14 was
+              deleted by Amendment 2:2022 — polarity verification, careful documentation.
             </li>
             <li>
               <strong>Found a fault during testing.</strong> Reg 643.1 — remedy and restart from the

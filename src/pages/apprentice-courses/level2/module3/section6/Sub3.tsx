@@ -142,7 +142,7 @@ const quizQuestions = [
   {
     id: 5,
     question:
-      'Reg 570.6.7.203 says stationary secondary batteries in dwellings "shall be installed in a suitable location taking account of manufacturer\'s instructions and PAS 63100". What is PAS 63100?',
+      'Reg 570.6.7.203 says stationary secondary batteries in dwellings "shall be installed in a suitable location taking account of manufacturer’s instructions and PAS 63100". What is PAS 63100?',
     options: [
       'A BSI product standard defining the cell-level overcharge, short-circuit and crush tests a manufacturer must pass.',
       'A BSI specification setting fire safety requirements for domestic battery storage — location, separation and detection.',
@@ -378,7 +378,7 @@ export default function Sub3() {
           <p>
             A 10 kWh LFP pack typically contains 16 cells of 3.2 V nominal each (in series for
             roughly 51 V) repeated several times in parallel — so 100+ individual cells in total.
-            Each cell can drift in voltage, temperature and capacity over the pack\'s life. Without
+            Each cell can drift in voltage, temperature and capacity over the pack’s life. Without
             active management, the cells go out of balance and the pack degrades fast.
           </p>
           <p>The BMS is the dedicated electronics that sits inside the battery enclosure and:</p>
@@ -551,7 +551,7 @@ export default function Sub3() {
             <li>The cell heats up faster than it can dissipate that heat.</li>
             <li>
               Above the chemistry-specific threshold (around 200 °C for NMC, around 270 °C for LFP),
-              the cell\'s internal materials decompose exothermically, releasing more heat and
+              the cell’s internal materials decompose exothermically, releasing more heat and
               flammable gases.
             </li>
             <li>
@@ -593,7 +593,7 @@ export default function Sub3() {
           onSite="Even a small battery install can trip into G99 territory if the inverter export rating exceeds 16 A per phase. A single hybrid inverter at 5 kW is roughly 22 A per phase — over the threshold. Most domestic battery installs in 2026 require a G99 application, not the simpler G98 process."
         >
           <p>
-            The G98 / G99 split is on the inverter\'s export current, not on whether the install
+            The G98 / G99 split is on the inverter’s export current, not on whether the install
             includes a battery. Reg 551.7.4 sets the same threshold — 16 A per phase decides whether
             the protection settings are fixed by BS EN 50549-1 (G98) or agreed with the DNO (G99).
           </p>
@@ -689,7 +689,7 @@ export default function Sub3() {
             <li>
               <strong>Transport.</strong> Lithium batteries are classed as dangerous goods (UN 3480
               / UN 3481) for transport — they must be packaged and shipped per ADR rules. Most
-              installers use the manufacturer\'s take-back scheme, which provides compliant
+              installers use the manufacturer’s take-back scheme, which provides compliant
               packaging.
             </li>
             <li>
@@ -761,7 +761,7 @@ export default function Sub3() {
           whyItMatters={
             <>
               Battery retrofits onto existing PV are now a routine job. The wrong design choice
-              wastes the customer\'s money or breaches the DNO connection agreement. Knowing when
+              wastes the customer’s money or breaches the DNO connection agreement. Knowing when
               DC-coupling is worth the extra capital outlay and when AC-coupling is the pragmatic
               call separates an experienced installer from one going through the motions.
             </>

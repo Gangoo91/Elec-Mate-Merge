@@ -578,6 +578,59 @@ Deno.serve(async (req: Request): Promise<Response> => {
       .eq('event_type', 'EXPIRATION')
       .gte('created_at', weekAgo.toISOString());
 
+    // ── Why Stripe subscriptions actually ended ──────────────────────────
+    // From `subscription_cancellations`, which carries Stripe's own
+    // `cancellation_details` for every ended subscription. Two things this is
+    // the only source for:
+    //
+    //   * trials that never converted, separated from real churn. Across the
+    //     486 historical cancellations backfilled on 27 Sep, 242 — half — were
+    //     trials. Counting those as churn overstates it twofold.
+    //   * subscriptions lost to a failed card or a chargeback rather than a
+    //     decision: 48 of those 486. Nobody chose to leave, so it is the
+    //     cheapest churn there is to win back, and it was invisible until now.
+    //
+    // Wrapped: a reporting section must never take the digest down with it.
+    let endedTrial = 0;
+    let endedVoluntary = 0;
+    let endedBilling = 0;
+    let endedWithDiscount = 0;
+    let stripeComments: Array<{ comment: string; feedback: string | null; trial: boolean }> = [];
+    try {
+      // Filtered on `canceled_at`, NOT `created_at`. `created_at` is when we
+      // wrote the row down, and the 486 rows recovered from Stripe on 27 Sep
+      // were all written that day for cancellations going back months — so
+      // filtering on it would report every historical cancellation as having
+      // happened this week.
+      const { data: endedRows } = await db
+        .from('v_subscription_endings')
+        .select('ending_kind, ending_cause, had_discount, comment, feedback')
+        .gte('canceled_at', weekAgo.toISOString());
+      // Split on `ending_kind` (ground truth: did money ever move), NOT on
+      // trial dates. Someone who never made a real payment was never a
+      // customer, so they are a failed conversion and counting them as churn
+      // roughly doubles the figure — across the 486 historical endings, 242 had
+      // never paid a penny.
+      for (const r of endedRows ?? []) {
+        if (r.ending_kind !== 'churn') endedTrial++;
+        else if (r.ending_cause === 'billing_failure') endedBilling++;
+        else endedVoluntary++;
+        if (r.had_discount) endedWithDiscount++;
+      }
+      // Verbatim words beat any category. These are typed by the customer into
+      // Stripe's own cancel form, so they arrive unprompted and unfiltered.
+      stripeComments = (endedRows ?? [])
+        .filter((r) => r.comment && String(r.comment).trim())
+        .slice(0, 12)
+        .map((r) => ({
+          comment: String(r.comment),
+          feedback: r.feedback ?? null,
+          trial: Boolean(r.died_in_trial),
+        }));
+    } catch {
+      /* additive section — never fail the digest over it */
+    }
+
     // Every store answer this week, not just the ones belonging to paid
     // leavers — trial cancellers tell us why too, and that is exactly the
     // population the in-app survey never reaches.
@@ -755,6 +808,28 @@ Deno.serve(async (req: Request): Promise<Response> => {
           <tr><td style="padding:2px 0;"><strong>Store paid lost</strong> — store subs that expired this week AND had genuinely paid (checked against RevenueCat revenue; trial expiries excluded). ${storeCancels ?? 0} turned auto-renew off (${storeCancelsUnknown === storeCancels ? 'incl. trials' : storeCancelLabel}); ${storeExpirations ?? 0} expired in total.</td></tr>
           <tr><td style="padding:2px 0;">Survey cards below are web subscribers — Apple &amp; Google make store users cancel in store settings, so they never see the in-app questions.</td></tr>
         </table>
+
+        ${sectionHead('🧾', 'How Stripe subscriptions ended', 'Churn is someone who made a real payment and then left. Anything that never paid is a failed conversion, counted separately.')}
+        <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 6px; font-size:13px; color:#333333; line-height:1.6;">
+          <tr><td style="padding:3px 0;"><strong style="color:#b02a2a;">${endedVoluntary + endedBilling}</strong> TRUE CHURN <span style="color:#666666;">— paid at least one real invoice, then left</span></td></tr>
+          <tr><td style="padding:3px 0 3px 18px; color:#555555;">${endedVoluntary} chose to leave · <strong style="color:#8a6d00;">${endedBilling}</strong> lost to a failed card or chargeback <span style="color:#666666;">(nobody chose that — cheapest to win back)</span></td></tr>
+          <tr><td style="padding:3px 0;"><strong>${endedTrial}</strong> failed conversion <span style="color:#666666;">— never paid us a penny, so not churn. A different problem: retention work cannot fix it.</span></td></tr>
+          ${endedWithDiscount ? `<tr><td style="padding:3px 0;"><strong>${endedWithDiscount}</strong> still had a retention discount running when it ended</td></tr>` : ''}
+        </table>
+        ${
+          stripeComments.length
+            ? `<table width="100%" cellpadding="0" cellspacing="0" style="font-size:13px; margin:0 0 4px;">
+                ${stripeComments
+                  .map(
+                    (c) => `<tr><td style="padding:7px 0; border-bottom:1px solid #eeeeee; color:#111111;">
+                      &ldquo;${esc(c.comment)}&rdquo;
+                      <span style="color:#777777; font-size:11.5px;">— ${esc(c.feedback ?? 'no category')}${c.trial ? ' · trial' : ''}</span>
+                    </td></tr>`
+                  )
+                  .join('')}
+              </table>`
+            : ''
+        }
 
         ${sectionHead('💸', 'Paying customers lost this week', 'Verified against real payments. Reasons come from the cancel survey where they gave one — store users never see it.')}
         ${

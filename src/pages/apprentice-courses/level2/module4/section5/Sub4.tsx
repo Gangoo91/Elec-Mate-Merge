@@ -316,7 +316,7 @@ const nonConformances = [
     fix: 'Fit the missing labels. Sticky-back BS 951 labels for bonding clamps. Standard RCD test notice on the CU. Mixed-cable-colours notice if the install has both old and new cable colours. EV / PV notices per Sections 722 / 712.',
     avoid:
       'Carry a label kit in the van — BS 951 stickers, RCD test notice, mixed-colours notice, periodic inspection notice. Fit them as you go, not as an afterthought.',
-    reg: 'Reg 514.12 / 514.13 / 514.14',
+    reg: 'Reg 514.12 / 514.13',
   },
   {
     n: 10,

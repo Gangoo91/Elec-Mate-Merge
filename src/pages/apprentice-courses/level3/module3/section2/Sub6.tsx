@@ -331,7 +331,7 @@ export default function Sub6() {
 
         <ConceptBlock
           title="L × di/dt — opening an inductive circuit hurts"
-          plainEnglish="If the current was 1 A and you open the switch, di/dt is huge (almost infinite over a few microseconds). The inductor responds with a back-EMF (V = L × di/dt) that can be hundreds or thousands of volts. That\'s the spark you see across opening contactor contacts."
+          plainEnglish="If the current was 1 A and you open the switch, di/dt is huge (almost infinite over a few microseconds). The inductor responds with a back-EMF (V = L × di/dt) that can be hundreds or thousands of volts. That’s the spark you see across opening contactor contacts."
           onSite="A 0.5 H solenoid coil carrying 0.5 A, opened in 10 μs: di/dt = 0.5 / 10⁻⁵ = 50 000 A/s. V_back = L × di/dt = 0.5 × 50 000 = 25 000 V. That arcs across the opening contacts, erodes them, and over time destroys the switch."
         >
           <p>Solutions:</p>
@@ -491,7 +491,7 @@ export default function Sub6() {
         <SectionRule />
 
         <CommonMistake
-          title="Working on a \'switched off' bank of capacitors without bleeding them"
+          title="Working on a ‘switched off' bank of capacitors without bleeding them"
           whatHappens={
             <>
               VFD has been off for an hour. Apprentice opens the cover and touches the DC bus
@@ -544,7 +544,7 @@ export default function Sub6() {
             <>
               Transient suppression has to be matched to the topology. Wrong component, wrong place
               — same intermittent failure. The maths (L × di/dt = back-EMF) tells you what scale of
-              voltage you\'re protecting against.
+              voltage you’re protecting against.
             </>
           }
         />

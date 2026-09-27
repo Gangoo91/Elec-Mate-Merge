@@ -127,10 +127,6 @@ export function parseQuoteFromCostAgent(
       location: jobDetails?.location || '',
     },
     settings: {
-      labourRate:
-        labourSubtotal > 0 && items.find((i) => i.category === 'labour')
-          ? items.find((i) => i.category === 'labour')!.unitPrice * 8
-          : 250,
       overheadPercentage: 0,
       profitMargin: 0,
       vatRate: 20,

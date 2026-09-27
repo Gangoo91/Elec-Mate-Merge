@@ -2,6 +2,7 @@ import React from 'react';
 import { useHaptic } from '@/hooks/useHaptic';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
+import { isKnownNonDwelling, PART_P_NOT_APPLICABLE } from '@/utils/partP';
 
 const cardCn =
   '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
@@ -65,6 +66,11 @@ const StandardsComplianceSection: React.FC<StandardsComplianceSectionProps> = ({
           </div>
         </div>
 
+        {/* ELE-1662 — Part P is for dwellings; a known commercial/industrial
+            installation gets the sentence instead of the chips. See utils/partP. */}
+        {isKnownNonDwelling(formData.installationType) ? (
+          <p className="text-[12px] leading-snug text-white">{PART_P_NOT_APPLICABLE}</p>
+        ) : (
         <div>
           <Label className={labelCn}>Part P compliance</Label>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
@@ -87,6 +93,7 @@ const StandardsComplianceSection: React.FC<StandardsComplianceSectionProps> = ({
             ))}
           </div>
         </div>
+        )}
       </div>
     </div>
   );

@@ -208,8 +208,36 @@ Deno.serve(async (req) => {
           console.log('Profile updated - subscribed:', targetUserId, tier);
         }
 
-        // Check if this was a promo offer checkout
-        const offerId = session.metadata?.offerId;
+        // Check if this was a promo offer checkout.
+        // offerId is set by create-checkout when we apply the code ourselves.
+        // When the customer types a code into Stripe Checkout instead
+        // (allow_promotion_codes), there is no metadata, so fall back to the
+        // promotion code Stripe actually applied to the session.
+        let offerId = session.metadata?.offerId;
+
+        if (!offerId) {
+          let promoCodeId: string | undefined;
+          try {
+            const full = await stripe.checkout.sessions.retrieve(session.id, {
+              expand: ['total_details.breakdown.discounts.discount.promotion_code'],
+            });
+            const applied = full.total_details?.breakdown?.discounts?.[0]?.discount;
+            const promo = applied?.promotion_code;
+            promoCodeId = typeof promo === 'string' ? promo : promo?.id;
+          } catch (e) {
+            console.error('Could not expand session discounts:', e);
+          }
+
+          if (promoCodeId) {
+            const { data: matched } = await supabase
+              .from('promo_offers')
+              .select('id')
+              .eq('stripe_promotion_code_id', promoCodeId)
+              .maybeSingle();
+            offerId = matched?.id;
+          }
+        }
+
         if (offerId) {
           // Update offer redemptions count
           const { data: offer } = await supabase
@@ -223,6 +251,7 @@ Deno.serve(async (req) => {
               .from('promo_offers')
               .update({ redemptions: (offer.redemptions || 0) + 1 })
               .eq('id', offerId);
+            console.log('Offer redemption recorded:', offerId);
           }
         }
         break;

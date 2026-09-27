@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import { NotificationsManager } from '@/components/notifications/NotificationsManager';
 import { SectionSkeleton } from '@/components/ui/page-skeleton';
+import { certificateRoute, certificateHref, certificateNewHref } from '@/utils/certificate-href';
+import { useToast } from '@/hooks/use-toast';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -33,6 +35,7 @@ const SectionLoader = SectionSkeleton;
 const InspectionIndex = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   // Base path for inspection routes
   const basePath = '/electrician/inspection-testing';
@@ -92,89 +95,52 @@ const InspectionIndex = () => {
     setCurrentSection('eicr');
   };
 
+  /**
+   * Open a SAVED report in the form that owns it.
+   *
+   * This used to be an if/else chain naming 8 of the 29 path-routed types, with
+   * a final `else` that opened the EICR form. Every type the chain did not name
+   * — Smoke & CO alarm, BESS, G98/G99, lightning protection, plug-in solar,
+   * heat pump, solar PV, and all seven notices — therefore opened as an EICR
+   * pointed at that certificate's own row, and the EICR form merged its blank
+   * field set into it on autosave. Three separate fixes had each added one
+   * missing branch; the chain is gone rather than extended.
+   *
+   * `certificateRoute` is the single source of truth, shared with every other
+   * surface that links to a certificate.
+   */
   const handleEditReport = (reportId: string, reportType?: string) => {
+    const route = certificateRoute(reportType || '');
+
+    if (route.kind === 'unknown') {
+      // Never guess. Opening the wrong form points a live editor at another
+      // certificate's row, which is how this bug destroyed data before.
+      console.error('[InspectionIndex] No route for report type', { reportType, reportId });
+      toast({
+        title: 'Cannot open this certificate',
+        description: `"${reportType || 'unknown'}" has no editor in this version of the app. Nothing has been changed — please report it to support.`,
+        variant: 'destructive',
+      });
+      return;
+    }
+
     setCurrentReportId(reportId);
     setCurrentReportType(reportType || null);
-
-    // Route to correct form based on report type
-    // New certificate types use dedicated routes (React Router)
-    if (reportType === 'ev-charging') {
-      navigate(`/electrician/inspection-testing/ev-charging/${reportId}`);
-      return;
-    } else if (reportType && reportType.startsWith('fire-alarm')) {
-      // Covers fire-alarm AND all four variants (design / commissioning /
-      // inspection / modification). Each has its own React Router route.
-      // Without this, variants fell through to the default EICR branch
-      // below — losing the user's data into the wrong form.
-      navigate(`/electrician/inspection-testing/${reportType}/${reportId}`);
-      return;
-    } else if (reportType === 'emergency-lighting') {
-      navigate(`/electrician/inspection-testing/emergency-lighting/${reportId}`);
-      return;
-    } else if (reportType === 'pat-testing') {
-      navigate(`/electrician/inspection-testing/pat-testing/${reportId}`);
-      return;
-    } else if (reportType === 'testing-only') {
-      navigate(`/electrician/inspection-testing/testing-only/${reportId}`);
-      return;
-    } else if (reportType === 'disconnection') {
-      navigate(`/electrician/inspection-testing/disconnection/${reportId}`);
-      return;
-    } else if (reportType === 'visual-condition') {
-      // Without this a saved Visual Condition Report fell through to the
-      // default EICR branch below and opened as a blank EICR — the same way
-      // the fire-alarm variants used to lose a user's data.
-      navigate(`/electrician/inspection-testing/visual-condition/${reportId}`);
-      return;
-    } else if (reportType === 'routine-inspection') {
-      // Same trap as the visual condition report: without an explicit branch a
-      // saved routine inspection falls through to the default EICR case below
-      // and opens as a blank EICR, losing the visit.
-      navigate(`/electrician/inspection-testing/routine-inspection/${reportId}`);
-      return;
-    }
-
-    // Legacy certificate types use section-based routing
-    if (reportType === 'eic') {
-      setCurrentSection('eic');
-    } else if (reportType === 'minor-works') {
-      setCurrentSection('minor-works');
-    } else {
-      setCurrentSection('eicr');
-    }
+    navigate(certificateHref(reportType || '', reportId));
   };
 
   const handleNavigate = (section: string, reportId?: string, reportType?: string) => {
-    // Cert types with dedicated routes — navigate directly. Includes the
-    // four fire-alarm variants explicitly so they don't fall back to EICR.
-    const dedicatedRouteTypes = [
-      'ev-charging',
-      'fire-alarm',
-      'fire-alarm-design',
-      'fire-alarm-commissioning',
-      'fire-alarm-inspection',
-      'fire-alarm-modification',
-      'emergency-lighting',
-      'pat-testing',
-      'solar-pv',
-      'testing-only',
-      'disconnection',
-      'visual-condition',
-      'routine-inspection',
-    ];
+    // Same single source of truth as handleEditReport. The two lists this
+    // replaced (`dedicatedRouteTypes` and `directToNewTypes`) had drifted
+    // apart from each other and from the router: `dedicatedRouteTypes` was
+    // missing smoke-co-alarm, bess, plug-in-solar, lightning-protection, the
+    // G98/G99 pair, heat-pump and every notice, while `directToNewTypes` sent
+    // visual-condition and routine-inspection to a `/new` route that does not
+    // exist for them.
     const effectiveType = reportType || section;
-    if (dedicatedRouteTypes.includes(effectiveType) && reportId) {
-      navigate(`/electrician/inspection-testing/${effectiveType}/${reportId}`);
-      return;
-    }
-    // Types that go straight to /new (no hub page)
-    const directToNewTypes = ['testing-only', 'bess', 'plug-in-solar', 'lightning-protection', 'g98-commissioning', 'g99-commissioning', 'smoke-co-alarm', 'disconnection', 'visual-condition', 'routine-inspection'];
-    if (dedicatedRouteTypes.includes(effectiveType) && !reportId) {
-      if (directToNewTypes.includes(effectiveType)) {
-        navigate(`/electrician/inspection-testing/${effectiveType}/new`);
-      } else {
-        navigate(`/electrician/inspection-testing/${effectiveType}`);
-      }
+    const route = certificateRoute(effectiveType);
+    if (route.kind === 'path') {
+      navigate(reportId ? certificateHref(effectiveType, reportId) : certificateNewHref(effectiveType));
       return;
     }
 

@@ -51,7 +51,7 @@ const checks = [
     ],
     correctIndex: 1,
     explanation:
-      'The EICR is a safety document and the handover is part of the inspection. Customers — especially landlords and homeowners without electrical knowledge — cannot be expected to interpret a coded report unaided. The verbal-plus-written handover ensures the duty holder understands what was found, what action is needed, and on what timescale. The handover also documents the inspector\'s discharge of the "communication" half of the EAWR continuing duty. Sending a report by email without explanation is a process failure that leaves real risks unaddressed because the recipient does not understand them.',
+      'The EICR is a safety document and the handover is part of the inspection. Customers — especially landlords and homeowners without electrical knowledge — cannot be expected to interpret a coded report unaided. The verbal-plus-written handover ensures the duty holder understands what was found, what action is needed, and on what timescale. The handover also documents the inspector’s discharge of the "communication" half of the EAWR continuing duty. Sending a report by email without explanation is a process failure that leaves real risks unaddressed because the recipient does not understand them.',
   },
   {
     id: 'm5-s5-sub4-priority',
@@ -151,7 +151,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'Customer pushback on coding is common and usually rooted in cost concern. The professional response is to explain the reasoning, hold the coding, document the conversation. "The installation has been like that for 20 years" is not a defence — it means the installation has been in C2 condition for 20 years and the foreseeable fault has not yet occurred. Code integrity matters more than customer comfort; an inspector who downgrades codes under pressure becomes commercially attractive in the short term and professionally indefensible in the long term. The conversation is documented so the inspector\'s record shows the integrity of the coding decision.',
+      'Customer pushback on coding is common and usually rooted in cost concern. The professional response is to explain the reasoning, hold the coding, document the conversation. "The installation has been like that for 20 years" is not a defence — it means the installation has been in C2 condition for 20 years and the foreseeable fault has not yet occurred. Code integrity matters more than customer comfort; an inspector who downgrades codes under pressure becomes commercially attractive in the short term and professionally indefensible in the long term. The conversation is documented so the inspector’s record shows the integrity of the coding decision.',
   },
   {
     id: 6,

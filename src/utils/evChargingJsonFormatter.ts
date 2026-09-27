@@ -8,6 +8,11 @@ import type { EVChargingPayloadType } from '@/types/ev-charging-payload';
 import { createAccessTracker, reportUnmappedFields } from './reportUnmappedFields';
 import { normalisePdfDates, ukDate } from '@/utils/certDate';
 import { coverKeysFromFormData } from '@/utils/certCoverPayload';
+import { isKnownNonDwelling } from '@/utils/partP';
+import {
+  buildingRegsAddressed,
+  buildingRegsAnswered,
+} from '@/components/inspection/shared/BuildingRegsNotification';
 
 /**
  * The methods permitted by Reg 722.411.4.1, spelled out for the certificate.
@@ -63,6 +68,16 @@ export const formatEVChargingJson = (
     if (typeof value === 'number') return String(value);
     return value;
   };
+
+  // ELE-1662 — Part P is for dwellings only; see utils/partP for why blank means 'applies'.
+  const partPApplies = !isKnownNonDwelling(get('installationType'));
+  // ELE-1663 — Part P is derived from the notification answer (shared with the
+  // EIC); a row that only ever had the old tick keeps it. A function, because
+  // getBool is declared further down and this is only called from the payload.
+  const buildingRegsAddressedOrLegacy = () =>
+    buildingRegsAddressed(formData as Record<string, unknown>, get('installationType')) ||
+    (!buildingRegsAnswered(formData as Record<string, unknown>) &&
+      getBool('buildingRegsCompliance'));
 
   const getNum = (key: string, defaultValue: number = 0): number => {
     track(key);
@@ -486,8 +501,13 @@ export const formatEVChargingJson = (
       bs7671_display: getBool('bs7671Compliance') ? '✓' : '',
       iet_cop: getBool('ietCopCompliance'),
       iet_cop_display: getBool('ietCopCompliance') ? '✓' : '',
-      building_regs: getBool('buildingRegsCompliance'),
-      building_regs_display: getBool('buildingRegsCompliance') ? '✓' : '',
+      // ELE-1662 — never print Part P for a non-dwelling, whatever was ticked
+      // before the premises type was set. See utils/partP.
+      // ELE-1663 — derived from the notification answer, never a separate tick:
+      // addressed = not notifiable, or notifiable and notified. An old row that
+      // only ever had the tick keeps it.
+      building_regs: partPApplies && buildingRegsAddressedOrLegacy(),
+      building_regs_display: partPApplies && buildingRegsAddressedOrLegacy() ? '✓' : '',
     },
 
     // Verification Checklist
@@ -504,12 +524,15 @@ export const formatEVChargingJson = (
 
     // Building Regulations Notification
     building_regs_notification: {
-      required: getBool('buildingRegsRequired'),
-      required_display: getBool('buildingRegsRequired') ? 'Yes' : 'No',
-      via_scheme: getBool('buildingRegsViaScheme'),
-      via_scheme_display: getBool('buildingRegsViaScheme') ? 'Yes' : 'No',
-      submitted: getBool('buildingRegsSubmitted'),
-      submitted_display: getBool('buildingRegsSubmitted') ? 'Yes' : 'No',
+      applies: partPApplies,
+      required: partPApplies && getBool('buildingRegsRequired'),
+      required_display: !partPApplies ? 'N/A' : getBool('buildingRegsRequired') ? 'Yes' : 'No',
+      via_scheme: partPApplies && getBool('buildingRegsViaScheme'),
+      via_scheme_display: !partPApplies ? 'N/A' : getBool('buildingRegsViaScheme') ? 'Yes' : 'No',
+      submitted: partPApplies && getBool('buildingRegsSubmitted'),
+      submitted_display: !partPApplies ? 'N/A' : getBool('buildingRegsSubmitted') ? 'Yes' : 'No',
+      answered: partPApplies && buildingRegsAnswered(formData as Record<string, unknown>),
+      reference: get('buildingRegsReference'),
     },
 
     // Additional Notes
@@ -634,7 +657,7 @@ export const formatEVChargingJson = (
     // Compliance (flat)
     bs7671_compliance: getBool('bs7671Compliance'),
     iet_cop_compliance: getBool('ietCopCompliance'),
-    building_regs_compliance: getBool('buildingRegsCompliance'),
+    building_regs_compliance: partPApplies && buildingRegsAddressedOrLegacy(),
 
     // Certificate
     certificate_number: get('certificateNumber'),

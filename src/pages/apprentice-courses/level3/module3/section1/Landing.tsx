@@ -10,7 +10,7 @@ import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Section 1 — Electrical units and measurements | Level 3 Module 3.1 | Elec-Mate';
 const DESCRIPTION =
-  'Ohm\'s law, electrical quantities, measurement instruments, accuracy and SI units.';
+  'Ohm’s law, electrical quantities, measurement instruments, accuracy and SI units.';
 
 const subsections = [
   {

@@ -112,7 +112,7 @@ const quizQuestions = [
   },
   {
     id: 4,
-    question: 'What\'s an "exposure route"?',
+    question: 'What’s an "exposure route"?',
     options: [
       'The pathway by which a hazard reaches and affects the body — inhalation, absorption, ingestion or injection.',
       'The escape route a worker uses to leave an area where a hazard is present.',
@@ -125,7 +125,7 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question: 'What\'s a "control measure"?',
+    question: 'What’s a "control measure"?',
     options: [
       'A measurement taken to quantify how much of a hazardous substance is present in the air.',
       'Something that reduces the risk from a hazard, sitting within the hierarchy of control.',
@@ -138,7 +138,7 @@ const quizQuestions = [
   },
   {
     id: 6,
-    question: 'What\'s "residual risk"?',
+    question: 'What’s "residual risk"?',
     options: [
       'The risk that existed before any controls were considered.',
       'The risk created by the control measures themselves.',
@@ -189,14 +189,14 @@ const faqs = [
       '3x3 or 5x5 matrices common. Likelihood (1=rare to 5=almost certain) × Severity (1=minor to 5=catastrophic). Score determines required level of control. Many digital RAMS systems automate the scoring.',
   },
   {
-    question: 'What\'s a "tolerable" risk?',
+    question: 'What’s a "tolerable" risk?',
     answer:
       "A risk reduced to a level the organisation accepts after controls. Edges into ALARP — the level at which further reduction would be grossly disproportionate. Tolerable doesn't mean zero.",
   },
   {
     question: 'Why does the wording matter on RAMS?',
     answer:
-      'Inspectors and courts read the words. A RAMS that says "low hazard" when it means "high hazard, low risk" is misleading. Precision in wording demonstrates the assessment was done thoughtfully — sloppy wording suggests it wasn\'t.',
+      'Inspectors and courts read the words. A RAMS that says "low hazard" when it means "high hazard, low risk" is misleading. Precision in wording demonstrates the assessment was done thoughtfully — sloppy wording suggests it wasn’t.',
   },
   {
     question: 'How are hazards prioritised on an assessment?',

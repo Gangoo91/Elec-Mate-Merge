@@ -44,7 +44,7 @@ const checks = [
   },
   {
     id: 'l3-m1-s4-sub3-second',
-    question: 'What\'s a "secondary injury" in electrical incidents?',
+    question: 'What’s a "secondary injury" in electrical incidents?',
     options: [
       'Damage to sensitive electronic equipment caused by the voltage transient that accompanies an arc fault, rather than damage to the people working nearby.',
       'A delayed cardiac effect that develops in the hours after a non-fatal shock, requiring the casualty to be kept under observation overnight.',
@@ -74,7 +74,7 @@ const quizQuestions = [
   {
     id: 1,
     question:
-      'What\'s the threshold above which AC voltage is considered "dangerous" under HSE guidance?',
+      'What’s the threshold above which AC voltage is considered "dangerous" under HSE guidance?',
     options: [
       '25V AC RMS — the limit set for reduced low voltage 110V site supplies (55V to earth), below which no shock controls are needed.',
       '50V AC RMS / 120V DC ripple-free — above this, full EAWR controls apply as routinely shock-hazardous.',
@@ -87,7 +87,7 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question: 'What\'s "shock"?',
+    question: 'What’s "shock"?',
     options: [
       'A sudden surge of voltage on a circuit that damages connected equipment when a fault occurs upstream.',
       'The mechanical jolt felt through a tool when a motor stalls and the back-EMF collapses suddenly.',
@@ -100,7 +100,7 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question: 'What\'s an "electrical burn"?',
+    question: 'What’s an "electrical burn"?',
     options: [
       'A burn caused only by touching equipment that has overheated due to an overloaded circuit, never by the current itself.',
       'Reddening of the skin from prolonged exposure to the UV light given off by a fluorescent or arc lamp.',
@@ -126,7 +126,7 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question: 'What\'s "step potential"?',
+    question: 'What’s "step potential"?',
     options: [
       'The voltage drop measured across a single step of a staircase where a metal handrail has not been bonded.',
       'The voltage difference between the feet planted on the ground near an earth fault, across the ground gradient.',
@@ -139,7 +139,7 @@ const quizQuestions = [
   },
   {
     id: 6,
-    question: 'What\'s "touch potential"?',
+    question: 'What’s "touch potential"?',
     options: [
       'The minimum voltage a test instrument must apply to a terminal to confirm reliable contact before a reading.',
       'The static charge that builds up on a person walking across an insulating floor, discharged on touching earthed metalwork.',
@@ -152,7 +152,7 @@ const quizQuestions = [
   },
   {
     id: 7,
-    question: 'What\'s "induced voltage"?',
+    question: 'What’s "induced voltage"?',
     options: [
       'The small voltage produced by a thermocouple effect where two dissimilar metals are joined at a terminal.',
       'The rise in supply voltage that occurs when a large motor on the same circuit is switched off and its load is removed.',
@@ -190,7 +190,7 @@ const faqs = [
       "RCBO detects earth-leakage (residual current); AFDD (Arc Fault Detection Device, BS 7671 A4:2026 expansion) detects the signature of arc faults that don't trip RCBOs. Both required in some installations under A4:2026; complementary protection.",
   },
   {
-    question: 'What\'s "back-EMF" and why does it matter?',
+    question: 'What’s "back-EMF" and why does it matter?',
     answer:
       'Back-EMF is voltage induced by collapsing magnetic field in inductive load (motor, transformer) when supply is removed. Can reach high voltages briefly; can give shock; reason for caution before touching disconnected motor terminals.',
   },
@@ -588,7 +588,7 @@ export default function Sub3() {
             <>
               You're scheduled for a planned EICR + remedial visit at a small commercial switchroom:
               400V three-phase distribution, 250A main switch, several sub-DBs, mid-week,
-              customer\'s operations continuing in the building.
+              customer’s operations continuing in the building.
             </>
           }
           whatToDo={

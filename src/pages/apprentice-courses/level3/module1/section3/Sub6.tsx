@@ -103,7 +103,7 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question: 'What\'s a "GS38" voltage indicator?',
+    question: 'What’s a "GS38" voltage indicator?',
     options: [
       'A multimeter set to its highest AC voltage range, which is the recommended tool for proving dead.',
       'A neon screwdriver, which lights when voltage is present and is approved for proving circuits dead.',
@@ -155,7 +155,7 @@ const quizQuestions = [
   },
   {
     id: 7,
-    question: 'What\'s a "permit-to-work" in the isolation context?',
+    question: 'What’s a "permit-to-work" in the isolation context?',
     options: [
       'A licence issued by the local authority allowing a contractor to carry out electrical work in a dwelling.',
       'A document the customer signs to confirm they are happy for the supply to be switched off for the day.',
@@ -283,7 +283,7 @@ export default function Sub6() {
         <ConceptBlock
           title="Prove-test-prove + lock-off + tag-out + re-check"
           plainEnglish="The six steps: (1) prove the voltage indicator on a known live source; (2) test the conductors to be isolated; (3) prove the indicator again on the same known live source; (4) fit lock-off device to the isolation point; (5) attach tag identifying operative, circuit, time, work; (6) re-check before starting work. Repeat after any break in the work."
-          onSite="Each step has a purpose. Skipping any one of them creates a failure mode. The L3 supervisor\'s job is to verify all six on every job — observation in the moment, record review afterwards."
+          onSite="Each step has a purpose. Skipping any one of them creates a failure mode. The L3 supervisor’s job is to verify all six on every job — observation in the moment, record review afterwards."
         >
           <p>Why each step matters:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -375,7 +375,7 @@ export default function Sub6() {
         <ContentEyebrow>Implications of compliance and non-compliance</ContentEyebrow>
         <ConceptBlock
           title="What happens when isolation is done right"
-          plainEnglish="Compliance with EAWR Reg 13 = legal duty discharged on the isolation point. Operative protected from re-energisation. Firm\'s defence position strong. Insurance valid. Reputation intact. Audit trail clean."
+          plainEnglish="Compliance with EAWR Reg 13 = legal duty discharged on the isolation point. Operative protected from re-energisation. Firm’s defence position strong. Insurance valid. Reputation intact. Audit trail clean."
           onSite="The cost of doing it right is small (5-10 minutes per circuit, plus equipment). The cost of doing it wrong is enormous. Done-right is the default for L3 operatives."
         >
           <p>Positive implications of compliant isolation:</p>
@@ -436,7 +436,7 @@ export default function Sub6() {
         <ConceptBlock
           title="L3 audit of the isolation procedure"
           plainEnglish="The L3 supervisor verifies the documented procedure is the actual practice. Methods: observation on jobs (planned and unannounced); record review (locks, voltage indicators, calibration, training); incident / near-miss data review; equipment audit."
-          onSite="Audit isn\'t \'gotcha' — it's verifying the system works. Most operatives respond well to a culture of mutual verification once it\'s clear the purpose is safety, not blame."
+          onSite="Audit isn’t ‘gotcha' — it's verifying the system works. Most operatives respond well to a culture of mutual verification once it’s clear the purpose is safety, not blame."
         >
           <p>Audit dimensions:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -499,7 +499,7 @@ export default function Sub6() {
         <ConceptBlock
           title="Multi-source isolation"
           plainEnglish="Modern installations increasingly have multiple sources — PV, battery storage, generator backup, UPS, dual incoming feeds. Each source must be identified, isolated, locked and tagged. Apply prove-test-prove from all directions; PV in particular can back-feed during daylight even with the AC side isolated."
-          onSite="The L3 supervisor\'s first question on any modern installation: \'how many sources are there?'. Walk-through identifies them; isolation strategy addresses each one. PV DC isolation, battery DC isolation, UPS internal battery, generator transfer switch — all need attention."
+          onSite="The L3 supervisor’s first question on any modern installation: ‘how many sources are there?'. Walk-through identifies them; isolation strategy addresses each one. PV DC isolation, battery DC isolation, UPS internal battery, generator transfer switch — all need attention."
         >
           <p>Common multi-source scenarios:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -690,7 +690,7 @@ export default function Sub6() {
         />
 
         <CommonMistake
-          title="One operative removes another's lock to \'save time'"
+          title="One operative removes another's lock to ‘save time'"
           whatHappens={
             <>
               Two operatives working on isolated circuit; one finishes early, sees the other&apos;s
@@ -713,8 +713,8 @@ export default function Sub6() {
           title="Auditing the firm's isolation practice"
           situation={
             <>
-              You\'ve been asked to spend a day auditing the safe-isolation practice across the
-              firm\'s operatives. Three teams currently on different jobs: Team A on a domestic CU
+              You’ve been asked to spend a day auditing the safe-isolation practice across the
+              firm’s operatives. Three teams currently on different jobs: Team A on a domestic CU
               change, Team B on a commercial DB upgrade, Team C on a small fault-finding visit at an
               industrial customer.
             </>

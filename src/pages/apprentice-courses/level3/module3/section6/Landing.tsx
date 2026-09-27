@@ -37,7 +37,7 @@ const subsections = [
   {
     number: 'Subsection 4',
     title: 'Lighting principles: lumens, lux, inverse square, cosine, lumen method (AC 5.1, 5.2)',
-    description: 'Inverse-square law, Lambert\\',
+    description: 'Inverse-square law, Lambert’s cosine law and the lumen method.',
     icon: AlertTriangle,
     href: '/study-centre/apprentice/level3-module3-section6-4',
   },
