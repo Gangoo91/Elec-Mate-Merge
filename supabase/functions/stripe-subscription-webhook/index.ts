@@ -805,6 +805,97 @@ serve(async (req) => {
       return null;
     }
 
+    /**
+     * Helper: write down why a subscription ended.
+     *
+     * Of the 305 subscriptions that ended between 26 May and 27 Sep 2026, only
+     * 176 could be accounted for. The other 129 left no survey row and no
+     * `billing_events` row (that table carries store traffic only), so for 41%
+     * of our churn there was no way to tell a customer who chose to leave from
+     * one whose card bounced — opposite problems needing opposite fixes.
+     *
+     * Stripe was supplying the answer the whole time in
+     * `cancellation_details`: `reason` separates `cancellation_requested` from
+     * `payment_failed`, and a cancellation made through the Stripe portal also
+     * carries `feedback` and a free-text `comment`. This handler read the event
+     * and threw all of it away.
+     *
+     * Fire-and-forget by design. A cancellation is recorded for the record, and
+     * losing the record must never make the webhook fail — a throw here would
+     * leave Stripe retrying us and the customer's access unchanged.
+     */
+    async function recordCancellation(
+      subscription: Stripe.Subscription,
+      customerId: string,
+      userId: string | null
+    ): Promise<void> {
+      try {
+        const details = (
+          subscription as Stripe.Subscription & {
+            cancellation_details?: {
+              reason?: string | null;
+              feedback?: string | null;
+              comment?: string | null;
+            } | null;
+          }
+        ).cancellation_details ?? null;
+
+        const reason = details?.reason ?? null;
+        // Only these two reasons say anything about intent. Anything else —
+        // including Stripe saying nothing at all — stays null rather than being
+        // guessed at, because "we don't know" is the finding we are trying to
+        // stop producing.
+        const voluntary =
+          reason === 'cancellation_requested' ? true : reason === 'payment_failed' ? false : null;
+
+        const item = subscription.items?.data?.[0];
+        const price = item?.price;
+
+        const { error } = await supabase.from('subscription_cancellations').insert({
+          user_id: userId,
+          stripe_customer_id: customerId,
+          subscription_id: subscription.id,
+          source: 'stripe',
+          stripe_reason: reason,
+          feedback: details?.feedback ?? null,
+          comment: details?.comment ?? null,
+          voluntary,
+          tier: subscription.metadata?.planId ?? null,
+          price_id: price?.id ?? null,
+          amount_pence: typeof price?.unit_amount === 'number' ? price.unit_amount : null,
+          currency: price?.currency ?? subscription.currency ?? null,
+          cancel_at_period_end: subscription.cancel_at_period_end ?? null,
+          canceled_at: subscription.canceled_at
+            ? new Date(subscription.canceled_at * 1000).toISOString()
+            : null,
+          period_end: subscription.current_period_end
+            ? new Date(subscription.current_period_end * 1000).toISOString()
+            : null,
+          detail: { cancellation_details: details, metadata: subscription.metadata ?? null },
+        });
+
+        // 23505 = the unique on subscription_id. Stripe redelivers webhooks, so
+        // a second delivery landing here is correct behaviour, not a problem.
+        if (error && (error as { code?: string }).code !== '23505') {
+          logger.warn('Could not record cancellation reason', {
+            subscriptionId: subscription.id,
+            error: error.message,
+          });
+        } else if (!error) {
+          logger.info('Recorded cancellation reason', {
+            subscriptionId: subscription.id,
+            reason,
+            voluntary,
+          });
+        }
+      } catch (err: unknown) {
+        logger.warn('Could not record cancellation reason', {
+          subscriptionId: subscription.id,
+          error: (err as Error)?.message,
+        });
+      }
+    }
+
     // Helper: Update user subscription status
     async function updateSubscriptionStatus(
       userId: string,
@@ -1113,6 +1204,62 @@ serve(async (req) => {
         const subIsTrialing =
           subscription.status === 'trialing' ||
           !!(subscription.trial_end && subscription.trial_end * 1000 > Date.now());
+
+        // 🔴 Pausing stops the billing immediately, but the customer has
+        // already PAID for the period they are in. Cutting access the moment
+        // they pause takes both the money and the product — which is exactly
+        // what happened to a customer who asked to pause on 21 Sep 2026, was
+        // billed on the 25th because it wasn't actioned, and then lost access
+        // on the 27th when it finally was.
+        //
+        // So: keep them in until the period they paid for runs out, then stop.
+        // This is granted as DATED free access rather than `subscribed`,
+        // because `subscribed` is a boolean with no expiry and the nightly
+        // `expire_*_free_access` job is the only thing that can end it.
+        //
+        // The date is captured ONCE, on the transition into paused. It must
+        // never be pushed further out, because Stripe keeps rolling
+        // `current_period_end` forward on a paused subscription (it issues a
+        // voided invoice each cycle). Re-reading it later would hand over the
+        // full product indefinitely to anyone who kept re-pausing — the hole
+        // the `isPaused` check above exists to close.
+        if (isPaused && periodEnd && periodEnd.getTime() > Date.now()) {
+          try {
+            const { data: existing } = await supabase
+              .from('profiles')
+              .select('free_access_granted, free_access_expires_at')
+              .eq('id', userId)
+              .maybeSingle();
+
+            // Only on the transition in. If a pause grant is already running,
+            // leave it exactly as it is.
+            if (!existing?.free_access_granted || !existing?.free_access_expires_at) {
+              await supabase
+                .from('profiles')
+                .update({
+                  free_access_granted: true,
+                  free_access_expires_at: periodEnd.toISOString(),
+                  free_access_reason: `Paused subscription ${subscription.id} — honouring the period already paid for. Expires ${periodEnd.toISOString().slice(0, 10)}.`,
+                  updated_at: new Date().toISOString(),
+                })
+                .eq('id', userId);
+
+              logger.info('Paused sub — access honoured to paid-through date', {
+                userId,
+                subscriptionId: subscription.id,
+                paidThrough: periodEnd.toISOString(),
+              });
+            }
+          } catch (pauseErr) {
+            // Non-fatal: never let this make the webhook fail and have Stripe
+            // retry. Worst case the customer loses access early, which is the
+            // behaviour we had before this block existed.
+            logger.warn('Failed to honour paid period on pause (non-fatal)', {
+              userId,
+              error: pauseErr instanceof Error ? pauseErr.message : String(pauseErr),
+            });
+          }
+        }
 
         await updateSubscriptionStatus(
           userId,
@@ -1643,6 +1790,10 @@ serve(async (req) => {
         const userId = await findUserByCustomer(customerId, metadataUserId);
         if (!userId) {
           logger.error('No user found for customer — cannot process cancellation', { customerId });
+          // Record it anyway, unattached. A cancellation we cannot match to an
+          // account is precisely the kind that used to disappear without trace,
+          // and the Stripe customer id is enough to chase it by hand later.
+          await recordCancellation(subscription, customerId, null);
           break;
         }
 
@@ -1673,6 +1824,11 @@ serve(async (req) => {
         }
 
         if (!hasOtherActiveSub) {
+          // Inside this branch on purpose. An upgrade also fires
+          // `subscription.deleted` for the old subscription, and recording that
+          // as a cancellation would count our best customers as churn.
+          await recordCancellation(subscription, customerId, userId);
+
           // Read pre-cancel profile state. We need:
           //   - business_ai_enabled → deprovision agent below
           //   - subscription_tier   → pick the right win-back coupon/copy

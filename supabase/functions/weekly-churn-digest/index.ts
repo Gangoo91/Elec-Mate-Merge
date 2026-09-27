@@ -467,9 +467,24 @@ Deno.serve(async (req: Request): Promise<Response> => {
     // three and the subscription resumes on its own. They are still worth a
     // note in the digest, which is why they sit alongside 'stayed' here rather
     // than being filtered out of the week entirely.
-    const savable = people.filter(
-      (r) => r.outcome === 'pending' || r.outcome === 'stayed' || r.outcome === 'paused'
-    );
+    //
+    // 🔴 'pending' used to be in this list, which meant the digest reported
+    // people who never decided anything as saves. On 27 Sep 2026 there were 61
+    // of them and 45 had already gone — so this line was overstating the save
+    // rate by roughly threefold. They still belong in the digest, because they
+    // are the warmest follow-up in it, but they are their own bucket now.
+    // `reconcile_cancel_survey_outcomes` resolves them nightly once reality is
+    // known, so anything still pending here is genuinely undecided.
+    //
+    // Two different questions, which the old single bucket conflated:
+    //   `saved`   — how did we do? Reporting. Nobody needs an email.
+    //   `savable` — who is still winnable? The action list this digest exists
+    //               to produce. A subscriber who clicked "stayed" is done; the
+    //               undecided and the paused are the ones a personal reply
+    //               still moves.
+    const saved = people.filter((r) => r.outcome === 'stayed' || r.outcome === 'paused');
+    const undecided = people.filter((r) => r.outcome === 'pending');
+    const savable = [...undecided, ...people.filter((r) => r.outcome === 'paused')];
     const heavy = people.filter((r) => r.outcome === 'cancelled' && num(r, 'hours_30d') >= 3);
     const tourists = people.filter((r) => r.outcome === 'cancelled' && num(r, 'tenure_days') <= 2);
     const activated = people.filter(
@@ -840,7 +855,10 @@ Deno.serve(async (req: Request): Promise<Response> => {
     const { error: mailErr } = await resend.emails.send({
       from: 'Elec-Mate <noreply@elec-mate.com>',
       to: ['founder@elec-mate.com'],
-      subject: `Churn digest — ${payingLost + storeGone.length} paying lost, ${savable.length} savable (w/e ${ukDate(now)})`,
+      // `saved` and `undecided` reported separately: the old subject line added
+      // them together under "savable", so a week where nobody was actually kept
+      // could still read as a good week.
+      subject: `Churn digest — ${payingLost + storeGone.length} paying lost, ${saved.length} saved, ${undecided.length} undecided (w/e ${ukDate(now)})`,
       html,
     });
     if (mailErr) throw new Error(`Digest email failed: ${mailErr.message}`);
