@@ -12,6 +12,16 @@ const corsHeaders = {
 const PDFMONKEY_API_KEY = Deno.env.get('PDFMONKEY_API_KEY');
 const QUOTE_TEMPLATE_ID = 'B9CD1B3D-71A2-4F67-84E9-B81E0DC3E0B2';
 const INVOICE_TEMPLATE_ID = 'DC891A6A-4B38-48F5-A7DB-7CD0B550F4A2';
+/*
+ * ELE-1704 — credit notes.
+ *
+ * Read from the environment, NOT hard-coded like the two above, because the
+ * template has to be created in PDFMonkey before it has an id. Unset means
+ * credit-note mode refuses with a clear message; it can never fall through to
+ * the invoice template, which would put the word INVOICE at the top of a
+ * document that gives money back.
+ */
+const CREDIT_NOTE_TEMPLATE_ID = Deno.env.get('PDFMONKEY_CREDIT_NOTE_TEMPLATE_ID') ?? '';
 
 // Briefing template IDs - different templates for different briefing types
 const BRIEFING_TEMPLATES = {
@@ -289,6 +299,11 @@ serve(async (req) => {
       quote,
       companyProfile,
       invoice_mode,
+      // ELE-1704. `creditNote` carries the SAVED figures and the statutory
+      // reference; `quote` carries the credited lines, so the whole invoice
+      // payload builder below is reused rather than duplicated.
+      credit_note_mode,
+      creditNote,
       briefing,
       briefing_mode,
       documentId: requestDocumentId,
@@ -496,6 +511,18 @@ serve(async (req) => {
       TEMPLATE_ID =
         BRIEFING_TEMPLATES[briefingType as keyof typeof BRIEFING_TEMPLATES] ||
         BRIEFING_TEMPLATES['general'];
+    } else if (credit_note_mode) {
+      if (!CREDIT_NOTE_TEMPLATE_ID) {
+        console.error('[PDF-MONKEY] PDFMONKEY_CREDIT_NOTE_TEMPLATE_ID is not set');
+        return new Response(
+          JSON.stringify({
+            error:
+              'The credit note PDF template has not been set up yet. Set PDFMONKEY_CREDIT_NOTE_TEMPLATE_ID.',
+          }),
+          { status: 501, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+      TEMPLATE_ID = CREDIT_NOTE_TEMPLATE_ID;
     } else {
       TEMPLATE_ID = invoice_mode ? INVOICE_TEMPLATE_ID : QUOTE_TEMPLATE_ID;
     }
@@ -602,7 +629,7 @@ serve(async (req) => {
       };
 
       payload = transformedBriefing;
-    } else if (invoice_mode) {
+    } else if (invoice_mode || credit_note_mode) {
       // Transform to invoice format - USE FRESH DATA
       // Use bank details from invoice settings first, fallback to company profile
       const bankDetails =
@@ -1296,6 +1323,71 @@ serve(async (req) => {
         _cache_bust: Date.now(),
         _generated_at: new Date().toISOString(),
       };
+
+      /*
+       * ELE-1704 — the credit-note overlay.
+       *
+       * Everything above is the invoice payload, reused verbatim: a credit
+       * note has the same lines, the same VAT treatment and the same CIS, and
+       * a second implementation of any of that is a second opinion the VAT
+       * return would eventually notice.
+       *
+       * What is added here is the part a credit note has and an invoice does
+       * not: its own number, the statutory reference to the invoice it
+       * corrects, and the SAVED totals.
+       */
+      if (credit_note_mode) {
+        const storedTotal = Number(creditNote?.total);
+        if (!creditNote?.number || !isFinite(storedTotal)) {
+          return new Response(
+            JSON.stringify({ error: 'creditNote.number and creditNote.total are required' }),
+            { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
+
+        /*
+         * 🔴 The figures the template prints come from the DATABASE, not from
+         * the recompute above — see the template comment. But the two must
+         * still agree: the line table and the VAT breakdown ARE the recompute,
+         * so if they disagree with the headline the customer gets a document
+         * whose rows do not add up to its total. Better to fail than to issue
+         * that. A penny of tolerance for float noise.
+         */
+        if (Math.abs(storedTotal - Number(total)) > 0.011) {
+          console.error('[PDF-MONKEY] credit note total mismatch', {
+            stored: storedTotal,
+            recomputed: total,
+            creditNote: creditNote?.number,
+          });
+          return new Response(
+            JSON.stringify({
+              error:
+                'This credit note could not be rendered: the saved total and the line items disagree. Nothing was generated.',
+              stored: storedTotal,
+              recomputed: total,
+            }),
+            { status: 409, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
+
+        const gbpCn = (v: number) =>
+          `£${(Number(v) || 0).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        const cnCis = Number(creditNote?.cisAmount) || 0;
+
+        (payload as Record<string, unknown>).creditNote = {
+          number: creditNote.number,
+          // Built by `creditNoteReference` on the client so the PDF, the app
+          // and the accounting push cannot word it three different ways.
+          reference: creditNote.reference || '',
+          issuedAt: creditNote.issuedAt || new Date().toISOString(),
+          reason: creditNote.reason || '',
+          alreadyPaid: Boolean(creditNote.alreadyPaid),
+          total: storedTotal,
+          totalFormatted: gbpCn(storedTotal),
+          cisAmount: cnCis,
+          netAfterCisFormatted: gbpCn(storedTotal - cnCis),
+        };
+      }
     } else {
       // Get items from quote - handle both camelCase and snake_case
       const quoteItems = freshQuote?.items || [];

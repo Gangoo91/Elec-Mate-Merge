@@ -73,6 +73,21 @@ const ROWS: Record<string, unknown[]> = {
       total: 1115.77, accepted_at: new Date(Date.now() - 115 * 864e5).toISOString(),
       first_sent_at: new Date(Date.now() - 118 * 864e5).toISOString(), acceptance_method: null },
   ],
+  /*
+   * ELE-1704 — two credit notes already raised, one of them VOID.
+   *
+   * The void row is the point: it must NOT count towards "already credited"
+   * (voiding is how an issued credit note is undone, so it has given nothing
+   * back) but it is still a real row the list has to survive.
+   */
+  credit_notes: [
+    { id: 'cn1', credit_note_number: 'Credit/001', invoice_id: 'inv-1',
+      invoice_number: 'Invoice/042', total: 120, cis_amount: 0, status: 'issued',
+      reason: 'Second circuit not required', created_at: new Date(Date.now() - 2 * 864e5).toISOString() },
+    { id: 'cn2', credit_note_number: 'Credit/002', invoice_id: 'inv-1',
+      invoice_number: 'Invoice/042', total: 999, cis_amount: 0, status: 'void',
+      reason: 'Raised in error', created_at: new Date(Date.now() - 1 * 864e5).toISOString() },
+  ],
 };
 
 const makeChain = (table: string): any => {

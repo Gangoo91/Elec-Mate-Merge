@@ -5,7 +5,20 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { FileText, Send, AlertCircle, Plus, CheckCircle, Search, ArrowLeft, X, Clock, ChevronRight, ArrowUpDown, FileSpreadsheet } from 'lucide-react';
+import {
+  FileText,
+  Send,
+  AlertCircle,
+  Plus,
+  CheckCircle,
+  Search,
+  ArrowLeft,
+  X,
+  Clock,
+  ChevronRight,
+  ArrowUpDown,
+  FileSpreadsheet,
+} from 'lucide-react';
 import InvoiceExportSheet from '@/components/electrician/invoice-builder/InvoiceExportSheet';
 import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
 import { isPast, addHours } from 'date-fns';
@@ -19,6 +32,8 @@ import { VoiceHeaderButton } from '@/components/electrician/VoiceHeaderButton';
 import { QuoteInvoiceAnalytics } from '@/components/electrician/analytics';
 import StripeConnectBanner from '@/components/electrician/StripeConnectBanner';
 import UninvoicedQuotesCard from '@/components/electrician/UninvoicedQuotesCard';
+import CreditNoteSheet from '@/components/electrician/invoice-builder/CreditNoteSheet';
+import { useCreditNoteTotals } from '@/hooks/useCreditNotes';
 import { InvoiceCard } from '@/components/electrician/invoice-builder/InvoiceCard';
 import { isInvoiceOverdue } from '@/utils/invoice-status';
 import { useAccountingIntegrations } from '@/hooks/useAccountingIntegrations';
@@ -73,10 +88,17 @@ const InvoicesPage = () => {
   const [deletingInvoiceId, setDeletingInvoiceId] = useState<string | null>(null);
   const [stripeRefreshKey, setStripeRefreshKey] = useState(0);
   const [creatingChaseTasks, setCreatingChaseTasks] = useState(false);
-  const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'value-high' | 'due-soonest'>('newest');
+  const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'value-high' | 'due-soonest'>(
+    'newest'
+  );
   const [quickFilter, setQuickFilter] = useState<'part-paid' | null>(null);
   const [dateRange, setDateRange] = useState<'all' | '30d' | '90d'>('all');
   const [editGuardInvoice, setEditGuardInvoice] = useState<Quote | null>(null);
+  // ELE-1704 — the destination for the advice this page has always given.
+  const [creditingInvoice, setCreditingInvoice] = useState<Quote | null>(null);
+  // ELE-1704 — one query for every invoice's credit total, so each card can
+  // show it without a query of its own.
+  const { creditedByInvoice, refetch: refetchCreditTotals } = useCreditNoteTotals();
 
   // Pull to refresh handler
   const handleRefresh = useCallback(async () => {
@@ -248,8 +270,7 @@ const InvoicesPage = () => {
   // reflected in the accounts (the correct path is a credit note/discount), and
   // edits don't re-sync — so we explain that before letting them proceed. ELE-1218.
   const handleEditInvoice = (invoice: Quote) => {
-    const hasPayment =
-      invoice.invoice_status === 'paid' || (invoice.total_paid || 0) > 0.005;
+    const hasPayment = invoice.invoice_status === 'paid' || (invoice.total_paid || 0) > 0.005;
     const isSynced = !!invoice.external_invoice_id;
     if (hasPayment || isSynced) {
       setEditGuardInvoice(invoice);
@@ -302,8 +323,6 @@ const InvoicesPage = () => {
     setDeletingInvoiceId(null);
   };
 
-
-
   // Calculate stats
   const stats = useMemo(() => {
     const draft = invoices.filter((i) => i.invoice_status === 'draft');
@@ -316,7 +335,10 @@ const InvoicesPage = () => {
       return at && at.getMonth() === now.getMonth() && at.getFullYear() === now.getFullYear();
     });
     const sumTotal = (list: typeof invoices) =>
-      list.reduce((sum, inv) => sum + (typeof inv.total === 'number' && !isNaN(inv.total) ? inv.total : 0), 0);
+      list.reduce(
+        (sum, inv) => sum + (typeof inv.total === 'number' && !isNaN(inv.total) ? inv.total : 0),
+        0
+      );
     const sumOutstanding = (list: typeof invoices) =>
       list.reduce((sum, inv) => sum + Math.max(0, (inv.total || 0) - (inv.total_paid || 0)), 0);
     const unpaid = invoices.filter(
@@ -345,7 +367,8 @@ const InvoicesPage = () => {
       const overdueInvoices = invoices.filter(isInvoiceOverdue);
 
       const tasks = overdueInvoices.map((inv) => ({
-        title: `Chase payment: Invoice ${inv.invoice_number || ''}${inv.client?.name ? ` — ${inv.client.name}` : ''}`.trim(),
+        title:
+          `Chase payment: Invoice ${inv.invoice_number || ''}${inv.client?.name ? ` — ${inv.client.name}` : ''}`.trim(),
         priority: 'high' as const,
         dueAt: new Date().toISOString(),
         tags: ['chase', 'invoice'],
@@ -381,9 +404,7 @@ const InvoicesPage = () => {
         filtered = filtered.filter((i) => {
           if (i.invoice_status !== 'paid') return false;
           const at = i.invoice_paid_at ? new Date(i.invoice_paid_at) : null;
-          return (
-            !!at && at.getMonth() === now.getMonth() && at.getFullYear() === now.getFullYear()
-          );
+          return !!at && at.getMonth() === now.getMonth() && at.getFullYear() === now.getFullYear();
         });
       } else {
         filtered = filtered.filter((i) => i.invoice_status === activeFilter);
@@ -401,9 +422,7 @@ const InvoicesPage = () => {
     }
 
     if (quickFilter === 'part-paid') {
-      filtered = filtered.filter(
-        (i) => i.invoice_status !== 'paid' && (i.total_paid || 0) > 0.005
-      );
+      filtered = filtered.filter((i) => i.invoice_status !== 'paid' && (i.total_paid || 0) > 0.005);
     }
 
     if (dateRange !== 'all') {
@@ -559,13 +578,18 @@ const InvoicesPage = () => {
                 </div>
                 <button
                   className="text-[13px] text-white font-medium flex-shrink-0 touch-manipulation h-12 px-2"
-                  onClick={() => { setIsSearchOpen(false); setSearchQuery(''); }}
+                  onClick={() => {
+                    setIsSearchOpen(false);
+                    setSearchQuery('');
+                  }}
                 >
                   Cancel
                 </button>
               </div>
               {searchQuery.trim() && (
-                <p className="text-[12px] text-white/50">{filteredInvoices.length} result{filteredInvoices.length !== 1 ? 's' : ''}</p>
+                <p className="text-[12px] text-white/50">
+                  {filteredInvoices.length} result{filteredInvoices.length !== 1 ? 's' : ''}
+                </p>
               )}
             </div>
             <div className="flex-1 overflow-y-auto px-4 pb-8 space-y-3">
@@ -582,8 +606,12 @@ const InvoicesPage = () => {
                       className="w-full flex items-center justify-between py-3 border-b border-white/[0.08] touch-manipulation active:bg-white/[0.04] transition-all text-left"
                     >
                       <div className="flex-1 min-w-0">
-                        <p className="text-[14px] font-medium text-white truncate">{invoice.client?.name || 'No client'}</p>
-                        <p className="text-[12px] text-white/50 mt-0.5">{invoice.invoice_number} · {invoice.items?.length || 0} items</p>
+                        <p className="text-[14px] font-medium text-white truncate">
+                          {invoice.client?.name || 'No client'}
+                        </p>
+                        <p className="text-[12px] text-white/50 mt-0.5">
+                          {invoice.invoice_number} · {invoice.items?.length || 0} items
+                        </p>
                       </div>
                       <span className="text-[14px] font-semibold text-white tabular-nums ml-3">
                         {formatCurrency(invoice.total)}
@@ -599,7 +627,9 @@ const InvoicesPage = () => {
               ) : (
                 <div className="space-y-4 pt-2">
                   <div>
-                    <p className="text-[11px] text-white/50 uppercase tracking-wider mb-2">Recent Invoices</p>
+                    <p className="text-[11px] text-white/50 uppercase tracking-wider mb-2">
+                      Recent Invoices
+                    </p>
                     <div className="space-y-2">
                       {invoices.slice(0, 5).map((invoice) => (
                         <button
@@ -611,8 +641,12 @@ const InvoicesPage = () => {
                           className="w-full flex items-center justify-between py-3 border-b border-white/[0.08] touch-manipulation active:bg-white/[0.04] transition-all text-left"
                         >
                           <div className="flex-1 min-w-0">
-                            <p className="text-[14px] font-medium text-white truncate">{invoice.client?.name || 'No client'}</p>
-                            <p className="text-[12px] text-white/50 mt-0.5">{invoice.invoice_number} · {invoice.items?.length || 0} items</p>
+                            <p className="text-[14px] font-medium text-white truncate">
+                              {invoice.client?.name || 'No client'}
+                            </p>
+                            <p className="text-[12px] text-white/50 mt-0.5">
+                              {invoice.invoice_number} · {invoice.items?.length || 0} items
+                            </p>
                           </div>
                           <span className="text-[14px] font-semibold text-white tabular-nums ml-3">
                             {formatCurrency(invoice.total)}
@@ -631,50 +665,58 @@ const InvoicesPage = () => {
       {/* Header */}
       <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-md border-b border-white/[0.06]">
         <div className="flex items-center h-14 px-4 gap-2">
-              <button
-                onClick={() => navigate('/electrician/business')}
-                className="h-10 w-10 -ml-2 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation"
-              >
-                <ArrowLeft className="h-5 w-5" />
-              </button>
-              <h1 className="flex-1 text-[22px] font-bold text-white truncate tracking-tight">Invoices</h1>
-              <button
-                onClick={() => navigate('/electrician/quotes')}
-                className="h-8 px-2.5 rounded-lg bg-white/[0.08] text-[11px] font-medium text-white/90 touch-manipulation active:scale-[0.97] transition-all flex-shrink-0"
-              >
-                Quotes
-              </button>
-              <button
-                onClick={() => setIsExportOpen(true)}
-                aria-label="Export invoices to Excel"
-                className="h-10 w-10 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation"
-              >
-                <FileSpreadsheet className="h-5 w-5 text-white" />
-              </button>
-              <button
-                onClick={() => setIsSearchOpen(true)}
-                className="h-10 w-10 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation"
-              >
-                <Search className="h-5 w-5 text-white" />
-              </button>
-              <button
-                onClick={() => navigate('/electrician/invoice-builder/create')}
-                className="h-10 w-10 rounded-xl bg-elec-yellow flex items-center justify-center active:scale-[0.98] touch-manipulation"
-              >
-                <Plus className="h-5 w-5 text-black" />
-              </button>
+          <button
+            onClick={() => navigate('/electrician/business')}
+            className="h-10 w-10 -ml-2 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation"
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </button>
+          <h1 className="flex-1 text-[22px] font-bold text-white truncate tracking-tight">
+            Invoices
+          </h1>
+          <button
+            onClick={() => navigate('/electrician/quotes')}
+            className="h-8 px-2.5 rounded-lg bg-white/[0.08] text-[11px] font-medium text-white/90 touch-manipulation active:scale-[0.97] transition-all flex-shrink-0"
+          >
+            Quotes
+          </button>
+          <button
+            onClick={() => setIsExportOpen(true)}
+            aria-label="Export invoices to Excel"
+            className="h-10 w-10 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation"
+          >
+            <FileSpreadsheet className="h-5 w-5 text-white" />
+          </button>
+          <button
+            onClick={() => setIsSearchOpen(true)}
+            className="h-10 w-10 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation"
+          >
+            <Search className="h-5 w-5 text-white" />
+          </button>
+          <button
+            onClick={() => navigate('/electrician/invoice-builder/create')}
+            className="h-10 w-10 rounded-xl bg-elec-yellow flex items-center justify-center active:scale-[0.98] touch-manipulation"
+          >
+            <Plus className="h-5 w-5 text-black" />
+          </button>
         </div>
 
         {/* Money subline */}
         <p className="px-4 mt-0.5 text-[12px] text-white/75">
-          <span className={cn('font-semibold tabular-nums', stats.outstandingValue > 0 ? 'text-elec-yellow' : 'text-white/90')}>
+          <span
+            className={cn(
+              'font-semibold tabular-nums',
+              stats.outstandingValue > 0 ? 'text-elec-yellow' : 'text-white/90'
+            )}
+          >
             {formatCurrency(stats.outstandingValue)}
           </span>{' '}
           outstanding
           {stats.overdue > 0 && (
             <>
               <span className="mx-1.5 text-white/30">·</span>
-              <span className="font-semibold text-red-400 tabular-nums">{stats.overdue}</span> overdue
+              <span className="font-semibold text-red-400 tabular-nums">{stats.overdue}</span>{' '}
+              overdue
             </>
           )}
         </p>
@@ -711,7 +753,10 @@ const InvoicesPage = () => {
       {/* Content */}
       <main className="px-4 py-4 space-y-6 pb-24">
         {/* Stripe Connect Banner */}
-        <StripeConnectBanner refreshKey={stripeRefreshKey} outstandingAmount={stats.outstandingValue} />
+        <StripeConnectBanner
+          refreshKey={stripeRefreshKey}
+          outstandingAmount={stats.outstandingValue}
+        />
 
         {/* Work the client agreed to that was never billed through the app.
             Renders nothing when there is none. */}
@@ -720,8 +765,12 @@ const InvoicesPage = () => {
         {/* 01 · REVENUE — panel, mirrors QuotesPage pipeline */}
         <div className="space-y-3">
           <div className="flex items-baseline gap-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">01</span>
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/65">· Revenue</span>
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
+              01
+            </span>
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/65">
+              · Revenue
+            </span>
           </div>
 
           <div className={cn(PANEL, 'overflow-hidden mt-2')}>
@@ -730,29 +779,52 @@ const InvoicesPage = () => {
                 onClick={() => handleFilterChange('paid_month')}
                 className="p-4 text-left border-b border-r border-white/[0.08] lg:border-b-0 touch-manipulation active:bg-white/[0.03] transition-colors"
               >
-                <p className="text-[22px] font-bold text-emerald-400 tabular-nums leading-none tracking-tight">{formatCurrency(stats.monthlyTotal)}</p>
-                <p className="text-[11px] text-white/80 mt-1.5">Paid this month · <span className="text-white tabular-nums">{stats.monthlyCount}</span></p>
+                <p className="text-[22px] font-bold text-emerald-400 tabular-nums leading-none tracking-tight">
+                  {formatCurrency(stats.monthlyTotal)}
+                </p>
+                <p className="text-[11px] text-white/80 mt-1.5">
+                  Paid this month ·{' '}
+                  <span className="text-white tabular-nums">{stats.monthlyCount}</span>
+                </p>
               </button>
               <button
                 onClick={() => handleFilterChange('sent')}
                 className="p-4 text-left border-b border-white/[0.08] lg:border-b-0 lg:border-r touch-manipulation active:bg-white/[0.03] transition-colors"
               >
-                <p className="text-[22px] font-bold text-amber-400 tabular-nums leading-none tracking-tight">{formatCurrency(stats.outstandingValue)}</p>
-                <p className="text-[11px] text-white/80 mt-1.5">Outstanding · <span className="text-white tabular-nums">{stats.outstandingCount}</span></p>
+                <p className="text-[22px] font-bold text-amber-400 tabular-nums leading-none tracking-tight">
+                  {formatCurrency(stats.outstandingValue)}
+                </p>
+                <p className="text-[11px] text-white/80 mt-1.5">
+                  Outstanding ·{' '}
+                  <span className="text-white tabular-nums">{stats.outstandingCount}</span>
+                </p>
               </button>
               <button
                 onClick={() => handleFilterChange('overdue')}
                 className="p-4 text-left border-r border-white/[0.08] touch-manipulation active:bg-white/[0.03] transition-colors"
               >
-                <p className={cn('text-[22px] font-bold tabular-nums leading-none tracking-tight', stats.overdue > 0 ? 'text-red-400' : 'text-white')}>{formatCurrency(stats.overdueValue)}</p>
-                <p className="text-[11px] text-white/80 mt-1.5">Overdue · <span className="text-white tabular-nums">{stats.overdue}</span></p>
+                <p
+                  className={cn(
+                    'text-[22px] font-bold tabular-nums leading-none tracking-tight',
+                    stats.overdue > 0 ? 'text-red-400' : 'text-white'
+                  )}
+                >
+                  {formatCurrency(stats.overdueValue)}
+                </p>
+                <p className="text-[11px] text-white/80 mt-1.5">
+                  Overdue · <span className="text-white tabular-nums">{stats.overdue}</span>
+                </p>
               </button>
               <button
                 onClick={() => handleFilterChange('draft')}
                 className="p-4 text-left touch-manipulation active:bg-white/[0.03] transition-colors"
               >
-                <p className="text-[22px] font-bold text-white tabular-nums leading-none tracking-tight">{formatCurrency(stats.draftValue)}</p>
-                <p className="text-[11px] text-white/80 mt-1.5">Drafts · <span className="text-white tabular-nums">{stats.draft}</span></p>
+                <p className="text-[22px] font-bold text-white tabular-nums leading-none tracking-tight">
+                  {formatCurrency(stats.draftValue)}
+                </p>
+                <p className="text-[11px] text-white/80 mt-1.5">
+                  Drafts · <span className="text-white tabular-nums">{stats.draft}</span>
+                </p>
               </button>
             </div>
 
@@ -765,7 +837,8 @@ const InvoicesPage = () => {
                 className="w-full flex items-center justify-between py-3 px-4 border-t border-white/[0.08] touch-manipulation active:bg-white/[0.03] transition-colors disabled:opacity-50"
               >
                 <p className="text-[12px] text-white/90">
-                  <span className="font-semibold text-red-400 tabular-nums">{stats.overdue}</span> invoice{stats.overdue !== 1 ? 's' : ''} need chasing
+                  <span className="font-semibold text-red-400 tabular-nums">{stats.overdue}</span>{' '}
+                  invoice{stats.overdue !== 1 ? 's' : ''} need chasing
                 </p>
                 <span className="text-[11px] font-semibold text-amber-400 flex-shrink-0 ml-3">
                   {creatingChaseTasks ? 'Creating…' : 'Create tasks →'}
@@ -822,7 +895,9 @@ const InvoicesPage = () => {
         <section className="space-y-3 pt-2 border-t border-white/[0.04]">
           <div className="flex items-baseline justify-between gap-3 pt-4">
             <div className="flex items-baseline gap-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">02</span>
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
+                02
+              </span>
               <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/50">
                 ·{' '}
                 {activeFilter === 'all'
@@ -844,10 +919,20 @@ const InvoicesPage = () => {
               <DropdownMenuTrigger asChild>
                 <button className="flex-shrink-0 h-9 flex items-center gap-1.5 text-[12px] font-medium text-white/90 touch-manipulation select-none active:scale-[0.97] transition-all">
                   <ArrowUpDown className="h-3.5 w-3.5 text-elec-yellow" />
-                  {{ newest: 'Newest', oldest: 'Oldest', 'value-high': 'Highest value', 'due-soonest': 'Due soonest' }[sortBy]}
+                  {
+                    {
+                      newest: 'Newest',
+                      oldest: 'Oldest',
+                      'value-high': 'Highest value',
+                      'due-soonest': 'Due soonest',
+                    }[sortBy]
+                  }
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="z-[100] min-w-[160px] bg-elec-gray border-white/10">
+              <DropdownMenuContent
+                align="start"
+                className="z-[100] min-w-[160px] bg-elec-gray border-white/10"
+              >
                 {(
                   [
                     ['newest', 'Newest'],
@@ -861,7 +946,9 @@ const InvoicesPage = () => {
                     onClick={() => setSortBy(id)}
                     className={cn(
                       'h-11 text-[14px] touch-manipulation focus:bg-white/[0.06]',
-                      sortBy === id ? 'text-elec-yellow focus:text-elec-yellow' : 'text-white focus:text-white'
+                      sortBy === id
+                        ? 'text-elec-yellow focus:text-elec-yellow'
+                        : 'text-white focus:text-white'
                     )}
                   >
                     {label}
@@ -922,7 +1009,13 @@ const InvoicesPage = () => {
             ) : (
               <div className="text-center py-12">
                 <p className="text-[14px] font-medium text-white">
-                  No {activeFilter !== 'all' ? activeFilter : quickFilter === 'part-paid' ? 'part-paid' : ''} invoices
+                  No{' '}
+                  {activeFilter !== 'all'
+                    ? activeFilter
+                    : quickFilter === 'part-paid'
+                      ? 'part-paid'
+                      : ''}{' '}
+                  invoices
                 </p>
                 <p className="text-[12px] text-white/70 mt-1">
                   {quickFilter || dateRange !== 'all'
@@ -935,7 +1028,13 @@ const InvoicesPage = () => {
             <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2.5">
               <AnimatePresence>
                 {filteredInvoices.map((invoice) => (
-                  <motion.div key={invoice.id} id={`invoice-${invoice.id}`} layout exit={{ opacity: 0, scale: 0.95 }} className="h-full">
+                  <motion.div
+                    key={invoice.id}
+                    id={`invoice-${invoice.id}`}
+                    layout
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    className="h-full"
+                  >
                     <InvoiceCard
                       invoice={invoice}
                       onTap={() => handleInvoiceAction(invoice)}
@@ -943,6 +1042,8 @@ const InvoicesPage = () => {
                       onDownloadPDF={() => handleDownloadPDF(invoice)}
                       onEdit={() => handleEditInvoice(invoice)}
                       onDelete={() => handleDeleteInvoice(invoice.id)}
+                      onCreditNote={() => setCreditingInvoice(invoice)}
+                      credited={creditedByInvoice[invoice.id]}
                       isMarkingPaid={markingPaidId === invoice.id}
                       isDownloading={downloadingPdfId === invoice.id}
                       isDeleting={deletingInvoiceId === invoice.id}
@@ -982,10 +1083,44 @@ const InvoicesPage = () => {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={proceedToGuardedEdit}>Edit anyway</AlertDialogAction>
+            {/*
+              ELE-1704 — the dialog above says a credit note is the correct
+              instrument. Until now the only button did the thing it had just
+              advised against. This is the route it was describing, and it
+              leads rather than sits beside "Edit anyway".
+            */}
+            <AlertDialogAction
+              onClick={() => {
+                const inv = editGuardInvoice;
+                setEditGuardInvoice(null);
+                setCreditingInvoice(inv);
+              }}
+              className="bg-elec-yellow text-black font-semibold hover:brightness-110"
+            >
+              Raise a credit note
+            </AlertDialogAction>
+            <AlertDialogAction
+              onClick={proceedToGuardedEdit}
+              className="bg-white/[0.08] text-white hover:bg-white/[0.12]"
+            >
+              Edit anyway
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <CreditNoteSheet
+        invoice={creditingInvoice}
+        open={!!creditingInvoice}
+        onOpenChange={(o) => !o && setCreditingInvoice(null)}
+        onRaised={() => {
+          void fetchInvoices();
+          // The card badge reads from its own cached query, so refreshing the
+          // invoices alone would leave the new credit note invisible until
+          // the next natural refetch.
+          void refetchCreditTotals();
+        }}
+      />
 
       <CertificateGenerationDialog
         open={showGenerationDialog}

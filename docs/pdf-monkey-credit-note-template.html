@@ -23,11 +23,11 @@
       .num { font-variant-numeric: tabular-nums; white-space: nowrap; }
 
       /* ── Brand accent bar ───────────────────────────────────── */
-      .brand-bar { height: 6px; border-radius: 3px; margin-bottom: 16px;
+      .brand-bar { height: 6px; border-radius: 3px; margin-bottom: 10px;
         background: linear-gradient(90deg, {{ branding.primaryColor | default: '#1e40af' }} 0%, {{ branding.secondaryColor | default: '#1e3a8a' }} 60%, {{ branding.primaryColor | default: '#1e40af' }} 100%); }
 
       /* ── Header: logo + company identity ────────────────────── */
-      .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid #e5e7eb; }
+      .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #e5e7eb; }
       .logo-section { max-width: 280px; display: flex; align-items: center; }
       .logo-section img { display: block; }
       .company-info { text-align: right; }
@@ -35,10 +35,10 @@
       .company-details { font-size: 10.5px; color: #374151; line-height: 1.65; }
 
       /* ── Title row: INVOICE + meta ───────────────────────────── */
-      .title-row { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 14px; }
+      .title-row { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; margin-bottom: 10px; }
       .doc-title { font-size: 26px; font-weight: 800; letter-spacing: 0.12em; color: {{ branding.primaryColor | default: '#1e40af' }}; }
       .doc-number { font-size: 12px; color: #374151; margin-top: 2px; }
-      .meta-cells { display: flex; gap: 26px; text-align: right; }
+      .meta-cells { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px 18px; text-align: right; max-width: 62%; }
       .meta-cell .label { margin-bottom: 3px; }
       .meta-cell .value { font-size: 12px; font-weight: 600; color: #111827; }
 
@@ -60,7 +60,7 @@
       }
 
       /* ── Party cards ────────────────────────────────────────── */
-      .two-col { display: flex; gap: 16px; margin-bottom: 16px; page-break-inside: avoid; }
+      .two-col { display: flex; gap: 16px; margin-bottom: 11px; page-break-inside: avoid; }
       .col { flex: 1; }
       .card { background: #ffffff; border: 1px solid #eceef1; border-radius: 12px; padding: 15px 18px; height: 100%; page-break-inside: avoid; }
       .card-header { font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: {{ branding.primaryColor | default: '#1e40af' }}; font-weight: 700; margin-bottom: 10px; }
@@ -69,7 +69,7 @@
       .info-value:last-child { margin-bottom: 0; }
 
       /* ── Description ────────────────────────────────────────── */
-      .description-card { border: 1px solid #eceef1; border-radius: 12px; padding: 16px 20px; margin-bottom: 18px; }
+      .description-card { border: 1px solid #eceef1; border-radius: 12px; padding: 13px 20px; margin-bottom: 11px; }
       .description-body {
         font-size: 12px; color: #111827; line-height: 1.75;
         white-space: pre-line; word-break: break-word; overflow-wrap: break-word;
@@ -96,7 +96,7 @@
       .items-table .qty-unit { color: #1f2937; white-space: nowrap; }
 
       /* ── Totals ─────────────────────────────────────────────── */
-      .totals-section { display: flex; justify-content: flex-end; margin-top: 6px; margin-bottom: 16px; page-break-inside: avoid; }
+      .totals-section { display: flex; justify-content: flex-end; margin-top: 6px; margin-bottom: 11px; page-break-inside: avoid; }
       .totals-box { width: 320px; }
       .totals-row { display: flex; justify-content: space-between; padding: 7px 12px; font-size: 11.5px; color: #111827; }
       .totals-row + .totals-row { border-top: 1px solid #f0f1f3; }
@@ -121,25 +121,13 @@
       .callout strong { color: {{ branding.primaryColor | default: '#1e40af' }}; }
 
       /* ── Payment block ──────────────────────────────────────── */
-      .payment-block { border: 1px solid #e5e7eb; border-radius: 10px; overflow: hidden; page-break-inside: avoid; margin-bottom: 16px; }
+      .payment-block { border: 1px solid #e5e7eb; border-radius: 10px; overflow: hidden; page-break-inside: avoid; margin-bottom: 8px; }
       .payment-header { background: linear-gradient(90deg, {{ branding.primaryColor | default: '#1e40af' }} 0%, {{ branding.secondaryColor | default: '#1e3a8a' }} 100%); padding: 9px 18px; color: #ffffff; font-size: 12px; font-weight: 700; letter-spacing: 0.02em; }
       .payment-body { padding: 14px 18px; }
-      .bank-grid { display: flex; gap: 18px; }
-      .bank-cell { flex: 1; }
-      .bank-cell .value { border-bottom: 1.5px solid #e5e7eb; padding: 5px 1px; font-size: 12px; font-weight: 600; color: #111827; min-height: 24px; }
-      .bank-cell .value.ref { border-color: {{ branding.primaryColor | default: '#1e40af' }}; color: {{ branding.primaryColor | default: '#1e40af' }}; font-weight: 800; }
 
       /* ── Key facts strip ────────────────────────────────────── */
-      .facts { display: flex; gap: 10px; margin-bottom: 16px; page-break-inside: avoid; }
-      .fact { flex: 1; text-align: center; background: #ffffff; border: 1px solid #eceef1; border-radius: 10px; padding: 11px 8px; }
-      .fact .label { margin-bottom: 3px; }
-      .fact .value { font-size: 13px; font-weight: 700; color: {{ branding.primaryColor | default: '#1e40af' }}; }
 
       /* ── Terms ──────────────────────────────────────────────── */
-      .terms-block { margin-bottom: 14px; page-break-inside: avoid; }
-      .terms-list { margin: 0; padding: 0; list-style: none; column-count: 2; column-gap: 26px; }
-      .terms-list li { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 7px; break-inside: avoid; font-size: 9.5px; color: #1f2937; line-height: 1.5; }
-      .terms-list li::before { content: '\2022'; color: {{ branding.primaryColor | default: '#1e40af' }}; font-size: 10px; line-height: 1.4; }
 
       /* ── Footer ─────────────────────────────────────────────── */
       .footer { padding-top: 10px; border-top: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; }
@@ -184,17 +172,22 @@
       <!-- ── Title row: INVOICE + dates ── -->
       <div class="title-row">
         <div>
-          <div class="doc-title">INVOICE</div>
-          <div class="doc-number">{{ invoice.invoiceNumber }}{% if invoice.purchaseOrder != blank %} &nbsp;·&nbsp; PO {{ invoice.purchaseOrder }}{% endif %}</div>
+          <div class="doc-title">CREDIT NOTE</div>
+          <div class="doc-number">{{ creditNote.number }}</div>
+          <!-- HMRC expects a credit note to identify the invoice it corrects.
+               Not decoration: it is what makes the pair reconcilable. -->
+          <div class="doc-number" style="font-weight: 500; font-size: 11px; margin-top: 2px;">{{ creditNote.reference }}</div>
         </div>
         <div class="meta-cells">
           <div class="meta-cell">
             <div class="label">Issued</div>
-            <div class="value num">{{ invoice.createdAt | date: "%d %b %Y" }}</div>
+            <div class="value num">{{ creditNote.issuedAt | date: "%d %b %Y" }}</div>
           </div>
+          <!-- No "Due" cell. Nothing is owed on a credit note, and a due date
+               on one reads as a demand for the money being given back. -->
           <div class="meta-cell">
-            <div class="label">Due</div>
-            <div class="value num">{{ invoice.dueDate | date: "%d %b %Y" }}</div>
+            <div class="label">Against invoice</div>
+            <div class="value num">{{ invoice.invoiceNumber }}</div>
           </div>
           {% if invoice.jobDetails.reference != blank %}
           <div class="meta-cell">
@@ -205,26 +198,29 @@
         </div>
       </div>
 
-      <!-- ── Amount-due band: the hero ── -->
+      <!-- ── Credit band: the hero ──
+           One figure, unconditional. The invoice's band switches between
+           "Amount due", "Balance due" and a paid stamp; none of those states
+           exist here — a credit note has exactly one number and it is not
+           owed by anyone.
+
+           The figure is the SAVED total from credit_notes.total, not a
+           re-derivation: that is what the electrician approved and what every
+           other surface reads. generate-pdf-monkey refuses to render if its
+           own recompute disagrees, so the rows below cannot contradict it. -->
       <div class="amount-band">
         <div>
-          <div class="label">{% if invoice.isPaid %}Total — settled{% elsif invoice.totalPaidFormatted != blank %}Balance due{% elsif calculations.cisAmount > 0 or calculations.grantAmount > 0 %}Amount due after deductions{% else %}Amount due{% endif %}</div>
-          <div class="amount-figure num">
-            {% if invoice.totalPaidFormatted != blank and invoice.isPaid != true %}{{ calculations.balanceDueFormatted }}{% elsif calculations.cisAmount > 0 or calculations.grantAmount > 0 %}{% if calculations.netPayableFormatted != blank %}{{ calculations.netPayableFormatted }}{% else %}£{{ calculations.netPayable | round: 2 }}{% endif %}{% else %}{% if calculations.totalFormatted != blank %}{{ calculations.totalFormatted }}{% else %}£{{ calculations.total | round: 2 }}{% endif %}{% endif %}
-          </div>
-          {% if invoice.totalPaidFormatted != blank and invoice.isPaid != true %}
-          <div style="font-size: 10.5px; color: #15803d; margin-top: 3px; font-weight: 600;">
-            {{ invoice.totalPaidFormatted }} received of {% if calculations.totalFormatted != blank %}{{ calculations.totalFormatted }}{% else %}£{{ calculations.total | round: 2 }}{% endif %} total
+          <div class="label">Total credited</div>
+          <div class="amount-figure num">{{ creditNote.totalFormatted }}</div>
+          {% if creditNote.reason != blank %}
+          <div style="font-size: 10.5px; color: #374151; margin-top: 3px;">
+            {{ creditNote.reason }}
           </div>
           {% endif %}
         </div>
         <div class="amount-side">
-          {% if invoice.isPaid %}
-          <span class="paid-stamp">Paid{% if invoice.paidAt != blank %} · {{ invoice.paidAt }}{% endif %}</span>
-          {% else %}
-          <span class="label" style="display: block; margin-bottom: 5px;">Payment due by</span>
-          <span class="num" style="display: inline-block; font-size: 13px; font-weight: 700; color: {{ branding.primaryColor | default: '#1e40af' }}; background: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 6px 14px;">{{ invoice.dueDate | date: "%d %B %Y" }}</span>
-          {% endif %}
+          <span class="label" style="display: block; margin-bottom: 5px;">Credit note</span>
+          <span class="num" style="display: inline-block; font-size: 13px; font-weight: 700; color: {{ branding.primaryColor | default: '#1e40af' }}; background: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 6px 14px;">{{ creditNote.number }}</span>
         </div>
       </div>
 
@@ -232,7 +228,7 @@
       <div class="two-col">
         <div class="col">
           <div class="card">
-            <div class="card-header">Billed to</div>
+            <div class="card-header">Credited to</div>
             <div class="info-value" style="font-weight: 700; font-size: 12.5px;">{{ invoice.client.name }}</div>
             {% if invoice.client.address != blank %}
             <div class="info-value" style="white-space: pre-line;">{{ invoice.client.address }}</div>
@@ -284,7 +280,7 @@
         {% if invoice.linkedCertificate.heldUntilPaid %}
         <strong>Certificate to follow:</strong> {{ invoice.linkedCertificate.type }} {{ invoice.linkedCertificate.reference }} will follow by email.
         {% else %}
-        <strong>Certificate attached:</strong> {{ invoice.linkedCertificate.type }} {{ invoice.linkedCertificate.reference }} accompanies this invoice.
+        <strong>Certificate attached:</strong> {{ invoice.linkedCertificate.type }} {{ invoice.linkedCertificate.reference }} accompanies the invoice this credits.
         {% endif %}
       </div>
       {% endif %}
@@ -376,7 +372,7 @@
           {% endif %}
           {% if calculations.cisAmount > 0 %}
           <div class="totals-row negative">
-            <span>Less CIS ({{ calculations.cisRate }}% on labour)</span>
+            <span>CIS reversed ({{ calculations.cisRate }}% on credited labour)</span>
             <span class="amount num">&minus;{% if calculations.cisAmountFormatted != blank %}{{ calculations.cisAmountFormatted }}{% else %}£{{ calculations.cisAmount | round: 2 }}{% endif %}</span>
           </div>
           {% if calculations.cisUtr != blank %}
@@ -386,23 +382,13 @@
           </div>
           {% endif %}
           {% endif %}
-          {% if invoice.totalPaidFormatted != blank and invoice.isPaid != true and calculations.cisAmount == 0 and calculations.grantAmount == 0 %}
-          <div class="totals-row" style="font-weight: 600;">
-            <span>Total</span>
-            <span class="amount num">{% if calculations.totalFormatted != blank %}{{ calculations.totalFormatted }}{% else %}£{{ calculations.total | round: 2 }}{% endif %}</span>
-          </div>
-          {% endif %}
-          {% if invoice.totalPaidFormatted != blank and invoice.isPaid != true %}
-          <div class="totals-row settled">
-            <span>Received to date</span>
-            <span class="amount num">&minus;{{ invoice.totalPaidFormatted }}</span>
-          </div>
-          {% endif %}
+          <!-- The invoice's "Received to date" rows are deliberately absent. What has
+               been paid against the ORIGINAL invoice does not change what this
+               document credits, and showing it here invites the credit and the
+               payment to be netted off twice. -->
           <div class="totals-row due" style="background: linear-gradient(90deg, {{ branding.primaryColor | default: '#1e40af' }} 0%, {{ branding.secondaryColor | default: '#1e3a8a' }} 100%);">
-            <span>{% if invoice.isPaid %}Total &mdash; paid{% elsif invoice.totalPaidFormatted != blank %}Balance due{% else %}Amount due{% endif %}</span>
-            <span class="amount num">
-              {% if invoice.totalPaidFormatted != blank and invoice.isPaid != true %}{{ calculations.balanceDueFormatted }}{% elsif calculations.cisAmount > 0 or calculations.grantAmount > 0 %}{% if calculations.netPayableFormatted != blank %}{{ calculations.netPayableFormatted }}{% else %}£{{ calculations.netPayable | round: 2 }}{% endif %}{% else %}{% if calculations.totalFormatted != blank %}{{ calculations.totalFormatted }}{% else %}£{{ calculations.total | round: 2 }}{% endif %}{% endif %}
-            </span>
+            <span>{% if calculations.cisAmount > 0 %}Total credited after CIS{% else %}Total credited{% endif %}</span>
+            <span class="amount num">{% if calculations.cisAmount > 0 %}{{ creditNote.netAfterCisFormatted }}{% else %}{{ creditNote.totalFormatted }}{% endif %}</span>
           </div>
         </div>
       </div>
@@ -411,84 +397,41 @@
       {% if calculations.reverseCharge %}
       <div class="callout">
         <strong>VAT reverse charge applies.</strong>
-        Customer to account to HMRC for the VAT of
+        This credits a supply on which the customer accounted to HMRC for the VAT of
         <strong>{% if calculations.notionalVatFormatted != blank %}{{ calculations.notionalVatFormatted }}{% else %}£{{ calculations.notionalVat | round: 2 }}{% endif %}</strong> ({{ calculations.vatRate }}%).
-        This invoice shows £0 VAT &mdash; do not pay the VAT to the supplier. VAT Act 1994, s.55A.
+        Adjust that VAT on your return. This credit note shows £0 VAT. VAT Act 1994, s.55A.
       </div>
       {% endif %}
 
-      <!-- ── Key facts ── -->
-      <div class="facts">
-        <div class="fact">
-          <div class="label">Payment terms</div>
-          <div class="value">{{ companyProfile.payment_terms | default: '14 days' }}</div>
-        </div>
-        <div class="fact">
-          <div class="label">Late payment interest</div>
-          <div class="value">{{ invoiceSettings.latePaymentInterestRate | default: '8% p.a.' }}</div>
-        </div>
-        <div class="fact">
-          <div class="label">Preferred payment</div>
-          <div class="value">{{ invoiceSettings.preferredPaymentMethod | default: 'Bank Transfer' }}</div>
-        </div>
-        <div class="fact" style="background: {{ branding.primaryColor | default: '#1e40af' }}; border-color: {{ branding.primaryColor | default: '#1e40af' }};">
-          <div class="label" style="color: rgba(255,255,255,0.85);">Payment reference</div>
-          <div class="value" style="color: #ffffff;">{{ invoice.invoiceNumber }}</div>
-        </div>
-      </div>
-
-      <!-- ── Payment information ── -->
-      {% if invoice.isPaid != true %}
+      <!-- ── What happens next ──
+           Replaces the invoice's key facts, "How to pay" and bank details
+           WHOLESALE. Printing an account number on a document that gives
+           money back is an invitation to pay it again, and payment terms and
+           late-payment interest are meaningless on a credit. -->
       <div class="payment-block">
-        <div class="payment-header">How to pay</div>
+        <div class="payment-header">What this credit note does</div>
         <div class="payment-body">
-          {% if invoice.payLink != blank %}
-          <div class="callout" style="margin-bottom: 12px;">
-            <strong>Pay online:</strong> {{ invoice.payLink }}
-          </div>
-          {% endif %}
-          <div class="bank-grid">
-            <div class="bank-cell">
-              <div class="label" style="margin-bottom: 4px;">Bank</div>
-              <div class="value">{{ companyProfile.bank_name }}</div>
-            </div>
-            <div class="bank-cell">
-              <div class="label" style="margin-bottom: 4px;">Account name</div>
-              <div class="value">{{ companyProfile.account_name }}</div>
-            </div>
-            <div class="bank-cell">
-              <div class="label" style="margin-bottom: 4px;">Sort code</div>
-              <div class="value num">{{ companyProfile.sort_code }}</div>
-            </div>
-            <div class="bank-cell">
-              <div class="label" style="margin-bottom: 4px;">Account number</div>
-              <div class="value num">{{ companyProfile.account_number }}</div>
-            </div>
-            <div class="bank-cell">
-              <div class="label" style="margin-bottom: 4px;">Reference</div>
-              <div class="value ref">{{ invoice.invoiceNumber }}</div>
-            </div>
-          </div>
-          <p style="font-size: 9.5px; color: #374151; margin-top: 10px;">
-            Please use the payment reference above so your payment is allocated correctly.
+          <p style="font-size: 10.5px; color: #111827;">
+            This credit note reduces what is owed on invoice
+            <strong>{{ invoice.invoiceNumber }}</strong> by
+            <strong class="num">{{ creditNote.totalFormatted }}</strong>.
+          </p>
+          <p style="font-size: 9.5px; color: #374151; margin-top: 8px;">
+            {% if creditNote.alreadyPaid %}
+            As that invoice has already been paid, this amount is refundable to you.
+            {% else %}
+            Please settle the invoice net of this credit.
+            {% endif %}
+            Quote <strong>{{ creditNote.number }}</strong> alongside invoice
+            <strong>{{ invoice.invoiceNumber }}</strong> in any correspondence.
           </p>
         </div>
       </div>
-      {% endif %}
 
-      <!-- ── Terms ── -->
-      {% if terms.size > 0 %}
-      <div class="terms-block">
-        <div class="section-title" style="font-size: 11px; margin-bottom: 6px;">Terms &amp; conditions</div>
-        <ul class="terms-list">
-          {% for term in terms %}
-          <li><span>{{ term }}</span></li>
-          {% endfor %}
-        </ul>
-      </div>
-      {% endif %}
+      <!-- The invoice's terms block is deliberately absent: it carries the
+           payment terms, which on a credit note read as a demand. -->
 
-      <!-- ── Footer ── -->
+<!-- ── Footer ── -->
       <div class="footer">
         <span class="footer-text">{{ companyProfile.company_name }}{% if companyProfile.vat_number != blank %} &middot; VAT {{ companyProfile.vat_number }}{% endif %}</span>
         <span class="footer-text">Powered by <span class="footer-brand">Elec-Mate</span> &middot; elec-mate.com</span>

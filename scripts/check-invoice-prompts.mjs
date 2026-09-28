@@ -86,10 +86,25 @@ for (const [label, opts, touchRules] of [
   const ctx = await browser.newContext(opts);
   const page = await ctx.newPage();
 
-  for (const which of ['banner', 'dropdown', 'uninvoiced', 'uninvoiced&case=single', 'uninvoiced&case=long', 'schedule', 'quoteitem', 'quotestep']) {
+  for (const which of ['banner', 'dropdown', 'uninvoiced', 'uninvoiced&case=single', 'uninvoiced&case=long', 'schedule', 'quoteitem', 'quotestep', 'creditnote', 'creditnote&case=switch', 'invoicecard', 'invoicecard&case=full']) {
     const id = `${label}/${which.replace('&case=', ':')}`;
     await page.goto(`file://${resolve(here, 'viewport.html')}?which=${which}`);
     await page.waitForTimeout(600);
+
+    /*
+     * ELE-1704 — the invoice card's actions live behind a menu, so asserting
+     * on `document.body.innerText` with it CLOSED proves nothing: the first
+     * version of the "no credit note on a fully-credited invoice" check
+     * passed happily with the guard deleted, because the text was never in
+     * the DOM either way. Open it.
+     */
+    if (which.startsWith('invoicecard')) {
+      const menu = page.locator('button[aria-label="Invoice actions"]');
+      if (await menu.count()) {
+        await menu.first().click().catch(() => {});
+        await page.waitForTimeout(500);
+      }
+    }
 
     // The dropdown only renders its Stripe block once opened.
     if (which.startsWith('dropdown')) {
@@ -268,6 +283,171 @@ for (const [label, opts, touchRules] of [
       );
       if (badOrder > 0) {
         problems.push(`${id}: ${badOrder} row(s) do not lead with the age — truncation can eat it`);
+      }
+    }
+
+    /*
+     * ELE-1704 — the credited badge.
+     *
+     * The generic rules above would stay green if the badge disappeared
+     * entirely: they only measure what IS rendered. So the figure is asserted
+     * by value. A part credit must show the AMOUNT — "credited" with no
+     * number still means opening the invoice to find out what changed — and a
+     * full credit must say so in words rather than print a figure that looks
+     * like a second charge.
+     */
+    /*
+     * ELE-1704 — the sheet must list the credit notes already raised, and it
+     * must NOT count the voided one. Both halves matter: the list is the only
+     * route back to the document, and a void note that still counted would
+     * quietly shrink what is left to credit.
+     */
+    if (which === 'creditnote') {
+      const body = await page.evaluate(() => document.body.innerText);
+      if (!body.includes('Credit/001')) {
+        problems.push(`${id}: the credit notes already raised are not listed`);
+      }
+      /*
+       * Assert the SUMMED figure, not the presence of "£120.00" anywhere —
+       * the list below prints each note's own total, so a loose substring
+       * check passes off the list even when the sum is wrong. It did: with
+       * `sumCreditsAgainst` mutated to count voids, the loose version stayed
+       * green. Only the minus-prefixed figure is the summary row.
+       *
+       * £120 issued + £999 VOID, against the £600 `creditableInvoice`. If
+       * the void were counted the row would read −£1,119.00 and nothing
+       * would be left to credit at all.
+       */
+      if (!body.includes('\u2212£120.00')) {
+        problems.push(`${id}: already-credited is not £120 — a voided note is being counted`);
+      }
+      if (!body.includes('£480.00')) {
+        problems.push(`${id}: still-creditable is not £480 (£600 less the £120 credited)`);
+      }
+
+      /*
+       * Voiding is the only remedy for a credit note raised in error, so the
+       * control must exist on a live note and must NOT exist on one already
+       * voided — and a voided note must still be shown, marked, rather than
+       * hidden: the number is spent and the row is part of the trail.
+       */
+      const v = await page.evaluate(() => ({
+        voidable: document.querySelectorAll('[aria-label^="Void "]').length,
+        downloads: document.querySelectorAll('[aria-label^="Download Credit/"]').length,
+        marked: /Voided/.test(document.body.innerText),
+      }));
+      if (v.downloads !== 2) {
+        problems.push(`${id}: expected both credit notes listed, found ${v.downloads}`);
+      }
+      if (v.voidable !== 1) {
+        problems.push(`${id}: expected exactly 1 voidable note (the other is already void), found ${v.voidable}`);
+      }
+      if (!v.marked) {
+        problems.push(`${id}: the voided credit note is not marked as voided`);
+      }
+
+      /*
+       * Voiding must be CONFIRMED, not instant. There is no un-void, and the
+       * control sits beside Download at the same size — a mis-tap on a phone
+       * would permanently cancel a document already sent to a customer.
+       */
+      const voidBtn = page.locator('[aria-label^="Void "]').first();
+      if (await voidBtn.count()) {
+        await voidBtn.click().catch(() => {});
+        await page.waitForTimeout(250);
+        const confirm = await page.evaluate(() => {
+          const t = Array.from(document.querySelectorAll('button')).map((b) =>
+            (b.textContent || '').trim()
+          );
+          return { cancel: t.includes('Cancel'), confirmVoid: t.includes('Void') };
+        });
+        if (!confirm.cancel || !confirm.confirmVoid) {
+          problems.push(`${id}: voiding is not confirmed — one tap destroys a sent document`);
+        }
+      }
+    }
+
+    /*
+     * ELE-1704 — state must not survive a change of invoice.
+     *
+     * Untick a line on invoice A, switch the sheet to invoice B, and B must
+     * be fully creditable. Before the reset effect, `selected` still held A's
+     * line ids, matched none of B's, and B refused with "already been
+     * credited in full" — on a screen showing what was still creditable.
+     */
+    if (which === 'creditnote&case=switch') {
+      const row = page.locator('button', { hasText: 'Consumer unit change' }).first();
+      if (await row.count()) {
+        await row.click().catch(() => {});
+        await page.waitForTimeout(200);
+      }
+      // Type a reason against the FIRST invoice. Carrying this over is the
+      // more dangerous half of the leak: it puts one client's wording on
+      // another client's credit note.
+      await page.evaluate(() => {
+        const el = document.querySelector('#credit-reason');
+        if (!el) return;
+        const setter = Object.getOwnPropertyDescriptor(
+          window.HTMLInputElement.prototype,
+          'value'
+        ).set;
+        setter.call(el, 'WRONG CLIENT REASON');
+        el.dispatchEvent(new Event('input', { bubbles: true }));
+      });
+      await page.waitForTimeout(150);
+      // The sheet's overlay covers the page, so a pointer click never reaches
+      // this button. Dispatched straight on the element instead.
+      await page.evaluate(() => document.querySelector('[data-switch]')?.click());
+      await page.waitForTimeout(400);
+      const after = await page.evaluate(() => ({
+        text: document.body.innerText,
+        cta: (
+          Array.from(document.querySelectorAll('button')).find((b) =>
+            /Raise credit note/.test(b.textContent || '')
+          )?.textContent || ''
+        ).trim(),
+      }));
+      /*
+       * The exact symptom of a leak. A stale `selected` matches none of the
+       * new invoice's line ids, so `buildCreditNote` refuses with
+       * `no-lines-selected` — asserted by its message rather than by the
+       * button's figure, which also moves for legitimate reasons such as
+       * exceeds-remaining.
+       */
+      if (/Choose at least one line to credit/i.test(after.text)) {
+        problems.push(`${id}: nothing is selected on the new invoice — selection leaked from the previous one`);
+      }
+      if (/already been credited in full/i.test(after.text)) {
+        problems.push(`${id}: the new invoice is wrongly reported as fully credited`);
+      }
+      if (!/£/.test(after.cta)) {
+        problems.push(`${id}: the new invoice cannot be credited (button reads "${after.cta}")`);
+      }
+      if (!after.text.includes('Invoice/043')) {
+        problems.push(`${id}: the sheet did not switch to the second invoice`);
+      }
+      const carried = await page.evaluate(
+        () => document.querySelector('#credit-reason')?.value || ''
+      );
+      if (carried) {
+        problems.push(`${id}: the reason carried over to another invoice — "${carried}"`);
+      }
+    }
+
+    if (which.startsWith('invoicecard')) {
+      const body = await page.evaluate(() => document.body.innerText);
+      const full = which.includes('case=full');
+      if (full) {
+        if (!/·\s*Credited/.test(body)) {
+          problems.push(`${id}: a fully-credited invoice does not say so`);
+        }
+        // `canCredit` must be false here — crediting a fully-credited invoice
+        // can only be refused, and offering it is offering a dead end.
+        if (/Raise a credit note/.test(body)) {
+          problems.push(`${id}: offers a credit note on an already fully-credited invoice`);
+        }
+      } else if (!body.includes('£420.50')) {
+        problems.push(`${id}: the part-credited badge does not show the amount`);
       }
     }
 

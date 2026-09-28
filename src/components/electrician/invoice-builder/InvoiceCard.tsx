@@ -1,7 +1,11 @@
-import { Trash2, Check, Pencil, MoreVertical, Download, Loader2 } from 'lucide-react';
+import { Trash2, Check, Pencil, MoreVertical, Download, Loader2, ReceiptText } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { differenceInDays, format } from 'date-fns';
-import { isInvoiceOverdue, getInvoiceDaysOverdue, getInvoiceOutstanding } from '@/utils/invoice-status';
+import {
+  isInvoiceOverdue,
+  getInvoiceDaysOverdue,
+  getInvoiceOutstanding,
+} from '@/utils/invoice-status';
 import { formatCardAmount, formatCardAge } from '@/lib/format';
 import { PANEL } from '@/components/electrician/shared/surfaces';
 import type { Quote } from '@/types/quote';
@@ -20,6 +24,15 @@ interface InvoiceCardProps {
   onDownloadPDF: () => void;
   onEdit: () => void;
   onDelete: () => void;
+  /**
+   * ELE-1704 — raise a credit note against this invoice.
+   *
+   * Optional: the card is also used where crediting makes no sense, and a
+   * menu item that does nothing is worse than an absent one.
+   */
+  onCreditNote?: () => void;
+  /** Sum and count of credit notes standing against this invoice (voids excluded). */
+  credited?: { total: number; count: number };
   isMarkingPaid?: boolean;
   isDownloading?: boolean;
   isDeleting?: boolean;
@@ -32,6 +45,8 @@ export function InvoiceCard({
   onDownloadPDF,
   onEdit,
   onDelete,
+  onCreditNote,
+  credited,
   isMarkingPaid,
   isDownloading,
   isDeleting,
@@ -42,6 +57,16 @@ export function InvoiceCard({
   const totalPaid = invoice.total_paid || 0;
   const isPartPaid = !isPaid && totalPaid > 0.005;
   const outstanding = getInvoiceOutstanding(invoice);
+
+  /*
+   * ELE-1704 — crediting only makes sense once the invoice has actually been
+   * issued. A draft is still editable, and the whole point of a credit note
+   * is that editing is no longer available.
+   */
+  const creditedTotal = credited?.total || 0;
+  const invoiceTotal = Number(invoice.total) || 0;
+  const fullyCredited = creditedTotal > 0 && creditedTotal >= invoiceTotal - 0.005;
+  const canCredit = Boolean(onCreditNote) && !isDraft && !fullyCredited;
 
   const paidLateDays =
     isPaid && invoice.invoice_paid_at && invoice.invoice_due_date
@@ -76,12 +101,22 @@ export function InvoiceCard({
       : null;
 
   const status = isPaid
-    ? { label: 'Paid', dot: 'bg-emerald-400', text: 'text-emerald-400', wash: 'from-emerald-500/[0.08]' }
+    ? {
+        label: 'Paid',
+        dot: 'bg-emerald-400',
+        text: 'text-emerald-400',
+        wash: 'from-emerald-500/[0.08]',
+      }
     : overdue
       ? { label: 'Overdue', dot: 'bg-red-400', text: 'text-red-400', wash: 'from-red-500/[0.08]' }
       : isDraft
         ? { label: 'Draft', dot: 'bg-white/75', text: 'text-white/85', wash: 'from-white/[0.05]' }
-        : { label: 'Sent', dot: 'bg-blue-400', text: 'text-blue-400', wash: 'from-blue-500/[0.08]' };
+        : {
+            label: 'Sent',
+            dot: 'bg-blue-400',
+            text: 'text-blue-400',
+            wash: 'from-blue-500/[0.08]',
+          };
 
   // One cue per card — most urgent first
   const cue = overdue
@@ -97,9 +132,9 @@ export function InvoiceCard({
       : daysToDue !== null && daysToDue <= 7 && daysToDue >= 0
         ? { text: daysToDue === 0 ? 'Due today' : `Due in ${daysToDue}d`, cls: 'text-orange-400' }
         : isPaid && paidLateDays > 0
-          ? { text: `Paid ${paidLateDays}d late`, cls: 'text-white/55' }
+          ? { text: `Paid ${paidLateDays}d late`, cls: 'text-white' }
           : isDraft
-            ? { text: 'Not sent yet', cls: 'text-white/55' }
+            ? { text: 'Not sent yet', cls: 'text-white' }
             : !isPaid &&
                 invoice.linked_certificate_id &&
                 invoice.certificate_release_mode === 'on_payment' &&
@@ -112,13 +147,7 @@ export function InvoiceCard({
   const busy = isMarkingPaid || isDownloading || isDeleting;
 
   return (
-    <div
-      className={cn(
-        PANEL,
-        'relative h-full overflow-hidden',
-        isDeleting && 'opacity-50'
-      )}
-    >
+    <div className={cn(PANEL, 'relative h-full overflow-hidden', isDeleting && 'opacity-50')}>
       {/* Status wash */}
       <div
         className={cn(
@@ -137,14 +166,28 @@ export function InvoiceCard({
           <span className={cn('h-1.5 w-1.5 rounded-full flex-shrink-0', status.dot)} />
           <span
             className={cn(
-              'text-[10px] font-semibold uppercase tracking-[0.08em] truncate',
+              'text-[11px] font-semibold uppercase tracking-[0.08em] truncate',
               status.text
             )}
           >
             {status.label}
           </span>
           {isPartPaid && (
-            <span className="text-[10px] font-semibold text-amber-400">Part-paid</span>
+            <span className="text-[11px] font-semibold text-amber-400">Part-paid</span>
+          )}
+          {/*
+            ELE-1704 — a credit note raised and then invisible is a document
+            the electrician cannot find again. Stated on the card, with the
+            amount, because "credited" without a figure still means opening it
+            to find out what changed.
+          */}
+          {creditedTotal > 0 && (
+            <span
+              className="text-[11px] font-semibold text-elec-yellow"
+              title={`${credited!.count} credit note${credited!.count === 1 ? '' : 's'} totalling ${formatCardAmount(creditedTotal)}`}
+            >
+              · {fullyCredited ? 'Credited' : `−${formatCardAmount(creditedTotal)}`}
+            </span>
           )}
           {/*
             Read receipt. Shown only on sent, unpaid invoices — once it is paid
@@ -153,8 +196,8 @@ export function InvoiceCard({
           {isSent && !isPaid && (
             <span
               className={cn(
-                'text-[10px] font-semibold',
-                openedAt ? 'text-blue-300' : 'text-white/55'
+                'text-[11px] font-semibold',
+                openedAt ? 'text-blue-300' : 'text-white'
               )}
               title={
                 openedAt
@@ -166,7 +209,7 @@ export function InvoiceCard({
             </span>
           )}
           {invoice.external_invoice_provider && (
-            <span className="text-[10px] font-semibold text-white/45 capitalize">
+            <span className="text-[11px] font-semibold text-white capitalize">
               · {invoice.external_invoice_provider}
             </span>
           )}
@@ -185,7 +228,7 @@ export function InvoiceCard({
           {formatCardAmount(isPartPaid ? outstanding : invoice.total || 0)}
         </p>
         {isPartPaid && (
-          <p className="text-[10px] text-white/50 tabular-nums mt-0.5">
+          <p className="text-[11px] text-white tabular-nums mt-0.5">
             of {formatCardAmount(invoice.total || 0)} · {formatCardAmount(totalPaid)} received
           </p>
         )}
@@ -193,13 +236,13 @@ export function InvoiceCard({
         {/* Footer — cue + age */}
         <div className="mt-3 pt-2 border-t border-white/[0.08] flex items-center justify-between gap-2">
           {cue ? (
-            <span className={cn('text-[10px] font-semibold truncate', cue.cls)}>{cue.text}</span>
+            <span className={cn('text-[11px] font-semibold truncate', cue.cls)}>{cue.text}</span>
           ) : (
-            <span className="text-[10px] text-white/45 font-mono truncate">
+            <span className="text-[11px] text-white font-mono truncate">
               {invoice.invoice_number || ''}
             </span>
           )}
-          <span className="text-[10px] text-white/65 tabular-nums flex-shrink-0">
+          <span className="text-[11px] text-white tabular-nums flex-shrink-0">
             {formatCardAge(invoice.invoice_date || invoice.createdAt)}
           </span>
         </div>
@@ -216,7 +259,11 @@ export function InvoiceCard({
               disabled={busy}
               className="h-11 w-11 flex items-center justify-center rounded-xl text-white/65 hover:text-white hover:bg-white/[0.06] active:scale-[0.95] transition-all touch-manipulation disabled:opacity-50"
             >
-              {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <MoreVertical className="h-4 w-4" />}
+              {busy ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <MoreVertical className="h-4 w-4" />
+              )}
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent
@@ -246,6 +293,15 @@ export function InvoiceCard({
               <Pencil className="h-4 w-4 mr-2 text-white/60" />
               Edit
             </DropdownMenuItem>
+            {canCredit && (
+              <DropdownMenuItem
+                onClick={onCreditNote}
+                className="h-11 text-[14px] text-white touch-manipulation focus:bg-white/[0.06] focus:text-white"
+              >
+                <ReceiptText className="h-4 w-4 mr-2 text-elec-yellow" />
+                Raise a credit note
+              </DropdownMenuItem>
+            )}
             <DropdownMenuSeparator className="bg-white/[0.08]" />
             <DropdownMenuItem
               onClick={onDelete}
