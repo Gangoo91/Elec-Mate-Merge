@@ -28,37 +28,37 @@ export interface CalculationWarning {
  */
 export function parseCalculationsFromResponse(responseText: string): any {
   const calculations: any = {};
-  
+
   // Extract design current (Ib)
   const ibMatch = responseText.match(/design current.*?(\d+(?:\.\d+)?)\s*A/i);
   if (ibMatch) {
     calculations.designCurrent = parseFloat(ibMatch[1]);
   }
-  
+
   // Extract MCB rating (In)
   const inMatch = responseText.match(/(?:MCB|RCBO).*?(\d+)\s*A/i);
   if (inMatch) {
     calculations.mcbRating = parseInt(inMatch[1]);
   }
-  
+
   // Extract cable size
   const cableSizeMatch = responseText.match(/(\d+(?:\.\d+)?)\s*mm²/i);
   if (cableSizeMatch) {
     calculations.cableSize = parseFloat(cableSizeMatch[1]);
   }
-  
+
   // Extract voltage drop
   const vdMatch = responseText.match(/voltage drop.*?(\d+(?:\.\d+)?)\s*%/i);
   if (vdMatch) {
     calculations.voltageDrop = parseFloat(vdMatch[1]);
   }
-  
+
   // Extract tabulated current (Iz)
   const izMatch = responseText.match(/(?:Iz|tabulated|rating).*?(\d+)\s*A/i);
   if (izMatch) {
     calculations.tabulatedCurrent = parseInt(izMatch[1]);
   }
-  
+
   return calculations;
 }
 
@@ -71,28 +71,30 @@ export function validateCalculations(
 ): CalculationValidation {
   const errors: CalculationError[] = [];
   const warnings: CalculationWarning[] = [];
-  
+
   // === VALIDATE DESIGN CURRENT (Ib) ===
   if (extractedCalcs.designCurrent && circuitParams.power && circuitParams.voltage) {
     const expectedIb = circuitParams.power / circuitParams.voltage;
     const deviation = Math.abs(extractedCalcs.designCurrent - expectedIb) / expectedIb;
-    
-    if (deviation > 0.15) { // 15% tolerance
+
+    if (deviation > 0.15) {
+      // 15% tolerance
       errors.push({
         field: 'designCurrent',
         expected: expectedIb,
         actual: extractedCalcs.designCurrent,
         deviation: deviation * 100,
-        message: `Design current (Ib) mismatch: Expected ${expectedIb.toFixed(1)}A, got ${extractedCalcs.designCurrent}A (${(deviation * 100).toFixed(1)}% deviation)`
+        message: `Design current (Ib) mismatch: Expected ${expectedIb.toFixed(1)}A, got ${extractedCalcs.designCurrent}A (${(deviation * 100).toFixed(1)}% deviation)`,
       });
-    } else if (deviation > 0.05) { // 5% tolerance for warning
+    } else if (deviation > 0.05) {
+      // 5% tolerance for warning
       warnings.push({
         field: 'designCurrent',
-        message: `Design current slightly off: ${extractedCalcs.designCurrent}A vs expected ${expectedIb.toFixed(1)}A`
+        message: `Design current slightly off: ${extractedCalcs.designCurrent}A vs expected ${expectedIb.toFixed(1)}A`,
       });
     }
   }
-  
+
   // === VALIDATE Ib ≤ In RELATIONSHIP ===
   if (extractedCalcs.designCurrent && extractedCalcs.mcbRating) {
     if (extractedCalcs.designCurrent > extractedCalcs.mcbRating) {
@@ -101,11 +103,11 @@ export function validateCalculations(
         expected: extractedCalcs.designCurrent,
         actual: extractedCalcs.mcbRating,
         deviation: 0,
-        message: `Regulation 433.1.1 violation: Ib (${extractedCalcs.designCurrent}A) must be ≤ In (${extractedCalcs.mcbRating}A)`
+        message: `Regulation 433.1.1 violation: Ib (${extractedCalcs.designCurrent}A) must be ≤ In (${extractedCalcs.mcbRating}A)`,
       });
     }
   }
-  
+
   // === VALIDATE In ≤ Iz RELATIONSHIP ===
   if (extractedCalcs.mcbRating && extractedCalcs.tabulatedCurrent) {
     if (extractedCalcs.mcbRating > extractedCalcs.tabulatedCurrent) {
@@ -114,33 +116,33 @@ export function validateCalculations(
         expected: extractedCalcs.mcbRating,
         actual: extractedCalcs.tabulatedCurrent,
         deviation: 0,
-        message: `Regulation 433.1.1 violation: In (${extractedCalcs.mcbRating}A) must be ≤ Iz (${extractedCalcs.tabulatedCurrent}A)`
+        message: `Regulation 433.1.1 violation: In (${extractedCalcs.mcbRating}A) must be ≤ Iz (${extractedCalcs.tabulatedCurrent}A)`,
       });
     }
   }
-  
+
   // === VALIDATE VOLTAGE DROP ===
   if (extractedCalcs.voltageDrop !== undefined) {
     const limit = circuitParams.loadType === 'lighting' ? 3 : 5;
-    
+
     if (extractedCalcs.voltageDrop > limit) {
       warnings.push({
         field: 'voltageDrop',
-        message: `Voltage drop ${extractedCalcs.voltageDrop}% exceeds ${limit}% limit (Regulation 525) - should flag or upsize`
+        message: `Voltage drop ${extractedCalcs.voltageDrop}% exceeds ${limit}% limit (Regulation 525) - should flag or upsize`,
       });
     }
   }
-  
+
   // Calculate confidence score
   const totalChecks = 4; // Design current, Ib≤In, In≤Iz, VD
   const passedChecks = totalChecks - errors.length;
   const confidence = (passedChecks / totalChecks) * 100;
-  
+
   return {
     isValid: errors.length === 0,
     errors,
     warnings,
-    confidence
+    confidence,
   };
 }
 
@@ -151,8 +153,8 @@ export function generateFixInstructions(validation: CalculationValidation): stri
   if (validation.isValid) {
     return '';
   }
-  
-  const fixes = validation.errors.map(err => {
+
+  const fixes = validation.errors.map((err) => {
     switch (err.field) {
       case 'designCurrent':
         return `Recalculate design current: Ib = ${err.expected.toFixed(1)}A (P/V)`;
@@ -164,6 +166,6 @@ export function generateFixInstructions(validation: CalculationValidation): stri
         return err.message;
     }
   });
-  
+
   return `CALCULATION ERRORS DETECTED:\n${fixes.join('\n')}\n\nRegenerate response with corrected values.`;
 }

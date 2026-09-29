@@ -10,7 +10,12 @@ export interface ConfusionPattern {
   originalQuery: string;
   originalResponse: string;
   userFollowUp: string;
-  confusionType: 'calculation_unclear' | 'regulation_missing' | 'assumption_wrong' | 'terminology' | 'why_question';
+  confusionType:
+    | 'calculation_unclear'
+    | 'regulation_missing'
+    | 'assumption_wrong'
+    | 'terminology'
+    | 'why_question';
   timestamp: string;
   userId?: string;
   sessionId?: string;
@@ -29,24 +34,22 @@ export async function trackConfusion(pattern: ConfusionPattern): Promise<void> {
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     // Store to learning review queue for analysis
-    const { error } = await supabase
-      .from('learning_review_queue')
-      .insert({
-        agent_name: pattern.agentName || 'designer',
-        issue_type: pattern.confusionType,
-        ai_answer: pattern.originalResponse,
-        user_correction: pattern.userFollowUp,
-        status: 'pending',
-        pattern_frequency: 1,
-        suggested_prompt_change: generatePromptSuggestion(pattern),
-      });
+    const { error } = await supabase.from('learning_review_queue').insert({
+      agent_name: pattern.agentName || 'designer',
+      issue_type: pattern.confusionType,
+      ai_answer: pattern.originalResponse,
+      user_correction: pattern.userFollowUp,
+      status: 'pending',
+      pattern_frequency: 1,
+      suggested_prompt_change: generatePromptSuggestion(pattern),
+    });
 
     if (error) {
       console.error('Failed to track confusion:', error);
     } else {
       console.log('📝 Confusion pattern tracked:', {
         type: pattern.confusionType,
-        session: pattern.sessionId
+        session: pattern.sessionId,
       });
     }
   } catch (error) {
@@ -60,11 +63,11 @@ export async function trackConfusion(pattern: ConfusionPattern): Promise<void> {
  */
 function generatePromptSuggestion(pattern: ConfusionPattern): string {
   const suggestions: Record<string, string> = {
-    'calculation_unclear': 'Add explicit calculation breakdown section showing step-by-step working',
-    'regulation_missing': 'Include all relevant regulation references upfront, not just primary ones',
-    'assumption_wrong': 'State all assumptions clearly before presenting the solution',
-    'terminology': 'Define technical terms when first used, especially for apprentice-level users',
-    'why_question': 'Proactively explain WHY decisions are made, not just WHAT they are'
+    calculation_unclear: 'Add explicit calculation breakdown section showing step-by-step working',
+    regulation_missing: 'Include all relevant regulation references upfront, not just primary ones',
+    assumption_wrong: 'State all assumptions clearly before presenting the solution',
+    terminology: 'Define technical terms when first used, especially for apprentice-level users',
+    why_question: 'Proactively explain WHY decisions are made, not just WHAT they are',
   };
 
   return suggestions[pattern.confusionType] || 'Review and improve clarity of response';
@@ -84,7 +87,7 @@ export function detectConfusionSignals(
     return {
       isConfused: true,
       confusionType: 'why_question',
-      topic: conversationalContext.lastTopic
+      topic: conversationalContext.lastTopic,
     };
   }
 
@@ -94,7 +97,7 @@ export function detectConfusionSignals(
     { pattern: /but (what|where|which|how) regulation/i, type: 'regulation_missing' },
     { pattern: /assumed|assumption|didn't specify/i, type: 'assumption_wrong' },
     { pattern: /what (does|is|means) .* mean/i, type: 'terminology' },
-    { pattern: /but (i|we) said|actually (i|we)/i, type: 'assumption_wrong' }
+    { pattern: /but (i|we) said|actually (i|we)/i, type: 'assumption_wrong' },
   ];
 
   for (const { pattern, type } of confusionPatterns) {
@@ -102,7 +105,7 @@ export function detectConfusionSignals(
       return {
         isConfused: true,
         confusionType: type,
-        topic: conversationalContext.lastTopic
+        topic: conversationalContext.lastTopic,
       };
     }
   }
@@ -134,7 +137,7 @@ export async function getCommonConfusions(
 
     if (error || !data) return [];
 
-    return data.map(d => d.suggested_prompt_change).filter(Boolean);
+    return data.map((d) => d.suggested_prompt_change).filter(Boolean);
   } catch (error) {
     console.error('Error fetching common confusions:', error);
     return [];

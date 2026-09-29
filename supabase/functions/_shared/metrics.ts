@@ -32,7 +32,7 @@ export class MetricsCollector {
       functionName,
       cacheHit: false,
       success: false,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
     this.timers = new Map();
     this.startTime = Date.now();
@@ -74,15 +74,18 @@ export class MetricsCollector {
       this.metrics.totalTime = Date.now() - this.startTime;
 
       // Log metrics (could also send to external service)
-      console.log('📊 Metrics:', JSON.stringify({
-        ...this.metrics,
-        timers: Object.fromEntries(this.timers)
-      }));
+      console.log(
+        '📊 Metrics:',
+        JSON.stringify({
+          ...this.metrics,
+          timers: Object.fromEntries(this.timers),
+        })
+      );
 
       // Store in Supabase for analysis
       const supabaseUrl = Deno.env.get('SUPABASE_URL');
       const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
-      
+
       if (supabaseUrl && supabaseKey) {
         const supabase = createClient(supabaseUrl, supabaseKey);
         await supabase.from('agent_metrics').insert(this.metrics as Metrics);
@@ -96,7 +99,7 @@ export class MetricsCollector {
   getMetrics(): Partial<Metrics> {
     return {
       ...this.metrics,
-      totalTime: Date.now() - this.startTime
+      totalTime: Date.now() - this.startTime,
     };
   }
 }

@@ -2,7 +2,7 @@
 // Enables real-time token streaming for better UX
 
 export interface StreamChunk {
-  type: 'token' | 'citation' | 'tool_call' | 'done' | 'error';
+  type: 'token' | 'citation' | 'tool_call' | 'done' | 'error' | 'progress' | 'heartbeat' | 'result';
   content?: string;
   data?: any;
 }
@@ -33,6 +33,18 @@ export class StreamingResponseBuilder {
 
   sendDone() {
     this.sendChunk({ type: 'done' });
+  }
+
+  sendHeartbeat(message?: string) {
+    this.sendChunk({ type: 'heartbeat', content: message });
+  }
+
+  sendProgress(message: string, data?: any) {
+    this.sendChunk({ type: 'progress', content: message, data });
+  }
+
+  sendResult(data: any) {
+    this.sendChunk({ type: 'result', data });
   }
 
   private sendChunk(chunk: StreamChunk) {
@@ -109,7 +121,7 @@ export function createStreamingResponse(
       } finally {
         builder.close();
       }
-    }
+    },
   });
 
   return new Response(stream, {
@@ -117,7 +129,7 @@ export function createStreamingResponse(
       ...corsHeaders,
       'Content-Type': 'text/event-stream',
       'Cache-Control': 'no-cache',
-      'Connection': 'keep-alive'
-    }
+      Connection: 'keep-alive',
+    },
   });
 }
