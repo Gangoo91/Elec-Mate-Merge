@@ -17,13 +17,21 @@
  */
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-import { Resend } from 'npm:resend@2.0.0';
 import {
   buildCertificateSendEmail,
   type CertificateSendData,
 } from '../_shared/email-templates/certificate-send.ts';
 import type { BrandedCompany } from '../_shared/email-template.ts';
-import { clientFacingSender } from '../_shared/mailer.ts';
+/*
+ * 🔴 `Resend` here is the BREVO shim, not the real SDK.
+ *
+ * This function was still importing `npm:resend@2.0.0` and sending through
+ * Resend directly — a provider that banned elec-mate.com at domain level
+ * (ELE-765), which is why everything else moved behind this shim. Every
+ * certificate released to a customer was going out over a path that cannot
+ * deliver.
+ */
+import { Resend, clientFacingSender } from '../_shared/mailer.ts';
 import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
@@ -85,7 +93,31 @@ serve(async (req: Request) => {
       quoteId = inv.quote_id;
     }
 
-    const { data: quote, error: quoteError } = await admin
+    /*
+     * The row shape, stated once.
+     *
+     * PostgREST cannot type a string `select()` against the generated types,
+     * so `data` widens to `… | GenericStringError` and EVERY field access
+     * below was a type error — 23 of them in this file alone. Naming the
+     * shape here fixes all of them rather than adding a 24th. The fields are
+     * exactly the ones the select asks for.
+     */
+    interface ReleaseQuote {
+      id: string;
+      user_id: string;
+      invoice_number: string | null;
+      invoice_paid_at: string | null;
+      invoice_status: string | null;
+      client_data: Record<string, unknown> | null;
+      certificate_release_mode: string | null;
+      certificate_released_at: string | null;
+      linked_certificate_id: string | null;
+      linked_certificate_type: string | null;
+      linked_certificate_reference: string | null;
+      linked_certificate_pdf_url: string | null;
+    }
+
+    const { data: quoteRow, error: quoteError } = await admin
       .from('quotes')
       .select(
         'id, user_id, invoice_number, invoice_paid_at, invoice_status, client_data, ' +
@@ -94,7 +126,8 @@ serve(async (req: Request) => {
       )
       .eq('id', quoteId)
       .maybeSingle();
-    if (quoteError || !quote) return json({ released: false, reason: 'quote_not_found' });
+    if (quoteError || !quoteRow) return json({ released: false, reason: 'quote_not_found' });
+    const quote = quoteRow as unknown as ReleaseQuote;
 
     // ── Guards — the DB is the truth, the request proves nothing ───────────
     if (manualUserId && manualUserId !== quote.user_id) {
@@ -107,8 +140,7 @@ serve(async (req: Request) => {
       return json({ released: false, reason: 'not_opted_in' });
     if (!quote.linked_certificate_id)
       return json({ released: false, reason: 'no_linked_certificate' });
-    if (quote.certificate_released_at)
-      return json({ released: false, reason: 'already_released' });
+    if (quote.certificate_released_at) return json({ released: false, reason: 'already_released' });
 
     // ── Atomic claim — twin triggers can both fire; only one send happens ──
     const { data: claimed } = await admin
@@ -164,7 +196,9 @@ serve(async (req: Request) => {
       {
         let { data: certReport } = await admin
           .from('reports')
-          .select('pdf_url, client_name, installation_address, inspection_date, next_inspection_due')
+          .select(
+            'pdf_url, client_name, installation_address, inspection_date, next_inspection_due'
+          )
           .eq('report_id', linkId)
           .maybeSingle();
         if (
@@ -195,10 +229,7 @@ serve(async (req: Request) => {
       const pdfBytes = new Uint8Array(await pdfResponse.arrayBuffer());
       let binary = '';
       for (let i = 0; i < pdfBytes.length; i += 0x8000) {
-        binary += String.fromCharCode.apply(
-          null,
-          Array.from(pdfBytes.subarray(i, i + 0x8000))
-        );
+        binary += String.fromCharCode.apply(null, Array.from(pdfBytes.subarray(i, i + 0x8000)));
       }
       const pdfBase64 = btoa(binary);
 
@@ -236,19 +267,24 @@ serve(async (req: Request) => {
       };
       const email = buildCertificateSendEmail(emailData);
 
-      const resendApiKey = Deno.env.get('RESEND_API_KEY');
-      if (!resendApiKey) {
+      /*
+       * The shim prefers BREVO_API_KEY and falls back to the legacy value, so
+       * either being present is enough. Gating on RESEND_API_KEY alone would
+       * refuse to send on a correctly-configured Brevo-only project.
+       */
+      const mailApiKey = Deno.env.get('BREVO_API_KEY') || Deno.env.get('RESEND_API_KEY');
+      if (!mailApiKey) {
         await unclaim();
-        return json({ error: 'RESEND_API_KEY not configured' }, 500);
+        return json({ error: 'No mail provider API key configured' }, 500);
       }
-      const resend = new Resend(resendApiKey);
+      const resend = new Resend(mailApiKey);
       const sender = clientFacingSender({
         companyName: company.name,
         companyEmail: companyProfile?.company_email,
       });
       const { error: sendError } = await resend.emails.send({
         from: sender.from,
-        reply_to: sender.replyTo,
+        replyTo: sender.replyTo,
         to: [clientEmail],
         subject: email.subject,
         html: email.html,
@@ -258,6 +294,7 @@ serve(async (req: Request) => {
             content: pdfBase64,
           },
         ],
+        log: { template: 'certificate_release', entityId: quote.id, userId: quote.user_id },
       });
       if (sendError) {
         await unclaim();
