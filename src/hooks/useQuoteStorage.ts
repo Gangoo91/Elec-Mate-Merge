@@ -11,6 +11,7 @@ import { trackQuoteCreated } from '@/lib/analytics-events';
 import { QUERY_KEYS, QUERY_PRESETS } from '@/lib/queryConfig';
 import { useStockMovements } from '@/hooks/useStockMovements';
 import { isQuoteDraft } from '@/utils/quote-status';
+import { generateSequentialInvoiceNumber } from '@/utils/invoice-number-generator';
 
 // Database storage for quotes (no longer using localStorage).
 //
@@ -643,17 +644,6 @@ export const useQuoteStorage = () => {
     };
   }, [savedQuotes]);
 
-  // Generate invoice number from quote number
-  const generateInvoiceNumber = (quoteNumber: string): string => {
-    if (quoteNumber.startsWith('Q')) {
-      return 'INV' + quoteNumber.slice(1);
-    }
-    if (quoteNumber.startsWith('QTE')) {
-      return quoteNumber.replace('QTE', 'INV');
-    }
-    return `INV-${Date.now().toString(36).toUpperCase()}`;
-  };
-
   const updateQuoteStatus = async (
     quoteId: string,
     status: Quote['status'],
@@ -680,7 +670,19 @@ export const useQuoteStorage = () => {
           // Get the quote to generate invoice number
           const quote = savedQuotes.find((q) => q.id === quoteId);
           if (quote && !quote.invoice_raised) {
-            const invoiceNumber = generateInvoiceNumber(quote.quoteNumber);
+            /*
+             * ELE-1721 — mint through the SAME atomic RPC every other
+             * invoice path uses.
+             *
+             * This used to derive the number from the quote number: 'Q…' to
+             * 'INV…', 'QTE' to 'INV', and otherwise a base-36 timestamp.
+             * Quote numbers are '2026/NNN', which matches neither prefix, so
+             * in practice every invoice raised here got the timestamp
+             * fallback — 8 of them in live data, e.g. 'INV-MOW1A8W3'. Those
+             * numbers sit outside the per-user sequence, which HMRC expects
+             * to be sequential and which the accounting sync relies on.
+             */
+            const invoiceNumber = await generateSequentialInvoiceNumber();
             const invoiceDate = new Date();
             const invoiceDueDate = new Date();
             invoiceDueDate.setDate(invoiceDueDate.getDate() + 30);

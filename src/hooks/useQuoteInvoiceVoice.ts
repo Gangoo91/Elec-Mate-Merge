@@ -1,6 +1,7 @@
 import { useState, useCallback, useRef } from 'react';
 import { useConversation } from '@elevenlabs/react';
 import { supabase } from '@/integrations/supabase/client';
+import { generateSequentialInvoiceNumber } from '@/utils/invoice-number-generator';
 import { toast } from 'sonner';
 
 // Quote/Invoice ElevenLabs agent
@@ -22,16 +23,20 @@ function generateQuoteNumber(): string {
   return `QTE-${year}${month}-${random}`;
 }
 
-// Helper to generate invoice number
-function generateInvoiceNumber(): string {
-  const now = new Date();
-  const year = now.getFullYear().toString().slice(-2);
-  const month = (now.getMonth() + 1).toString().padStart(2, '0');
-  const random = Math.floor(Math.random() * 1000)
-    .toString()
-    .padStart(3, '0');
-  return `INV-${year}${month}-${random}`;
-}
+/*
+ * ELE-1721 — invoice numbers come from the atomic RPC, like every other
+ * path in the app.
+ *
+ * This used to mint `INV-YYMM-RRR` with `Math.random()`. Two problems: the
+ * numbers sat outside the per-user sequence that HMRC expects and the
+ * accounting sync relies on, and a 3-digit random within a month is a
+ * collision waiting to happen. Seven live invoices carry it (INV-2603-088,
+ * -180, -244, -299, -335, -372, -977).
+ *
+ * `generateSequentialInvoiceNumber` is the quote-to-invoice generator —
+ * every site here either converts a quote or mints a quote number alongside,
+ * and `useInvoiceStorage` treats "has a quote number" as not-standalone.
+ */
 
 export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) {
   const { currentSection = 'quotes', onToolResult } = options;
@@ -323,7 +328,7 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
         try {
           const session = await getAuthSession();
           const quoteNumber = generateQuoteNumber();
-          const invoiceNumber = generateInvoiceNumber();
+          const invoiceNumber = await generateSequentialInvoiceNumber();
           const vatRate = params.vatRate ?? 20;
           const quantity = params.itemQuantity || 1;
           const unitPrice = params.itemUnitPrice || 0;
@@ -457,7 +462,7 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
             console.log('[QuoteInvoiceVoice] Converting non-accepted quote, status:', quote.status);
           }
 
-          const invoiceNumber = generateInvoiceNumber();
+          const invoiceNumber = await generateSequentialInvoiceNumber();
           const invoiceDate = new Date();
           const dueDate = new Date();
           dueDate.setDate(dueDate.getDate() + 30);
@@ -665,7 +670,7 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
                 typeof quote.client_data === 'object' ? quote.client_data?.name : 'the client';
             } else {
               // Convert to invoice
-              invoiceNumber = generateInvoiceNumber();
+              invoiceNumber = await generateSequentialInvoiceNumber();
               const invoiceDate = new Date();
               const dueDate = new Date();
               dueDate.setDate(dueDate.getDate() + (params.paymentDays || 30));
@@ -717,7 +722,7 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
             }
 
             const quoteNumber = generateQuoteNumber();
-            invoiceNumber = generateInvoiceNumber();
+            invoiceNumber = await generateSequentialInvoiceNumber();
             const vatRate = params.vatRate ?? 20;
             const quantity = params.itemQuantity || 1;
             const unitPrice = params.itemUnitPrice;
