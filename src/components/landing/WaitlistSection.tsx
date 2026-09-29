@@ -231,8 +231,9 @@ function WaitlistCard({ config }: { config: AudienceConfig }) {
 export function WaitlistSection({ className }: { className?: string }) {
   return (
     <section
+      id="employer-waitlist"
       className={cn(
-        '[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 py-14 sm:py-20 lg:px-8 lg:py-24',
+        '[content-visibility:auto] [contain-intrinsic-size:auto_700px] scroll-mt-20 px-5 py-14 sm:py-20 lg:px-8 lg:py-24',
         className
       )}
     >
