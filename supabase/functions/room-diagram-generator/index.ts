@@ -1,8 +1,11 @@
 import { serve, corsHeaders } from '../_shared/deps.ts';
 import { captureException } from '../_shared/sentry.ts';
 import { AIProviderError } from '../_shared/ai-providers.ts';
+import { createClient } from '../_shared/deps.ts';
+import { readPlan, describePlan, type PlanPage, type PlanProgress } from './plan-reader.ts';
+import { ELECTRICAL_RULES } from './electrical-rules.ts';
 
-const VERSION = 'v1.1.0';
+const VERSION = 'v1.2.0';
 
 /**
  * The vision model for reading a plan.
@@ -145,19 +148,82 @@ const FLOOR_PLAN_SCHEMA = {
   required: ['rooms'],
 };
 
+
+
+
+/**
+ * What the browser is told. Our own messages ("No rooms found on the plan")
+ * are written for the user and pass through; anything from upstream — a
+ * provider's raw error body, a network error quoting a URL — is replaced with
+ * a plain sentence. The detail still goes to the logs and Sentry.
+ */
+function clientMessage(err: unknown, fallback: string): string {
+  const msg = err instanceof Error ? err.message : '';
+  if (!msg || /gemini|google|https?:\/\/|api[_-]?key|error sending request|\{|\bstatus\b/i.test(msg)) {
+    return 'The plan reader is busy or unavailable. Please try again in a minute.';
+  }
+  return msg.length > 300 ? fallback : msg;
+}
+
+/** An answer about the plan itself — asking again gives the same answer. */
+function isFinalAnswer(err: unknown): boolean {
+  return /no (readable )?rooms|not a (floor )?plan|too (large|big)/i.test(err instanceof Error ? err.message : '');
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { description, image_base64 } = await req.json();
+    /*
+     * Signed-in users only. This function spends Gemini credit on every call
+     * and was deployed with verify_jwt off and no check of its own, so anyone
+     * who found the URL could run it. The app always calls it with the user's
+     * session, so requiring one costs a real user nothing.
+     */
+    const authHeader = req.headers.get('Authorization') ?? '';
+    const supabase = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
+      { global: { headers: { Authorization: authHeader } } }
+    );
+    const { data: auth } = await supabase.auth.getUser(authHeader.replace(/^Bearer\s+/i, ''));
+    if (!auth?.user) {
+      return new Response(JSON.stringify({ success: false, error: 'Please sign in again.' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
 
-    if (!description && !image_base64) {
+    // Eight pages at 2,400 px is a few MB; anything far past that is a mistake
+    // and would only fail slowly further on. Say so at once (the client does
+    // not retry a 4xx).
+    const declared = Number(req.headers.get('content-length') ?? 0);
+    if (declared > 25 * 1024 * 1024) {
+      return new Response(
+        JSON.stringify({ success: false, error: 'That plan is too large to send. Upload fewer pages, or a smaller export.' }),
+        { status: 413, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+    const body = await req.json();
+    const { description, image_base64, image_width, image_height, notes } = body;
+    /*
+     * `pages` carries a multi-page PDF (one floor per page is common in an
+     * architect's pack); `image_base64` is the single-image shape every older
+     * build sends.
+     */
+    const pagesIn: { image_base64: string; width?: number; height?: number }[] = Array.isArray(body.pages)
+      ? body.pages.slice(0, 8)
+      : image_base64
+        ? [{ image_base64, width: image_width, height: image_height }]
+        : [];
+
+    if (!description && pagesIn.length === 0) {
       throw new Error('Room description or photo is required');
     }
 
-    const isPhotoMode = !!image_base64;
+    const isPhotoMode = pagesIn.length > 0;
     console.log(`🏠 Generating room diagram from: ${isPhotoMode ? 'photo' : 'description'}`);
 
     const geminiKey = Deno.env.get('GEMINI_API_KEY');
@@ -201,54 +267,7 @@ IMPORTANT PARSING RULES:
 7. Place ceiling lights at room center unless specified otherwise
 8. If wall orientation not specified, assume: top=north, right=east, bottom=south, left=west
 
-VALID SYMBOL IDs (use ONLY these exact IDs, no suffixes):
-Lighting: light-ceiling, light-wall, light-downlight, light-emergency, light-fluorescent, light-pendant, light-bulkhead, light-pir, light-outside, light-led-strip, light-exit-sign, light-twin-emergency, light-high-bay
-Sockets: socket-single-13a, socket-double-13a, socket-fused-spur, socket-switched-fused-spur, socket-unswitched-spur, socket-cooker-45a, socket-floor, socket-outdoor, socket-usb, socket-ev-charger, socket-tv-aerial, socket-data, socket-telephone, socket-shaver, socket-comms-cabinet
-Switches: switch-1way, switch-2way, switch-intermediate, switch-dimmer, switch-pull-cord, switch-double, switch-pir, switch-timer, switch-isolator, switch-emergency-stop, switch-fan-isolator, switch-key, switch-heater
-Distribution: consumer-unit, mcb, rcd, rcbo, main-isolator, distribution-board, spd, meter, mccb, contactor, changeover-switch, generator-changeover, busbar-chamber, sub-main-board
-Safety: smoke-detector, co-detector, heat-detector, fire-alarm, bell, junction-box, thermostat, extractor-fan, cctv, door-entry, emergency-call-point, disabled-alarm, sounder-beacon, access-control, door-release, motion-detector, break-glass
-
-ROOM-SPECIFIC UK WIRING REGULATIONS:
-
-BATHROOM (BS 7671 Section 701):
-- NO 13A socket outlets (except shaver sockets to BS EN 61558-2-5)
-- Light switches MUST be pull-cord type (not plate switches) — use switch-pull-cord
-- All circuits must be 30mA RCD protected
-- Use IP-rated downlights (light-downlight)
-- Include extractor-fan
-- Include shaver socket (socket-shaver)
-- NEVER place socket-single-13a or socket-double-13a in bathrooms
-
-KITCHEN:
-- Minimum 4 double sockets on worktop ring final circuit at 1.15m height
-- Dedicated 45A cooker circuit (socket-cooker-45a)
-- FCU for extractor (socket-fused-spur or socket-switched-fused-spur)
-- RCD protection for sockets within 1m of sink
-- Place worktop sockets above worktop height (1.15m)
-
-GARAGE/WORKSHOP:
-- Consider consumer-unit or sub-main-board
-- Outdoor IP66 sockets (socket-outdoor)
-- Fluorescent or high-bay lighting (light-fluorescent or light-high-bay)
-- RCD protection on all circuits
-
-HALLWAY/LANDING/CORRIDOR:
-- 2-way switching (switch-2way) for lights (switch at each end / top and bottom of stairs)
-- Smoke detector required (smoke-detector)
-- Emergency lighting if commercial (light-emergency)
-
-LONG ROOMS AND CORRIDORS — SPACE THE LIGHTING OUT:
-- A single fitting at the centre of a long room leaves most of it dark. Any room
-  longer than 5m gets multiple lighting points spread along its length, each with
-  its own "position" in metres, roughly one every 3-4m.
-- The same applies to emergency lighting and detection on an escape route: space
-  them along the corridor rather than placing one in the middle.
-- A 20m corridor should have around 5-6 lighting points, not one.
-
-ALL ROOMS:
-- Smoke detector required in habitable rooms and escape routes
-- CO detector required where there is a combustion appliance
-- Consider switch position relative to door opening direction
+${ELECTRICAL_RULES}
 
 Return ONLY valid JSON in this exact format. "rooms" is an ARRAY — include one entry per room on the plan:
 {
@@ -297,6 +316,95 @@ Return ONLY valid JSON in this exact format. "rooms" is an ARRAY — include one
 
 CRITICAL: Return ONLY the JSON object, no markdown, no explanations, no code blocks. Use ONLY the exact symbol IDs listed above — never append suffixes like -bs7671.`;
 
+    /*
+     * A drawn plan goes through the two-stage reader (plan-reader.ts): find
+     * every room first, then design the electrics in batches. The single-call
+     * path below found 6-9 of ~32 rooms on a real care-home CAD sheet. It stays
+     * as the fallback — a partial floor beats an error.
+     */
+    const toPages = (): PlanPage[] =>
+      pagesIn.map((p) => ({
+        mimeType: p.image_base64.match(/^data:(image\/[a-zA-Z0-9.+-]+);base64,/)?.[1] ?? 'image/jpeg',
+        base64: p.image_base64.replace(/^data:[^;]+;base64,/, ''),
+        width: Number(p.width) || undefined,
+        height: Number(p.height) || undefined,
+      }));
+
+    /*
+     * Live progress (opt-in with `stream: true`). The response is one JSON
+     * object per line: progress events as the read goes, then a final
+     * `{ stage: 'done', result }` or `{ stage: 'error', error }`. Builds that do
+     * not ask for it get the plain JSON below, unchanged. A streamed read that
+     * fails does not try the single-call fallback — the client simply asks
+     * again without `stream`, which does.
+     */
+    if (body.stream === true) {
+      const encoder = new TextEncoder();
+      const stream = new ReadableStream({
+        async start(controller) {
+          const send = (obj: unknown) => controller.enqueue(encoder.encode(JSON.stringify(obj) + '\n'));
+          const onProgress = (p: PlanProgress) => send(p);
+          try {
+            const plan = isPhotoMode
+              ? await readPlan(toPages(), geminiKey, ELECTRICAL_RULES, typeof notes === 'string' ? notes : undefined, onProgress)
+              : await describePlan(String(description), geminiKey, ELECTRICAL_RULES, onProgress);
+            send({
+              stage: 'done',
+              result: {
+                success: true,
+                roomData: { ...plan.rooms[0], rooms: plan.rooms, floors: plan.floors, scale: plan.scale, underlays: plan.underlays },
+                version: VERSION,
+              },
+            });
+          } catch (err) {
+            await captureException(err, { functionName: 'room-diagram-generator', requestUrl: req.url, requestMethod: req.method });
+            send({
+              stage: 'error',
+              error: clientMessage(err, 'Failed to read the plan'),
+              retryable: !(err instanceof AIProviderError && !err.retryable) && !isFinalAnswer(err),
+            });
+          } finally {
+            controller.close();
+          }
+        },
+      });
+      return new Response(stream, {
+        headers: { ...corsHeaders, 'Content-Type': 'application/x-ndjson', 'Cache-Control': 'no-cache' },
+      });
+    }
+
+    const respond = (roomData: unknown) =>
+      new Response(JSON.stringify({ success: true, roomData, version: VERSION }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+
+    if (isPhotoMode) {
+      const pages = toPages();
+      try {
+        const plan = await readPlan(pages, geminiKey, ELECTRICAL_RULES, typeof notes === 'string' ? notes : undefined);
+        console.log(`✅ Plan read: ${plan.rooms.length} rooms, floors=${JSON.stringify(plan.floors)}, scale=${plan.scale.basis}`);
+        // First room also at the top level, for builds that predate `rooms`.
+        return respond({ ...plan.rooms[0], rooms: plan.rooms, floors: plan.floors, scale: plan.scale, underlays: plan.underlays });
+      } catch (planErr) {
+        if (planErr instanceof AIProviderError && !planErr.retryable) throw planErr;
+        if (pages.length > 1) throw planErr; // the single-call fallback reads one image only
+        console.warn('⚠️ Two-stage plan read failed, falling back to single call:', String(planErr));
+      }
+    } else {
+      /*
+       * A description can be a whole property now — "three-bed semi, kitchen
+       * at the back, en-suite off the main bedroom" — not just one room. The
+       * single-room path below stays as the fallback.
+       */
+      try {
+        const plan = await describePlan(String(description), geminiKey, ELECTRICAL_RULES);
+        console.log(`✅ Described plan: ${plan.rooms.length} rooms, floors=${JSON.stringify(plan.floors)}`);
+        return respond({ ...plan.rooms[0], rooms: plan.rooms, floors: plan.floors });
+      } catch (descErr) {
+        console.warn('⚠️ Described layout failed, falling back to single room:', String(descErr));
+      }
+    }
+
     // Import Gemini provider
     const { callGemini, withRetry } = await import('../_shared/ai-providers.ts');
 
@@ -316,9 +424,10 @@ CRITICAL: Return ONLY the JSON object, no markdown, no explanations, no code blo
            * before sending, so this is the belt to that braces: any caller
            * sending something else is still described honestly.
            */
-          const dataUriMatch = image_base64.match(/^data:(image\/[a-zA-Z0-9.+-]+);base64,/);
+          const firstImage = pagesIn[0].image_base64;
+          const dataUriMatch = firstImage.match(/^data:(image\/[a-zA-Z0-9.+-]+);base64,/);
           const mimeType = dataUriMatch?.[1] ?? 'image/jpeg';
-          const rawBase64 = image_base64.replace(/^data:image\/[a-zA-Z0-9.+-]+;base64,/, '');
+          const rawBase64 = firstImage.replace(/^data:image\/[a-zA-Z0-9.+-]+;base64,/, '');
 
           const visionBody = {
             contents: [{
@@ -360,8 +469,13 @@ CRITICAL: Return ONLY the JSON object, no markdown, no explanations, no code blo
           };
 
           const visionRes = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/${PHOTO_MODEL}:generateContent?key=${geminiKey}`,
-            { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(visionBody) }
+            `https://generativelanguage.googleapis.com/v1beta/models/${PHOTO_MODEL}:generateContent`,
+            {
+              method: 'POST',
+              // Key in a header, not the URL (see plan-reader.ts).
+              headers: { 'Content-Type': 'application/json', 'x-goog-api-key': geminiKey },
+              body: JSON.stringify(visionBody),
+            }
           );
 
           if (!visionRes.ok) {
@@ -474,7 +588,7 @@ CRITICAL: Return ONLY the JSON object, no markdown, no explanations, no code blo
     return new Response(
       JSON.stringify({
         success: false,
-        error: error instanceof Error ? error.message : 'Failed to generate room diagram',
+        error: clientMessage(error, 'Failed to generate room diagram'),
         version: VERSION,
       }),
       {

@@ -145,22 +145,32 @@ const DefectObservationCard = ({
     deletePhoto,
     scanPhotoWithAI,
   } = useInspectionPhotos({
-      reportId: reportId || '',
-      reportType: 'eicr',
-      itemId: defect.inspectionItemId,
-      observationId: defect.id,
-      observationContext: {
-        classification: defect.defectCode,
-        itemLocation: defect.item || 'Not specified',
-        description: defect.description || 'No description provided',
-        recommendation: defect.recommendation,
-      },
-    });
+    reportId: reportId || '',
+    reportType: 'eicr',
+    itemId: defect.inspectionItemId,
+    observationId: defect.id,
+    observationContext: {
+      classification: defect.defectCode,
+      itemLocation: defect.item || 'Not specified',
+      description: defect.description || 'No description provided',
+      recommendation: defect.recommendation,
+    },
+  });
 
   const config = defectCodeConfig[defect.defectCode];
 
-  // The AI needs something to work from — the gate stays, but the button says so.
-  const canUseAI = defect.description.trim().length >= 5;
+  /*
+   * ELE-1786 — the AI needs something to work from, and the user needs to be
+   * told what. Both fields count: a recommendation with no observation is
+   * still a starting point. Five characters across both, the live edge
+   * function's own rule — "Hmvv" alone left a real user tapping a button that
+   * would never fire, with no message saying why.
+   */
+  const aiSeed = [defect.description, defect.recommendation || '']
+    .map((t) => t.trim())
+    .filter(Boolean)
+    .join('. ');
+  const canUseAI = aiSeed.length >= 5;
   /*
    * Polishing only makes sense once there is real prose to polish. A handful of
    * keywords is the generate case; a written sentence — or any recommendation of
@@ -363,7 +373,7 @@ const DefectObservationCard = ({
                   haptic.light();
                   setShowAISheet(true);
                   await enhance({
-                    description: defect.description,
+                    description: aiSeed,
                     location: defect.item,
                     currentCode: defect.defectCode,
                   });
@@ -384,16 +394,21 @@ const DefectObservationCard = ({
                     <Loader2 className="mr-2 h-4 w-4 animate-spin text-black" />
                     AI is writing…
                   </>
-                ) : canUseAI ? (
-                  'Write with AI'
                 ) : (
-                  'Add a few words to use AI'
+                  'Write with AI'
                 )}
               </Button>
-              <p className="mt-2 text-[12px] leading-relaxed text-white/85">
-                Jot a few words above — AI writes the full observation, recommendation and BS 7671
-                references from the regulations database.
-              </p>
+              {canUseAI ? (
+                <p className="mt-2 text-[12px] leading-relaxed text-white">
+                  AI writes the full observation, recommendation and BS 7671 references from the
+                  regulations database, starting from what you have typed.
+                </p>
+              ) : (
+                <p className="mt-2 text-[12px] leading-relaxed text-white" role="status">
+                  Type a few words in Observation or Recommendation first — even "loose socket,
+                  kitchen" is enough — and the button switches on.
+                </p>
+              )}
 
               {/* ELE-1528 — inspectors who have written it properly themselves
                 want it tidied, not replaced: "somewhere for me to write my shit
@@ -495,19 +510,18 @@ const DefectObservationCard = ({
               {/* Ticking this does not change the outcome, and inspectors expect
                 it to (ELE-1537). Say so where the expectation forms, not at the
                 sign-off gate two tabs later. */}
-              {defect.rectified &&
-                (defect.defectCode === 'C1' || defect.defectCode === 'C2') && (
-                  <p className="mt-2 text-[12px] leading-relaxed text-white">
-                    Still counts as {defect.defectCode} towards the overall assessment.{' '}
-                    <button
-                      type="button"
-                      onClick={() => setShowCodeHelp(true)}
-                      className="font-semibold text-elec-yellow underline underline-offset-2 touch-manipulation"
-                    >
-                      Why?
-                    </button>
-                  </p>
-                )}
+              {defect.rectified && (defect.defectCode === 'C1' || defect.defectCode === 'C2') && (
+                <p className="mt-2 text-[12px] leading-relaxed text-white">
+                  Still counts as {defect.defectCode} towards the overall assessment.{' '}
+                  <button
+                    type="button"
+                    onClick={() => setShowCodeHelp(true)}
+                    className="font-semibold text-elec-yellow underline underline-offset-2 touch-manipulation"
+                  >
+                    Why?
+                  </button>
+                </p>
+              )}
 
               {/* Rectification (after) evidence — only once marked rectified */}
               {defect.rectified && (

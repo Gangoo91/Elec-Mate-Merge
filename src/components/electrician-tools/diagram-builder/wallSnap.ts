@@ -56,7 +56,21 @@ export function computeWallSnap(
   y: number,
   symbolId: string | null | undefined,
   walls: CanvasObject[],
-  { alwaysSnap = false }: { alwaysSnap?: boolean } = {}
+  {
+    alwaysSnap = false,
+    scale = 1,
+    towards,
+  }: {
+    alwaysSnap?: boolean;
+    scale?: number;
+    /**
+     * A point inside the room the symbol belongs to. The symbol then faces
+     * that way whatever side of the line it started on — a symbol sitting
+     * exactly on a wall (or a hair over it) would otherwise land on the
+     * neighbouring room's face.
+     */
+    towards?: { x: number; y: number };
+  } = {}
 ): WallSnapPlacement | null {
   if (!isWallMountSymbol(symbolId)) return null;
 
@@ -87,9 +101,17 @@ export function computeWallSnap(
 
     if (!alwaysSnap && distance > WALL_SNAP_THRESHOLD) continue;
 
-    const side = (x - projX) * normalX + (y - projY) * normalY >= 0 ? 1 : -1;
-    const snapX = projX + normalX * WALL_MOUNT_OFFSET * side;
-    const snapY = projY + normalY * WALL_MOUNT_OFFSET * side;
+    const side = towards
+      ? (towards.x - projX) * normalX + (towards.y - projY) * normalY >= 0
+        ? 1
+        : -1
+      : (x - projX) * normalX + (y - projY) * normalY >= 0
+        ? 1
+        : -1;
+    // A smaller symbol's plate sits proportionally closer to its centre.
+    const offset = WALL_MOUNT_OFFSET * scale;
+    const snapX = projX + normalX * offset * side;
+    const snapY = projY + normalY * offset * side;
 
     // Turn the symbol so its plate lies flat on the wall and the device faces
     // INTO the room.
@@ -159,6 +181,7 @@ export function resnapWallSymbols(objects: CanvasObject[]): {
 
     const placement = computeWallSnap(obj.x, obj.y, obj.symbolId, walls, {
       alwaysSnap: true,
+      scale: (obj.width ?? 40) / 40,
     });
     if (!placement) return obj;
 

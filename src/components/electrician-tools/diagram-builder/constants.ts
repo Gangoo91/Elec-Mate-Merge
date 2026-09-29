@@ -36,3 +36,6 @@ export const GRID_MAJOR = SCALE;
  */
 export const snapToStep = (value: number): number =>
   Math.round((Math.round(value / SNAP_STEP) * SNAP_STEP) * 1000) / 1000;
+
+/** Below this zoom, circuit tags (L1, S2…) are too small to read and are hidden on screen. */
+export const CIRCUIT_TAG_MIN_ZOOM = 0.75;

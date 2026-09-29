@@ -5,6 +5,7 @@
  */
 
 import { useCallback, useEffect } from 'react';
+import BuildingRegsNotification from '@/components/inspection/shared/BuildingRegsNotification';
 import { useParams } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -236,6 +237,14 @@ const SolarPVDeclarations: React.FC<Props> = ({ formData, onUpdate, reportId }) 
       </div>
 
       {/* Handover Documentation */}
+      <div className={cardCn}>
+        <SectionHeading title="Building Regulations (Part P)" />
+        {/* A PV install is a new circuit, so it is notifiable in a dwelling. The
+            same section the EIC and EV forms use — one answer, one set of keys —
+            and it is what opens the Part P tracker row on Generate. */}
+        <BuildingRegsNotification formData={formData as unknown as Record<string, unknown>} onUpdate={onUpdate} />
+      </div>
+
       <div className={cardCn}>
         <SectionHeading title="Handover Documentation" />
         <p className="text-[12px] text-white/80">

@@ -1,44 +1,57 @@
 import { useState, useRef, useEffect } from 'react';
+import { Capacitor } from '@capacitor/core';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
-import {
-  Sparkles,
-  Loader2,
-  ArrowLeft,
-  Mic,
-  ChevronRight,
-  Camera,
-  Image as ImageIcon,
-  LayoutGrid,
-  Shield,
-  Zap,
-  Lightbulb,
-  FileText,
-  PoundSterling,
-  AlertTriangle,
-  Info,
-  CheckCircle2,
-} from 'lucide-react';
+import { Loader2, ArrowLeft, Mic, FileText } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { useHaptic } from '@/hooks/useHaptic';
 import { useSpeechToText } from '@/hooks/useSpeechToText';
 import { cn } from '@/lib/utils';
+import { HubQuickStart, HubToolGrid } from '@/components/hub/HubPrimitives';
+import { RoomScheduleForm } from './RoomScheduleForm';
+import { planFromSchedule, ROOM_PRESETS } from './roomSchedule';
+import { scheduleFromObjects } from './circuitDesign';
+import { cableTakeOff, runLengths } from './wiring';
 import type { CanvasObject } from '@/pages/electrician-tools/ai-tools/DiagramBuilderPage';
 import { symbolRegistry } from '@/components/electrician-tools/diagram-builder/symbols/symbolRegistry';
 import { compressImageForUpload, validateImageSize } from '@/utils/imageUploadUtils';
 import { nativePickPhoto } from '@/utils/pickPhotos';
+import { preparePlan, unsupportedPlanReason, type PlanPageImage } from '@/utils/planImage';
+import {
+  generatePlan,
+  EMPTY_PROGRESS,
+  type PlanProgress,
+  type PlanProgressState,
+} from './generatePlan';
+import { PlanProgressPanel } from './PlanProgressPanel';
+import { buildUnderlays, snapRoomsToLines, type ReaderUnderlay } from './underlay';
+import {
+  PrimaryAction,
+  ResultActions,
+  ResultRow,
+  ResultSection,
+  ToolIntro,
+  ToolLoading,
+  TotalLine,
+} from './aiToolUi';
+import { formatCurrency } from '@/lib/format';
+
+/** The house £ formatter, tolerant of the strings and nulls the tools return. */
+const gbp = (n: unknown) => formatCurrency(Number(n) || 0);
+import { CARD_BASE, CARD_NEUTRAL } from '@/components/ui/card-recipe';
 
 /**
- * A floor plan only needs enough resolution to read walls and labels. 1 MB
- * keeps the vision call fast enough that iOS does not abandon the request.
+ * Fallback only: used when a photo cannot be decoded by `preparePlan`
+ * (a HEIC on a desktop browser, say). 1 MB keeps the call short on iOS.
  */
 const PLAN_PHOTO_TARGET_KB = 1024;
 
 type Mode =
   | 'hub'
   | 'templates'
+  | 'schedule'
   | 'describe'
   | 'review'
   | 'autoplace'
@@ -232,25 +245,27 @@ const ROOM_SYMBOL_PACKS: Record<string, { symbolId: string; name: string }[]> = 
 const modeTitle: Record<Mode, string> = {
   hub: 'AI Tools',
   templates: 'Room Templates',
-  describe: 'Describe Room',
+  schedule: 'Room by Room',
+  describe: 'Describe It',
   review: 'Compliance Review',
   autoplace: 'Auto-Place Symbols',
   suggestions: 'Smart Suggestions',
   spec: 'Specification Writer',
   quote: 'Quote Generator',
-  photo: 'Photo to Plan',
+  photo: 'Plan to Floor Plan',
 };
 
 const modeSubtitle: Record<Mode, string> = {
   hub: 'Choose a tool to get started',
   templates: 'Choose a room type to generate',
-  describe: 'Tell us about the room in your own words',
+  schedule: 'Each room, its size and what goes in it',
+  describe: 'One room or the whole property, in your own words',
   review: 'Check your drawing against BS 7671',
   autoplace: 'Quick-add typical symbols for a room type',
   suggestions: "AI finds what's missing or could be better",
   spec: 'AI generates professional electrical specification',
   quote: 'Price the job from your floor plan',
-  photo: 'Take a photo and AI generates the floor plan',
+  photo: 'A PDF, screenshot or photo — every room on every floor',
 };
 
 interface AIRoomBuilderDialogProps {
@@ -260,6 +275,12 @@ interface AIRoomBuilderDialogProps {
   canvasObjects?: CanvasObject[];
   savedRooms?: import('@/hooks/useFloorPlanRooms').SavedRoom[];
   onSymbolsAutoPlaced?: (symbols: CanvasObject[]) => void;
+  /**
+   * A plan dropped or pasted onto the planner page itself. The dialog opens
+   * straight into Plan to Floor Plan with it loaded — drop it and it goes.
+   */
+  initialPlanFile?: File | null;
+  onInitialPlanFileConsumed?: () => void;
 }
 
 export const AIRoomBuilderDialog = ({
@@ -269,6 +290,8 @@ export const AIRoomBuilderDialog = ({
   canvasObjects,
   savedRooms,
   onSymbolsAutoPlaced,
+  initialPlanFile,
+  onInitialPlanFileConsumed,
 }: AIRoomBuilderDialogProps) => {
   const [description, setDescription] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
@@ -285,7 +308,30 @@ export const AIRoomBuilderDialog = ({
   const [quoteResult, setQuoteResult] = useState<any>(null);
   const [quoteLoading, setQuoteLoading] = useState(false);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  /** Every page to be read (one for an image), with its true size. */
+  const [photoPages, setPhotoPages] = useState<PlanPageImage[]>([]);
+  /** Where the plan came from, and how many pages the PDF had in total. */
+  const [photoMeta, setPhotoMeta] = useState<{
+    pageCount: number;
+    source: 'pdf' | 'image';
+    name?: string;
+  } | null>(null);
+  /** Anything the electrician wants on top of the drawing — "EV charger in the garage". */
+  const [planNotes, setPlanNotes] = useState('');
+  const [isDragging, setIsDragging] = useState(false);
+  const isNativeApp = Capacitor.isNativePlatform();
+  const [photoPreparing, setPhotoPreparing] = useState(false);
   const [photoGenerating, setPhotoGenerating] = useState(false);
+  /** Live progress from the reader — see PlanProgressPanel. */
+  const [planProgress, setPlanProgress] = useState<PlanProgressState>(EMPTY_PROGRESS);
+  const onPlanProgress = (p: PlanProgress) =>
+    setPlanProgress((prev) =>
+      p.stage === 'rooms'
+        ? { ...prev, found: { rooms: p.rooms, floors: p.floors } }
+        : p.stage === 'electrics'
+          ? { ...prev, electrics: { done: p.done, total: p.total } }
+          : prev
+    );
   const photoInputRef = useRef<HTMLInputElement>(null);
   const haptic = useHaptic();
   const toastIdRef = useRef<string | number | null>(null);
@@ -301,8 +347,27 @@ export const AIRoomBuilderDialog = ({
     },
   });
 
+  /*
+   * Each read belongs to one opening of the sheet. Closing (or reopening) it
+   * cancels the read in flight: a 45-second read finishing after the user had
+   * swiped the sheet away used to replace whatever they had drawn since, and
+   * close a sheet they had reopened.
+   */
+  const runRef = useRef(0);
+  const abortRef = useRef<AbortController | null>(null);
+  const startRun = () => {
+    abortRef.current?.abort();
+    abortRef.current = new AbortController();
+    return { run: ++runRef.current, signal: abortRef.current.signal };
+  };
+
   // Reset to hub when dialog opens/closes
   useEffect(() => {
+    runRef.current++;
+    prepRef.current++; // a file still being prepared is for the old opening
+    abortRef.current?.abort();
+    abortRef.current = null;
+    setIsGenerating(false);
     if (open) {
       setMode('hub');
       setReviewResults(null);
@@ -311,6 +376,9 @@ export const AIRoomBuilderDialog = ({
       setQuoteResult(null);
       setSelectedAutoPlaceRoom(null);
       setPhotoPreview(null);
+      setPhotoPages([]);
+      setPhotoMeta(null);
+      setPlanNotes('');
       setPhotoGenerating(false);
     } else {
       // Clean up speech when dialog closes
@@ -328,32 +396,24 @@ export const AIRoomBuilderDialog = ({
 
   const generateRoom = async (roomDescription: string, roomName: string) => {
     setIsGenerating(true);
+    setPlanProgress(EMPTY_PROGRESS);
     haptic.light();
-    toastIdRef.current = toast.loading(`Generating ${roomName}...`);
 
+    const { run, signal } = startRun();
     try {
-      const { data, error } = await supabase.functions.invoke('room-diagram-generator', {
-        body: { description: roomDescription },
-      });
-
-      dismissLoadingToast();
-
-      if (error) throw error;
-
-      if (data.success) {
-        haptic.success();
-        toast.success(`${roomName} generated`);
-        onRoomGenerated(data.roomData);
-        onOpenChange(false);
-      } else {
-        throw new Error(data.error || 'Failed to generate room');
-      }
+      const roomData = await generatePlan({ description: roomDescription }, onPlanProgress, signal);
+      if (run !== runRef.current) return; // the sheet was closed: drop it
+      haptic.success();
+      // The page announces the result (room count and a reminder to check it).
+      onRoomGenerated(roomData);
+      onOpenChange(false);
     } catch (error) {
+      if (run !== runRef.current) return;
       dismissLoadingToast();
       haptic.error();
       toast.error(error instanceof Error ? error.message : 'Failed to generate room');
     } finally {
-      setIsGenerating(false);
+      if (run === runRef.current) setIsGenerating(false);
     }
   };
 
@@ -498,6 +558,22 @@ export const AIRoomBuilderDialog = ({
   };
 
   // --- Suggestions (API) ---
+  /*
+   * The three analysis tools answer `{ success, data }`. The screens read their
+   * fields straight off that wrapper, so even once the functions worked every
+   * result rendered empty. Unwrap once here, and surface the function's own
+   * error message rather than "non-2xx status code".
+   */
+  const callTool = async (fn: string, body: Record<string, unknown>) => {
+    const { data, error } = await supabase.functions.invoke(fn, { body });
+    if (error) {
+      const detail = await (error as { context?: Response }).context?.json?.().catch(() => null);
+      throw new Error(detail?.error || error.message);
+    }
+    if (data?.success === false) throw new Error(data.error || 'That did not work — try again');
+    return data?.data ?? data;
+  };
+
   const runSuggestions = async () => {
     const symbols = buildSymbolSummary();
     if (symbols.length === 0) {
@@ -507,11 +583,13 @@ export const AIRoomBuilderDialog = ({
     setSuggestionsLoading(true);
     setSuggestionsResult(null);
     try {
-      const { data, error } = await supabase.functions.invoke('floor-plan-ai-suggestions', {
-        body: { room_name: 'Floor Plan', symbols, room_type: 'general' },
-      });
-      if (error) throw error;
-      setSuggestionsResult(data);
+      setSuggestionsResult(
+        await callTool('floor-plan-ai-suggestions', {
+          room_name: 'Floor Plan',
+          symbols,
+          room_type: 'general',
+        })
+      );
       haptic.success();
     } catch (error) {
       haptic.error();
@@ -531,11 +609,13 @@ export const AIRoomBuilderDialog = ({
     setSpecLoading(true);
     setSpecResult(null);
     try {
-      const { data, error } = await supabase.functions.invoke('floor-plan-ai-spec', {
-        body: { room_name: 'Floor Plan', symbols, room_type: 'general' },
-      });
-      if (error) throw error;
-      setSpecResult(data);
+      setSpecResult(
+        await callTool('floor-plan-ai-spec', {
+          room_name: 'Floor Plan',
+          symbols,
+          room_type: 'general',
+        })
+      );
       haptic.success();
     } catch (error) {
       haptic.error();
@@ -555,11 +635,41 @@ export const AIRoomBuilderDialog = ({
     setQuoteLoading(true);
     setQuoteResult(null);
     try {
-      const { data, error } = await supabase.functions.invoke('floor-plan-ai-quote', {
-        body: { room_name: 'Floor Plan', symbols, room_type: 'general' },
-      });
-      if (error) throw error;
-      setQuoteResult(data);
+      /*
+       * The quote function reads `materials` (count, name, category), not the
+       * `symbols` the other tools take — it was sent `symbols` and answered
+       * "No materials to quote" for every plan. Room names come from the text
+       * labels the plan reader puts in each room.
+       */
+      const roomNames = (canvasObjects || [])
+        .filter((o) => o.type === 'text' && o.id.startsWith('ai-title-') && o.text)
+        .map((o) => String(o.text).split('\n')[0]);
+      setQuoteResult(
+        await callTool('floor-plan-ai-quote', {
+          materials: [
+            ...symbols.map((sym) => ({
+              name: sym.name,
+              count: sym.count,
+              category: symbolRegistry.find((r) => r.id === sym.id)?.category ?? 'other',
+            })),
+            // With the cable runs drawn, the cable itself — priced from the
+            // drawing instead of guessed from a count of accessories.
+            ...cableTakeOff(
+              scheduleFromObjects(canvasObjects ?? []).circuits,
+              runLengths(canvasObjects ?? [])
+            ).map((t) => ({
+              // "2.5/1.5 mm² T&E cable (m)" — the sizing caveats are for the
+              // sheet, not for a line on a price list.
+              name: `${t.cable.replace(/\s*\(.*\)$/, '')} cable (m)`,
+              count: t.metres,
+              category: 'cable',
+            })),
+          ],
+          total_items: symbols.reduce((n, sym) => n + sym.count, 0),
+          room_count: roomNames.length || savedRooms?.length || 1,
+          rooms: roomNames.map((name) => ({ name })),
+        })
+      );
       haptic.success();
     } catch (error) {
       haptic.error();
@@ -615,26 +725,127 @@ export const AIRoomBuilderDialog = ({
     await acceptPlanPhoto(file);
   };
 
+  /*
+   * Accept a plan — an architect's PDF (a sheet or a whole pack), a screenshot
+   * or a photo — however it arrives: picked, dropped, pasted or handed over by
+   * the page.
+   *
+   * PDFs used to be refused outright (`accept="image/*"`), which is the worst
+   * possible outcome: Paddy's CAD export was the sharpest input anyone could
+   * give us, so he screenshotted it and got a partial floor instead.
+   */
+  // Only the latest file dropped counts: two drops in quick succession used to
+  // race, the slower one landing last and the spinner clearing on the first.
+  const prepRef = useRef(0);
+  const photoGeneratingRef = useRef(false);
+  photoGeneratingRef.current = photoGenerating;
   const acceptPlanPhoto = async (file: File) => {
-    const sizeCheck = validateImageSize(file);
-    if (!sizeCheck.valid) {
-      toast.error(sizeCheck.error ?? 'That image is too large');
+    const unsupported = unsupportedPlanReason(file);
+    if (unsupported) {
+      toast.error(unsupported);
       return;
     }
-
-    let forUpload = file;
-    try {
-      forUpload = await compressImageForUpload(file, PLAN_PHOTO_TARGET_KB);
-    } catch {
-      // Keep the original; the upload may still succeed.
+    // From a ref: the paste listener is registered once per opening and would
+    // otherwise always see the value from when the sheet opened.
+    if (photoGeneratingRef.current) {
+      toast.info('Still reading the last plan — it will be ready in a moment.');
+      return;
     }
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      setPhotoPreview(reader.result as string);
-    };
-    reader.readAsDataURL(forUpload);
+    const prep = ++prepRef.current;
+    setMode('photo');
+    setPhotoPreparing(true);
+    try {
+      const plan = await preparePlan(file);
+      if (prep !== prepRef.current) return;
+      setPhotoPages(plan.pages);
+      setPhotoMeta({ pageCount: plan.pageCount, source: plan.source, name: file.name });
+      setPhotoPreview(plan.pages[0].dataUrl);
+      if (plan.pageCount > plan.pages.length) {
+        toast.info(
+          `That PDF has ${plan.pageCount} pages — reading the first ${plan.pages.length}.`
+        );
+      }
+    } catch (err) {
+      if (prep !== prepRef.current) return;
+      if (file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf')) {
+        toast.error(err instanceof Error ? err.message : 'That PDF could not be opened');
+        return;
+      }
+      // A photo the browser cannot decode itself (HEIC on desktop, say) still
+      // gets the older compress-and-send path rather than a dead end.
+      const sizeCheck = validateImageSize(file);
+      if (!sizeCheck.valid) {
+        toast.error(sizeCheck.error ?? 'That image is too large');
+        return;
+      }
+      let forUpload = file;
+      try {
+        forUpload = await compressImageForUpload(file, PLAN_PHOTO_TARGET_KB);
+      } catch {
+        // Keep the original; the upload may still succeed.
+      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (prep !== prepRef.current) return;
+        const dataUrl = reader.result as string;
+        setPhotoPages([{ dataUrl, width: 0, height: 0 }]);
+        setPhotoMeta({ pageCount: 1, source: 'image', name: file.name });
+        setPhotoPreview(dataUrl);
+      };
+      reader.readAsDataURL(forUpload);
+    } finally {
+      if (prep === prepRef.current) setPhotoPreparing(false);
+    }
   };
+
+  // A plan handed over by the page (dropped or pasted onto the canvas).
+  useEffect(() => {
+    if (!open || !initialPlanFile) return;
+    void acceptPlanPhoto(initialPlanFile);
+    onInitialPlanFileConsumed?.();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, initialPlanFile]);
+
+  /*
+   * Paste a plan straight in (a screenshot on the clipboard is the commonest
+   * way a plan exists on a desktop). Only while the dialog is open, and never
+   * while typing — a paste into the notes box is text, not a plan.
+   */
+  useEffect(() => {
+    if (!open) return;
+    const onPaste = (e: ClipboardEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (target && (target.tagName === 'TEXTAREA' || target.tagName === 'INPUT')) return;
+      const file = Array.from(e.clipboardData?.files ?? [])[0];
+      if (!file) return;
+      e.preventDefault();
+      void acceptPlanPhoto(file);
+    };
+    window.addEventListener('paste', onPaste);
+    return () => window.removeEventListener('paste', onPaste);
+  }, [open]);
+
+  const dropHandlers = {
+    onDragOver: (e: React.DragEvent) => {
+      if (!Array.from(e.dataTransfer.types).includes('Files')) return;
+      e.preventDefault();
+      setIsDragging(true);
+    },
+    onDragLeave: (e: React.DragEvent) => {
+      if (e.currentTarget.contains(e.relatedTarget as Node)) return;
+      setIsDragging(false);
+    },
+    onDrop: (e: React.DragEvent) => {
+      const file = e.dataTransfer.files?.[0];
+      setIsDragging(false);
+      if (!file) return;
+      e.preventDefault();
+      void acceptPlanPhoto(file);
+    },
+  };
+
+  /** Straight to the file picker — the only route to a PDF on every platform. */
+  const choosePlanFile = () => photoInputRef.current?.click();
 
   /*
    * How long the photo has been analysing, in seconds.
@@ -648,7 +859,7 @@ export const AIRoomBuilderDialog = ({
   const [analysingFor, setAnalysingFor] = useState(0);
 
   useEffect(() => {
-    if (!photoGenerating) {
+    if (!photoGenerating && !isGenerating) {
       setAnalysingFor(0);
       return;
     }
@@ -657,40 +868,120 @@ export const AIRoomBuilderDialog = ({
       setAnalysingFor(Math.round((Date.now() - started) / 1000));
     }, 1000);
     return () => window.clearInterval(id);
-  }, [photoGenerating]);
-
-  /** What to say at this point in the wait. */
-  const analysingMessage =
-    analysingFor < 8
-      ? 'Reading the plan…'
-      : analysingFor < 25
-        ? 'Finding the rooms…'
-        : 'Laying out the electrics…';
+  }, [photoGenerating, isGenerating]);
 
   const handlePhotoGenerate = async () => {
     if (!photoPreview) return;
     setPhotoGenerating(true);
+    setPlanProgress(EMPTY_PROGRESS);
     haptic.light();
 
+    const { run, signal } = startRun();
     try {
-      const { data, error } = await supabase.functions.invoke('room-diagram-generator', {
-        body: { image_base64: photoPreview },
-      });
+      const roomData = await generatePlan(
+        photoPages.length
+          ? {
+              // Pages only: sending page one again as `image_base64` doubled
+              // the first page's share of the body, and a big body is what
+              // iOS drops. The deployed function reads `pages`.
+              pages: photoPages.map((p) => ({
+                image_base64: p.dataUrl,
+                width: p.width || undefined,
+                height: p.height || undefined,
+              })),
+              notes: planNotes.trim() || undefined,
+            }
+          : { image_base64: photoPreview, notes: planNotes.trim() || undefined },
+        onPlanProgress,
+        signal
+      );
+      if (run !== runRef.current) return; // the sheet was closed: drop it
 
-      if (error) throw error;
-      if (!data?.success) throw new Error(data?.error || 'Failed to analyse photo');
+      /*
+       * A CAD PDF: put the architect's own drawing underneath, and move every
+       * room onto its real walls first so the electrics land on them. Any
+       * failure here keeps the plan as drawn boxes — never an error.
+       */
+      const underlays: ReaderUnderlay[] = roomData?.underlays ?? [];
+      if (photoMeta?.source === 'pdf' && underlays.length && Array.isArray(roomData?.rooms)) {
+        try {
+          const linesByPage = new Map(
+            photoPages.map((p, i) => [i, p.lines ?? []] as const).filter(([, l]) => l.length > 0)
+          );
+          if (linesByPage.size) {
+            const snapped = snapRoomsToLines(roomData.rooms, underlays, linesByPage);
+            roomData.rooms = snapped.rooms;
+          }
+          const { data: session } = await supabase.auth.getSession();
+          const userId = session.session?.user.id;
+          if (userId) {
+            const underlayObjects = await buildUnderlays(underlays, photoPages, userId);
+            if (underlayObjects.length) roomData.underlayObjects = underlayObjects;
+          }
+        } catch (err) {
+          console.warn('[plan] drawing not laid underneath, keeping the boxed plan:', err);
+        }
+      }
 
-      onRoomGenerated(data.roomData || data);
+      if (run !== runRef.current) return;
+      onRoomGenerated(roomData);
       haptic.success();
-      toast.success('Room generated from photo');
+      // The page announces the result (room count and a reminder to check it).
       setPhotoPreview(null);
+      setPhotoPages([]);
+      setPhotoMeta(null);
+      setPlanNotes('');
       onOpenChange(false);
     } catch (error) {
+      if (run !== runRef.current) return;
       haptic.error();
-      toast.error(error instanceof Error ? error.message : 'Failed to generate from photo');
+      toast.error(error instanceof Error ? error.message : 'Could not read the plan');
     } finally {
-      setPhotoGenerating(false);
+      if (run === runRef.current) setPhotoGenerating(false);
     }
+  };
+
+  /*
+   * A template is a known room, so it is drawn straight from the room-list
+   * engine: instant, and the same every time. It used to be sent to the AI as
+   * a paragraph and took half a minute to come back slightly different.
+   */
+  const TEMPLATE_PRESET: Record<string, string> = {
+    kitchen: 'Kitchen',
+    bedroom: 'Bedroom',
+    'living-room': 'Lounge',
+    bathroom: 'Bathroom',
+    office: 'Office',
+    garage: 'Garage',
+    'utility-room': 'Utility',
+    hallway: 'Hall',
+    'en-suite': 'En-suite',
+    wc: 'WC',
+    conservatory: 'Conservatory',
+    'dining-room': 'Dining room',
+  };
+  const drawTemplate = (template: (typeof QUICK_TEMPLATES)[number]) => {
+    const preset = ROOM_PRESETS.find((p) => p.name === TEMPLATE_PRESET[template.id]);
+    const size = /([\d.]+)\s*m?\s*x\s*([\d.]+)/i.exec(template.dimensions);
+    if (!preset || !size) {
+      generateRoom(template.description, template.name);
+      return;
+    }
+    haptic.success();
+    onRoomGenerated(
+      planFromSchedule([
+        {
+          name: template.name,
+          floor: '',
+          width: Number(size[1]),
+          length: Number(size[2]),
+          sockets: preset.sockets,
+          lights: preset.lights,
+          extras: { ...preset.extras },
+        },
+      ])
+    );
+    onOpenChange(false);
   };
 
   // --- Auto-place symbols (inside room walls if present) ---
@@ -742,95 +1033,83 @@ export const AIRoomBuilderDialog = ({
     onOpenChange(false);
   };
 
-  const hubToolsQuickStart = [
+  /*
+   * Built on the house hub cards (HubQuickStart / HubToolGrid): text-only, the
+   * one solid volt card on the action most people open this for. The old list
+   * gave every row its own icon in its own colour — six hues on one screen,
+   * which is decoration, not information.
+   */
+  const startItems = [
     {
-      id: 'templates' as Mode,
-      icon: LayoutGrid,
+      title: 'Plan to Floor Plan',
+      description: 'PDF, screenshot or photo — every floor read',
+      onClick: () => setMode('photo'),
+      primary: true,
+    },
+    {
+      title: 'Room by Room',
+      description: 'List each room and what goes in it — drawn exactly',
+      onClick: () => setMode('schedule'),
+    },
+    {
+      title: 'Describe It',
+      description: 'One room or the whole property, in your words',
+      onClick: () => setMode('describe'),
+    },
+    {
       title: 'Room Templates',
-      desc: 'Pick a room type, adjust dimensions',
-      color: 'bg-white/[0.06] text-elec-yellow',
-    },
-    {
-      id: 'describe' as Mode,
-      icon: Mic,
-      title: 'Describe Room',
-      desc: 'Tell us about it — we draw it',
-      color: 'bg-blue-500/10 text-blue-400',
-    },
-    {
-      id: 'photo' as Mode,
-      icon: Camera,
-      title: 'Photo to Plan',
-      desc: 'Snap a photo, AI generates the plan',
-      color: 'bg-pink-500/10 text-pink-400',
+      description: 'Pick a room, then adjust the sizes',
+      onClick: () => setMode('templates'),
     },
   ];
-  const hubToolsDesign = [
+  const checkTools = [
     {
-      id: 'autoplace' as Mode,
-      icon: Zap,
+      id: 'autoplace',
       title: 'Auto-Place Symbols',
-      desc: 'Quick-add sockets, lights, switches',
-      color: 'bg-green-500/10 text-green-400',
+      description: 'Sockets, lights and switches for a room',
+      onClick: () => setMode('autoplace'),
     },
     {
-      id: 'review' as Mode,
-      icon: Shield,
+      id: 'review',
       title: 'Compliance Check',
-      desc: 'Verify against BS 7671 regulations',
-      color: 'bg-orange-500/10 text-orange-400',
+      description: 'Your layout against BS 7671',
+      onClick: () => setMode('review'),
     },
     {
-      id: 'suggestions' as Mode,
-      icon: Lightbulb,
+      id: 'suggestions',
       title: 'Smart Suggestions',
-      desc: 'Find missing sockets, lights, or safety items',
-      color: 'bg-purple-500/10 text-purple-400',
+      description: 'Missing sockets, lights and safety items',
+      onClick: () => setMode('suggestions'),
     },
   ];
-  const hubToolsOutput = [
+  const outputTools = [
     {
-      id: 'spec' as Mode,
-      icon: FileText,
+      id: 'spec',
       title: 'Write Specification',
-      desc: 'Generate a client spec sheet',
-      color: 'bg-cyan-500/10 text-cyan-400',
+      description: 'A client-ready spec sheet',
+      onClick: () => setMode('spec'),
     },
     {
-      id: 'quote' as Mode,
-      icon: PoundSterling,
+      id: 'quote',
       title: 'Price This Job',
-      desc: 'Labour + materials cost estimate',
-      color: 'bg-emerald-500/10 text-emerald-400',
+      description: 'Labour and materials estimate',
+      onClick: () => setMode('quote'),
     },
   ];
-
-  const reviewItemIcon = (type: 'warning' | 'info' | 'pass') => {
-    switch (type) {
-      case 'warning':
-        return <AlertTriangle className="h-4 w-4 text-orange-400 shrink-0 mt-0.5" />;
-      case 'info':
-        return <Info className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />;
-      case 'pass':
-        return <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />;
-    }
-  };
-
-  const reviewItemBg = (type: 'warning' | 'info' | 'pass') => {
-    switch (type) {
-      case 'warning':
-        return 'bg-orange-500/10 border-orange-500/20';
-      case 'info':
-        return 'bg-blue-500/10 border-blue-500/20';
-      case 'pass':
-        return 'bg-green-500/10 border-green-500/20';
-    }
-  };
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0 overflow-hidden">
-        <div className="flex flex-col h-full bg-background">
+        {/* The whole sheet is a drop target: drop a plan anywhere, in any mode,
+            and it goes straight to Plan to Floor Plan. */}
+        <div className="relative flex flex-col h-full bg-background" {...dropHandlers}>
+          {isDragging && (
+            <div className="pointer-events-none absolute inset-2 z-20 flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-elec-yellow bg-background/90">
+              <FileText className="h-9 w-9 text-elec-yellow mb-2" />
+              <p className="text-sm font-semibold text-white">Drop the plan to read it</p>
+              <p className="text-xs text-white mt-1">PDF, screenshot or photo</p>
+            </div>
+          )}
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
             <div className="flex items-center gap-3">
@@ -854,72 +1133,45 @@ export const AIRoomBuilderDialog = ({
                 <p className="text-xs text-white">{modeSubtitle[mode]}</p>
               </div>
             </div>
-            <Sparkles className="h-5 w-5 text-elec-yellow" />
           </div>
 
           {/* Content */}
           <div className="flex-1 overflow-y-auto">
             {/* ==================== HUB ==================== */}
             {mode === 'hub' && (
-              <div className="p-4 space-y-4">
-                {[
-                  { label: 'Quick Start', tools: hubToolsQuickStart },
-                  { label: 'Design Tools', tools: hubToolsDesign },
-                  { label: 'Output', tools: hubToolsOutput },
-                ].map((section) => (
-                  <div key={section.label}>
-                    <p className="text-[10px] font-bold text-white uppercase tracking-wider mb-2">
-                      {section.label}
-                    </p>
-                    <div className="space-y-2">
-                      {section.tools.map((tool) => (
-                        <button
-                          key={tool.id}
-                          onClick={() => setMode(tool.id)}
-                          className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:scale-[0.98] transition-all"
-                        >
-                          <div
-                            className={cn(
-                              'h-10 w-10 rounded-xl flex items-center justify-center shrink-0',
-                              tool.color
-                            )}
-                          >
-                            <tool.icon className="h-5 w-5" />
-                          </div>
-                          <div className="flex-1 text-left">
-                            <p className="text-sm font-semibold text-white">{tool.title}</p>
-                            <p className="text-xs text-white">{tool.desc}</p>
-                          </div>
-                          <ChevronRight className="h-4 w-4 text-white shrink-0" />
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                ))}
+              <div className="space-y-7 px-4 py-5 sm:px-5">
+                <HubQuickStart label="Start a plan" items={startItems} leadSpans />
+                <HubToolGrid label="Check and improve" cards={checkTools} />
+                <HubToolGrid label="Output" cards={outputTools} columns="two" />
+                <p className="hidden text-[11px] text-white sm:block">
+                  Tip: drop a plan PDF anywhere on this sheet, or paste a screenshot, to go straight
+                  to reading it.
+                </p>
               </div>
             )}
 
             {/* ==================== TEMPLATES ==================== */}
             {mode === 'templates' && (
-              <div className="p-4 space-y-4">
-                <div className="grid grid-cols-2 gap-2">
+              <div className="mx-auto w-full max-w-3xl space-y-5 px-4 py-5 sm:px-5">
+                <ToolIntro>
+                  A ready-made room with its electrics laid out. Pick one, then adjust the walls and
+                  items on the canvas.
+                </ToolIntro>
+                <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
                   {QUICK_TEMPLATES.map((template) => (
                     <button
                       key={template.id}
-                      onClick={() => generateRoom(template.description, template.name)}
+                      type="button"
+                      onClick={() => drawTemplate(template)}
                       disabled={isGenerating}
-                      className={cn(
-                        'relative overflow-hidden text-left p-3.5 rounded-xl',
-                        'bg-white/[0.04] border border-white/[0.08]',
-                        'hover:bg-white/[0.08] hover:border-elec-yellow/30',
-                        'active:scale-[0.97] transition-all duration-150 touch-manipulation',
-                        isGenerating && 'opacity-50 pointer-events-none'
-                      )}
+                      className={cn(CARD_BASE, CARD_NEUTRAL, 'min-h-[84px] p-4')}
                     >
-                      <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow/40 to-amber-400/40" />
-                      <p className="text-sm font-semibold text-white">{template.name}</p>
-                      <p className="text-[11px] text-white mt-0.5">{template.dimensions}</p>
-                      <ChevronRight className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
+                      <span className="text-[15px] font-bold leading-tight tracking-tight text-white transition-colors group-hover:text-elec-yellow">
+                        {template.name}
+                      </span>
+                      <span className="mt-1 text-[12px] tabular-nums text-white">
+                        {template.dimensions}
+                      </span>
                     </button>
                   ))}
                 </div>
@@ -927,158 +1179,164 @@ export const AIRoomBuilderDialog = ({
             )}
 
             {/* ==================== DESCRIBE ==================== */}
+            {mode === 'schedule' && (
+              <RoomScheduleForm
+                onDraw={(plan, count) => {
+                  // The page announces the result.
+                  onRoomGenerated(plan);
+                  onOpenChange(false);
+                }}
+              />
+            )}
+
             {mode === 'describe' && (
-              <div className="p-4 space-y-4">
-                {/* Voice recording area */}
-                <div className="bg-white/[0.03] rounded-xl border border-white/[0.06] p-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <p className="text-xs font-medium text-white">
-                      {speech.isListening ? 'Listening...' : 'Tap the microphone to speak'}
-                    </p>
-                    {speech.isListening && (
-                      <div className="flex items-center gap-1.5">
-                        <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-                        <span className="text-xs text-red-400 font-medium">Recording</span>
-                      </div>
+              <div className="mx-auto w-full max-w-2xl space-y-5 px-4 py-5 sm:px-5">
+                <ToolIntro>
+                  Say it or type it — one room or the whole property. Sizes you give are used;
+                  anything you ask for is put in.
+                </ToolIntro>
+
+                {/* Voice — the mic is the control itself, so it keeps its glyph. */}
+                <div className="flex items-center gap-4">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (speech.isListening) {
+                        speech.stopListening();
+                        haptic.light();
+                      } else {
+                        speech.resetTranscript();
+                        speech.startListening();
+                        haptic.medium();
+                      }
+                    }}
+                    disabled={isGenerating}
+                    aria-label={speech.isListening ? 'Stop recording' : 'Start recording'}
+                    className={cn(
+                      'flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full touch-manipulation transition-transform active:scale-90',
+                      speech.isListening ? 'bg-red-500' : 'bg-elec-yellow'
                     )}
+                  >
+                    <Mic
+                      className={cn('h-6 w-6', speech.isListening ? 'text-white' : 'text-black')}
+                    />
+                  </button>
+                  <div className="min-w-0">
+                    <p className="text-[14px] font-semibold text-white">
+                      {speech.isListening ? 'Listening — tap to stop' : 'Tap to speak'}
+                    </p>
+                    <p className="text-[12px] text-white">
+                      {speech.isListening
+                        ? 'Talk it through room by room.'
+                        : 'Or type below. Both work.'}
+                    </p>
                   </div>
-
-                  {/* Big mic button */}
-                  <div className="flex justify-center mb-4">
-                    <button
-                      onClick={() => {
-                        if (speech.isListening) {
-                          speech.stopListening();
-                          haptic.light();
-                        } else {
-                          speech.resetTranscript();
-                          speech.startListening();
-                          haptic.medium();
-                        }
-                      }}
-                      disabled={isGenerating}
-                      className={cn(
-                        'h-16 w-16 rounded-full flex items-center justify-center touch-manipulation transition-all active:scale-90',
-                        speech.isListening
-                          ? 'bg-red-500 shadow-lg shadow-red-500/30'
-                          : 'bg-elec-yellow shadow-lg shadow-elec-yellow/20'
-                      )}
-                    >
-                      <Mic
-                        className={cn('h-7 w-7', speech.isListening ? 'text-white' : 'text-black')}
-                      />
-                    </button>
-                  </div>
-
-                  {/* Live transcript */}
-                  {(speech.transcript || speech.interimTranscript) && (
-                    <div className="bg-white/[0.04] rounded-lg p-3 min-h-[60px]">
-                      <p className="text-sm text-white">
-                        {speech.transcript}
-                        {speech.interimTranscript && (
-                          <span className="text-white"> {speech.interimTranscript}</span>
-                        )}
-                      </p>
-                    </div>
-                  )}
                 </div>
 
-                {/* Text input as fallback */}
-                <Textarea
-                  placeholder="Or type your room description here..."
-                  value={description || speech.transcript}
-                  onChange={(e) => setDescription(e.target.value)}
-                  className="min-h-[80px] bg-white/[0.04] border-white/10 text-white placeholder:text-white/25 text-sm touch-manipulation focus:border-elec-yellow/40 focus:ring-elec-yellow/20"
-                  disabled={isGenerating}
-                />
-
-                <div className="bg-white/[0.03] rounded-xl p-3 border border-white/[0.06]">
-                  <p className="text-xs font-medium text-white mb-2">Tips</p>
-                  <ul className="text-[11px] text-white space-y-1">
-                    <li>Say the room type and size: "Kitchen, 4 by 3 metres"</li>
-                    <li>Describe walls: "Window on the north wall, door on the east"</li>
-                    <li>List what you need: "6 double sockets, cooker point, ceiling light"</li>
-                  </ul>
+                <div>
+                  <label
+                    htmlFor="describe-text"
+                    className="mb-1 block text-[12px] font-medium text-white"
+                  >
+                    Description
+                  </label>
+                  <Textarea
+                    id="describe-text"
+                    placeholder="e.g. Three-bed semi. Lounge 4 by 5 at the front, kitchen-diner across the back…"
+                    value={
+                      speech.isListening && speech.interimTranscript
+                        ? `${description || speech.transcript} ${speech.interimTranscript}`.trim()
+                        : description || speech.transcript
+                    }
+                    onChange={(e) => setDescription(e.target.value)}
+                    rows={4}
+                    className="min-h-[96px] resize-none rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none touch-manipulation"
+                    disabled={isGenerating}
+                  />
                 </div>
 
-                <Button
+                <PrimaryAction
                   onClick={() => generateRoom((description || speech.transcript).trim(), 'Room')}
-                  disabled={isGenerating || !(description || speech.transcript).trim()}
-                  className="w-full h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-sm touch-manipulation"
+                  disabled={!(description || speech.transcript).trim()}
+                  loading={isGenerating}
                 >
-                  {isGenerating ? (
-                    <>
-                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                      Generating...
-                    </>
-                  ) : (
-                    <>
-                      <Sparkles className="h-4 w-4 mr-2" />
-                      Generate Floor Plan
-                    </>
-                  )}
-                </Button>
+                  Draw the floor plan
+                </PrimaryAction>
+
+                <ResultSection title="Examples">
+                  {[
+                    {
+                      t: 'A whole house',
+                      d: '“Three-bed semi. Lounge 4 by 5 at the front, kitchen-diner across the back, WC under the stairs. Upstairs three bedrooms, en-suite off the main, family bathroom.”',
+                    },
+                    {
+                      t: 'One room',
+                      d: '“Kitchen, 4 by 3 metres, window on the north wall, door on the east.”',
+                    },
+                    {
+                      t: 'With what you need',
+                      d: '“…EV charger in the garage, USB doubles in every bedroom.”',
+                    },
+                  ].map((ex) => (
+                    <ResultRow key={ex.t} title={ex.t} detail={ex.d} />
+                  ))}
+                </ResultSection>
               </div>
             )}
 
             {/* ==================== REVIEW ==================== */}
             {mode === 'review' && (
-              <div className="p-4 space-y-4">
+              <div className="mx-auto w-full max-w-2xl space-y-5 px-4 py-5 sm:px-5">
                 {!reviewResults ? (
                   <>
-                    <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.06] text-center">
-                      <Shield className="h-10 w-10 text-orange-400 mx-auto mb-3" />
-                      <p className="text-sm font-semibold text-white mb-1">Compliance Review</p>
-                      <p className="text-xs text-white">
-                        Checks your placed symbols against BS 7671, Building Regs Part B/F, and
-                        common installation standards.
-                      </p>
-                    </div>
-                    <Button
+                    <ToolIntro>
+                      Checks what is on your plan against BS 7671, Building Regulations Parts B and
+                      F, and common installation practice.
+                    </ToolIntro>
+                    <PrimaryAction
                       onClick={() => {
                         haptic.light();
                         reviewFloorPlan();
                       }}
-                      className="w-full h-12 bg-orange-500 text-white hover:bg-orange-600 font-semibold text-sm touch-manipulation"
                     >
-                      <Shield className="h-4 w-4 mr-2" />
-                      Run Compliance Check
-                    </Button>
+                      Run the check
+                    </PrimaryAction>
                   </>
                 ) : (
                   <>
-                    <div className="space-y-2">
+                    <ToolIntro
+                      title={(() => {
+                        const n = reviewResults.filter((r) => r.type === 'warning').length;
+                        return n === 0
+                          ? 'Nothing to change'
+                          : `${n} thing${n === 1 ? '' : 's'} to look at`;
+                      })()}
+                    >
+                      Against BS 7671, Building Regulations Parts B and F, and common practice.
+                    </ToolIntro>
+                    <ResultSection title="Findings" count={reviewResults.length}>
                       {reviewResults.map((item, idx) => (
-                        <div
+                        <ResultRow
                           key={idx}
-                          className={cn(
-                            'flex items-start gap-3 p-3 rounded-xl border',
-                            reviewItemBg(item.type)
-                          )}
-                        >
-                          {reviewItemIcon(item.type)}
-                          <p className="text-sm text-white">{item.message}</p>
-                        </div>
+                          title={item.message}
+                          tone={
+                            item.type === 'warning'
+                              ? 'action'
+                              : item.type === 'pass'
+                                ? 'pass'
+                                : 'advice'
+                          }
+                        />
                       ))}
-                    </div>
-                    <div className="flex gap-2">
-                      <Button
-                        onClick={() => {
-                          setReviewResults(null);
-                          reviewFloorPlan();
-                        }}
-                        variant="outline"
-                        className="flex-1 h-11 touch-manipulation border-white/10 text-white hover:bg-white/10"
-                      >
-                        Re-check
-                      </Button>
-                      <Button
-                        onClick={() => setMode('hub')}
-                        className="flex-1 h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
-                      >
-                        Done
-                      </Button>
-                    </div>
+                    </ResultSection>
+                    <ResultActions
+                      againLabel="Check again"
+                      onAgain={() => {
+                        setReviewResults(null);
+                        reviewFloorPlan();
+                      }}
+                      onDone={() => setMode('hub')}
+                    />
                   </>
                 )}
               </div>
@@ -1086,176 +1344,143 @@ export const AIRoomBuilderDialog = ({
 
             {/* ==================== AUTO-PLACE ==================== */}
             {mode === 'autoplace' && (
-              <div className="p-4 space-y-3">
-                <p className="text-xs text-white mb-2">
-                  Select a room type to auto-place its typical symbols onto the canvas.
-                </p>
-                {Object.entries(ROOM_SYMBOL_PACKS).map(([roomType, pack]) => (
-                  <div key={roomType}>
-                    <button
-                      onClick={() =>
-                        setSelectedAutoPlaceRoom(
-                          selectedAutoPlaceRoom === roomType ? null : roomType
-                        )
-                      }
-                      className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:scale-[0.98] transition-all"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="h-10 w-10 rounded-xl flex items-center justify-center shrink-0 bg-green-500/10 text-green-400">
-                          <Zap className="h-5 w-5" />
-                        </div>
-                        <div className="text-left">
-                          <p className="text-sm font-semibold text-white capitalize">{roomType}</p>
-                          <p className="text-xs text-white">{pack.length} symbols</p>
-                        </div>
-                      </div>
-                      <ChevronRight
-                        className={cn(
-                          'h-4 w-4 text-white shrink-0 transition-transform',
-                          selectedAutoPlaceRoom === roomType && 'rotate-90'
-                        )}
-                      />
-                    </button>
-                    {selectedAutoPlaceRoom === roomType && (
-                      <div className="mt-2 ml-4 space-y-2">
-                        <div className="flex flex-wrap gap-1.5">
-                          {pack.map((item, idx) => (
-                            <span
-                              key={idx}
-                              className="text-[11px] text-white bg-white/[0.06] px-2 py-1 rounded-lg"
-                            >
-                              {item.name}
-                            </span>
-                          ))}
-                        </div>
-                        <Button
-                          onClick={() => handleAutoPlace(roomType)}
-                          disabled={!onSymbolsAutoPlaced}
-                          className="w-full h-11 bg-green-600 text-white hover:bg-green-700 font-semibold text-sm touch-manipulation"
+              <div className="mx-auto w-full max-w-2xl space-y-5 px-4 py-5 sm:px-5">
+                <ToolIntro>
+                  Choose the room type and the usual sockets, lights and switches for it are placed
+                  inside the room on the canvas.
+                </ToolIntro>
+                <div className="border-t border-white/[0.12]">
+                  {Object.entries(ROOM_SYMBOL_PACKS).map(([roomType, pack]) => {
+                    const open = selectedAutoPlaceRoom === roomType;
+                    const grouped = Object.entries(
+                      pack.reduce<Record<string, number>>((acc, item) => {
+                        acc[item.name] = (acc[item.name] ?? 0) + 1;
+                        return acc;
+                      }, {})
+                    );
+                    return (
+                      <div key={roomType} className="border-b border-white/[0.12]">
+                        <button
+                          type="button"
+                          onClick={() => setSelectedAutoPlaceRoom(open ? null : roomType)}
+                          aria-expanded={open}
+                          className="flex h-14 w-full items-center justify-between gap-3 text-left touch-manipulation"
                         >
-                          <Zap className="h-4 w-4 mr-2" />
-                          Place {pack.length} Symbols
-                        </Button>
+                          <span
+                            className={cn(
+                              'text-[15px] font-semibold capitalize',
+                              open ? 'text-elec-yellow' : 'text-white'
+                            )}
+                          >
+                            {roomType}
+                          </span>
+                          <span className="text-[12px] tabular-nums text-white">
+                            {pack.length} items
+                          </span>
+                        </button>
+                        {open && (
+                          <div className="space-y-3 pb-4">
+                            <ul className="grid grid-cols-1 gap-x-6 gap-y-1 sm:grid-cols-2">
+                              {grouped.map(([name, n]) => (
+                                <li
+                                  key={name}
+                                  className="flex justify-between text-[13px] text-white"
+                                >
+                                  <span>{name}</span>
+                                  <span className="tabular-nums">× {n}</span>
+                                </li>
+                              ))}
+                            </ul>
+                            <PrimaryAction
+                              onClick={() => handleAutoPlace(roomType)}
+                              disabled={!onSymbolsAutoPlaced}
+                            >
+                              Place {pack.length} items
+                            </PrimaryAction>
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
-                ))}
+                    );
+                  })}
+                </div>
               </div>
             )}
 
             {/* ==================== SUGGESTIONS ==================== */}
             {mode === 'suggestions' && (
-              <div className="p-4 space-y-4">
+              <div className="mx-auto w-full max-w-2xl space-y-5 px-4 py-5 sm:px-5">
                 {!suggestionsResult && !suggestionsLoading && (
                   <>
-                    <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.06] text-center">
-                      <Lightbulb className="h-10 w-10 text-purple-400 mx-auto mb-3" />
-                      <p className="text-sm font-semibold text-white mb-1">Smart Suggestions</p>
-                      <p className="text-xs text-white">
-                        AI analyses your floor plan and suggests missing items, compliance issues,
-                        and improvements.
-                      </p>
-                    </div>
-                    <Button
+                    <ToolIntro>
+                      Reads your plan and lists what is missing, anything that would not comply, and
+                      improvements worth offering the client.
+                    </ToolIntro>
+                    <PrimaryAction
                       onClick={() => {
                         haptic.light();
                         runSuggestions();
                       }}
-                      className="w-full h-12 bg-purple-600 text-white hover:bg-purple-700 font-semibold text-sm touch-manipulation"
                     >
-                      <Lightbulb className="h-4 w-4 mr-2" />
-                      Analyse Floor Plan
-                    </Button>
+                      Analyse the plan
+                    </PrimaryAction>
                   </>
                 )}
                 {suggestionsLoading && (
-                  <div className="flex flex-col items-center justify-center py-12">
-                    <Loader2 className="h-8 w-8 text-purple-400 animate-spin mb-3" />
-                    <p className="text-sm font-medium text-white">Analysing your floor plan...</p>
-                    <p className="text-xs text-white mt-1">This may take a few seconds</p>
-                  </div>
+                  <ToolLoading label="Analysing your plan…" hint="Usually a few seconds." />
                 )}
                 {suggestionsResult && (
                   <>
-                    <div className="space-y-3">
-                      {suggestionsResult.summary && (
-                        <div className="p-3 rounded-xl bg-purple-500/20 border border-purple-500/30">
-                          <p className="text-sm font-semibold text-white">
-                            {suggestionsResult.summary}
-                          </p>
-                        </div>
-                      )}
-                      {suggestionsResult.missing?.length > 0 && (
-                        <div>
-                          <p className="text-xs font-semibold text-orange-400 uppercase mb-1.5">
-                            Missing Items
-                          </p>
-                          {suggestionsResult.missing.map((item: any, idx: number) => (
-                            <div
-                              key={idx}
-                              className="p-2.5 rounded-lg bg-orange-500/10 border border-orange-500/20 mb-1.5"
-                            >
-                              <p className="text-sm font-medium text-white">
-                                {item.name || item.symbol}
-                              </p>
-                              <p className="text-xs text-white mt-0.5">{item.reason}</p>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                      {suggestionsResult.compliance?.length > 0 && (
-                        <div>
-                          <p className="text-xs font-semibold text-red-400 uppercase mb-1.5">
-                            Compliance Issues
-                          </p>
-                          {suggestionsResult.compliance.map((item: any, idx: number) => (
-                            <div
-                              key={idx}
-                              className="p-2.5 rounded-lg bg-red-500/10 border border-red-500/20 mb-1.5"
-                            >
-                              <p className="text-sm font-medium text-white">{item.issue}</p>
-                              <p className="text-xs text-white mt-0.5">
-                                {item.regulation} — {item.severity}
-                              </p>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                      {suggestionsResult.improvements?.length > 0 && (
-                        <div>
-                          <p className="text-xs font-semibold text-blue-400 uppercase mb-1.5">
-                            Improvements
-                          </p>
-                          {suggestionsResult.improvements.map((item: any, idx: number) => (
-                            <div
-                              key={idx}
-                              className="p-2.5 rounded-lg bg-blue-500/10 border border-blue-500/20 mb-1.5"
-                            >
-                              <p className="text-sm font-medium text-white">{item.suggestion}</p>
-                              <p className="text-xs text-white mt-0.5">{item.benefit}</p>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                    <div className="flex gap-2">
-                      <Button
-                        onClick={() => {
-                          setSuggestionsResult(null);
-                          runSuggestions();
-                        }}
-                        variant="outline"
-                        className="flex-1 h-11 touch-manipulation border-white/10 text-white hover:bg-white/10"
+                    <ToolIntro title="What stands out">
+                      {suggestionsResult.summary || undefined}
+                    </ToolIntro>
+                    {suggestionsResult.compliance?.length > 0 && (
+                      <ResultSection title="Compliance" count={suggestionsResult.compliance.length}>
+                        {suggestionsResult.compliance.map((item: any, idx: number) => (
+                          <ResultRow
+                            key={idx}
+                            title={item.issue}
+                            detail={[item.regulation, item.severity].filter(Boolean).join(' · ')}
+                            tone={
+                              /high|critical|fail/i.test(String(item.severity)) ? 'fail' : 'action'
+                            }
+                          />
+                        ))}
+                      </ResultSection>
+                    )}
+                    {suggestionsResult.missing?.length > 0 && (
+                      <ResultSection title="Missing" count={suggestionsResult.missing.length}>
+                        {suggestionsResult.missing.map((item: any, idx: number) => (
+                          <ResultRow
+                            key={idx}
+                            title={item.name || item.symbol}
+                            detail={item.reason}
+                            tone="action"
+                          />
+                        ))}
+                      </ResultSection>
+                    )}
+                    {suggestionsResult.improvements?.length > 0 && (
+                      <ResultSection
+                        title="Worth offering"
+                        count={suggestionsResult.improvements.length}
                       >
-                        Try Again
-                      </Button>
-                      <Button
-                        onClick={() => setMode('hub')}
-                        className="flex-1 h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
-                      >
-                        Done
-                      </Button>
-                    </div>
+                        {suggestionsResult.improvements.map((item: any, idx: number) => (
+                          <ResultRow
+                            key={idx}
+                            title={item.suggestion}
+                            detail={item.benefit}
+                            tone="advice"
+                          />
+                        ))}
+                      </ResultSection>
+                    )}
+                    <ResultActions
+                      onAgain={() => {
+                        setSuggestionsResult(null);
+                        runSuggestions();
+                      }}
+                      onDone={() => setMode('hub')}
+                    />
                   </>
                 )}
               </div>
@@ -1263,112 +1488,67 @@ export const AIRoomBuilderDialog = ({
 
             {/* ==================== SPEC ==================== */}
             {mode === 'spec' && (
-              <div className="p-4 space-y-4">
+              <div className="mx-auto w-full max-w-2xl space-y-5 px-4 py-5 sm:px-5">
                 {!specResult && !specLoading && (
                   <>
-                    <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.06] text-center">
-                      <FileText className="h-10 w-10 text-cyan-400 mx-auto mb-3" />
-                      <p className="text-sm font-semibold text-white mb-1">Specification Writer</p>
-                      <p className="text-xs text-white">
-                        Generates a professional electrical specification from your floor plan
-                        symbols.
-                      </p>
-                    </div>
-                    <Button
+                    <ToolIntro>
+                      A client-ready specification of the electrical work, written from what is on
+                      your plan — circuits, cables and protection.
+                    </ToolIntro>
+                    <PrimaryAction
                       onClick={() => {
                         haptic.light();
                         runSpec();
                       }}
-                      className="w-full h-12 bg-cyan-600 text-white hover:bg-cyan-700 font-semibold text-sm touch-manipulation"
                     >
-                      <FileText className="h-4 w-4 mr-2" />
-                      Generate Specification
-                    </Button>
+                      Write the specification
+                    </PrimaryAction>
                   </>
                 )}
                 {specLoading && (
-                  <div className="flex flex-col items-center justify-center py-12">
-                    <Loader2 className="h-8 w-8 text-cyan-400 animate-spin mb-3" />
-                    <p className="text-sm font-medium text-white">Writing specification...</p>
-                    <p className="text-xs text-white mt-1">This may take a few seconds</p>
-                  </div>
+                  <ToolLoading label="Writing the specification…" hint="Usually a few seconds." />
                 )}
                 {specResult && (
                   <>
-                    <div className="space-y-3">
-                      {specResult.title && (
-                        <p className="text-sm font-bold text-cyan-400">{specResult.title}</p>
-                      )}
-                      {specResult.items?.length > 0 && (
-                        <div className="space-y-2">
-                          {specResult.items.map((item: any, idx: number) => (
-                            <div
-                              key={idx}
-                              className="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20"
-                            >
-                              <p className="text-sm text-white font-semibold mb-1">
-                                {item.number || idx + 1}. {item.description}
-                              </p>
-                              <div className="flex flex-wrap gap-2 mt-1.5">
-                                {item.circuit && (
-                                  <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded text-white">
-                                    {item.circuit}
-                                  </span>
-                                )}
-                                {item.cable && (
-                                  <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded text-white">
-                                    {item.cable}
-                                  </span>
-                                )}
-                                {item.protection && (
-                                  <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded text-white">
-                                    {item.protection}
-                                  </span>
-                                )}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                      {specResult.generalNotes && (
-                        <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-                          <p className="text-xs font-semibold text-cyan-400 uppercase mb-1">
-                            General Notes
-                          </p>
-                          <p className="text-sm text-white">{specResult.generalNotes}</p>
-                        </div>
-                      )}
-                      {specResult.regulations?.length > 0 && (
-                        <div className="flex flex-wrap gap-1.5">
-                          {specResult.regulations.map((reg: string, idx: number) => (
-                            <span
-                              key={idx}
-                              className="text-[10px] bg-cyan-500/10 border border-cyan-500/20 px-2 py-0.5 rounded text-cyan-400"
-                            >
-                              {reg}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                    <div className="flex gap-2">
-                      <Button
-                        onClick={() => {
-                          setSpecResult(null);
-                          runSpec();
-                        }}
-                        variant="outline"
-                        className="flex-1 h-11 touch-manipulation border-white/10 text-white hover:bg-white/10"
-                      >
-                        Try Again
-                      </Button>
-                      <Button
-                        onClick={() => setMode('hub')}
-                        className="flex-1 h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
-                      >
-                        Done
-                      </Button>
-                    </div>
+                    <ToolIntro title={specResult.title || 'Specification'}>
+                      Written from the items on your plan. Check it before it goes to the client.
+                    </ToolIntro>
+                    {specResult.items?.length > 0 && (
+                      <ResultSection title="Scope of work" count={specResult.items.length}>
+                        {specResult.items.map((item: any, idx: number) => (
+                          <ResultRow
+                            key={idx}
+                            index={Number(item.number) || idx + 1}
+                            title={item.description}
+                            detail={[item.circuit, item.cable, item.protection]
+                              .filter(Boolean)
+                              .join(' · ')}
+                          />
+                        ))}
+                      </ResultSection>
+                    )}
+                    {specResult.generalNotes && (
+                      <ResultSection title="General notes">
+                        <p className="py-3 text-[13px] leading-relaxed text-white">
+                          {specResult.generalNotes}
+                        </p>
+                      </ResultSection>
+                    )}
+                    {specResult.regulations?.length > 0 && (
+                      <ResultSection title="Regulations referenced">
+                        <p className="py-3 text-[13px] leading-relaxed text-white">
+                          {specResult.regulations.join(' · ')}
+                        </p>
+                      </ResultSection>
+                    )}
+                    <ResultActions
+                      againLabel="Write again"
+                      onAgain={() => {
+                        setSpecResult(null);
+                        runSpec();
+                      }}
+                      onDone={() => setMode('hub')}
+                    />
                   </>
                 )}
               </div>
@@ -1376,259 +1556,341 @@ export const AIRoomBuilderDialog = ({
 
             {/* ==================== QUOTE ==================== */}
             {mode === 'quote' && (
-              <div className="p-4 space-y-4">
+              <div className="mx-auto w-full max-w-2xl space-y-5 px-4 py-5 sm:px-5">
                 {!quoteResult && !quoteLoading && (
                   <>
-                    <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.06] text-center">
-                      <PoundSterling className="h-10 w-10 text-emerald-400 mx-auto mb-3" />
-                      <p className="text-sm font-semibold text-white mb-1">Quote Generator</p>
-                      <p className="text-xs text-white">
-                        Generates a quote breakdown with materials, labour, and total from your
-                        floor plan.
-                      </p>
-                    </div>
-                    <Button
+                    <ToolIntro>
+                      An estimate from your plan: materials, labour, sundries and certification,
+                      with VAT.
+                    </ToolIntro>
+                    <PrimaryAction
                       onClick={() => {
                         haptic.light();
                         runQuote();
                       }}
-                      className="w-full h-12 bg-emerald-600 text-white hover:bg-emerald-700 font-semibold text-sm touch-manipulation"
                     >
-                      <PoundSterling className="h-4 w-4 mr-2" />
-                      Generate Quote
-                    </Button>
+                      Price it
+                    </PrimaryAction>
                   </>
                 )}
                 {quoteLoading && (
-                  <div className="flex flex-col items-center justify-center py-12">
-                    <Loader2 className="h-8 w-8 text-emerald-400 animate-spin mb-3" />
-                    <p className="text-sm font-medium text-white">Generating quote...</p>
-                    <p className="text-xs text-white mt-1">This may take a few seconds</p>
-                  </div>
+                  <ToolLoading label="Pricing the job…" hint="Usually a few seconds." />
                 )}
                 {quoteResult && (
                   <>
                     {quoteResult.materials ? (
-                      <div className="space-y-3">
-                        {quoteResult.quoteRef && (
-                          <p className="text-xs text-white font-medium">
-                            Ref: {quoteResult.quoteRef}
-                          </p>
-                        )}
-                        <div>
-                          <p className="text-xs font-semibold text-white mb-2">Materials</p>
-                          <div className="space-y-1.5">
-                            {(Array.isArray(quoteResult.materials)
-                              ? quoteResult.materials
-                              : []
-                            ).map((item: any, idx: number) => (
-                              <div
+                      <div className="space-y-5">
+                        <ToolIntro
+                          title={
+                            quoteResult.totalIncVat != null || quoteResult.total != null
+                              ? `${gbp(quoteResult.totalIncVat || quoteResult.total)} inc VAT`
+                              : 'Estimate'
+                          }
+                        >
+                          {quoteResult.quoteRef ? `Ref ${quoteResult.quoteRef}. ` : ''}
+                          {quoteResult.estimatedDuration
+                            ? `About ${quoteResult.estimatedDuration} on site.`
+                            : 'Check the rates before it goes to the client.'}
+                        </ToolIntro>
+                        <ResultSection
+                          title="Materials"
+                          count={
+                            Array.isArray(quoteResult.materials)
+                              ? quoteResult.materials.length
+                              : undefined
+                          }
+                        >
+                          {(Array.isArray(quoteResult.materials) ? quoteResult.materials : []).map(
+                            (item: any, idx: number) => (
+                              <ResultRow
                                 key={idx}
-                                className="flex items-center justify-between p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20"
-                              >
-                                <div className="flex-1 mr-2">
-                                  <p className="text-sm text-white">{item.item || item.name}</p>
-                                  {item.qty && (
-                                    <p className="text-xs text-white">Qty: {item.qty}</p>
-                                  )}
-                                </div>
-                                <p className="text-sm font-semibold text-emerald-400 shrink-0">
-                                  {item.total != null ? `£${Number(item.total).toFixed(2)}` : ''}
-                                </p>
-                              </div>
-                            ))}
-                          </div>
+                                title={item.item || item.name}
+                                detail={item.qty ? `Qty ${item.qty}` : undefined}
+                                value={item.total != null ? gbp(item.total) : undefined}
+                              />
+                            )
+                          )}
+                        </ResultSection>
+                        <div>
+                          {quoteResult.materialsSubtotal != null && (
+                            <TotalLine
+                              label="Materials"
+                              value={gbp(quoteResult.materialsSubtotal)}
+                            />
+                          )}
+                          {quoteResult.labour && (
+                            <TotalLine
+                              label={
+                                quoteResult.labour.hours
+                                  ? `Labour — ${quoteResult.labour.hours} hrs at £${quoteResult.labour.rate}/hr`
+                                  : 'Labour'
+                              }
+                              value={gbp(quoteResult.labour.total || 0)}
+                            />
+                          )}
+                          {quoteResult.sundries && (
+                            <TotalLine
+                              label={quoteResult.sundries.description || 'Sundries'}
+                              value={gbp(quoteResult.sundries.total || 0)}
+                            />
+                          )}
+                          {quoteResult.certification && (
+                            <TotalLine
+                              label={quoteResult.certification.description || 'Certification'}
+                              value={gbp(quoteResult.certification.total || 0)}
+                            />
+                          )}
+                          {quoteResult.subtotalExVat != null && (
+                            <TotalLine
+                              label="Subtotal (ex VAT)"
+                              value={gbp(quoteResult.subtotalExVat)}
+                            />
+                          )}
+                          {quoteResult.vat != null && (
+                            <TotalLine label="VAT (20%)" value={gbp(quoteResult.vat)} />
+                          )}
+                          {(quoteResult.totalIncVat != null || quoteResult.total != null) && (
+                            <TotalLine
+                              strong
+                              label="Total (inc VAT)"
+                              value={gbp(quoteResult.totalIncVat || quoteResult.total)}
+                            />
+                          )}
                         </div>
-                        {quoteResult.materialsSubtotal != null && (
-                          <div className="flex items-center justify-between px-3 py-1.5">
-                            <p className="text-xs text-white">Materials subtotal</p>
-                            <p className="text-sm font-semibold text-white">
-                              £{Number(quoteResult.materialsSubtotal).toFixed(2)}
-                            </p>
-                          </div>
-                        )}
-                        {quoteResult.labour && (
-                          <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-                            <div>
-                              <p className="text-sm font-semibold text-white">Labour</p>
-                              {quoteResult.labour.hours && (
-                                <p className="text-xs text-white">
-                                  {quoteResult.labour.hours}hrs @ £{quoteResult.labour.rate}/hr
-                                </p>
-                              )}
-                            </div>
-                            <p className="text-sm font-semibold text-white">
-                              £{Number(quoteResult.labour.total || 0).toFixed(2)}
-                            </p>
-                          </div>
-                        )}
-                        {quoteResult.sundries && (
-                          <div className="flex items-center justify-between px-3 py-1.5">
-                            <p className="text-xs text-white">
-                              {quoteResult.sundries.description || 'Sundries'}
-                            </p>
-                            <p className="text-sm text-white">
-                              £{Number(quoteResult.sundries.total || 0).toFixed(2)}
-                            </p>
-                          </div>
-                        )}
-                        {quoteResult.certification && (
-                          <div className="flex items-center justify-between px-3 py-1.5">
-                            <p className="text-xs text-white">
-                              {quoteResult.certification.description || 'Certification'}
-                            </p>
-                            <p className="text-sm text-white">
-                              £{Number(quoteResult.certification.total || 0).toFixed(2)}
-                            </p>
-                          </div>
-                        )}
-                        {quoteResult.subtotalExVat != null && (
-                          <div className="flex items-center justify-between px-3 py-1.5 border-t border-white/10">
-                            <p className="text-sm text-white">Subtotal (ex VAT)</p>
-                            <p className="text-sm font-semibold text-white">
-                              £{Number(quoteResult.subtotalExVat).toFixed(2)}
-                            </p>
-                          </div>
-                        )}
-                        {quoteResult.vat != null && (
-                          <div className="flex items-center justify-between px-3 py-1.5">
-                            <p className="text-xs text-white">VAT (20%)</p>
-                            <p className="text-sm text-white">
-                              £{Number(quoteResult.vat).toFixed(2)}
-                            </p>
-                          </div>
-                        )}
-                        {(quoteResult.totalIncVat != null || quoteResult.total != null) && (
-                          <div className="flex items-center justify-between p-3 rounded-xl bg-emerald-500/20 border border-emerald-500/30">
-                            <p className="text-base font-bold text-white">Total (inc VAT)</p>
-                            <p className="text-base font-bold text-emerald-400">
-                              £{Number(quoteResult.totalIncVat || quoteResult.total).toFixed(2)}
-                            </p>
-                          </div>
-                        )}
-                        {quoteResult.estimatedDuration && (
-                          <p className="text-xs text-white">
-                            Estimated duration: {quoteResult.estimatedDuration}
-                          </p>
-                        )}
                       </div>
                     ) : (
-                      <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-                        <p className="text-sm text-white whitespace-pre-wrap">
-                          {typeof quoteResult === 'string'
-                            ? quoteResult
-                            : JSON.stringify(quoteResult, null, 2)}
-                        </p>
-                      </div>
+                      <ToolIntro title="Nothing to price yet">
+                        {typeof quoteResult === 'string'
+                          ? quoteResult
+                          : quoteResult?.error ||
+                            'Add sockets, lights and switches to the plan, then price it.'}
+                      </ToolIntro>
                     )}
-                    <div className="flex gap-2">
-                      <Button
-                        onClick={() => {
-                          setQuoteResult(null);
-                          runQuote();
-                        }}
-                        variant="outline"
-                        className="flex-1 h-11 touch-manipulation border-white/10 text-white hover:bg-white/10"
-                      >
-                        Try Again
-                      </Button>
-                      <Button
-                        onClick={() => setMode('hub')}
-                        className="flex-1 h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
-                      >
-                        Done
-                      </Button>
-                    </div>
+                    <ResultActions
+                      againLabel="Price again"
+                      onAgain={() => {
+                        setQuoteResult(null);
+                        runQuote();
+                      }}
+                      onDone={() => setMode('hub')}
+                    />
                   </>
                 )}
               </div>
             )}
+
             {/* ==================== PHOTO TO PLAN ==================== */}
             {mode === 'photo' && (
-              <div className="p-4 space-y-4">
+              <div className="space-y-4 px-4 py-5 sm:px-5">
                 <input
                   ref={photoInputRef}
                   type="file"
-                  accept="image/*"
-                  onChange={handlePhotoCapture}
+                  accept="image/*,application/pdf,.pdf"
+                  onChange={(e) => {
+                    void handlePhotoCapture(e);
+                    // Let the same file be chosen again after "Choose another".
+                    e.target.value = '';
+                  }}
                   className="hidden"
                 />
 
-                {!photoPreview && !photoGenerating && (
-                  <>
-                    <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.06] text-center">
-                      <Camera className="h-10 w-10 text-pink-400 mx-auto mb-3" />
-                      <p className="text-sm font-semibold text-white mb-1">Photo to Floor Plan</p>
-                      <p className="text-xs text-white">
-                        Photograph a floor plan — hand-drawn is fine — and every room on it is laid
-                        out with a suggested electrical layout.
+                {!photoPreview && !photoGenerating && !photoPreparing && (
+                  <div className="mx-auto w-full max-w-2xl space-y-4">
+                    {/* The drop zone IS the upload control on the web — one
+                        large target instead of a card explaining a button. */}
+                    <button
+                      type="button"
+                      onClick={isNativeApp ? () => choosePlanPhoto('library') : choosePlanFile}
+                      className="group w-full touch-manipulation rounded-2xl border border-dashed border-white/[0.2] bg-gradient-to-b from-white/[0.06] to-white/[0.02] px-5 py-8 text-left transition-colors hover:border-elec-yellow active:scale-[0.99] sm:py-10"
+                    >
+                      <span className="block text-[20px] font-bold leading-tight tracking-tight text-white group-hover:text-elec-yellow sm:text-[22px]">
+                        {isNativeApp ? 'Add the plan' : 'Drop the plan here'}
+                      </span>
+                      <span className="mt-2 block text-[13px] leading-relaxed text-white">
+                        The architect&apos;s PDF, a screenshot or a photo — hand-drawn is fine.
+                        Every room on every floor is laid out with a suggested electrical layout.
+                      </span>
+                      <span className="mt-3 hidden text-[12px] text-white sm:block">
+                        Or click to choose a file · paste a screenshot with Ctrl/⌘ V
+                      </span>
+                    </button>
+
+                    {isNativeApp ? (
+                      <div className="grid grid-cols-2 gap-2.5">
+                        {/* Library first: a plan is nearly always a photo you
+                            already took (ELE-1745). The file picker is the one
+                            route to a PDF in the app. */}
+                        <Button
+                          onClick={() => choosePlanPhoto('library')}
+                          className="col-span-2 h-12 touch-manipulation rounded-xl bg-elec-yellow text-[15px] font-bold text-black hover:bg-elec-yellow/90 md:h-12"
+                        >
+                          Choose a photo of the plan
+                        </Button>
+                        <Button
+                          onClick={choosePlanFile}
+                          variant="outline"
+                          className="h-11 touch-manipulation rounded-xl border-white/[0.14] text-sm font-semibold text-white hover:bg-white/10"
+                        >
+                          Upload a PDF
+                        </Button>
+                        <Button
+                          onClick={() => choosePlanPhoto('camera')}
+                          variant="outline"
+                          className="h-11 touch-manipulation rounded-xl border-white/[0.14] text-sm font-semibold text-white hover:bg-white/10"
+                        >
+                          Take a photo
+                        </Button>
+                      </div>
+                    ) : (
+                      <Button
+                        onClick={choosePlanFile}
+                        className="h-12 w-full touch-manipulation rounded-xl bg-elec-yellow text-[15px] font-bold text-black hover:bg-elec-yellow/90 md:h-12"
+                      >
+                        Choose a file
+                      </Button>
+                    )}
+
+                    <div className="border-t border-white/[0.1] pt-4">
+                      <p className="text-[13px] font-semibold text-white">Best results</p>
+                      <p className="mt-1 text-[12px] leading-relaxed text-white">
+                        The original PDF from CAD. A pack with a floor on each page is read page by
+                        page. Title blocks, legends and notes are ignored.
                       </p>
                     </div>
-                    {/* Library first: a plan is nearly always a photo you already
-                        took, and offering only the camera is what made this
-                        unusable in the app (ELE-1745). */}
-                    <Button
-                      onClick={() => choosePlanPhoto('library')}
-                      className="w-full h-12 bg-pink-600 text-white hover:bg-pink-700 font-semibold text-sm touch-manipulation"
-                    >
-                      <ImageIcon className="h-4 w-4 mr-2" />
-                      Choose a plan photo
-                    </Button>
-                    <Button
-                      onClick={() => choosePlanPhoto('camera')}
-                      variant="outline"
-                      className="w-full h-11 border-white/10 text-white hover:bg-white/10 font-semibold text-sm touch-manipulation"
-                    >
-                      <Camera className="h-4 w-4 mr-2" />
-                      Take a photo now
-                    </Button>
-                  </>
+                  </div>
+                )}
+
+                {photoPreparing && (
+                  <div className="flex flex-col items-center justify-center py-12">
+                    <Loader2 className="mb-3 h-6 w-6 animate-spin text-elec-yellow" />
+                    <p className="text-sm font-semibold text-white">Preparing the plan…</p>
+                  </div>
                 )}
 
                 {photoPreview && !photoGenerating && (
-                  <>
-                    <div className="rounded-xl overflow-hidden border border-white/10">
-                      <img
-                        src={photoPreview}
-                        alt="Room photo"
-                        className="w-full h-48 object-cover"
-                      />
+                  /* Plan large on the left, everything about it on the right.
+                     Stacked on phones. A plan in a thin full-width strip with
+                     empty space either side said nothing about what happens
+                     next. */
+                  <div className="grid gap-5 lg:grid-cols-[minmax(0,1.5fr)_minmax(320px,1fr)] lg:gap-7">
+                    <div className="space-y-2.5">
+                      <div className="overflow-hidden rounded-2xl border border-white/[0.14] bg-white">
+                        <img
+                          src={photoPreview}
+                          alt="Your floor plan"
+                          className="h-64 w-full object-contain sm:h-80 lg:h-[26rem]"
+                        />
+                      </div>
+                      {photoPages.length > 1 && (
+                        <div className="flex gap-2 overflow-x-auto pb-1">
+                          {photoPages.map((p, i) => (
+                            <div
+                              key={i}
+                              className="relative h-14 w-20 flex-shrink-0 overflow-hidden rounded-lg border border-white/[0.14] bg-white"
+                            >
+                              <img
+                                src={p.dataUrl}
+                                alt={`Page ${i + 1}`}
+                                className="h-full w-full object-contain"
+                              />
+                              <span className="absolute bottom-0.5 right-1 rounded bg-black/70 px-1 text-[10px] font-semibold text-white">
+                                {i + 1}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
-                    <div className="flex gap-2">
-                      <Button
-                        onClick={() => {
-                          setPhotoPreview(null);
-                          void choosePlanPhoto('library');
-                        }}
-                        variant="outline"
-                        className="flex-1 h-11 border-white/10 text-white hover:bg-white/10 touch-manipulation"
-                      >
-                        Choose another
-                      </Button>
-                      <Button
-                        onClick={handlePhotoGenerate}
-                        className="flex-1 h-11 bg-pink-600 text-white hover:bg-pink-700 font-semibold touch-manipulation"
-                      >
-                        <Sparkles className="h-4 w-4 mr-2" />
-                        Generate Plan
-                      </Button>
+
+                    <div className="flex flex-col gap-5">
+                      <div>
+                        <p
+                          className="truncate text-[17px] font-bold tracking-tight text-white"
+                          title={photoMeta?.name}
+                        >
+                          {photoMeta?.name || 'Your plan'}
+                        </p>
+                        <p className="mt-0.5 text-[13px] text-white">
+                          {photoMeta?.source === 'pdf'
+                            ? photoPages.length > 1
+                              ? `PDF · ${photoPages.length} pages${
+                                  photoMeta.pageCount > photoPages.length
+                                    ? ` of ${photoMeta.pageCount}`
+                                    : ''
+                                }, read side by side`
+                              : 'PDF drawing · every floor on the sheet'
+                            : 'Image · every room on it'}
+                        </p>
+                      </div>
+
+                      <ol className="border-t border-white/[0.12]">
+                        {[
+                          ['Finds every room', 'Named as on the drawing, floor by floor.'],
+                          ['Lays out the walls', 'Rooms sized and placed as drawn.'],
+                          ['Designs the electrics', 'Sockets, lighting, switching and detection.'],
+                        ].map(([t, d], i) => (
+                          <li key={t} className="flex gap-3 border-b border-white/[0.12] py-2.5">
+                            <span className="w-5 flex-shrink-0 pt-px text-[12px] font-semibold tabular-nums text-elec-yellow">
+                              {String(i + 1).padStart(2, '0')}
+                            </span>
+                            <div>
+                              <p className="text-[13.5px] font-semibold text-white">{t}</p>
+                              <p className="text-[12px] text-white">{d}</p>
+                            </div>
+                          </li>
+                        ))}
+                      </ol>
+
+                      <div>
+                        <label
+                          htmlFor="plan-notes"
+                          className="mb-1 block text-[12px] font-medium text-white"
+                        >
+                          Anything to add? (optional)
+                        </label>
+                        <Textarea
+                          id="plan-notes"
+                          value={planNotes}
+                          onChange={(e) => setPlanNotes(e.target.value)}
+                          placeholder="e.g. Full rewire. EV charger in the garage, USB sockets in every bedroom."
+                          rows={2}
+                          className="min-h-[56px] resize-none rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none touch-manipulation"
+                        />
+                      </div>
+
+                      <div className="mt-auto grid grid-cols-[1fr_2fr] gap-2.5">
+                        <Button
+                          onClick={() => {
+                            setPhotoPreview(null);
+                            setPhotoPages([]);
+                            setPhotoMeta(null);
+                            if (photoMeta?.source === 'pdf') choosePlanFile();
+                            else void choosePlanPhoto('library');
+                          }}
+                          variant="outline"
+                          className="h-12 touch-manipulation rounded-xl border-white/[0.14] text-sm font-semibold text-white hover:bg-white/10 md:h-12"
+                        >
+                          Change
+                        </Button>
+                        <Button
+                          onClick={handlePhotoGenerate}
+                          className="h-12 touch-manipulation rounded-xl bg-elec-yellow text-[15px] font-bold text-black hover:bg-elec-yellow/90 md:h-12 md:text-[15px]"
+                        >
+                          Read the plan
+                        </Button>
+                      </div>
                     </div>
-                  </>
+                  </div>
                 )}
 
                 {photoGenerating && (
-                  <div className="flex flex-col items-center justify-center py-12">
-                    <Loader2 className="h-8 w-8 text-pink-400 animate-spin mb-3" />
-                    <p className="text-sm font-medium text-white">{analysingMessage}</p>
-                    <p className="text-xs text-white mt-1">
-                      {analysingFor >= 25
-                        ? 'A large plan can take a minute — it is still working.'
-                        : 'Every room on the plan, with a suggested electrical layout.'}
-                    </p>
-                    {analysingFor >= 8 && (
-                      <p className="text-[11px] text-white mt-2 tabular-nums">{analysingFor}s</p>
-                    )}
-                  </div>
+                  <PlanProgressPanel
+                    progress={planProgress}
+                    elapsed={analysingFor}
+                    source="plan"
+                    previewUrl={photoPreview}
+                    fileName={photoMeta?.name}
+                  />
                 )}
               </div>
             )}
@@ -1636,10 +1898,14 @@ export const AIRoomBuilderDialog = ({
 
           {/* Loading overlay */}
           {isGenerating && (
-            <div className="absolute inset-0 bg-background/80 backdrop-blur-sm flex flex-col items-center justify-center z-10">
-              <Loader2 className="h-8 w-8 text-elec-yellow animate-spin mb-3" />
-              <p className="text-sm font-medium text-white">Generating floor plan...</p>
-              <p className="text-xs text-white mt-1">This takes a few seconds</p>
+            <div className="absolute inset-0 z-10 overflow-y-auto bg-background/95 backdrop-blur-sm">
+              <div className="mx-auto max-w-md px-5 py-8">
+                <PlanProgressPanel
+                  progress={planProgress}
+                  elapsed={analysingFor}
+                  source="describe"
+                />
+              </div>
             </div>
           )}
         </div>

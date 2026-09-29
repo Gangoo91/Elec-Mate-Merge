@@ -127,7 +127,8 @@ serve(withSentry('generate-professional-package', async (req) => {
     const zipBlob = await zip.generateAsync({ type: 'uint8array' });
 
     // Phase 3: Save design to database for later testing
-    const authHeader = req.headers.get('Authorization');
+    // (`authHeader` is the one read above — redeclaring it here was a
+    // SyntaxError that stopped the function booting.)
     if (authHeader) {
       try {
         const token = authHeader.replace('Bearer ', '');
@@ -313,7 +314,7 @@ function extractMaterials(text: string): Array<{ item: string; quantity: string 
 
 // Real PDF generation using jsPDF
 async function generateDesignSpec(data: any, companyDetails: any): Promise<Uint8Array> {
-  const { default: jsPDF } = await import('https://esm.sh/jspdf@2.5.1');
+  const { default: jsPDF } = await import('https://esm.sh/jspdf@4.2.1');
   const doc = new jsPDF();
 
   // Header
@@ -375,7 +376,7 @@ async function generateClientQuote(
   companyDetails: any,
   clientDetails: any
 ): Promise<Uint8Array> {
-  const { default: jsPDF } = await import('https://esm.sh/jspdf@2.5.1');
+  const { default: jsPDF } = await import('https://esm.sh/jspdf@4.2.1');
   const doc = new jsPDF();
 
   doc.setFontSize(20);
@@ -430,7 +431,7 @@ async function generateRAMS(
   companyDetails: any,
   clientDetails: any
 ): Promise<Uint8Array> {
-  const { default: jsPDF } = await import('https://esm.sh/jspdf@2.5.1');
+  const { default: jsPDF } = await import('https://esm.sh/jspdf@4.2.1');
   const doc = new jsPDF();
 
   doc.setFontSize(18);
@@ -475,7 +476,7 @@ async function generateRAMS(
 }
 
 async function generateInstallationChecklist(data: any, clientDetails: any): Promise<Uint8Array> {
-  const { default: jsPDF } = await import('https://esm.sh/jspdf@2.5.1');
+  const { default: jsPDF } = await import('https://esm.sh/jspdf@4.2.1');
   const doc = new jsPDF();
 
   doc.setFontSize(18);
@@ -506,7 +507,7 @@ async function generateInstallationChecklist(data: any, clientDetails: any): Pro
 }
 
 async function generateTestSchedule(data: any, clientDetails: any): Promise<Uint8Array> {
-  const { default: jsPDF } = await import('https://esm.sh/jspdf@2.5.1');
+  const { default: jsPDF } = await import('https://esm.sh/jspdf@4.2.1');
   const doc = new jsPDF();
 
   doc.setFontSize(18);
@@ -543,7 +544,7 @@ async function generateEIC(
   clientDetails: any,
   companyDetails: any
 ): Promise<Uint8Array> {
-  const { default: jsPDF } = await import('https://esm.sh/jspdf@2.5.1');
+  const { default: jsPDF } = await import('https://esm.sh/jspdf@4.2.1');
   const doc = new jsPDF();
 
   doc.setFontSize(18);

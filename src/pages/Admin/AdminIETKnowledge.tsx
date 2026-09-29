@@ -185,7 +185,9 @@ async function renderPageToPng(
   canvas.height = Math.ceil(viewport.height);
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Could not get 2D canvas context');
-  await page.render({ canvasContext: ctx, viewport }).promise;
+  // pdfjs-dist 6 requires the canvas itself in RenderParameters (the
+  // context-only form was the pre-v5 shape).
+  await page.render({ canvas, canvasContext: ctx, viewport }).promise;
   return await new Promise<Blob>((resolve, reject) =>
     canvas.toBlob((b) => (b ? resolve(b) : reject(new Error('toBlob failed'))), 'image/png')
   );

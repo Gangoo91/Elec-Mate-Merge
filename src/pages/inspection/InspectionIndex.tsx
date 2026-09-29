@@ -238,8 +238,8 @@ const InspectionIndex = () => {
                 <h1 className="text-2xl font-bold tracking-tight text-white sm:text-[28px]">
                   Part P Notifications
                 </h1>
-                <p className="mt-1 text-[13px] text-white/50">
-                  Notifiable work and the 30-day Building Regs clock — submit, track, done.
+                <p className="mt-1 text-[13px] text-white">
+                  Notifiable work, and the 30 days you have to tell Building Control.
                 </p>
               </div>
             </div>

@@ -344,3 +344,18 @@ jobs:
         run: npm run check:team-linking
       - name: Three-phase sibling fill (ELE-1770)
         run: npm run check:three-phase
+      # ELE-1788: a "recover unversioned functions" commit overwrote a shared
+      # module and silently removed an export three live functions import. A
+      # deploy type-checks nothing, so the next deploy would have broken them.
+      - name: Edge-function shared exports resolve
+        run: npm run check:shared-exports
+      # An AI observation may cite only the regulations it was grounded in.
+      - name: AI citation guard (enhance-eicr-observation)
+        run: npm run check:citation-guard
+      # A newer local draft must never hide cloud test results (Rovell, 28 Sep 2026).
+      - name: Local-draft guard
+        run: npm run check:local-draft-guard
+      # The Part P tracker opens a row only when the certificate says notifiable;
+      # this rule is mirrored in SQL (part_p_certificate_verdict) and must not drift.
+      - name: Part P verdict guard
+        run: npm run check:part-p-verdict

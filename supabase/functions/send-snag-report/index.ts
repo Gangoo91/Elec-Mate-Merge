@@ -190,7 +190,7 @@ serve(async (req) => {
     const primaryHex: string = companyProfile?.primary_color || '#0f172a';
 
     // ─── Build PDF (jsPDF) ─────────────────────────────────────────
-    const { default: jsPDF } = await import('https://esm.sh/jspdf@2.5.1');
+    const { default: jsPDF } = await import('https://esm.sh/jspdf@4.2.1');
     const doc = new jsPDF({ unit: 'pt', format: 'a4' });
     const pageW = doc.internal.pageSize.getWidth();
     const pageH = doc.internal.pageSize.getHeight();

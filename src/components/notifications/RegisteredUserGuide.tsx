@@ -2,48 +2,47 @@ import { PORTAL_LINKS } from '@/utils/portalLinks';
 import { openExternalUrl } from '@/utils/open-external-url';
 
 interface RegisteredUserGuideProps {
-  showNiceic: boolean;
-  showNapit: boolean;
+  /** NAPIT / NICEIC memberships from the company profile. */
+  schemes: Array<'napit' | 'niceic'>;
+  /** Another scheme (e.g. Stroma) — no portal link, but still self-certifying. */
+  otherSchemeName?: string | null;
 }
 
 /**
- * Compact scheme strip — states the electrician's competent-person scheme once
- * and puts the portal one tap away. Replaces the old three-part block (member
- * card + benefit chips + duplicate "registered" badge) that repeated the scheme
- * name three times and pushed the actual notifications off-screen.
+ * One line that says which scheme the electrician is with and puts its
+ * portal a tap away. Nothing else — the cards carry the work.
  */
-export const RegisteredUserGuide = ({ showNiceic, showNapit }: RegisteredUserGuideProps) => {
-  // If neither flag is set we can't tell which scheme — offer both portals.
-  const showBoth = !showNiceic && !showNapit;
-  const portals = [
-    (showNapit || showBoth) && { name: 'NAPIT', url: PORTAL_LINKS.napit.url },
-    (showNiceic || showBoth) && { name: 'NICEIC', url: PORTAL_LINKS.niceic.url },
-  ].filter(Boolean) as { name: string; url: string }[];
+export const RegisteredUserGuide = ({ schemes, otherSchemeName }: RegisteredUserGuideProps) => {
+  const names = [
+    ...schemes.map((s) => (s === 'napit' ? 'NAPIT' : 'NICEIC')),
+    ...(otherSchemeName ? [otherSchemeName] : []),
+  ];
 
   return (
-    <div className="flex flex-col gap-3 rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.06] to-white/[0.03] p-4 sm:flex-row sm:items-center sm:justify-between">
+    <div className="-mx-4 flex flex-col gap-3 border-y border-white/[0.12] bg-gradient-to-b from-white/[0.06] to-white/[0.03] p-4 sm:mx-0 sm:flex-row sm:items-center sm:justify-between sm:rounded-2xl sm:border-x sm:p-5">
       <div className="min-w-0">
-        <div className="flex items-center gap-2">
-          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400" aria-hidden />
-          <p className="text-[13.5px] font-semibold tracking-tight text-white">
-            Registered with {portals.map((p) => p.name).join(' & ')}
-          </p>
-        </div>
-        <p className="mt-0.5 text-[12px] leading-relaxed text-white/60">
-          Self-certify and submit directly — no Building Control fee.
+        <p className="text-[13.5px] font-semibold tracking-tight text-white">
+          Registered with {names.join(' & ') || 'a competent person scheme'}
+        </p>
+        <p className="mt-0.5 text-[12.5px] leading-snug text-white">
+          Self-certify through the portal within 30 days of finishing. Your scheme tells Building
+          Control and posts the compliance certificate — no council fee.
         </p>
       </div>
-      <div className="flex shrink-0 flex-wrap gap-2">
-        {portals.map((p) => (
-          <button
-            key={p.name}
-            onClick={() => openExternalUrl(p.url)}
-            className="inline-flex h-10 items-center rounded-xl bg-elec-yellow px-4 text-[13px] font-semibold text-black touch-manipulation transition-colors hover:bg-elec-yellow/90 active:scale-[0.98]"
-          >
-            Open {p.name} portal
-          </button>
-        ))}
-      </div>
+      {schemes.length > 0 && (
+        <div className="flex shrink-0 flex-wrap gap-2">
+          {schemes.map((s) => (
+            <button
+              key={s}
+              type="button"
+              onClick={() => openExternalUrl(PORTAL_LINKS[s].url)}
+              className="inline-flex h-11 items-center rounded-xl bg-elec-yellow px-4 text-[13px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 active:scale-[0.98] touch-manipulation"
+            >
+              Open {s === 'napit' ? 'NAPIT' : 'NICEIC'} portal
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

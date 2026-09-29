@@ -1,249 +1,291 @@
-import { Trash2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
-import { symbolRegistry } from './symbols/symbolRegistry';
-import { SCALE, SNAP_STEP } from './constants';
 import { useHaptic } from '@/hooks/useHaptic';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { cn } from '@/lib/utils';
+import type { CanvasObject } from '@/pages/electrician-tools/ai-tools/DiagramBuilderPage';
+import { symbolRegistry } from './symbols/symbolRegistry';
+import { SCALE, SNAP_STEP } from './constants';
 
 interface PropertiesPanelProps {
-  selectedObject: any;
-  onUpdate: (updates: any) => void;
+  selectedObject: CanvasObject | null;
+  onUpdate: (updates: Partial<CanvasObject>) => void;
   onDelete: () => void;
   onClose: () => void;
+  /** The drawing's circuits, so an item can be moved to another one. */
+  circuits?: { ref: string; name: string; colour: string }[];
 }
 
+const chipOn = 'bg-elec-yellow border-elec-yellow text-black font-semibold';
+const chipOff = 'bg-white/[0.06] border-white/[0.12] text-white font-medium';
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 ' +
+  'text-base font-medium text-white placeholder:text-white/25 caret-elec-yellow transition-colors ' +
+  'hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none touch-manipulation';
+
+/** "S3" → "S": circuits an item can sensibly move between. */
+const family = (ref?: string) => /^([A-Z]+)/.exec(ref ?? '')?.[1] ?? '';
+
+/**
+ * Properties of the selected item, in the house style (29 Sep 2026).
+ *
+ * What an electrician needs from a tapped socket: what it is, which room, which
+ * circuit — and to move it to another circuit. The old sheet showed raw canvas
+ * coordinates ("X 1234") and the circuit as text it could not change.
+ */
 export const PropertiesPanel = ({
   selectedObject,
   onUpdate,
   onDelete,
   onClose,
+  circuits = [],
 }: PropertiesPanelProps) => {
   const haptic = useHaptic();
   if (!selectedObject) return null;
+  const o = selectedObject;
 
-  const symbolMeta = selectedObject.symbolId
-    ? symbolRegistry.find((symbol) => symbol.id === selectedObject.symbolId)
-    : null;
-  const objectLength =
-    selectedObject.points && selectedObject.points.length >= 2
-      ? Math.hypot(
-          selectedObject.points[1].x - selectedObject.points[0].x,
-          selectedObject.points[1].y - selectedObject.points[0].y
-        ) / SCALE
+  const symbolMeta = o.symbolId ? symbolRegistry.find((s) => s.id === o.symbolId) : null;
+  const length =
+    o.points && o.points.length >= 2
+      ? Math.hypot(o.points[1].x - o.points[0].x, o.points[1].y - o.points[0].y) / SCALE
       : null;
-  // Nudge by exactly one snap step (0.1m). It was a flat 10px = 0.192m, which
-  // is not a grid multiple — nudging knocked an item off the lattice it had
-  // just been snapped to, so positions drifted to awkward decimals.
+  const title =
+    symbolMeta?.name ??
+    (o.type === 'wall'
+      ? 'Wall'
+      : o.type === 'text'
+        ? 'Label'
+        : o.type === 'cable'
+          ? 'Cable'
+          : 'Item');
+  const where = [o.roomName, o.floor].filter(Boolean).join(' · ');
+
+  // Circuits of the same kind (sockets with sockets, lights with lights).
+  const sameKind = circuits.filter((c) => family(c.ref) === family(o.circuitRef));
+
   const nudge = (dx: number, dy: number) => {
     haptic.selection();
-    return onUpdate({
-      x: (selectedObject.x || 0) + dx * SNAP_STEP,
-      y: (selectedObject.y || 0) + dy * SNAP_STEP,
-    });
+    onUpdate({ x: (o.x || 0) + dx * SNAP_STEP, y: (o.y || 0) + dy * SNAP_STEP });
   };
+  const padBtn =
+    'h-11 rounded-xl border border-white/[0.12] bg-white/[0.06] text-lg font-semibold text-white touch-manipulation active:bg-white/[0.12]';
 
   return (
-    <Sheet
-      open={!!selectedObject}
-      onOpenChange={(open) => {
-        if (!open) onClose();
-      }}
-    >
+    <Sheet open={!!selectedObject} onOpenChange={(open) => !open && onClose()}>
       <SheetContent
         side="bottom"
-        className="h-[85vh] lg:h-auto lg:max-h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-elec-card border-white/10 flex flex-col"
+        className="flex h-[85vh] flex-col overflow-hidden rounded-t-2xl p-0 lg:h-auto lg:max-h-[85vh]"
       >
-        {/* Drag handle */}
-        <div className="flex justify-center pt-2 pb-1">
-          <div className="w-10 h-1 rounded-full bg-white/20" />
-        </div>
+        <div className="flex h-full flex-col bg-background">
+          <SheetHeader className="mx-auto w-full max-w-2xl px-4 pb-3 pt-5 text-left sm:px-6">
+            <SheetTitle className="text-[17px] font-semibold tracking-tight text-white">
+              {title}
+            </SheetTitle>
+            {(where || length !== null) && (
+              <p className="text-[13px] text-white">
+                {where}
+                {length !== null && `${where ? ' · ' : ''}${length.toFixed(2)} m long`}
+              </p>
+            )}
+          </SheetHeader>
 
-        <SheetHeader className="w-full max-w-2xl mx-auto px-4 pb-3">
-          <SheetTitle className="text-white text-lg font-semibold">Properties</SheetTitle>
-        </SheetHeader>
+          <div className="mx-auto w-full max-w-2xl flex-1 space-y-6 overflow-y-auto px-4 pb-8 sm:px-6">
+            {/* Circuit */}
+            {o.type === 'symbol' && o.circuitRef && (
+              <section>
+                <h3 className="mb-2 text-[15px] font-semibold tracking-tight text-white">
+                  Circuit
+                </h3>
+                {sameKind.length > 1 ? (
+                  <div className="flex flex-wrap gap-2">
+                    {sameKind.map((c) => (
+                      <button
+                        key={c.ref}
+                        type="button"
+                        onClick={() => {
+                          haptic.selection();
+                          onUpdate({ circuitRef: c.ref });
+                        }}
+                        className={cn(
+                          'flex h-11 items-center gap-2 rounded-full border px-4 text-sm touch-manipulation',
+                          c.ref === o.circuitRef ? chipOn : chipOff
+                        )}
+                      >
+                        <span
+                          className="h-4 w-[3px] rounded-full"
+                          style={{ backgroundColor: c.colour }}
+                        />
+                        <span className="font-bold">{c.ref}</span>
+                        <span className="max-w-[12rem] truncate">{c.name}</span>
+                      </button>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-[14px] text-white">
+                    <span className="font-bold">{o.circuitRef}</span>
+                    {sameKind[0] && ` — ${sameKind[0].name}`}
+                  </p>
+                )}
+              </section>
+            )}
 
-        <div className="w-full max-w-2xl mx-auto px-4 pb-6 overflow-y-auto flex-1 space-y-4">
-          {objectLength !== null && (
-            <div className="space-y-1 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2">
-              <Label className="text-white text-[11px] uppercase tracking-wide">Length</Label>
-              <p className="text-sm font-semibold text-white">{objectLength.toFixed(2)}m</p>
-            </div>
-          )}
-
-          {/* Rotation */}
-          <div className="space-y-2">
-            <Label className="text-white text-xs">Rotation</Label>
-            <Input
-              type="range"
-              min="0"
-              max="360"
-              value={selectedObject.rotation || 0}
-              onChange={(e) => onUpdate({ rotation: Number(e.target.value) })}
-              className="h-11 touch-manipulation accent-elec-yellow"
-            />
-            <div className="flex items-center justify-between">
-              <span className="text-xs text-white">
-                {Math.round(selectedObject.rotation || 0)}deg
-              </span>
-              <div className="flex gap-1">
-                {[0, 90, 180, 270].map((angle) => (
-                  <Button
-                    key={angle}
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      haptic.light();
-                      onUpdate({ rotation: angle });
-                    }}
-                    className="h-11 sm:h-8 px-2 text-xs border-white/10 text-white hover:bg-white/10 touch-manipulation"
-                  >
-                    {angle}
-                  </Button>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label className="text-white text-xs">Nudge (0.1m)</Label>
-            <div className="grid grid-cols-3 gap-2">
-              <div />
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => nudge(0, -1)}
-                className="h-11 sm:h-9 border-white/10 text-white hover:bg-white/10 touch-manipulation"
-              >
-                Up
-              </Button>
-              <div />
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => nudge(-1, 0)}
-                className="h-11 sm:h-9 border-white/10 text-white hover:bg-white/10 touch-manipulation"
-              >
-                Left
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => nudge(0, 1)}
-                className="h-11 sm:h-9 border-white/10 text-white hover:bg-white/10 touch-manipulation"
-              >
-                Down
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => nudge(1, 0)}
-                className="h-11 sm:h-9 border-white/10 text-white hover:bg-white/10 touch-manipulation"
-              >
-                Right
-              </Button>
-            </div>
-          </div>
-
-          {/* Position */}
-          <div className="space-y-2">
-            <Label className="text-white text-xs">Position</Label>
-            <div className="grid grid-cols-2 gap-2">
-              <div>
-                <Label className="text-white text-xs">X</Label>
-                <Input
-                  type="number"
-                  value={Math.round(selectedObject.x || 0)}
-                  onChange={(e) => onUpdate({ x: Number(e.target.value) })}
-                  className="h-11 bg-elec-dark border-white/10 text-white text-base touch-manipulation"
-                />
-              </div>
-              <div>
-                <Label className="text-white text-xs">Y</Label>
-                <Input
-                  type="number"
-                  value={Math.round(selectedObject.y || 0)}
-                  onChange={(e) => onUpdate({ y: Number(e.target.value) })}
-                  className="h-11 bg-elec-dark border-white/10 text-white text-base touch-manipulation"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Size */}
-          {selectedObject.type === 'rectangle' && (
-            <div className="space-y-2">
-              <Label className="text-white text-xs">Size</Label>
-              <div className="grid grid-cols-2 gap-2">
-                <div>
-                  <Label className="text-white text-xs">W</Label>
-                  <Input
-                    type="number"
-                    value={Math.round(selectedObject.width || 40)}
-                    onChange={(e) => onUpdate({ width: Number(e.target.value) })}
-                    className="h-11 bg-elec-dark border-white/10 text-white text-base touch-manipulation"
-                  />
-                </div>
-                <div>
-                  <Label className="text-white text-xs">H</Label>
-                  <Input
-                    type="number"
-                    value={Math.round(selectedObject.height || 40)}
-                    onChange={(e) => onUpdate({ height: Number(e.target.value) })}
-                    className="h-11 bg-elec-dark border-white/10 text-white text-base touch-manipulation"
-                  />
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Text content */}
-          {selectedObject.type === 'text' && (
-            <>
-              <Separator className="bg-white/10" />
-              <div className="space-y-2">
-                <Label className="text-white text-xs">Label Text</Label>
-                <Input
-                  type="text"
-                  value={selectedObject.text || ''}
+            {/* Label text */}
+            {o.type === 'text' && (
+              <section>
+                <label
+                  htmlFor="prop-text"
+                  className="mb-1 block text-[12px] font-medium text-white"
+                >
+                  Text
+                </label>
+                <input
+                  id="prop-text"
+                  value={o.text || ''}
                   onChange={(e) => onUpdate({ text: e.target.value })}
-                  className="h-11 bg-elec-dark border-white/10 text-white text-base touch-manipulation"
+                  className={inputCn}
                   autoFocus
                 />
-              </div>
-            </>
-          )}
+              </section>
+            )}
 
-          {/* Symbol info */}
-          {selectedObject.type === 'symbol' && selectedObject.symbolId && (
-            <>
-              <Separator className="bg-white/10" />
-              <div className="space-y-1">
-                <Label className="text-white text-xs">Item</Label>
-                <p className="text-sm text-white">{symbolMeta?.name || selectedObject.symbolId}</p>
-                {selectedObject.circuitRef && (
-                  <p className="text-xs text-white">Circuit: {selectedObject.circuitRef}</p>
-                )}
-              </div>
-            </>
-          )}
+            {/* Size — drawn shapes */}
+            {o.type === 'rectangle' && (
+              <section className="grid grid-cols-2 gap-4">
+                {(
+                  [
+                    ['width', 'Width (m)'],
+                    ['height', 'Height (m)'],
+                  ] as const
+                ).map(([k, label]) => (
+                  <div key={k}>
+                    <label
+                      htmlFor={`prop-${k}`}
+                      className="mb-1 block text-[12px] font-medium text-white"
+                    >
+                      {label}
+                    </label>
+                    <input
+                      id={`prop-${k}`}
+                      type="number"
+                      inputMode="decimal"
+                      step="0.1"
+                      min="0.1"
+                      value={Math.round(((o[k] ?? 40) / SCALE) * 100) / 100}
+                      onChange={(e) => {
+                        const v = Number.parseFloat(e.target.value);
+                        if (Number.isFinite(v) && v >= 0.1) onUpdate({ [k]: v * SCALE });
+                      }}
+                      className={inputCn}
+                    />
+                  </div>
+                ))}
+              </section>
+            )}
 
-          {/* Delete */}
-          <Separator className="bg-white/10" />
-          <Button
-            variant="outline"
-            onClick={() => {
-              haptic.heavy();
-              onDelete();
-              onClose();
-            }}
-            className="w-full h-11 border-red-500/30 text-red-400 hover:bg-red-500/10 touch-manipulation"
-          >
-            <Trash2 className="h-4 w-4 mr-2" />
-            Delete Object
-          </Button>
+            {/* Rotation */}
+            {o.type !== 'wall' && (
+              <section>
+                <h3 className="mb-2 text-[15px] font-semibold tracking-tight text-white">
+                  Rotation
+                </h3>
+                <div className="grid grid-cols-4 gap-2">
+                  {[0, 90, 180, 270].map((angle) => {
+                    const current = (((o.rotation ?? 0) % 360) + 360) % 360;
+                    return (
+                      <button
+                        key={angle}
+                        type="button"
+                        onClick={() => {
+                          haptic.light();
+                          onUpdate({ rotation: angle });
+                        }}
+                        className={cn(
+                          'h-11 rounded-full border text-sm touch-manipulation',
+                          Math.round(current) === angle ? chipOn : chipOff
+                        )}
+                      >
+                        {angle}°
+                      </button>
+                    );
+                  })}
+                </div>
+                <div className="mt-2 flex items-center justify-between">
+                  <span className="text-[13px] tabular-nums text-white">
+                    {Math.round((((o.rotation ?? 0) % 360) + 360) % 360)}°
+                  </span>
+                  <div className="flex gap-2">
+                    {[-15, 15].map((step) => (
+                      <button
+                        key={step}
+                        type="button"
+                        aria-label={step < 0 ? 'Turn 15° anticlockwise' : 'Turn 15° clockwise'}
+                        onClick={() => {
+                          haptic.selection();
+                          onUpdate({ rotation: ((((o.rotation ?? 0) + step) % 360) + 360) % 360 });
+                        }}
+                        className="h-11 rounded-full border border-white/[0.12] bg-white/[0.06] px-4 text-sm font-medium text-white touch-manipulation"
+                      >
+                        {step < 0 ? '−15°' : '+15°'}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </section>
+            )}
+
+            {/* Nudge */}
+            <section>
+              <h3 className="mb-2 text-[15px] font-semibold tracking-tight text-white">
+                Move <span className="font-medium">(0.1 m a tap)</span>
+              </h3>
+              <div className="mx-auto grid max-w-[15rem] grid-cols-3 gap-2">
+                <div />
+                <button
+                  type="button"
+                  aria-label="Move up"
+                  onClick={() => nudge(0, -1)}
+                  className={padBtn}
+                >
+                  ↑
+                </button>
+                <div />
+                <button
+                  type="button"
+                  aria-label="Move left"
+                  onClick={() => nudge(-1, 0)}
+                  className={padBtn}
+                >
+                  ←
+                </button>
+                <button
+                  type="button"
+                  aria-label="Move down"
+                  onClick={() => nudge(0, 1)}
+                  className={padBtn}
+                >
+                  ↓
+                </button>
+                <button
+                  type="button"
+                  aria-label="Move right"
+                  onClick={() => nudge(1, 0)}
+                  className={padBtn}
+                >
+                  →
+                </button>
+              </div>
+            </section>
+
+            <button
+              type="button"
+              onClick={() => {
+                haptic.heavy();
+                onDelete();
+                onClose();
+              }}
+              className="h-11 w-full rounded-xl border border-red-500/30 text-sm font-semibold text-red-300 touch-manipulation active:bg-red-500/10"
+            >
+              Delete {symbolMeta ? `this ${title}` : title.toLowerCase()}
+            </button>
+          </div>
         </div>
       </SheetContent>
     </Sheet>

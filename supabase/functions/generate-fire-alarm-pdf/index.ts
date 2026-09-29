@@ -34,7 +34,7 @@ async function createPDFMonkeyDocument(
     body: JSON.stringify({
       document: {
         document_template_id: templateId || TEMPLATE_ID,
-        payload: formData,
+        payload: keepTransformsAsJpeg(formData),
         status: 'pending',
       },
     }),
@@ -50,23 +50,54 @@ async function createPDFMonkeyDocument(
   return data.document;
 }
 
+
+// Supabase's image-transform endpoint returns WebP to a fetcher that accepts it
+// (PDFMonkey's Chrome does), and Chrome can only embed WebP into a PDF as a
+// lossless raster: 26 photos became 23.6 MB inside one EICR (29 Sep 2026,
+// Scott, EICR-2026-4308). `format=origin` keeps the JPEG, which embeds as-is.
+// The app formatters ask for it too; this catches older clients.
+function keepTransformsAsJpeg<T>(payload: T): T {
+  const s = JSON.stringify(payload);
+  const fixed = s.replace(/(\/storage\/v1\/render\/image\/[^"]*?)(?=")/g, (m) =>
+    m.includes('format=') ? m : `${m}&format=origin`
+  );
+  return fixed === s ? payload : (JSON.parse(fixed) as T);
+}
+
 async function getPDFMonkeyDocument(documentId: string): Promise<PDFMonkeyDocument> {
-  const response = await fetch(`https://api.pdfmonkey.io/api/v1/documents/${documentId}`, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${PDFMONKEY_API_KEY}`,
-      'Content-Type': 'application/json',
-    },
-  });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    console.error('PDF Monkey fetch error:', errorText);
-    throw new Error(`Failed to fetch PDF document: ${response.status}`);
+  // PDFMonkey's document endpoint answers 5xx now and then while a render is
+  // in flight (29 Sep 2026: three EIC generations failed on a single bad poll
+  // and the electrician paid for a second render — the first had succeeded
+  // four seconds later). One bad poll is not a failed certificate: retry the
+  // read a few times before giving up.
+  const MAX_TRIES = 4;
+  let lastError: Error | null = null;
+  for (let attempt = 1; attempt <= MAX_TRIES; attempt++) {
+    try {
+      const response = await fetch(`https://api.pdfmonkey.io/api/v1/documents/${documentId}`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${PDFMONKEY_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        return data.document;
+      }
+      const errorText = await response.text().catch(() => '');
+      console.error(`PDF Monkey fetch error (${response.status}, try ${attempt}/${MAX_TRIES}):`, errorText);
+      lastError = new Error(`Failed to fetch PDF document: ${response.status}`);
+      // 4xx is not going to change; 5xx and network errors are worth another go.
+      if (response.status < 500) throw lastError;
+    } catch (err) {
+      if (err instanceof Error && /^Failed to fetch PDF document: 4/.test(err.message)) throw err;
+      lastError = err instanceof Error ? err : new Error(String(err));
+      console.error(`PDF Monkey fetch threw (try ${attempt}/${MAX_TRIES}):`, lastError.message);
+    }
+    if (attempt < MAX_TRIES) await new Promise((r) => setTimeout(r, 1500 * attempt));
   }
-
-  const data = await response.json();
-  return data.document;
+  throw lastError || new Error('Failed to fetch PDF document');
 }
 
 async function waitForPDFGeneration(

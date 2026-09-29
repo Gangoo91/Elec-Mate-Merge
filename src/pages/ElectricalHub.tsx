@@ -480,6 +480,16 @@ const ElectricalHubInner = () => {
 };
 
 const ElectricalHub = () => {
+  // Warm the Inspection & Testing route + dashboard chunks while the hub is on
+  // screen, so the "Certificates" tap lands on the page, not a skeleton.
+  useEffect(() => {
+    const t = setTimeout(() => {
+      void import('@/pages/inspection/InspectionIndex');
+      void import('@/components/Dashboard');
+    }, 600);
+    return () => clearTimeout(t);
+  }, []);
+
   useSEO({
     title: 'Electrician Tools & Certificates | BS 7671 Compliant',
     description:

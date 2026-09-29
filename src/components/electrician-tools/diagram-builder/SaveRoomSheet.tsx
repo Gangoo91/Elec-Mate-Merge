@@ -39,7 +39,12 @@ export const SaveRoomSheet = ({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] lg:h-auto p-0 rounded-t-2xl overflow-hidden">
+      <SheetContent
+        side="bottom"
+        // The sheet draws its own close button; the default one made two.
+        hideCloseButton
+        className="h-[85vh] lg:h-auto p-0 rounded-t-2xl overflow-hidden"
+      >
         <div className="flex flex-col h-full bg-background">
           {/* Header */}
           <SheetHeader className="flex flex-row items-center justify-between w-full max-w-lg mx-auto px-4 py-3 border-b border-white/10">

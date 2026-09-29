@@ -8,6 +8,8 @@ import { FileText, Loader2, Check, ChevronUp, ChevronDown } from 'lucide-react';
 import { SavedRoom } from '@/hooks/useFloorPlanRooms';
 import { symbolRegistry } from '@/components/electrician-tools/diagram-builder/symbols/symbolRegistry';
 import { assignCircuits, type CircuitScheduleEntry } from '@/utils/circuit-assignment';
+import type { CanvasObject } from '@/pages/electrician-tools/ai-tools/DiagramBuilderPage';
+import { isDesigned, scheduleForRooms, toScheduleEntries } from './circuitDesign';
 
 /**
  * Underline field, per the house form language (see CLAUDE.md → Design System).
@@ -143,6 +145,11 @@ export const ExportReviewSheet = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultProperty, defaultClient, defaultElectrician]);
 
+  const orderedRooms = roomOrder
+    .map((id) => rooms.find((r) => r.id === id))
+    .filter((r): r is SavedRoom => !!r);
+  const includedRooms = orderedRooms.filter((r) => !excluded.has(r.id));
+
   // Reconcile the schedule with the drawing every time the sheet opens.
   //
   // Simply skipping the rebuild once the user had edited anything froze the
@@ -153,8 +160,40 @@ export const ExportReviewSheet = ({
   // arrive with defaults, and circuits whose last symbol was deleted drop out.
   useEffect(() => {
     if (!open) return;
-    const allSymbolIds = includedRooms.flatMap((r) => r.symbolIds);
-    const fresh = assignCircuits(allSymbolIds).circuitSchedule;
+    // A plan read by the AI carries a real design — circuits per floor, rings
+    // held under 100 m², lighting under 11 points. Issue that, as each drawing
+    // shows it now, sheet by sheet (each is numbered from S1, so pooling them
+    // merged different circuits); hand-drawn sheets keep the per-type defaults.
+    const sheets = includedRooms.map((r) => {
+      let objects: CanvasObject[] = [];
+      try {
+        const parsed = JSON.parse(r.canvasState);
+        if (Array.isArray(parsed)) objects = parsed as CanvasObject[];
+      } catch {
+        /* an unreadable sheet contributes its symbol list only */
+      }
+      return { room: r, objects, designed: isDesigned(objects) };
+    });
+    const designed = sheets.filter((sh) => sh.designed);
+    const plain = sheets.filter((sh) => !sh.designed);
+    const designedEntries = designed.length
+      ? toScheduleEntries(
+          scheduleForRooms(designed.map((sh) => ({ name: sh.room.name, objects: sh.objects })))
+            .circuits
+        )
+      : [];
+    const plainEntries = plain.length
+      ? assignCircuits(plain.flatMap((sh) => sh.room.symbolIds)).circuitSchedule.map((c) =>
+          designed.length
+            ? {
+                ...c,
+                circuitRef: `${c.circuitRef} · hand-drawn`,
+                circuitName: `${c.circuitName} (hand-drawn sheets)`,
+              }
+            : c
+        )
+      : [];
+    const fresh = [...designedEntries, ...plainEntries];
     setCircuits((prev) => {
       if (!circuitsTouchedRef.current) return fresh;
       const edited = new Map(prev.map((c) => [c.circuitRef, c]));
@@ -167,7 +206,13 @@ export const ExportReviewSheet = ({
           : f;
       });
     });
-  }, [open, rooms]);
+    // Keyed on the rooms actually INCLUDED, not just `rooms`: on first open the
+    // room order is filled by the effect below in the same pass, so this ran
+    // against no rooms, produced an empty schedule and never ran again — the
+    // PDF went out with no circuit or board schedule. Leaving a room out
+    // didn't update the schedule either.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, rooms, includedRooms.map((r) => r.id).join(',')]);
 
   // Preserve the user's ordering, drop rooms that no longer exist, append new ones.
   useEffect(() => {
@@ -179,11 +224,6 @@ export const ExportReviewSheet = ({
       return [...kept, ...added];
     });
   }, [open, rooms]);
-
-  const orderedRooms = roomOrder
-    .map((id) => rooms.find((r) => r.id === id))
-    .filter((r): r is SavedRoom => !!r);
-  const includedRooms = orderedRooms.filter((r) => !excluded.has(r.id));
 
   const toggleRoom = (id: string) =>
     setExcluded((prev) => {
@@ -554,7 +594,7 @@ export const ExportReviewSheet = ({
                           <p className="text-[11px] text-orange-300">⚠ {c.needsReview}</p>
                         )}
 
-                        <div className="grid grid-cols-2 gap-3">
+                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                           <Field
                             id={`c-${c.circuitRef}-cable`}
                             label="Cable"

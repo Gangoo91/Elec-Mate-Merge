@@ -1,545 +1,905 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Electrical Floor Plan</title>
-    <style>
-        /* Accent follows the installer's branding, matching the certificate
-           templates. primary_color wins over accent_color; Elec-Mate yellow is
-           the fallback when no branding is set. */
-        :root {
-            --accent: {{ company_accent_color | default: "#EAB308" }};
-            --dark: #0a1628;
-            --mid: #1e293b;
-            --muted: #64748b;
-            --border: #e2e8f0;
-            --hair: #f1f5f9;
-        }
+<meta charset="UTF-8">
+<title>Electrical drawings — {{ property_address }}</title>
+<!--
+  Floor plan drawing set, redesigned 29 Sep 2026 as CAD drawing sheets: zoned
+  border, right-hand title panel, view labels. Generated (the title panel is
+  stamped into every sheet) — every .sheet is exactly one A4 landscape page, so
+  long tables are split into sheets here (12 circuits, 20 ways, 4 material
+  groups a sheet). Template settings: A4 landscape, margins 0.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --accent: {{ company_accent_color | default: "#EAB308" }};
+        --ink: #0f172a;
+        --ink2: #334155;
+        --mute: #64748b;
+        --line: #cbd5e1;
+        --hair: #e2e8f0;
+        --wash: #f8fafc;
+    }
+    @page { size: 297mm 210mm; margin: 0; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 297mm; }
+    body {
+        font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size: 9px; line-height: 1.45; color: var(--ink); background: #fff;
+        -webkit-print-color-adjust: exact; print-color-adjust: exact;
+        font-feature-settings: 'tnum' 1;
+    }
+    .sheet { width: 297mm; height: 210mm; padding: 7mm; overflow: hidden; position: relative; page-break-after: always; break-after: page; }
+    .sheet:last-of-type { page-break-after: auto; break-after: auto; }
 
-        /* A named page lets the cover be full-bleed while inner pages keep a
-           margin — mixing the two on one @page rule is what produces a stray
-           blank sheet after the cover. */
-        @page { size: A4 landscape; margin: 8mm 10mm; }
-        @page cover { size: A4 landscape; margin: 0; }
+    /* Border zones */
+    .zones { position: absolute; inset: 0; }
+    .zones i { position: absolute; background: var(--ink); }
+    .zt, .zb { width: 0.2mm; height: 3mm; }
+    .zt { top: 4mm; } .zb { bottom: 4mm; }
+    .zl, .zr { height: 0.2mm; width: 3mm; }
+    .zl { left: 4mm; } .zr { right: 4mm; }
+    .zn { position: absolute; font-size: 6px; font-weight: 700; color: var(--ink2); }
+    .zt-n { top: 3.6mm; transform: translate(-50%, -50%); }
+    .zb-n { bottom: 3.6mm; transform: translate(-50%, 50%); }
+    .zl-n { left: 3.6mm; transform: translate(-50%, -50%); }
+    .zr-n { right: 3.6mm; transform: translate(50%, -50%); }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            font-size: 10.5px; line-height: 1.5; color: var(--dark); background: #fff;
-            -webkit-print-color-adjust: exact; print-color-adjust: exact;
-        }
+    .frame { height: 100%; border: 0.5mm solid var(--ink); display: flex; position: relative; }
+    .main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
 
-        .page { page-break-after: always; }
-        .page:last-child { page-break-after: auto; }
+    /* View label */
+    .vl { display: flex; align-items: center; gap: 3mm; padding: 4mm 5mm 2mm; }
+    .vl-n { width: 7.5mm; height: 7.5mm; border: 0.35mm solid var(--ink); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 8.5px; flex-shrink: 0; }
+    .vl-t { flex: 1; border-bottom: 0.5mm solid var(--ink); padding-bottom: 1mm; display: flex; justify-content: space-between; align-items: baseline; gap: 4mm; position: relative; }
+    .vl-t::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1.3mm; border-bottom: 0.2mm solid var(--ink); }
+    .vl-t b { font-size: 11.5px; font-weight: 800; letter-spacing: 0.9px; text-transform: uppercase; }
+    .vl-t span { font-size: 7px; color: var(--ink2); text-align: right; }
+    .vl-t span strong { color: var(--ink); }
+    .body { flex: 1; min-height: 0; padding: 3mm 5mm 4mm; display: flex; flex-direction: column; gap: 2.5mm; overflow: hidden; }
 
-        /* ─────────────── Cover ─────────────── */
-        .cover-page {
-            page: cover; width: 297mm; height: 210mm;
-            display: flex; flex-direction: column; page-break-after: always; color: var(--dark);
-        }
-        .cover-hero {
-            position: relative; flex: 1;
-            background: linear-gradient(160deg, #0a1628 0%, #152238 60%, #1c2e4a 100%);
-            color: #fff; padding: 16mm 20mm 12mm;
-            display: flex; flex-direction: column;
-        }
-        .cover-hero::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0;
-            height: 6px; background: var(--accent);
-        }
-        .cover-logos {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 10mm; min-height: 46px;
-        }
-        .cover-logos img { max-height: 46px; max-width: 190px; object-fit: contain; }
-        .cover-band-name { color: var(--accent); font-weight: 700; font-size: 17px; letter-spacing: 0.3px; }
-        .cover-band-contact { font-size: 9px; color: #94a3b8; text-align: right; line-height: 1.6; }
+    /* Title panel */
+    .tp { width: 60mm; flex-shrink: 0; border-left: 0.5mm solid var(--ink); display: flex; flex-direction: column; }
+    .tp > div { border-bottom: 0.25mm solid var(--ink); padding: 1.8mm 2.5mm; }
+    .tp > div:last-child { border-bottom: 0; }
+    .tp-k { display: block; font-size: 5.5px; font-weight: 700; letter-spacing: 0.9px; text-transform: uppercase; color: var(--mute); margin-bottom: 0.5mm; }
+    .tp b { font-weight: 800; }
+    .tp-notes { flex: 1; min-height: 0; overflow: hidden; }
+    .tp-notes ol { padding-left: 3mm; font-size: 6.2px; line-height: 1.45; color: var(--ink2); }
+    .tp-notes li { margin-bottom: 0.7mm; }
+    .key { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8mm 2mm; font-size: 6px; color: var(--ink2); }
+    .key span { display: flex; align-items: center; gap: 1.2mm; white-space: nowrap; }
+    .key i { width: 3.5mm; height: 1.2mm; flex-shrink: 0; }
+    .key i.ln { height: 0; border-top: 0.6mm solid var(--ink); }
+    .key i.ln.dash { border-top: 0.4mm dashed #dc2626; }
+    .tp-rev { padding: 0 !important; }
+    .tp-rev table { width: 100%; border-collapse: collapse; }
+    .tp-rev th { font-size: 5.3px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; color: var(--mute); text-align: left; padding: 1mm 1.5mm; border-bottom: 0.2mm solid var(--line); }
+    .tp-rev td { font-size: 6.2px; padding: 1.2mm 1.5mm; vertical-align: top; }
+    .tp-status { border-left: 1.6mm solid var(--accent); background: var(--wash); display: flex; flex-direction: column; }
+    .tp-status b { font-size: 8px; text-transform: uppercase; letter-spacing: 0.7px; }
+    .tp-status span:last-child { font-size: 6.2px; color: var(--ink2); }
+    .tp-co { display: flex; gap: 2.5mm; align-items: center; }
+    .tp-co img { max-width: 17mm; max-height: 11mm; object-fit: contain; }
+    .tp-co div { display: flex; flex-direction: column; min-width: 0; }
+    .tp-co b { font-size: 8.5px; line-height: 1.2; }
+    .tp-co span { font-size: 6.2px; color: var(--ink2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .tp-cell { display: flex; flex-direction: column; }
+    .tp-cell span:not(.tp-k) { font-size: 6.4px; color: var(--ink2); margin-top: 0.4mm; }
+    .tp-proj { font-size: 8.5px; line-height: 1.25; }
+    .tp-title b { font-size: 10.5px; line-height: 1.15; text-transform: uppercase; letter-spacing: 0.4px; }
+    .tp-grid { display: grid; grid-template-columns: 1fr 1fr; padding: 0 !important; }
+    .tp-grid div { padding: 1.4mm 2.5mm; border-right: 0.25mm solid var(--line); border-bottom: 0.25mm solid var(--line); min-width: 0; }
+    .tp-grid div:nth-child(2n) { border-right: 0; }
+    .tp-grid div:nth-child(n+3) { border-bottom: 0; }
+    .tp-grid b { font-size: 7.4px; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .tp-no { display: flex; padding: 0 !important; background: var(--ink); color: #fff; }
+    .tp-no > div { padding: 2mm 2.5mm; }
+    .tp-no > div:first-child { flex: 1; min-width: 0; }
+    .tp-no .tp-k { color: #94a3b8; }
+    .tp-dwg { font-size: 12px; letter-spacing: 0.2px; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .tp-revbox { border-left: 0.25mm solid #475569; text-align: center; width: 13mm; }
+    .tp-revbox b { font-size: 15px; color: var(--accent); display: block; line-height: 1.1; }
 
-        .cover-eyebrow {
-            font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
-            color: var(--accent); font-weight: 700; margin-bottom: 10px;
-        }
-        .cover-title { font-size: 34px; line-height: 1.08; font-weight: 800; letter-spacing: -0.5px; color: #fff; }
-        .cover-title-rule { width: 80px; height: 4px; background: var(--accent); margin-top: 14px; border-radius: 2px; }
-        .cover-subtitle { margin-top: 12px; font-size: 11px; color: #cbd5e1; }
+    /* Shared */
+    .k { font-size: 6.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--mute); }
+    .h3 { font-size: 7.5px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; padding-bottom: 1.2mm; border-bottom: 0.35mm solid var(--ink); margin-bottom: 1.2mm; }
+    .note { font-size: 7px; color: var(--ink2); line-height: 1.5; }
+    .flag { display: flex; gap: 2mm; border: 0.25mm solid var(--ink); border-left: 1.6mm solid var(--accent); padding: 1.5mm 2.5mm; font-size: 7px; color: var(--ink2); }
+    .flag strong { color: var(--ink); text-transform: uppercase; letter-spacing: 0.6px; white-space: nowrap; }
+    .num { text-align: right; font-variant-numeric: tabular-nums; }
+    table.t { width: 100%; border-collapse: collapse; }
+    table.t th { font-size: 6px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--ink); text-align: left; padding: 1.4mm 1.8mm; border-top: 0.35mm solid var(--ink); border-bottom: 0.35mm solid var(--ink); white-space: nowrap; background: var(--wash); }
+    table.t td { padding: 1.3mm 1.8mm; border-bottom: 0.2mm solid var(--hair); font-size: 7.4px; vertical-align: top; }
+    table.t td.ref { font-weight: 800; white-space: nowrap; }
+    table.t tr.warn td { background: #fffbeb; color: #92400e; font-size: 6.6px; padding: 0.9mm 1.8mm 1.2mm; border-bottom: 0.2mm solid #fde68a; }
+    .chip { display: inline-block; width: 0.9mm; height: 2.8mm; margin-right: 1.5mm; vertical-align: -0.5mm; }
+    .over { color: #b45309; font-weight: 800; }
+    .sub { color: var(--mute); font-size: 6.4px; }
+    .total { display: flex; justify-content: space-between; align-items: baseline; border: 0.35mm solid var(--ink); padding: 1.8mm 3mm; font-weight: 800; font-size: 8px; text-transform: uppercase; letter-spacing: 0.6px; }
+    .total span:last-child { font-size: 11px; letter-spacing: 0; text-transform: none; }
 
-        .cover-status {
-            padding: 11px 20mm; display: flex; align-items: center; justify-content: space-between;
-            background: var(--accent); color: #1a1a00;
-        }
-        .cover-status-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; opacity: 0.85; }
-        .cover-status-value { font-size: 19px; font-weight: 800; }
+    /* Cover */
+    .cv { display: flex; flex-direction: column; gap: 4.5mm; flex: 1; min-height: 0; }
+    .cv-head { border-left: 1.6mm solid var(--accent); padding: 1mm 0 1mm 4mm; }
+    .cv-eyebrow { font-size: 6.5px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--mute); }
+    .cv-title { font-size: 22px; font-weight: 800; letter-spacing: -0.4px; line-height: 1.1; margin-top: 1.2mm; }
+    .cv-sub { font-size: 8px; color: var(--ink2); margin-top: 1.2mm; }
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); border: 0.35mm solid var(--ink); }
+    .stat { padding: 2.5mm 4mm; border-right: 0.25mm solid var(--line); }
+    .stat:last-child { border-right: 0; }
+    .stat .n { font-size: 18px; font-weight: 800; letter-spacing: -0.4px; line-height: 1.05; }
+    .stat .l { font-size: 6px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--mute); margin-top: 0.6mm; }
+    .reg td { font-size: 7.4px; padding: 1.1mm 1.8mm; }
+    .reg td:first-child { font-weight: 800; white-space: nowrap; width: 46mm; }
+    .reg td:last-child, .reg th:last-child { text-align: right; width: 14mm; }
+    .cv-caveat { margin-top: auto; font-size: 6.8px; color: var(--ink2); line-height: 1.5; }
 
-        .cover-lower { display: flex; background: #fff; border-left: 4px solid var(--accent); }
-        .cover-details { flex: 1.35; padding: 8mm 10mm 8mm 20mm; }
-        .cover-revisions { flex: 1; padding: 8mm 20mm 8mm 10mm; border-left: 1px solid var(--border); }
-        .cover-h {
-            font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px;
-            color: var(--muted); font-weight: 700; margin-bottom: 5px;
-        }
-        .cover-row { display: flex; border-bottom: 1px solid var(--border); }
-        .cover-row:last-child { border-bottom: 0; }
-        .cover-k {
-            width: 132px; flex-shrink: 0; color: var(--dark); font-weight: 700;
-            text-transform: uppercase; font-size: 8.5px; letter-spacing: 0.4px; padding: 7px 0; align-self: center;
-        }
-        .cover-v { flex: 1; color: var(--dark); font-weight: 600; font-size: 11px; padding: 7px 0; align-self: center; }
-
-        .rev-table { width: 100%; border-collapse: collapse; }
-        .rev-table th {
-            font-size: 8px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted);
-            text-align: left; padding: 4px 8px; border-bottom: 1px solid var(--border); font-weight: 700;
-        }
-        .rev-table td { font-size: 9.5px; padding: 6px 8px; border-bottom: 1px solid var(--hair); }
-
-        .cover-footer {
-            background: var(--dark); color: #94a3b8; font-size: 8px;
-            padding: 8px 20mm; display: flex; justify-content: space-between;
-        }
-
-        /* ─────────────── Shared page furniture ─────────────── */
-        .sheet-head {
-            display: flex; justify-content: space-between; align-items: baseline;
-            border-bottom: 2px solid var(--accent); padding-bottom: 5px; margin-bottom: 9px;
-        }
-        .sheet-title { font-size: 19px; font-weight: 800; color: var(--dark); letter-spacing: -0.2px; }
-        .sheet-meta { font-size: 9px; color: var(--muted); }
-
-        .caution {
-            border: 1px solid #f59e0b; background: #fffbeb; border-radius: 4px;
-            padding: 7px 10px; margin-bottom: 10px;
-        }
-        .caution-h { font-size: 9px; font-weight: 700; color: #92400e; text-transform: uppercase; letter-spacing: 0.4px; }
-        .caution-b { font-size: 8.5px; color: #78350f; margin-top: 2px; line-height: 1.45; }
-
-        table.grid { width: 100%; border-collapse: collapse; }
-        table.grid thead th {
-            background: var(--dark); color: #fff; font-size: 8.5px; text-transform: uppercase;
-            letter-spacing: 0.5px; padding: 6px 9px; text-align: left; font-weight: 700;
-        }
-        table.grid tbody td { padding: 5px 9px; border-bottom: 1px solid var(--border); font-size: 9.5px; }
-        table.grid tbody tr:nth-child(even) td { background: #f8fafc; }
-        .num { text-align: right; font-variant-numeric: tabular-nums; }
-        .reg { color: var(--muted); font-size: 8px; }
-
-        /* ─────────────── Room sheets ─────────────── */
-        .room-body { display: flex; gap: 8mm; height: 152mm; }
-        .plan-frame {
-            flex: 1; border: 1px solid var(--border); border-radius: 4px; padding: 4px; background: #fff;
-            display: flex; align-items: center; justify-content: center; overflow: hidden;
-        }
-        .plan-frame img { max-width: 100%; max-height: 100%; object-fit: contain; }
-        .room-aside { width: 68mm; flex-shrink: 0; display: flex; flex-direction: column; gap: 6px; }
-        .aside-h {
-            font-size: 8.5px; font-weight: 700; color: var(--accent);
-            text-transform: uppercase; letter-spacing: 0.6px; padding-bottom: 3px; border-bottom: 1px solid var(--accent);
-        }
-        .legend-row { display: flex; justify-content: space-between; font-size: 9px; padding: 2.5px 0; border-bottom: 1px solid var(--hair); }
-        .legend-row span:first-child { color: var(--dark); }
-        .legend-row span:last-child { font-weight: 700; color: var(--dark); font-variant-numeric: tabular-nums; }
-        .tblock { margin-top: auto; border: 1px solid var(--dark); }
-        .tblock td { padding: 3px 7px; border: 1px solid var(--border); font-size: 8px; }
-        .tblock td:first-child { font-weight: 700; background: #f8fafc; width: 62px; }
-
-        /* ─────────────── Materials ─────────────── */
-        .cols-2 { column-count: 2; column-gap: 12mm; }
-        .cat { break-inside: avoid; margin-bottom: 9px; }
-        .cat-h {
-            font-size: 10px; font-weight: 700; color: var(--accent); text-transform: uppercase;
-            letter-spacing: 0.5px; padding-bottom: 3px; border-bottom: 1px solid var(--accent); margin-bottom: 3px;
-        }
-        .cat-row { display: flex; justify-content: space-between; font-size: 9.5px; padding: 2.5px 0; border-bottom: 1px solid var(--hair); }
-        .cat-row span:last-child { font-weight: 700; font-variant-numeric: tabular-nums; }
-        .total-bar {
-            background: var(--dark); color: #fff; font-size: 13px; font-weight: 800;
-            padding: 8px 14px; border-radius: 4px; margin-top: 10px; display: flex; justify-content: space-between;
-        }
-
-        /* ─────────────── Symbol appendix ─────────────── */
-        .sym-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 3px 6px; }
-        .sym-cat { grid-column: 1 / -1; font-size: 8px; font-weight: 700; color: var(--accent);
-                   text-transform: uppercase; letter-spacing: 0.5px; padding: 5px 0 2px; border-bottom: 1px solid var(--accent); }
-        .sym { display: flex; align-items: center; gap: 4px; padding: 2px 4px; border: 1px solid var(--border); border-radius: 3px; }
-        .sym img { width: 17px; height: 17px; flex-shrink: 0; }
-        .sym span { font-size: 7px; line-height: 1.2; }
-
-        /* ─────────────── Sign-off ─────────────── */
-        .declaration { font-size: 10px; line-height: 1.65; margin-bottom: 14px; }
-        .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24mm; margin-top: 14mm; }
-        .sig-line { height: 26px; border-bottom: 1px solid var(--dark); }
-        .sig-k { font-size: 8.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; margin-top: 5px; }
-        .sig-v { font-size: 8.5px; color: var(--muted); margin-top: 2px; }
-        .foot-note { margin-top: 12mm; text-align: center; font-size: 8px; color: var(--muted); line-height: 1.7; }
-    </style>
+    /* Plans */
+    .room { display: flex; gap: 4mm; flex: 1; min-height: 0; }
+    .plan { flex: 1; min-width: 0; display: flex; align-items: center; justify-content: center; }
+    .plan img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    .aside { width: 44mm; flex-shrink: 0; display: flex; flex-direction: column; gap: 2.5mm; min-height: 0; border-left: 0.25mm solid var(--line); padding-left: 3.5mm; }
+    .li { display: flex; justify-content: space-between; gap: 2mm; font-size: 7.2px; padding: 0.8mm 0; border-bottom: 0.2mm solid var(--hair); }
+    .li b { font-variant-numeric: tabular-nums; }
+    .north { margin-top: auto; display: flex; align-items: center; gap: 2mm; font-size: 6.2px; color: var(--ink2); }
+    /* Materials */
+    .mat { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5mm; flex: 1; min-height: 0; align-content: start; }
+    /* Symbols */
+    .syms { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.4mm 2.5mm; align-content: start; }
+    .sym { display: flex; align-items: center; gap: 2mm; padding: 1mm 1.8mm; border: 0.2mm solid var(--line); min-width: 0; }
+    .sym img { width: 6mm; height: 6mm; flex-shrink: 0; }
+    .sym span { font-size: 6.8px; line-height: 1.2; overflow: hidden; }
+    .sym-cat { grid-column: 1 / -1; margin-top: 1.2mm; }
+    /* Single line */
+    .sld { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; }
+    .sld img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    /* Notes */
+    .two { display: flex; gap: 6mm; flex: 1; min-height: 0; }
+    .two > div { min-width: 0; }
+    ol.gn { padding-left: 4mm; font-size: 7px; line-height: 1.5; }
+    ol.gn li { margin-bottom: 0.7mm; }
+    .abbr { display: grid; grid-template-columns: 1fr 1fr; gap: 0 4mm; }
+    .abbr div { font-size: 6.6px; padding: 0.6mm 0; border-bottom: 0.2mm solid var(--hair); }
+    /* Sign-off */
+    .decl { font-size: 8.2px; line-height: 1.6; }
+    .decl p + p { margin-top: 2mm; }
+    .sigs { display: grid; grid-template-columns: 1fr 1fr; gap: 10mm; margin-top: 4mm; }
+    .sig { border: 0.35mm solid var(--ink); padding: 3mm 4mm; }
+    .sig .line { height: 13mm; border-bottom: 0.3mm solid var(--ink); }
+    .sig .row { display: flex; justify-content: space-between; font-size: 7.4px; margin-top: 1.5mm; }
+    .pnotes { border: 0.25mm solid var(--ink); border-left: 1.6mm solid var(--accent); padding: 2.5mm 3.5mm; font-size: 8px; white-space: pre-line; }
+</style>
 </head>
 <body>
+{% assign cs_pages = circuit_schedule.size | plus: 11 | divided_by: 12 | floor %}{% if cs_pages < 1 %}{% assign cs_pages = 1 %}{% endif %}
+{% assign cu_pages = 1 %}{% if consumer_unit and consumer_unit.ways.size > 0 %}{% assign cu_pages = consumer_unit.ways.size | plus: 19 | divided_by: 20 | floor %}{% endif %}
+{% assign mat_pages = materials_by_category.size | plus: 3 | divided_by: 4 | floor %}{% if mat_pages < 1 %}{% assign mat_pages = 1 %}{% endif %}
+{% assign has_runs = false %}{% assign has_boards = false %}
+{% for c in circuit_schedule %}{% if c.runLengthM %}{% assign has_runs = true %}{% endif %}{% if c.fedFrom and c.fedFrom != "CU" %}{% assign has_boards = true %}{% endif %}{% endfor %}
+{% assign cols = 7 %}{% if has_runs %}{% assign cols = cols | plus: 1 %}{% endif %}{% if has_boards %}{% assign cols = cols | plus: 1 %}{% endif %}
 
-<!-- ══════════════════════════ COVER ══════════════════════════ -->
-<div class="cover-page">
-    <div class="cover-hero">
-        <div class="cover-logos">
-            {% if company_logo and company_logo != "" %}
-                <img src="{{ company_logo }}" alt="{{ company_name }}" />
-            {% else %}
-                <span class="cover-band-name">{{ company_name | default: "Elec-Mate" }}</span>
-            {% endif %}
-            <div class="cover-band-contact">
-                {% if company_phone and company_phone != "" %}{{ company_phone }}<br />{% endif %}
-                {% if company_email and company_email != "" %}{{ company_email }}{% endif %}
+<section class="sheet">
+    <div class="zones"><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 0.5 / 8)">1</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 0.5 / 8)">1</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 1 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 1 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 1.5 / 8)">2</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 1.5 / 8)">2</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 2 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 2 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 2.5 / 8)">3</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 2.5 / 8)">3</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 3 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 3 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 3.5 / 8)">4</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 3.5 / 8)">4</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 4 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 4 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 4.5 / 8)">5</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 4.5 / 8)">5</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 5 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 5 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 5.5 / 8)">6</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 5.5 / 8)">6</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 6 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 6 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 6.5 / 8)">7</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 6.5 / 8)">7</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 7 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 7 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 7.5 / 8)">8</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 7.5 / 8)">8</b><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 0.5 / 5)">A</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 0.5 / 5)">A</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 1 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 1 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 1.5 / 5)">B</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 1.5 / 5)">B</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 2 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 2 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 2.5 / 5)">C</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 2.5 / 5)">C</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 3 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 3 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 3.5 / 5)">D</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 3.5 / 5)">D</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 4 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 4 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 4.5 / 5)">E</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 4.5 / 5)">E</b></div>
+    <div class="frame">
+        <div class="main">
+            <header class="vl">
+                <span class="vl-n">0</span>
+                <div class="vl-t"><b>Cover sheet</b><span>Drawing register</span></div>
+            </header>
+            <div class="body">
+            <div class="cv">
+                <div class="cv-head">
+                    <div class="cv-eyebrow">Electrical installation drawings</div>
+                    <div class="cv-title">{{ property_address | default: "Electrical layout" }}</div>
+                    <div class="cv-sub">{% if client_name and client_name != "" %}Prepared for {{ client_name }} · {% endif %}Drawing set {{ drawing_number }} · Revision {{ revision.rev }} · {{ date }}</div>
+                </div>
+                <div class="stats">
+                    <div class="stat"><div class="n">{{ rooms.size }}</div><div class="l">Plan{% if rooms.size != 1 %}s{% endif %}</div></div>
+                    <div class="stat"><div class="n">{{ total_items }}</div><div class="l">Items</div></div>
+                    <div class="stat"><div class="n">{% if circuit_schedule.size > 0 %}{{ circuit_schedule.size }}{% else %}—{% endif %}</div><div class="l">Circuits</div></div>
+                    <div class="stat"><div class="n">{% if consumer_unit and consumer_unit.way_count > 0 %}{{ consumer_unit.way_count }}{% else %}—{% endif %}</div><div class="l">Main board ways</div></div>
+                </div>
+                <div>
+                    <div class="h3">Drawing register</div>
+                    <table class="t reg">
+                        <thead><tr><th>Drawing no.</th><th>Title</th><th>Sheets</th></tr></thead>
+                        <tbody>
+                            <tr><td>{{ drawing_number }}-E001</td><td>Cover sheet and drawing register</td><td>1</td></tr>
+                            {% if rooms.size > 8 %}
+                            <tr><td>{{ drawing_number }}-E101 to E{{ rooms.size | plus: 100 }}</td><td>Plans</td><td>{{ rooms.size }}</td></tr>
+                            {% else %}{% for room in rooms %}
+                            <tr><td>{{ drawing_number }}-E{{ forloop.index | plus: 100 }}</td><td>{{ room.name }} — plan</td><td>1</td></tr>
+                            {% endfor %}{% endif %}
+                            {% if circuit_schedule.size > 0 %}<tr><td>{{ drawing_number }}-E201{% if cs_pages > 1 %} to E{{ cs_pages | plus: 200 }}{% endif %}</td><td>Circuit schedule</td><td>{{ cs_pages }}</td></tr>{% endif %}
+                            {% if consumer_unit and consumer_unit.ways.size > 0 %}<tr><td>{{ drawing_number }}-E301{% if cu_pages > 1 %} to E{{ cu_pages | plus: 300 }}{% endif %}</td><td>Main board schedule</td><td>{{ cu_pages }}</td></tr>{% endif %}
+                            {% if single_line_images.size > 0 %}<tr><td>{{ drawing_number }}-E401{% if single_line_images.size > 1 %} to E{{ single_line_images.size | plus: 400 }}{% endif %}</td><td>Single-line diagram{% if single_line_images.size > 1 %}s{% endif %}</td><td>{{ single_line_images.size }}</td></tr>{% endif %}
+                            <tr><td>{{ drawing_number }}-E501{% if mat_pages > 1 %} to E{{ mat_pages | plus: 500 }}{% endif %}</td><td>Materials schedule</td><td>{{ mat_pages }}</td></tr>
+                            {% if standard_notes.mountingHeights %}<tr><td>{{ drawing_number }}-E601</td><td>Installation notes</td><td>1</td></tr>{% endif %}
+                            {% if all_symbols.size > 0 %}<tr><td>{{ drawing_number }}-E701</td><td>Symbol key</td><td>1</td></tr>{% endif %}
+                            <tr><td>{{ drawing_number }}-E801</td><td>Notes and sign-off</td><td>1</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="cv-caveat">Prepared with reference to BS 7671:2018+A4:2026 (IET Wiring Regulations). Symbols to BS EN 60617. Circuit and board information is indicative and subject to design verification before work is carried out.</div>
+            </div>
             </div>
         </div>
-
-        <div class="cover-eyebrow">BS 7671:2018 + Amendment 4:2026</div>
-        <h1 class="cover-title">Electrical<br />Floor Plan</h1>
-        <div class="cover-title-rule"></div>
-        <div class="cover-subtitle">
-            Room-by-room installation layout, materials schedule and circuit reference
-            &middot; Symbols to BS EN 60617
-        </div>
-    </div>
-
-    <div class="cover-status">
-        <span class="cover-status-label">{{ property_address }}</span>
-        <span class="cover-status-value">
-            {{ total_items }} item{% if total_items != 1 %}s{% endif %} &middot;
-            {{ rooms.size }} room{% if rooms.size != 1 %}s{% endif %}
-        </span>
-    </div>
-
-    <div class="cover-lower">
-        <div class="cover-details">
-            <div class="cover-h">Drawing Details</div>
-            <div class="cover-row"><span class="cover-k">Property</span><span class="cover-v">{{ property_address }}</span></div>
-            <div class="cover-row"><span class="cover-k">Client</span><span class="cover-v">{{ client_name | default: "—" }}</span></div>
-            <div class="cover-row"><span class="cover-k">Drawn by</span><span class="cover-v">{{ electrician_name | default: "—" }}</span></div>
-            <div class="cover-row"><span class="cover-k">Date</span><span class="cover-v">{{ date }}</span></div>
-            <div class="cover-row"><span class="cover-k">Drawing No.</span><span class="cover-v">{{ drawing_number }}</span></div>
-            <div class="cover-row">
-                <span class="cover-k">Rooms</span>
-                <span class="cover-v">{% for room in rooms %}{{ room.name }}{% unless forloop.last %}, {% endunless %}{% endfor %}</span>
+        <aside class="tp">
+            <div class="tp-notes">
+                <span class="tp-k">Notes</span>
+                <ol>
+                    <li>Do not scale from this drawing. Dimensions are in metres.</li>
+                    <li>Read with the circuit and board schedules.</li>
+                    <li>Circuits, cables and devices are indicative and subject to design verification.</li>
+                    <li>Install, inspect and test to BS 7671:2018+A4:2026.</li>
+                </ol>
+                <span class="tp-k" style="margin-top:2.5mm">Circuit key</span>
+                <div class="key">
+                    <span><i style="background:#dc2626"></i>S — sockets</span>
+                    <span><i style="background:#2563eb"></i>L — lighting</span>
+                    <span><i style="background:#d97706"></i>C — cooker</span>
+                    <span><i style="background:#ea580c"></i>H — heating</span>
+                    <span><i style="background:#0891b2"></i>IH — water heater</span>
+                    <span><i style="background:#7c3aed"></i>EV — charge point</span>
+                    <span><i style="background:#0d9488"></i>AC — air con</span>
+                    <span><i style="background:#db2777"></i>SA / FA / FZ — fire</span>
+                    <span><i style="background:#0f172a"></i>DB — submain</span>
+                </div>
+                <span class="tp-k" style="margin-top:2.5mm">Line types</span>
+                <div class="key">
+                    <span><i class="ln"></i>Wall</span>
+                    <span><i class="ln dash"></i>Cable route (indicative)</span>
+                </div>
             </div>
-        </div>
-
-        <div class="cover-revisions">
-            <div class="cover-h">Revision History</div>
-            <!-- Driven entirely by the payload. The previous template carried a
-                 hardcoded empty "Rev B" row, which printed a phantom revision
-                 on every drawing ever issued. -->
-            <table class="rev-table">
-                <thead><tr><th>Rev</th><th>Date</th><th>Description</th><th>By</th></tr></thead>
-                <tbody>
-                    <tr>
-                        <td><strong>{{ revision.rev }}</strong></td>
-                        <td>{{ revision.date }}</td>
-                        <td>{{ revision.description }}</td>
-                        <td>{{ revision.by }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+            <div class="tp-rev">
+                <table>
+                    <thead><tr><th>Rev</th><th>Date</th><th>Description</th><th>By</th></tr></thead>
+                    <tbody><tr><td><b>{{ revision.rev }}</b></td><td>{{ revision.date }}</td><td>{{ revision.description }}</td><td>{{ revision.by }}</td></tr></tbody>
+                </table>
+            </div>
+            <div class="tp-status"><span class="tp-k">Status</span><b>For information</b><span>Subject to design verification</span></div>
+            <div class="tp-co">
+                {% if company_logo and company_logo != "" %}<img src="{{ company_logo }}" alt="" />{% endif %}
+                <div><b>{{ company_name | default: "Elec-Mate" }}</b>{% if company_phone and company_phone != "" %}<span>{{ company_phone }}</span>{% endif %}{% if company_email and company_email != "" %}<span>{{ company_email }}</span>{% endif %}</div>
+            </div>
+            <div class="tp-cell"><span class="tp-k">Project</span><b class="tp-proj">{{ property_address | default: "—" }}</b>{% if client_name and client_name != "" %}<span>Client: {{ client_name }}</span>{% endif %}</div>
+            <div class="tp-cell tp-title"><span class="tp-k">Drawing title</span><b>Cover sheet</b><span>Drawing register</span></div>
+            <div class="tp-grid">
+                <div><span class="tp-k">Drawn</span><b>{{ electrician_name | default: "—" }}</b></div>
+                <div><span class="tp-k">Date</span><b>{{ date }}</b></div>
+                <div><span class="tp-k">Scale</span><b>NTS</b></div>
+                <div><span class="tp-k">Sheet size</span><b>A4</b></div>
+            </div>
+            <div class="tp-no">
+                <div><span class="tp-k">Drawing no.</span><b class="tp-dwg">{{ drawing_number }}-E001</b></div>
+                <div class="tp-revbox"><span class="tp-k">Rev</span><b>{{ revision.rev }}</b></div>
+            </div>
+        </aside>
     </div>
-
-    <div class="cover-footer">
-        <span>{{ company_name | default: "Elec-Mate" }} &middot; Electrical installation floor plan</span>
-        <span>BS 7671:2018+A4:2026 &middot; BS EN 60617</span>
-    </div>
-</div>
-
-<!-- ══════════════════════════ ROOM SHEETS ══════════════════════════ -->
+</section>
 {% for room in rooms %}
-<div class="page">
-    <div class="sheet-head">
-        <span class="sheet-title">{{ room.name }}</span>
-        <span class="sheet-meta">{{ property_address }} &middot; {{ drawing_number }} Rev {{ revision.rev }}</span>
-    </div>
-
-    <div class="room-body">
-        <div class="plan-frame">
-            <img src="{{ room.floor_plan_image }}" alt="{{ room.name }} floor plan" />
-        </div>
-
-        <div class="room-aside">
-            {% if room.items.size > 0 %}
-            <div>
-                <div class="aside-h">Items in this room ({{ room.item_count }})</div>
-                {% for item in room.items %}
-                <div class="legend-row"><span>{{ item.name }}</span><span>{{ item.count }}</span></div>
-                {% endfor %}
+<section class="sheet">
+    <div class="zones"><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 0.5 / 8)">1</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 0.5 / 8)">1</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 1 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 1 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 1.5 / 8)">2</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 1.5 / 8)">2</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 2 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 2 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 2.5 / 8)">3</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 2.5 / 8)">3</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 3 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 3 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 3.5 / 8)">4</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 3.5 / 8)">4</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 4 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 4 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 4.5 / 8)">5</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 4.5 / 8)">5</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 5 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 5 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 5.5 / 8)">6</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 5.5 / 8)">6</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 6 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 6 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 6.5 / 8)">7</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 6.5 / 8)">7</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 7 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 7 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 7.5 / 8)">8</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 7.5 / 8)">8</b><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 0.5 / 5)">A</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 0.5 / 5)">A</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 1 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 1 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 1.5 / 5)">B</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 1.5 / 5)">B</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 2 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 2 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 2.5 / 5)">C</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 2.5 / 5)">C</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 3 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 3 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 3.5 / 5)">D</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 3.5 / 5)">D</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 4 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 4 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 4.5 / 5)">E</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 4.5 / 5)">E</b></div>
+    <div class="frame">
+        <div class="main">
+            <header class="vl">
+                <span class="vl-n">{{ forloop.index }}</span>
+                <div class="vl-t"><b>{{ room.name }}</b><span>{{ room.item_count }} item{% if room.item_count != 1 %}s{% endif %} · plan {{ forloop.index }} of {{ rooms.size }} · scale NTS</span></div>
+            </header>
+            <div class="body">
+            <div class="room">
+                <div class="plan"><img src="{{ room.floor_plan_image }}" alt="{{ room.name }}" /></div>
+                <div class="aside">
+                    <div>
+                        <div class="h3">Items shown</div>
+                        {% for item in room.items limit: 26 %}<div class="li"><span>{{ item.name }}</span><b>{{ item.count }}</b></div>{% endfor %}
+                        {% if room.items.size > 26 %}<div class="li"><span class="sub">{{ room.items.size | minus: 26 }} more — see materials</span><b></b></div>{% endif %}
+                    </div>
+                    <div class="total"><span>Total</span><span>{{ room.item_count }}</span></div>
+                    <div class="north">
+                        <svg width="20" height="20" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#0f172a" stroke-width="0.8"/><path d="M11 2 L14.5 13 L11 11 L7.5 13 Z" fill="#0f172a"/><text x="11" y="20" font-size="5" text-anchor="middle" font-family="Helvetica" font-weight="700" fill="#0f172a">N</text></svg>
+                        <span>Orientation as drawn.<br />Dimensions in metres.</span>
+                    </div>
+                </div>
             </div>
-            {% endif %}
-
-            <table class="tblock">
-                <tr><td>Project</td><td>{{ property_address }}</td></tr>
-                <tr><td>Room</td><td>{{ room.name }}</td></tr>
-                <tr><td>Scale</td><td>{{ scale_note }}</td></tr>
-                <tr><td>Date</td><td>{{ date }}</td></tr>
-                <tr><td>Drawn by</td><td>{{ electrician_name }}</td></tr>
-                <tr><td>Dwg No.</td><td>{{ drawing_number }} Rev {{ revision.rev }}</td></tr>
-            </table>
+            </div>
         </div>
+        <aside class="tp">
+            <div class="tp-notes">
+                <span class="tp-k">Notes</span>
+                <ol>
+                    <li>Do not scale from this drawing. Dimensions are in metres.</li>
+                    <li>Read with the circuit and board schedules.</li>
+                    <li>Circuits, cables and devices are indicative and subject to design verification.</li>
+                    <li>Install, inspect and test to BS 7671:2018+A4:2026.</li>
+                </ol>
+                <span class="tp-k" style="margin-top:2.5mm">Circuit key</span>
+                <div class="key">
+                    <span><i style="background:#dc2626"></i>S — sockets</span>
+                    <span><i style="background:#2563eb"></i>L — lighting</span>
+                    <span><i style="background:#d97706"></i>C — cooker</span>
+                    <span><i style="background:#ea580c"></i>H — heating</span>
+                    <span><i style="background:#0891b2"></i>IH — water heater</span>
+                    <span><i style="background:#7c3aed"></i>EV — charge point</span>
+                    <span><i style="background:#0d9488"></i>AC — air con</span>
+                    <span><i style="background:#db2777"></i>SA / FA / FZ — fire</span>
+                    <span><i style="background:#0f172a"></i>DB — submain</span>
+                </div>
+                <span class="tp-k" style="margin-top:2.5mm">Line types</span>
+                <div class="key">
+                    <span><i class="ln"></i>Wall</span>
+                    <span><i class="ln dash"></i>Cable route (indicative)</span>
+                </div>
+            </div>
+            <div class="tp-rev">
+                <table>
+                    <thead><tr><th>Rev</th><th>Date</th><th>Description</th><th>By</th></tr></thead>
+                    <tbody><tr><td><b>{{ revision.rev }}</b></td><td>{{ revision.date }}</td><td>{{ revision.description }}</td><td>{{ revision.by }}</td></tr></tbody>
+                </table>
+            </div>
+            <div class="tp-status"><span class="tp-k">Status</span><b>For information</b><span>Subject to design verification</span></div>
+            <div class="tp-co">
+                {% if company_logo and company_logo != "" %}<img src="{{ company_logo }}" alt="" />{% endif %}
+                <div><b>{{ company_name | default: "Elec-Mate" }}</b>{% if company_phone and company_phone != "" %}<span>{{ company_phone }}</span>{% endif %}{% if company_email and company_email != "" %}<span>{{ company_email }}</span>{% endif %}</div>
+            </div>
+            <div class="tp-cell"><span class="tp-k">Project</span><b class="tp-proj">{{ property_address | default: "—" }}</b>{% if client_name and client_name != "" %}<span>Client: {{ client_name }}</span>{% endif %}</div>
+            <div class="tp-cell tp-title"><span class="tp-k">Drawing title</span><b>{{ room.name }}</b><span>Plan {{ forloop.index }} of {{ rooms.size }}</span></div>
+            <div class="tp-grid">
+                <div><span class="tp-k">Drawn</span><b>{{ electrician_name | default: "—" }}</b></div>
+                <div><span class="tp-k">Date</span><b>{{ date }}</b></div>
+                <div><span class="tp-k">Scale</span><b>NTS</b></div>
+                <div><span class="tp-k">Sheet size</span><b>A4</b></div>
+            </div>
+            <div class="tp-no">
+                <div><span class="tp-k">Drawing no.</span><b class="tp-dwg">{{ drawing_number }}-E{{ forloop.index | plus: 100 }}</b></div>
+                <div class="tp-revbox"><span class="tp-k">Rev</span><b>{{ revision.rev }}</b></div>
+            </div>
+        </aside>
     </div>
-</div>
-{% endfor %}
-
-<!-- ══════════════════════════ MATERIALS ══════════════════════════ -->
-<div class="page">
-    <div class="sheet-head">
-        <span class="sheet-title">Materials Schedule</span>
-        <span class="sheet-meta">{{ property_address }} &middot; {{ date }}</span>
-    </div>
-
-    <div class="cols-2">
-        {% for category in materials_by_category %}
-        <div class="cat">
-            <div class="cat-h">{{ category.name }}</div>
-            {% for item in category.items %}
-            <div class="cat-row"><span>{{ item.name }}</span><span>{{ item.count }}</span></div>
-            {% endfor %}
-        </div>
-        {% endfor %}
-    </div>
-
-    <div class="total-bar"><span>Total items</span><span>{{ total_items }}</span></div>
-</div>
-
-<!-- ══════════════════════════ CIRCUIT SCHEDULE ══════════════════════════ -->
-{% if circuit_schedule.size > 0 %}
-<div class="page">
-    <div class="sheet-head">
-        <span class="sheet-title">Circuit Schedule</span>
-        <span class="sheet-meta">{{ property_address }} &middot; {{ drawing_number }}</span>
-    </div>
-
-    <!-- The schedule is derived from the symbols placed on the drawing. Saying
-         so is the difference between a useful aid and an implied design. -->
-    <div class="caution">
-        <div class="caution-h">Indicative — subject to design verification</div>
-        <div class="caution-b">
-            Circuits, cable sizes and protective devices below are suggested defaults for a typical
-            domestic installation, derived from the items shown on this drawing. They are not a substitute
-            for design calculation. Cable sizing, volt drop, earth fault loop impedance and diversity must
-            be verified for the actual installation before work is carried out.
-        </div>
-    </div>
-
-    <table class="grid">
-        <thead>
-            <tr>
-                <th>Ref</th><th>Circuit</th><th>Cable</th><th>Protection</th>
-                <th>RCD</th><th class="num">Points</th><th class="num">Typical load</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for circuit in circuit_schedule %}
-            <tr>
-                <td style="font-weight:700; color: var(--accent);">{{ circuit.circuitRef }}</td>
-                <td>{{ circuit.circuitName }}</td>
-                <td>{{ circuit.cableSize }}</td>
-                <td>{{ circuit.protection }}</td>
-                <td>{{ circuit.rcd }}{% if circuit.rcdBasis and circuit.rcdBasis != "" %} <span class="reg">· {{ circuit.rcdBasis }}</span>{% endif %}</td>
-                <td class="num">{{ circuit.points }}</td>
-                <td class="num">{{ circuit.typicalLoad }}</td>
-            </tr>
-            {% if circuit.needsReview and circuit.needsReview != "" %}
-            <tr><td colspan="7" style="background:#fffbeb; color:#b45309; font-size:8.5px; padding:4px 9px;">
-                &#9888; {{ circuit.circuitRef }} — {{ circuit.needsReview }}
-            </td></tr>
-            {% endif %}
-            {% endfor %}
-        </tbody>
-    </table>
-
-    <p style="margin-top:8px; font-size:8px; color:var(--muted); line-height:1.6;">
-        The RCD column cites the regulation requiring additional protection: 411.3.4 (luminaires in
-        domestic premises), 411.3.3 (socket-outlets up to 32&nbsp;A), 522.6.202 (cables concealed less
-        than 50&nbsp;mm in a wall), Section 701 (locations containing a bath or shower), Section 722
-        (electric vehicle charging). References are to BS 7671:2018+A4:2026.
-    </p>
-</div>
-{% endif %}
-
-<!-- ══════════════════════════ CONSUMER UNIT SCHEDULE ══════════════════════════ -->
-{% if consumer_unit and consumer_unit.ways.size > 0 %}
-<div class="page">
-    <div class="sheet-head">
-        <span class="sheet-title">Consumer Unit Schedule</span>
-        <span class="sheet-meta">{{ consumer_unit.way_count }} way{% if consumer_unit.way_count != 1 %}s{% endif %} &middot; {{ property_address }}</span>
-    </div>
-
-    <div class="caution">
-        <div class="caution-h">Indicative — subject to design verification</div>
-        <div class="caution-b">
-            Board arrangement derived from the circuits on this drawing. Way numbering is sequential and
-            does not imply a physical board layout. The total below is CONNECTED load — diversity must be
-            applied to establish maximum demand for the actual installation.
-        </div>
-    </div>
-
-    <table class="grid">
-        <thead>
-            <tr>
-                <th class="num">Way</th><th>Ref</th><th>Circuit</th><th>Protective device</th>
-                <th>RCD</th><th>Cable</th><th class="num">Points</th><th class="num">Connected load</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for w in consumer_unit.ways %}
-            <tr>
-                <td class="num">{{ w.way }}</td>
-                <td style="font-weight:700; color: var(--accent);">{{ w.circuitRef }}</td>
-                <td>{{ w.circuitName }}</td>
-                <td>{{ w.protection }}</td>
-                <td>{{ w.rcd }}</td>
-                <td>{{ w.cableSize }}</td>
-                <td class="num">{{ w.points }}</td>
-                <td class="num">{{ w.connectedLoad }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-    <div class="total-bar">
-        <span>Total connected load (before diversity)</span>
-        <span>{{ consumer_unit.total_connected_load_kw }} kW</span>
-    </div>
-
-    <p style="margin-top:8px; font-size:8px; color:var(--muted); line-height:1.6;">
-        Voltage drop has not been calculated on this drawing. It must be verified per circuit against the
-        cable's tabulated mV/A/m value and the circuit length (BS 7671 Regulation 125.8, Appendix 4)
-        before the installation is energised.
-    </p>
-</div>
-{% endif %}
-
-<!-- ══════════════════════════ INSTALLATION NOTES ══════════════════════════ -->
-{% if standard_notes.mountingHeights %}
-<div class="page">
-    <div class="sheet-head">
-        <span class="sheet-title">Standard Installation Notes</span>
-        <span class="sheet-meta">{{ property_address }}</span>
-    </div>
-
-    <div style="display:flex; gap:10mm; align-items:flex-start;">
-        <div style="flex:1.25;">
-            <div class="cat-h">Mounting heights</div>
-            <table class="grid" style="margin-top:4px;">
-                <thead><tr><th>Item</th><th>Height</th><th>Notes</th></tr></thead>
+</section>{% endfor %}
+{% if circuit_schedule.size > 0 %}{% for p in (1..cs_pages) %}{% assign off = p | minus: 1 | times: 12 %}
+<section class="sheet">
+    <div class="zones"><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 0.5 / 8)">1</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 0.5 / 8)">1</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 1 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 1 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 1.5 / 8)">2</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 1.5 / 8)">2</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 2 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 2 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 2.5 / 8)">3</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 2.5 / 8)">3</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 3 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 3 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 3.5 / 8)">4</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 3.5 / 8)">4</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 4 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 4 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 4.5 / 8)">5</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 4.5 / 8)">5</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 5 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 5 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 5.5 / 8)">6</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 5.5 / 8)">6</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 6 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 6 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 6.5 / 8)">7</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 6.5 / 8)">7</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 7 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 7 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 7.5 / 8)">8</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 7.5 / 8)">8</b><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 0.5 / 5)">A</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 0.5 / 5)">A</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 1 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 1 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 1.5 / 5)">B</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 1.5 / 5)">B</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 2 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 2 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 2.5 / 5)">C</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 2.5 / 5)">C</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 3 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 3 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 3.5 / 5)">D</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 3.5 / 5)">D</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 4 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 4 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 4.5 / 5)">E</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 4.5 / 5)">E</b></div>
+    <div class="frame">
+        <div class="main">
+            <header class="vl">
+                <span class="vl-n">{{ p }}</span>
+                <div class="vl-t"><b>Circuit schedule</b><span><strong>{{ circuit_schedule.size }}</strong> circuits · sheet {{ p }} of {{ cs_pages }}</span></div>
+            </header>
+            <div class="body">
+            {% if p == 1 %}<div class="flag"><strong>Indicative</strong><span>Circuits, cables and devices are defaults derived from the items on this drawing, not a substitute for design. Cable sizing, voltage drop, earth fault loop impedance and diversity must be verified before work is carried out.</span></div>{% endif %}
+            <table class="t">
+                <thead><tr><th>Ref</th>{% if has_boards %}<th>From</th>{% endif %}<th>Circuit</th><th>Protection</th><th>Cable</th><th>RCD</th><th class="num">Pts</th>{% if has_runs %}<th class="num">Run</th>{% endif %}<th class="num">Load</th></tr></thead>
                 <tbody>
-                    {% for item in standard_notes.mountingHeights %}
-                    <tr><td>{{ item.item }}</td><td style="font-weight:700;">{{ item.height }}</td><td>{{ item.notes }}</td></tr>
-                    {% endfor %}
+                {% for c in circuit_schedule limit: 12 offset: off %}{% assign f2 = c.circuitRef | slice: 0, 2 %}{% assign f1 = c.circuitRef | slice: 0 %}{% case f2 %}{% when "EV" %}{% assign cc = "#7c3aed" %}{% when "IH" %}{% assign cc = "#0891b2" %}{% when "FZ" or "FA" or "SA" %}{% assign cc = "#db2777" %}{% when "DB" %}{% assign cc = "#0f172a" %}{% when "AC" %}{% assign cc = "#0d9488" %}{% else %}{% case f1 %}{% when "S" %}{% assign cc = "#dc2626" %}{% when "L" %}{% assign cc = "#2563eb" %}{% when "C" %}{% assign cc = "#d97706" %}{% when "H" %}{% assign cc = "#ea580c" %}{% else %}{% assign cc = "#475569" %}{% endcase %}{% endcase %}
+                    <tr>
+                        <td class="ref"><span class="chip" style="background:{{ cc }}"></span>{{ c.circuitRef }}</td>
+                        {% if has_boards %}<td>{{ c.fedFrom | default: "CU" }}</td>{% endif %}
+                        <td>{{ c.circuitName }}</td>
+                        <td>{{ c.protection }}</td>
+                        <td>{{ c.cableSize }}</td>
+                        <td>{{ c.rcd }}{% if c.rcdBasis and c.rcdBasis != "" %}<div class="sub">{{ c.rcdBasis }}</div>{% endif %}</td>
+                        <td class="num">{{ c.points }}</td>
+                        {% if has_runs %}<td class="num{% if c.lengthOk == false %} over{% endif %}" style="white-space:nowrap">{% if c.runLengthM %}≈ {{ c.runLengthM }} m{% if c.maxLengthM %}<div class="sub">max {{ c.maxLengthM }} m</div>{% endif %}{% else %}—{% endif %}</td>{% endif %}
+                        <td class="num" style="white-space:nowrap">{{ c.typicalLoad }}</td>
+                    </tr>
+                    {% if c.needsReview and c.needsReview != "" %}<tr class="warn"><td colspan="{{ cols }}">⚠ {{ c.circuitRef }} — {{ c.needsReview }}</td></tr>{% endif %}
+                {% endfor %}
                 </tbody>
             </table>
+            {% if p == cs_pages %}<div class="note" style="margin-top:auto">RCD references are to BS 7671:2018+A4:2026 — 411.3.3 socket-outlets up to 32 A, 411.3.4 luminaires in domestic premises, 522.6.202 cables concealed less than 50 mm in a wall, Section 701 bath and shower locations, Section 722 EV charging.{% if has_runs %} Run lengths are estimated from the cable routes drawn on the plan, with allowances for drops and terminations, and checked against OSG Table 7.1(i) where a row applies.{% endif %}</div>{% endif %}
+            </div>
         </div>
-
-        <div style="flex:1;">
-            <div class="cat-h">General notes</div>
-            <ol style="padding-left:14px; font-size:9px; line-height:1.6; margin-top:4px;">
-                {% for note in standard_notes.generalNotes %}
-                <li style="margin-bottom:3px;">{{ note }}</li>
+        <aside class="tp">
+            <div class="tp-notes">
+                <span class="tp-k">Notes</span>
+                <ol>
+                    <li>Do not scale from this drawing. Dimensions are in metres.</li>
+                    <li>Read with the circuit and board schedules.</li>
+                    <li>Circuits, cables and devices are indicative and subject to design verification.</li>
+                    <li>Install, inspect and test to BS 7671:2018+A4:2026.</li>
+                </ol>
+                <span class="tp-k" style="margin-top:2.5mm">Circuit key</span>
+                <div class="key">
+                    <span><i style="background:#dc2626"></i>S — sockets</span>
+                    <span><i style="background:#2563eb"></i>L — lighting</span>
+                    <span><i style="background:#d97706"></i>C — cooker</span>
+                    <span><i style="background:#ea580c"></i>H — heating</span>
+                    <span><i style="background:#0891b2"></i>IH — water heater</span>
+                    <span><i style="background:#7c3aed"></i>EV — charge point</span>
+                    <span><i style="background:#0d9488"></i>AC — air con</span>
+                    <span><i style="background:#db2777"></i>SA / FA / FZ — fire</span>
+                    <span><i style="background:#0f172a"></i>DB — submain</span>
+                </div>
+                <span class="tp-k" style="margin-top:2.5mm">Line types</span>
+                <div class="key">
+                    <span><i class="ln"></i>Wall</span>
+                    <span><i class="ln dash"></i>Cable route (indicative)</span>
+                </div>
+            </div>
+            <div class="tp-rev">
+                <table>
+                    <thead><tr><th>Rev</th><th>Date</th><th>Description</th><th>By</th></tr></thead>
+                    <tbody><tr><td><b>{{ revision.rev }}</b></td><td>{{ revision.date }}</td><td>{{ revision.description }}</td><td>{{ revision.by }}</td></tr></tbody>
+                </table>
+            </div>
+            <div class="tp-status"><span class="tp-k">Status</span><b>For information</b><span>Subject to design verification</span></div>
+            <div class="tp-co">
+                {% if company_logo and company_logo != "" %}<img src="{{ company_logo }}" alt="" />{% endif %}
+                <div><b>{{ company_name | default: "Elec-Mate" }}</b>{% if company_phone and company_phone != "" %}<span>{{ company_phone }}</span>{% endif %}{% if company_email and company_email != "" %}<span>{{ company_email }}</span>{% endif %}</div>
+            </div>
+            <div class="tp-cell"><span class="tp-k">Project</span><b class="tp-proj">{{ property_address | default: "—" }}</b>{% if client_name and client_name != "" %}<span>Client: {{ client_name }}</span>{% endif %}</div>
+            <div class="tp-cell tp-title"><span class="tp-k">Drawing title</span><b>Circuit schedule</b><span>{{ circuit_schedule.size }} circuits · sheet {{ p }} of {{ cs_pages }}</span></div>
+            <div class="tp-grid">
+                <div><span class="tp-k">Drawn</span><b>{{ electrician_name | default: "—" }}</b></div>
+                <div><span class="tp-k">Date</span><b>{{ date }}</b></div>
+                <div><span class="tp-k">Scale</span><b>NTS</b></div>
+                <div><span class="tp-k">Sheet size</span><b>A4</b></div>
+            </div>
+            <div class="tp-no">
+                <div><span class="tp-k">Drawing no.</span><b class="tp-dwg">{{ drawing_number }}-E{{ p | plus: 200 }}</b></div>
+                <div class="tp-revbox"><span class="tp-k">Rev</span><b>{{ revision.rev }}</b></div>
+            </div>
+        </aside>
+    </div>
+</section>{% endfor %}{% endif %}
+{% if consumer_unit and consumer_unit.ways.size > 0 %}{% for p in (1..cu_pages) %}{% assign off = p | minus: 1 | times: 20 %}
+<section class="sheet">
+    <div class="zones"><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 0.5 / 8)">1</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 0.5 / 8)">1</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 1 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 1 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 1.5 / 8)">2</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 1.5 / 8)">2</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 2 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 2 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 2.5 / 8)">3</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 2.5 / 8)">3</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 3 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 3 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 3.5 / 8)">4</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 3.5 / 8)">4</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 4 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 4 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 4.5 / 8)">5</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 4.5 / 8)">5</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 5 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 5 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 5.5 / 8)">6</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 5.5 / 8)">6</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 6 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 6 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 6.5 / 8)">7</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 6.5 / 8)">7</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 7 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 7 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 7.5 / 8)">8</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 7.5 / 8)">8</b><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 0.5 / 5)">A</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 0.5 / 5)">A</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 1 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 1 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 1.5 / 5)">B</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 1.5 / 5)">B</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 2 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 2 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 2.5 / 5)">C</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 2.5 / 5)">C</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 3 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 3 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 3.5 / 5)">D</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 3.5 / 5)">D</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 4 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 4 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 4.5 / 5)">E</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 4.5 / 5)">E</b></div>
+    <div class="frame">
+        <div class="main">
+            <header class="vl">
+                <span class="vl-n">{{ p }}</span>
+                <div class="vl-t"><b>Main board schedule</b><span><strong>{{ consumer_unit.way_count }}</strong> way{% if consumer_unit.way_count != 1 %}s{% endif %} · <strong>{{ consumer_unit.total_connected_load_kw }} kW</strong> connected · sheet {{ p }} of {{ cu_pages }}</span></div>
+            </header>
+            <div class="body">
+            {% if p == 1 %}<div class="flag"><strong>Indicative</strong><span>Way numbering is sequential and does not imply a physical board layout. Loads are connected load — apply diversity to establish maximum demand.</span></div>{% endif %}
+            <table class="t">
+                <thead><tr><th class="num">Way</th><th>Ref</th><th>Circuit</th><th>Protective device</th><th>RCD</th><th>Cable</th><th class="num">Pts</th><th class="num">Connected load</th></tr></thead>
+                <tbody>
+                {% for w in consumer_unit.ways limit: 20 offset: off %}{% assign c = w %}{% assign f2 = c.circuitRef | slice: 0, 2 %}{% assign f1 = c.circuitRef | slice: 0 %}{% case f2 %}{% when "EV" %}{% assign cc = "#7c3aed" %}{% when "IH" %}{% assign cc = "#0891b2" %}{% when "FZ" or "FA" or "SA" %}{% assign cc = "#db2777" %}{% when "DB" %}{% assign cc = "#0f172a" %}{% when "AC" %}{% assign cc = "#0d9488" %}{% else %}{% case f1 %}{% when "S" %}{% assign cc = "#dc2626" %}{% when "L" %}{% assign cc = "#2563eb" %}{% when "C" %}{% assign cc = "#d97706" %}{% when "H" %}{% assign cc = "#ea580c" %}{% else %}{% assign cc = "#475569" %}{% endcase %}{% endcase %}
+                    <tr>
+                        <td class="num" style="font-weight:800">{{ w.way }}</td>
+                        <td class="ref"><span class="chip" style="background:{{ cc }}"></span>{{ w.circuitRef }}</td>
+                        <td>{{ w.circuitName }}</td>
+                        <td>{{ w.protection }}</td>
+                        <td>{{ w.rcd }}</td>
+                        <td>{{ w.cableSize }}</td>
+                        <td class="num">{{ w.points }}</td>
+                        <td class="num" style="white-space:nowrap">{{ w.connectedLoad }}</td>
+                    </tr>
                 {% endfor %}
-            </ol>
-
-            <div class="cat-h" style="margin-top:10px;">Abbreviations</div>
-            <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:1px 10px; margin-top:4px;">
-                {% for item in standard_notes.abbreviations %}
-                <div style="font-size:8px; padding:2px 0; border-bottom:1px solid var(--hair);">
-                    <strong>{{ item.abbr }}</strong> — {{ item.meaning }}
+                </tbody>
+            </table>
+            {% if p == cu_pages %}
+            <div class="total"><span>Total connected load, before diversity</span><span>{{ consumer_unit.total_connected_load_kw }} kW</span></div>
+            <div class="note" style="margin-top:auto">Voltage drop has not been calculated on this drawing. It must be verified per circuit, from the origin, against the limits in BS 7671 Appendix 4 section 6.4 (Regulation 525.202) before the installation is energised.</div>
+            {% endif %}
+            </div>
+        </div>
+        <aside class="tp">
+            <div class="tp-notes">
+                <span class="tp-k">Notes</span>
+                <ol>
+                    <li>Do not scale from this drawing. Dimensions are in metres.</li>
+                    <li>Read with the circuit and board schedules.</li>
+                    <li>Circuits, cables and devices are indicative and subject to design verification.</li>
+                    <li>Install, inspect and test to BS 7671:2018+A4:2026.</li>
+                </ol>
+                <span class="tp-k" style="margin-top:2.5mm">Circuit key</span>
+                <div class="key">
+                    <span><i style="background:#dc2626"></i>S — sockets</span>
+                    <span><i style="background:#2563eb"></i>L — lighting</span>
+                    <span><i style="background:#d97706"></i>C — cooker</span>
+                    <span><i style="background:#ea580c"></i>H — heating</span>
+                    <span><i style="background:#0891b2"></i>IH — water heater</span>
+                    <span><i style="background:#7c3aed"></i>EV — charge point</span>
+                    <span><i style="background:#0d9488"></i>AC — air con</span>
+                    <span><i style="background:#db2777"></i>SA / FA / FZ — fire</span>
+                    <span><i style="background:#0f172a"></i>DB — submain</span>
+                </div>
+                <span class="tp-k" style="margin-top:2.5mm">Line types</span>
+                <div class="key">
+                    <span><i class="ln"></i>Wall</span>
+                    <span><i class="ln dash"></i>Cable route (indicative)</span>
+                </div>
+            </div>
+            <div class="tp-rev">
+                <table>
+                    <thead><tr><th>Rev</th><th>Date</th><th>Description</th><th>By</th></tr></thead>
+                    <tbody><tr><td><b>{{ revision.rev }}</b></td><td>{{ revision.date }}</td><td>{{ revision.description }}</td><td>{{ revision.by }}</td></tr></tbody>
+                </table>
+            </div>
+            <div class="tp-status"><span class="tp-k">Status</span><b>For information</b><span>Subject to design verification</span></div>
+            <div class="tp-co">
+                {% if company_logo and company_logo != "" %}<img src="{{ company_logo }}" alt="" />{% endif %}
+                <div><b>{{ company_name | default: "Elec-Mate" }}</b>{% if company_phone and company_phone != "" %}<span>{{ company_phone }}</span>{% endif %}{% if company_email and company_email != "" %}<span>{{ company_email }}</span>{% endif %}</div>
+            </div>
+            <div class="tp-cell"><span class="tp-k">Project</span><b class="tp-proj">{{ property_address | default: "—" }}</b>{% if client_name and client_name != "" %}<span>Client: {{ client_name }}</span>{% endif %}</div>
+            <div class="tp-cell tp-title"><span class="tp-k">Drawing title</span><b>Main board schedule</b><span>{{ consumer_unit.way_count }} ways · sheet {{ p }} of {{ cu_pages }}</span></div>
+            <div class="tp-grid">
+                <div><span class="tp-k">Drawn</span><b>{{ electrician_name | default: "—" }}</b></div>
+                <div><span class="tp-k">Date</span><b>{{ date }}</b></div>
+                <div><span class="tp-k">Scale</span><b>NTS</b></div>
+                <div><span class="tp-k">Sheet size</span><b>A4</b></div>
+            </div>
+            <div class="tp-no">
+                <div><span class="tp-k">Drawing no.</span><b class="tp-dwg">{{ drawing_number }}-E{{ p | plus: 300 }}</b></div>
+                <div class="tp-revbox"><span class="tp-k">Rev</span><b>{{ revision.rev }}</b></div>
+            </div>
+        </aside>
+    </div>
+</section>{% endfor %}{% endif %}
+{% for img in single_line_images %}
+<section class="sheet">
+    <div class="zones"><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 0.5 / 8)">1</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 0.5 / 8)">1</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 1 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 1 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 1.5 / 8)">2</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 1.5 / 8)">2</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 2 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 2 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 2.5 / 8)">3</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 2.5 / 8)">3</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 3 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 3 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 3.5 / 8)">4</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 3.5 / 8)">4</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 4 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 4 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 4.5 / 8)">5</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 4.5 / 8)">5</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 5 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 5 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 5.5 / 8)">6</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 5.5 / 8)">6</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 6 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 6 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 6.5 / 8)">7</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 6.5 / 8)">7</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 7 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 7 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 7.5 / 8)">8</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 7.5 / 8)">8</b><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 0.5 / 5)">A</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 0.5 / 5)">A</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 1 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 1 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 1.5 / 5)">B</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 1.5 / 5)">B</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 2 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 2 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 2.5 / 5)">C</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 2.5 / 5)">C</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 3 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 3 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 3.5 / 5)">D</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 3.5 / 5)">D</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 4 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 4 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 4.5 / 5)">E</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 4.5 / 5)">E</b></div>
+    <div class="frame">
+        <div class="main">
+            <header class="vl">
+                <span class="vl-n">{{ forloop.index }}</span>
+                <div class="vl-t"><b>Single-line diagram</b><span>Diagram {{ forloop.index }} of {{ single_line_images.size }} · devices and cables indicative</span></div>
+            </header>
+            <div class="body">
+            <div class="sld"><img src="{{ img }}" alt="Single-line diagram" /></div>
+            </div>
+        </div>
+        <aside class="tp">
+            <div class="tp-notes">
+                <span class="tp-k">Notes</span>
+                <ol>
+                    <li>Do not scale from this drawing. Dimensions are in metres.</li>
+                    <li>Read with the circuit and board schedules.</li>
+                    <li>Circuits, cables and devices are indicative and subject to design verification.</li>
+                    <li>Install, inspect and test to BS 7671:2018+A4:2026.</li>
+                </ol>
+                <span class="tp-k" style="margin-top:2.5mm">Circuit key</span>
+                <div class="key">
+                    <span><i style="background:#dc2626"></i>S — sockets</span>
+                    <span><i style="background:#2563eb"></i>L — lighting</span>
+                    <span><i style="background:#d97706"></i>C — cooker</span>
+                    <span><i style="background:#ea580c"></i>H — heating</span>
+                    <span><i style="background:#0891b2"></i>IH — water heater</span>
+                    <span><i style="background:#7c3aed"></i>EV — charge point</span>
+                    <span><i style="background:#0d9488"></i>AC — air con</span>
+                    <span><i style="background:#db2777"></i>SA / FA / FZ — fire</span>
+                    <span><i style="background:#0f172a"></i>DB — submain</span>
+                </div>
+                <span class="tp-k" style="margin-top:2.5mm">Line types</span>
+                <div class="key">
+                    <span><i class="ln"></i>Wall</span>
+                    <span><i class="ln dash"></i>Cable route (indicative)</span>
+                </div>
+            </div>
+            <div class="tp-rev">
+                <table>
+                    <thead><tr><th>Rev</th><th>Date</th><th>Description</th><th>By</th></tr></thead>
+                    <tbody><tr><td><b>{{ revision.rev }}</b></td><td>{{ revision.date }}</td><td>{{ revision.description }}</td><td>{{ revision.by }}</td></tr></tbody>
+                </table>
+            </div>
+            <div class="tp-status"><span class="tp-k">Status</span><b>For information</b><span>Subject to design verification</span></div>
+            <div class="tp-co">
+                {% if company_logo and company_logo != "" %}<img src="{{ company_logo }}" alt="" />{% endif %}
+                <div><b>{{ company_name | default: "Elec-Mate" }}</b>{% if company_phone and company_phone != "" %}<span>{{ company_phone }}</span>{% endif %}{% if company_email and company_email != "" %}<span>{{ company_email }}</span>{% endif %}</div>
+            </div>
+            <div class="tp-cell"><span class="tp-k">Project</span><b class="tp-proj">{{ property_address | default: "—" }}</b>{% if client_name and client_name != "" %}<span>Client: {{ client_name }}</span>{% endif %}</div>
+            <div class="tp-cell tp-title"><span class="tp-k">Drawing title</span><b>Single-line diagram</b><span>Diagram {{ forloop.index }} of {{ single_line_images.size }}</span></div>
+            <div class="tp-grid">
+                <div><span class="tp-k">Drawn</span><b>{{ electrician_name | default: "—" }}</b></div>
+                <div><span class="tp-k">Date</span><b>{{ date }}</b></div>
+                <div><span class="tp-k">Scale</span><b>NTS</b></div>
+                <div><span class="tp-k">Sheet size</span><b>A4</b></div>
+            </div>
+            <div class="tp-no">
+                <div><span class="tp-k">Drawing no.</span><b class="tp-dwg">{{ drawing_number }}-E{{ forloop.index | plus: 400 }}</b></div>
+                <div class="tp-revbox"><span class="tp-k">Rev</span><b>{{ revision.rev }}</b></div>
+            </div>
+        </aside>
+    </div>
+</section>{% endfor %}
+{% for p in (1..mat_pages) %}{% assign off = p | minus: 1 | times: 4 %}
+<section class="sheet">
+    <div class="zones"><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 0.5 / 8)">1</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 0.5 / 8)">1</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 1 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 1 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 1.5 / 8)">2</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 1.5 / 8)">2</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 2 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 2 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 2.5 / 8)">3</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 2.5 / 8)">3</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 3 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 3 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 3.5 / 8)">4</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 3.5 / 8)">4</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 4 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 4 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 4.5 / 8)">5</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 4.5 / 8)">5</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 5 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 5 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 5.5 / 8)">6</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 5.5 / 8)">6</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 6 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 6 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 6.5 / 8)">7</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 6.5 / 8)">7</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 7 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 7 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 7.5 / 8)">8</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 7.5 / 8)">8</b><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 0.5 / 5)">A</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 0.5 / 5)">A</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 1 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 1 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 1.5 / 5)">B</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 1.5 / 5)">B</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 2 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 2 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 2.5 / 5)">C</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 2.5 / 5)">C</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 3 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 3 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 3.5 / 5)">D</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 3.5 / 5)">D</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 4 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 4 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 4.5 / 5)">E</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 4.5 / 5)">E</b></div>
+    <div class="frame">
+        <div class="main">
+            <header class="vl">
+                <span class="vl-n">{{ p }}</span>
+                <div class="vl-t"><b>Materials schedule</b><span><strong>{{ total_items }}</strong> items · counted from the drawing</span></div>
+            </header>
+            <div class="body">
+            <div class="mat">
+                {% for category in materials_by_category limit: 4 offset: off %}
+                <div>
+                    <div class="h3">{{ category.name }}</div>
+                    {% for item in category.items %}<div class="li"><span>{{ item.name }}</span><b>{{ item.count }}</b></div>{% endfor %}
                 </div>
                 {% endfor %}
             </div>
-        </div>
-    </div>
-</div>
-{% endif %}
-
-<!-- ══════════════════════════ SYMBOL KEY ══════════════════════════ -->
-{% if all_symbols.size > 0 %}
-<div class="page">
-    <div class="sheet-head">
-        <span class="sheet-title">Symbol Key</span>
-        <span class="sheet-meta">{{ all_symbols.size }} symbol{% if all_symbols.size != 1 %}s{% endif %} used on this drawing</span>
-    </div>
-
-    <p style="font-size:9px; color:var(--muted); margin-bottom:8px;">
-        Symbols conform to BS EN 60617 / CIBSE conventions for UK electrical installation drawings.
-        Only symbols appearing on this drawing are listed.
-    </p>
-
-    <!-- Grouped by category. The payload has always carried `category`; the
-         previous template ignored it and printed one flat list. -->
-    <div class="sym-grid">
-        {%- comment -%}
-          Sort by category, then emit a heading whenever the category changes.
-          `group_by` is a Jekyll filter, not core Liquid — `sort` and `assign`
-          are, so this works wherever the template is rendered.
-        {%- endcomment -%}
-        {% assign sorted_symbols = all_symbols | sort: "category" %}
-        {% assign current_category = "" %}
-        {% for symbol in sorted_symbols %}
-            {% if symbol.category != current_category %}
-                <div class="sym-cat">{{ symbol.category }}</div>
-                {% assign current_category = symbol.category %}
-            {% endif %}
-            <div class="sym">
-                {% if symbol.svg_data_uri and symbol.svg_data_uri != "" %}<img src="{{ symbol.svg_data_uri }}" alt="{{ symbol.name }}" />{% endif %}
-                <span>{{ symbol.name }}</span>
+            {% if p == mat_pages %}<div class="total"><span>Total items on the drawing</span><span>{{ total_items }}</span></div>{% endif %}
             </div>
-        {% endfor %}
-    </div>
-</div>
-{% endif %}
-
-<!-- ══════════════════════════ NOTES + SIGN-OFF ══════════════════════════ -->
-<div class="page">
-    <div class="sheet-head">
-        <span class="sheet-title">Notes &amp; Sign-Off</span>
-        <span class="sheet-meta">{{ drawing_number }} Rev {{ revision.rev }} &middot; {{ date }}</span>
-    </div>
-
-    <!-- Project notes were captured in the app and rendered NOWHERE — typed by
-         the electrician on export and silently dropped from every PDF. -->
-    {% if notes and notes != "" %}
-    <div style="border-left:3px solid var(--accent); background:#f8fafc; padding:9px 12px; margin-bottom:14px;">
-        <div class="cat-h" style="border:0; padding:0; margin-bottom:3px;">Project notes</div>
-        <div style="font-size:10px; white-space:pre-line;">{{ notes }}</div>
-    </div>
-    {% endif %}
-
-    <div class="declaration">
-        <p style="margin-bottom:9px;">
-            This drawing records the intended electrical installation layout for the property above.
-            It has been prepared with reference to <strong>BS 7671:2018+A4:2026</strong>
-            (Requirements for Electrical Installations — IET Wiring Regulations), and symbols conform to
-            <strong>BS EN 60617</strong> / CIBSE conventions.
-        </p>
-        <p>
-            Circuit information shown is indicative and subject to design verification. All work must be
-            carried out by a competent person, and the installation inspected, tested and certified in
-            accordance with the current edition of BS 7671 before it is put into service.
-        </p>
-    </div>
-
-    <div class="sig-grid">
-        <div>
-            <div class="sig-line"></div>
-            <div class="sig-k">Prepared by</div>
-            <div class="sig-v">Name: {{ electrician_name | default: "—" }}</div>
-            <div class="sig-v">Date: {{ date }}</div>
         </div>
-        <div>
-            <div class="sig-line"></div>
-            <div class="sig-k">Client acknowledgement</div>
-            <div class="sig-v">Name: {{ client_name | default: "—" }}</div>
-            <div class="sig-v">Date: _______________</div>
+        <aside class="tp">
+            <div class="tp-notes">
+                <span class="tp-k">Notes</span>
+                <ol>
+                    <li>Do not scale from this drawing. Dimensions are in metres.</li>
+                    <li>Read with the circuit and board schedules.</li>
+                    <li>Circuits, cables and devices are indicative and subject to design verification.</li>
+                    <li>Install, inspect and test to BS 7671:2018+A4:2026.</li>
+                </ol>
+                <span class="tp-k" style="margin-top:2.5mm">Circuit key</span>
+                <div class="key">
+                    <span><i style="background:#dc2626"></i>S — sockets</span>
+                    <span><i style="background:#2563eb"></i>L — lighting</span>
+                    <span><i style="background:#d97706"></i>C — cooker</span>
+                    <span><i style="background:#ea580c"></i>H — heating</span>
+                    <span><i style="background:#0891b2"></i>IH — water heater</span>
+                    <span><i style="background:#7c3aed"></i>EV — charge point</span>
+                    <span><i style="background:#0d9488"></i>AC — air con</span>
+                    <span><i style="background:#db2777"></i>SA / FA / FZ — fire</span>
+                    <span><i style="background:#0f172a"></i>DB — submain</span>
+                </div>
+                <span class="tp-k" style="margin-top:2.5mm">Line types</span>
+                <div class="key">
+                    <span><i class="ln"></i>Wall</span>
+                    <span><i class="ln dash"></i>Cable route (indicative)</span>
+                </div>
+            </div>
+            <div class="tp-rev">
+                <table>
+                    <thead><tr><th>Rev</th><th>Date</th><th>Description</th><th>By</th></tr></thead>
+                    <tbody><tr><td><b>{{ revision.rev }}</b></td><td>{{ revision.date }}</td><td>{{ revision.description }}</td><td>{{ revision.by }}</td></tr></tbody>
+                </table>
+            </div>
+            <div class="tp-status"><span class="tp-k">Status</span><b>For information</b><span>Subject to design verification</span></div>
+            <div class="tp-co">
+                {% if company_logo and company_logo != "" %}<img src="{{ company_logo }}" alt="" />{% endif %}
+                <div><b>{{ company_name | default: "Elec-Mate" }}</b>{% if company_phone and company_phone != "" %}<span>{{ company_phone }}</span>{% endif %}{% if company_email and company_email != "" %}<span>{{ company_email }}</span>{% endif %}</div>
+            </div>
+            <div class="tp-cell"><span class="tp-k">Project</span><b class="tp-proj">{{ property_address | default: "—" }}</b>{% if client_name and client_name != "" %}<span>Client: {{ client_name }}</span>{% endif %}</div>
+            <div class="tp-cell tp-title"><span class="tp-k">Drawing title</span><b>Materials schedule</b><span>Counted from the drawing</span></div>
+            <div class="tp-grid">
+                <div><span class="tp-k">Drawn</span><b>{{ electrician_name | default: "—" }}</b></div>
+                <div><span class="tp-k">Date</span><b>{{ date }}</b></div>
+                <div><span class="tp-k">Scale</span><b>NTS</b></div>
+                <div><span class="tp-k">Sheet size</span><b>A4</b></div>
+            </div>
+            <div class="tp-no">
+                <div><span class="tp-k">Drawing no.</span><b class="tp-dwg">{{ drawing_number }}-E{{ p | plus: 500 }}</b></div>
+                <div class="tp-revbox"><span class="tp-k">Rev</span><b>{{ revision.rev }}</b></div>
+            </div>
+        </aside>
+    </div>
+</section>{% endfor %}
+{% if standard_notes.mountingHeights %}
+<section class="sheet">
+    <div class="zones"><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 0.5 / 8)">1</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 0.5 / 8)">1</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 1 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 1 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 1.5 / 8)">2</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 1.5 / 8)">2</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 2 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 2 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 2.5 / 8)">3</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 2.5 / 8)">3</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 3 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 3 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 3.5 / 8)">4</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 3.5 / 8)">4</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 4 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 4 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 4.5 / 8)">5</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 4.5 / 8)">5</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 5 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 5 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 5.5 / 8)">6</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 5.5 / 8)">6</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 6 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 6 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 6.5 / 8)">7</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 6.5 / 8)">7</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 7 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 7 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 7.5 / 8)">8</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 7.5 / 8)">8</b><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 0.5 / 5)">A</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 0.5 / 5)">A</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 1 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 1 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 1.5 / 5)">B</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 1.5 / 5)">B</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 2 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 2 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 2.5 / 5)">C</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 2.5 / 5)">C</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 3 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 3 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 3.5 / 5)">D</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 3.5 / 5)">D</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 4 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 4 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 4.5 / 5)">E</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 4.5 / 5)">E</b></div>
+    <div class="frame">
+        <div class="main">
+            <header class="vl">
+                <span class="vl-n">1</span>
+                <div class="vl-t"><b>Installation notes</b><span>Mounting heights are typical — confirm against the specification</span></div>
+            </header>
+            <div class="body">
+            <div class="two">
+                <div style="flex:1.2">
+                    <div class="h3">Mounting heights</div>
+                    <table class="t">
+                        <thead><tr><th>Item</th><th>Height</th><th>Notes</th></tr></thead>
+                        <tbody>{% for item in standard_notes.mountingHeights %}<tr><td>{{ item.item }}</td><td style="font-weight:800;white-space:nowrap">{{ item.height }}</td><td>{{ item.notes }}</td></tr>{% endfor %}</tbody>
+                    </table>
+                </div>
+                <div style="flex:1">
+                    <div class="h3">General notes</div>
+                    <ol class="gn">{% for note in standard_notes.generalNotes %}<li>{{ note }}</li>{% endfor %}</ol>
+                    {% if standard_notes.abbreviations %}
+                    <div class="h3" style="margin-top:2.5mm">Abbreviations</div>
+                    <div class="abbr">{% for item in standard_notes.abbreviations %}<div><strong>{{ item.abbr }}</strong> — {{ item.meaning }}</div>{% endfor %}</div>
+                    {% endif %}
+                </div>
+            </div>
+            </div>
         </div>
+        <aside class="tp">
+            <div class="tp-notes">
+                <span class="tp-k">Notes</span>
+                <ol>
+                    <li>Do not scale from this drawing. Dimensions are in metres.</li>
+                    <li>Read with the circuit and board schedules.</li>
+                    <li>Circuits, cables and devices are indicative and subject to design verification.</li>
+                    <li>Install, inspect and test to BS 7671:2018+A4:2026.</li>
+                </ol>
+                <span class="tp-k" style="margin-top:2.5mm">Circuit key</span>
+                <div class="key">
+                    <span><i style="background:#dc2626"></i>S — sockets</span>
+                    <span><i style="background:#2563eb"></i>L — lighting</span>
+                    <span><i style="background:#d97706"></i>C — cooker</span>
+                    <span><i style="background:#ea580c"></i>H — heating</span>
+                    <span><i style="background:#0891b2"></i>IH — water heater</span>
+                    <span><i style="background:#7c3aed"></i>EV — charge point</span>
+                    <span><i style="background:#0d9488"></i>AC — air con</span>
+                    <span><i style="background:#db2777"></i>SA / FA / FZ — fire</span>
+                    <span><i style="background:#0f172a"></i>DB — submain</span>
+                </div>
+                <span class="tp-k" style="margin-top:2.5mm">Line types</span>
+                <div class="key">
+                    <span><i class="ln"></i>Wall</span>
+                    <span><i class="ln dash"></i>Cable route (indicative)</span>
+                </div>
+            </div>
+            <div class="tp-rev">
+                <table>
+                    <thead><tr><th>Rev</th><th>Date</th><th>Description</th><th>By</th></tr></thead>
+                    <tbody><tr><td><b>{{ revision.rev }}</b></td><td>{{ revision.date }}</td><td>{{ revision.description }}</td><td>{{ revision.by }}</td></tr></tbody>
+                </table>
+            </div>
+            <div class="tp-status"><span class="tp-k">Status</span><b>For information</b><span>Subject to design verification</span></div>
+            <div class="tp-co">
+                {% if company_logo and company_logo != "" %}<img src="{{ company_logo }}" alt="" />{% endif %}
+                <div><b>{{ company_name | default: "Elec-Mate" }}</b>{% if company_phone and company_phone != "" %}<span>{{ company_phone }}</span>{% endif %}{% if company_email and company_email != "" %}<span>{{ company_email }}</span>{% endif %}</div>
+            </div>
+            <div class="tp-cell"><span class="tp-k">Project</span><b class="tp-proj">{{ property_address | default: "—" }}</b>{% if client_name and client_name != "" %}<span>Client: {{ client_name }}</span>{% endif %}</div>
+            <div class="tp-cell tp-title"><span class="tp-k">Drawing title</span><b>Installation notes</b><span>Heights, notes, abbreviations</span></div>
+            <div class="tp-grid">
+                <div><span class="tp-k">Drawn</span><b>{{ electrician_name | default: "—" }}</b></div>
+                <div><span class="tp-k">Date</span><b>{{ date }}</b></div>
+                <div><span class="tp-k">Scale</span><b>NTS</b></div>
+                <div><span class="tp-k">Sheet size</span><b>A4</b></div>
+            </div>
+            <div class="tp-no">
+                <div><span class="tp-k">Drawing no.</span><b class="tp-dwg">{{ drawing_number }}-E601</b></div>
+                <div class="tp-revbox"><span class="tp-k">Rev</span><b>{{ revision.rev }}</b></div>
+            </div>
+        </aside>
     </div>
-
-    <div class="foot-note">
-        <div><strong>{{ company_name | default: "Elec-Mate" }}</strong>{% if company_phone and company_phone != "" %} &middot; {{ company_phone }}{% endif %}{% if company_email and company_email != "" %} &middot; {{ company_email }}{% endif %}</div>
-        <div style="margin-top:3px;">BS 7671:2018+A4:2026 &middot; BS EN 60617 &middot; Produced with Elec-Mate</div>
+</section>{% endif %}
+{% if all_symbols.size > 0 %}
+<section class="sheet">
+    <div class="zones"><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 0.5 / 8)">1</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 0.5 / 8)">1</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 1 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 1 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 1.5 / 8)">2</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 1.5 / 8)">2</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 2 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 2 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 2.5 / 8)">3</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 2.5 / 8)">3</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 3 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 3 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 3.5 / 8)">4</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 3.5 / 8)">4</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 4 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 4 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 4.5 / 8)">5</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 4.5 / 8)">5</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 5 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 5 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 5.5 / 8)">6</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 5.5 / 8)">6</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 6 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 6 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 6.5 / 8)">7</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 6.5 / 8)">7</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 7 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 7 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 7.5 / 8)">8</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 7.5 / 8)">8</b><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 0.5 / 5)">A</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 0.5 / 5)">A</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 1 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 1 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 1.5 / 5)">B</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 1.5 / 5)">B</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 2 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 2 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 2.5 / 5)">C</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 2.5 / 5)">C</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 3 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 3 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 3.5 / 5)">D</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 3.5 / 5)">D</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 4 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 4 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 4.5 / 5)">E</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 4.5 / 5)">E</b></div>
+    <div class="frame">
+        <div class="main">
+            <header class="vl">
+                <span class="vl-n">1</span>
+                <div class="vl-t"><b>Symbol key</b><span>{{ all_symbols.size }} symbol{% if all_symbols.size != 1 %}s{% endif %} used · BS EN 60617 / CIBSE conventions</span></div>
+            </header>
+            <div class="body">
+            <div class="syms">
+                {% assign sorted_symbols = all_symbols | sort: "category" %}{% assign current_category = "" %}
+                {% for symbol in sorted_symbols limit: 80 %}
+                    {% if symbol.category != current_category %}<div class="sym-cat h3">{{ symbol.category }}</div>{% assign current_category = symbol.category %}{% endif %}
+                    <div class="sym">{% if symbol.svg_data_uri and symbol.svg_data_uri != "" %}<img src="{{ symbol.svg_data_uri }}" alt="" />{% endif %}<span>{{ symbol.name }}</span></div>
+                {% endfor %}
+            </div>
+            </div>
+        </div>
+        <aside class="tp">
+            <div class="tp-notes">
+                <span class="tp-k">Notes</span>
+                <ol>
+                    <li>Do not scale from this drawing. Dimensions are in metres.</li>
+                    <li>Read with the circuit and board schedules.</li>
+                    <li>Circuits, cables and devices are indicative and subject to design verification.</li>
+                    <li>Install, inspect and test to BS 7671:2018+A4:2026.</li>
+                </ol>
+                <span class="tp-k" style="margin-top:2.5mm">Circuit key</span>
+                <div class="key">
+                    <span><i style="background:#dc2626"></i>S — sockets</span>
+                    <span><i style="background:#2563eb"></i>L — lighting</span>
+                    <span><i style="background:#d97706"></i>C — cooker</span>
+                    <span><i style="background:#ea580c"></i>H — heating</span>
+                    <span><i style="background:#0891b2"></i>IH — water heater</span>
+                    <span><i style="background:#7c3aed"></i>EV — charge point</span>
+                    <span><i style="background:#0d9488"></i>AC — air con</span>
+                    <span><i style="background:#db2777"></i>SA / FA / FZ — fire</span>
+                    <span><i style="background:#0f172a"></i>DB — submain</span>
+                </div>
+                <span class="tp-k" style="margin-top:2.5mm">Line types</span>
+                <div class="key">
+                    <span><i class="ln"></i>Wall</span>
+                    <span><i class="ln dash"></i>Cable route (indicative)</span>
+                </div>
+            </div>
+            <div class="tp-rev">
+                <table>
+                    <thead><tr><th>Rev</th><th>Date</th><th>Description</th><th>By</th></tr></thead>
+                    <tbody><tr><td><b>{{ revision.rev }}</b></td><td>{{ revision.date }}</td><td>{{ revision.description }}</td><td>{{ revision.by }}</td></tr></tbody>
+                </table>
+            </div>
+            <div class="tp-status"><span class="tp-k">Status</span><b>For information</b><span>Subject to design verification</span></div>
+            <div class="tp-co">
+                {% if company_logo and company_logo != "" %}<img src="{{ company_logo }}" alt="" />{% endif %}
+                <div><b>{{ company_name | default: "Elec-Mate" }}</b>{% if company_phone and company_phone != "" %}<span>{{ company_phone }}</span>{% endif %}{% if company_email and company_email != "" %}<span>{{ company_email }}</span>{% endif %}</div>
+            </div>
+            <div class="tp-cell"><span class="tp-k">Project</span><b class="tp-proj">{{ property_address | default: "—" }}</b>{% if client_name and client_name != "" %}<span>Client: {{ client_name }}</span>{% endif %}</div>
+            <div class="tp-cell tp-title"><span class="tp-k">Drawing title</span><b>Symbol key</b><span>Symbols used on this drawing</span></div>
+            <div class="tp-grid">
+                <div><span class="tp-k">Drawn</span><b>{{ electrician_name | default: "—" }}</b></div>
+                <div><span class="tp-k">Date</span><b>{{ date }}</b></div>
+                <div><span class="tp-k">Scale</span><b>NTS</b></div>
+                <div><span class="tp-k">Sheet size</span><b>A4</b></div>
+            </div>
+            <div class="tp-no">
+                <div><span class="tp-k">Drawing no.</span><b class="tp-dwg">{{ drawing_number }}-E701</b></div>
+                <div class="tp-revbox"><span class="tp-k">Rev</span><b>{{ revision.rev }}</b></div>
+            </div>
+        </aside>
     </div>
-</div>
+</section>{% endif %}
 
+<section class="sheet">
+    <div class="zones"><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 0.5 / 8)">1</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 0.5 / 8)">1</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 1 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 1 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 1.5 / 8)">2</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 1.5 / 8)">2</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 2 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 2 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 2.5 / 8)">3</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 2.5 / 8)">3</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 3 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 3 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 3.5 / 8)">4</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 3.5 / 8)">4</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 4 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 4 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 4.5 / 8)">5</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 4.5 / 8)">5</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 5 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 5 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 5.5 / 8)">6</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 5.5 / 8)">6</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 6 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 6 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 6.5 / 8)">7</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 6.5 / 8)">7</b><i class="zt" style="left:calc(7mm + (100% - 14mm) * 7 / 8)"></i><i class="zb" style="left:calc(7mm + (100% - 14mm) * 7 / 8)"></i><b class="zn zt-n" style="left:calc(7mm + (100% - 14mm) * 7.5 / 8)">8</b><b class="zn zb-n" style="left:calc(7mm + (100% - 14mm) * 7.5 / 8)">8</b><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 0.5 / 5)">A</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 0.5 / 5)">A</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 1 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 1 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 1.5 / 5)">B</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 1.5 / 5)">B</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 2 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 2 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 2.5 / 5)">C</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 2.5 / 5)">C</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 3 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 3 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 3.5 / 5)">D</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 3.5 / 5)">D</b><i class="zl" style="top:calc(7mm + (100% - 14mm) * 4 / 5)"></i><i class="zr" style="top:calc(7mm + (100% - 14mm) * 4 / 5)"></i><b class="zn zl-n" style="top:calc(7mm + (100% - 14mm) * 4.5 / 5)">E</b><b class="zn zr-n" style="top:calc(7mm + (100% - 14mm) * 4.5 / 5)">E</b></div>
+    <div class="frame">
+        <div class="main">
+            <header class="vl">
+                <span class="vl-n">1</span>
+                <div class="vl-t"><b>Notes and sign-off</b><span>{{ drawing_number }} · Rev {{ revision.rev }} · {{ date }}</span></div>
+            </header>
+            <div class="body">
+            {% if notes and notes != "" %}<div class="pnotes"><div class="k" style="margin-bottom:1mm">Project notes</div>{{ notes }}</div>{% endif %}
+            <div class="decl">
+                <p>This drawing set records the intended electrical installation layout for the property named in the title panel. It has been prepared with reference to <strong>BS 7671:2018+A4:2026</strong> (Requirements for Electrical Installations — IET Wiring Regulations), and its symbols follow <strong>BS EN 60617</strong> / CIBSE conventions.</p>
+                <p>Circuit, cable and board information is indicative and subject to design verification. All work must be carried out by a competent person, and the installation inspected, tested and certified in accordance with the current edition of BS 7671 before it is put into service.</p>
+            </div>
+            <div class="sigs">
+                <div class="sig"><div class="k">Prepared by</div><div class="line"></div><div class="row"><span>{{ electrician_name | default: "—" }}</span><span>{{ date }}</span></div></div>
+                <div class="sig"><div class="k">Client acknowledgement</div><div class="line"></div><div class="row"><span>{{ client_name | default: "Name" }}</span><span>Date ____________</span></div></div>
+            </div>
+            </div>
+        </div>
+        <aside class="tp">
+            <div class="tp-notes">
+                <span class="tp-k">Notes</span>
+                <ol>
+                    <li>Do not scale from this drawing. Dimensions are in metres.</li>
+                    <li>Read with the circuit and board schedules.</li>
+                    <li>Circuits, cables and devices are indicative and subject to design verification.</li>
+                    <li>Install, inspect and test to BS 7671:2018+A4:2026.</li>
+                </ol>
+                <span class="tp-k" style="margin-top:2.5mm">Circuit key</span>
+                <div class="key">
+                    <span><i style="background:#dc2626"></i>S — sockets</span>
+                    <span><i style="background:#2563eb"></i>L — lighting</span>
+                    <span><i style="background:#d97706"></i>C — cooker</span>
+                    <span><i style="background:#ea580c"></i>H — heating</span>
+                    <span><i style="background:#0891b2"></i>IH — water heater</span>
+                    <span><i style="background:#7c3aed"></i>EV — charge point</span>
+                    <span><i style="background:#0d9488"></i>AC — air con</span>
+                    <span><i style="background:#db2777"></i>SA / FA / FZ — fire</span>
+                    <span><i style="background:#0f172a"></i>DB — submain</span>
+                </div>
+                <span class="tp-k" style="margin-top:2.5mm">Line types</span>
+                <div class="key">
+                    <span><i class="ln"></i>Wall</span>
+                    <span><i class="ln dash"></i>Cable route (indicative)</span>
+                </div>
+            </div>
+            <div class="tp-rev">
+                <table>
+                    <thead><tr><th>Rev</th><th>Date</th><th>Description</th><th>By</th></tr></thead>
+                    <tbody><tr><td><b>{{ revision.rev }}</b></td><td>{{ revision.date }}</td><td>{{ revision.description }}</td><td>{{ revision.by }}</td></tr></tbody>
+                </table>
+            </div>
+            <div class="tp-status"><span class="tp-k">Status</span><b>For information</b><span>Subject to design verification</span></div>
+            <div class="tp-co">
+                {% if company_logo and company_logo != "" %}<img src="{{ company_logo }}" alt="" />{% endif %}
+                <div><b>{{ company_name | default: "Elec-Mate" }}</b>{% if company_phone and company_phone != "" %}<span>{{ company_phone }}</span>{% endif %}{% if company_email and company_email != "" %}<span>{{ company_email }}</span>{% endif %}</div>
+            </div>
+            <div class="tp-cell"><span class="tp-k">Project</span><b class="tp-proj">{{ property_address | default: "—" }}</b>{% if client_name and client_name != "" %}<span>Client: {{ client_name }}</span>{% endif %}</div>
+            <div class="tp-cell tp-title"><span class="tp-k">Drawing title</span><b>Notes and sign-off</b><span>Declaration and acknowledgement</span></div>
+            <div class="tp-grid">
+                <div><span class="tp-k">Drawn</span><b>{{ electrician_name | default: "—" }}</b></div>
+                <div><span class="tp-k">Date</span><b>{{ date }}</b></div>
+                <div><span class="tp-k">Scale</span><b>NTS</b></div>
+                <div><span class="tp-k">Sheet size</span><b>A4</b></div>
+            </div>
+            <div class="tp-no">
+                <div><span class="tp-k">Drawing no.</span><b class="tp-dwg">{{ drawing_number }}-E801</b></div>
+                <div class="tp-revbox"><span class="tp-k">Rev</span><b>{{ revision.rev }}</b></div>
+            </div>
+        </aside>
+    </div>
+</section>
 </body>
 </html>

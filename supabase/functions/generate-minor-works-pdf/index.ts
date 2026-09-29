@@ -409,6 +409,13 @@ function transformFormDataForTemplate(formData: any): MinorWorksPayload {
         test_results_accurate: ietDeclared || formData.testResultsAccurate || false,
         work_safety: ietDeclared || formData.workSafety || false,
         part_p_notification: formData.partPNotification || false,
+        // How Building Control was told, once the tracker (or the form) records it.
+        part_p_notified_via: formData.buildingRegsViaScheme === true || formData.buildingRegsViaScheme === 'true'
+          ? 'competent person scheme'
+          : formData.buildingRegsSubmitted === true || formData.buildingRegsSubmitted === 'true'
+            ? 'Building Control'
+            : '',
+        part_p_reference: String(formData.buildingRegsReference || '').trim(),
         copy_provided: formData.copyProvided || false,
         additional_notes: formData.additionalNotes || '',
       };

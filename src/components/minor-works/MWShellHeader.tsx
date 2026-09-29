@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
+import React, { useState } from 'react';
+import CertificateHistorySheet from '@/components/inspection/shared/CertificateHistorySheet';
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
 import type { MWTabValue } from '@/hooks/useMinorWorksTabs';
@@ -23,6 +24,8 @@ interface MWShellHeaderProps {
   currentTab: MWTabValue;
   onTabChange: (tab: MWTabValue) => void;
   completedTabs: Record<string, boolean>;
+  /** When supplied, a History control opens the certificate's revision list (ELE-1432). */
+  history?: { reportId: string; onRestored: (data: Record<string, unknown>) => void };
 }
 
 export const MW_STEPS: { id: MWTabValue; label: string }[] = [
@@ -63,10 +66,12 @@ const MWShellHeader: React.FC<MWShellHeaderProps> = ({
   currentTab,
   onTabChange,
   completedTabs,
+  history,
 }) => {
   const haptic = useHaptic();
   const certNumber = formData?.certificateNumber as string | undefined;
   const save = saveWord(isSaving, syncState?.status, isOnline);
+  const [historyOpen, setHistoryOpen] = useState(false);
 
   return (
     <>
@@ -98,6 +103,19 @@ const MWShellHeader: React.FC<MWShellHeaderProps> = ({
               </p>
             )}
           </div>
+          {history && (
+            <button
+              type="button"
+              onClick={() => {
+                haptic.light();
+                setHistoryOpen(true);
+              }}
+              aria-label="Certificate history — earlier versions and restore"
+              className="h-11 px-2 text-[11.5px] font-semibold text-white touch-manipulation active:scale-[0.97] outline-none focus:outline-none focus-visible:outline-none"
+            >
+              History
+            </button>
+          )}
           <button
             onClick={onManualSave}
             disabled={saveDisabled || isSaving || syncState?.status === 'syncing'}
@@ -180,6 +198,14 @@ const MWShellHeader: React.FC<MWShellHeaderProps> = ({
       </div>
       {/* Spacer — reserves the shell's height in the document flow */}
       <div className="h-[105px]" aria-hidden="true" />
+      {history && (
+        <CertificateHistorySheet
+          open={historyOpen}
+          onOpenChange={setHistoryOpen}
+          reportId={history.reportId}
+          onRestored={history.onRestored}
+        />
+      )}
     </>
   );
 };

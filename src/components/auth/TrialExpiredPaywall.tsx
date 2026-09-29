@@ -1,18 +1,9 @@
 import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import { Capacitor } from '@capacitor/core';
-import {
-  Bell,
-  Bot,
-  Calculator,
-  CreditCard,
-  FileCheck,
-  GraduationCap,
-  Loader2,
-  Lock,
-  ReceiptText,
-  Zap,
-} from 'lucide-react';
+import { motion, useReducedMotion, type MotionProps } from 'framer-motion';
+import { Loader2 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -27,6 +18,7 @@ type PriceInfo = {
   priceId: string;
   label: string;
   price: string;
+  amount: number;
 };
 
 const ROLE_TO_PRICE: Record<string, PriceInfo> = {
@@ -35,42 +27,93 @@ const ROLE_TO_PRICE: Record<string, PriceInfo> = {
     priceId: 'price_1TnbOh2RKw5t5RAmsf2KcHT6',
     label: 'Electrician',
     price: '£19.99',
+    amount: 19.99,
   },
   apprentice: {
     planId: 'apprentice-monthly',
     priceId: 'price_1TnbOk2RKw5t5RAmiOCTkqS3',
     label: 'Apprentice',
     price: '£6.99',
+    amount: 6.99,
   },
 };
 
 const FEATURES = [
   {
-    icon: FileCheck,
     title: 'Every BS 7671 certificate',
     detail: 'EICR, EIC, Minor Works and 16 more — signed on site, A4:2026 ready.',
   },
   {
-    icon: ReceiptText,
     title: 'Quotes and invoices',
     detail: 'Branded, tracked and chased automatically — paid by card or Apple Pay.',
   },
   {
-    icon: Bot,
     title: '5 AI specialists',
     detail: 'Cost engineer, circuit designer, RAMS and more — trained on BS 7671.',
   },
   {
-    icon: Calculator,
     title: '70+ electrical calculators',
     detail: 'Cable sizing, volt drop, Zs, fault current — all BS 7671 compliant.',
   },
   {
-    icon: GraduationCap,
     title: 'Full Study Centre',
     detail: '46+ courses, mock exams and CPD tracking.',
   },
 ];
+
+const SUPPORT_EMAIL = 'founder@elec-mate.com';
+
+// "Mr Philip Henwood" must greet Philip, not Mr. Names are stored however the
+// person typed them, titles included — the lifecycle emails got this wrong.
+const TITLES = new Set(['mr', 'mrs', 'ms', 'miss', 'mx', 'dr', 'sir', 'prof']);
+const firstNameOf = (fullName: string | null | undefined): string | null => {
+  if (!fullName) return null;
+  const parts = fullName.trim().split(/\s+/);
+  const first = parts.find((p) => !TITLES.has(p.replace(/\./g, '').toLowerCase()));
+  if (!first || first.includes('@')) return null;
+  return first.charAt(0).toUpperCase() + first.slice(1);
+};
+
+const formatDate = (iso: string): string => {
+  const d = new Date(iso);
+  const sameYear = d.getFullYear() === new Date().getFullYear();
+  return d.toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    ...(sameYear ? {} : { year: 'numeric' }),
+  });
+};
+
+/**
+ * What they built while subscribed — real counts, shown only when non-zero.
+ * Both tables let a user read their own rows regardless of subscription, so
+ * this works on a lapsed account. A failed count hides the line, never the page.
+ */
+const useSavedWork = (userId: string | undefined, enabled: boolean) =>
+  useQuery({
+    queryKey: ['paywall-saved-work', userId],
+    enabled: !!userId && enabled,
+    staleTime: 10 * 60 * 1000,
+    queryFn: async () => {
+      const [certs, quotes] = await Promise.all([
+        supabase
+          .from('reports')
+          .select('id', { count: 'exact', head: true })
+          .eq('user_id', userId!)
+          .is('deleted_at', null)
+          .neq('status', 'auto-draft'),
+        supabase
+          .from('quotes')
+          .select('id', { count: 'exact', head: true })
+          .eq('user_id', userId!)
+          .is('deleted_at', null),
+      ]);
+      return {
+        certificates: certs.error ? 0 : (certs.count ?? 0),
+        quotes: quotes.error ? 0 : (quotes.count ?? 0),
+      };
+    },
+  });
 
 const TrialExpiredPaywall = () => {
   const navigate = useNavigate();
@@ -80,23 +123,31 @@ const TrialExpiredPaywall = () => {
 
   const role = profile?.role || storageGetSync('elec-mate-profile-role') || 'electrician';
   const priceInfo = ROLE_TO_PRICE[role] || ROLE_TO_PRICE.electrician;
+  const platform = Capacitor.getPlatform();
   const isNative = Capacitor.isNativePlatform();
+  const storeName = platform === 'android' ? 'Google Play' : 'the App Store';
 
-  const trialEndedRecently = trialEndsAt && new Date(trialEndsAt).getTime() < Date.now();
-  const formattedTrialEnd = trialEndsAt
-    ? new Date(trialEndsAt).toLocaleDateString('en-GB', {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-      })
-    : null;
+  // Returning customer = they have had a subscription before. create-checkout
+  // gives NO second trial to anyone with a prior subscription to the product
+  // and charges on the spot, so promising "7 days free, £0 today" here was
+  // untrue for exactly these people. `subscription_end` is written by the
+  // Stripe and RevenueCat webhooks when a subscription ends; a never-subscribed
+  // account has none. When in doubt this errs towards "billed today" — nobody
+  // is promised a trial they will not get.
+  const endedAt = profile?.subscription_end ?? null;
+  const isReturning = !!endedAt && new Date(endedAt).getTime() < Date.now();
+
+  const trialEnded = !isReturning && !!trialEndsAt && new Date(trialEndsAt).getTime() < Date.now();
+
+  const firstName = firstNameOf(profile?.full_name);
+  const { data: saved } = useSavedWork(user?.id, isReturning || trialEnded);
+  const reduceMotion = useReducedMotion();
 
   const startCheckout = useCallback(async () => {
     if (isStarting) return;
 
-    // Native devices must use StoreKit via RevenueCat — Stripe Checkout isn't
-    // allowed on iOS/Android. Bounce through the trial interstitial which
-    // knows how to trigger the in-app purchase flow.
+    // Native devices must use StoreKit / Play Billing via RevenueCat — Stripe
+    // Checkout isn't allowed there. /checkout-trial runs the in-app purchase.
     if (isNative) {
       navigate('/checkout-trial');
       return;
@@ -127,9 +178,8 @@ const TrialExpiredPaywall = () => {
       }
       if (!data?.url) throw new Error('No checkout URL returned');
 
-      const checkoutValue = priceInfo.planId.startsWith('apprentice') ? 6.99 : 19.99;
       const eventId = trackInitiateCheckout({
-        value: checkoutValue,
+        value: priceInfo.amount,
         currency: 'GBP',
         contentName: priceInfo.label,
         contentIds: [priceInfo.priceId],
@@ -139,7 +189,7 @@ const TrialExpiredPaywall = () => {
         event_id: eventId,
         email: user?.email || undefined,
         user_id: user?.id,
-        value: checkoutValue,
+        value: priceInfo.amount,
         currency: 'GBP',
         content_name: priceInfo.label,
       });
@@ -153,224 +203,273 @@ const TrialExpiredPaywall = () => {
     }
   }, [isStarting, isNative, navigate, priceInfo, user?.email, user?.id]);
 
-  const timeline = [
-    { icon: Zap, title: 'Today — everything unlocks', detail: 'Full access. £0 charged.' },
-    { icon: Bell, title: 'Before your trial ends', detail: 'We remind you — no surprises.' },
-    {
-      icon: CreditCard,
-      title: 'Day 8 — first payment',
-      detail: `${priceInfo.price}/month, only if you keep it.`,
-    },
-  ];
+  const handleSignOut = async () => {
+    await signOut();
+    window.location.replace('/');
+  };
+
+  // ── Copy — one source per state, so the two layouts cannot disagree ──────
+  const headline = isReturning
+    ? firstName
+      ? `Welcome back, ${firstName}.`
+      : 'Welcome back.'
+    : trialEnded
+      ? 'Your free week has ended.'
+      : "Everything's ready when you are.";
+
+  const lede = isReturning
+    ? `Your subscription ended on ${formatDate(endedAt!)}. Your account is exactly as you left it — resubscribe and it all opens up again.`
+    : trialEnded
+      ? `Your trial finished on ${formatDate(String(trialEndsAt))}. Your account is exactly as you left it.`
+      : 'Start your free week and the whole app unlocks. Nothing is charged for 7 days.';
+
+  const ctaLabel = isReturning
+    ? `Resubscribe — ${priceInfo.price}/month`
+    : 'Start 7-day free trial';
+
+  const billingNote = isNative
+    ? `Billed through ${storeName}. Cancel any time in your ${platform === 'android' ? 'Play Store' : 'Apple'} subscriptions.`
+    : isReturning
+      ? 'Secure checkout by Stripe · Apple Pay, Google Pay or card'
+      : 'Secure checkout by Stripe · No charge during your trial';
+
+  const steps = isReturning
+    ? [
+        { when: 'Today', what: `${priceInfo.price} — everything unlocks straight away.` },
+        { when: 'Monthly', what: `${priceInfo.price} on the same date each month.` },
+        {
+          when: 'Any time',
+          what: "Cancel from Settings. You keep access to the end of the month you've paid for.",
+        },
+      ]
+    : [
+        { when: 'Today', what: 'Everything unlocks. £0 charged.' },
+        { when: 'Before day 8', what: "We email you a reminder, with the date you'd be charged." },
+        { when: 'Day 8', what: `${priceInfo.price}/month — only if you keep it.` },
+      ];
+
+  // ── Motion — a short settle on arrival, nothing on reduced motion ────────
+  const rise = (i: number): MotionProps =>
+    reduceMotion
+      ? {}
+      : {
+          initial: { opacity: 0, y: 10 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.42, delay: 0.05 + i * 0.06, ease: [0.22, 1, 0.36, 1] as const },
+        };
+
+  // ── Pieces ───────────────────────────────────────────────────────────────
+  const planLine = (
+    <div className="flex items-center justify-between gap-3">
+      <p className="text-[14px] font-semibold tracking-[-0.01em] text-white">
+        {priceInfo.label} <span className="font-normal">· monthly</span>
+      </p>
+      {!isReturning && (
+        <p className="text-[13px] font-semibold text-elec-yellow">7 days free</p>
+      )}
+    </div>
+  );
+
+  const priceBlock = (
+    <div>
+      {planLine}
+      <div className="mt-4 flex items-baseline gap-2">
+        <span className="text-[60px] font-extrabold leading-[0.9] tracking-[-0.05em] text-white tabular-nums lg:text-[68px]">
+          {isReturning ? priceInfo.price : '£0'}
+        </span>
+        <span className="text-[16px] font-medium text-white">
+          {isReturning ? 'a month' : 'today'}
+        </span>
+      </div>
+      <p className="mt-3 text-[14px] leading-[1.5] text-white">
+        {isReturning ? (
+          <>Billed today, then monthly. Cancel any time.</>
+        ) : (
+          <>
+            Then <span className="font-semibold">{priceInfo.price} a month</span>. Cancel any time.
+          </>
+        )}
+      </p>
+
+      {/* How the money works — stacked rows, so a phone never wastes a column */}
+      <ol className="mt-6 border-t border-white/[0.12]">
+        {steps.map((s, i) => (
+          <li key={s.when} className="flex gap-3.5 border-b border-white/[0.12] py-3.5">
+            <span
+              aria-hidden
+              className={cn(
+                'mt-[5px] h-2 w-2 flex-shrink-0 rounded-full',
+                i === 0 ? 'bg-elec-yellow' : 'border border-white/[0.5]'
+              )}
+            />
+            <div className="min-w-0">
+              <p className="text-[13px] font-semibold leading-tight text-white">{s.when}</p>
+              <p className="mt-1 text-[13.5px] leading-[1.5] text-white">{s.what}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+
+  const savedWork =
+    saved && (saved.certificates > 0 || saved.quotes > 0) ? (
+      <div className="grid grid-cols-2 border-y border-white/[0.12]">
+        {[
+          { n: saved.certificates, label: saved.certificates === 1 ? 'certificate' : 'certificates' },
+          { n: saved.quotes, label: saved.quotes === 1 ? 'quote' : 'quotes' },
+        ].map((c, i) => (
+          <div key={c.label} className={cn('py-4', i === 1 && 'border-l border-white/[0.12] pl-5')}>
+            <p className="text-[32px] font-bold leading-none tracking-[-0.04em] text-white tabular-nums">
+              {c.n}
+            </p>
+            <p className="mt-1.5 text-[13px] text-white">{c.label} saved</p>
+          </div>
+        ))}
+      </div>
+    ) : null;
+
+  const featureList = (
+    <ol className="grid border-t border-white/[0.12] sm:grid-cols-2 sm:gap-x-8">
+      {FEATURES.map((f, i) => (
+        <li
+          key={f.title}
+          className={cn(
+            'grid grid-cols-[2rem_1fr] gap-1.5 border-b border-white/[0.12] py-4',
+            // An odd last item spans both columns rather than leaving a hole.
+            i === FEATURES.length - 1 && FEATURES.length % 2 === 1 && 'sm:col-span-2'
+          )}
+        >
+          <span className="pt-[3px] text-[12px] font-semibold tabular-nums text-elec-yellow">
+            {String(i + 1).padStart(2, '0')}
+          </span>
+          <div className="min-w-0">
+            <p className="text-[15px] font-semibold leading-tight tracking-[-0.015em] text-white">
+              {f.title}
+            </p>
+            <p className="mt-1.5 text-[13px] leading-[1.55] text-white">{f.detail}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  );
+
+  const cta = (
+    <Button
+      onClick={startCheckout}
+      disabled={isStarting}
+      // md: variants pinned — the default Button size drops to h-10 / text-sm from md up.
+      className="h-14 w-full touch-manipulation rounded-xl bg-elec-yellow text-[16px] font-bold tracking-[-0.01em] text-black shadow-[inset_0_1px_0_rgba(255,255,255,0.35)] transition-transform hover:bg-elec-yellow/90 active:scale-[0.985] disabled:bg-white/[0.1] disabled:text-white md:h-14 md:text-[16px]"
+    >
+      {isStarting ? <Loader2 className="h-5 w-5 animate-spin" /> : ctaLabel}
+    </Button>
+  );
+
+  const errorBox = error && (
+    <p
+      role="alert"
+      className="rounded-xl border border-orange-500/30 bg-orange-500/10 px-4 py-3 text-[13px] text-orange-300"
+    >
+      {error}
+    </p>
+  );
+
+  const help = (
+    <div>
+      <p className="text-[14px] font-semibold text-white">Stuck getting in?</p>
+      <p className="mt-1 text-[13px] leading-[1.6] text-white">
+        Email <span className="select-all font-semibold text-elec-yellow">{SUPPORT_EMAIL}</span>.
+        It comes straight to Andrew, the founder, who usually replies the same day.
+      </p>
+    </div>
+  );
 
   return (
-    // bg-background, not bg-black — the app's page root is #0a0a0a everywhere
-    // else, and pure black made this screen read as a different product.
-    <div className="relative min-h-[100svh] overflow-hidden bg-background">
-      {/* Single ambient wash, toned well down from the original. On a
-          conversion screen the price should be the brightest thing, not the
-          backdrop. */}
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-[6%] h-[32rem] w-[32rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_50%_50%,rgba(250,204,21,0.10),transparent_62%)] blur-3xl" />
-      </div>
-
-      <div className="relative mx-auto flex min-h-[100svh] max-w-[520px] flex-col px-5 pb-[calc(env(safe-area-inset-bottom)+24px)] pt-[calc(env(safe-area-inset-top)+24px)] sm:px-6 lg:max-w-[1040px] lg:justify-center lg:px-8">
-        {/* Logo */}
-        <div className="flex justify-center">
-          <div className="flex items-center gap-3">
-            <img src="/logo.jpg" alt="Elec-Mate" className="h-10 w-10 rounded-xl" />
-            <span className="text-[20px] font-bold tracking-[-0.02em] text-white">
-              Elec-<span className="text-elec-yellow">Mate</span>
-            </span>
-          </div>
+    // bg-background, not bg-black — the app's page root is #0a0a0a everywhere.
+    <div className="min-h-[100svh] bg-background text-white">
+      {/* Top bar — brand left, the only exit right */}
+      <header className="mx-auto flex max-w-[1120px] items-center justify-between px-4 pt-[calc(env(safe-area-inset-top)+10px)] sm:px-8 lg:px-12">
+        <div className="flex items-center gap-2.5">
+          <img src="/logo.jpg" alt="" className="h-8 w-8 rounded-lg" />
+          <span className="text-[17px] font-bold tracking-[-0.02em]">
+            Elec-<span className="text-elec-yellow">Mate</span>
+          </span>
         </div>
+        <button
+          type="button"
+          onClick={handleSignOut}
+          className="-mr-2 inline-flex h-11 touch-manipulation items-center px-2 text-[14px] font-medium text-white transition-colors hover:text-elec-yellow"
+        >
+          Sign out
+        </button>
+      </header>
 
-        <div className="lg:mt-10 lg:grid lg:grid-cols-[1fr_460px] lg:items-center lg:gap-14">
-          {/* Desktop pitch column — everything they get, with detail */}
-          <div className="hidden lg:block">
-            <h1 className="text-[2.6rem] font-bold leading-[1.06] tracking-[-0.04em] text-white">
-              {trialEndedRecently ? (
-                <>
-                  Pick up <span className="text-elec-yellow">where you left off.</span>
-                </>
-              ) : (
-                <>
-                  Everything's ready <span className="text-elec-yellow">when you are.</span>
-                </>
-              )}
-            </h1>
-            <p className="mt-4 max-w-[28rem] text-[15px] leading-[1.7] text-white">
-              Your account and everything in it are exactly as you left them. Start the free week
-              and it all unlocks — £0 today, nothing charged for 7 days.
-            </p>
+      <main
+        className={cn(
+          'mx-auto max-w-[1120px] px-4 sm:px-8 lg:px-12',
+          // Room for the fixed CTA strip on phones and tablets; desktop has it inline.
+          'pb-[calc(env(safe-area-inset-bottom)+136px)] lg:pb-20'
+        )}
+      >
+        <div className="mx-auto max-w-[640px] lg:grid lg:max-w-none lg:grid-cols-[minmax(0,1fr)_400px] lg:items-start lg:gap-20 lg:pt-20 xl:gap-24">
+          {/* Left — who they are, what's waiting, what they get */}
+          <section className="pt-9 sm:pt-14 lg:pt-0">
+            <motion.h1
+              {...rise(0)}
+              className="text-[36px] font-extrabold leading-[1.02] tracking-[-0.045em] [text-wrap:balance] sm:text-[46px] lg:text-[56px]"
+            >
+              {headline}
+            </motion.h1>
+            <motion.p
+              {...rise(1)}
+              className="mt-4 max-w-[32rem] text-[16px] leading-[1.6] text-white sm:text-[17px]"
+            >
+              {lede}
+            </motion.p>
 
-            <div className="mt-8 space-y-4">
-              {FEATURES.map((feature) => (
-                <div key={feature.title} className="flex items-start gap-3.5">
-                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border border-white/[0.1] bg-white/[0.06]">
-                    <feature.icon className="h-[18px] w-[18px] text-elec-yellow" />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-[14.5px] font-semibold leading-tight text-white">
-                      {feature.title}
-                    </p>
-                    {/* Hierarchy comes from size and weight, not opacity — the
-                        app forbids low-opacity white, which renders as grey. */}
-                    <p className="mt-0.5 text-[13px] leading-[1.55] text-white">{feature.detail}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+            {savedWork && (
+              <motion.div {...rise(2)} className="mt-7 max-w-[26rem]">
+                {savedWork}
+              </motion.div>
+            )}
 
-          <div>
-            {/* Hero card — price-first. House card recipe: rounded-3xl, hairline
-                white border, subtle top-down gradient. The yellow-tinted border
-                and heavy glow were a one-off that existed nowhere else. */}
-            <div className="mt-8 rounded-3xl border border-white/[0.1] bg-gradient-to-b from-white/[0.08] to-white/[0.03] p-6 text-center sm:p-8 lg:mt-0">
-              {/* Trial pill */}
-              <div className="inline-flex items-center gap-2 rounded-full border border-elec-yellow/30 bg-elec-yellow/[0.12] px-3 py-1">
-                <span className="h-1.5 w-1.5 rounded-full bg-elec-yellow" />
-                <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
-                  7-day free trial
-                </span>
-              </div>
+            {/* Offer — under the intro on phones and tablets, a panel on desktop */}
+            <motion.div {...rise(3)} className="mt-9 lg:hidden">
+              {priceBlock}
+            </motion.div>
 
-              {/* Big zero price */}
-              <div className="mt-6 flex items-baseline justify-center gap-2">
-                <span className="text-[72px] font-extrabold leading-none tracking-[-0.04em] text-white sm:text-[88px]">
-                  £0
-                </span>
-                <span className="text-lg font-medium text-white">today</span>
-              </div>
+            <motion.div {...rise(4)} className="mt-11 lg:mt-14">
+              <h2 className="mb-1 text-[15px] font-semibold tracking-tight text-white">
+                {isReturning ? 'What you get back' : 'What you unlock'}
+              </h2>
+              {featureList}
+            </motion.div>
 
-              {/* Price after trial */}
-              <p className="mt-3 text-[15px] text-white">
-                Then <span className="font-bold">{priceInfo.price}/month</span> — cancel in two
-                clicks
-              </p>
+            <motion.div {...rise(5)} className="mt-10 max-w-[30rem]">
+              {help}
+            </motion.div>
+          </section>
 
-              {/* Reassurance line */}
-              <p className="mt-2 text-[12px] text-white">
-                {trialEndedRecently && formattedTrialEnd
-                  ? `Your trial ended on ${formattedTrialEnd}. Restart below.`
-                  : 'No charge for 7 days · No surprises · Cancel anytime'}
-              </p>
-
-              {/* What happens when — makes "no charge for 7 days" concrete.
-                  Now a proper connected timeline rather than three loose rows. */}
-              <div className="mt-6 rounded-2xl border border-white/[0.1] bg-white/[0.04] p-4 text-left">
-                {timeline.map((step, i) => (
-                  <div key={step.title} className="relative flex items-start gap-3">
-                    {/* Rail joining the steps. Not drawn under the last one, so
-                        the sequence visibly terminates at first payment. */}
-                    {i < timeline.length - 1 && (
-                      <span
-                        aria-hidden
-                        className="absolute left-4 top-9 h-[calc(100%-1.25rem)] w-px bg-white/[0.12]"
-                      />
-                    )}
-                    <div className="relative flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-white/[0.12] bg-white/[0.06]">
-                      <step.icon className="h-3.5 w-3.5 text-elec-yellow" />
-                    </div>
-                    <div className={cn('min-w-0', i < timeline.length - 1 && 'pb-4')}>
-                      <p className="text-[12.5px] font-semibold leading-tight text-white">
-                        {step.title}
-                      </p>
-                      <p className="mt-0.5 text-[11.5px] leading-snug text-white">{step.detail}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Primary CTA */}
-              <div className="mt-6">
-                <Button
-                  onClick={startCheckout}
-                  disabled={isStarting}
-                  className="h-14 w-full touch-manipulation rounded-2xl bg-elec-yellow text-[15px] font-bold text-black transition-all hover:bg-elec-yellow/90 active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
-                >
-                  {isStarting ? (
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                  ) : (
-                    'Start 7-day free trial'
-                  )}
-                </Button>
-              </div>
-
-              {/* Payment methods — Stripe handles Apple Pay / Google Pay / cards */}
-              <div className="mt-5 flex items-center justify-center gap-2.5">
-                <Lock className="h-3.5 w-3.5 text-white" />
-                <span className="text-[11.5px] text-white">
-                  {isNative
-                    ? 'Pay with Apple Pay or your App Store account'
-                    : 'Pay with Apple Pay, Google Pay, or any card'}
-                </span>
-              </div>
-
-              {/* Payment-method badges */}
-              {!isNative && (
-                <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
-                  {['Apple Pay', 'Google Pay', 'Visa', 'Mastercard'].map((m) => (
-                    <span
-                      key={m}
-                      className="inline-flex h-7 items-center rounded-md border border-white/[0.12] bg-white/[0.04] px-2.5 text-[10.5px] font-semibold tracking-wide text-white"
-                    >
-                      {m}
-                    </span>
-                  ))}
-                </div>
-              )}
-
-              {error && (
-                <p className="mt-4 rounded-xl border border-red-500/25 bg-red-500/[0.08] px-4 py-2.5 text-[12px] text-red-300">
-                  {error}
-                </p>
-              )}
-            </div>
-
-            {/* What you get back — mobile only; desktop shows it in the left column */}
-            <div className="mt-6 rounded-2xl border border-white/[0.1] bg-white/[0.04] p-5 text-left lg:hidden">
-              <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-elec-yellow">
-                What you unlock
-              </p>
-              <div className="mt-4 space-y-3.5">
-                {FEATURES.map((feature) => (
-                  <div key={feature.title} className="flex items-start gap-3">
-                    <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg border border-white/[0.12] bg-white/[0.06]">
-                      <feature.icon className="h-4 w-4 text-elec-yellow" />
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-[13.5px] font-semibold leading-tight text-white">
-                        {feature.title}
-                      </p>
-                      <p className="mt-0.5 text-[12px] leading-[1.55] text-white">
-                        {feature.detail}
-                      </p>
-                    </div>
-                  </div>
-                ))}
+          {/* Desktop — the offer panel, pinned while the left column scrolls */}
+          <motion.aside {...rise(2)} className="hidden lg:sticky lg:top-12 lg:block">
+            <div className="rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.025] p-8 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_24px_60px_-20px_rgba(0,0,0,0.6)]">
+              {priceBlock}
+              <div className="mt-7 space-y-3">
+                {errorBox}
+                {cta}
+                <p className="text-center text-[12px] leading-snug text-white">{billingNote}</p>
               </div>
             </div>
+          </motion.aside>
+        </div>
+      </main>
 
-            {/* Sign out is the only exit — /subscriptions was a side door into the
-                app without a card, so no plan-switcher link here */}
-            <div className="mt-5 text-center">
-              <button
-                onClick={async () => {
-                  await signOut();
-                  window.location.replace('/');
-                }}
-                className="inline-flex h-11 touch-manipulation items-center px-4 text-[13px] font-medium text-white transition-colors hover:text-elec-yellow"
-              >
-                Sign out
-              </button>
-            </div>
-
-            <p className="mt-2 text-center text-[11px] text-white">
-              Secure checkout by Stripe · You won't be charged during your trial
-            </p>
-          </div>
+      {/* Phones and tablets — CTA pinned under the thumb. Flat strip, not a card. */}
+      <div className="fixed inset-x-0 bottom-0 z-20 border-t border-white/[0.1] bg-background/95 px-4 pb-[calc(env(safe-area-inset-bottom)+12px)] pt-3 backdrop-blur-md sm:px-8 lg:hidden">
+        <div className="mx-auto max-w-[640px] space-y-2">
+          {errorBox}
+          {cta}
+          <p className="text-center text-[11.5px] leading-snug text-white">{billingNote}</p>
         </div>
       </div>
     </div>

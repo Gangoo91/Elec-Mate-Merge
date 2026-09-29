@@ -9,8 +9,8 @@ import {
   Circle,
   Path,
   Point,
+  FabricImage,
   loadSVGFromString,
-  util,
 } from 'fabric';
 import type { TPointerEventInfo, TPointerEvent } from 'fabric';
 import type { CanvasObject } from '@/pages/electrician-tools/ai-tools/DiagramBuilderPage';
@@ -18,7 +18,10 @@ import { symbolRegistry } from './symbols/symbolRegistry';
 import { resolveSymbolId } from './symbols/symbolAliases';
 import { loadSymbolSvg } from './symbols/svgLoader';
 import { extractWalls, orthogonalRoute } from './cableRouter';
-import { SCALE, GRID_MINOR, GRID_MAJOR, snapToStep } from './constants';
+import { SCALE, GRID_MINOR, GRID_MAJOR, snapToStep, CIRCUIT_TAG_MIN_ZOOM } from './constants';
+import { aiPlanToObjects, WALL_THICKNESS, type AIPlanData } from './aiPlanToObjects';
+import { circuitColour } from './circuitDesign';
+import { labelSize } from './textMetrics';
 import {
   computeWallSnap,
   isWallMountSymbol,
@@ -29,18 +32,33 @@ import { isTypingContext, shouldAllowSpaceDefault, isInOverlay } from '@/utils/k
 import { ZoomIn, ZoomOut, Maximize2, RotateCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useHaptic } from '@/hooks/useHaptic';
+import { supabase } from '@/integrations/supabase/client';
 
 /**
- * One room as the generator returns it (ELE-1745).
- *
- * `origin` is the room's offset in metres from the top-left of the whole floor,
- * which is what lets a photographed plan come back as a floor rather than a
- * stack of rooms. `dimensions` are the sizes read off the drawing.
+ * Signed URLs for underlay drawings, cached per storage path for the session.
+ * The bucket is private (an architect's drawing is the client's document), so
+ * each path is exchanged for a URL valid long enough for a working session.
  */
-type RoomMeta = {
-  name?: string;
-  origin?: { x?: number; y?: number };
-  dimensions?: { width?: number; height?: number; unit?: string };
+const UNDERLAY_URL_SECONDS = 60 * 60 * 12;
+const underlayUrlCache = new Map<string, { url: Promise<string | null>; expires: number }>();
+const underlayUrl = (path: string) => {
+  // Re-sign an hour before expiry, and never keep a failure: a single offline
+  // blip used to leave the drawing missing until a full reload.
+  const hit = underlayUrlCache.get(path);
+  if (hit && Date.now() < hit.expires) return hit.url;
+  const url = supabase.storage
+    .from('project-documents')
+    .createSignedUrl(path, UNDERLAY_URL_SECONDS)
+    .then(({ data }) => {
+      if (!data?.signedUrl) underlayUrlCache.delete(path);
+      return data?.signedUrl ?? null;
+    })
+    .catch(() => {
+      underlayUrlCache.delete(path);
+      return null;
+    });
+  underlayUrlCache.set(path, { url, expires: Date.now() + (UNDERLAY_URL_SECONDS - 3600) * 1000 });
+  return url;
 };
 
 // Minimap component — renders a small overview of the canvas
@@ -61,7 +79,17 @@ const MinimapOverlay = ({ fabricCanvas }: { fabricCanvas: FabricCanvas | null })
       ctx.fillStyle = '#1a1a1a';
       ctx.fillRect(0, 0, 120, 80);
 
-      const mainEl = (fabricCanvas as any).lowerCanvasEl || fabricCanvas.getElement?.();
+      // A disposed Fabric canvas has no elements, and `getElement()` THROWS on
+      // one ("Cannot read properties of undefined (reading 'el')") rather than
+      // returning null. The canvas is disposed and rebuilt under this effect on
+      // a hot reload and on React's development double-mount; the throw came
+      // from inside an effect, so it took the whole planner down. Read the
+      // element without the throwing accessor, and skip the frame if it's gone.
+      const fc = fabricCanvas as unknown as {
+        elements?: { lower?: { el?: HTMLCanvasElement } };
+        lowerCanvasEl?: HTMLCanvasElement;
+      };
+      const mainEl = fc.elements?.lower?.el ?? fc.lowerCanvasEl;
       if (!mainEl) return;
 
       const cw = fabricCanvas.width || 400;
@@ -131,7 +159,6 @@ const MinimapOverlay = ({ fabricCanvas }: { fabricCanvas: FabricCanvas | null })
   );
 };
 
-const WALL_THICKNESS = 3;
 const SNAP_DISTANCE = 10; // px for wall endpoint snapping
 const AXIS_SNAP_DEGREES = 10; // snap to horizontal/vertical within this angle
 
@@ -200,13 +227,24 @@ const WALL_POINT_MATCH_TOLERANCE = 6;
  * Only used to detect whether a rendered Fabric object is still in sync with React state —
  * any property that doesn't affect rendering can be omitted safely.
  */
+/**
+ * A symbol's drawn scale. Every symbol was 1.2x; a symbol's own `width` now
+ * sets it, with 40 — what every existing symbol has — giving exactly 1.2x, so
+ * no drawing changes. The AI plan reader places smaller symbols (width 30), so
+ * a whole building is not wall-to-wall glyphs.
+ */
+const symbolScaleOf = (obj: { width?: number }) => 1.2 * ((obj.width ?? 40) / 40);
+
 const serialiseCanvasObject = (obj: CanvasObject): string => {
   // Points array is the hot path for walls/lines — stringify only if present
   const points = obj.points ? obj.points.map((p) => `${p.x},${p.y}`).join(';') : '';
   return (
     `${obj.id}|${obj.type}|${obj.x ?? ''}|${obj.y ?? ''}|${obj.rotation ?? ''}|` +
     `${obj.width ?? ''}|${obj.height ?? ''}|${obj.symbolId ?? ''}|` +
-    `${(obj as { text?: string }).text ?? ''}|${(obj as { color?: string }).color ?? ''}|${points}`
+    `${(obj as { text?: string }).text ?? ''}|${(obj as { color?: string }).color ?? ''}|${points}|` +
+    // circuitRef and fontSize too: a symbol whose circuit was assigned after
+    // it was drawn never redrew, so its tag was missing.
+    `${obj.src ?? ''}|${obj.ghost ? 'g' : ''}|${obj.circuitRef ?? ''}|${obj.fontSize ?? ''}`
   );
 };
 
@@ -233,14 +271,44 @@ const findTagSpot = (target: CanvasObject, all: CanvasObject[]): { x: number; y:
     { x: -TAG_RADIUS * 0.75, y: TAG_RADIUS * 0.75 },
   ];
   const neighbours = all.filter((o) => o.type === 'symbol' && o.id !== target.id);
+  // Room names too: a tag printed over "3.4 × 3.6 m" makes both unreadable.
+  const names = all
+    .filter((o) => o.type === 'text' && o.text)
+    .map((t) => {
+      const { w, h } = labelSize(String(t.text), t.fontSize ?? 16);
+      // Any angle, turned about the text's top-left as Fabric draws it.
+      const a = ((t.rotation ?? 0) * Math.PI) / 180;
+      const corners = [
+        [0, 0],
+        [w, 0],
+        [0, h],
+        [w, h],
+      ].map(([dx, dy]) => ({
+        x: t.x + dx * Math.cos(a) - dy * Math.sin(a),
+        y: t.y + dx * Math.sin(a) + dy * Math.cos(a),
+      }));
+      return {
+        x0: Math.min(...corners.map((c) => c.x)),
+        y0: Math.min(...corners.map((c) => c.y)),
+        x1: Math.max(...corners.map((c) => c.x)),
+        y1: Math.max(...corners.map((c) => c.y)),
+      };
+    });
+  const onName = (px: number, py: number) =>
+    names.some((b) => px > b.x0 - 7 && px < b.x1 + 7 && py > b.y0 - 5 && py < b.y1 + 5);
 
   for (const c of candidates) {
     const px = target.x + c.x;
     const py = target.y + c.y;
-    const clashes = neighbours.some(
-      (n) => Math.abs(n.x - px) < TAG_CLEARANCE && Math.abs(n.y - py) < TAG_CLEARANCE
-    );
+    const clashes =
+      neighbours.some(
+        (n) => Math.abs(n.x - px) < TAG_CLEARANCE && Math.abs(n.y - py) < TAG_CLEARANCE
+      ) || onName(px, py);
     if (!clashes) return { x: px, y: py };
+  }
+  // Nowhere fully clear: at least keep off the name.
+  for (const c of candidates) {
+    if (!onName(target.x + c.x, target.y + c.y)) return { x: target.x + c.x, y: target.y + c.y };
   }
   return { x: target.x, y: target.y - TAG_RADIUS };
 };
@@ -405,6 +473,24 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
     const dimensionStartRef = useRef<{ x: number; y: number } | null>(null);
     const cableStartIdRef = useRef<string | null>(null);
     const [zoomLevel, setZoomLevel] = useState(1);
+    const underlayFailedRef = useRef(false);
+
+    // Circuit tags are drawn at 7.5 units; zoomed out they become specks that
+    // read as dirt on the drawing. Show them once they are legible. The export
+    // capture turns them back on regardless (roomImage.ts).
+    useEffect(() => {
+      const canvas = fabricCanvasRef.current;
+      if (!canvas) return;
+      const show = zoomLevel >= CIRCUIT_TAG_MIN_ZOOM;
+      let changed = false;
+      canvas.getObjects().forEach((o) => {
+        if ((o as any).isCircuitTag && o.visible !== show) {
+          o.visible = show;
+          changed = true;
+        }
+      });
+      if (changed) canvas.requestRenderAll();
+    }, [zoomLevel]);
     // Published once the Fabric canvas exists so children re-render with it.
     const [canvasReady, setCanvasReady] = useState<FabricCanvas | null>(null);
     // (An `aiRenderActiveRef` guard used to live here to suppress the object
@@ -843,7 +929,9 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       const canvas = fabricCanvasRef.current;
       if (!canvas) return;
 
-      const objects = canvas.getObjects().filter((obj) => !(obj as any).isGridLine);
+      const objects = canvas
+        .getObjects()
+        .filter((obj) => !(obj as any).isGridLine && !(obj as any).isHighlight);
       if (objects.length === 0) return;
 
       // Calculate bounding box of all objects
@@ -908,8 +996,76 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       canvas.renderAll();
     };
 
+    /**
+     * Show where a set of items is: fit them in view and ring each one for a
+     * few seconds. Used by the board schedule to point at a circuit on the
+     * drawing. The rings live on the canvas only — never in the objects.
+     */
+    /** The drawing could not load: show the rooms' own walls instead. */
+    const showGhostWalls = () => {
+      // Remembered, so walls drawn after the failure (still queued behind
+      // symbol loads) come in visible too.
+      underlayFailedRef.current = true;
+      const c = fabricCanvasRef.current;
+      if (!c) return;
+      c.getObjects().forEach((o) => {
+        if ((o as any).customData?.type === 'ghost-wall') o.visible = true;
+      });
+      c.requestRenderAll();
+    };
+
+    const showObjects = (ids: string[]) => {
+      const canvas = fabricCanvasRef.current;
+      const targets = objectsRef.current.filter((o) => ids.includes(o.id));
+      if (!canvas || targets.length === 0) return;
+      const xs = targets.map((o) => o.x);
+      const ys = targets.map((o) => o.y);
+      const minX = Math.min(...xs) - 60;
+      const maxX = Math.max(...xs) + 60;
+      const minY = Math.min(...ys) - 60;
+      const maxY = Math.max(...ys) + 60;
+      const zoom = Math.min(
+        2.5,
+        Math.max(
+          0.2,
+          Math.min((canvas.width || 400) / (maxX - minX), (canvas.height || 600) / (maxY - minY))
+        )
+      );
+      focusOnPoint((minX + maxX) / 2, (minY + maxY) / 2, zoom);
+
+      const rings = targets.map(
+        (o) =>
+          new Circle({
+            left: o.x,
+            top: o.y,
+            radius: 22,
+            originX: 'center',
+            originY: 'center',
+            fill: 'rgba(250, 204, 21, 0.18)',
+            stroke: '#EAB308',
+            strokeWidth: 3,
+            selectable: false,
+            evented: false,
+            excludeFromExport: true,
+          })
+      );
+      // Flagged so fit-to-view and the PDF capture leave them out.
+      rings.forEach((r) => {
+        (r as any).isHighlight = true;
+        canvas.add(r);
+      });
+      canvas.requestRenderAll();
+      window.setTimeout(() => {
+        const c = fabricCanvasRef.current;
+        if (!c) return;
+        rings.forEach((r) => c.remove(r));
+        c.requestRenderAll();
+      }, 2600);
+    };
+
     // Expose methods to parent via ref
     useImperativeHandle(ref, () => ({
+      showObjects,
       getCanvasElement: (): HTMLCanvasElement | null => {
         return canvasRef.current;
       },
@@ -1053,16 +1209,8 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
        */
       // Shape the generator returns per room (ELE-1745). `origin` places the
       // room on the floor; `dimensions` are what the plan was labelled with.
-      renderAIRoom: async (roomData: {
-        room?: RoomMeta;
-        walls?: { id?: string; length: number }[];
-        symbols?: { type: string; wall?: string; position?: number | string }[];
-        rooms?: {
-          room?: RoomMeta;
-          walls?: { id?: string; length: number }[];
-          symbols?: { type: string; wall?: string; position?: number | string }[];
-        }[];
-      }) => {
+      renderAIRoom: async (roomData: AIPlanData) => {
+        underlayFailedRef.current = false; // a new drawing gets a fresh chance to load
         const canvas = fabricCanvasRef.current;
         if (!canvas) return;
 
@@ -1076,235 +1224,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
          * too, so that is wrapped into a one-entry array and everything below
          * runs once per room.
          */
-        const plan =
-          Array.isArray(roomData.rooms) && roomData.rooms.length > 0
-            ? roomData.rooms
-            : [{ room: roomData.room, walls: roomData.walls, symbols: roomData.symbols }];
-
-        const stamp = Date.now();
-        const next: CanvasObject[] = [];
-
-        plan.forEach((entry, roomIdx) => {
-          const offsetX = 100 + (entry.room?.origin?.x ?? 0) * SCALE;
-          const offsetY = 100 + (entry.room?.origin?.y ?? 0) * SCALE;
-          const walls = entry.walls || [];
-          const symbols = entry.symbols || [];
-
-          /*
-           * Walls are resolved BY ID, not by array position.
-           *
-           * This used to walk the array in order, moving a pen on from the
-           * previous wall's end point, and then read the room's width and
-           * height off `walls[0]` and `walls[1]`. Both assume the model returns
-           * exactly north, east, south, west in that order. When it does not —
-           * and asking for a whole floor at once makes that far more likely —
-           * the rectangle is traced in the wrong order and comes out as an open
-           * zig-zag, while the extents come off the wrong walls so every symbol
-           * is placed against the wrong side of the room.
-           *
-           * Reading by id is order-independent, and a room missing one wall
-           * still closes because the opposite wall supplies the length.
-           */
-          const wallLength = (id: string) => walls.find((w) => w.id === id)?.length;
-          const widthM = wallLength('north') ?? wallLength('south') ?? 4;
-          const heightM = wallLength('east') ?? wallLength('west') ?? 4;
-          const roomWidth = widthM * SCALE;
-          const roomHeight = heightM * SCALE;
-
-          // Corners, clockwise from the room's top-left.
-          const x0 = offsetX;
-          const y0 = offsetY;
-          const x1 = offsetX + roomWidth;
-          const y1 = offsetY + roomHeight;
-
-          [
-            { from: { x: x0, y: y0 }, to: { x: x1, y: y0 } }, // north
-            { from: { x: x1, y: y0 }, to: { x: x1, y: y1 } }, // east
-            { from: { x: x1, y: y1 }, to: { x: x0, y: y1 } }, // south
-            { from: { x: x0, y: y1 }, to: { x: x0, y: y0 } }, // west
-          ].forEach((run, idx) => {
-            next.push({
-              id: `ai-wall-${roomIdx}-${idx}-${stamp}`,
-              type: 'wall',
-              x: run.from.x,
-              y: run.from.y,
-              points: [run.from, run.to],
-            });
-          });
-          const SYMBOL_INSET = 4;
-
-          /*
-           * Spread symbols that land on the same spot.
-           *
-           * The model happily puts two accessories at the same wall position —
-           * a real response for a kitchen placed `socket-cooker-45a` and
-           * `socket-switched-fused-spur` both at north 1.5m — and they then
-           * draw exactly on top of each other. One symbol is simply invisible,
-           * and the drawing is wrong in a way the user cannot see.
-           *
-           * Each repeat of a wall+position is stepped along the wall instead.
-           */
-          const SYMBOL_SPREAD = 28;
-          const usedSlots = new Map<string, number>();
-
-          symbols.forEach((symbol, idx) => {
-            // ELE-604: the AI sometimes emits ids suffixed with -bs7671, and
-            // still uses names from the retired symbol list. `resolveSymbolId`
-            // handles both, so a room comes back with everything that was asked
-            // for rather than quietly missing items.
-            const symbolId = resolveSymbolId(symbol.type);
-            const known = symbolRegistry.some((s) => s.id === symbolId);
-            if (!known) {
-              console.warn(
-                `[AI room] unknown symbol skipped: ${symbol.type} (resolved: ${symbolId})`
-              );
-              return;
-            }
-
-            let sx = offsetX + 20;
-            let sy = offsetY + 20;
-
-            /*
-             * `position` arrives in three shapes, and all three are useful:
-             *   "center"     — middle of the room
-             *   "2.4"        — metres along the named wall
-             *   "0.8, 1.4"   — an exact x,y in metres inside the room
-             *
-             * The pair is the model's own idea, and a good one: it places
-             * ceiling items where they actually go instead of piling every
-             * downlight on the centre point. It appeared once the response
-             * schema was introduced, so it must be handled rather than
-             * half-parsed — `parseFloat("0.8, 1.4")` quietly yields 0.8 and
-             * throws the second number away.
-             */
-            const posText = typeof symbol.position === 'string' ? symbol.position : '';
-            const pair = posText.split(',');
-            const pairX = Number.parseFloat(pair[0]);
-            const pairY = pair.length > 1 ? Number.parseFloat(pair[1]) : NaN;
-            const isCoordinatePair = Number.isFinite(pairX) && Number.isFinite(pairY);
-
-            if (isCoordinatePair) {
-              sx = offsetX + pairX * SCALE;
-              sy = offsetY + pairY * SCALE;
-            } else if (symbol.position === 'center') {
-              /*
-               * Ceiling items all ask for "center", so a room with a light and
-               * a detector stacks them on one point — a real kitchen response
-               * put `light-ceiling` and `heat-detector` there, and the corridor
-               * did the same with its smoke detector. Each additional centre
-               * item is stepped to the side so all of them are visible and can
-               * be dragged apart.
-               */
-              const centreRepeat = usedSlots.get('center') ?? 0;
-              usedSlots.set('center', centreRepeat + 1);
-              sx = offsetX + roomWidth / 2 + centreRepeat * SYMBOL_SPREAD;
-              sy = offsetY + roomHeight / 2;
-            } else if (symbol.wall) {
-              const slotKey = `${symbol.wall}:${symbol.position}`;
-              const repeat = usedSlots.get(slotKey) ?? 0;
-              usedSlots.set(slotKey, repeat + 1);
-              /*
-               * `position` arrives as a number or as a numeric string.
-               *
-               * The generator now constrains its output with a schema, and that
-               * schema types this field as a string — so "1.5" is as likely as
-               * 1.5. The old `typeof === 'number'` test silently turned every
-               * string into 0 and stacked the whole room's accessories in the
-               * corner. Parse, and fall back to 0 only when it really is not a
-               * number.
-               */
-              const rawPos = symbol.position;
-              const parsedPos =
-                typeof rawPos === 'number' ? rawPos : Number.parseFloat(String(rawPos ?? ''));
-              const rawMetres = Number.isFinite(parsedPos) ? parsedPos : 0;
-
-              /*
-               * Clamp to the wall it is actually on.
-               *
-               * The model can give a distance measured along the ROOM when the
-               * accessory is on a short end wall. A real 21m x 3.4m corridor
-               * came back with a two-way switch on the east wall at 20.5m — a
-               * wall only 3.4m long — which drew the switch far outside the
-               * building. Whatever the model meant, a symbol belonging to a
-               * room must never render outside it, so the distance is held
-               * inside the wall's own length.
-               */
-              const wallRunMetres =
-                symbol.wall === 'north' || symbol.wall === 'south' ? widthM : heightM;
-              const alongMetres = Math.min(Math.max(rawMetres, 0), wallRunMetres);
-              const along = alongMetres * SCALE + repeat * SYMBOL_SPREAD;
-              if (symbol.wall === 'north') {
-                sx = offsetX + along;
-                sy = offsetY + WALL_THICKNESS + SYMBOL_INSET;
-              } else if (symbol.wall === 'south') {
-                sx = offsetX + along;
-                sy = offsetY + roomHeight - WALL_THICKNESS - SYMBOL_INSET - 20;
-              } else if (symbol.wall === 'east') {
-                sx = offsetX + roomWidth - WALL_THICKNESS - SYMBOL_INSET - 20;
-                sy = offsetY + along;
-              } else if (symbol.wall === 'west') {
-                sx = offsetX + WALL_THICKNESS + SYMBOL_INSET;
-                sy = offsetY + along;
-              }
-            }
-
-            /*
-             * Last-ditch spread. Anything that reached here without a wall, a
-             * centre or a coordinate pair would otherwise sit on the same
-             * default corner as every other such symbol — which is how three
-             * bathroom downlights ended up as one.
-             */
-            if (!isCoordinatePair && symbol.position !== 'center' && !symbol.wall) {
-              const fallbackRepeat = usedSlots.get('fallback') ?? 0;
-              usedSlots.set('fallback', fallbackRepeat + 1);
-              sx += fallbackRepeat * SYMBOL_SPREAD;
-            }
-
-            next.push({
-              id: `ai-sym-${roomIdx}-${idx}-${stamp}`,
-              type: 'symbol',
-              x: sx,
-              y: sy,
-              width: 40,
-              height: 40,
-              rotation: 0,
-              symbolId,
-            });
-          });
-
-          // Room name as a real text object so it can be moved, edited or
-          // deleted like anything else — it used to be baked into the canvas.
-          if (entry.room?.name) {
-            /*
-             * The name goes INSIDE the room.
-             *
-             * It used to sit 40px above the top wall, which is fine for a
-             * single room floating on an empty canvas. With a whole floor the
-             * space above a room belongs to the room above it — on a real
-             * six-room plan the corridor's label landed inside the kitchen and
-             * bedroom one's landed inside the corridor. Inset from the top-left
-             * corner, a label is always in the room it names.
-             */
-            /*
-             * Name AND size. The model reads the dimensions off the drawing and
-             * we were dropping them — an electrician pricing a rewire needs the
-             * room size on the plan, and it is the first thing anyone checks a
-             * generated plan against. Both are ordinary text objects, so either
-             * can be moved, edited or deleted.
-             */
-            const dims = entry.room.dimensions;
-            const sizeLabel =
-              dims?.width && dims?.height ? `${dims.width}m x ${dims.height}m` : null;
-
-            next.push({
-              id: `ai-title-${roomIdx}-${stamp}`,
-              type: 'text',
-              x: offsetX + 8,
-              y: offsetY + 8,
-              text: sizeLabel ? `${entry.room.name}\n${sizeLabel}` : entry.room.name,
-            });
-          }
-        });
+        const next = aiPlanToObjects(roomData);
 
         // Generating a room REPLACES whatever was on the canvas. Snapshot
         // first so that is reversible — an accidental tap on AI Help could
@@ -1744,7 +1664,8 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           const allObjs = canvas.getObjects();
           allObjs.forEach((fObj) => {
             const cd = (fObj as any).customData;
-            if (cd?.type === 'symbol' || cd?.type === 'cable') {
+            // Drawn circuit runs stay underneath (see the cable renderer).
+            if (cd?.type === 'symbol' || (cd?.type === 'cable' && !cd.generated)) {
               canvas.bringObjectToFront(fObj);
             }
           });
@@ -2066,8 +1987,8 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           native.set({
             left: obj.x,
             top: obj.y,
-            scaleX: 1.2,
-            scaleY: 1.2,
+            scaleX: symbolScaleOf(obj),
+            scaleY: symbolScaleOf(obj),
             angle: obj.rotation || 0,
             selectable: true,
             hasControls: false,
@@ -2091,11 +2012,15 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             const svgObjects = result.objects;
             const validObjects = (svgObjects || []).filter((o): o is FabricObject => o !== null);
             if (validObjects.length > 0) {
-              fabricObj = util.groupSVGElements(validObjects, {
+              // Always a Group. `util.groupSVGElements` hands back the bare
+              // shape when an SVG has only one element and drops these options
+              // — every downlight, LED strip and junction box on a plan was
+              // drawn stacked at the canvas corner instead of in its room.
+              fabricObj = new Group(validObjects, {
                 left: obj.x,
                 top: obj.y,
-                scaleX: 1.2,
-                scaleY: 1.2,
+                scaleX: symbolScaleOf(obj),
+                scaleY: symbolScaleOf(obj),
                 angle: obj.rotation || 0,
                 selectable: true,
                 hasControls: false,
@@ -2164,19 +2089,10 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         // circuits with their reference — L1, S1, C1 — so that is what we
         // draw. The colour is kept as the TEXT colour, so the at-a-glance
         // scanning still works without the blob.
-        if (obj.circuitRef && fabricObj) {
-          const COLOURS: Record<string, string> = {
-            L1: '#1D4ED8',
-            L2: '#3B82F6',
-            S1: '#B91C1C',
-            S2: '#DC2626',
-            C1: '#B45309',
-            EV1: '#047857',
-            FA1: '#BE185D',
-            IH1: '#6D28D9',
-            AC1: '#0E7490',
-          };
-          const tagColour = COLOURS[obj.circuitRef] || '#374151';
+        // Switches follow their light's circuit; drawings don't tag them, and
+        // tagging every one was a large share of the clutter.
+        if (obj.circuitRef && fabricObj && !/^switch-/.test(obj.symbolId ?? '')) {
+          const tagColour = circuitColour(obj.circuitRef);
           const spot = findTagSpot(obj, objectsRef.current);
           const tag = new FabricText(obj.circuitRef, {
             left: spot.x,
@@ -2194,6 +2110,8 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           });
           // Same customData type so the follow-the-symbol move logic still applies.
           (tag as any).customData = { type: 'circuit-dot', parentId: obj.id };
+          (tag as any).isCircuitTag = true;
+          tag.visible = (canvas.getZoom() || 1) >= CIRCUIT_TAG_MIN_ZOOM;
           canvas.add(tag);
         }
       } else if (obj.type === 'rectangle') {
@@ -2235,7 +2153,10 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           left: obj.x,
           top: obj.y,
           fill: '#000000',
-          fontSize: 16,
+          fontSize: obj.fontSize ?? 16,
+          // A room name the plan placed keeps a soft white ground, so a cable
+          // run or the architect's drawing beneath never strikes through it.
+          ...(obj.id.startsWith('ai-title-') ? { backgroundColor: 'rgba(255,255,255,0.85)' } : {}),
           fontFamily: 'Arial',
           angle: obj.rotation || 0,
           selectable: true,
@@ -2244,6 +2165,82 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         (fabricObj as any).customData = {
           id: obj.id,
           type: 'text',
+          stateHash: serialiseCanvasObject(obj),
+        };
+      } else if (obj.type === 'underlay' && obj.src) {
+        /*
+         * The architect's drawing, underneath everything. Locked: not
+         * selectable, not a hit target, so drawing and placing work exactly as
+         * on an empty canvas. It sits just above the grid (the drawing is its
+         * own paper) and below every wall, symbol and label.
+         */
+        // Loaded in the background. Awaiting it here held every wall, symbol
+        // and label behind two network round-trips: fit-to-view ran on an
+        // empty canvas, and any change in that window drew everything twice.
+        const canvasAtStart = fabricCanvasRef.current;
+        void (async () => {
+          const url = await underlayUrl(obj.src!);
+          const c = fabricCanvasRef.current;
+          if (!url) {
+            showGhostWalls();
+            return;
+          }
+          if (!c || c !== canvasAtStart) return;
+          // Still wanted, and not already on the canvas?
+          if (!objectsRef.current.some((o) => o.id === obj.id)) return;
+          if (c.getObjects().some((o) => (o as any).customData?.id === obj.id)) return;
+          try {
+            const img = await FabricImage.fromURL(url, { crossOrigin: 'anonymous' });
+            if (fabricCanvasRef.current !== c) return;
+            if (c.getObjects().some((o) => (o as any).customData?.id === obj.id)) return;
+            img.set({
+              left: obj.x,
+              top: obj.y,
+              scaleX: (obj.width ?? img.width) / img.width,
+              scaleY: (obj.height ?? img.height) / img.height,
+              selectable: false,
+              evented: false,
+              hoverCursor: 'default',
+            });
+            (img as any).customData = {
+              id: obj.id,
+              type: 'underlay',
+              stateHash: serialiseCanvasObject(obj),
+            };
+            c.add(img);
+            const gridCount = c
+              .getObjects()
+              .filter((o) => (o as { isGridLine?: boolean }).isGridLine).length;
+            c.moveObjectTo(img, gridCount);
+            c.requestRenderAll();
+          } catch (err) {
+            console.warn('[underlay] could not load drawing:', err);
+            showGhostWalls();
+          }
+        })();
+        return;
+      } else if (obj.type === 'wall' && obj.ghost && obj.points && obj.points.length >= 2) {
+        // Drawn by the architect's drawing underneath; kept for snapping. A
+        // hairline, not nothing: if the drawing cannot load (offline, a link
+        // that could not be signed) the rooms are still there to see.
+        const [p1, p2] = obj.points;
+        fabricObj = new Line([p1.x, p1.y, p2.x, p2.y], {
+          stroke: '#94a3b8',
+          strokeWidth: 1,
+          opacity: 0.6,
+          selectable: false,
+          evented: false,
+          // Hidden while the drawing is there — a second, slightly-off set of
+          // walls over the architect's reads as a mistake. Shown only when
+          // no drawing can be loaded (see showGhostWalls).
+          visible:
+            underlayFailedRef.current || !objectsRef.current.some((o) => o.type === 'underlay'),
+        });
+        (fabricObj as any).customData = {
+          id: obj.id,
+          // Not 'wall': the wall handlers (drag ends, lengths, adornments)
+          // must leave a guide line alone.
+          type: 'ghost-wall',
           stateHash: serialiseCanvasObject(obj),
         };
       } else if (obj.type === 'wall' && obj.points && obj.points.length >= 2) {
@@ -2361,26 +2358,32 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         // Auto dimension label — always the FULL wall length, placed at the
         // midpoint of the original line (not per-segment). This gives the
         // correct total length even when the wall is split by features.
-        const midX = (p1.x + p2.x) / 2;
-        const midY = (p1.y + p2.y) / 2;
-        const labelText = pxToMetres(dist);
-        // Dimension text sits ON the drawing, so it needs to read as annotation
-        // rather than content: smaller, mid-grey, on a white ground so it is
-        // never lost against a wall or a symbol it happens to overlap.
-        const label = new FabricText(labelText, {
-          left: isVertical ? midX + WALL_THICKNESS / 2 + 7 : midX,
-          top: isVertical ? midY : midY - WALL_THICKNESS / 2 - 15,
-          fontSize: 9,
-          fill: '#1f2937',
-          fontFamily: 'Helvetica, Arial, sans-serif',
-          fontWeight: '600',
-          backgroundColor: 'rgba(255,255,255,0.92)',
-          selectable: false,
-          evented: false,
-          originX: isVertical ? 'left' : 'center',
-        });
-        (label as any).customData = { id: obj.id + '-label', type: 'wall-label', parentId: obj.id };
-        canvas.add(label);
+        if (!obj.hideLength) {
+          const midX = (p1.x + p2.x) / 2;
+          const midY = (p1.y + p2.y) / 2;
+          const labelText = pxToMetres(dist);
+          // Dimension text sits ON the drawing, so it needs to read as annotation
+          // rather than content: smaller, mid-grey, on a white ground so it is
+          // never lost against a wall or a symbol it happens to overlap.
+          const label = new FabricText(labelText, {
+            left: isVertical ? midX + WALL_THICKNESS / 2 + 7 : midX,
+            top: isVertical ? midY : midY - WALL_THICKNESS / 2 - 15,
+            fontSize: 9,
+            fill: '#1f2937',
+            fontFamily: 'Helvetica, Arial, sans-serif',
+            fontWeight: '600',
+            backgroundColor: 'rgba(255,255,255,0.92)',
+            selectable: false,
+            evented: false,
+            originX: isVertical ? 'left' : 'center',
+          });
+          (label as any).customData = {
+            id: obj.id + '-label',
+            type: 'wall-label',
+            parentId: obj.id,
+          };
+          canvas.add(label);
+        }
 
         return; // Already added manually
       } else if (obj.type === 'cable' && obj.points && obj.points.length >= 2) {
@@ -2388,18 +2391,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         // The canvas background is white, so the fallback uses a dark grey (#404040)
         // which is visible against white yet distinct from black walls. Previously
         // the fallback was #6B7280 which rendered as invisible washed-out grey.
-        const CIRCUIT_PALETTE: Record<string, string> = {
-          L1: '#2563eb',
-          L2: '#60A5FA',
-          S1: '#dc2626',
-          S2: '#F87171',
-          C1: '#D97706',
-          EV1: '#059669',
-          FA1: '#DB2777',
-          IH1: '#7C3AED',
-          AC1: '#0891b2',
-        };
-        const cableColour = CIRCUIT_PALETTE[obj.circuitRef || ''] || '#404040';
+        const cableColour = obj.circuitRef ? circuitColour(obj.circuitRef) : '#404040';
 
         // Walk all waypoints so Phase-5 multi-segment cable routes render
         // correctly without another touch to this block.
@@ -2413,8 +2405,10 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           segments.push(
             new Line([a.x, a.y, b.x, b.y], {
               stroke: cableColour,
-              strokeWidth: 3,
-              strokeDashArray: [8, 5],
+              // A drawn circuit run is a wiring line, not a hand-drawn cable:
+              // finer, so a whole board's runs read without swamping the plan.
+              strokeWidth: obj.generated ? 1.6 : 3,
+              strokeDashArray: obj.generated ? [6, 4] : [8, 5],
               strokeLineCap: 'round',
               selectable: false,
               evented: false,
@@ -2437,7 +2431,8 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             labelY = (a.y + b.y) / 2;
           }
         }
-        const cableLabel = pxToMetres(totalLen);
+        // A drawn run carries its estimate (drops and tails included).
+        const cableLabel = obj.lengthM ? `≈ ${obj.lengthM} m` : pxToMetres(totalLen);
         const circuitTag = obj.circuitRef ? `${obj.circuitRef} · ` : '';
         const labelText = `${circuitTag}${cableLabel}`;
 
@@ -2471,11 +2466,15 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         });
 
         const cableGroup = new Group(
-          [...segments, labelBg as unknown as FabricObject, label as unknown as FabricObject],
+          // A drawn circuit run carries no label: its length is in the board
+          // schedule, and a pill on each of a dozen runs buried the plan.
+          obj.generated
+            ? segments
+            : [...segments, labelBg as unknown as FabricObject, label as unknown as FabricObject],
           {
-            selectable: true,
+            selectable: !obj.generated,
             hasControls: false,
-            evented: true,
+            evented: !obj.generated, // drawn runs never take a tap from the fittings
             lockScalingX: true,
             lockScalingY: true,
             lockRotation: true,
@@ -2488,9 +2487,21 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         (cableGroup as any).customData = {
           id: obj.id,
           type: 'cable',
+          generated: !!obj.generated,
           stateHash: serialiseCanvasObject(obj),
         };
         canvas.add(cableGroup);
+        if (obj.generated) {
+          // Wiring sits UNDER the drawing's content — above the grid and the
+          // architect's drawing, below walls, fittings and names — so a run
+          // never strikes through a room's name or a socket.
+          const floor = canvas
+            .getObjects()
+            .filter(
+              (o) => (o as any).isGridLine || (o as any).customData?.type === 'underlay'
+            ).length;
+          canvas.moveObjectTo(cableGroup, floor);
+        }
         return;
       } else if (obj.type === 'dimension' && obj.points && obj.points.length >= 2) {
         const p1 = obj.points[0];
@@ -3306,7 +3317,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             // Symbols are fixed size — only save position and rotation
             if (customData.type === 'symbol') {
               // Reset any accidental scaling back to 1:1 (ELE-712 safety)
-              modifiedObj.set({ scaleX: 1.2, scaleY: 1.2 });
+              modifiedObj.set({ scaleX: symbolScaleOf(obj), scaleY: symbolScaleOf(obj) });
               const updatedObject = {
                 ...obj,
                 // ?? not || — rotating an item back to 0deg is a real value,
@@ -3341,7 +3352,8 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
                 x: (obj.x || 0) + deltaX,
                 y: (obj.y || 0) + deltaY,
                 points: nextPoints,
-                rotation: modifiedObj.angle || obj.rotation || 0,
+                // ?? not ||: turning something back to 0° is a real angle.
+                rotation: modifiedObj.angle ?? obj.rotation ?? 0,
               };
               customData.stateHash = serialiseCanvasObject(updatedObject);
               return updatedObject;
@@ -3350,9 +3362,10 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             if (customData.type === 'text') {
               const updatedObject = {
                 ...obj,
-                x: modifiedObj.left || obj.x,
-                y: modifiedObj.top || obj.y,
-                rotation: modifiedObj.angle || obj.rotation || 0,
+                x: modifiedObj.left ?? obj.x,
+                y: modifiedObj.top ?? obj.y,
+                // ?? not ||: turning something back to 0° is a real angle.
+                rotation: modifiedObj.angle ?? obj.rotation ?? 0,
                 text: modifiedObj.text || obj.text,
               };
               customData.stateHash = serialiseCanvasObject(updatedObject);
@@ -3361,11 +3374,12 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
 
             const updatedObject = {
               ...obj,
-              x: modifiedObj.left || obj.x,
-              y: modifiedObj.top || obj.y,
+              x: modifiedObj.left ?? obj.x,
+              y: modifiedObj.top ?? obj.y,
               width: (modifiedObj.width || obj.width || 100) * (modifiedObj.scaleX || 1),
               height: (modifiedObj.height || obj.height || 100) * (modifiedObj.scaleY || 1),
-              rotation: modifiedObj.angle || obj.rotation || 0,
+              // ?? not ||: turning something back to 0° is a real angle.
+              rotation: modifiedObj.angle ?? obj.rotation ?? 0,
             };
             customData.stateHash = serialiseCanvasObject(updatedObject);
             return updatedObject;

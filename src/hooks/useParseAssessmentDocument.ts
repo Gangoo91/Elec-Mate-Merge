@@ -83,8 +83,8 @@ async function extractText(file: File): Promise<string> {
   const lower = file.name.toLowerCase();
   if (lower.endsWith('.pdf') || file.type === 'application/pdf') {
     const pdfjs = await import('pdfjs-dist');
-    // Vite serves the worker as a static URL.
-    // @ts-expect-error -- ?url import handled by Vite at build time
+    // Vite serves the worker as a static URL (`?url` is covered by the
+    // project's Vite types, so no ts-expect-error is needed here).
     const workerSrc = (await import('pdfjs-dist/build/pdf.worker.min.mjs?url')).default;
     pdfjs.GlobalWorkerOptions.workerSrc = workerSrc;
     const buf = await file.arrayBuffer();

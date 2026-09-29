@@ -64,6 +64,15 @@ serve(async (req) => {
       ? `\n\nLABOUR TIMING DATA:\n${labourData.map(l => `- ${l.equipment_category}: ${l.activity_types?.join(', ') || 'install'}`).join('\n')}`
       : '';
 
+    /*
+     * The key was never passed: callOpenAI takes it as its second argument and
+     * this call supplied only the options, so every request went to OpenAI
+     * with "undefined" and came back 401. The tool has been failing for every
+     * user since at least June (found 28 Sep 2026).
+     */
+    const openAiKey = Deno.env.get('OPENAI_API_KEY');
+    if (!openAiKey) throw new Error('OPENAI_API_KEY not configured');
+
     const result = await callOpenAI({
       messages: [
         { role: 'system', content: SYSTEM_PROMPT },
@@ -112,7 +121,7 @@ Use realistic 2026 UK prices. A qualified electrician day rate is typically £25
       ],
       response_format: { type: 'json_object' },
       max_tokens: 6000,
-    });
+    }, openAiKey);
 
     const data = JSON.parse(result.content);
 

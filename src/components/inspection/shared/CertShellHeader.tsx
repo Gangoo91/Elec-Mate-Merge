@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import CertificateHistorySheet from '@/components/inspection/shared/CertificateHistorySheet';
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
 import type { SyncStatus } from '@/hooks/useReportSync';
@@ -33,6 +34,8 @@ interface CertShellHeaderProps {
   currentTab?: string;
   onTabChange?: (tab: string) => void;
   completedTabs?: Record<string, boolean>;
+  /** When supplied, a History control opens the certificate's revision list (ELE-1432). */
+  history?: { reportId: string; onRestored: (data: Record<string, unknown>) => void };
 }
 
 /**
@@ -93,9 +96,11 @@ const CertShellHeader: React.FC<CertShellHeaderProps> = ({
   currentTab,
   onTabChange,
   completedTabs,
+  history,
 }) => {
   const haptic = useHaptic();
   const save = saveWord(isSaving, syncStatus?.cloud, syncStatus?.queuedChanges);
+  const [historyOpen, setHistoryOpen] = useState(false);
 
   return (
     <>
@@ -123,6 +128,19 @@ const CertShellHeader: React.FC<CertShellHeaderProps> = ({
               </p>
             )}
           </div>
+          {history && (
+            <button
+              type="button"
+              onClick={() => {
+                haptic.light();
+                setHistoryOpen(true);
+              }}
+              aria-label="Certificate history — earlier versions and restore"
+              className="h-11 px-2 text-[11.5px] font-semibold text-white touch-manipulation active:scale-[0.97] outline-none focus:outline-none focus-visible:outline-none"
+            >
+              History
+            </button>
+          )}
           <button
             onClick={onManualSave}
             disabled={isSaving || syncStatus?.cloud === 'syncing'}
@@ -224,6 +242,14 @@ const CertShellHeader: React.FC<CertShellHeaderProps> = ({
         className={steps && steps.length > 0 ? 'h-[105px]' : 'h-[64px]'}
         aria-hidden="true"
       />
+      {history && (
+        <CertificateHistorySheet
+          open={historyOpen}
+          onOpenChange={setHistoryOpen}
+          reportId={history.reportId}
+          onRestored={history.onRestored}
+        />
+      )}
     </>
   );
 };

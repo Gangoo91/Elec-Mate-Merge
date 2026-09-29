@@ -18,6 +18,15 @@ interface CertShellFooterProps {
   onGenerate?: () => void;
   canGenerate?: boolean;
   generateLabel?: string;
+  /**
+   * ELE-1787 — when `canGenerate` is false, supply both and the footer shows a
+   * live neutral button that says why ("3 items to complete") and opens the
+   * list, instead of a greyed Generate with no explanation. A user with a
+   * correctly coded Unsatisfactory EICR read the dead button as "it won't let
+   * me generate an Unsatisfactory report".
+   */
+  generateBlockedLabel?: string;
+  onGenerateBlocked?: () => void;
   /** Cert-specific neutral actions rendered beside Back on the last step
       (e.g. Email / Invoice buttons). Style them with certFooterNeutralButton. */
   lastStepActions?: React.ReactNode;
@@ -118,6 +127,8 @@ const CertShellFooter: React.FC<CertShellFooterProps> = ({
   onGenerate,
   canGenerate = true,
   generateLabel = 'Generate certificate',
+  generateBlockedLabel,
+  onGenerateBlocked,
   lastStepActions,
   previewReportType,
   previewData,
@@ -144,63 +155,13 @@ const CertShellFooter: React.FC<CertShellFooterProps> = ({
       )}
       style={{ left: 'var(--sidebar-width, 0px)' }}
     >
-        <div className="mx-auto flex flex-col gap-2 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 lg:max-w-[1600px] lg:flex-row lg:items-center lg:px-8">
-          <span className="hidden text-[12px] tabular-nums text-white/80 lg:block">
-            Step {currentIndex + 1} of {totalSteps}
-          </span>
-          {isLastStep ? (
-            <>
-              <div className="flex gap-2 lg:ml-auto">
-                <button
-                  onClick={() => {
-                    haptic.light();
-                    onPrevious();
-                    scrollToTop();
-                  }}
-                  disabled={!canPrevious}
-                  className={certFooterNeutralButton}
-                >
-                  Back
-                </button>
-                {canPreview && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      haptic.light();
-                      setShowPreview(true);
-                    }}
-                    className={certFooterNeutralButton}
-                  >
-                    Preview
-                  </button>
-                )}
-                {canViewPdf && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      haptic.light();
-                      setShowPdf(true);
-                    }}
-                    className={certFooterNeutralButton}
-                  >
-                    View PDF
-                  </button>
-                )}
-                {lastStepActions}
-              </div>
-              <button
-                onClick={() => {
-                  haptic.medium();
-                  onGenerate?.();
-                }}
-                disabled={!canGenerate}
-                className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-transform hover:bg-elec-yellow/90 disabled:bg-elec-yellow disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation active:scale-[0.99] lg:w-auto lg:px-10 outline-none focus:outline-none focus-visible:outline-none"
-              >
-                {generateLabel}
-              </button>
-            </>
-          ) : (
-            <div className="flex w-full gap-2 lg:ml-auto lg:w-auto">
+      <div className="mx-auto flex flex-col gap-2 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 lg:max-w-[1600px] lg:flex-row lg:items-center lg:px-8">
+        <span className="hidden text-[12px] tabular-nums text-white/80 lg:block">
+          Step {currentIndex + 1} of {totalSteps}
+        </span>
+        {isLastStep ? (
+          <>
+            <div className="flex gap-2 lg:ml-auto">
               <button
                 onClick={() => {
                   haptic.light();
@@ -212,20 +173,85 @@ const CertShellFooter: React.FC<CertShellFooterProps> = ({
               >
                 Back
               </button>
+              {canPreview && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    haptic.light();
+                    setShowPreview(true);
+                  }}
+                  className={certFooterNeutralButton}
+                >
+                  Preview
+                </button>
+              )}
+              {canViewPdf && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    haptic.light();
+                    setShowPdf(true);
+                  }}
+                  className={certFooterNeutralButton}
+                >
+                  View PDF
+                </button>
+              )}
+              {lastStepActions}
+            </div>
+            {!canGenerate && generateBlockedLabel && onGenerateBlocked ? (
+              <button
+                type="button"
+                onClick={() => {
+                  haptic.light();
+                  onGenerateBlocked();
+                }}
+                aria-label={`${generateBlockedLabel} — show what is missing`}
+                className="flex h-12 w-full items-center justify-center gap-2 rounded-xl border border-white/[0.14] bg-white/[0.05] text-[14px] font-medium text-white transition-colors hover:bg-white/[0.09] touch-manipulation active:scale-[0.98] lg:w-auto lg:px-6 outline-none focus:outline-none focus-visible:outline-none"
+              >
+                <span className="font-semibold text-elec-yellow">{generateBlockedLabel}</span>
+                <span className="text-white">· Show</span>
+              </button>
+            ) : (
               <button
                 onClick={() => {
                   haptic.medium();
-                  onNext();
-                  scrollToTop();
+                  onGenerate?.();
                 }}
-                disabled={!canNext}
-                className="h-12 flex-[2] rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-transform hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation active:scale-[0.99] lg:flex-none lg:px-10 outline-none focus:outline-none focus-visible:outline-none"
+                disabled={!canGenerate}
+                className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-transform hover:bg-elec-yellow/90 disabled:bg-elec-yellow disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation active:scale-[0.99] lg:w-auto lg:px-10 outline-none focus:outline-none focus-visible:outline-none"
               >
-                {nextLabels[currentIndex] || 'Continue'}
+                {generateLabel}
               </button>
-            </div>
-          )}
-        </div>
+            )}
+          </>
+        ) : (
+          <div className="flex w-full gap-2 lg:ml-auto lg:w-auto">
+            <button
+              onClick={() => {
+                haptic.light();
+                onPrevious();
+                scrollToTop();
+              }}
+              disabled={!canPrevious}
+              className={certFooterNeutralButton}
+            >
+              Back
+            </button>
+            <button
+              onClick={() => {
+                haptic.medium();
+                onNext();
+                scrollToTop();
+              }}
+              disabled={!canNext}
+              className="h-12 flex-[2] rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-transform hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation active:scale-[0.99] lg:flex-none lg:px-10 outline-none focus:outline-none focus-visible:outline-none"
+            >
+              {nextLabels[currentIndex] || 'Continue'}
+            </button>
+          </div>
+        )}
+      </div>
 
       {canViewPdf && (
         <ReportPdfViewer

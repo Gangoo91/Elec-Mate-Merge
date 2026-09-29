@@ -67,55 +67,96 @@ export interface CircuitScheduleEntry {
    * value is deliberately left for them rather than guessed.
    */
   needsReview?: string;
+  /** Where cable runs are drawn: the run's length and its OSG Table 7.1(i) check. */
+  runLengthM?: number;
+  maxLengthM?: number;
+  lengthOk?: boolean;
+  /** The board it is fed from when the plan has sub-boards: "CU", "DB2"… */
+  fedFrom?: string;
 }
 
 // Symbol IDs that are lighting points
 const LIGHTING_IDS = new Set([
-  'light-ceiling', 'light-wall', 'light-downlight', 'light-emergency',
-  'light-fluorescent', 'light-pendant', 'light-bulkhead', 'light-pir',
-  'light-outside', 'light-led-strip', 'light-exit-sign', 'light-twin-emergency',
+  'light-ceiling',
+  'light-wall',
+  'light-downlight',
+  'light-emergency',
+  'light-fluorescent',
+  'light-pendant',
+  'light-bulkhead',
+  'light-pir',
+  'light-outside',
+  'light-led-strip',
+  'light-exit-sign',
+  'light-twin-emergency',
   'light-high-bay',
 ]);
 
 // Symbol IDs that count as 13A socket points on a ring final
 const SOCKET_IDS = new Set([
-  'socket-single-13a', 'socket-double-13a', 'socket-usb', 'socket-data',
-  'socket-telephone', 'socket-tv-aerial', 'socket-floor', 'socket-outdoor',
-  'socket-shaver',
+  // Not socket-data / telephone / TV aerial: those are not on a mains circuit,
+  // and counted as ring points they inflated the schedule. The shaver supply
+  // unit is a bathroom lighting-circuit item.
+  'socket-single-13a',
+  'socket-double-13a',
+  'socket-usb',
+  'socket-floor',
+  'socket-outdoor',
 ]);
 
 // Fused spurs go on the ring circuit
 const SPUR_IDS = new Set([
-  'socket-fused-spur', 'socket-switched-fused-spur', 'socket-unswitched-spur',
+  'socket-fused-spur',
+  'socket-switched-fused-spur',
+  'socket-unswitched-spur',
 ]);
 
 // Smoke / CO / heat detectors → fire alarm circuit
-const FIRE_ALARM_IDS = new Set([
-  'smoke-detector', 'co-detector', 'heat-detector',
-]);
+const FIRE_ALARM_IDS = new Set(['smoke-detector', 'co-detector', 'heat-detector']);
 
 // Distribution / protection — not on a circuit
 const DISTRIBUTION_IDS = new Set([
-  'consumer-unit', 'mcb', 'rcd', 'rcbo', 'main-isolator',
-  'distribution-board', 'spd', 'meter', 'mccb', 'contactor',
-  'changeover-switch', 'generator-changeover', 'busbar-chamber', 'sub-main-board',
+  'consumer-unit',
+  'mcb',
+  'rcd',
+  'rcbo',
+  'main-isolator',
+  'distribution-board',
+  'spd',
+  'meter',
+  'mccb',
+  'contactor',
+  'changeover-switch',
+  'generator-changeover',
+  'busbar-chamber',
+  'sub-main-board',
 ]);
 
 // Architectural elements — not electrical circuits
 const ARCHITECTURAL_IDS = new Set([
-  'door-left', 'door-right', 'door-double', 'window', 'north-arrow', 'stairs',
+  'door-left',
+  'door-right',
+  'door-double',
+  'window',
+  'north-arrow',
+  'stairs',
 ]);
 
 // Containment — not on a circuit
 const CONTAINMENT_IDS = new Set([
-  'cable-tray', 'conduit', 'trunking', 'floor-trunking', 'busbar-trunking',
-  'cable-tray-drop', 'riser', 'floor-box-multi', 'underfloor-trunking',
+  'cable-tray',
+  'conduit',
+  'trunking',
+  'floor-trunking',
+  'busbar-trunking',
+  'cable-tray-drop',
+  'riser',
+  'floor-box-multi',
+  'underfloor-trunking',
 ]);
 
 // Bathroom-related symbols that require RCD
-const BATHROOM_SYMBOLS = new Set([
-  'socket-shaver', 'switch-pull-cord', 'towel-rail',
-]);
+const BATHROOM_SYMBOLS = new Set(['socket-shaver', 'switch-pull-cord', 'towel-rail']);
 
 function getSymbolName(symbolId: string): string {
   const sym = symbolRegistry.find((s) => s.id === symbolId);
@@ -133,9 +174,11 @@ function getSymbolName(symbolId: string): string {
  * demand is a design step requiring the installation's actual usage, so it is
  * deliberately not attempted here.
  */
-export function buildConsumerUnitSchedule(
-  circuitSchedule: CircuitScheduleEntry[]
-): { ways: ConsumerUnitWay[]; totalConnectedLoadKw: number; wayCount: number } {
+export function buildConsumerUnitSchedule(circuitSchedule: CircuitScheduleEntry[]): {
+  ways: ConsumerUnitWay[];
+  totalConnectedLoadKw: number;
+  wayCount: number;
+} {
   const ways = circuitSchedule.map((c, i) => ({
     way: i + 1,
     circuitRef: c.circuitRef,
@@ -429,7 +472,9 @@ export function assignCircuits(symbolIds: string[]): {
         cableSize: a.cableSize,
         protection: a.protectionRating,
         rcd: a.rcdRequired
-          ? (a.rcdBasis === '722.531.3.101' ? '30mA Type B / Type A + RDC-DD' : RCD_30MA)
+          ? a.rcdBasis === '722.531.3.101'
+            ? '30mA Type B / Type A + RDC-DD'
+            : RCD_30MA
           : 'Not required',
         rcdBasis: a.rcdBasis,
         points: 1,

@@ -226,7 +226,7 @@ const {
         const {
           data: { publicUrl },
         } = supabase.storage.from('inspection-photos').getPublicUrl(p.file_path, {
-          transform: { width: 1000, height: 1400, resize: 'contain', quality: 60 },
+          transform: { format: 'origin', width: 1000, height: 1400, resize: 'contain', quality: 60 },
         });
         return { url: publicUrl, caption: p.fault_description || '' };
       });

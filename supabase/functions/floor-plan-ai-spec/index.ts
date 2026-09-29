@@ -54,6 +54,15 @@ serve(async (req) => {
       practicalWork?.length ? `\nINSTALLATION METHODS:\n${practicalWork.map(p => `${p.equipment_category}/${p.equipment_subcategory}: ${p.installation_method || ''}`).join('\n')}` : '',
     ].filter(Boolean).join('\n');
 
+    /*
+     * The key was never passed: callOpenAI takes it as its second argument and
+     * this call supplied only the options, so every request went to OpenAI
+     * with "undefined" and came back 401. The tool has been failing for every
+     * user since at least June (found 28 Sep 2026).
+     */
+    const openAiKey = Deno.env.get('OPENAI_API_KEY');
+    if (!openAiKey) throw new Error('OPENAI_API_KEY not configured');
+
     const result = await callOpenAI({
       messages: [
         { role: 'system', content: SYSTEM_PROMPT },
@@ -92,7 +101,7 @@ Return as JSON:
       ],
       response_format: { type: 'json_object' },
       max_tokens: 6000,
-    });
+    }, openAiKey);
 
     const data = JSON.parse(result.content);
 

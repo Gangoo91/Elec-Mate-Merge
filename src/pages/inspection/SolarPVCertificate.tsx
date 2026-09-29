@@ -567,7 +567,13 @@ export default function SolarPVCertificate() {
           .eq('report_id', savedReportId);
 
         if (user) {
-          await createNotificationFromCertificate(savedReportId, 'solar-pv', formData, user.id);
+          const partP = await createNotificationFromCertificate(savedReportId, 'solar-pv', formData, user.id);
+          if (partP.reason === 'unanswered') {
+            toast.info(
+              'Part P was not answered, so nothing was added to Building Control notifications. If the work is notifiable, answer it under Sign off and regenerate.',
+              { duration: 8000 }
+            );
+          }
         }
       }
 

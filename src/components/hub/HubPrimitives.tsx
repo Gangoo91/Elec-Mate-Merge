@@ -350,7 +350,20 @@ export interface HubQuickAction {
  * The whole card is the button — no "Start →" link inside it, which would be a
  * smaller target for the same job.
  */
-export const HubQuickStart = ({ label, items }: { label: string; items: HubQuickAction[] }) => {
+export const HubQuickStart = ({
+  label,
+  items,
+  leadSpans = false,
+}: {
+  label: string;
+  items: HubQuickAction[];
+  /**
+   * Phones: the first card takes the whole row. Opt-in — for a group of three
+   * led by one main action, where two-up otherwise leaves the last card beside
+   * a hole. Other hubs keep their layout.
+   */
+  leadSpans?: boolean;
+}) => {
   const haptic = useHaptic();
   if (items.length === 0) return null;
 
@@ -365,7 +378,14 @@ export const HubQuickStart = ({ label, items }: { label: string; items: HubQuick
 
       <motion.div
         variants={itemVariants}
-        className="grid grid-cols-2 gap-2.5 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] sm:gap-3"
+        className={cn(
+          'grid grid-cols-2 gap-2.5 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] sm:gap-3',
+          leadSpans && '[&>*:first-child]:col-span-2 sm:[&>*:first-child]:col-span-1',
+          // …and if that leaves an odd card at the end, it fills its row too.
+          leadSpans &&
+            (items.length - 1) % 2 === 1 &&
+            '[&>*:last-child]:col-span-2 sm:[&>*:last-child]:col-span-1'
+        )}
       >
         {items.map((q) => (
           <button

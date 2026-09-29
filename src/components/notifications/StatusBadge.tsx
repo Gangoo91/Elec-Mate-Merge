@@ -8,11 +8,12 @@ interface StatusBadgeProps {
 }
 
 const STATUS_STYLES = {
-  pending: 'bg-white/[0.06] text-white/70 border-white/[0.12]',
-  'in-progress': 'bg-white/[0.06] text-white/70 border-white/[0.12]',
+  pending: 'bg-white/[0.06] text-white border-white/[0.12]',
+  'in-progress': 'bg-white/[0.06] text-white border-white/[0.12]',
   submitted: 'bg-green-500/10 text-green-400 border-green-500/20',
   overdue: 'bg-red-500/10 text-red-400 border-red-500/20',
-  cancelled: 'bg-white/[0.05] text-white/45 border-white/[0.1]',
+  cancelled: 'bg-white/[0.05] text-white border-white/[0.1]',
+  not_required: 'bg-white/[0.05] text-white border-white/[0.1]',
 };
 
 const STATUS_LABELS = {
@@ -21,6 +22,7 @@ const STATUS_LABELS = {
   submitted: 'Submitted',
   overdue: 'Overdue',
   cancelled: 'Cancelled',
+  not_required: 'Not required',
 };
 
 export const StatusBadge = ({ status, className }: StatusBadgeProps) => {

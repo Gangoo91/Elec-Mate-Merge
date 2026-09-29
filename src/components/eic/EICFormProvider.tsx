@@ -33,6 +33,7 @@ import {
   saveToLocalStorageBackup,
   logIntegrityEvent,
 } from '@/utils/dataIntegrity';
+import { localDraftHidesCloudResults, mergeLocalOntoCloud } from '@/utils/localDraftGuard';
 import { CertificatePhotoProvider } from '@/contexts/CertificatePhotoContext';
 import { type SyncState } from '@/components/ui/SyncStatusIndicator';
 import type { SyncStatus } from '@/hooks/useReportSync';
@@ -45,6 +46,8 @@ interface EICFormContextType {
   formData: any;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   updateFormData: (field: string, value: any) => void;
+  /** Bulk replace after a history restore — keeps the certificate number, merges everything else. */
+  replaceFormData: (data: Record<string, unknown>) => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getLatestFormData: () => any;
   currentReportId: string | null;
@@ -399,6 +402,11 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
   // True while initial cloud hydration is in-flight. Gates the autosave in useCloudSync
   // to prevent blank initial state overwriting real data. See 2026-04-17 incident.
   const [isLoadingReport, setIsLoadingReport] = useState<boolean>(!!initialReportId);
+  // Set when the requested report could not be loaded from anywhere. The gate
+  // then stays closed: no number is allocated, nothing autosaves, so a bad id
+  // (or a row this account cannot see) never turns into a blank new
+  // certificate under that id.
+  const loadFailedRef = useRef(false);
 
   // Fetch design data if designId is provided (from Circuit Designer)
   const { data: designData, isLoading: isLoadingDesign } = useDesignedCircuit(designId || '');
@@ -809,6 +817,21 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
             }
           }
 
+          // A newer local draft that shows FEWER circuits or readings than the cloud
+          // is a stale snapshot, not a newer version — see utils/localDraftGuard.ts.
+          const staleLocal =
+            localDraft?.data && localTime > cloudTime
+              ? localDraftHidesCloudResults(localDraft.data, data)
+              : null;
+          if (staleLocal?.hides) {
+            console.warn('[EIC] Local draft is newer but holds fewer readings than the cloud — merging, cloud rows kept', staleLocal);
+            logIntegrityEvent('load_empty', {
+              reportType: 'eic',
+              reportId: initialReportId,
+              fieldCount: staleLocal.cloudReadings,
+              error: `newer-local-draft-hides-${staleLocal.array}; merged (local ${staleLocal.localRows} rows/${staleLocal.localReadings} readings vs cloud ${staleLocal.cloudRows}/${staleLocal.cloudReadings})`,
+            });
+          }
           if (localDraft?.data && localTime > cloudTime) {
             console.log('[EIC] Using LOCAL draft (newer than cloud)');
             // Guard (mirrors EICR): a newer local draft with ZERO observations while
@@ -835,9 +858,10 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
             }
             const certificateNumber =
               localDraft.data.certificateNumber || formData.certificateNumber;
+            // Local wins where it holds a value, the cloud fills every blank, rows
+            // are matched by id — neither side's readings can be lost (Rovell, 28 Sep).
             const mergedData = {
-              ...localDraft.data,
-              observations: rescueObs ? cloudObs : localObs,
+              ...mergeLocalOntoCloud(localDraft.data, data),
               certificateNumber,
             };
             setFormData(mergedData);
@@ -881,20 +905,23 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
             description: 'Cloud sync will retry automatically.',
           });
         } else {
+          loadFailedRef.current = true;
           logIntegrityEvent('recovery_failed', {
             reportType: 'eic',
             reportId: initialReportId,
             error: 'No data found in cloud or local',
           });
           toast({
-            title: 'Report not found',
-            description: 'Could not load the requested report.',
+            title: 'Certificate not found',
+            description: 'It may have been deleted, or it belongs to another account. Nothing has been changed.',
             variant: 'destructive',
           });
+          // Back to the list rather than a form that can neither load nor save.
+          navigate('/electrician/inspection-testing', { replace: true });
         }
       }).finally(() => {
-        // Hydration complete — release the autosave gate.
-        setIsLoadingReport(false);
+        // Hydration complete — release the autosave gate (not after a failed load).
+        if (!loadFailedRef.current) setIsLoadingReport(false);
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -902,6 +929,20 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
 
   // Form update handler
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const replaceFormData = useCallback(
+    (data: Record<string, unknown>) => {
+      // A restore is a whole-certificate write; the printed number is the one thing it never touches.
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      setFormData((prev: any) => ({ ...prev, ...data, certificateNumber: prev.certificateNumber }));
+      if (Array.isArray((data as { observations?: unknown }).observations)) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        seedObservations(data as any);
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
+
   const updateFormData = useCallback(
     (field: string, value: any) => {
       if (field === 'certificateNumber') {
@@ -1238,13 +1279,22 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
                   <Button
                     size="sm"
                     variant="outline"
-                    onClick={() => navigate('/?section=notifications')}
+                    onClick={() => navigate('/electrician/inspection-testing?section=notifications')}
                   >
                     <Bell className="h-3 w-3 mr-1" />
                     View Notifications
                   </Button>
                 ),
               });
+            } else if (notificationResult.reason === 'unanswered') {
+              toast({
+                title: 'EIC Generated',
+                description:
+                  'Part P was not answered, so nothing was added to Building Control notifications. If the work is notifiable, answer it under Declarations and regenerate.',
+                duration: 8000,
+              });
+            } else if (notificationResult.reason === 'not_notifiable') {
+              // The certificate says so — nothing to track, nothing to say.
             } else {
               throw new Error(notificationResult.error);
             }
@@ -1418,6 +1468,7 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
   const contextValue: EICFormContextType = {
     formData,
     updateFormData,
+    replaceFormData,
     getLatestFormData,
     currentReportId,
     effectiveReportId,

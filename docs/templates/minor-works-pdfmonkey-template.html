@@ -5,6 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Minor Electrical Installation Works Certificate</title>
     <style>
+      /* =============================================
+         COVER / MASTHEAD PALETTE  — ELE-1671
+         ---------------------------------------------
+         The navy furniture is tokenised so the payload can drive it. Every
+         `default:` below is the literal this template already used, so a
+         payload that sends no palette keys renders exactly as before.
+
+         Modes (chosen client-side in certBranding.ts):
+           house   — the defaults below
+           branded — the electrician's own colour
+           print   — white cover, dark ink (saves ~94% of page-1 ink)
+
+         🔴 Whoever sets --cover-from MUST also set a --cover-fg that contrasts
+         with it AND send the matching scheme-logo variant (reversed on dark,
+         standard on light) — or the NICEIC wordmark vanishes. That is ELE-1669.
+         ============================================= */
+      :root {
+        --em-accent: {{ em_accent | default: '#fbbf24' }};
+        --em-accent-deep: {{ em_accent_deep | default: '#f59e0b' }};
+        --em-cover-dim: {{ em_cover_dim | default: '#94a3b8' }};
+        --em-cover-fg: {{ em_cover_fg | default: '#fff' }};
+        --em-cover-from: {{ em_cover_from | default: '#0a1628' }};
+        --em-cover-mid: {{ em_cover_mid | default: '#152238' }};
+        --em-cover-muted: {{ em_cover_muted | default: '#cbd5e1' }};
+        --em-cover-to: {{ em_cover_to | default: '#1c2e4a' }};
+      }
+
+
       @page {
         size: A4;
         margin: 3mm 4mm;
@@ -36,8 +64,8 @@
          DOCUMENT HEADER
          ============================================= */
       .doc-header {
-        background: linear-gradient(180deg, #0a1628 0%, #152238 100%);
-        color: #fff;
+        background: linear-gradient(180deg, var(--em-cover-from) 0%, var(--em-cover-mid) 100%);
+        color: var(--em-cover-fg);
         padding: 12px 16px;
         margin-bottom: 10px;
         border-radius: 2px;
@@ -45,20 +73,11 @@
         overflow: hidden;
       }
 
-      .doc-header::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: linear-gradient(
-          90deg,
-          {% if company.accent_color %}{{ company.accent_color }}{% else %}#f59e0b{% endif %},
-          #fbbf24,
-          {% if company.accent_color %}{{ company.accent_color }}{% else %}#f59e0b{% endif %}
-        );
-      }
+      /* ELE-1751 — the 3px amber strip across the header is removed.
+         Its middle stop was hardcoded #fbbf24 and its ends fell back to
+         #f59e0b, so it rendered yellow even on a branded certificate and
+         bypassed the ELE-1671 cover palette entirely. Agreed with Craig
+         Soper and Andrew to drop it rather than recolour it. */
 
       .doc-header-content {
         display: flex;
@@ -489,27 +508,27 @@
          CLIENT-FACING COVER SHEET (A4:2026) — full-bleed navy + gold
          All values from the existing payload — statutory certificate unchanged below
          ============================================= */
-      .cover-page { page: cover; width: 210mm; min-height: 297mm; display: flex; flex-direction: column; color: #0a1628; }
-      .cover-hero { position: relative; background: linear-gradient(160deg, #0a1628 0%, #152238 60%, #1c2e4a 100%); color: #fff; padding: 22mm 18mm 16mm; }
-      .cover-hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: linear-gradient(90deg, #f59e0b, #fbbf24, #f59e0b); }
+      .cover-page { page: cover; width: 200mm; min-height: 280mm; display: flex; flex-direction: column; color: #0a1628; }
+      .cover-hero { position: relative; background: linear-gradient(160deg, var(--em-cover-from) 0%, var(--em-cover-mid) 60%, var(--em-cover-to) 100%); color: var(--em-cover-fg); padding: 22mm 18mm 16mm; }
+      /* ELE-1751 — the 6px accent band across the top of the cover is removed. Agreed with Craig Soper and Andrew: it reads as a stray stripe rather than branding, and it is the band the ticket is about. The cover gradient itself (.cover-hero) is untouched. */
       .cover-logos { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18mm; min-height: 60px; }
       .cover-logos img { max-height: 60px; max-width: 190px; object-fit: contain; }
-      .cover-band-name { color: #fbbf24; font-weight: 700; font-size: 18px; }
-      .cover-eyebrow { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #fbbf24; font-weight: 700; margin-bottom: 12px; }
-      .cover-title { font-size: 34px; line-height: 1.1; font-weight: 800; letter-spacing: -0.5px; color: #fff; }
-      .cover-title-rule { width: 80px; height: 4px; background: linear-gradient(90deg, #f59e0b, #fbbf24); margin-top: 16px; border-radius: 2px; }
-      .cover-subtitle { margin-top: 16px; font-size: 11px; color: #cbd5e1; }
-      .cover-status { padding: 14px 18mm; display: flex; align-items: center; justify-content: space-between; background: #152238; color: #fff; }
+      .cover-band-name { color: var(--em-accent); font-weight: 700; font-size: 18px; }
+      .cover-eyebrow { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--em-accent); font-weight: 700; margin-bottom: 12px; }
+      .cover-title { font-size: 34px; line-height: 1.1; font-weight: 800; letter-spacing: -0.5px; color: var(--em-cover-fg); }
+      .cover-title-rule { width: 80px; height: 4px; background: linear-gradient(90deg, var(--em-accent-deep), var(--em-accent)); margin-top: 16px; border-radius: 2px; }
+      .cover-subtitle { margin-top: 16px; font-size: 11px; color: var(--em-cover-muted); }
+      .cover-status { padding: 14px 18mm; display: flex; align-items: center; justify-content: space-between; background: var(--em-cover-mid); color: var(--em-cover-fg); }
       .cover-status-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; opacity: 0.95; }
-      .cover-status-value { font-size: 16px; font-weight: 800; letter-spacing: 0.5px; color: #fbbf24; text-align: right; }
-      .cover-details { flex: 1; padding: 14mm 18mm; border-left: 4px solid #fbbf24; }
-      .cover-details-h { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: #94a3b8; font-weight: 700; margin-bottom: 6px; }
+      .cover-status-value { font-size: 16px; font-weight: 800; letter-spacing: 0.5px; color: var(--em-accent); text-align: right; }
+      .cover-details { flex: 1; padding: 14mm 18mm; border-left: 4px solid var(--em-accent); }
+      .cover-details-h { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--em-cover-dim); font-weight: 700; margin-bottom: 6px; }
       .cover-row { display: flex; border-bottom: 1px solid #e2e8f0; }
       .cover-row:last-child { border-bottom: 0; }
       .cover-k { width: 185px; flex-shrink: 0; color: #0a1628; font-weight: 700; text-transform: uppercase; font-size: 9.5px; letter-spacing: 0.5px; padding: 11px 0; align-self: center; }
       .cover-v { flex: 1; color: #0f172a; font-weight: 600; font-size: 12px; padding: 11px 0; align-self: center; }
       .cover-v .muted { color: #64748b; font-weight: 500; }
-      .cover-footer { background: #0a1628; color: #94a3b8; font-size: 8.5px; font-style: italic; padding: 11px 18mm; }
+      .cover-footer { background: var(--em-cover-from); color: var(--em-cover-dim); font-size: 8.5px; font-style: italic; padding: 11px 18mm; }
     </style>
   </head>
   <body>
@@ -1017,7 +1036,7 @@
       {% endif %}
       {% endif %}
 
-      <!-- Insulation Resistance -->
+      <!-- Insulation Resistance — A4:2026 MEIWC model form: Live-Live & Live-Earth only -->
       <div class="section-subtitle mt-6">Insulation Resistance (test voltage: {{ tests.insulation_voltage }} V DC)</div>
       <div class="inline-form">
         <div class="inline-group">
@@ -1025,16 +1044,8 @@
           <span class="inline-value">{{ tests.ir_live_live }}</span>
         </div>
         <div class="inline-group">
-          <span class="inline-label">Live&ndash;Neutral (M&Omega;):</span>
-          <span class="inline-value">{{ tests.ir_live_neutral }}</span>
-        </div>
-        <div class="inline-group">
           <span class="inline-label">Live&ndash;Earth (M&Omega;):</span>
           <span class="inline-value">{{ tests.ir_live_earth }}</span>
-        </div>
-        <div class="inline-group">
-          <span class="inline-label">Neutral&ndash;Earth (M&Omega;):</span>
-          <span class="inline-value">{{ tests.ir_neutral_earth }}</span>
         </div>
       </div>
 
@@ -1204,7 +1215,7 @@
         <div class="inline-group">
           <div class="checkbox-item">
             <span class="checkbox-box {% if declaration.part_p_notification == true or declaration.part_p_notification == 'true' %}checked{% endif %}">{% if declaration.part_p_notification == true or declaration.part_p_notification == 'true' %}&#10003;{% endif %}</span>
-            <label>Part P notification required</label>
+            <label>Part P notification required{% if declaration.part_p_notified_via != blank %} &mdash; notified via {{ declaration.part_p_notified_via }}{% if declaration.part_p_reference != blank %}, ref {{ declaration.part_p_reference }}{% endif %}{% endif %}</label>
           </div>
         </div>
         <div class="inline-group">
@@ -1232,6 +1243,16 @@
                 {% endif %}
               </span>
             </div>
+          {% if has_engineer_verify %}
+          <!-- ELE-1453 — the engineer's Elec-ID, verifiable by anyone holding this certificate -->
+          <div class="sig-field">
+            <span class="sig-field-label">Verify this engineer</span>
+            <span class="sig-field-value" style="display:flex;align-items:center;gap:6px">
+              <img src="{{ engineer_verify_qr }}" style="width:14mm;height:14mm;flex:none" alt="" />
+              <span style="font-size:7px;line-height:1.3">Elec-ID {{ engineer_verify_number }}<br>Scan, or visit {{ engineer_verify_url }}</span>
+            </span>
+          </div>
+          {% endif %}
             <div class="sig-field">
               <span class="sig-field-label">For/on behalf of</span>
               <span class="sig-field-value">{{ declaration.company }}</span>
@@ -1277,6 +1298,37 @@
           </div>
         </div>
       </div>
+
+      <!-- Qualifying Supervisor countersignature (ELE-1065) — only renders when a QS has approved the cert -->
+      {% if qs_review and qs_review.name and qs_review.name != '' %}
+      <div class="signature-grid mt-6">
+        <div class="signature-box">
+          <div class="signature-box-header">Countersigned &mdash; Qualifying Supervisor</div>
+          <div class="signature-box-body">
+            <div class="sig-field">
+              <span class="sig-field-label">Name</span>
+              <span class="sig-field-value">{{ qs_review.name }}</span>
+            </div>
+            <div class="sig-field">
+              <span class="sig-field-label">Signature</span>
+              <span class="sig-field-value signature">
+                {% if qs_review.signature and qs_review.signature != '' %}
+                <img src="{{ qs_review.signature }}" style="max-height: 28px" />
+                {% endif %}
+              </span>
+            </div>
+            <div class="sig-field">
+              <span class="sig-field-label">Position</span>
+              <span class="sig-field-value">{{ qs_review.position }}</span>
+            </div>
+            <div class="sig-field">
+              <span class="sig-field-label">Date</span>
+              <span class="sig-field-value">{{ qs_review.date }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
 
       {% if declaration.additional_notes and declaration.additional_notes != '' %}
       <div class="inline-form mt-6">

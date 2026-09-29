@@ -44,6 +44,7 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
     formData,
     updateFormData,
     currentReportId,
+    replaceFormData,
     showStartNewDialog,
     setShowStartNewDialog,
     handleManualSave,
@@ -415,6 +416,9 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
         currentTab={currentTab}
         onTabChange={handleTabChange}
         completedTabs={completedTabs}
+          history={
+            currentReportId ? { reportId: currentReportId, onRestored: replaceFormData } : undefined
+          }
       />
 
       {/* ELE-1037 — lock / version bar (Issue & lock, read-only, Amend) */}
@@ -541,6 +545,12 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
           onGenerate={() => pdfActionsRef.current?.generate()}
           canGenerate={canGenerate}
           generateLabel="Generate certificate"
+          // ELE-1787 — a blocked Generate says how many items are missing and
+          // opens the same jump-to-field list the progress ring opens.
+          generateBlockedLabel={`${eicrValidation.errors.length} item${
+            eicrValidation.errors.length === 1 ? '' : 's'
+          } to complete`}
+          onGenerateBlocked={() => setShowMissingSheet(true)}
           previewReportType="eicr"
           previewReportId={currentReportId}
           previewData={formData}

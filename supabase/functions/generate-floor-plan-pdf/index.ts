@@ -32,6 +32,7 @@ serve(async (req) => {
       drawing_number,
       notes,
       rooms,
+      single_line_images,
       materials_by_category,
       total_items,
       all_symbols,
@@ -72,13 +73,20 @@ serve(async (req) => {
             drawing_number: drawing_number || 'EL-001',
             notes: notes || '',
             rooms: rooms || [],
+            // Page images of the board's single-line diagram (29 Sep 2026).
+            single_line_images: Array.isArray(single_line_images) ? single_line_images : [],
             materials_by_category: materials_by_category || [],
             total_items: total_items || 0,
             all_symbols: all_symbols || [],
             circuit_schedule: circuit_schedule || [],
             consumer_unit: consumer_unit || null,
             standard_notes: standard_notes || {},
-            revision: revision || { rev: 'A', date: date || '', description: 'Initial Issue', by: electrician_name || '' },
+            revision: revision || {
+              rev: 'A',
+              date: date || '',
+              description: 'Initial Issue',
+              by: electrician_name || '',
+            },
             // Branding — the template falls back to Elec-Mate styling when the
             // installer has not set a logo or accent colour.
             company_name: company_name || '',
@@ -167,7 +175,11 @@ serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
-    await captureException(error, { functionName: 'generate-floor-plan-pdf', requestUrl: req.url, requestMethod: req.method });
+    await captureException(error, {
+      functionName: 'generate-floor-plan-pdf',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
     console.error('Floor plan PDF error:', error);
     return new Response(
       JSON.stringify({

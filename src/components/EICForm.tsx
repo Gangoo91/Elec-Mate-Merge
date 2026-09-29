@@ -56,6 +56,7 @@ const EICFormInner = ({ onBack }: { onBack: () => void }) => {
     handleBoardScanComplete,
     isLoadingDesign,
     currentReportId,
+    replaceFormData,
     isLocked,
     lockedAt,
     editVersion,
@@ -226,6 +227,9 @@ const EICFormInner = ({ onBack }: { onBack: () => void }) => {
         currentTab={currentTab}
         onTabChange={handleTabChange}
         completedTabs={completedTabs}
+          history={
+            currentReportId ? { reportId: currentReportId, onRestored: replaceFormData } : undefined
+          }
       />
 
       {/* ELE-1037 — lock / version bar (Issue & lock, read-only, Amend) */}
@@ -352,6 +356,12 @@ const EICFormInner = ({ onBack }: { onBack: () => void }) => {
             else handleGenerateCertificate();
           }}
           canGenerate={canGenerate}
+          // ELE-1787 — a blocked Generate says how many items are missing and
+          // opens the same jump-to-field list the progress ring opens.
+          generateBlockedLabel={`${eicValidation.errors.length} item${
+            eicValidation.errors.length === 1 ? '' : 's'
+          } to complete`}
+          onGenerateBlocked={() => setShowMissingSheet(true)}
           generateLabel="Generate certificate"
           previewReportType="eic"
           previewReportId={currentReportId}

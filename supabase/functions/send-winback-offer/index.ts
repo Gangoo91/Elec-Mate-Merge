@@ -3034,6 +3034,9 @@ Deno.serve(async (req) => {
           // Defensive: refuse to send a discount offer to a currently-paying user.
           // Look up by email → profile → check subscribed / free_access_granted.
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          // `recipientName` is destructured as a const above; assigning to it threw a
+          // TypeError at runtime on the profile-name fallback path (caught 28 Sep 2026).
+          let greetingName: string | undefined = (recipientName as string | undefined) || undefined;
           const { data: emailRows } = await supabaseAdmin.rpc('get_auth_user_emails');
           const matchingAuth = (emailRows || []).find(
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -3056,12 +3059,12 @@ Deno.serve(async (req) => {
               );
             }
             // Use the profile's full name if no recipientName was supplied
-            if (!recipientName && matchProfile?.full_name) {
-              recipientName = matchProfile.full_name;
+            if (!greetingName && matchProfile?.full_name) {
+              greetingName = matchProfile.full_name as string;
             }
           }
 
-          const firstName = recipientName?.split(' ')[0] || 'mate';
+          const firstName = greetingName?.split(' ')[0] || 'mate';
           const unsubscribeUrl = await buildUnsubscribeUrl(manualRecipient);
           const html = useV11
             ? generateV11HTML('winback', firstName, unsubscribeUrl)

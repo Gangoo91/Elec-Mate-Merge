@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Skeleton } from '@/components/ui/skeleton';
 import { AlertTriangle, CheckCircle2, Bell, ChevronRight } from 'lucide-react';
 import { useNotifications } from '@/hooks/useNotifications';
-import { getDaysUntilDeadline, getDeadlineUrgency } from '@/utils/notificationHelper';
+import { getDaysUntilDeadline, getDeadlineUrgency, isOpenNotification, isOverdueNotification, needsAnswerNotification } from '@/utils/notificationHelper';
 import { cn } from '@/lib/utils';
 
 interface PendingNotificationsCardProps {
@@ -36,7 +36,7 @@ export const PendingNotificationsCard = ({ onNavigate }: PendingNotificationsCar
   const { notifications = [], isLoading } = useNotifications();
 
   const urgentNotifications = notifications
-    .filter((n) => n.notification_status !== 'submitted' && n.notification_status !== 'cancelled')
+    .filter(isOpenNotification)
     .sort((a, b) => {
       if (!a.submission_deadline) return 1;
       if (!b.submission_deadline) return -1;
@@ -46,16 +46,9 @@ export const PendingNotificationsCard = ({ onNavigate }: PendingNotificationsCar
     })
     .slice(0, 3);
 
-  const overdueCount = notifications.filter(
-    (n) =>
-      n.submission_deadline &&
-      getDaysUntilDeadline(n.submission_deadline) < 0 &&
-      n.notification_status !== 'submitted'
-  ).length;
+  const overdueCount = notifications.filter(isOverdueNotification).length;
 
-  const totalPending = notifications.filter(
-    (n) => n.notification_status !== 'submitted' && n.notification_status !== 'cancelled'
-  ).length;
+  const totalPending = notifications.filter(isOpenNotification).length;
 
   if (isLoading) {
     return (
@@ -137,11 +130,13 @@ export const PendingNotificationsCard = ({ onNavigate }: PendingNotificationsCar
               notification.reports?.certificate_number
             );
 
-            const isOverdue = urgency === 'overdue';
-            const isUrgent = urgency === 'urgent';
+            const unanswered = needsAnswerNotification(notification);
+            const isOverdue = !unanswered && urgency === 'overdue';
+            const isUrgent = !unanswered && urgency === 'urgent';
 
-            const deadlineText =
-              daysRemaining !== null && daysRemaining < 0
+            const deadlineText = unanswered
+              ? 'Notifiable?'
+              : daysRemaining !== null && daysRemaining < 0
                 ? `${Math.abs(daysRemaining)}d overdue`
                 : daysRemaining === 0
                   ? 'Due today'

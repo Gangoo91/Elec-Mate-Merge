@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, Variants } from 'framer-motion';
 import { NotificationsList } from './NotificationsList';
@@ -7,6 +7,7 @@ import { BuildingControlFormGuide } from './BuildingControlFormGuide';
 import { BuildingControlFinder } from './BuildingControlFinder';
 import { NonRegisteredUserGuide } from './NonRegisteredUserGuide';
 import { RegisteredUserGuide } from './RegisteredUserGuide';
+import { SchemeChooser } from './SchemeChooser';
 import { CertExpiryCard } from './CertExpiryCard';
 import { ElecIdExpiryCard } from './ElecIdExpiryCard';
 import { OverdueInvoiceCard, ExpiringQuoteCard, QuoteActivityCard, InvoicePaidCard } from './FinanceAlertCard';
@@ -24,7 +25,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/hooks/use-toast';
 import { differenceInDays, parseISO } from 'date-fns';
-import { getDaysUntilDeadline } from '@/utils/notificationHelper';
+import { getDaysUntilDeadline, isOpenNotification, isOverdueNotification, needsAnswerNotification } from '@/utils/notificationHelper';
 import { cn } from '@/lib/utils';
 
 // Maps logical section names to real app routes
@@ -45,10 +46,11 @@ interface ComplianceStatusProps {
   overdue: number;
   submitted: number;
   nextDays: number | null;
+  needsAnswer: number;
   isLoading: boolean;
 }
 
-function ComplianceStatus({ pending, overdue, submitted, nextDays, isLoading }: ComplianceStatusProps) {
+function ComplianceStatus({ pending, overdue, submitted, nextDays, needsAnswer, isLoading }: ComplianceStatusProps) {
   if (isLoading) {
     return (
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
@@ -63,8 +65,8 @@ function ComplianceStatus({ pending, overdue, submitted, nextDays, isLoading }: 
     {
       label: 'Overdue',
       value: String(overdue),
-      valueCls: overdue > 0 ? 'text-red-400' : 'text-white',
-      border: overdue > 0 ? 'border-red-500/30' : 'border-white/[0.12]',
+      valueCls: overdue > 0 ? 'text-red-300' : 'text-white',
+      border: overdue > 0 ? 'border-red-400/40' : 'border-white/[0.12]',
       sub: overdue > 0 ? 'Submit now' : null,
     },
     {
@@ -81,13 +83,21 @@ function ComplianceStatus({ pending, overdue, submitted, nextDays, isLoading }: 
       border: 'border-white/[0.12]',
       sub: null,
     },
-    {
-      label: 'Next deadline',
-      value: nextDays === null ? '—' : nextDays <= 0 ? 'Today' : `${nextDays}d`,
-      valueCls: nextDays !== null && nextDays <= 7 ? 'text-elec-yellow' : 'text-white',
-      border: 'border-white/[0.12]',
-      sub: null,
-    },
+    needsAnswer > 0
+      ? {
+          label: 'Needs an answer',
+          value: String(needsAnswer),
+          valueCls: 'text-elec-yellow',
+          border: 'border-elec-yellow/40',
+          sub: null,
+        }
+      : {
+          label: 'Next deadline',
+          value: nextDays === null ? '—' : nextDays <= 0 ? 'Today' : `${nextDays}d`,
+          valueCls: nextDays !== null && nextDays <= 7 ? 'text-elec-yellow' : 'text-white',
+          border: 'border-white/[0.12]',
+          sub: null,
+        },
   ];
 
   return (
@@ -96,16 +106,16 @@ function ComplianceStatus({ pending, overdue, submitted, nextDays, isLoading }: 
         <div
           key={s.label}
           className={cn(
-            'rounded-2xl border bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-4',
+            'rounded-2xl border bg-gradient-to-b from-white/[0.06] to-white/[0.03] p-4',
             s.border
           )}
         >
           <div className={cn('text-2xl font-bold tabular-nums tracking-tight', s.valueCls)}>
             {s.value}
           </div>
-          <div className="mt-0.5 flex items-baseline gap-1.5 text-[12px] text-white/55">
+          <div className="mt-0.5 flex items-baseline gap-1.5 text-[12px] text-white">
             {s.label}
-            {s.sub && <span className="font-semibold text-red-400">· {s.sub}</span>}
+            {s.sub && <span className="font-semibold text-red-300">· {s.sub}</span>}
           </div>
         </div>
       ))}
@@ -142,7 +152,7 @@ const defaultItemVariants: Variants = {
 
 export const NotificationsManager = ({ onNavigate, onBeforeNavigate, compact = false, partPOnly = false, itemVariants }: NotificationsManagerProps) => {
   const navigate = useNavigate();
-  const { notifications, isLoading, updateNotification, deleteNotification } = useNotifications();
+  const { notifications, isLoading, updateNotification, deleteNotification, markSubmitted, markNotRequired, reopen, saveReference, notifyClient } = useNotifications();
   const { reminders, isLoading: expIsLoading } = useExpiryReminders();
   const { data: elecIdAlerts = [] } = useElecIdExpiryAlerts();
   const { data: financeAlerts } = useFinanceAlerts();
@@ -171,9 +181,33 @@ export const NotificationsManager = ({ onNavigate, onBeforeNavigate, compact = f
   }, [reminders]);
 
   const [selectedNotification, setSelectedNotification] = useState<Notification | null>(null);
-  const [showNiceic, setShowNiceic] = useState(true);
-  const [showNapit, setShowNapit] = useState(true);
+  // Which scheme(s) the electrician is registered with. NAPIT / NICEIC get a
+  // portal button; any other scheme (Stroma, ...) is named but has no link.
+  const [schemes, setSchemes] = useState<Array<'napit' | 'niceic'>>([]);
+  const [otherSchemeName, setOtherSchemeName] = useState<string | null>(null);
+  // Profile has no scheme at all → ask on the page (SchemeChooser), once.
+  const [schemeUnknown, setSchemeUnknown] = useState(false);
+
+  const applyScheme = useCallback((rawIn: string | null | undefined) => {
+    const raw = (rawIn || '').trim();
+    const scheme = raw.toLowerCase();
+    const known: Array<'napit' | 'niceic'> = [];
+    if (scheme.includes('napit')) known.push('napit');
+    if (scheme.includes('niceic')) known.push('niceic');
+    setSchemes(known);
+    const isNone = scheme === 'none';
+    setSchemeUnknown(!raw);
+    // A named scheme we have no portal for (Stroma…) is shown by name; the
+    // profile's "Other" option still reads as a scheme, not as "go direct".
+    setOtherSchemeName(
+      known.length === 0 && raw && !isNone ? (scheme === 'other' ? 'a competent person scheme' : raw) : null
+    );
+    // Registered = a scheme is named (a registration number is nice to have,
+    // but its absence must not turn a NAPIT member into "go direct").
+    setIsRegistered(!!raw && !isNone);
+  }, []);
   const [isFormGuideOpen, setIsFormGuideOpen] = useState(false);
+  const guideRef = useRef<HTMLDivElement>(null);
   const [isRegistered, setIsRegistered] = useState<boolean | null>(null);
   const [showBuildingControlFinder, setShowBuildingControlFinder] = useState(false);
 
@@ -188,17 +222,10 @@ export const NotificationsManager = ({ onNavigate, onBeforeNavigate, compact = f
         .eq('user_id', user.id)
         .single();
 
-      if (companyProfile && companyProfile.registration_scheme) {
-        const scheme = (companyProfile.registration_scheme || '').toLowerCase();
-        setShowNiceic(scheme.includes('niceic'));
-        setShowNapit(scheme.includes('napit'));
-        setIsRegistered(!!companyProfile.registration_number);
-      } else {
-        setIsRegistered(false);
-      }
+      applyScheme(companyProfile?.registration_scheme);
     };
     checkSchemeMembership();
-  }, []);
+  }, [applyScheme]);
 
   const handleViewCertificate = (reportId: string, reportType: string) => {
     const sectionMap: Record<string, string> = { eicr: 'eicr', eic: 'eic', 'minor-works': 'minor-works' };
@@ -206,13 +233,14 @@ export const NotificationsManager = ({ onNavigate, onBeforeNavigate, compact = f
   };
 
   // ── KPI calculations ──
-  const pendingCount = notifications.filter(n => n.notification_status === 'pending' || n.notification_status === 'in-progress').length;
-  const overdueCount = notifications.filter(n => n.submission_deadline && getDaysUntilDeadline(n.submission_deadline) < 0 && n.notification_status !== 'submitted' && n.notification_status !== 'cancelled').length;
+  const needsAnswerCount = notifications.filter(needsAnswerNotification).length;
+  const pendingCount = notifications.filter(isOpenNotification).length - needsAnswerCount;
+  const overdueCount = notifications.filter(isOverdueNotification).length;
   const submittedCount = notifications.filter(n => n.notification_status === 'submitted').length;
 
   const nextDeadlineDays = useMemo(() => {
     const pending = notifications
-      .filter(n => n.submission_deadline && n.notification_status !== 'submitted' && n.notification_status !== 'cancelled')
+      .filter(n => n.submission_deadline && isOpenNotification(n) && !needsAnswerNotification(n))
       .map(n => getDaysUntilDeadline(n.submission_deadline!))
       .filter(d => d >= 0)
       .sort((a, b) => a - b);
@@ -238,6 +266,7 @@ export const NotificationsManager = ({ onNavigate, onBeforeNavigate, compact = f
             overdue={overdueCount}
             submitted={submittedCount}
             nextDays={nextDeadlineDays}
+            needsAnswer={needsAnswerCount}
             isLoading={isLoading}
           />
         </motion.div>
@@ -245,36 +274,60 @@ export const NotificationsManager = ({ onNavigate, onBeforeNavigate, compact = f
         {/* Scheme — one compact strip, portal a tap away */}
         {!compact && isRegistered !== null && (
           <motion.div variants={iv}>
-            {isRegistered ? (
-              <RegisteredUserGuide showNiceic={showNiceic} showNapit={showNapit} />
+            {schemeUnknown ? (
+              <SchemeChooser onChosen={(v) => applyScheme(v)} />
+            ) : isRegistered ? (
+              <RegisteredUserGuide schemes={schemes} otherSchemeName={otherSchemeName} />
             ) : (
-              <NonRegisteredUserGuide onFindBuildingControl={() => setShowBuildingControlFinder(true)} />
+              <NonRegisteredUserGuide
+                onFindBuildingControl={() => setShowBuildingControlFinder(true)}
+                onOpenGuide={() => {
+                  setIsFormGuideOpen(true);
+                  requestAnimationFrame(() =>
+                    guideRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                  );
+                }}
+              />
             )}
           </motion.div>
         )}
 
-        {/* The work — notifications lead the page, no shouty label needed */}
+        {/* The work — notifications lead the page, no shouty label needed.
+            Skeleton while loading: the expiry query can finish first, and an
+            empty list must not flash "Nothing to notify" at someone who has 30. */}
         <motion.div variants={iv}>
+          {isLoading ? (
+            <div className="grid grid-cols-1 gap-3 lg:grid-cols-2 lg:gap-4">
+              {[0, 1].map((i) => (
+                <Skeleton key={i} className="h-[220px] rounded-2xl bg-white/[0.05]" />
+              ))}
+            </div>
+          ) : (
           <NotificationsList
             notifications={notifications}
             onUpdate={updateNotification}
             onDelete={deleteNotification}
             onViewDetails={setSelectedNotification}
-            onViewCertificate={handleViewCertificate}
-            showNiceic={showNiceic}
-            showNapit={showNapit}
+            onMarkSubmitted={markSubmitted}
+            onMarkNotRequired={markNotRequired}
+            onReopen={reopen}
+            onSaveReference={saveReference}
+            onNotifyClient={notifyClient}
+            schemes={schemes}
+            otherSchemeName={otherSchemeName}
           />
+          )}
         </motion.div>
 
         {/* Building Control guide — quiet reference at the foot */}
         {!compact && (
-          <motion.div variants={iv}>
+          <motion.div variants={iv} ref={guideRef} className="scroll-mt-4">
             <Collapsible open={isFormGuideOpen} onOpenChange={setIsFormGuideOpen}>
               <CollapsibleTrigger asChild>
-                <button className="w-full flex items-center justify-between gap-3 rounded-2xl border border-white/[0.09] bg-white/[0.02] p-4 touch-manipulation transition-colors hover:bg-white/[0.04] active:bg-white/[0.05] focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow/50">
+                <button className="-mx-4 flex w-[calc(100%+2rem)] items-center justify-between gap-3 border-y border-white/[0.12] bg-gradient-to-b from-white/[0.06] to-white/[0.03] p-4 touch-manipulation transition-colors hover:bg-white/[0.04] active:bg-white/[0.05] focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow/50 sm:mx-0 sm:w-full sm:rounded-2xl sm:border-x sm:p-5">
                   <div className="text-left">
                     <p className="text-[14px] font-semibold tracking-tight text-white">Building Control guide</p>
-                    <p className="text-[12px] text-white/75">What to submit, and how</p>
+                    <p className="text-[12px] text-white">What's notifiable, how to notify, what to send</p>
                   </div>
                   <span className="text-[12.5px] font-semibold text-elec-yellow">
                     {isFormGuideOpen ? 'Hide' : 'Show'}
@@ -386,7 +439,7 @@ export const NotificationsManager = ({ onNavigate, onBeforeNavigate, compact = f
         <NonRegisteredUserGuide onFindBuildingControl={() => setShowBuildingControlFinder(true)} />
       )}
       {!compact && isRegistered === true && (
-        <RegisteredUserGuide showNiceic={showNiceic} showNapit={showNapit} />
+        <RegisteredUserGuide schemes={schemes} otherSchemeName={otherSchemeName} />
       )}
 
       {!compact && (
@@ -413,9 +466,13 @@ export const NotificationsManager = ({ onNavigate, onBeforeNavigate, compact = f
         onUpdate={updateNotification}
         onDelete={deleteNotification}
         onViewDetails={setSelectedNotification}
-        onViewCertificate={handleViewCertificate}
-        showNiceic={showNiceic}
-        showNapit={showNapit}
+        onMarkSubmitted={markSubmitted}
+        onMarkNotRequired={markNotRequired}
+        onReopen={reopen}
+        onSaveReference={saveReference}
+        onNotifyClient={notifyClient}
+        schemes={schemes}
+        otherSchemeName={otherSchemeName}
       />
 
       {!compact && (

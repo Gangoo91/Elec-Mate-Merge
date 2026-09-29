@@ -161,6 +161,10 @@ const CERTS = [
  * (`const MOUNTING = { ceiling: 'Ceiling' }`), plus internal routing flags.
  */
 const NOISE = new Set([
+  // Superseded by the cover payload (certCoverPayload.ts): every live template
+  // draws the scheme lockup from em_scheme_logo_light, and em_scheme_logo_dark
+  // is the reserved reversed variant. Neither is a gap.
+  'registrationSchemeLogo', 'em_scheme_logo_dark',
   'default', 'status', 'type', 'category', 'notes', 'data', 'id', 'both', 'other', 'general',
   'ceiling', 'wall', 'combination', 'addition', 'installed', 'chemistry', 'phases', 'scope',
   'result', 'reason', 'criteria', 'findings', 'extent', 'basis', 'organisation', 'acknowledgement',
@@ -180,6 +184,10 @@ const hasRenderedTwin = (key, tSrc) => {
   for (let i = 1; i < parts.length; i++) {
     if (tSrc.includes(`${parts.slice(0, i).join('_')}.${parts.slice(i).join('_')}`)) return true;
   }
+  // A raw value whose formatted twin prints — `submitted` beside
+  // `submitted_display`, `reinspect_on_occupancy_change` beside its `_note`.
+  // The template shows the human form; the boolean underneath is not lost.
+  for (const suffix of ['_display', '_note', '_label']) if (tSrc.includes(`${key}${suffix}`)) return true;
   return false;
 };
 
@@ -306,8 +314,33 @@ function analyse(cert) {
   const real = (k) => !NOISE.has(k) && !rendered.has(k);
   // A key is only "not printed" if the template never mentions it in ANY form —
   // including as a loop field (`{{ d.zone }}`) or a flat/nested twin.
+  // Keys that reach the template from OUTSIDE the formatter, at render time:
+  // the cover/theme tokens (`em_*`) and the scheme logo twins come from
+  // certCoverPayload.ts, and the verify-engineer QR block's four keys from
+  // engineerVerify.ts (spread into the payload by the generator page). They
+  // are printed by every live template since September 2026 and no formatter
+  // will ever emit them, so without this the check reports 11–15 "blank
+  // template variables" on every certificate.
+  // Only the cover payload and the verify block are allowed to vouch for a
+  // formatter key being consumed elsewhere. The shared generator is NOT in
+  // this set: its source mentions `.status`, `.email`, `.signature` and a
+  // dozen other ordinary field names, and reading it here excused every one
+  // of them from the not-printed count (caught 28 Sep 2026).
+  const coverSrc = [read('src/utils/certCoverPayload.ts'), read('src/utils/engineerVerify.ts')]
+    .filter(Boolean)
+    .join('\n');
+  // For "does anything supply this template variable" the generator counts,
+  // because it injects company branding (logo_url, scheme_logo) at render.
+  const renderTimeSrc = [coverSrc, read('supabase/functions/generate-pdf-monkey/index.ts')]
+    .filter(Boolean)
+    .join('\n');
+  // …and the keys the cover payload CONSUMES to make them (registrationSchemeLogo → em_scheme_logo_*,
+  // companyAccentColor → em_accent) are printed through that twin, not directly.
+  const consumedAtRender = (k) => coverSrc.includes(`.${k}`) || coverSrc.includes(`'${k}'`);
+  const suppliedAtRender = (n) =>
+    renderTimeSrc.includes(`${n}`) && /^(em_|engineer_verify_|has_engineer_verify$|logo_url$|scheme_logo$)/.test(n);
   let notPrinted = [...emitted]
-    .filter((k) => real(k) && !tSrc.includes(k) && !hasRenderedTwin(k, tSrc))
+    .filter((k) => real(k) && !tSrc.includes(k) && !hasRenderedTwin(k, tSrc) && !consumedAtRender(k))
     .sort();
 
   /*
@@ -323,7 +356,12 @@ function analyse(cert) {
   let hollowArrays = [];
   if (PROBED[cert.id]) {
     const refs = templatePaths(tSrc);
-    notPrinted = PROBED[cert.id].paths.filter((path) => !isRendered(path, refs)).sort();
+    notPrinted = PROBED[cert.id].paths
+      .filter((path) => !isRendered(path, refs))
+      // The same three exemptions the static branch applies: a printed twin
+      // (`x_display`, `x_note`), the cover-payload keys, and known noise.
+      .filter((path) => !hasRenderedTwin(path, tSrc) && !consumedAtRender(path.split('.').pop()) && !NOISE.has(path.split('.').pop()))
+      .sort();
     probedLeaves = PROBED[cert.id].paths.length;
     /*
      * An array the fixture never seeded contributes `foo[]` and nothing inside
@@ -359,7 +397,9 @@ function analyse(cert) {
 
   const unsourced = [...rendered]
     .filter((n) => !n.includes('.') && /^[a-zA-Z_][a-zA-Z0-9_]*$/.test(n))
-    .filter((n) => !emitted.has(n) && !fSrc.includes(n) && !liquidScoped.has(n))
+    // …and a name the edge function's own source mentions (logo_url, scheme_logo)
+    // is supplied server-side at render, not by the formatter.
+    .filter((n) => !emitted.has(n) && !fSrc.includes(n) && !eSrc.includes(n) && !liquidScoped.has(n) && !suppliedAtRender(n))
     .sort();
 
   const notInSchema = declared ? [...emitted].filter((k) => !NOISE.has(k) && !declared.has(k)).sort() : [];

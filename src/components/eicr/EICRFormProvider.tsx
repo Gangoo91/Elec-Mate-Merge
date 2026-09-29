@@ -23,6 +23,7 @@ import {
   saveToLocalStorageBackup,
   logIntegrityEvent,
 } from '@/utils/dataIntegrity';
+import { localDraftHidesCloudResults, mergeLocalOntoCloud } from '@/utils/localDraftGuard';
 import OfflineBanner from '@/components/OfflineBanner';
 import { CreateCustomerDialog } from '@/components/CreateCustomerDialog';
 import { CertificatePhotoProvider } from '@/contexts/CertificatePhotoContext';
@@ -40,6 +41,8 @@ import { useQsReviewStatus } from '@/hooks/useQsReview';
 interface EICRFormContextType {
   formData: any;
   updateFormData: (field: string, value: any) => void;
+  /** Bulk replace after a history restore — keeps the certificate number, merges everything else. */
+  replaceFormData: (data: Record<string, unknown>) => void;
   getLatestFormData: () => any; // Returns the absolute latest form data (bypasses closure issues)
   currentReportId: string | null;
   effectiveReportId: string;
@@ -110,6 +113,9 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
   const [currentReportId, setCurrentReportId] = useState<string | null>(initialReportId || null);
   const [databaseId, setDatabaseId] = useState<string | null>(null); // Actual database UUID
   const [isLoadingReport, setIsLoadingReport] = useState(!!initialReportId);
+  // Set when the requested report could not be loaded from anywhere; the gate
+  // then stays closed so a bad id never becomes a blank new certificate.
+  const loadFailedRef = useRef(false);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [showCustomerDialog, setShowCustomerDialog] = useState(false);
   const [pendingReportId, setPendingReportId] = useState<string | null>(null);
@@ -683,6 +689,21 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
           }
         }
 
+        // A newer local draft that shows FEWER circuits or readings than the cloud
+        // is a stale snapshot, not a newer version — see utils/localDraftGuard.ts.
+        const staleLocal =
+          localDraft?.data && localTime > cloudTime
+            ? localDraftHidesCloudResults(localDraft.data, loadedCloudData)
+            : null;
+        if (staleLocal?.hides) {
+          console.warn('[EICR] Local draft is newer but holds fewer readings than the cloud — merging, cloud rows kept', staleLocal);
+          logIntegrityEvent('load_empty', {
+            reportType: 'eicr',
+            reportId: initialReportId,
+            fieldCount: staleLocal.cloudReadings,
+            error: `newer-local-draft-hides-${staleLocal.array}; merged (local ${staleLocal.localRows} rows/${staleLocal.localReadings} readings vs cloud ${staleLocal.cloudRows}/${staleLocal.cloudReadings})`,
+          });
+        }
         if (localDraft?.data && localTime > cloudTime) {
           // Local is newer - use local data
           console.log(
@@ -690,7 +711,9 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
             Math.round((localTime - cloudTime) / 1000),
             'seconds)'
           );
-          const loadedData = localDraft.data;
+          // Local wins where it holds a value, the cloud fills every blank, rows
+          // are matched by id — neither side's readings can be lost (Rovell, 28 Sep).
+          const loadedData = mergeLocalOntoCloud(localDraft.data, loadedCloudData) as typeof localDraft.data;
           // Cross-browser guard: a newer local draft that has ZERO observations
           // while the cloud has some is almost always a stale-session artifact
           // (e.g. another browser autosaved an empty draft) — not a deliberate
@@ -718,7 +741,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
             inspectionItems: loadedData.inspectionItems || [],
             circuits: loadedData.circuits || [],
             scheduleOfTests: loadedData.scheduleOfTests || [],
-            defectObservations: rescueObs ? cloudObs : localObs,
+            defectObservations: loadedData.defectObservations || [],
             generalObservations: loadedData.generalObservations || [],
             observations: loadedData.observations || [],
             certificateNumber: loadedData.certificateNumber || prev.certificateNumber,
@@ -781,19 +804,22 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
           description: 'Cloud sync will retry automatically.',
         });
       } else {
+        loadFailedRef.current = true;
         logIntegrityEvent('recovery_failed', {
           reportType: 'eicr',
           reportId: initialReportId,
           error: 'No data found in cloud or local',
         });
         toast({
-          title: 'Report not found',
-          description: 'Could not load the requested report.',
+          title: 'Certificate not found',
+          description: 'It may have been deleted, or it belongs to another account. Nothing has been changed.',
           variant: 'destructive',
         });
+        // Back to the list rather than a form that can neither load nor save.
+        navigate('/electrician/inspection-testing', { replace: true });
       }
 
-      setIsLoadingReport(false);
+      if (!loadFailedRef.current) setIsLoadingReport(false);
     };
 
     loadInitialData();
@@ -931,6 +957,15 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
   // prevProps.onUpdate === nextProps.onUpdate; a recreated-per-render function
   // defeated every comparator and re-rendered the whole Details step per
   // keystroke.
+  const replaceFormData = useCallback(
+    (data: Record<string, unknown>) => {
+      // A restore is a whole-certificate write; the printed number is the one thing it never touches.
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      setFormData((prev: any) => ({ ...prev, ...data, certificateNumber: prev.certificateNumber }));
+    },
+    []
+  );
+
   const updateFormData = useCallback(
     (field: string, value: any) => {
       if (field === 'certificateNumber') {
@@ -1338,6 +1373,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
   const contextValue: EICRFormContextType = {
     formData,
     updateFormData,
+    replaceFormData,
     getLatestFormData,
     currentReportId,
     effectiveReportId,

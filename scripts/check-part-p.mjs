@@ -70,7 +70,7 @@ for (const [file, keys, gate] of FORMATTERS) {
 
 const SECTIONS = [
   // ELE-1663 — the EV's two Part P areas became ONE shared section; the gate lives there.
-  ['src/components/inspection/shared/BuildingRegsNotification.tsx', 'isKnownNonDwelling(f.installationType)', 1],
+  ['src/components/inspection/shared/BuildingRegsNotification.tsx', 'isKnownNonDwelling(f.installationType ?? f.propertyType)', 1],
   ['src/components/eic/StandardsComplianceSection.tsx', 'isKnownNonDwelling(formData.installationType)', 1],
   ['src/components/EICRSummary.tsx', 'isKnownNonDwelling(formData.propertyType)', 1],
 ];

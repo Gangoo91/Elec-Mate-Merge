@@ -1,0 +1,515 @@
+"""Build the floor-plan PDFMonkey template (29 Sep 2026).
+
+A drawing set in the form of a CAD sheet: bordered frame with grid-reference
+zones, a title panel down the right-hand side (notes, revisions, status,
+company, project, drawing title, drawn/date/scale/size, drawing number and
+revision), and a view label on each drawing. Every .sheet is one A4 landscape
+page, so long tables are split into sheets here.
+
+Written by a generator so the title panel is identical on every sheet.
+
+    python3 scripts/build-floor-plan-template.py
+
+Then PATCH body + body_draft (and settings: A4 landscape, margins 0) on
+PDFMonkey template b9a9f9c7-37e7-48a9-b154-faa3fbba2923 ("Floor Plans").
+"""
+
+import os
+
+OUT = os.path.join(os.path.dirname(__file__), '..', 'supabase', 'functions', 'generate-floor-plan-pdf', 'floor-plan-template.html')
+
+ZX, ZY = 8, 5
+
+
+def zones():
+    """Grid-reference ticks and labels in the border margin."""
+    out = []
+    for n in range(ZX):
+        at = f'calc(7mm + (100% - 14mm) * {n} / {ZX})'
+        mid = f'calc(7mm + (100% - 14mm) * {n + 0.5} / {ZX})'
+        if n:
+            out.append(f'<i class="zt" style="left:{at}"></i><i class="zb" style="left:{at}"></i>')
+        out.append(f'<b class="zn zt-n" style="left:{mid}">{n + 1}</b><b class="zn zb-n" style="left:{mid}">{n + 1}</b>')
+    for n in range(ZY):
+        at = f'calc(7mm + (100% - 14mm) * {n} / {ZY})'
+        mid = f'calc(7mm + (100% - 14mm) * {n + 0.5} / {ZY})'
+        if n:
+            out.append(f'<i class="zl" style="top:{at}"></i><i class="zr" style="top:{at}"></i>')
+        out.append(f'<b class="zn zl-n" style="top:{mid}">{"ABCDE"[n]}</b><b class="zn zr-n" style="top:{mid}">{"ABCDE"[n]}</b>')
+    return '<div class="zones">' + ''.join(out) + '</div>'
+
+
+ZONES = zones()
+
+PANEL = '''
+        <aside class="tp">
+            <div class="tp-notes">
+                <span class="tp-k">Notes</span>
+                <ol>
+                    <li>Do not scale from this drawing. Dimensions are in metres.</li>
+                    <li>Read with the circuit and board schedules.</li>
+                    <li>Circuits, cables and devices are indicative and subject to design verification.</li>
+                    <li>Install, inspect and test to BS 7671:2018+A4:2026.</li>
+                </ol>
+                <span class="tp-k" style="margin-top:2.5mm">Circuit key</span>
+                <div class="key">
+                    <span><i style="background:#dc2626"></i>S — sockets</span>
+                    <span><i style="background:#2563eb"></i>L — lighting</span>
+                    <span><i style="background:#d97706"></i>C — cooker</span>
+                    <span><i style="background:#ea580c"></i>H — heating</span>
+                    <span><i style="background:#0891b2"></i>IH — water heater</span>
+                    <span><i style="background:#7c3aed"></i>EV — charge point</span>
+                    <span><i style="background:#0d9488"></i>AC — air con</span>
+                    <span><i style="background:#db2777"></i>SA / FA / FZ — fire</span>
+                    <span><i style="background:#0f172a"></i>DB — submain</span>
+                </div>
+                <span class="tp-k" style="margin-top:2.5mm">Line types</span>
+                <div class="key">
+                    <span><i class="ln"></i>Wall</span>
+                    <span><i class="ln dash"></i>Cable route (indicative)</span>
+                </div>
+            </div>
+            <div class="tp-rev">
+                <table>
+                    <thead><tr><th>Rev</th><th>Date</th><th>Description</th><th>By</th></tr></thead>
+                    <tbody><tr><td><b>{{ revision.rev }}</b></td><td>{{ revision.date }}</td><td>{{ revision.description }}</td><td>{{ revision.by }}</td></tr></tbody>
+                </table>
+            </div>
+            <div class="tp-status"><span class="tp-k">Status</span><b>For information</b><span>Subject to design verification</span></div>
+            <div class="tp-co">
+                {% if company_logo and company_logo != "" %}<img src="{{ company_logo }}" alt="" />{% endif %}
+                <div><b>{{ company_name | default: "Elec-Mate" }}</b>{% if company_phone and company_phone != "" %}<span>{{ company_phone }}</span>{% endif %}{% if company_email and company_email != "" %}<span>{{ company_email }}</span>{% endif %}</div>
+            </div>
+            <div class="tp-cell"><span class="tp-k">Project</span><b class="tp-proj">{{ property_address | default: "—" }}</b>{% if client_name and client_name != "" %}<span>Client: {{ client_name }}</span>{% endif %}</div>
+            <div class="tp-cell tp-title"><span class="tp-k">Drawing title</span><b>@@TITLE@@</b><span>@@SUB@@</span></div>
+            <div class="tp-grid">
+                <div><span class="tp-k">Drawn</span><b>{{ electrician_name | default: "—" }}</b></div>
+                <div><span class="tp-k">Date</span><b>{{ date }}</b></div>
+                <div><span class="tp-k">Scale</span><b>NTS</b></div>
+                <div><span class="tp-k">Sheet size</span><b>A4</b></div>
+            </div>
+            <div class="tp-no">
+                <div><span class="tp-k">Drawing no.</span><b class="tp-dwg">{{ drawing_number }}-@@CODE@@</b></div>
+                <div class="tp-revbox"><span class="tp-k">Rev</span><b>{{ revision.rev }}</b></div>
+            </div>
+        </aside>'''
+
+
+def sheet(title, code, body, sub='', right='', n='1'):
+    panel = PANEL.replace('@@TITLE@@', title).replace('@@SUB@@', sub).replace('@@CODE@@', code)
+    return f'''
+<section class="sheet">
+    {ZONES}
+    <div class="frame">
+        <div class="main">
+            <header class="vl">
+                <span class="vl-n">{n}</span>
+                <div class="vl-t"><b>{title}</b><span>{right}</span></div>
+            </header>
+            <div class="body">{body}
+            </div>
+        </div>{panel}
+    </div>
+</section>'''
+
+
+CSS = r'''
+    :root {
+        --accent: {{ company_accent_color | default: "#EAB308" }};
+        --ink: #0f172a;
+        --ink2: #334155;
+        --mute: #64748b;
+        --line: #cbd5e1;
+        --hair: #e2e8f0;
+        --wash: #f8fafc;
+    }
+    @page { size: 297mm 210mm; margin: 0; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 297mm; }
+    body {
+        font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size: 9px; line-height: 1.45; color: var(--ink); background: #fff;
+        -webkit-print-color-adjust: exact; print-color-adjust: exact;
+        font-feature-settings: 'tnum' 1;
+    }
+    .sheet { width: 297mm; height: 210mm; padding: 7mm; overflow: hidden; position: relative; page-break-after: always; break-after: page; }
+    .sheet:last-of-type { page-break-after: auto; break-after: auto; }
+
+    /* Border zones */
+    .zones { position: absolute; inset: 0; }
+    .zones i { position: absolute; background: var(--ink); }
+    .zt, .zb { width: 0.2mm; height: 3mm; }
+    .zt { top: 4mm; } .zb { bottom: 4mm; }
+    .zl, .zr { height: 0.2mm; width: 3mm; }
+    .zl { left: 4mm; } .zr { right: 4mm; }
+    .zn { position: absolute; font-size: 6px; font-weight: 700; color: var(--ink2); }
+    .zt-n { top: 3.6mm; transform: translate(-50%, -50%); }
+    .zb-n { bottom: 3.6mm; transform: translate(-50%, 50%); }
+    .zl-n { left: 3.6mm; transform: translate(-50%, -50%); }
+    .zr-n { right: 3.6mm; transform: translate(50%, -50%); }
+
+    .frame { height: 100%; border: 0.5mm solid var(--ink); display: flex; position: relative; }
+    .main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+
+    /* View label */
+    .vl { display: flex; align-items: center; gap: 3mm; padding: 4mm 5mm 2mm; }
+    .vl-n { width: 7.5mm; height: 7.5mm; border: 0.35mm solid var(--ink); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 8.5px; flex-shrink: 0; }
+    .vl-t { flex: 1; border-bottom: 0.5mm solid var(--ink); padding-bottom: 1mm; display: flex; justify-content: space-between; align-items: baseline; gap: 4mm; position: relative; }
+    .vl-t::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1.3mm; border-bottom: 0.2mm solid var(--ink); }
+    .vl-t b { font-size: 11.5px; font-weight: 800; letter-spacing: 0.9px; text-transform: uppercase; }
+    .vl-t span { font-size: 7px; color: var(--ink2); text-align: right; }
+    .vl-t span strong { color: var(--ink); }
+    .body { flex: 1; min-height: 0; padding: 3mm 5mm 4mm; display: flex; flex-direction: column; gap: 2.5mm; overflow: hidden; }
+
+    /* Title panel */
+    .tp { width: 60mm; flex-shrink: 0; border-left: 0.5mm solid var(--ink); display: flex; flex-direction: column; }
+    .tp > div { border-bottom: 0.25mm solid var(--ink); padding: 1.8mm 2.5mm; }
+    .tp > div:last-child { border-bottom: 0; }
+    .tp-k { display: block; font-size: 5.5px; font-weight: 700; letter-spacing: 0.9px; text-transform: uppercase; color: var(--mute); margin-bottom: 0.5mm; }
+    .tp b { font-weight: 800; }
+    .tp-notes { flex: 1; min-height: 0; overflow: hidden; }
+    .tp-notes ol { padding-left: 3mm; font-size: 6.2px; line-height: 1.45; color: var(--ink2); }
+    .tp-notes li { margin-bottom: 0.7mm; }
+    .key { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8mm 2mm; font-size: 6px; color: var(--ink2); }
+    .key span { display: flex; align-items: center; gap: 1.2mm; white-space: nowrap; }
+    .key i { width: 3.5mm; height: 1.2mm; flex-shrink: 0; }
+    .key i.ln { height: 0; border-top: 0.6mm solid var(--ink); }
+    .key i.ln.dash { border-top: 0.4mm dashed #dc2626; }
+    .tp-rev { padding: 0 !important; }
+    .tp-rev table { width: 100%; border-collapse: collapse; }
+    .tp-rev th { font-size: 5.3px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; color: var(--mute); text-align: left; padding: 1mm 1.5mm; border-bottom: 0.2mm solid var(--line); }
+    .tp-rev td { font-size: 6.2px; padding: 1.2mm 1.5mm; vertical-align: top; }
+    .tp-status { border-left: 1.6mm solid var(--accent); background: var(--wash); display: flex; flex-direction: column; }
+    .tp-status b { font-size: 8px; text-transform: uppercase; letter-spacing: 0.7px; }
+    .tp-status span:last-child { font-size: 6.2px; color: var(--ink2); }
+    .tp-co { display: flex; gap: 2.5mm; align-items: center; }
+    .tp-co img { max-width: 17mm; max-height: 11mm; object-fit: contain; }
+    .tp-co div { display: flex; flex-direction: column; min-width: 0; }
+    .tp-co b { font-size: 8.5px; line-height: 1.2; }
+    .tp-co span { font-size: 6.2px; color: var(--ink2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .tp-cell { display: flex; flex-direction: column; }
+    .tp-cell span:not(.tp-k) { font-size: 6.4px; color: var(--ink2); margin-top: 0.4mm; }
+    .tp-proj { font-size: 8.5px; line-height: 1.25; }
+    .tp-title b { font-size: 10.5px; line-height: 1.15; text-transform: uppercase; letter-spacing: 0.4px; }
+    .tp-grid { display: grid; grid-template-columns: 1fr 1fr; padding: 0 !important; }
+    .tp-grid div { padding: 1.4mm 2.5mm; border-right: 0.25mm solid var(--line); border-bottom: 0.25mm solid var(--line); min-width: 0; }
+    .tp-grid div:nth-child(2n) { border-right: 0; }
+    .tp-grid div:nth-child(n+3) { border-bottom: 0; }
+    .tp-grid b { font-size: 7.4px; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .tp-no { display: flex; padding: 0 !important; background: var(--ink); color: #fff; }
+    .tp-no > div { padding: 2mm 2.5mm; }
+    .tp-no > div:first-child { flex: 1; min-width: 0; }
+    .tp-no .tp-k { color: #94a3b8; }
+    .tp-dwg { font-size: 12px; letter-spacing: 0.2px; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .tp-revbox { border-left: 0.25mm solid #475569; text-align: center; width: 13mm; }
+    .tp-revbox b { font-size: 15px; color: var(--accent); display: block; line-height: 1.1; }
+
+    /* Shared */
+    .k { font-size: 6.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--mute); }
+    .h3 { font-size: 7.5px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; padding-bottom: 1.2mm; border-bottom: 0.35mm solid var(--ink); margin-bottom: 1.2mm; }
+    .note { font-size: 7px; color: var(--ink2); line-height: 1.5; }
+    .flag { display: flex; gap: 2mm; border: 0.25mm solid var(--ink); border-left: 1.6mm solid var(--accent); padding: 1.5mm 2.5mm; font-size: 7px; color: var(--ink2); }
+    .flag strong { color: var(--ink); text-transform: uppercase; letter-spacing: 0.6px; white-space: nowrap; }
+    .num { text-align: right; font-variant-numeric: tabular-nums; }
+    table.t { width: 100%; border-collapse: collapse; }
+    table.t th { font-size: 6px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--ink); text-align: left; padding: 1.4mm 1.8mm; border-top: 0.35mm solid var(--ink); border-bottom: 0.35mm solid var(--ink); white-space: nowrap; background: var(--wash); }
+    table.t td { padding: 1.3mm 1.8mm; border-bottom: 0.2mm solid var(--hair); font-size: 7.4px; vertical-align: top; }
+    table.t td.ref { font-weight: 800; white-space: nowrap; }
+    table.t tr.warn td { background: #fffbeb; color: #92400e; font-size: 6.6px; padding: 0.9mm 1.8mm 1.2mm; border-bottom: 0.2mm solid #fde68a; }
+    .chip { display: inline-block; width: 0.9mm; height: 2.8mm; margin-right: 1.5mm; vertical-align: -0.5mm; }
+    .over { color: #b45309; font-weight: 800; }
+    .sub { color: var(--mute); font-size: 6.4px; }
+    .total { display: flex; justify-content: space-between; align-items: baseline; border: 0.35mm solid var(--ink); padding: 1.8mm 3mm; font-weight: 800; font-size: 8px; text-transform: uppercase; letter-spacing: 0.6px; }
+    .total span:last-child { font-size: 11px; letter-spacing: 0; text-transform: none; }
+
+    /* Cover */
+    .cv { display: flex; flex-direction: column; gap: 4.5mm; flex: 1; min-height: 0; }
+    .cv-head { border-left: 1.6mm solid var(--accent); padding: 1mm 0 1mm 4mm; }
+    .cv-eyebrow { font-size: 6.5px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--mute); }
+    .cv-title { font-size: 22px; font-weight: 800; letter-spacing: -0.4px; line-height: 1.1; margin-top: 1.2mm; }
+    .cv-sub { font-size: 8px; color: var(--ink2); margin-top: 1.2mm; }
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); border: 0.35mm solid var(--ink); }
+    .stat { padding: 2.5mm 4mm; border-right: 0.25mm solid var(--line); }
+    .stat:last-child { border-right: 0; }
+    .stat .n { font-size: 18px; font-weight: 800; letter-spacing: -0.4px; line-height: 1.05; }
+    .stat .l { font-size: 6px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--mute); margin-top: 0.6mm; }
+    .reg td { font-size: 7.4px; padding: 1.1mm 1.8mm; }
+    .reg td:first-child { font-weight: 800; white-space: nowrap; width: 46mm; }
+    .reg td:last-child, .reg th:last-child { text-align: right; width: 14mm; }
+    .cv-caveat { margin-top: auto; font-size: 6.8px; color: var(--ink2); line-height: 1.5; }
+
+    /* Plans */
+    .room { display: flex; gap: 4mm; flex: 1; min-height: 0; }
+    .plan { flex: 1; min-width: 0; display: flex; align-items: center; justify-content: center; }
+    .plan img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    .aside { width: 44mm; flex-shrink: 0; display: flex; flex-direction: column; gap: 2.5mm; min-height: 0; border-left: 0.25mm solid var(--line); padding-left: 3.5mm; }
+    .li { display: flex; justify-content: space-between; gap: 2mm; font-size: 7.2px; padding: 0.8mm 0; border-bottom: 0.2mm solid var(--hair); }
+    .li b { font-variant-numeric: tabular-nums; }
+    .north { margin-top: auto; display: flex; align-items: center; gap: 2mm; font-size: 6.2px; color: var(--ink2); }
+    /* Materials */
+    .mat { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5mm; flex: 1; min-height: 0; align-content: start; }
+    /* Symbols */
+    .syms { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.4mm 2.5mm; align-content: start; }
+    .sym { display: flex; align-items: center; gap: 2mm; padding: 1mm 1.8mm; border: 0.2mm solid var(--line); min-width: 0; }
+    .sym img { width: 6mm; height: 6mm; flex-shrink: 0; }
+    .sym span { font-size: 6.8px; line-height: 1.2; overflow: hidden; }
+    .sym-cat { grid-column: 1 / -1; margin-top: 1.2mm; }
+    /* Single line */
+    .sld { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; }
+    .sld img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    /* Notes */
+    .two { display: flex; gap: 6mm; flex: 1; min-height: 0; }
+    .two > div { min-width: 0; }
+    ol.gn { padding-left: 4mm; font-size: 7px; line-height: 1.5; }
+    ol.gn li { margin-bottom: 0.7mm; }
+    .abbr { display: grid; grid-template-columns: 1fr 1fr; gap: 0 4mm; }
+    .abbr div { font-size: 6.6px; padding: 0.6mm 0; border-bottom: 0.2mm solid var(--hair); }
+    /* Sign-off */
+    .decl { font-size: 8.2px; line-height: 1.6; }
+    .decl p + p { margin-top: 2mm; }
+    .sigs { display: grid; grid-template-columns: 1fr 1fr; gap: 10mm; margin-top: 4mm; }
+    .sig { border: 0.35mm solid var(--ink); padding: 3mm 4mm; }
+    .sig .line { height: 13mm; border-bottom: 0.3mm solid var(--ink); }
+    .sig .row { display: flex; justify-content: space-between; font-size: 7.4px; margin-top: 1.5mm; }
+    .pnotes { border: 0.25mm solid var(--ink); border-left: 1.6mm solid var(--accent); padding: 2.5mm 3.5mm; font-size: 8px; white-space: pre-line; }
+'''
+
+CHIP = ('{% assign f2 = c.circuitRef | slice: 0, 2 %}{% assign f1 = c.circuitRef | slice: 0 %}'
+        '{% case f2 %}{% when "EV" %}{% assign cc = "#7c3aed" %}{% when "IH" %}{% assign cc = "#0891b2" %}'
+        '{% when "FZ" or "FA" or "SA" %}{% assign cc = "#db2777" %}{% when "DB" %}{% assign cc = "#0f172a" %}'
+        '{% when "AC" %}{% assign cc = "#0d9488" %}{% else %}{% case f1 %}{% when "S" %}{% assign cc = "#dc2626" %}'
+        '{% when "L" %}{% assign cc = "#2563eb" %}{% when "C" %}{% assign cc = "#d97706" %}{% when "H" %}{% assign cc = "#ea580c" %}'
+        '{% else %}{% assign cc = "#475569" %}{% endcase %}{% endcase %}')
+
+COVER_BODY = '''
+            <div class="cv">
+                <div class="cv-head">
+                    <div class="cv-eyebrow">Electrical installation drawings</div>
+                    <div class="cv-title">{{ property_address | default: "Electrical layout" }}</div>
+                    <div class="cv-sub">{% if client_name and client_name != "" %}Prepared for {{ client_name }} · {% endif %}Drawing set {{ drawing_number }} · Revision {{ revision.rev }} · {{ date }}</div>
+                </div>
+                <div class="stats">
+                    <div class="stat"><div class="n">{{ rooms.size }}</div><div class="l">Plan{% if rooms.size != 1 %}s{% endif %}</div></div>
+                    <div class="stat"><div class="n">{{ total_items }}</div><div class="l">Items</div></div>
+                    <div class="stat"><div class="n">{% if circuit_schedule.size > 0 %}{{ circuit_schedule.size }}{% else %}—{% endif %}</div><div class="l">Circuits</div></div>
+                    <div class="stat"><div class="n">{% if consumer_unit and consumer_unit.way_count > 0 %}{{ consumer_unit.way_count }}{% else %}—{% endif %}</div><div class="l">Main board ways</div></div>
+                </div>
+                <div>
+                    <div class="h3">Drawing register</div>
+                    <table class="t reg">
+                        <thead><tr><th>Drawing no.</th><th>Title</th><th>Sheets</th></tr></thead>
+                        <tbody>
+                            <tr><td>{{ drawing_number }}-E001</td><td>Cover sheet and drawing register</td><td>1</td></tr>
+                            {% if rooms.size > 8 %}
+                            <tr><td>{{ drawing_number }}-E101 to E{{ rooms.size | plus: 100 }}</td><td>Plans</td><td>{{ rooms.size }}</td></tr>
+                            {% else %}{% for room in rooms %}
+                            <tr><td>{{ drawing_number }}-E{{ forloop.index | plus: 100 }}</td><td>{{ room.name }} — plan</td><td>1</td></tr>
+                            {% endfor %}{% endif %}
+                            {% if circuit_schedule.size > 0 %}<tr><td>{{ drawing_number }}-E201{% if cs_pages > 1 %} to E{{ cs_pages | plus: 200 }}{% endif %}</td><td>Circuit schedule</td><td>{{ cs_pages }}</td></tr>{% endif %}
+                            {% if consumer_unit and consumer_unit.ways.size > 0 %}<tr><td>{{ drawing_number }}-E301{% if cu_pages > 1 %} to E{{ cu_pages | plus: 300 }}{% endif %}</td><td>Main board schedule</td><td>{{ cu_pages }}</td></tr>{% endif %}
+                            {% if single_line_images.size > 0 %}<tr><td>{{ drawing_number }}-E401{% if single_line_images.size > 1 %} to E{{ single_line_images.size | plus: 400 }}{% endif %}</td><td>Single-line diagram{% if single_line_images.size > 1 %}s{% endif %}</td><td>{{ single_line_images.size }}</td></tr>{% endif %}
+                            <tr><td>{{ drawing_number }}-E501{% if mat_pages > 1 %} to E{{ mat_pages | plus: 500 }}{% endif %}</td><td>Materials schedule</td><td>{{ mat_pages }}</td></tr>
+                            {% if standard_notes.mountingHeights %}<tr><td>{{ drawing_number }}-E601</td><td>Installation notes</td><td>1</td></tr>{% endif %}
+                            {% if all_symbols.size > 0 %}<tr><td>{{ drawing_number }}-E701</td><td>Symbol key</td><td>1</td></tr>{% endif %}
+                            <tr><td>{{ drawing_number }}-E801</td><td>Notes and sign-off</td><td>1</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="cv-caveat">Prepared with reference to BS 7671:2018+A4:2026 (IET Wiring Regulations). Symbols to BS EN 60617. Circuit and board information is indicative and subject to design verification before work is carried out.</div>
+            </div>'''
+COVER = sheet('Cover sheet', 'E001', COVER_BODY, sub='Drawing register', right='Drawing register', n='0')
+
+ROOM_BODY = '''
+            <div class="room">
+                <div class="plan"><img src="{{ room.floor_plan_image }}" alt="{{ room.name }}" /></div>
+                <div class="aside">
+                    <div>
+                        <div class="h3">Items shown</div>
+                        {% for item in room.items limit: 26 %}<div class="li"><span>{{ item.name }}</span><b>{{ item.count }}</b></div>{% endfor %}
+                        {% if room.items.size > 26 %}<div class="li"><span class="sub">{{ room.items.size | minus: 26 }} more — see materials</span><b></b></div>{% endif %}
+                    </div>
+                    <div class="total"><span>Total</span><span>{{ room.item_count }}</span></div>
+                    <div class="north">
+                        <svg width="20" height="20" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#0f172a" stroke-width="0.8"/><path d="M11 2 L14.5 13 L11 11 L7.5 13 Z" fill="#0f172a"/><text x="11" y="20" font-size="5" text-anchor="middle" font-family="Helvetica" font-weight="700" fill="#0f172a">N</text></svg>
+                        <span>Orientation as drawn.<br />Dimensions in metres.</span>
+                    </div>
+                </div>
+            </div>'''
+ROOMS = '{% for room in rooms %}' + sheet(
+    '{{ room.name }}', 'E{{ forloop.index | plus: 100 }}', ROOM_BODY,
+    sub='Plan {{ forloop.index }} of {{ rooms.size }}',
+    right='{{ room.item_count }} item{% if room.item_count != 1 %}s{% endif %} · plan {{ forloop.index }} of {{ rooms.size }} · scale NTS',
+    n='{{ forloop.index }}') + '{% endfor %}'
+
+CS_BODY = '''
+            {% if p == 1 %}<div class="flag"><strong>Indicative</strong><span>Circuits, cables and devices are defaults derived from the items on this drawing, not a substitute for design. Cable sizing, voltage drop, earth fault loop impedance and diversity must be verified before work is carried out.</span></div>{% endif %}
+            <table class="t">
+                <thead><tr><th>Ref</th>{% if has_boards %}<th>From</th>{% endif %}<th>Circuit</th><th>Protection</th><th>Cable</th><th>RCD</th><th class="num">Pts</th>{% if has_runs %}<th class="num">Run</th>{% endif %}<th class="num">Load</th></tr></thead>
+                <tbody>
+                {% for c in circuit_schedule limit: 12 offset: off %}''' + CHIP + '''
+                    <tr>
+                        <td class="ref"><span class="chip" style="background:{{ cc }}"></span>{{ c.circuitRef }}</td>
+                        {% if has_boards %}<td>{{ c.fedFrom | default: "CU" }}</td>{% endif %}
+                        <td>{{ c.circuitName }}</td>
+                        <td>{{ c.protection }}</td>
+                        <td>{{ c.cableSize }}</td>
+                        <td>{{ c.rcd }}{% if c.rcdBasis and c.rcdBasis != "" %}<div class="sub">{{ c.rcdBasis }}</div>{% endif %}</td>
+                        <td class="num">{{ c.points }}</td>
+                        {% if has_runs %}<td class="num{% if c.lengthOk == false %} over{% endif %}" style="white-space:nowrap">{% if c.runLengthM %}≈ {{ c.runLengthM }} m{% if c.maxLengthM %}<div class="sub">max {{ c.maxLengthM }} m</div>{% endif %}{% else %}—{% endif %}</td>{% endif %}
+                        <td class="num" style="white-space:nowrap">{{ c.typicalLoad }}</td>
+                    </tr>
+                    {% if c.needsReview and c.needsReview != "" %}<tr class="warn"><td colspan="{{ cols }}">⚠ {{ c.circuitRef }} — {{ c.needsReview }}</td></tr>{% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+            {% if p == cs_pages %}<div class="note" style="margin-top:auto">RCD references are to BS 7671:2018+A4:2026 — 411.3.3 socket-outlets up to 32 A, 411.3.4 luminaires in domestic premises, 522.6.202 cables concealed less than 50 mm in a wall, Section 701 bath and shower locations, Section 722 EV charging.{% if has_runs %} Run lengths are estimated from the cable routes drawn on the plan, with allowances for drops and terminations, and checked against OSG Table 7.1(i) where a row applies.{% endif %}</div>{% endif %}'''
+CS = ('{% if circuit_schedule.size > 0 %}{% for p in (1..cs_pages) %}{% assign off = p | minus: 1 | times: 12 %}'
+      + sheet('Circuit schedule', 'E{{ p | plus: 200 }}', CS_BODY,
+              sub='{{ circuit_schedule.size }} circuits · sheet {{ p }} of {{ cs_pages }}',
+              right='<strong>{{ circuit_schedule.size }}</strong> circuits · sheet {{ p }} of {{ cs_pages }}', n='{{ p }}')
+      + '{% endfor %}{% endif %}')
+
+CU_BODY = '''
+            {% if p == 1 %}<div class="flag"><strong>Indicative</strong><span>Way numbering is sequential and does not imply a physical board layout. Loads are connected load — apply diversity to establish maximum demand.</span></div>{% endif %}
+            <table class="t">
+                <thead><tr><th class="num">Way</th><th>Ref</th><th>Circuit</th><th>Protective device</th><th>RCD</th><th>Cable</th><th class="num">Pts</th><th class="num">Connected load</th></tr></thead>
+                <tbody>
+                {% for w in consumer_unit.ways limit: 20 offset: off %}{% assign c = w %}''' + CHIP + '''
+                    <tr>
+                        <td class="num" style="font-weight:800">{{ w.way }}</td>
+                        <td class="ref"><span class="chip" style="background:{{ cc }}"></span>{{ w.circuitRef }}</td>
+                        <td>{{ w.circuitName }}</td>
+                        <td>{{ w.protection }}</td>
+                        <td>{{ w.rcd }}</td>
+                        <td>{{ w.cableSize }}</td>
+                        <td class="num">{{ w.points }}</td>
+                        <td class="num" style="white-space:nowrap">{{ w.connectedLoad }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% if p == cu_pages %}
+            <div class="total"><span>Total connected load, before diversity</span><span>{{ consumer_unit.total_connected_load_kw }} kW</span></div>
+            <div class="note" style="margin-top:auto">Voltage drop has not been calculated on this drawing. It must be verified per circuit, from the origin, against the limits in BS 7671 Appendix 4 section 6.4 (Regulation 525.202) before the installation is energised.</div>
+            {% endif %}'''
+CU = ('{% if consumer_unit and consumer_unit.ways.size > 0 %}{% for p in (1..cu_pages) %}{% assign off = p | minus: 1 | times: 20 %}'
+      + sheet('Main board schedule', 'E{{ p | plus: 300 }}', CU_BODY,
+              sub='{{ consumer_unit.way_count }} ways · sheet {{ p }} of {{ cu_pages }}',
+              right='<strong>{{ consumer_unit.way_count }}</strong> way{% if consumer_unit.way_count != 1 %}s{% endif %} · <strong>{{ consumer_unit.total_connected_load_kw }} kW</strong> connected · sheet {{ p }} of {{ cu_pages }}',
+              n='{{ p }}')
+      + '{% endfor %}{% endif %}')
+
+SLD = ('{% for img in single_line_images %}'
+       + sheet('Single-line diagram', 'E{{ forloop.index | plus: 400 }}',
+               '\n            <div class="sld"><img src="{{ img }}" alt="Single-line diagram" /></div>',
+               sub='Diagram {{ forloop.index }} of {{ single_line_images.size }}',
+               right='Diagram {{ forloop.index }} of {{ single_line_images.size }} · devices and cables indicative',
+               n='{{ forloop.index }}')
+       + '{% endfor %}')
+
+MAT_BODY = '''
+            <div class="mat">
+                {% for category in materials_by_category limit: 4 offset: off %}
+                <div>
+                    <div class="h3">{{ category.name }}</div>
+                    {% for item in category.items %}<div class="li"><span>{{ item.name }}</span><b>{{ item.count }}</b></div>{% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+            {% if p == mat_pages %}<div class="total"><span>Total items on the drawing</span><span>{{ total_items }}</span></div>{% endif %}'''
+MAT = ('{% for p in (1..mat_pages) %}{% assign off = p | minus: 1 | times: 4 %}'
+       + sheet('Materials schedule', 'E{{ p | plus: 500 }}', MAT_BODY, sub='Counted from the drawing',
+               right='<strong>{{ total_items }}</strong> items · counted from the drawing', n='{{ p }}')
+       + '{% endfor %}')
+
+NOTES_BODY = '''
+            <div class="two">
+                <div style="flex:1.2">
+                    <div class="h3">Mounting heights</div>
+                    <table class="t">
+                        <thead><tr><th>Item</th><th>Height</th><th>Notes</th></tr></thead>
+                        <tbody>{% for item in standard_notes.mountingHeights %}<tr><td>{{ item.item }}</td><td style="font-weight:800;white-space:nowrap">{{ item.height }}</td><td>{{ item.notes }}</td></tr>{% endfor %}</tbody>
+                    </table>
+                </div>
+                <div style="flex:1">
+                    <div class="h3">General notes</div>
+                    <ol class="gn">{% for note in standard_notes.generalNotes %}<li>{{ note }}</li>{% endfor %}</ol>
+                    {% if standard_notes.abbreviations %}
+                    <div class="h3" style="margin-top:2.5mm">Abbreviations</div>
+                    <div class="abbr">{% for item in standard_notes.abbreviations %}<div><strong>{{ item.abbr }}</strong> — {{ item.meaning }}</div>{% endfor %}</div>
+                    {% endif %}
+                </div>
+            </div>'''
+NOTES = ('{% if standard_notes.mountingHeights %}'
+         + sheet('Installation notes', 'E601', NOTES_BODY, sub='Heights, notes, abbreviations',
+                 right='Mounting heights are typical — confirm against the specification')
+         + '{% endif %}')
+
+SYM_BODY = '''
+            <div class="syms">
+                {% assign sorted_symbols = all_symbols | sort: "category" %}{% assign current_category = "" %}
+                {% for symbol in sorted_symbols limit: 80 %}
+                    {% if symbol.category != current_category %}<div class="sym-cat h3">{{ symbol.category }}</div>{% assign current_category = symbol.category %}{% endif %}
+                    <div class="sym">{% if symbol.svg_data_uri and symbol.svg_data_uri != "" %}<img src="{{ symbol.svg_data_uri }}" alt="" />{% endif %}<span>{{ symbol.name }}</span></div>
+                {% endfor %}
+            </div>'''
+SYM = ('{% if all_symbols.size > 0 %}'
+       + sheet('Symbol key', 'E701', SYM_BODY, sub='Symbols used on this drawing',
+               right='{{ all_symbols.size }} symbol{% if all_symbols.size != 1 %}s{% endif %} used · BS EN 60617 / CIBSE conventions')
+       + '{% endif %}')
+
+SIGN_BODY = '''
+            {% if notes and notes != "" %}<div class="pnotes"><div class="k" style="margin-bottom:1mm">Project notes</div>{{ notes }}</div>{% endif %}
+            <div class="decl">
+                <p>This drawing set records the intended electrical installation layout for the property named in the title panel. It has been prepared with reference to <strong>BS 7671:2018+A4:2026</strong> (Requirements for Electrical Installations — IET Wiring Regulations), and its symbols follow <strong>BS EN 60617</strong> / CIBSE conventions.</p>
+                <p>Circuit, cable and board information is indicative and subject to design verification. All work must be carried out by a competent person, and the installation inspected, tested and certified in accordance with the current edition of BS 7671 before it is put into service.</p>
+            </div>
+            <div class="sigs">
+                <div class="sig"><div class="k">Prepared by</div><div class="line"></div><div class="row"><span>{{ electrician_name | default: "—" }}</span><span>{{ date }}</span></div></div>
+                <div class="sig"><div class="k">Client acknowledgement</div><div class="line"></div><div class="row"><span>{{ client_name | default: "Name" }}</span><span>Date ____________</span></div></div>
+            </div>'''
+SIGN = sheet('Notes and sign-off', 'E801', SIGN_BODY, sub='Declaration and acknowledgement',
+             right='{{ drawing_number }} · Rev {{ revision.rev }} · {{ date }}')
+
+# Sheet counts before anything prints (the register needs them). `floor`
+# keeps the division whole in every Liquid engine.
+COUNTS = '''{% assign cs_pages = circuit_schedule.size | plus: 11 | divided_by: 12 | floor %}{% if cs_pages < 1 %}{% assign cs_pages = 1 %}{% endif %}
+{% assign cu_pages = 1 %}{% if consumer_unit and consumer_unit.ways.size > 0 %}{% assign cu_pages = consumer_unit.ways.size | plus: 19 | divided_by: 20 | floor %}{% endif %}
+{% assign mat_pages = materials_by_category.size | plus: 3 | divided_by: 4 | floor %}{% if mat_pages < 1 %}{% assign mat_pages = 1 %}{% endif %}
+{% assign has_runs = false %}{% assign has_boards = false %}
+{% for c in circuit_schedule %}{% if c.runLengthM %}{% assign has_runs = true %}{% endif %}{% if c.fedFrom and c.fedFrom != "CU" %}{% assign has_boards = true %}{% endif %}{% endfor %}
+{% assign cols = 7 %}{% if has_runs %}{% assign cols = cols | plus: 1 %}{% endif %}{% if has_boards %}{% assign cols = cols | plus: 1 %}{% endif %}'''
+
+HTML = f'''<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Electrical drawings — {{{{ property_address }}}}</title>
+<!--
+  Floor plan drawing set, redesigned 29 Sep 2026 as CAD drawing sheets: zoned
+  border, right-hand title panel, view labels. Generated (the title panel is
+  stamped into every sheet) — every .sheet is exactly one A4 landscape page, so
+  long tables are split into sheets here (12 circuits, 20 ways, 4 material
+  groups a sheet). Template settings: A4 landscape, margins 0.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>{CSS}</style>
+</head>
+<body>
+{COUNTS}
+{COVER}
+{ROOMS}
+{CS}
+{CU}
+{SLD}
+{MAT}
+{NOTES}
+{SYM}
+{SIGN}
+</body>
+</html>
+'''
+
+open(OUT, 'w').write(HTML)
+print('wrote', len(HTML))

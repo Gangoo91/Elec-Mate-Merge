@@ -73,9 +73,10 @@ interface Props {
 }
 
 const BuildingRegsNotification: React.FC<Props> = ({ formData, onUpdate, className }) => {
-  const f = formData as BuildingRegsFields & { installationType?: unknown };
+  const f = formData as BuildingRegsFields & { installationType?: unknown; propertyType?: unknown };
 
-  if (isKnownNonDwelling(f.installationType)) {
+  // EIC/EV hold the premises under installationType, the solar form under propertyType.
+  if (isKnownNonDwelling(f.installationType ?? f.propertyType)) {
     return (
       <p className={cn('text-[13px] leading-relaxed text-white', className)}>
         {PART_P_NOT_APPLICABLE}

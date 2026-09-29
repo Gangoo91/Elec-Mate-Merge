@@ -116,6 +116,8 @@ export default defineConfig(({ mode }) => ({
       'date-fns',
       'lodash',
       'lodash/debounce',
+      'lodash/isEqual', // reportConflict.ts — with noDiscovery, a CJS subpath missing here breaks every route that loads it
+      'react-dom/server', // engineerVerify.ts — CJS in the browser build
       'clsx',
       'tailwind-merge',
       'uuid',

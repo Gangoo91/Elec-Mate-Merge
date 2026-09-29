@@ -151,7 +151,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
           title: 'Part P Notification Created',
           description: 'Notification created successfully. Submission required within 30 days.',
           action: (
-            <Button size="sm" variant="outline" onClick={() => navigate('/?section=notifications')}>
+            <Button size="sm" variant="outline" onClick={() => navigate('/electrician/inspection-testing?section=notifications')}>
               <Bell className="h-3 w-3 mr-1" />
               View Notifications
             </Button>

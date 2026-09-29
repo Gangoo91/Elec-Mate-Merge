@@ -1,5 +1,5 @@
 import { readCertificatePrefill } from '@/utils/certificatePrefill';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 // Step transitions handled by the v3 shell (keyed animate-mw-step-in/back)
 import StartNewEICRDialog from '@/components/StartNewEICRDialog';
@@ -12,6 +12,7 @@ import {
   saveToLocalStorageBackup,
   logIntegrityEvent,
 } from '@/utils/dataIntegrity';
+import { localDraftHidesCloudResults, mergeLocalOntoCloud } from '@/utils/localDraftGuard';
 import MinorWorksPdfGenerator from '@/components/pdf/MinorWorksPdfGenerator';
 import { useEICAutoSave } from '@/hooks/useEICAutoSave';
 import { useUiPreferences } from '@/hooks/useUiPreferences';
@@ -83,6 +84,9 @@ const MinorWorksForm = ({
   // True while initial cloud hydration is in-flight. Gates cloud autosave to prevent
   // the blank initial form state overwriting real data. See 2026-04-17 incident.
   const [isLoadingReport, setIsLoadingReport] = useState<boolean>(!!initialReportId);
+  // Set when the requested report could not be loaded from anywhere; the gate
+  // then stays closed so a bad id never becomes a blank new certificate.
+  const loadFailedRef = useRef(false);
 
   // Capture customer data from navigation state
   const customerIdFromNav = location.state?.customerId;
@@ -697,10 +701,26 @@ const MinorWorksForm = ({
               }
             }
 
+            // A newer local draft that shows FEWER circuits or readings than the cloud
+            // is a stale snapshot, not a newer version — see utils/localDraftGuard.ts.
+            const staleLocal =
+              localDraft?.data && localTime > cloudTime
+                ? localDraftHidesCloudResults(localDraft.data, data)
+                : null;
+            if (staleLocal?.hides) {
+              console.warn('[MinorWorks] Local draft is newer but holds fewer readings than the cloud — merging, cloud rows kept', staleLocal);
+              logIntegrityEvent('load_empty', {
+                reportType: 'minor-works',
+                reportId: initialReportId,
+                fieldCount: staleLocal.cloudReadings,
+                error: `newer-local-draft-hides-${staleLocal.array}; merged (local ${staleLocal.localRows} rows/${staleLocal.localReadings} readings vs cloud ${staleLocal.cloudRows}/${staleLocal.cloudReadings})`,
+              });
+            }
             if (localDraft?.data && localTime > cloudTime) {
               // Local is newer - use local data
               console.log('[MinorWorks] Using LOCAL draft (newer than cloud)');
-              setFormData(localDraft.data);
+              // Local wins where it holds a value, the cloud fills every blank (Rovell, 28 Sep).
+              setFormData(mergeLocalOntoCloud(localDraft.data, data) as typeof localDraft.data);
               logIntegrityEvent('load_success', {
                 reportType: 'minor-works',
                 reportId: initialReportId,
@@ -738,21 +758,24 @@ const MinorWorksForm = ({
               description: 'Cloud sync will retry automatically.',
             });
           } else {
+            loadFailedRef.current = true;
             logIntegrityEvent('recovery_failed', {
               reportType: 'minor-works',
               reportId: initialReportId,
               error: 'No data found in cloud or local',
             });
             toast({
-              title: 'Report not found',
-              description: 'Could not load the requested report.',
+              title: 'Certificate not found',
+              description: 'It may have been deleted, or it belongs to another account. Nothing has been changed.',
               variant: 'destructive',
             });
+            // Back to the list rather than a form that can neither load nor save.
+            navigate('/electrician/inspection-testing', { replace: true });
           }
         })
         .finally(() => {
           // Hydration complete — release the autosave gate.
-          setIsLoadingReport(false);
+          if (!loadFailedRef.current) setIsLoadingReport(false);
         });
     }
   }, [initialReportId, authChecked, isAuthenticated, isOnline, loadFromCloud]);
@@ -1371,6 +1394,15 @@ const MinorWorksForm = ({
           currentTab={currentTab}
           onTabChange={handleTabChange}
           completedTabs={completedTabs}
+          history={
+            currentReportId || initialReportId
+              ? {
+                  reportId: (currentReportId || initialReportId) as string,
+                  onRestored: (d) =>
+                    setFormData((prev: any) => ({ ...prev, ...d, certificateNumber: prev.certificateNumber })),
+                }
+              : undefined
+          }
         />
 
 

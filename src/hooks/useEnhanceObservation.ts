@@ -44,10 +44,11 @@ export function useEnhanceObservation() {
   const lastRequestRef = useRef<EnhanceRequest | null>(null);
 
   const enhance = async (request: EnhanceRequest): Promise<ObservationSuggestions | null> => {
+    // ELE-1786 — five characters, matching the button gate and the live edge function.
     if (!request.description || request.description.trim().length < 5) {
       toast({
-        title: 'Description too short',
-        description: 'Enter at least 5 characters to use AI enhancement.',
+        title: 'A few words first',
+        description: 'Type a few words about what you found, then tap Write with AI.',
         variant: 'destructive',
       });
       return null;

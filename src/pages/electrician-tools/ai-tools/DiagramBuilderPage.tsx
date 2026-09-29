@@ -1,4 +1,12 @@
-import { useState, useRef, useEffect, useMemo, Fragment, type SetStateAction } from 'react';
+import {
+  useState,
+  useRef,
+  useEffect,
+  useMemo,
+  useCallback,
+  Fragment,
+  type SetStateAction,
+} from 'react';
 import { createPortal } from 'react-dom';
 import {
   ArrowLeft,
@@ -36,15 +44,36 @@ import { SymbolLibrary } from '@/components/electrician-tools/diagram-builder/Sy
 // Old jsPDF export removed — using PDFMonkey via ExportReviewSheet
 import { PropertiesPanel } from '@/components/electrician-tools/diagram-builder/PropertiesPanel';
 import { AIRoomBuilderDialog } from '@/components/electrician-tools/diagram-builder/AIRoomBuilderDialog';
+import { CARD_BASE, CARD_NEUTRAL, CARD_PRIMARY } from '@/components/ui/card-recipe';
+import {
+  ROOM_EXPORT_SIZE,
+  ROOM_IMAGE_PADDING,
+  ROOM_THUMBNAIL_SIZE,
+  getObjectBounds,
+  renderCenteredRoomImage,
+} from '@/components/electrician-tools/diagram-builder/roomImage';
 import { RoomShapePicker } from '@/components/electrician-tools/diagram-builder/RoomShapePicker';
 import { SaveRoomSheet } from '@/components/electrician-tools/diagram-builder/SaveRoomSheet';
 import { SavedRoomsStrip } from '@/components/electrician-tools/diagram-builder/SavedRoomsStrip';
 import { SymbolCountPanel } from '@/components/electrician-tools/diagram-builder/SymbolCountPanel';
 import { ExportReviewSheet } from '@/components/electrician-tools/diagram-builder/ExportReviewSheet';
+import { BoardScheduleSheet } from '@/components/electrician-tools/diagram-builder/BoardScheduleSheet';
+import { singleLinePngs } from '@/components/electrician-tools/diagram-builder/singleLine';
+import { runsAreStale, withRuns } from '@/components/electrician-tools/diagram-builder/wiring';
 import { MyPlansSheet } from '@/components/electrician-tools/diagram-builder/MyPlansSheet';
 import { symbolRegistry } from '@/components/electrician-tools/diagram-builder/symbols/symbolRegistry';
 import { STANDARD_NOTES } from '@/utils/standard-electrical-notes';
 import { buildConsumerUnitSchedule } from '@/utils/circuit-assignment';
+import {
+  assignNewSymbols,
+  circuitColour,
+  circuitName,
+  circuitRank,
+  isDesigned,
+  kindOfRef,
+  type DesignedCircuit,
+  scheduleFromObjects,
+} from '@/components/electrician-tools/diagram-builder/circuitDesign';
 import { useFloorPlanRooms, FLOOR_PLAN_ROOMS_KEY, type SavedRoom } from '@/hooks/useFloorPlanRooms';
 import { resnapWallSymbols } from '@/components/electrician-tools/diagram-builder/wallSnap';
 import { useFloorPlanCloud } from '@/hooks/useFloorPlanCloud';
@@ -78,16 +107,58 @@ export type DrawingTool =
 
 export interface CanvasObject {
   id: string;
-  type: 'symbol' | 'line' | 'rectangle' | 'text' | 'wall' | 'dimension' | 'cable';
+  type: 'symbol' | 'line' | 'rectangle' | 'text' | 'wall' | 'dimension' | 'cable' | 'underlay';
   x: number;
   y: number;
   width?: number;
   height?: number;
   rotation?: number;
+  /** Text only: size in canvas units. Room names in tight rooms are set smaller. */
+  fontSize?: number;
   symbolId?: string;
   text?: string;
   points?: { x: number; y: number }[];
   circuitRef?: string;
+  /**
+   * Walls only: do not print this wall's length beside it. Set on plans the
+   * AI draws, where every room already carries its size in its label and four
+   * lengths per room turned a building into a cloud of small numbers.
+   */
+  hideLength?: boolean;
+  /**
+   * Walls only: kept for sockets to snap to, but not drawn. Used when the
+   * architect's own drawing is laid underneath (an `underlay`), which already
+   * shows every wall exactly — drawing ours on top would only blur it.
+   */
+  ghost?: boolean;
+  /**
+   * Underlay only: storage path of the architect's drawing, in the private
+   * project-documents bucket. Resolved to a short-lived signed URL at draw time.
+   */
+  src?: string;
+  /**
+   * Symbols placed by the plan reader: the room they serve. Circuit design
+   * groups by room and floor area, and the board schedule is rebuilt from
+   * these whenever the drawing changes.
+   */
+  roomName?: string;
+  floor?: string;
+  roomArea?: number;
+  roomKind?: string;
+  /** Which room of the plan a symbol belongs to — unique even when names repeat. */
+  roomKey?: string;
+  /** Designed plans: what the building is, as the electrician set it. */
+  buildingType?: 'house' | 'flat' | 'hrrb' | 'hmo' | 'student' | 'care-home' | 'non-domestic';
+  /** Designed plans: the supply's earthing, for the cable-length check. */
+  earthing?: 'TN-C-S' | 'TN-S' | 'TT';
+  /** Cables drawn by "Draw cable runs" — replaced whenever the runs are redrawn. */
+  generated?: boolean;
+  /** A drawn run's estimated cable length in metres, drops included. */
+  lengthM?: number;
+  /** On a drawn run: what it was drawn from, so a moved item redraws it. */
+  runsFor?: string;
+  /** On a drawn run: the board it is fed from ("CU", "DB2"). */
+  fedFrom?: string;
 }
 
 // Circuit colour map for visual identification
@@ -124,12 +195,10 @@ function getCircuitRefForSymbol(symbolId: string): string | undefined {
     'socket-single-13a',
     'socket-double-13a',
     'socket-usb',
-    'socket-data',
-    'socket-telephone',
-    'socket-tv-aerial',
+    // Data, telephone and TV outlets are not on a mains circuit; a shaver
+    // supply unit is fed from the lighting (below).
     'socket-floor',
     'socket-outdoor',
-    'socket-shaver',
     'socket-fused-spur',
     'socket-switched-fused-spur',
     'socket-unswitched-spur',
@@ -140,7 +209,7 @@ function getCircuitRefForSymbol(symbolId: string): string | undefined {
   if (SOCKETS.includes(symbolId)) return 'S1';
   if (symbolId === 'socket-cooker-45a') return 'C1';
   if (symbolId === 'socket-ev-charger') return 'EV1';
-  if (symbolId === 'extractor-fan') return 'L1';
+  if (symbolId === 'extractor-fan' || symbolId === 'socket-shaver') return 'L1';
   if (FIRE.includes(symbolId)) return 'FA1';
   if (symbolId === 'water-heater') return 'IH1';
   if (symbolId === 'air-conditioning' || symbolId === 'fan-coil-unit') return 'AC1';
@@ -149,50 +218,6 @@ function getCircuitRefForSymbol(symbolId: string): string | undefined {
 
 const HEADER_HEIGHT = 48;
 const TOOLBAR_HEIGHT = 56;
-const ROOM_IMAGE_PADDING = 64;
-const ROOM_THUMBNAIL_SIZE = { width: 120, height: 90 };
-const ROOM_EXPORT_SIZE = { width: 1800, height: 1350 };
-
-const getObjectBounds = (items: CanvasObject[]) => {
-  if (items.length === 0) return null;
-
-  let minX = Infinity;
-  let minY = Infinity;
-  let maxX = -Infinity;
-  let maxY = -Infinity;
-
-  for (const obj of items) {
-    if (obj.points && obj.points.length > 0) {
-      for (const point of obj.points) {
-        minX = Math.min(minX, point.x);
-        minY = Math.min(minY, point.y);
-        maxX = Math.max(maxX, point.x);
-        maxY = Math.max(maxY, point.y);
-      }
-      continue;
-    }
-
-    const width = obj.width || 40;
-    const height = obj.height || 40;
-    minX = Math.min(minX, obj.x);
-    minY = Math.min(minY, obj.y);
-    maxX = Math.max(maxX, obj.x + width);
-    maxY = Math.max(maxY, obj.y + height);
-  }
-
-  if (!isFinite(minX)) return null;
-  return {
-    minX,
-    minY,
-    maxX,
-    maxY,
-    width: maxX - minX,
-    height: maxY - minY,
-    centreX: (minX + maxX) / 2,
-    centreY: (minY + maxY) / 2,
-  };
-};
-
 const applyCanvasObjectUpdates = (
   obj: CanvasObject,
   updates: Partial<CanvasObject>
@@ -220,6 +245,10 @@ const applyCanvasObjectUpdates = (
 
 const duplicateCanvasObject = (obj: CanvasObject, offset = 24): CanvasObject => ({
   ...obj,
+  // A copied item finds its own circuit: copying the circuit put a second
+  // cooker or EV charger on the first one's dedicated circuit. (A cable keeps
+  // its circuit — nothing re-assigns cables.)
+  circuitRef: obj.type === 'symbol' ? undefined : obj.circuitRef,
   id: `obj-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
   x: obj.x + offset,
   y: obj.y + offset,
@@ -228,110 +257,6 @@ const duplicateCanvasObject = (obj: CanvasObject, offset = 24): CanvasObject => 
     y: point.y + offset,
   })),
 });
-
-/**
- * Render the room to a centred image at `targetSize` with `padding` margin.
- *
- * Uses Fabric's `toCanvasElement(multiplier, { left, top, width, height })`
- * which renders objects at their NATIVE coordinates regardless of the current
- * viewport pan/zoom. The previous implementation cropped pixels off the
- * displayed HTML canvas, which produced blank images whenever the user had
- * panned/zoomed so the room sat outside the visible canvas pixel bounds.
- */
-type ExportableCanvas = {
-  toCanvasElement: (
-    multiplier: number,
-    options?: { left: number; top: number; width: number; height: number }
-  ) => HTMLCanvasElement;
-  getObjects?: () => { visible?: boolean; isGridLine?: boolean }[];
-  renderAll?: () => unknown;
-  getZoom?: () => number;
-  viewportTransform?: number[];
-  setViewportTransform?: (vpt: number[]) => unknown;
-};
-
-const renderCenteredRoomImage = (
-  fabricCanvas: ExportableCanvas | null | undefined,
-  bounds: ReturnType<typeof getObjectBounds>,
-  targetSize: { width: number; height: number },
-  padding: number,
-  quality = 1
-) => {
-  const outputCanvas = document.createElement('canvas');
-  outputCanvas.width = targetSize.width;
-  outputCanvas.height = targetSize.height;
-  const ctx = outputCanvas.getContext('2d');
-  if (!ctx) return '';
-
-  ctx.fillStyle = '#FFFFFF';
-  ctx.fillRect(0, 0, outputCanvas.width, outputCanvas.height);
-
-  if (!fabricCanvas || !bounds || bounds.width <= 0 || bounds.height <= 0) {
-    return outputCanvas.toDataURL('image/png', quality);
-  }
-
-  const cropPad = 24;
-  const cropL = bounds.minX - cropPad;
-  const cropT = bounds.minY - cropPad;
-  const cropW = bounds.width + cropPad * 2;
-  const cropH = bounds.height + cropPad * 2;
-  const multiplier = 2;
-
-  // The on-screen grid is a drawing aid, not drawing content — it has no place
-  // on a document handed to a client. Hide the grid lines for the capture and
-  // put them straight back, so the export is the drawing alone.
-  const gridLines = (fabricCanvas.getObjects?.() ?? []).filter((o) => o.isGridLine);
-  const gridWasVisible = gridLines.map((o) => o.visible !== false);
-  gridLines.forEach((o) => {
-    o.visible = false;
-  });
-
-  // Capture at identity viewport.
-  //
-  // Fabric v6's toCanvasElement does NOT ignore the viewport — it computes
-  // newZoom = zoom * multiplier and offsets the crop by the current pan. The
-  // crop rect here is in world coordinates, so any zoom other than 1 aimed it
-  // somewhere other than the drawing and produced a blank white sheet. This
-  // silently worked only because the canvas happened to sit at zoom 1 until
-  // fit-to-view started setting it. Neutralise the viewport for the capture
-  // and restore it after, so the image is correct at any zoom or pan.
-  const savedVpt = fabricCanvas.viewportTransform ? [...fabricCanvas.viewportTransform] : null;
-  const canResetViewport = typeof fabricCanvas.setViewportTransform === 'function';
-
-  let tightCanvas: HTMLCanvasElement;
-  try {
-    if (canResetViewport) fabricCanvas.setViewportTransform!([1, 0, 0, 1, 0, 0]);
-    tightCanvas = fabricCanvas.toCanvasElement(multiplier, {
-      left: cropL,
-      top: cropT,
-      width: cropW,
-      height: cropH,
-    });
-  } catch {
-    return outputCanvas.toDataURL('image/png', quality);
-  } finally {
-    if (savedVpt && canResetViewport) fabricCanvas.setViewportTransform!(savedVpt);
-    gridLines.forEach((o, i) => {
-      o.visible = gridWasVisible[i];
-    });
-    fabricCanvas.renderAll?.();
-  }
-
-  const scale = Math.min(
-    (outputCanvas.width - padding * 2) / tightCanvas.width,
-    (outputCanvas.height - padding * 2) / tightCanvas.height
-  );
-  const drawWidth = tightCanvas.width * scale;
-  const drawHeight = tightCanvas.height * scale;
-  const drawX = (outputCanvas.width - drawWidth) / 2;
-  const drawY = (outputCanvas.height - drawHeight) / 2;
-
-  ctx.imageSmoothingEnabled = true;
-  ctx.imageSmoothingQuality = 'high';
-  ctx.drawImage(tightCanvas, drawX, drawY, drawWidth, drawHeight);
-
-  return outputCanvas.toDataURL('image/png', quality);
-};
 
 const DiagramBuilderPage = () => {
   const navigate = useNavigate();
@@ -386,6 +311,21 @@ const DiagramBuilderPage = () => {
   // but `propertiesTarget` is the state that controls the panel sheet.
   const [propertiesTarget, setPropertiesTarget] = useState<CanvasObject | null>(null);
   const [aiDialogOpen, setAiDialogOpen] = useState(false);
+  /*
+   * A plan dropped onto the planner. Drop a PDF or screenshot anywhere on the
+   * page and the reader opens with it — no hunting for the right button.
+   */
+  const [droppedPlanFile, setDroppedPlanFile] = useState<File | null>(null);
+  const handlePlanDrop = (e: React.DragEvent) => {
+    const file = e.dataTransfer.files?.[0];
+    if (!file) return; // symbol drags carry no files — leave them to the canvas
+    e.preventDefault();
+    setDroppedPlanFile(file);
+    setAiDialogOpen(true);
+  };
+  const handlePlanDragOver = (e: React.DragEvent) => {
+    if (Array.from(e.dataTransfer.types).includes('Files')) e.preventDefault();
+  };
   const [symbolSheetOpen, setSymbolSheetOpen] = useState(false);
   const [shapesSheetOpen, setShapesSheetOpen] = useState(false);
   const [wallEditState, setWallEditState] = useState<{
@@ -406,6 +346,7 @@ const DiagramBuilderPage = () => {
   const [activeRoomId, setActiveRoomId] = useState<string | null>(restoredRoom?.id ?? null);
   const [exportReviewOpen, setExportReviewOpen] = useState(false);
   const [myPlansOpen, setMyPlansOpen] = useState(false);
+  const [boardOpen, setBoardOpen] = useState(false);
   const [viewportWidth, setViewportWidth] = useState(() => window.innerWidth);
   const [mobileUiOffset, setMobileUiOffset] = useState(0);
   const {
@@ -519,8 +460,17 @@ const DiagramBuilderPage = () => {
     { kind: 'load'; plan: { name: string; rooms: SavedRoom[] } } | { kind: 'new' } | null
   >(null);
 
-  // Auto-assign circuitRef to symbols that don't have one
+  // Auto-assign circuitRef to symbols that don't have one. On a plan the
+  // reader designed, a new item joins the circuit nearest to it rather than a
+  // fixed "S1" / "L1" that may be on another floor.
   useEffect(() => {
+    if (isDesigned(canvasObjects)) {
+      // One at a time, each seeing the last, so two cookers added together get
+      // two circuits.
+      const { objects, changed } = assignNewSymbols(canvasObjects);
+      if (changed) setCanvasObjects(objects);
+      return;
+    }
     let needsUpdate = false;
     const updated = canvasObjects.map((obj) => {
       if (obj.type === 'symbol' && obj.symbolId && !obj.circuitRef) {
@@ -535,40 +485,74 @@ const DiagramBuilderPage = () => {
     if (needsUpdate) setCanvasObjects(updated);
   }, [canvasObjects]);
 
-  // Circuit summary for the circuit panel
+  // Drawn cable runs follow the drawing: move a socket, add one or change its
+  // circuit and the runs (and their lengths on the board schedule) are redrawn
+  // a moment later. Stale runs showed a length for a layout that no longer
+  // existed. No undo entry — the edit that caused it already has one.
+  useEffect(() => {
+    if (!runsAreStale(canvasObjects)) return;
+    const t = setTimeout(() => {
+      setCanvasObjects((prev) => (runsAreStale(prev) ? withRuns(prev) : prev));
+    }, 400);
+    return () => clearTimeout(t);
+  }, [canvasObjects]);
+
+  // Circuit summary for the circuit panel. A plan read by the AI carries a
+  // designed circuit per ref (Sockets — Ground floor, Lighting — First floor);
+  // anything else falls back to a name read from the ref itself.
   const circuitSummary = useMemo(() => {
+    const designed = isDesigned(canvasObjects)
+      ? new Map(scheduleFromObjects(canvasObjects).circuits.map((c) => [c.ref, c.description]))
+      : new Map<string, string>();
     const circuits = new Map<
       string,
       { ref: string; name: string; count: number; colour: string }
     >();
     for (const obj of canvasObjects) {
-      if (obj.circuitRef) {
-        const existing = circuits.get(obj.circuitRef);
-        if (existing) {
-          existing.count++;
-        } else {
-          const names: Record<string, string> = {
-            L1: 'Lighting 1',
-            L2: 'Lighting 2',
-            S1: 'Ring Final 1',
-            S2: 'Ring Final 2',
-            C1: 'Cooker',
-            EV1: 'EV Charger',
-            FA1: 'Fire Alarm',
-            IH1: 'Immersion',
-            AC1: 'A/C',
-          };
-          circuits.set(obj.circuitRef, {
-            ref: obj.circuitRef,
-            name: names[obj.circuitRef] || obj.circuitRef,
-            count: 1,
-            colour: CIRCUIT_COLOURS[obj.circuitRef] || '#6B7280',
-          });
-        }
-      }
+      // Fittings only — a drawn cable run carries its circuit's ref too.
+      if (!obj.circuitRef || obj.type !== 'symbol') continue;
+      const existing = circuits.get(obj.circuitRef);
+      if (existing) existing.count++;
+      else
+        circuits.set(obj.circuitRef, {
+          ref: obj.circuitRef,
+          name: designed.get(obj.circuitRef) ?? circuitName(obj.circuitRef),
+          count: 1,
+          colour: circuitColour(obj.circuitRef),
+        });
     }
-    return Array.from(circuits.values()).sort((a, b) => a.ref.localeCompare(b.ref));
+    return Array.from(circuits.values()).sort((a, b) => circuitRank(a.ref) - circuitRank(b.ref));
   }, [canvasObjects]);
+
+  /** Zoom to a circuit and ring each of its items for a moment. */
+  const showCircuit = useCallback(
+    (ref: string) => {
+      // The circuit's items — not its drawn run, which spans the whole route.
+      const ids = canvasObjects
+        .filter((o) => o.type === 'symbol' && o.circuitRef === ref)
+        .map((o) => o.id);
+      canvasRef.current?.showObjects?.(ids);
+    },
+    [canvasObjects]
+  );
+
+  // What to call a new save. A plan read from a drawing or the form knows what
+  // it is — its floors, or its one room — and "Room 1" for a whole house read
+  // as if the plan had been lost.
+  const suggestedSaveName = useMemo(() => {
+    const floorNames = [
+      ...new Set(canvasObjects.filter((o) => o.type === 'symbol' && o.floor).map((o) => o.floor!)),
+    ];
+    if (floorNames.length > 1) return floorNames.join(' & ');
+    const roomNames = [
+      ...new Set(
+        canvasObjects.filter((o) => o.type === 'symbol' && o.roomName).map((o) => o.roomName!)
+      ),
+    ];
+    if (roomNames.length === 1) return roomNames[0];
+    if (roomNames.length > 1) return floorNames[0] || 'Floor plan';
+    return `Room ${rooms.length + 1}`;
+  }, [canvasObjects, rooms.length]);
 
   // Live symbol counts for the floating panel
   const symbolCounts = useMemo(() => {
@@ -1145,6 +1129,17 @@ const DiagramBuilderPage = () => {
   }, [canvasObjects, selectedObject]);
 
   const handleRotateAll = () => {
+    // The architect's drawing can't turn with the plan, and a turned plan on
+    // an unturned drawing puts every socket off its wall. Say so instead.
+    if (canvasObjects.some((o) => o.type === 'underlay')) {
+      haptic.warning();
+      toast({
+        title: "Can't rotate a plan on its drawing",
+        description:
+          'The architect’s drawing underneath stays as drawn, so the plan stays with it.',
+      });
+      return;
+    }
     haptic.medium();
     const bounds = getObjectBounds(canvasObjects);
     const placementCentre = canvasRef.current?.getPlacementCenter?.();
@@ -1187,20 +1182,27 @@ const DiagramBuilderPage = () => {
     toast({ title: 'Rotated 90°' });
   };
 
-  const handleObjectUpdate = (updates: Partial<CanvasObject>) => {
-    if (!selectedObject) return;
-    const updatedObjects = canvasObjects.map((obj) =>
-      obj.id === selectedObject.id ? applyCanvasObjectUpdates(obj, updates) : obj
+  /*
+   * By id, not by "whatever is selected": each update redraws the item, the
+   * redraw clears the canvas selection, and the properties sheet's second and
+   * later edits (and its Delete) then acted on nothing — silently.
+   */
+  const handleObjectUpdate = (updates: Partial<CanvasObject>, id = selectedObject?.id) => {
+    if (!id) return;
+    commitObjects((prev) =>
+      prev.map((obj) => (obj.id === id ? applyCanvasObjectUpdates(obj, updates) : obj))
     );
-    commitObjects(updatedObjects);
-    setSelectedObject(applyCanvasObjectUpdates(selectedObject, updates));
+    if (selectedObject?.id === id)
+      setSelectedObject(applyCanvasObjectUpdates(selectedObject, updates));
   };
 
-  const handleObjectDelete = () => {
-    if (!selectedObject) return;
-    commitObjects((prev) => prev.filter((obj) => obj.id !== selectedObject.id));
-    setSelectedObject(null);
-    canvasRef.current?.deleteSelected?.();
+  const handleObjectDelete = (id = selectedObject?.id) => {
+    if (!id) return;
+    commitObjects((prev) => prev.filter((obj) => obj.id !== id));
+    if (selectedObject?.id === id) {
+      setSelectedObject(null);
+      canvasRef.current?.deleteSelected?.();
+    }
   };
 
   const handleDuplicateSelected = () => {
@@ -1214,6 +1216,9 @@ const DiagramBuilderPage = () => {
 
   const handleRoomGenerated = (roomData: any) => {
     if (!canvasRef.current?.renderAIRoom) return;
+    // A new plan replaces the canvas. It is undoable — say so, or a drawing
+    // someone spent an hour on looks simply gone.
+    const replaced = canvasObjects.some((o) => o.type !== 'underlay');
 
     canvasRef.current.renderAIRoom(roomData);
     haptic.success();
@@ -1233,8 +1238,9 @@ const DiagramBuilderPage = () => {
 
     toast({
       title: rooms.length > 1 ? `Floor plan generated — ${rooms.length} rooms` : 'Room generated',
-      description:
-        rooms.length > 1
+      description: replaced
+        ? 'It replaced your previous drawing — tap Undo to get that back.'
+        : rooms.length > 1
           ? 'Check each room against your plan before you rely on it.'
           : firstName
             ? `${firstName} diagram created`
@@ -1617,6 +1623,8 @@ const DiagramBuilderPage = () => {
         'lg:top-[var(--header-height,56px)] lg:left-[var(--sidebar-width,0px)]'
       )}
       style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
+      onDragOver={handlePlanDragOver}
+      onDrop={handlePlanDrop}
     >
       {/* Minimal sticky header */}
       <div
@@ -1788,12 +1796,12 @@ const DiagramBuilderPage = () => {
               // and exporting without re-saving used to silently produce a
               // document missing every change made since the last save.
               if (roomDirty && activeRoomId && canvasObjects.length > 0) {
-                haptic.warning();
-                toast({
-                  title: 'Unsaved changes to this room',
-                  description: 'Tap Save Room first, or the PDF will show the previous version.',
-                });
-                return;
+                // Save what is on screen, then export it — sending the user off
+                // to press another button first was a dead end on a phone.
+                const current = rooms.find((r) => r.id === activeRoomId);
+                if (current) handleSaveRoom(current.name);
+                // Out of storage: the save said so; don't export the old image.
+                if (didLastWriteFail()) return;
               }
               haptic.light();
               setExportReviewOpen(true);
@@ -2060,63 +2068,77 @@ const DiagramBuilderPage = () => {
           </div>
         </div>
 
-        {/* Empty canvas hint */}
+        {/* Empty canvas — where a plan starts.
+            Built from the shared card recipe, like the hubs: text-only cards,
+            one solid volt card for the route most people want (a plan they
+            already have, or a description), no per-row icons in their own
+            colours. */}
         {canvasObjects.length === 0 && rooms.length === 0 && (
           <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
-            <div className="text-center pointer-events-auto px-6 w-[min(26rem,calc(100vw-2rem))] rounded-3xl bg-[#141414]/95 backdrop-blur-xl border border-white/[0.12] shadow-[0_24px_70px_-12px_rgba(0,0,0,0.9)] py-7">
-              <h2 className="text-white text-lg font-bold mb-1">Start Your First Room</h2>
-              <p className="text-white text-xs mb-5">
-                Pick a starting point — or open one you've already saved.
+            <div className="pointer-events-auto w-[min(30rem,calc(100vw-2rem))] rounded-3xl border border-white/[0.12] bg-[#141414]/95 p-5 shadow-[0_24px_70px_-12px_rgba(0,0,0,0.9)] backdrop-blur-xl sm:p-6">
+              <h2 className="text-[22px] font-bold leading-tight tracking-tight text-white">
+                Start a plan
+              </h2>
+              <p className="mt-1 text-[13px] text-white">
+                Bring in the drawings, describe the job, or open one you&apos;ve saved.
               </p>
-              <div className="space-y-2">
+
+              <div className="mt-5 grid grid-cols-2 gap-2.5">
                 <button
+                  type="button"
+                  onClick={() => {
+                    haptic.light();
+                    setAiDialogOpen(true);
+                  }}
+                  className={cn(CARD_BASE, CARD_PRIMARY, 'col-span-2 min-h-[104px] p-4')}
+                >
+                  <span className="text-[17px] font-bold leading-tight tracking-tight text-black">
+                    Read a plan or describe it
+                  </span>
+                  <span className="mt-1 text-[12px] leading-snug text-black/70">
+                    The architect&apos;s PDF, a photo, or the property in your own words — every
+                    room laid out with the electrics.
+                  </span>
+                </button>
+                <button
+                  type="button"
                   onClick={() => {
                     haptic.light();
                     setMyPlansOpen(true);
                   }}
-                  className="w-full p-3.5 bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.12] rounded-2xl touch-manipulation active:scale-[0.98] transition-colors text-left flex items-center gap-3"
+                  className={cn(CARD_BASE, CARD_NEUTRAL, 'min-h-[92px] p-4')}
                 >
-                  <FolderOpen className="h-5 w-5 text-blue-400 shrink-0" />
-                  <div>
-                    <p className="text-sm font-semibold text-white">Open a Saved Plan</p>
-                    <p className="text-[11px] text-white">
-                      Pick up where you left off on a previous job.
-                    </p>
-                  </div>
+                  <span className="text-[15px] font-bold leading-tight tracking-tight text-white transition-colors group-hover:text-elec-yellow">
+                    Saved plans
+                  </span>
+                  <span className="mt-1 text-[11.5px] leading-snug text-white">
+                    Pick up where you left off
+                  </span>
                 </button>
                 <button
-                  onClick={() => setShapesSheetOpen(true)}
-                  className="w-full p-3.5 bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.12] rounded-2xl touch-manipulation active:scale-[0.98] transition-colors text-left flex items-center gap-3"
+                  type="button"
+                  onClick={() => {
+                    haptic.light();
+                    setShapesSheetOpen(true);
+                  }}
+                  className={cn(CARD_BASE, CARD_NEUTRAL, 'min-h-[92px] p-4')}
                 >
-                  <LayoutGrid className="h-5 w-5 text-elec-yellow shrink-0" />
-                  <div>
-                    <p className="text-sm font-semibold text-white">Use a Room Shape</p>
-                    <p className="text-[11px] text-white">
-                      Start with a rectangle, L-shape, T-shape, or corridor.
-                    </p>
-                  </div>
-                </button>
-                <button
-                  onClick={() => setAiDialogOpen(true)}
-                  className="w-full p-3.5 bg-white/[0.06] hover:bg-white/[0.1] border border-elec-yellow/35 rounded-2xl touch-manipulation active:scale-[0.98] transition-colors text-left flex items-center gap-3"
-                >
-                  <Sparkles className="h-5 w-5 text-elec-yellow shrink-0" />
-                  <div>
-                    <p className="text-sm font-semibold text-elec-yellow">Use AI Help</p>
-                    <p className="text-[11px] text-elec-yellow/80">
-                      Generate from a template, voice description, or photo.
-                    </p>
-                  </div>
+                  <span className="text-[15px] font-bold leading-tight tracking-tight text-white transition-colors group-hover:text-elec-yellow">
+                    Room shape
+                  </span>
+                  <span className="mt-1 text-[11.5px] leading-snug text-white">
+                    Rectangle, L, T or corridor
+                  </span>
                 </button>
               </div>
-              <p className="text-white text-[11px] mt-5">
+
+              <p className="mt-5 border-t border-white/[0.1] pt-4 text-[12px] leading-relaxed text-white">
                 {/* The toolbar is below on phones and to the left on desktop —
                     the copy has to follow the layout it is describing. */}
-                <span className="lg:hidden">
-                  You can also draw walls manually from the toolbar below.
-                </span>
+                <span className="lg:hidden">Or draw walls yourself from the toolbar below.</span>
                 <span className="hidden lg:inline">
-                  You can also draw walls manually — the tools are on the left.
+                  Or drop a plan PDF anywhere on the canvas, or draw walls yourself with the tools
+                  on the left.
                 </span>
               </p>
             </div>
@@ -2245,6 +2267,8 @@ const DiagramBuilderPage = () => {
       <SymbolCountPanel
         counts={symbolCounts}
         circuits={circuitSummary}
+        onOpenSchedule={() => setBoardOpen(true)}
+        onShowCircuit={showCircuit}
         mobile={isMobileViewport}
         bottomOffset={overlayBottom}
         // Any overlay covering the canvas should hide this too — it used to stay
@@ -2258,6 +2282,7 @@ const DiagramBuilderPage = () => {
             shapesSheetOpen ||
             exportReviewOpen ||
             myPlansOpen ||
+            boardOpen ||
             aiDialogOpen ||
             !!pendingPlanAction ||
             !!pendingCloudPlan)
@@ -2340,13 +2365,14 @@ const DiagramBuilderPage = () => {
       <PropertiesPanel
         selectedObject={propertiesTarget}
         onUpdate={(updates) => {
-          handleObjectUpdate(updates);
+          handleObjectUpdate(updates, propertiesTarget?.id);
           // Mirror the update into the live target so the sheet reflects
           // the change immediately.
           setPropertiesTarget((prev) => (prev ? { ...prev, ...updates } : prev));
         }}
-        onDelete={handleObjectDelete}
+        onDelete={() => handleObjectDelete(propertiesTarget?.id)}
         onClose={() => setPropertiesTarget(null)}
+        circuits={circuitSummary}
       />
 
       {/* My Floor Plans Sheet */}
@@ -2383,6 +2409,8 @@ const DiagramBuilderPage = () => {
         canvasObjects={canvasObjects}
         savedRooms={rooms}
         onSymbolsAutoPlaced={(symbols) => commitObjects((prev) => [...prev, ...symbols])}
+        initialPlanFile={droppedPlanFile}
+        onInitialPlanFileConsumed={() => setDroppedPlanFile(null)}
       />
 
       {/* Save Room Sheet */}
@@ -2393,7 +2421,7 @@ const DiagramBuilderPage = () => {
           if (!open) setPendingSave(null);
         }}
         onSave={handleSaveRoom}
-        defaultName={activeRoom?.name || `Room ${rooms.length + 1}`}
+        defaultName={activeRoom?.name || suggestedSaveName}
       />
 
       {/* Deep-link replace confirmation — protects unsaved local work when
@@ -2499,6 +2527,18 @@ const DiagramBuilderPage = () => {
       </AlertDialog>
 
       {/* Export Review Sheet */}
+      <BoardScheduleSheet
+        open={boardOpen}
+        onOpenChange={setBoardOpen}
+        objects={canvasObjects}
+        onChange={(next) => commitObjects(next)}
+        onShowCircuit={(ref) => {
+          setBoardOpen(false);
+          // After the sheet has gone, so the canvas has its full size back.
+          setTimeout(() => showCircuit(ref), 320);
+        }}
+      />
+
       <ExportReviewSheet
         open={exportReviewOpen}
         onOpenChange={setExportReviewOpen}
@@ -2528,6 +2568,65 @@ const DiagramBuilderPage = () => {
                 });
               })(),
             }));
+
+            // The board's single-line diagram, drawn from the schedule exactly
+            // as reviewed on the sheet (edits and run lengths included). Its own
+            // pages in the PDF — laid out landscape in columns so it prints at a
+            // readable size — never a "room".
+            const singleLineImages: string[] = [];
+            if (data.circuitSchedule.length) {
+              try {
+                const asCircuits = data.circuitSchedule.map((c): DesignedCircuit => ({
+                  ref: c.circuitRef,
+                  kind: kindOfRef(c.circuitRef) ?? 'radial',
+                  description: c.circuitName,
+                  device: c.protection,
+                  cable: c.cableSize,
+                  points: c.points,
+                  floor: '',
+                  rooms: [],
+                  rcd: !/not required/i.test(c.rcd),
+                  afdd: /AFDD/i.test(c.protection),
+                  notes: [],
+                  source: '',
+                  board: c.fedFrom,
+                  ...(c.runLengthM
+                    ? {
+                        length: {
+                          lengthM: c.runLengthM,
+                          maxM: c.maxLengthM,
+                          ok: c.lengthOk,
+                          note: '',
+                        },
+                      }
+                    : {}),
+                }));
+                // One diagram per board: the main board, then each sub-board.
+                const boardNames = [
+                  'CU',
+                  ...new Set(
+                    asCircuits.map((c) => c.board).filter((b): b is string => !!b && b !== 'CU')
+                  ),
+                ];
+                for (const name of boardNames) {
+                  const onBoard = asCircuits.filter((c) => (c.board ?? 'CU') === name);
+                  singleLineImages.push(
+                    ...(await singleLinePngs(
+                      onBoard.filter((c) => c.kind !== 'fire-zone'),
+                      name === 'CU' ? onBoard.filter((c) => c.kind === 'fire-zone') : [],
+                      name === 'CU'
+                        ? boardNames.length > 1
+                          ? 'Main board — single-line diagram'
+                          : 'Distribution board — single-line diagram'
+                        : `${name} sub-board — single-line diagram`,
+                      name === 'CU' ? undefined : 'CU'
+                    ))
+                  );
+                }
+              } catch (err) {
+                console.warn('[export] single-line pages skipped:', err);
+              }
+            }
 
             // Group materials by category
             const materialsByCategory = Object.entries(
@@ -2577,7 +2676,15 @@ const DiagramBuilderPage = () => {
             const circuitSchedule = data.circuitSchedule;
             // Board schedule is derived from the circuits the user just
             // reviewed, so it always agrees with the circuit page.
-            const cu = buildConsumerUnitSchedule(circuitSchedule);
+            // Fire detection zones are panel zones, not board ways — the panel's
+            // own supply (FA1) is the way.
+            // The main board's ways: its own circuits and a way per sub-board.
+            // A sub-board's circuits are on its own single-line page.
+            const cu = buildConsumerUnitSchedule(
+              circuitSchedule.filter(
+                (c) => !/^FZ\d+/.test(c.circuitRef) && (c.fedFrom ?? 'CU') === 'CU'
+              )
+            );
 
             const revision = {
               rev: data.revision,
@@ -2601,6 +2708,7 @@ const DiagramBuilderPage = () => {
                   drawing_number: data.drawingNumber,
                   notes: data.notes,
                   rooms: roomsPayload,
+                  single_line_images: singleLineImages,
                   materials_by_category: materialsByCategory,
                   total_items: data.totalItems,
                   all_symbols: allSymbolsLegend,

@@ -19,13 +19,19 @@ import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { containerVariants, itemVariants } from '@/components/college/primitives';
+// The hub used to inherit the shared stagger (opacity + 8px slide per item).
+// On this page ~10 sections arrive at different moments as reports and
+// notifications resolve, so the cascade read as jitter. The page now fades in
+// once, as one block, once its data is there; the per-section variants are
+// deliberately inert.
+const containerVariants = { hidden: { opacity: 1 }, visible: { opacity: 1 } };
+const itemVariants = { hidden: { opacity: 1 }, visible: { opacity: 1 } };
 import RecoverUnsavedWork from './dashboard/RecoverUnsavedWork';
 import HelpPanel from './HelpPanel';
 import { useNotifications } from '@/hooks/useNotifications';
 import { useExpiryReminders } from '@/hooks/useExpiryReminders';
 import { filterByTimeRange, getExpiryUrgency } from '@/utils/expiryHelper';
-import { getDaysUntilDeadline } from '@/utils/notificationHelper';
+import { isOpenNotification, isOverdueNotification } from '@/utils/notificationHelper';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery } from '@tanstack/react-query';
 import { reportCloud } from '@/utils/reportCloud';
@@ -393,7 +399,7 @@ const Dashboard = ({
     supabase.auth.getUser().then(({ data: { user } }) => setUser(user));
   }, []);
 
-  const { notifications = [] } = useNotifications();
+  const { notifications = [], isLoading: notificationsLoading } = useNotifications();
   const { reminders = [] } = useExpiryReminders();
   const { data: designedCircuits } = useDesignedCircuits();
 
@@ -402,7 +408,7 @@ const Dashboard = ({
   const qsPendingCount = useQsPendingCount();
   const isQs = qsTeam?.am_i_qs === true;
 
-  const { data: reportsData } = useQuery({
+  const { data: reportsData, isLoading: reportsLoading } = useQuery({
     queryKey: ['recent-certificates', user?.id],
     queryFn: async () => {
       if (!user) return { reports: [], totalCount: 0, hasMore: false };
@@ -419,16 +425,10 @@ const Dashboard = ({
   const completedCount = reports.filter((r) => r.status === 'completed').length;
   const totalCount = reportsData?.totalCount ?? reports.length;
 
-  const partPPending = notifications.filter(
-    (n) => n.notification_status !== 'submitted' && n.notification_status !== 'cancelled'
-  );
+  const partPPending = notifications.filter(isOpenNotification);
   const partPDueCount = partPPending.length;
-  const overduePartP = partPPending.some(
-    (n) => n.submission_deadline && getDaysUntilDeadline(n.submission_deadline) < 0
-  );
-  const partPOverdueCount = partPPending.filter(
-    (n) => n.submission_deadline && getDaysUntilDeadline(n.submission_deadline) < 0
-  ).length;
+  const partPOverdueCount = partPPending.filter(isOverdueNotification).length;
+  const overduePartP = partPOverdueCount > 0;
 
   const expiringReminders = filterByTimeRange(reminders, '90');
   const expiringCount = expiringReminders.length;
@@ -613,9 +613,41 @@ const Dashboard = ({
     },
   ];
 
+  // First entry in a session: hold the page until the two queries that shape
+  // it (certificates, Building Control alert) are in, then show it whole.
+  // Cached data renders immediately; the skeleton keeps the masthead in place.
+  const settling = (reportsLoading && !reportsData) || (notificationsLoading && notifications.length === 0 && !reportsData);
+  if (settling) {
+    return (
+      <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-elec-dark min-h-screen pb-24">
+        <PageMasthead />
+        <div className="mx-auto max-w-7xl space-y-8 px-4 py-4 lg:px-8" aria-busy="true">
+          <div className="h-[46px] rounded-2xl border border-white/[0.08] bg-white/[0.02]" />
+          <div className="space-y-3">
+            <div className="h-[18px] w-24 rounded bg-white/[0.06]" />
+            <div className="grid grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-4">
+              {[0, 1, 2, 3].map((i) => (
+                <div key={i} className="h-[74px] rounded-2xl border border-white/[0.08] bg-white/[0.03]" />
+              ))}
+            </div>
+          </div>
+          <div className="space-y-3">
+            <div className="h-[18px] w-20 rounded bg-white/[0.06]" />
+            <div className="h-[80px] rounded-2xl border border-white/[0.08] bg-white/[0.03]" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
-      <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-elec-dark min-h-screen pb-24">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.18, ease: 'easeOut' }}
+        className="-mt-3 sm:-mt-4 md:-mt-6 bg-elec-dark min-h-screen pb-24"
+      >
         <PageMasthead />
 
         {/* Tighter rhythm than the old space-y-12/16 — that spacing existed to
@@ -676,7 +708,7 @@ const Dashboard = ({
 
           <EditorialToolGrid label="Compliance" cards={complianceTools} columns="three" />
         </div>
-      </div>
+      </motion.div>
 
       <HelpPanel open={isHelpOpen} onOpenChange={setIsHelpOpen} />
     </>

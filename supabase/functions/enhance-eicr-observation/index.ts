@@ -7,6 +7,7 @@ import {
   formatForAIContext,
 } from '../_shared/rag-practical-work.ts';
 import { searchFacets, formatFacetsForPrompt } from '../_shared/bs7671-facets-rag.ts';
+import { keepOnlyListedRegulations } from '../_shared/citation-guard.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -345,14 +346,31 @@ They asked for it to be "jazzed up a little", and they meant a little.
       ? parsed.suggestedCode
       : currentCode || 'C3';
 
+    // The prose may cite only what the model was given. The prompt says so
+    // and nothing enforced it (see _shared/citation-guard.ts). A number the
+    // model was not given is rewritten as plain "BS 7671".
+    const allowedRegs = regulationRefs.map((r) => r.number);
+    const removedRegs: string[] = [];
+    const cite = (raw: unknown, fallback = ''): string => {
+      const r = keepOnlyListedRegulations(String(raw || fallback), allowedRegs);
+      removedRegs.push(...r.removed);
+      return r.text.substring(0, 500);
+    };
+
     const suggestions = {
       suggestedCode,
       confidence: Math.min(Math.max(Number(parsed.confidence) || 0.5, 0), 1),
-      enhancedDescription: String(parsed.enhancedDescription || description).substring(0, 500),
-      clientExplanation: String(parsed.clientExplanation || '').substring(0, 500),
-      recommendation: String(parsed.recommendation || '').substring(0, 500),
+      enhancedDescription: cite(parsed.enhancedDescription, description),
+      clientExplanation: cite(parsed.clientExplanation),
+      recommendation: cite(parsed.recommendation),
       regulationRefs: regulationRefs.slice(0, 8),
     };
+    if (removedRegs.length) {
+      console.warn(
+        `[enhance-eicr-observation] removed uncited regulation numbers from prose: ${removedRegs.join(', ')}` +
+          ` (allowed: ${allowedRegs.join(', ') || 'none'})`
+      );
+    }
 
     return new Response(
       JSON.stringify({

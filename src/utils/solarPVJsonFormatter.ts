@@ -672,6 +672,34 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPa
     previous_installation_ref: get('previousInstallationRef'),
     status: get('status'),
 
+    // Building Regulations (Part P) — the shared section on the Sign off tab
+    // (ELE-1715). A PV install is a new circuit, so in a dwelling it is
+    // notifiable; the certificate now says whether it was and how it was told.
+    building_regs: (() => {
+      const truthy = (v: unknown) => v === true || v === 'true';
+      const premises = String(formData.propertyType || formData.installationType || '').toLowerCase();
+      const applies = !['commercial', 'industrial', 'public'].includes(premises);
+      const answered =
+        truthy(formData.buildingRegsAnswered) ||
+        truthy(formData.buildingRegsRequired) ||
+        truthy(formData.buildingRegsViaScheme) ||
+        truthy(formData.buildingRegsSubmitted);
+      const required = applies && truthy(formData.buildingRegsRequired);
+      const viaScheme = required && truthy(formData.buildingRegsViaScheme);
+      const submitted = required && truthy(formData.buildingRegsSubmitted);
+      const reference = String(formData.buildingRegsReference || '').trim();
+      return {
+        applies,
+        answered: applies && answered,
+        required,
+        required_display: !applies ? 'N/A' : !answered ? '' : required ? 'Yes' : 'No',
+        via_scheme: viaScheme,
+        submitted,
+        route_display: !required ? '' : viaScheme ? 'Competent person scheme' : submitted ? 'Building Control' : 'Not yet notified',
+        reference: required ? reference : '',
+      };
+    })(),
+
     // ============================================
     // CLIENT DETAILS
     // ============================================

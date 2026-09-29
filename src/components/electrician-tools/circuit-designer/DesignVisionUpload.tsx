@@ -88,12 +88,11 @@ export const DesignVisionUpload = ({
   ): Promise<{ dataUrl: string; totalPages: number }> => {
     const pdfjs = await import('pdfjs-dist');
     // Vite-friendly worker URL — `?url` returns the asset URL as a string.
-    // The `as unknown as` cast bypasses TS not knowing about Vite's `?url`
-    // suffix on a node_modules path.
-    const workerMod = (await import(
-      // @ts-expect-error — Vite resolves `?url` at build time.
-      'pdfjs-dist/build/pdf.worker.min.mjs?url'
-    )) as { default: string };
+    // (No ts-expect-error: this project's Vite types already cover `?url`,
+    // and since pdfjs-dist 6 an unused directive is itself a type error.)
+    const workerMod = (await import('pdfjs-dist/build/pdf.worker.min.mjs?url')) as {
+      default: string;
+    };
     pdfjs.GlobalWorkerOptions.workerSrc = workerMod.default;
 
     const buf = await f.arrayBuffer();

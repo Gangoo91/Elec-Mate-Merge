@@ -55,7 +55,6 @@ const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({ onNavigate, cla
   const [user, setUser] = useState<any>(null);
   const [showSheet, setShowSheet] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<CloudReport | null>(null);
-  const [deleteAll, setDeleteAll] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
 
@@ -113,26 +112,7 @@ const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({ onNavigate, cla
         ),
       ]);
     try {
-      if (deleteAll && autoDrafts) {
-        // allSettled (not all): one slow/failed draft must not abort the batch.
-        const results = await Promise.allSettled(
-          autoDrafts.map((d) => withTimeout(reportCloud.softDeleteReport(d.report_id, user.id)))
-        );
-        const failed = results.filter(
-          (r) => r.status === 'rejected' || (r.status === 'fulfilled' && !r.value.success)
-        ).length;
-        toast(
-          failed === 0
-            ? { title: 'All drafts deleted' }
-            : {
-                title: `${autoDrafts.length - failed} deleted, ${failed} failed`,
-                description: 'Some drafts could not be deleted — please try again.',
-                variant: 'destructive',
-              }
-        );
-        setShowSheet(false);
-        setIsDismissed(true);
-      } else if (deleteTarget) {
+      if (deleteTarget) {
         const result = await withTimeout(
           reportCloud.softDeleteReport(deleteTarget.report_id, user.id)
         );
@@ -148,7 +128,6 @@ const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({ onNavigate, cla
     } finally {
       setIsDeleting(false);
       setDeleteTarget(null);
-      setDeleteAll(false);
     }
   };
 
@@ -173,7 +152,7 @@ const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({ onNavigate, cla
           variants={itemVariants}
           className="text-[15px] font-semibold tracking-tight text-white"
         >
-          Unsaved drafts
+          Certificates in progress
         </motion.h2>
 
         {/*
@@ -199,23 +178,20 @@ const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({ onNavigate, cla
                 <span className="min-w-0 truncate text-white">· {uniqueTypes || 'Drafts'}</span>
               </span>
               <span className="mt-1 block truncate text-[16px] font-bold leading-tight tracking-tight text-white transition-colors group-hover:text-elec-yellow">
-                {autoDrafts.length} unsaved draft{autoDrafts.length !== 1 ? 's' : ''} waiting
+                {autoDrafts.length} certificate{autoDrafts.length !== 1 ? 's' : ''} started, not yet issued
               </span>
               <span className="mt-0.5 block truncate text-[11.5px] leading-snug text-white">
-                Auto-saved before you closed the tab.
+                Saved to your account as you typed. Nothing here is lost.
               </span>
             </span>
             <span className="shrink-0 text-[13px] font-bold text-elec-yellow">Open</span>
           </button>
 
+          {/* No bulk delete here. These are live certificates — a subscriber's four
+              EICs with a fortnight of readings sat in this list on 28 Sep 2026, one
+              confirm away from "Delete all". Deleting is per certificate, by name,
+              inside the sheet. */}
           <div className="flex items-center gap-4 border-t border-white/[0.10] px-4">
-            <button
-              type="button"
-              onClick={() => setDeleteAll(true)}
-              className="flex h-11 items-center text-[11.5px] font-semibold text-white transition-colors touch-manipulation hover:text-red-300"
-            >
-              Delete all
-            </button>
             <button
               type="button"
               onClick={() => setIsDismissed(true)}
@@ -236,13 +212,13 @@ const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({ onNavigate, cla
           <SheetHeader className="px-5 pt-5 pb-4 border-b border-white/[0.06] flex-shrink-0">
             <div className="flex items-center gap-3">
               <SheetTitle className="text-white text-base font-semibold text-left">
-                Unsaved Drafts
+                Certificates in progress
               </SheetTitle>
               <span className="rounded border border-white/[0.16] bg-white/[0.08] px-2 py-0.5 text-[10px] font-bold tabular-nums text-white">
                 {autoDrafts.length}
               </span>
             </div>
-            <p className="text-xs text-white/60 text-left">Tap a draft to continue editing</p>
+            <p className="text-xs text-white text-left">Tap one to carry on where you left off.</p>
           </SheetHeader>
 
           {/* Draft cards — same recipe as the cert pickers: gradient surface,
@@ -297,35 +273,21 @@ const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({ onNavigate, cla
             </div>
           </div>
 
-          {/* Sheet footer */}
-          <div className="flex-shrink-0 px-5 py-4 border-t border-white/[0.06]">
-            <button
-              onClick={() => confirmFromSheet(() => setDeleteAll(true))}
-              className="w-full h-11 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-semibold active:scale-[0.98] transition-all touch-manipulation"
-            >
-              Delete all drafts
-            </button>
-          </div>
         </SheetContent>
       </Sheet>
 
       {/* Delete Confirmation Dialog */}
       <AlertDialog
-        open={!!deleteTarget || deleteAll}
-        onOpenChange={() => {
-          setDeleteTarget(null);
-          setDeleteAll(false);
-        }}
+        open={!!deleteTarget}
+        onOpenChange={() => setDeleteTarget(null)}
       >
         <AlertDialogContent className="max-w-[90vw] sm:max-w-md bg-[#111114] border border-white/[0.08] rounded-2xl shadow-2xl">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-white text-base font-bold">
-              {deleteAll ? 'Delete all drafts?' : 'Delete draft?'}
+              Delete this certificate?
             </AlertDialogTitle>
             <AlertDialogDescription className="text-white text-sm">
-              {deleteAll
-                ? `This will permanently delete all ${autoDrafts.length} unsaved drafts.`
-                : `This will permanently delete "${deleteTarget?.client_name || 'Untitled'}".`}
+              {`${getTypeLabel(deleteTarget?.report_type || '')} for ${deleteTarget?.client_name || 'an unnamed client'}${deleteTarget?.installation_address ? ` at ${deleteTarget.installation_address}` : ''}. Everything typed into it goes with it, and it cannot be brought back from the app.`}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="flex-col gap-2 sm:flex-col sm:space-x-0">
