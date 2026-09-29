@@ -17,12 +17,29 @@
  * `_shared/deps.ts`, which re-exports it. An earlier hand-rolled version of
  * this sweep matched only the former and reported 54 false positives,
  * including `create-checkout` — a function demonstrably serving live traffic.
+ *
+ * 🔴 SOURCE IS NOT PRODUCTION. Pass `--live` to probe the real preflight.
+ *
+ * The static pass alone is not enough and was proven so: it found 4 broken
+ * functions, while probing production found 11. The other 7 had correct
+ * SOURCE and a stale DEPLOY — the fix only lands on redeploy, which is the
+ * whole lesson of ELE-1748. `--live` sends a real OPTIONS with
+ * `x-request-id` and reads what comes back, so deploy drift is caught too.
+ * It needs network access, so it is opt-in rather than part of the default
+ * run.
  */
 import { readFileSync, existsSync } from 'node:fs';
 import { execSync } from 'node:child_process';
 
 const SHARED = /from '\.\.\/_shared\/(cors|deps)\.ts'/;
 const ALLOW = /['"]Access-Control-Allow-Headers['"]\s*:\s*\n?\s*((?:['"][^'"]*['"]\s*\+?\s*)+)/;
+
+/*
+ * `fn` is excluded: it is not a function. It appears as a doc-comment example
+ * (`invoke('fn')`) in edgeFunctionError.ts and as the variable name at call
+ * sites that invoke a function chosen at runtime. Probing it hits nothing.
+ */
+const NOT_FUNCTIONS = new Set(['fn']);
 
 const invoked = new Set(
   execSync(`grep -rhoE "functions\\.invoke\\(\\s*['\\"][a-z0-9-]+['\\"]" src || true`, {
@@ -31,7 +48,7 @@ const invoked = new Set(
   })
     .split('\n')
     .map((l) => l.match(/['"]([a-z0-9-]+)['"]/)?.[1])
-    .filter(Boolean)
+    .filter((n) => n && !NOT_FUNCTIONS.has(n))
 );
 
 const problems = [];
@@ -60,6 +77,48 @@ for (const fn of [...invoked].sort()) {
 console.log(
   `  ${invoked.size} browser-called functions · ${shared} use the shared list · ${noSource} without repo source`
 );
+
+/* ── Optional: what production actually answers ──────────────────────── */
+if (process.argv.includes('--live')) {
+  const BASE = 'https://jtwygbeceundfgnkirof.supabase.co/functions/v1';
+  const names = [...invoked].sort();
+  let ok = 0;
+  const live = [];
+  const probe = async (fn) => {
+    try {
+      const res = await fetch(`${BASE}/${fn}`, {
+        method: 'OPTIONS',
+        headers: {
+          Origin: 'https://app.elec-mate.com',
+          'Access-Control-Request-Method': 'POST',
+          'Access-Control-Request-Headers': 'authorization,content-type,x-request-id',
+        },
+        signal: AbortSignal.timeout(15000),
+      });
+      /*
+       * A 404 means the function is not deployed at all — the platform
+       * answers with its own default headers, which look exactly like a
+       * cors fault but are not one. Reported as what it actually is: the
+       * app invoking something that does not exist.
+       */
+      if (res.status === 404) {
+        live.push(`${fn}: invoked from the app but NOT DEPLOYED (preflight 404)`);
+        return;
+      }
+      const allow = res.headers.get('access-control-allow-headers') || '';
+      if (allow.toLowerCase().includes('x-request-id')) ok++;
+      else live.push(`${fn}: deployed preflight omits x-request-id (allows: ${allow || 'nothing'})`);
+    } catch {
+      // A probe that cannot complete is not evidence of a fault.
+    }
+  };
+  // Batched so 200+ probes do not open 200+ sockets at once.
+  for (let i = 0; i < names.length; i += 12) {
+    await Promise.all(names.slice(i, i + 12).map(probe));
+  }
+  console.log(`  live: ${ok}/${names.length} deployed preflights allow x-request-id`);
+  problems.push(...live);
+}
 
 if (problems.length) {
   console.log(`\n❌ cors headers: ${problems.length} problem(s)`);
