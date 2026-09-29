@@ -309,7 +309,6 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
   const [showCircuitSelector, setShowCircuitSelector] = useState(false);
   const [showInstallSheet, setShowInstallSheet] = useState(false);
   const [installContext, setInstallContext] = useState<any>(null);
-  const [regeneratingCircuits, setRegeneratingCircuits] = useState<Set<number>>(new Set());
   const [justificationsPatchVersion, setJustificationsPatchVersion] = useState(0);
   const [showSuccessAnimation, setShowSuccessAnimation] = useState(true);
   const [isSendingToEIC, setIsSendingToEIC] = useState(false);
@@ -469,58 +468,6 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
       }
     }
   }, [design, justificationsPatchVersion]);
-
-  // Check if a circuit has placeholder justifications
-  const isPlaceholderJustification = (circuit: CircuitDesign): boolean => {
-    if (!circuit.justifications || Object.keys(circuit.justifications).length === 0) {
-      return false; // No justifications at all - shouldn't happen after patch
-    }
-    const cableJust = circuit.justifications.cableSize || '';
-    // Check for our specific placeholder pattern
-    return cableJust.includes('selected for') && cableJust.includes('design current');
-  };
-
-  // Regenerate justifications for a specific circuit
-  const handleRegenerateJustifications = async (circuitIndex: number) => {
-    const circuit = design.circuits?.[circuitIndex];
-    if (!circuit) return;
-
-    setRegeneratingCircuits((prev) => new Set(prev).add(circuitIndex));
-
-    try {
-      const { data, error } = await supabase.functions.invoke('regenerate-circuit-justifications', {
-        body: { circuit },
-      });
-
-      if (error) throw error;
-
-      if (data.success && data.justifications) {
-        // Update circuit with new justifications
-        const updatedCircuits = [...(design.circuits || [])];
-        updatedCircuits[circuitIndex] = {
-          ...updatedCircuits[circuitIndex],
-          justifications: data.justifications,
-        };
-
-        design.circuits = updatedCircuits;
-
-        toast.success('Justifications regenerated', {
-          description: `Circuit ${circuitIndex + 1} justifications updated with AI analysis`,
-        });
-      }
-    } catch (error) {
-      console.error('Failed to regenerate justifications:', error);
-      toast.error('Failed to regenerate justifications', {
-        description: error instanceof Error ? error.message : 'Unknown error',
-      });
-    } finally {
-      setRegeneratingCircuits((prev) => {
-        const next = new Set(prev);
-        next.delete(circuitIndex);
-        return next;
-      });
-    }
-  };
 
   const [exportSuccess, setExportSuccess] = useState(false);
   const [exportId, setExportId] = useState('');
@@ -882,7 +829,8 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             // ELE-1426 — an uncalculated Zs must not be exported as COMPLIANT.
             compliant: getZsCheck(circuit, design.consumerUnit?.incomingSupply?.Ze).compliant,
             complianceText:
-              getZsCheck(circuit, design.consumerUnit?.incomingSupply?.Ze).state === 'not-calculated'
+              getZsCheck(circuit, design.consumerUnit?.incomingSupply?.Ze).state ===
+              'not-calculated'
                 ? '⚠ ZS NOT CALCULATED'
                 : getZsCheck(circuit, design.consumerUnit?.incomingSupply?.Ze).compliant
                   ? '✓ COMPLIANT'
@@ -2239,16 +2187,15 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             <span className="text-white">{design.projectName}</span>
             {design.location ? (
               <>
-                {' '}<span className="text-white/60">·</span> {design.location}
+                {' '}
+                <span className="text-white/60">·</span> {design.location}
               </>
             ) : null}{' '}
             <span className="text-white/60">·</span> {design.circuits.length} circuit
             {design.circuits.length === 1 ? '' : 's'} sized and{' '}
             <span
               className={
-                allCompliant
-                  ? 'text-emerald-400 font-medium'
-                  : 'text-amber-400 font-medium'
+                allCompliant ? 'text-emerald-400 font-medium' : 'text-amber-400 font-medium'
               }
             >
               {allCompliant ? 'validated against the regs' : 'flagged for review'}
@@ -2434,7 +2381,10 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                 const isActive = idx === selectedCircuit;
                 const hasWarnings = circuit.warnings?.length > 0;
                 const vdCompliant = circuit.calculations?.voltageDrop?.compliant ?? true;
-                const zsCompliant = getZsCheck(circuit, design.consumerUnit?.incomingSupply?.Ze).compliant;
+                const zsCompliant = getZsCheck(
+                  circuit,
+                  design.consumerUnit?.incomingSupply?.Ze
+                ).compliant;
                 const hasIssues = !vdCompliant || !zsCompliant;
 
                 return (
@@ -2915,24 +2865,20 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                   <h4 className="text-sm sm:text-base font-semibold text-foreground">
                     Design Justification
                   </h4>
-                  {isPlaceholderJustification(currentCircuit) && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleRegenerateJustifications(selectedCircuit)}
-                      disabled={regeneratingCircuits.has(selectedCircuit)}
-                      className="h-8 sm:h-7 text-xs min-h-[44px] sm:min-h-0 touch-manipulation"
-                    >
-                      {regeneratingCircuits.has(selectedCircuit) ? (
-                        <>
-                          <Loader2 className="h-3 w-3 animate-spin" />
-                          Regenerating...
-                        </>
-                      ) : (
-                        'Regenerate AI'
-                      )}
-                    </Button>
-                  )}
+                  {/*
+                    The "Regenerate AI" button is removed, not hidden.
+
+                    It invoked `regenerate-circuit-justifications`, which the
+                    Circuit Designer rebuild (a73fbaedc) DELETED — so every
+                    press hit a 404 and produced the failure toast. The
+                    showing condition still fires: 175 of 577 stored designs
+                    carry the legacy placeholder, so about a third of saved
+                    designs offered a control that could not work.
+
+                    Those designs keep their stored justifications. Giving
+                    them a working remedy means rebuilding the function
+                    against the new pipeline — a product call, not a tidy-up.
+                  */}
                 </div>
                 <div className="space-y-2 text-sm">
                   <div>
