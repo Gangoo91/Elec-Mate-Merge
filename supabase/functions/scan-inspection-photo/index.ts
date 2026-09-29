@@ -1,9 +1,15 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-};
+/*
+ * ELE-1748 — was a local copy of the CORS headers that omitted
+ * `x-request-id`, which the browser client sets on EVERY request. The
+ * preflight refused it, so the browser never sent the real call and the
+ * function was unreachable from the app with only a bare "Failed to fetch".
+ *
+ * Imported rather than corrected in place, so the next header the client
+ * starts sending does not leave this file behind again.
+ */
+import { corsHeaders } from '../_shared/cors.ts';
 
 const SYSTEM_PROMPT = `You are a BS7671:2018+A3:2024 expert providing quality assurance peer review for qualified electrical inspectors.
 

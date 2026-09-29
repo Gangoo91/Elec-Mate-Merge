@@ -3,10 +3,16 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
 const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
+/*
+ * ELE-1748 — was a local copy of the CORS headers that omitted
+ * `x-request-id`, which the browser client sets on EVERY request. The
+ * preflight refused it, so the browser never sent the real call and the
+ * function was unreachable from the app with only a bare "Failed to fetch".
+ *
+ * Imported rather than corrected in place, so the next header the client
+ * starts sending does not leave this file behind again.
+ */
+import { corsHeaders } from '../_shared/cors.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {

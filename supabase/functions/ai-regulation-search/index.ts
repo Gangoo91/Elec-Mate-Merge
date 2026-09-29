@@ -2,10 +2,16 @@ import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
+/*
+ * ELE-1748 — was a local copy of the CORS headers that omitted
+ * `x-request-id`, which the browser client sets on EVERY request. The
+ * preflight refused it, so the browser never sent the real call and the
+ * function was unreachable from the app with only a bare "Failed to fetch".
+ *
+ * Imported rather than corrected in place, so the next header the client
+ * starts sending does not leave this file behind again.
+ */
+import { corsHeaders } from '../_shared/cors.ts';
 
 // Rate limiting state
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
