@@ -2,15 +2,7 @@ import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
-import {
-  Car,
-  Shield,
-  Cable,
-  FileCheck2,
-  Calculator,
-  GraduationCap,
-  Home,
-} from 'lucide-react';
+import { Car, Shield, Cable, FileCheck2, Calculator, GraduationCap, Home } from 'lucide-react';
 
 // -------------------------------------------------------------------
 // Shared surface classes — edge-to-edge on mobile, inset from sm: up
@@ -233,8 +225,8 @@ const sections = [
                     Covers
                   </th>
                   <td className={`${tdCn} border-b-0`}>
-                    Domestic, workplace, public and fleet depot charging; Mode 3 (AC) and Mode 4
-                    (DC rapid)
+                    Domestic, workplace, public and fleet depot charging; Mode 3 (AC) and Mode 4 (DC
+                    rapid)
                   </td>
                 </tr>
               </tbody>
@@ -538,9 +530,11 @@ const sections = [
         <p>
           For TN-S earthing systems, where the earth and neutral are separate throughout, the
           open-PEN risk does not arise and the{' '}
-          <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">earthing arrangement</SEOInternalLink> can
-          be used directly for EV charging without these additional measures. TN-S supplies are far
-          less common in the UK — most domestic supplies are TN-C-S (PME).
+          <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">
+            earthing arrangement
+          </SEOInternalLink>{' '}
+          can be used directly for EV charging without these additional measures. TN-S supplies are
+          far less common in the UK — most domestic supplies are TN-C-S (PME).
         </p>
         <SEOAppBridge
           title="EV charger certificates with open-PEN verification"
@@ -863,14 +857,14 @@ const sections = [
               AFDDs — the Section 722 exemption
             </h4>
             <p className="text-sm leading-relaxed text-white">
-              Regulation 722.421.1.7.201 states that AFDDs are not required for circuits supplying EV
-              charging equipment conforming to the BS EN 61851 series that incorporate socket-outlets
-              or vehicle connectors conforming to BS EN IEC 62196-2. This matters because A4:2026
-              redrafted Regulation 421.1.7 to make AFDDs a requirement on socket-outlet final
-              circuits up to 32 A in Higher Risk Residential Buildings, Houses in Multiple
-              Occupation, purpose-built student accommodation and care homes, and a recommendation
-              elsewhere. A dedicated EV circuit feeding compliant equipment does not pull that
-              requirement in.
+              Regulation 722.421.1.7.201 states that AFDDs are not required for circuits supplying
+              EV charging equipment conforming to the BS EN 61851 series that incorporate
+              socket-outlets or vehicle connectors conforming to BS EN IEC 62196-2. This matters
+              because A4:2026 redrafted Regulation 421.1.7 to make AFDDs a requirement on
+              socket-outlet final circuits up to 32 A in Higher Risk Residential Buildings, Houses
+              in Multiple Occupation, purpose-built student accommodation and care homes, and a
+              recommendation elsewhere. A dedicated EV circuit feeding compliant equipment does not
+              pull that requirement in.
             </p>
           </div>
           <div className="border-t border-white/[0.1] pt-4 mt-4">
@@ -1030,6 +1024,7 @@ export default function IETCodeOfPracticeEVPage() {
       faqs={faqs}
       faqHeading="Frequently Asked Questions About the IET EV Code of Practice"
       relatedPages={relatedPages}
+      heroCtaLabel="Issue EV charger certificates on your phone"
       ctaHeading="Install EV Chargers with Confidence"
       ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EV charger installations. Cable sizing, IET CoP checklist, open-PEN verification, and instant certificates. 7-day free trial, cancel anytime."
     />

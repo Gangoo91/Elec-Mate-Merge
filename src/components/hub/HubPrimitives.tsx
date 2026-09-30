@@ -413,7 +413,7 @@ export const HubQuickStart = ({
             <span
               className={cn(
                 'mt-1 text-[11.5px] leading-snug',
-                q.primary ? 'text-black/70' : 'text-white'
+                q.primary ? 'text-black' : 'text-white'
               )}
             >
               {q.description}

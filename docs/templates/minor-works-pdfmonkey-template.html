@@ -440,13 +440,13 @@
 
       .guidance-col {
         flex: 1;
-        font-size: 8px;
-        line-height: 1.5;
+        font-size: 7px;
+        line-height: 1.4;
         color: #475569;
       }
 
       .guidance-col p {
-        margin-bottom: 4px;
+        margin-bottom: 3px;
         text-align: justify;
       }
 
@@ -508,17 +508,17 @@
          CLIENT-FACING COVER SHEET (A4:2026) — full-bleed navy + gold
          All values from the existing payload — statutory certificate unchanged below
          ============================================= */
-      .cover-page { page: cover; width: 200mm; min-height: 280mm; display: flex; flex-direction: column; color: #0a1628; }
-      .cover-hero { position: relative; background: linear-gradient(160deg, var(--em-cover-from) 0%, var(--em-cover-mid) 60%, var(--em-cover-to) 100%); color: var(--em-cover-fg); padding: 22mm 18mm 16mm; }
+      .cover-page { width: 200mm; display: flex; flex-direction: column; color: #0a1628; margin-bottom: 6mm; page-break-inside: avoid; }
+      .cover-hero { position: relative; background: linear-gradient(160deg, var(--em-cover-from) 0%, var(--em-cover-mid) 60%, var(--em-cover-to) 100%); color: var(--em-cover-fg); padding: 9mm 14mm 7mm; }
       /* ELE-1751 — the 6px accent band across the top of the cover is removed. Agreed with Craig Soper and Andrew: it reads as a stray stripe rather than branding, and it is the band the ticket is about. The cover gradient itself (.cover-hero) is untouched. */
-      .cover-logos { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18mm; min-height: 60px; }
-      .cover-logos img { max-height: 60px; max-width: 190px; object-fit: contain; }
+      .cover-logos { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6mm; min-height: 44px; }
+      .cover-logos img { max-height: 44px; max-width: 170px; object-fit: contain; }
       .cover-band-name { color: var(--em-accent); font-weight: 700; font-size: 18px; }
       .cover-eyebrow { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--em-accent); font-weight: 700; margin-bottom: 12px; }
-      .cover-title { font-size: 34px; line-height: 1.1; font-weight: 800; letter-spacing: -0.5px; color: var(--em-cover-fg); }
-      .cover-title-rule { width: 80px; height: 4px; background: linear-gradient(90deg, var(--em-accent-deep), var(--em-accent)); margin-top: 16px; border-radius: 2px; }
-      .cover-subtitle { margin-top: 16px; font-size: 11px; color: var(--em-cover-muted); }
-      .cover-status { padding: 14px 18mm; display: flex; align-items: center; justify-content: space-between; background: var(--em-cover-mid); color: var(--em-cover-fg); }
+      .cover-title { font-size: 24px; line-height: 1.1; font-weight: 800; letter-spacing: -0.5px; color: var(--em-cover-fg); }
+      .cover-title-rule { width: 64px; height: 3px; background: linear-gradient(90deg, var(--em-accent-deep), var(--em-accent)); margin-top: 16px; border-radius: 2px; }
+      .cover-subtitle { margin-top: 8px; font-size: 11px; color: var(--em-cover-muted); }
+      .cover-status { padding: 8px 14mm; display: flex; align-items: center; justify-content: space-between; background: var(--em-cover-mid); color: var(--em-cover-fg); }
       .cover-status-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; opacity: 0.95; }
       .cover-status-value { font-size: 16px; font-weight: 800; letter-spacing: 0.5px; color: var(--em-accent); text-align: right; }
       .cover-details { flex: 1; padding: 14mm 18mm; border-left: 4px solid var(--em-accent); }
@@ -540,7 +540,7 @@
       <div class="cover-hero">
         <div class="cover-logos">
           {% if company.logo_url and company.logo_url != '' %}<img src="{{ company.logo_url }}" alt="{{ company.name }}" />{% else %}<span class="cover-band-name">{{ company.name }}</span>{% endif %}
-          {% if company.scheme_logo and company.scheme_logo != '' %}<img src="{{ company.scheme_logo }}" alt="Scheme Logo" />{% endif %}
+          {% if company.scheme_logo and company.scheme_logo != '' and declaration.scheme_provider != '' %}<img src="{{ company.scheme_logo }}" alt="Scheme Logo" />{% endif %}
         </div>
         <div class="cover-eyebrow">BS 7671:2018 + Amendment 4:2026</div>
         <h1 class="cover-title">Minor Electrical<br />Installation Works</h1>
@@ -553,21 +553,7 @@
         <span class="cover-status-value">{% if work_type and work_type != '' %}{{ work_type }}{% else %}Minor Electrical Installation Works{% endif %}</span>
       </div>
 
-      <div class="cover-details">
-        <div class="cover-details-h">Certificate Details</div>
-        <div class="cover-row"><span class="cover-k">Installation Address</span><span class="cover-v">{{ installation.address }}{% if installation.postcode and installation.postcode != '' %}, {{ installation.postcode }}{% endif %}</span></div>
-        <div class="cover-row"><span class="cover-k">Client</span><span class="cover-v">{{ client.name }}</span></div>
-        <div class="cover-row"><span class="cover-k">Certificate Reference</span><span class="cover-v">{{ certificate_number }}</span></div>
-        <div class="cover-row"><span class="cover-k">Date of Work</span><span class="cover-v">{{ work_date }}</span></div>
-        <div class="cover-row"><span class="cover-k">Next Inspection Due</span><span class="cover-v">{{ next_inspection_due }}</span></div>
-        <div class="cover-row"><span class="cover-k">Signed By</span><span class="cover-v">{{ declaration.name }}{% if declaration.qualification and declaration.qualification != '' %}&nbsp;<span class="muted">&middot; {{ declaration.qualification }}</span>{% endif %}</span></div>
-        {% if declaration.company and declaration.company != '' %}<div class="cover-row"><span class="cover-k">For / On Behalf Of</span><span class="cover-v">{{ declaration.company }}</span></div>{% endif %}
-        {% if declaration.scheme_provider and declaration.scheme_provider != '' %}<div class="cover-row"><span class="cover-k">Scheme Provider</span><span class="cover-v">{{ declaration.scheme_provider }}{% if declaration.registration_number and declaration.registration_number != '' %} &middot; {{ declaration.registration_number }}{% endif %}</span></div>{% endif %}
-      </div>
-
-      <div class="cover-footer">This certificate is an important document and should be retained for future reference. It covers only the minor works described.</div>
     </div>
-    <div class="page-break-before"></div>
 
     <!-- =============================================
          DOCUMENT HEADER
@@ -605,7 +591,6 @@
 
         <div class="doc-meta">
           <div class="cert-number">{{ certificate_number }}</div>
-          <div class="page-number">Page 1 of 1</div>
         </div>
 
         {% if company.scheme_logo and company.scheme_logo != '' %}
@@ -978,7 +963,7 @@
     <!-- =============================================
          PART 4: TEST RESULTS (force new page)
          ============================================= -->
-    <div class="section page-break-before">
+    <div class="section">
       <div class="section-title">Part 4 &mdash; Test Results for the Altered or Extended Circuit (where relevant and practicable)</div>
 
       <!-- Continuity -->
@@ -988,10 +973,12 @@
           <span class="inline-label">R1+R2 (&Omega;):</span>
           <span class="inline-value">{{ tests.r1_r2 }}</span>
         </div>
+        {% if tests.r2 != '' and tests.r2 != 'N/A' %}
         <div class="inline-group">
           <span class="inline-label">R2 (&Omega;):</span>
           <span class="inline-value">{{ tests.r2 }}</span>
         </div>
+        {% endif %}
       </div>
 
       {% if tests.ring_r1_end != 'N/A' or tests.ring_rn_end != 'N/A' or tests.ring_r2_end != 'N/A' %}
@@ -1070,17 +1057,22 @@
           <span class="inline-label">PFC (kA):</span>
           <span class="inline-value">{{ tests.pfc }}</span>
         </div>
+        {% if tests.earth_electrode != '' and tests.earth_electrode != 'N/A' %}
         <div class="inline-group">
           <span class="inline-label">Earth Electrode (&Omega;):</span>
           <span class="inline-value">{{ tests.earth_electrode }}</span>
         </div>
+        {% endif %}
+        {% if tests.phase_rotation != '' and tests.phase_rotation != 'N/A' and tests.phase_rotation != 'na' %}
         <div class="inline-group">
           <span class="inline-label">Phase Rotation:</span>
           <span class="inline-value">{{ tests.phase_rotation }}</span>
         </div>
+        {% endif %}
       </div>
 
-      <!-- RCD / RCBO Tests -->
+      <!-- RCD / RCBO Tests — Reg 643.7.3.201: AC test at 1× IΔn; 5× is optional; the ½× "no trip" test is not part of the regulation -->
+      {% if circuit.protection.rcd or circuit.protection.rcbo %}
       <div class="section-subtitle mt-6">RCD / RCBO Tests</div>
       <div class="inline-form">
         <div class="inline-group">
@@ -1091,30 +1083,31 @@
           <span class="inline-label">1&times; I&Delta;n (ms):</span>
           <span class="inline-value">{{ tests.rcd_time }}</span>
         </div>
+        {% if tests.rcd_5x_time != '' and tests.rcd_5x_time != 'N/A' %}
         <div class="inline-group">
           <span class="inline-label">5&times; I&Delta;n (ms):</span>
           <span class="inline-value">{{ tests.rcd_5x_time }}</span>
         </div>
-        <div class="inline-group">
-          <span class="inline-label">&frac12;&times; I&Delta;n:</span>
-          <span class="inline-value">
-            {% if tests.rcd_half_x == 'Pass' or tests.rcd_half_x == 'pass' or tests.rcd_half_x == 'No Trip' %}<span class="pass">{{ tests.rcd_half_x }}</span>{% elsif tests.rcd_half_x == 'Fail' or tests.rcd_half_x == 'fail' or tests.rcd_half_x == 'Trip' %}<span class="fail">{{ tests.rcd_half_x }}</span>{% else %}{{ tests.rcd_half_x }}{% endif %}
-          </span>
-        </div>
+        {% endif %}
         <div class="inline-group">
           <span class="inline-label">Test Button:</span>
           <span class="inline-value">
-            {% if tests.rcd_test_button == 'Pass' or tests.rcd_test_button == 'pass' or tests.rcd_test_button == 'OK' %}<span class="pass">{{ tests.rcd_test_button }}</span>{% elsif tests.rcd_test_button == 'Fail' or tests.rcd_test_button == 'fail' %}<span class="fail">{{ tests.rcd_test_button }}</span>{% else %}{{ tests.rcd_test_button }}{% endif %}
+            {% if tests.rcd_test_button == 'Pass' or tests.rcd_test_button == 'pass' or tests.rcd_test_button == 'OK' %}<span class="pass">Pass</span>{% elsif tests.rcd_test_button == 'Fail' or tests.rcd_test_button == 'fail' %}<span class="fail">Fail</span>{% else %}{{ tests.rcd_test_button }}{% endif %}
           </span>
         </div>
+        {% if tests.rcbo_trip_time != '' and tests.rcbo_trip_time != 'N/A' %}
         <div class="inline-group">
           <span class="inline-label">RCBO Trip (ms):</span>
           <span class="inline-value">{{ tests.rcbo_trip_time }}</span>
         </div>
+        {% endif %}
       </div>
+      {% endif %}
 
-      <!-- A4:2026 Section D — AFDD + SPD checkboxes with explicit notes -->
+      <!-- A4:2026 Section D — AFDD / SPD, printed only for the device fitted -->
+      {% if circuit.protection.afdd or circuit.protection.spd %}
       <div class="section-subtitle mt-6">AFDD &amp; SPD (BS 7671:2018+A4:2026 Section D)</div>
+      {% if circuit.protection.afdd %}
       <div class="inline-form">
         <div class="inline-group">
           <span class="inline-label">AFDD satisfactory test button operation:</span>
@@ -1126,8 +1119,9 @@
         </div>
       </div>
       <p class="hint" style="font-size:9pt;color:#555;margin-top:4px;">NOTE: Not all AFDDs have a test button.</p>
-
-      <div class="inline-form mt-4">
+      {% endif %}
+      {% if circuit.protection.spd %}
+      <div class="inline-form{% if circuit.protection.afdd %} mt-4{% endif %}">
         <div class="inline-group">
           <span class="inline-label">SPD functionality confirmed:</span>
           <span class="checkbox-box {% if tests.spd_ok == true or tests.spd_ok == 'true' or tests.spd_ok == 'satisfactory' or tests.spd_ok == 'Pass' or tests.spd_ok == 'pass' or tests.spd_ok == 'OK' %}checked{% endif %}">{% if tests.spd_ok == true or tests.spd_ok == 'true' or tests.spd_ok == 'satisfactory' or tests.spd_ok == 'Pass' or tests.spd_ok == 'pass' or tests.spd_ok == 'OK' %}&#10003;{% endif %}</span>
@@ -1138,6 +1132,9 @@
         </div>
       </div>
       <p class="hint" style="font-size:9pt;color:#555;margin-top:4px;">NOTE: Not all SPDs have visible functionality indication.</p>
+
+      {% endif %}
+      {% endif %}
 
       <div class="inline-form mt-4">
         <div class="inline-group">
@@ -1287,14 +1284,18 @@
               <span class="sig-field-label">Qualification</span>
               <span class="sig-field-value">{{ declaration.qualification }}</span>
             </div>
+            {% if declaration.scheme_provider != '' %}
             <div class="sig-field">
               <span class="sig-field-label">Scheme Provider</span>
               <span class="sig-field-value">{{ declaration.scheme_provider }}</span>
             </div>
+            {% endif %}
+            {% if declaration.registration_number != '' %}
             <div class="sig-field">
               <span class="sig-field-label">Registration No</span>
               <span class="sig-field-value">{{ declaration.registration_number }}</span>
             </div>
+            {% endif %}
           </div>
         </div>
       </div>
@@ -1343,7 +1344,7 @@
     <!-- =============================================
          GUIDANCE FOR RECIPIENTS
          ============================================= -->
-    <div class="section avoid-break">
+    <div class="section">
       <div class="section-title">Guidance for Recipients</div>
       <div class="guidance-intro">
         This certificate is an important and valuable document which should be retained for future reference.

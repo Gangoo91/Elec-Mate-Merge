@@ -23,14 +23,22 @@ import { SCALE } from '../constants';
 import { labelSize } from '../textMetrics';
 import { planFromSchedule, ROOM_PRESETS, type ScheduleRoom } from '../roomSchedule';
 import {
+  applyCircuitEdit,
   assignNewSymbols,
   circuitColour,
   inferPremises,
   scheduleForRooms,
   scheduleFromObjects,
   toScheduleEntries,
+  connectedLoadW,
   type DesignedCircuit,
 } from '../circuitDesign';
+import { notation, phaseLoads, wayMap } from '../boardWays';
+import { handDrawnCircuits, jobNumbering } from '../jobNumbering';
+import { planToCertificate } from '../planToCertificate';
+import { planResults } from '../planResults';
+import { deriveCircuitNumber } from '@/utils/circuitNumbering';
+import { buildScheduleFromCert } from '@/utils/board-schedule-import';
 import type { CanvasObject } from '@/pages/electrician-tools/ai-tools/DiagramBuilderPage';
 import {
   findBoard,
@@ -43,6 +51,10 @@ import {
   subBoards,
   splitCircuit,
   withRuns,
+  withoutRuns,
+  waysOf,
+  moveWay,
+  editCircuit,
 } from '../wiring';
 
 const FIXTURES = 'src/components/electrician-tools/diagram-builder/__checks__/fixtures';
@@ -831,6 +843,569 @@ if (circuitColour('S0') === undefined) fail('circuitColour("S0") is undefined');
     o.id === wall.id ? { ...o, points: o.points!.map((p) => ({ x: p.x + 20, y: p.y })) } : o
   );
   if (!runsAreStale(moved)) fail('moving a wall did not make the runs stale');
+}
+{
+  // Board numbering, 30 Sep 2026: ways as the board is marked, never S1/L1.
+  const load = (f: string) =>
+    withRuns(
+      placeBoard(
+        aiPlanToObjects({ rooms: JSON.parse(readFileSync(join(FIXTURES, f), 'utf8')).rooms }, 11)
+      )
+    );
+  for (const f of [
+    'care-home-two-floor.json',
+    'described-detached-house.json',
+    'primary-school.json',
+  ]) {
+    const circuits = scheduleFromObjects(load(f)).circuits;
+    const single = wayMap(circuits, 'single');
+    const ways = circuits.filter((c) => c.kind !== 'fire-zone').map((c) => single.get(c.ref)!);
+    const labels = ways.map((w) => w.label).sort((a, b) => Number(a) - Number(b));
+    if (labels.some((l, i) => l !== String(i + 1)))
+      fail(`${f}: single-phase ways are not 1..${labels.length}: ${labels.slice(0, 6).join(',')}`);
+    circuits
+      .filter((c) => c.kind === 'fire-zone')
+      .forEach((c) => {
+        if (!/^Zone \d+$/.test(single.get(c.ref)!.label))
+          fail(`${f}: zone ${c.ref} not numbered as a zone`);
+      });
+    const three = wayMap(circuits, 'three');
+    const seen = new Set<string>();
+    circuits
+      .filter((c) => c.kind !== 'fire-zone')
+      .forEach((c) => {
+        const w = three.get(c.ref)!;
+        if (!/^\d+(L[123]| TPN)$/.test(w.label)) fail(`${f}: three-phase label ${w.label}`);
+        if (seen.has(w.label)) fail(`${f}: two circuits on ${w.label}`);
+        seen.add(w.label);
+      });
+    const phases = phaseLoads(circuits, three).get('CU');
+    if (phases) {
+      const v = [phases.L1, phases.L2, phases.L3];
+      const biggest = Math.max(...circuits.filter((c) => c.kind !== 'submain').map(connectedLoadW));
+      if (Math.max(...v) - Math.min(...v) > biggest)
+        fail(`${f}: phases out of balance ${v.join('/')}`);
+    }
+  }
+  // With sub-boards every number says which board it is on.
+  const fixed = fixLongRuns(load('primary-school.json')).objects;
+  const multi = wayMap(scheduleFromObjects(fixed).circuits, 'single');
+  const bad = [...multi.values()].filter(
+    (w) => w.board !== 'Panel' && !/^(CU|DB\d+)\/\d+$/.test(w.full)
+  );
+  if (bad.length)
+    fail(
+      `board-qualified numbers missing: ${bad
+        .slice(0, 3)
+        .map((w) => w.full)
+        .join(', ')}`
+    );
+}
+{
+  // Numbering review, 30 Sep 2026.
+  const load = (f: string) =>
+    withRuns(
+      placeBoard(
+        aiPlanToObjects({ rooms: JSON.parse(readFileSync(join(FIXTURES, f), 'utf8')).rooms }, 11)
+      )
+    );
+  // Hiding the runs doesn't renumber the board.
+  const school = fixLongRuns(load('primary-school.json')).objects;
+  const shown = waysOf(school);
+  const hidden = waysOf(withoutRuns(school));
+  const moved = [...shown].filter(([ref, w]) => hidden.get(ref)?.full !== w.full);
+  if (moved.length)
+    fail(
+      `hiding runs renumbered ${moved.length} circuits (e.g. ${moved[0][1].full} → ${hidden.get(moved[0][0])?.full})`
+    );
+  // One job, two designed sheets with a sub-board each: no board has two of a
+  // way, and every circuit on every sheet has a number.
+  const uni = fixLongRuns(load('university-three-floor.json')).objects;
+  const job = jobNumbering([
+    { name: 'School', objects: school },
+    { name: 'University', objects: uni },
+  ]);
+  const byBoard = new Map<string, Set<string>>();
+  job.ways.forEach((w) => {
+    const set = byBoard.get(w.board) ?? new Set<string>();
+    if (set.has(w.label)) fail(`board ${w.board} has two way ${w.label}`);
+    set.add(w.label);
+    byBoard.set(w.board, set);
+  });
+  [school, uni].forEach((objs, i) => {
+    const labels = job.labelsFor(i);
+    const missing = objs.filter(
+      (o) => o.type === 'symbol' && o.circuitRef && !labels.get(o.circuitRef)
+    );
+    if (missing.length) fail(`sheet ${i + 1}: ${missing.length} fittings have no way number`);
+  });
+  // A hand-drawn job: the plan's numbers are the schedule's numbers.
+  const hand = [
+    {
+      name: 'Kitchen',
+      objects: [] as CanvasObject[],
+      symbolIds: [
+        'light-ceiling',
+        'socket-double',
+        'socket-cooker-45a',
+        'smoke-detector',
+        'socket-ev-charger',
+        'water-heater',
+      ],
+    },
+    {
+      name: 'Hall',
+      objects: [] as CanvasObject[],
+      symbolIds: ['light-ceiling', 'socket-double-13a'],
+    },
+  ];
+  const hj = jobNumbering(hand);
+  const labels = [...hj.ways.values()].map((w) => w.label);
+  if (hj.ways.size < 6) fail(`hand-drawn job lost circuits: ${[...hj.ways.keys()].join(',')}`);
+  if (new Set(labels).size !== labels.length || labels.some((l) => !/^\d+$/.test(l)))
+    fail(`hand-drawn job numbered badly: ${labels.join(',')}`);
+  // A hand-drawn sheet's schedule lists the circuits as drawn — no S2 made
+  // up by sorting symbol names — and detectors on FA1 are an alarm circuit.
+  const drawnObjs: CanvasObject[] = [
+    ...Array.from({ length: 14 }, (_, i) => ({
+      id: `s${i}`,
+      type: 'symbol' as const,
+      symbolId: 'socket-double-13a',
+      x: i * 40,
+      y: 0,
+      circuitRef: 'S1',
+    })),
+    ...Array.from({ length: 3 }, (_, i) => ({
+      id: `l${i}`,
+      type: 'symbol' as const,
+      symbolId: 'light-ceiling',
+      x: i * 40,
+      y: 80,
+      circuitRef: 'L1',
+    })),
+    ...Array.from({ length: 2 }, (_, i) => ({
+      id: `d${i}`,
+      type: 'symbol' as const,
+      symbolId: 'smoke-detector',
+      x: i * 40,
+      y: 160,
+      circuitRef: 'FA1',
+    })),
+  ];
+  const drawnCircuits = handDrawnCircuits(drawnObjs, [], false);
+  const drawnRefs = drawnCircuits
+    .map((c) => c.ref)
+    .sort()
+    .join(',');
+  if (drawnRefs !== 'FA1,L1,S1') fail(`hand-drawn schedule invents circuits: ${drawnRefs}`);
+  const alarms = drawnCircuits.find((c) => c.ref === 'FA1');
+  if (alarms?.kind !== 'smoke-alarms' || alarms.points !== 2)
+    fail(`hand-drawn detectors read as ${alarms?.kind} with ${alarms?.points} points`);
+  const hjDrawn = jobNumbering([{ name: 'Room 1', objects: drawnObjs }]);
+  const tags = hjDrawn.labelsFor(0);
+  drawnCircuits.forEach((c) => {
+    if (tags.get(c.ref) !== hjDrawn.ways.get(c.ref)?.full)
+      fail(`hand-drawn ${c.ref}: tag and schedule disagree`);
+  });
+  // Edits are kept by where a circuit comes from, which doesn't move when a
+  // sheet is added or the pages are reordered (the job ref does: S1 → S1 · 1).
+  const flat = load('described-small-flat.json');
+  const houseObjs = load('described-detached-house.json');
+  const alone = jobNumbering([{ id: 'flat', name: 'Flat', objects: flat }]);
+  const both = jobNumbering([
+    { id: 'flat', name: 'Flat', objects: flat },
+    { id: 'house', name: 'House', objects: houseObjs },
+  ]);
+  const swapped = jobNumbering([
+    { id: 'house', name: 'House', objects: houseObjs },
+    { id: 'flat', name: 'Flat', objects: flat },
+  ]);
+  const flatRing = alone.originOf('S1');
+  if (flatRing !== 'flat:S1') fail(`origin of a lone sheet's S1 is ${flatRing}`);
+  if (both.originOf(both.refOf(0, 'S1')) !== flatRing)
+    fail("adding a sheet moved the flat ring's edits");
+  if (swapped.originOf(swapped.refOf(1, 'S1')) !== flatRing)
+    fail("reordering sheets moved the flat ring's edits");
+  if (swapped.originOf(swapped.refOf(0, 'S1')) === flatRing)
+    fail("the house ring took the flat ring's edits");
+  // Three-phase on a small board stays compact: phases within one circuit.
+  const house = scheduleFromObjects(load('described-detached-house.json')).circuits;
+  const three = wayMap(house, 'three');
+  const perPhase = { L1: 0, L2: 0, L3: 0 } as Record<string, number>;
+  three.forEach((w) => w.phase && w.phase !== 'TPN' && (perPhase[w.phase] += 1));
+  const counts = Object.values(perPhase);
+  if (Math.max(...counts) - Math.min(...counts) > 1)
+    fail(`three-phase positions uneven: ${counts.join('/')}`);
+  // Board shorthand reads the text as written.
+  const n = (device: string, rcd: boolean) =>
+    notation({
+      ref: 'X1',
+      kind: 'radial',
+      description: '',
+      device,
+      cable: '',
+      points: 1,
+      floor: '',
+      rooms: [],
+      rcd,
+      afdd: false,
+      notes: [],
+      source: '',
+    });
+  const cases: [string, boolean, string, string][] = [
+    ['32A MCB Type B', true, 'MCB', 'B32'],
+    ['32A MCB Type B', false, 'MCB', 'B32'],
+    ['B32 RCBO 30mA', true, 'RCBO', 'B32'],
+    ['32 A Type B AFDD/RCBO 30 mA', true, 'AFDD/RCBO', 'B32'],
+    ['6 A Type B RCBO 30 mA', true, 'RCBO', 'B6'],
+  ];
+  cases.forEach(([d, rcd, dev, rating]) => {
+    const got = n(d, rcd);
+    if (got.device !== dev || got.rating !== rating)
+      fail(`"${d}" read as ${got.device} ${got.rating}`);
+  });
+}
+{
+  // Plan → certificate, 30 Sep 2026: the EIC gets every circuit, numbered as
+  // the plan is, on the right board, with Table 41.3's maximum Zs.
+  const load = (f: string) =>
+    withRuns(
+      placeBoard(
+        aiPlanToObjects({ rooms: JSON.parse(readFileSync(join(FIXTURES, f), 'utf8')).rooms }, 11)
+      )
+    );
+  for (const [f, three, fix] of [
+    ['care-home-two-floor.json', true, false],
+    ['primary-school.json', false, true],
+    // Three-phase with sub-boards: TPN submains on the CU.
+    ['primary-school.json', true, true],
+  ] as const) {
+    let objs = load(f);
+    if (fix) objs = fixLongRuns(objs).objects;
+    if (three)
+      objs = objs.map((o) => (o.type === 'symbol' ? { ...o, supply: 'three' as const } : o));
+    const job = jobNumbering([{ id: 's', name: f, objects: objs }]);
+    const cert = planToCertificate([...job.designed, ...job.handCircuits], job.ways, {
+      supply: job.supply,
+      earthing: job.earthing,
+      planName: f,
+    });
+    const boardOf = new Map(cert.distributionBoards.map((b) => [b.id, b.reference]));
+    const multi = cert.distributionBoards.length > 1;
+    const tags = new Set(job.labelsFor(0).values());
+    const real = cert.scheduleOfTests.filter((r) => !r.isSpare);
+    // The certificate's own form back to the plan's: "1.2" on L2 → "1L2",
+    // a TPN way "1" → "1 TPN".
+    const planLabel = (r: (typeof real)[number]) =>
+      r.phaseAssignment === 'L1,L2,L3'
+        ? `${r.wayNumber} TPN`
+        : r.phaseAssignment
+          ? `${r.wayNumber}${r.phaseAssignment}`
+          : r.circuitNumber;
+    const untagged = real.filter((r) => {
+      const full = multi ? `${boardOf.get(r.boardId!)}/${planLabel(r)}` : planLabel(r);
+      return !tags.has(full) && !/panel supply/i.test(r.circuitDescription);
+    });
+    if (untagged.length)
+      fail(
+        `${f}: ${untagged.length} certificate circuits match no plan tag (e.g. ${untagged[0].circuitNumber})`
+      );
+    const designedWays = job.designed.filter((c) => c.kind !== 'fire-zone').length;
+    if (real.length !== designedWays)
+      fail(`${f}: ${real.length} certificate circuits for ${designedWays} ways`);
+    real
+      .filter((r) => r.protectiveDeviceCurve === 'B' && r.protectiveDeviceRating === '32')
+      .forEach((r) => r.maxZs !== '1.37' && fail(`${f}: B32 max Zs ${r.maxZs}`));
+    // Nothing on a plan has been tested: no result may arrive filled in.
+    cert.scheduleOfTests.forEach((r) => {
+      const said = (
+        [
+          'insulationResistance',
+          'insulationLiveNeutral',
+          'insulationLiveEarth',
+          'polarity',
+          'functionalTesting',
+          'zs',
+          'r1r2',
+          'rcdOneX',
+        ] as const
+      ).filter((k) => r[k]);
+      if (said.length)
+        fail(`${f}: way ${r.circuitNumber} arrives with results: ${said.join(', ')}`);
+    });
+    if (three && !real.every((r) => r.phaseAssignment))
+      fail(`${f}: three-phase circuit with no phase`);
+    cert.distributionBoards
+      .filter((b) => b.order > 0)
+      .forEach(
+        (b) =>
+          !/^CU way \d/.test(b.suppliedFrom ?? '') &&
+          fail(`${f}: ${b.reference} not supplied from a CU way`)
+      );
+    // In the certificate's own numbering: unique per board, and a phase row
+    // reads "n.k" — "1L1" typed there was cut to "1" on the first edit.
+    const perBoard = new Map<string, Set<string>>();
+    cert.scheduleOfTests.forEach((r) => {
+      const seen = perBoard.get(r.boardId!) ?? new Set<string>();
+      if (seen.has(r.circuitNumber)) fail(`${f}: ${r.circuitNumber} twice on one board`);
+      seen.add(r.circuitNumber);
+      perBoard.set(r.boardId!, seen);
+      if (/L/.test(r.circuitNumber)) fail(`${f}: certificate number ${r.circuitNumber}`);
+      if (/^L[123]$/.test(r.phaseAssignment ?? '')) {
+        if (r.circuitNumber !== `${r.wayNumber}.${r.phaseAssignment!.slice(1)}`)
+          fail(`${f}: ${r.phaseAssignment} row numbered ${r.circuitNumber}`);
+        if (deriveCircuitNumber(r.circuitDesignation) !== String(r.wayNumber))
+          fail(`${f}: designation ${r.circuitDesignation} edits to another way`);
+      }
+    });
+    const door = buildScheduleFromCert(
+      cert as unknown as Parameters<typeof buildScheduleFromCert>[0],
+      cert.distributionBoards[0].id
+    );
+    const onMain = cert.scheduleOfTests.filter(
+      (r) => r.boardId === cert.distributionBoards[0].id
+    ).length;
+    const mainRows = cert.scheduleOfTests.filter(
+      (r) => r.boardId === cert.distributionBoards[0].id
+    );
+    if (three) {
+      // One way on the door per way on the board, three rows (L1–L3) each.
+      const ways = new Set(mainRows.map((r) => r.wayNumber));
+      const doorWays = new Set(door.board.circuits.map((c) => c.circuitNumber));
+      if (doorWays.size !== ways.size)
+        fail(`${f}: door chart has ${doorWays.size} ways, the board ${ways.size}`);
+      doorWays.forEach((w) => {
+        const ph = door.board.circuits
+          .filter((c) => c.circuitNumber === w)
+          .map((c) => c.phase)
+          .join(',');
+        if (ph !== 'L1,L2,L3') fail(`${f}: door way ${w} rows ${ph}`);
+      });
+    } else if (door.board.circuits.length !== (multi ? onMain : cert.scheduleOfTests.length))
+      fail(
+        `${f}: door chart has ${door.board.circuits.length} ways, certificate board has ${onMain}`
+      );
+  }
+}
+{
+  // Test results back on the drawing, 30 Sep 2026.
+  {
+    const objs = withRuns(
+      placeBoard(
+        aiPlanToObjects(
+          {
+            rooms: JSON.parse(readFileSync(join(FIXTURES, 'described-detached-house.json'), 'utf8'))
+              .rooms,
+          },
+          11
+        )
+      )
+    );
+    const job = jobNumbering([{ id: 'sheet-a', name: 'House', objects: objs }]);
+    const cert = planToCertificate([...job.designed, ...job.handCircuits], job.ways, {
+      supply: job.supply,
+      earthing: job.earthing,
+      planName: 'House',
+      link: { sheetIds: ['sheet-a'], originOf: job.originOf },
+    });
+    if (cert.sourcePlan?.sheetIds[0] !== 'sheet-a') fail('certificate not linked to its sheet');
+    const real = cert.scheduleOfTests.filter((r) => !r.isSpare);
+    if (real.some((r) => !r.planOrigin?.startsWith('sheet-a:')))
+      fail('a certificate row carries no plan origin');
+    const b32 = real.find(
+      (r) => r.protectiveDeviceCurve === 'B' && r.protectiveDeviceRating === '32'
+    )!;
+    const b6 = real.find((r) => r.protectiveDeviceRating === '6')!;
+    const other = real.find((r) => r !== b32 && r !== b6)!;
+    const good = {
+      r1r2: '0.30',
+      insulationLiveEarth: '>200',
+      insulationLiveNeutral: '>200',
+      polarity: 'Correct',
+    };
+    const rows = cert.scheduleOfTests.map((r) =>
+      r === b32
+        ? { ...r, ...good, zs: '1.60' } // over the 1.37 Ω the row prints
+        : r === b6
+          ? { ...r, ...good, zs: '0.90' }
+          : r === other
+            ? { ...r, r1r2: '0.2' }
+            : r
+    );
+    const linked = {
+      id: 'r',
+      certificateNumber: 'EIC-TEST',
+      updatedAt: '',
+      rows,
+      boards: cert.distributionBoards,
+      earthing: cert.earthingArrangement,
+    };
+    const refOfRow = (r: (typeof rows)[number]) =>
+      [...job.ways.keys()].find((k) => job.originOf(k) === r.planOrigin)!;
+    const res = planResults(linked, job.ways, job.originOf);
+    const st = (r: (typeof rows)[number]) => res.get(refOfRow(r))?.status;
+    if (st(b32) !== 'fail') fail(`B32 with Zs 1.60 Ω of 1.37 reads ${st(b32)}, not fail`);
+    if (st(b6) !== 'pass') fail(`B6 with Zs 0.90 Ω of 7.28 reads ${st(b6)}, not pass`);
+    if (st(other) !== 'partial') fail(`R1+R2 alone reads ${st(other)}, not in progress`);
+    const todo = res.get(refOfRow(other))?.missing?.join(', ');
+    if (todo !== 'Zs, insulation, polarity') fail(`in progress lists "${todo}" still to do`);
+    if (res.get(refOfRow(b32))?.decidedBy !== 'zs') fail('the B32 fail is not put down to Zs');
+    const untouched = real.find((r) => r !== b32 && r !== b6 && r !== other)!;
+    if (res.get(refOfRow(untouched))?.status !== 'untested')
+      fail('a circuit with no readings is not "not tested"');
+
+    // A row added by hand on the certificate, sharing a way number with a plan
+    // circuit whose own row was renumbered there, never takes that circuit.
+    {
+      const own = rows.find((r) => r.id === b6.id)!;
+      const w6 = job.ways.get(refOfRow(b6))!;
+      const intruder = {
+        ...own,
+        id: 'by-hand',
+        planOrigin: undefined,
+        zs: '9.99',
+        circuitNumber: w6.label,
+        wayNumber: w6.way,
+      };
+      const moved6 = { ...own, circuitNumber: '99', wayNumber: 99 };
+      const r2 = planResults({ ...linked, rows: [intruder, moved6] }, job.ways, job.originOf);
+      if (r2.get(refOfRow(b6))?.zs !== '0.90')
+        fail(`a hand-added row took way ${w6.label}'s readings (${r2.get(refOfRow(b6))?.zs})`);
+    }
+    // Recorded decisions and the certificate's own wordings are not findings.
+    {
+      const own = rows.find((r) => r.id === b6.id)!;
+      const na = planResults(
+        { ...linked, rows: [{ ...own, insulationLiveNeutral: 'N/A', polarity: 'Satisfactory' }] },
+        job.ways,
+        job.originOf
+      ).get(refOfRow(b6));
+      if (na?.status !== 'pass') fail(`"N/A" or "Satisfactory" turned a pass into ${na?.status}`);
+      const tt = planResults(
+        { ...linked, earthing: 'tt', rows: [{ ...own, zs: '45' }] },
+        job.ways,
+        job.originOf
+      ).get(refOfRow(b6));
+      if (tt?.status !== 'pass' || tt.maxZs)
+        fail(`TT: Zs 45 Ω with a 30 mA RCD reads ${tt?.status}, limit shown "${tt?.maxZs}"`);
+    }
+
+    // Renumber the plan: the readings stay on their own circuits.
+    const order = [...job.ways.values()]
+      .filter((w) => w.board === 'CU')
+      .sort((a, b) => a.way - b.way)
+      .map((w) => w.ref);
+    const moved = moveWay(objs, order, order[1], -1);
+    const job2 = jobNumbering([{ id: 'sheet-a', name: 'House', objects: moved }]);
+    const res2 = planResults(linked, job2.ways, job2.originOf);
+    if (res2.get(refOfRow(b32))?.status !== 'fail' || res2.get(refOfRow(b6))?.status !== 'pass')
+      fail('moving a way on the plan moved its readings to another circuit');
+
+    // A circuit taken off the plan is dropped, never guessed onto another.
+    const gone = planResults(
+      { ...linked, rows: [{ ...rows.find((r) => r.id === b32.id)!, planOrigin: 'sheet-a:NOPE' }] },
+      job.ways,
+      job.originOf
+    );
+    if (gone.size) fail('a row for a circuit no longer on the plan landed on one');
+
+    // A row added on the certificate by hand matches by its way.
+    const w = job.ways.get(refOfRow(b6))!;
+    const byHand = planResults(
+      { ...linked, rows: [{ ...rows.find((r) => r.id === b6.id)!, planOrigin: undefined }] },
+      job.ways,
+      job.originOf
+    );
+    if (byHand.get(w.ref)?.status !== 'pass') fail('a hand-added row did not match by its way');
+  }
+
+  // Amending a submain: an MCB in SWA, never an RCBO's 30 mA or T&E.
+  const sm = applyCircuitEdit(
+    {
+      ref: 'DB2',
+      kind: 'submain',
+      description: 'Submain to DB2',
+      device: 'Size to the sub-board’s design load — confirm',
+      cable: 'Size to load, length and installation method — confirm',
+      points: 0,
+      floor: '',
+      rooms: [],
+      rcd: false,
+      afdd: false,
+      notes: [],
+      source: '',
+    },
+    { device: 'RCBO', rating: 'C63', cable: '16' }
+  );
+  if (/30 mA|RCBO/.test(sm.device) || sm.rcd || !/SWA/.test(sm.cable) || /T&E/.test(sm.cable))
+    fail(`submain amended to "${sm.device}" in "${sm.cable}"`);
+  // Amending the board by hand, 30 Sep 2026.
+  const base = withRuns(
+    placeBoard(
+      aiPlanToObjects(
+        {
+          rooms: JSON.parse(readFileSync(join(FIXTURES, 'described-detached-house.json'), 'utf8'))
+            .rooms,
+        },
+        11
+      )
+    )
+  );
+  const before = waysOf(base);
+  const order = [...before.values()]
+    .filter((w) => w.board === 'CU')
+    .sort((a, b) => a.way - b.way)
+    .map((w) => w.ref);
+  const [first, second] = order;
+  const moved = moveWay(base, order, second, -1);
+  const after = waysOf(moved);
+  if (
+    after.get(second)?.label !== before.get(first)?.label ||
+    after.get(first)?.label !== before.get(second)?.label
+  )
+    fail(
+      `moving way ${before.get(second)?.label} up didn't swap it with ${before.get(first)?.label}`
+    );
+  const ring = scheduleFromObjects(base).circuits.find((c) => c.kind === 'ring')!;
+  const edited = editCircuit(base, ring.ref, {
+    device: 'MCB',
+    rating: 'B20',
+    cable: '4/1.5',
+    description: 'Workshop sockets',
+  });
+  const e = scheduleFromObjects(edited).circuits.find((c) => c.ref === ring.ref)!;
+  const n = notation(e);
+  if (
+    n.device !== 'MCB' ||
+    n.rating !== 'B20' ||
+    n.cable !== '4/1.5' ||
+    e.description !== 'Workshop sockets' ||
+    e.rcd
+  )
+    fail(
+      `an amended circuit reads ${n.device} ${n.rating} ${n.cable} "${e.description}" rcd=${e.rcd}`
+    );
+  if (e.length && e.length.ok !== undefined)
+    fail("an amended circuit kept the design's OSG length verdict");
+  const job = jobNumbering([{ id: 's', name: 'House', objects: edited }]);
+  const row = planToCertificate([...job.designed, ...job.handCircuits], job.ways, {
+    supply: 'single',
+    earthing: 'TN-C-S',
+    planName: 'House',
+  }).scheduleOfTests.find((r) => r.circuitDescription.startsWith('Workshop sockets'));
+  if (
+    !row ||
+    row.bsStandard !== 'MCB (BS EN 60898)' ||
+    row.protectiveDeviceRating !== '20' ||
+    row.maxZs !== '2.19' ||
+    row.liveSize !== '4.0mm'
+  )
+    fail(
+      `the certificate row for an amended circuit: ${row?.bsStandard} ${row?.protectiveDeviceRating} ${row?.maxZs} ${row?.liveSize}`
+    );
+  const redesigned = redesignCircuits(edited, { buildingType: 'house' });
+  if (redesigned.some((o) => o.circuitEdit || o.wayPin))
+    fail('a redesign kept amendments to circuits that no longer exist');
 }
 if (failures === beforeRegressions) console.log('  ✔ all fixed and staying fixed');
 

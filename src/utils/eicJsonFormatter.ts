@@ -525,7 +525,9 @@ export async function formatEicJson(
       // A4:2026 — Ring final circuit: Confirmed (BoardSection tick; EICR
       // already emits this key, EIC was dropping it).
       ring_final_circuit_confirmed: board.ringFinalCircuitConfirmed ?? false,
-      supply_from: board.supplyFrom || 'Main',
+      // The board card and the floor plan write `suppliedFrom`; only the dev
+      // fill wrote `supplyFrom`, so every sub-board's feed printed "Main".
+      supply_from: board.suppliedFrom || board.supplyFrom || 'Main',
       supply_cable_size: board.supplyCableSize || '',
       supply_cable_type: board.supplyCableType || '',
     })),

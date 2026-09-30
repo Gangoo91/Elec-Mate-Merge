@@ -243,16 +243,16 @@ const ROOM_SYMBOL_PACKS: Record<string, { symbolId: string; name: string }[]> = 
 };
 
 const modeTitle: Record<Mode, string> = {
-  hub: 'AI Tools',
-  templates: 'Room Templates',
-  schedule: 'Room by Room',
-  describe: 'Describe It',
-  review: 'Compliance Review',
-  autoplace: 'Auto-Place Symbols',
-  suggestions: 'Smart Suggestions',
-  spec: 'Specification Writer',
-  quote: 'Quote Generator',
-  photo: 'Plan to Floor Plan',
+  hub: 'AI tools',
+  templates: 'Room templates',
+  schedule: 'Room by room',
+  describe: 'Describe it',
+  review: 'Compliance review',
+  autoplace: 'Auto-place symbols',
+  suggestions: 'Smart suggestions',
+  spec: 'Specification writer',
+  quote: 'Quote generator',
+  photo: 'Plan to floor plan',
 };
 
 const modeSubtitle: Record<Mode, string> = {
@@ -1041,23 +1041,23 @@ export const AIRoomBuilderDialog = ({
    */
   const startItems = [
     {
-      title: 'Plan to Floor Plan',
+      title: 'Plan to floor plan',
       description: 'PDF, screenshot or photo — every floor read',
       onClick: () => setMode('photo'),
       primary: true,
     },
     {
-      title: 'Room by Room',
+      title: 'Room by room',
       description: 'List each room and what goes in it — drawn exactly',
       onClick: () => setMode('schedule'),
     },
     {
-      title: 'Describe It',
+      title: 'Describe it',
       description: 'One room or the whole property, in your words',
       onClick: () => setMode('describe'),
     },
     {
-      title: 'Room Templates',
+      title: 'Room templates',
       description: 'Pick a room, then adjust the sizes',
       onClick: () => setMode('templates'),
     },
@@ -1065,19 +1065,19 @@ export const AIRoomBuilderDialog = ({
   const checkTools = [
     {
       id: 'autoplace',
-      title: 'Auto-Place Symbols',
+      title: 'Auto-place symbols',
       description: 'Sockets, lights and switches for a room',
       onClick: () => setMode('autoplace'),
     },
     {
       id: 'review',
-      title: 'Compliance Check',
+      title: 'Compliance check',
       description: 'Your layout against BS 7671',
       onClick: () => setMode('review'),
     },
     {
       id: 'suggestions',
-      title: 'Smart Suggestions',
+      title: 'Smart suggestions',
       description: 'Missing sockets, lights and safety items',
       onClick: () => setMode('suggestions'),
     },
@@ -1085,13 +1085,13 @@ export const AIRoomBuilderDialog = ({
   const outputTools = [
     {
       id: 'spec',
-      title: 'Write Specification',
+      title: 'Write specification',
       description: 'A client-ready spec sheet',
       onClick: () => setMode('spec'),
     },
     {
       id: 'quote',
-      title: 'Price This Job',
+      title: 'Price this job',
       description: 'Labour and materials estimate',
       onClick: () => setMode('quote'),
     },
@@ -1123,7 +1123,8 @@ export const AIRoomBuilderDialog = ({
                     setQuoteResult(null);
                     setSelectedAutoPlaceRoom(null);
                   }}
-                  className="h-11 w-11 sm:h-8 sm:w-8 flex items-center justify-center rounded-lg hover:bg-white/10 touch-manipulation"
+                  aria-label="Back"
+                  className="h-11 w-11 flex items-center justify-center rounded-lg hover:bg-white/10 touch-manipulation"
                 >
                   <ArrowLeft className="h-4 w-4 text-white" />
                 </button>
@@ -1772,7 +1773,7 @@ export const AIRoomBuilderDialog = ({
                      Stacked on phones. A plan in a thin full-width strip with
                      empty space either side said nothing about what happens
                      next. */
-                  <div className="grid gap-5 lg:grid-cols-[minmax(0,1.5fr)_minmax(320px,1fr)] lg:gap-7">
+                  <div className="grid grid-cols-[minmax(0,1fr)] gap-5 lg:grid-cols-[minmax(0,1.5fr)_minmax(320px,1fr)] lg:gap-7">
                     <div className="space-y-2.5">
                       <div className="overflow-hidden rounded-2xl border border-white/[0.14] bg-white">
                         <img
@@ -1854,7 +1855,7 @@ export const AIRoomBuilderDialog = ({
                           onChange={(e) => setPlanNotes(e.target.value)}
                           placeholder="e.g. Full rewire. EV charger in the garage, USB sockets in every bedroom."
                           rows={2}
-                          className="min-h-[56px] resize-none rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none touch-manipulation"
+                          className="textarea-soft min-h-[56px] resize-none rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none touch-manipulation"
                         />
                       </div>
 

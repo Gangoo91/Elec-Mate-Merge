@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { reportCloud, type CloudReport, type ReportType } from '@/utils/reportCloud';
 import type { TestResult } from '@/types/testResult';
+import { normaliseEarthingArrangement } from '@/utils/earthingArrangement';
 
 /**
  * Fields copied forward from a previous cert at the same installation address.
@@ -126,6 +127,60 @@ const LAST_CERT_FIELDS: Record<ReportType, string[]> = {
   'fire-alarm-log-book': [],
 };
 
+/**
+ * What each copied key is called on the prompt. Several keys describe one
+ * thing (type + size + custom size of a conductor), so labels repeat and the
+ * card de-duplicates them: "fills premises type and bonding conductor".
+ */
+const LAST_CERT_FIELD_LABELS: Record<string, string> = {
+  supplyVoltage: 'supply voltage',
+  supplyFrequency: 'frequency',
+  phases: 'phases',
+  supplyPhases: 'phases',
+  earthingArrangement: 'earthing arrangement',
+  Ze: 'Ze',
+  zdb: 'Zdb',
+  prospectiveFaultCurrent: 'PFC',
+  pfc: 'PFC',
+  bsAmendment: 'BS 7671 edition',
+  bsAmendmentDate: 'BS 7671 edition',
+  mainProtectiveDevice: 'main protective device',
+  mainSwitchRating: 'main switch rating',
+  propertyType: 'property type',
+  numberOfBedrooms: 'bedrooms',
+  estimatedAge: 'installation age',
+  ageUnit: 'installation age',
+  description: 'premises type',
+  mainEarthingConductorType: 'earthing conductor',
+  mainEarthingConductorSize: 'earthing conductor',
+  mainEarthingConductorSizeCustom: 'earthing conductor',
+  earthingConductorPresent: 'earthing conductor',
+  earthingConductorSize: 'earthing conductor',
+  mainBondingConductorType: 'bonding conductor',
+  mainBondingSize: 'bonding conductor',
+  mainBondingSizeCustom: 'bonding conductor',
+  mainBondingLocations: 'bonding locations',
+  distributionBoards: 'distribution boards',
+  premisesType: 'premises type',
+  supplyType: 'supply type',
+  boardsCovered: 'boards covered',
+  boardLocation: 'board location',
+  boardMake: 'board make',
+};
+
+/** De-duplicated, in field order — what the prompt will fill on this cert. */
+export const describeLastCertFields = (fields: Record<string, unknown>): string[] => {
+  const seen = new Set<string>();
+  const out: string[] = [];
+  for (const key of Object.keys(fields)) {
+    const label = LAST_CERT_FIELD_LABELS[key] ?? key.replace(/([A-Z])/g, ' $1').toLowerCase().trim();
+    if (seen.has(label)) continue;
+    seen.add(label);
+    out.push(label);
+  }
+  return out;
+};
+
 export interface LastCertSuggestion {
   reportId: string;
   certNumber?: string;
@@ -151,9 +206,87 @@ export interface UseCertPrefillResult {
    * method, maxZs, board association. Empty array when nothing to copy.
    */
   buildCircuitSkeleton: () => TestResult[];
-  /** Hides the prompt until the user navigates away + back. */
+  /** Hides the prompt for this certificate — remembered across reloads. */
   dismiss: () => void;
 }
+
+export interface UseCertPrefillOptions {
+  excludeReportId?: string;
+  enabled?: boolean;
+  /**
+   * The certificate being filled in. When supplied, only fields that are still
+   * blank on it are offered — a cert that already has its supply and earthing
+   * recorded gets no prompt at all, and "Copy details" never overwrites a
+   * value the user has typed.
+   */
+  currentData?: Record<string, unknown>;
+  /**
+   * Values a brand-new certificate starts with (e.g. the EICR seeds 230 V /
+   * 50 Hz / 1 phase / TN-C-S). A field still holding its seed counts as blank,
+   * so a previous TT supply is still offered over the seeded TN-C-S.
+   */
+  untouchedValues?: Record<string, unknown>;
+  /**
+   * Saved report id — keys the remembered dismissal. Before the first save the
+   * dismissal is keyed by address + cert type instead, and both keys are
+   * checked, so "No thanks" survives the cert acquiring an id.
+   */
+  reportId?: string;
+}
+
+const DISMISS_PREFIX = 'elec-mate:cert-prefill:dismissed:';
+/**
+ * The address-keyed dismissal is only a bridge for a cert that has not been
+ * saved yet (no id). It lapses after a day so a NEW cert at the same address
+ * next week is offered the prompt again; the report-keyed one is for life.
+ */
+const ADDRESS_DISMISS_TTL_MS = 24 * 60 * 60 * 1000;
+
+const dismissKeys = (certType: string, address: string, reportId?: string): string[] => {
+  const keys = [`${DISMISS_PREFIX}${certType}:${address.trim().toLowerCase()}`];
+  if (reportId) keys.unshift(`${DISMISS_PREFIX}${reportId}`);
+  return keys;
+};
+
+const isReportKey = (key: string) => !/^elec-mate:cert-prefill:dismissed:[a-z-]+:/.test(key);
+
+const readDismissed = (keys: string[]): boolean => {
+  try {
+    return keys.some((k) => {
+      const raw = window.localStorage.getItem(k);
+      if (!raw) return false;
+      if (isReportKey(k)) return true;
+      const at = Number(raw);
+      return Number.isFinite(at) && Date.now() - at < ADDRESS_DISMISS_TTL_MS;
+    });
+  } catch {
+    return false;
+  }
+};
+
+const writeDismissed = (keys: string[]) => {
+  try {
+    keys.forEach((k) => window.localStorage.setItem(k, String(Date.now())));
+  } catch {
+    /* private mode / quota — the in-memory flag still hides it for this visit */
+  }
+};
+
+const isBlank = (v: unknown): boolean =>
+  v === undefined || v === null || v === '' || (Array.isArray(v) && v.length === 0);
+
+/**
+ * "Same value" per key. Earthing is stored in several spellings ("TN-C-S",
+ * "TN-C-S (PME)", "tncs"), and offering one spelling over another would be
+ * an empty gesture — the form canonicalises on read anyway.
+ */
+const sameValue = (key: string, a: unknown, b: unknown): boolean => {
+  if (a === b) return true;
+  if (key === 'earthingArrangement' && typeof a === 'string' && typeof b === 'string') {
+    return normaliseEarthingArrangement(a) === normaliseEarthingArrangement(b);
+  }
+  return false;
+};
 
 /**
  * Reading / per-visit test-outcome fields blanked when copying a circuit
@@ -205,7 +338,7 @@ const toCircuitSkeleton = (row: TestResult, index: number): TestResult => {
   for (const key of CIRCUIT_READING_FIELDS) {
     if (clone[key] !== undefined) {
       // All reading fields are string-typed on TestResult.
-      (clone as Record<string, unknown>)[key] = '';
+      (clone as unknown as Record<string, unknown>)[key] = '';
     }
   }
   clone.id = `circuit-${Date.now()}-${index}-${Math.random().toString(36).slice(2, 8)}`;
@@ -224,16 +357,31 @@ const toCircuitSkeleton = (row: TestResult, index: number): TestResult => {
 export function useCertPrefill(
   address: string | undefined,
   certType: ReportType,
-  options?: { excludeReportId?: string; enabled?: boolean }
+  options?: UseCertPrefillOptions
 ): UseCertPrefillResult {
-  const [suggestion, setSuggestion] = useState<LastCertSuggestion | null>(null);
+  // The previous cert's fields as found — filtered against the current cert
+  // below, so a keystroke on the form never triggers another lookup.
+  const [found, setFound] = useState<LastCertSuggestion | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [dismissed, setDismissed] = useState(false);
+  const keys = dismissKeys(certType, address || '', options?.reportId);
+  const keysSignature = keys.join('|');
+  // Dismissals made this visit, by key — the fallback when storage is
+  // unavailable, and the reason a dismissal never leaks from one cert to the
+  // next when the form stays mounted and simply loads a different report.
+  const dismissedThisVisit = useRef(new Set<string>());
+  const [dismissed, setDismissed] = useState(() => readDismissed(keys));
+
+  // Re-read whenever the cert changes identity: acquires an id on first save,
+  // gets an address, or the form loads another report.
+  useEffect(() => {
+    setDismissed(readDismissed(keys) || dismissedThisVisit.current.has(keysSignature));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [keysSignature]);
 
   useEffect(() => {
     const enabled = options?.enabled !== false;
     if (!enabled || dismissed || !address || address.trim().length < 6) {
-      setSuggestion(null);
+      setFound(null);
       return;
     }
 
@@ -244,7 +392,7 @@ export function useCertPrefill(
       try {
         const { data: { user } } = await supabase.auth.getUser();
         if (!user) {
-          if (!cancelled) setSuggestion(null);
+          if (!cancelled) setFound(null);
           return;
         }
 
@@ -258,7 +406,7 @@ export function useCertPrefill(
         if (cancelled) return;
 
         if (!cert) {
-          setSuggestion(null);
+          setFound(null);
           return;
         }
 
@@ -281,11 +429,11 @@ export function useCertPrefill(
             : undefined;
 
         if (Object.keys(fields).length === 0) {
-          setSuggestion(null);
+          setFound(null);
           return;
         }
 
-        setSuggestion({
+        setFound({
           reportId: cert.report_id,
           certNumber: cert.certificate_number,
           date: cert.inspection_date || cert.updated_at,
@@ -295,7 +443,7 @@ export function useCertPrefill(
         });
       } catch (error) {
         console.warn('[useCertPrefill] lookup failed:', error);
-        if (!cancelled) setSuggestion(null);
+        if (!cancelled) setFound(null);
       } finally {
         if (!cancelled) setIsLoading(false);
       }
@@ -306,6 +454,32 @@ export function useCertPrefill(
     };
   }, [address, certType, options?.excludeReportId, options?.enabled, dismissed]);
 
+  // Offer only what the current cert has not got. A value still equal to its
+  // new-cert seed counts as not got; a value equal to the previous cert's is
+  // nothing to copy. No current data supplied → offer everything found.
+  const currentData = options?.currentData;
+  const untouched = options?.untouchedValues;
+  const suggestion = useMemo<LastCertSuggestion | null>(() => {
+    if (!found) return null;
+    if (!currentData) return found;
+    const fields: Record<string, unknown> = {};
+    for (const [key, prev] of Object.entries(found.fields)) {
+      const cur = currentData[key];
+      // Boards carry ids the schedule rows point at. Offer them only to a
+      // cert with no schedule at all — copying two boards onto a cert whose
+      // eight circuits already sit on its own board left it showing three
+      // (seen on the test cert, 30 Sep 2026).
+      if (key === 'distributionBoards' && !isBlank(currentData.scheduleOfTests)) continue;
+      const untouchedHere =
+        isBlank(cur) || (untouched !== undefined && key in untouched && sameValue(key, cur, untouched[key]));
+      if (!untouchedHere) continue;
+      if (sameValue(key, cur, prev)) continue;
+      fields[key] = prev;
+    }
+    if (Object.keys(fields).length === 0) return null;
+    return { ...found, fields };
+  }, [found, currentData, untouched]);
+
   return {
     suggestion,
     isLoading,
@@ -313,6 +487,10 @@ export function useCertPrefill(
     // references between the suggestion state and the live form state.
     buildPatch: () => (suggestion?.fields ? structuredClone(suggestion.fields) : {}),
     buildCircuitSkeleton: () => (suggestion?.scheduleOfTests || []).map(toCircuitSkeleton),
-    dismiss: () => setDismissed(true),
+    dismiss: () => {
+      dismissedThisVisit.current.add(keysSignature);
+      writeDismissed(keys);
+      setDismissed(true);
+    },
   };
 }

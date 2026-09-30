@@ -94,6 +94,10 @@ export interface DesignedCircuit {
   source: string;
   /** The board this circuit is fed from, when the plan has sub-boards ("DB2"). */
   board?: string;
+  /** Its place on the board, where the electrician has moved it. */
+  pin?: number;
+  /** Amended by hand on the board schedule: its OSG length row no longer applies. */
+  edited?: boolean;
   /** When the cable runs are drawn: the run's length and the OSG check. */
   length?: LengthCheck;
 }
@@ -709,9 +713,11 @@ const BOARD_ORDER = ['DB', 'C', 'EV', 'IH', 'H', 'AC', 'S', 'L', 'SA', 'FA', 'FZ
 /** Board order — heavy dedicated loads first, fire last — shared by every list of circuits. */
 export function circuitRank(ref: string): number {
   // "S1", or "S1 · 2" for sheet 2's S1 when several sheets are exported.
-  const m = /^([A-Z]+)(\d*)(?: · (\d+))?$/.exec(ref);
+  // "S1 · hand-drawn" for a hand-drawn sheet's S1 beside designed ones.
+  const m = /^([A-Z]+)(\d*)(?: · (\d+|hand-drawn))?$/.exec(ref);
   const i = BOARD_ORDER.indexOf(m?.[1] ?? '');
-  return (i < 0 ? BOARD_ORDER.length : i) * 1e6 + Number(m?.[3] || 0) * 1000 + Number(m?.[2] || 0);
+  const sheet = m?.[3] === 'hand-drawn' ? 999 : Number(m?.[3] || 0);
+  return (i < 0 ? BOARD_ORDER.length : i) * 1e6 + sheet * 1000 + Number(m?.[2] || 0);
 }
 
 /** The room facts a designed symbol carries (set by the plan reader). */
@@ -749,6 +755,8 @@ const KIND_OF_PREFIX: Record<string, CircuitKind> = {
   SA: 'smoke-alarms',
   // A sub-board's own way on the main board (29 Sep 2026).
   DB: 'submain',
+  // The fire alarm panel's supply, where a hand-drawn plan carries it.
+  FA: 'fire-supply',
 };
 
 /** The kind of circuit a ref names — "S3" a ring, "DB2" a submain. */
@@ -790,7 +798,12 @@ export function scheduleFromObjects(objects: CanvasObject[]): {
   const circuits: DesignedCircuit[] = [];
   byRef.forEach((items, ref) => {
     const prefix = /^([A-Z]+)/.exec(ref)?.[1] ?? '';
-    const kind = KIND_OF_PREFIX[prefix];
+    // A hand-drawn plan puts its smoke and heat detectors on "FA1": that is
+    // an alarm circuit, not a panel's supply way with nothing on it.
+    const kind =
+      prefix === 'FA' && items.some((o) => o.symbolId && role(o.symbolId) === 'fire')
+        ? 'smoke-alarms'
+        : KIND_OF_PREFIX[prefix];
     if (!kind) return;
     const roomSet = new Map<string, RoomFacts>();
     items.forEach((o) => {
@@ -967,6 +980,18 @@ export function scheduleFromObjects(objects: CanvasObject[]): {
         ],
         source: 'Reg 525.202 · Appendix 4',
       });
+    } else if (kind === 'fire-supply') {
+      circuits.push({
+        ...base,
+        points: 0,
+        description: 'Fire alarm panel supply',
+        device: 'Dedicated way — "FIRE ALARM. DO NOT SWITCH OFF"',
+        cable: 'Fire-resisting cable to panel',
+        rcd: false,
+        afdd: false,
+        notes: ['Dedicated circuit from the first distribution board'],
+        source: 'BS 5839-1:2025 cl 24.1',
+      });
     } else if (kind === 'fire-zone') {
       circuits.push({
         ...base,
@@ -981,7 +1006,21 @@ export function scheduleFromObjects(objects: CanvasObject[]): {
       });
     }
   });
-  if (circuits.some((c) => c.kind === 'fire-zone')) {
+  // The electrician's amendments from the board schedule: a way moved, or a
+  // circuit's description, device, rating or cable changed. Kept on its
+  // fittings, so they travel with the drawing.
+  circuits.forEach((c, i) => {
+    const items = byRef.get(c.ref) ?? [];
+    const pins = items.map((o) => o.wayPin).filter((v): v is number => typeof v === 'number');
+    const edit = items.find((o) => o.circuitEdit)?.circuitEdit;
+    let next = pins.length ? { ...c, pin: Math.min(...pins) } : c;
+    if (edit) next = applyCircuitEdit(next, edit);
+    circuits[i] = next;
+  });
+  if (
+    circuits.some((c) => c.kind === 'fire-zone') &&
+    !circuits.some((c) => c.kind === 'fire-supply')
+  ) {
     circuits.push({
       ref: 'FA1',
       kind: 'fire-supply',
@@ -1016,6 +1055,45 @@ const LOAD_W: Record<CircuitKind, (points: number) => number> = {
   'smoke-alarms': (n) => n * 5,
   submain: () => 0,
 };
+/**
+ * A circuit with the electrician's amendments applied. The device text is
+ * rebuilt in the design's own form ("32 A Type B RCBO 30 mA") so everything
+ * that reads it — board shorthand, single-line, PDF, certificate — agrees.
+ */
+export function applyCircuitEdit(
+  c: DesignedCircuit,
+  edit: NonNullable<CanvasObject['circuitEdit']>
+): DesignedCircuit {
+  const out: DesignedCircuit = { ...c, notes: [...c.notes, 'Amended on the board schedule'] };
+  if (edit.description?.trim()) out.description = edit.description.trim();
+  // A submain feeds a board: an MCB with no 30 mA RCD of its own (the
+  // circuits beyond carry theirs), run in SWA — not a final circuit's T&E.
+  const sub = c.kind === 'submain';
+  if (edit.device || edit.rating) {
+    const device = sub
+      ? 'MCB'
+      : (edit.device ??
+        (/AFDD/.test(c.device) ? 'AFDD/RCBO' : /RCBO/.test(c.device) ? 'RCBO' : 'MCB'));
+    const fromEdit = /^([BCD])(\d+)$/.exec(edit.rating ?? '');
+    const fromDesign = /(\d+)\s*A\s*Type\s*([BCD])/.exec(c.device);
+    const curve = fromEdit?.[1] ?? fromDesign?.[2] ?? '';
+    const amps = fromEdit?.[2] ?? fromDesign?.[1] ?? '';
+    const rcd = device !== 'MCB';
+    out.device = `${amps ? `${amps} A Type ${curve} ` : ''}${device}${rcd ? ' 30 mA' : ''}`;
+    out.rcd = rcd;
+    out.afdd = device === 'AFDD/RCBO';
+    // Not the device the design's length row was read for.
+    out.edited = true;
+  }
+  if (edit.cable) {
+    out.cable = sub ? `${edit.cable} mm² SWA` : `${edit.cable} mm² T&E`;
+    out.edited = true;
+  }
+  return out;
+}
+
+/** Connected load of a circuit, in watts (before diversity). */
+export const connectedLoadW = (c: DesignedCircuit) => LOAD_W[c.kind](c.points);
 const watts = (w: number) => (w >= 1000 ? `${(w / 1000).toFixed(1)}kW` : `${Math.round(w)}W`);
 
 /**
@@ -1023,7 +1101,11 @@ const watts = (w: number) => (w >= 1000 ? `${(w / 1000).toFixed(1)}kW` : `${Math
  * issued circuit and board schedules carry the design rather than the old
  * "all lights on L1, all sockets on S1" defaults.
  */
-export function toScheduleEntries(circuits: DesignedCircuit[]): CircuitScheduleEntry[] {
+export function toScheduleEntries(
+  circuits: DesignedCircuit[],
+  /** Board numbering (boardWays.wayMap): the circuit number printed for each. */
+  ways?: Map<string, { full: string }>
+): CircuitScheduleEntry[] {
   return circuits.map((c) => {
     const warnings = c.notes.filter((n) => /over|split|confirm/i.test(n));
     // Every warning goes on the issued schedule: the length note used to
@@ -1034,12 +1116,20 @@ export function toScheduleEntries(circuits: DesignedCircuit[]): CircuitScheduleE
         : [];
     return {
       circuitRef: c.ref,
+      wayLabel: ways?.get(c.ref)?.full,
+      circuitKind: c.kind,
       runLengthM: c.length?.lengthM,
       maxLengthM: c.length?.maxM,
       lengthOk: c.length?.ok,
+      // The rooms it serves, so four "Lighting — Ground floor" rows can be
+      // told apart: all of them up to four, then the first three and a count.
       circuitName:
-        c.rooms.length && c.rooms.length <= 4 && !c.rooms.some((r) => c.description.includes(r))
-          ? `${c.description} (${c.rooms.join(', ')})`
+        c.rooms.length && !c.rooms.some((r) => c.description.includes(r))
+          ? `${c.description} (${
+              c.rooms.length <= 4
+                ? c.rooms.join(', ')
+                : `${c.rooms.slice(0, 3).join(', ')} +${c.rooms.length - 3} more`
+            })`
           : c.description,
       cableSize: c.cable,
       protection: c.device,
@@ -1049,8 +1139,8 @@ export function toScheduleEntries(circuits: DesignedCircuit[]): CircuitScheduleE
           ? 'Per design'
           : c.rcd
             ? c.kind === 'ev'
-              ? '30mA Type B / Type A + RDC-DD'
-              : '30mA RCD'
+              ? '30 mA Type B / Type A + RDC-DD'
+              : '30 mA RCD'
             : 'Not required',
       rcdBasis: c.kind === 'submain' ? undefined : c.source,
       points: c.points,
@@ -1217,19 +1307,24 @@ export function scheduleForRooms(sheets: { name: string; objects: CanvasObject[]
   per.forEach((p) => p.circuits.forEach((c) => seen.set(c.ref, (seen.get(c.ref) ?? 0) + 1)));
   const multi = per.filter((p) => p.circuits.length).length > 1;
   const circuits = per.flatMap((p, i) =>
-    p.circuits.map((c) =>
-      multi && (seen.get(c.ref) ?? 0) > 1
+    p.circuits.map((c) => {
+      if (!multi) return c;
+      // A sub-board repeated on several sheets is several boards: every
+      // circuit on it takes the sheet's name for its board ("DB2 · 2"),
+      // whether or not its own ref repeats — or one board got two way 1s.
+      const board =
+        c.board && c.board !== 'CU' && (seen.get(c.board) ?? 0) > 1
+          ? { board: `${c.board} · ${i + 1}` }
+          : {};
+      return (seen.get(c.ref) ?? 0) > 1
         ? {
             ...c,
             ref: `${c.ref} · ${i + 1}`,
             description: `${c.description} (${p.sh.name})`,
-            // A sub-board's name is qualified with its ways ("DB2 · 2").
-            ...(c.board && c.board !== 'CU' && (seen.get(c.board) ?? 0) > 1
-              ? { board: `${c.board} · ${i + 1}` }
-              : {}),
+            ...board,
           }
-        : c
-    )
+        : { ...c, ...board };
+    })
   );
   // The stricter premises wins: one multi-occupancy sheet makes it one.
   const premises: Premises = per.some((p) => p.premises === 'multi-occupancy')
@@ -1267,6 +1362,10 @@ export interface LengthCheck {
 }
 
 export function lengthCheck(c: DesignedCircuit, lengthM: number, earthing: Earthing): LengthCheck {
+  // An amended device or cable is not the row the design was checked against.
+  if (c.edited) {
+    return { lengthM, note: 'Check the length against OSG Table 7.1(i) for this device and cable' };
+  }
   if (c.kind === 'submain') {
     return {
       lengthM,
@@ -1304,25 +1403,39 @@ export function lengthCheck(c: DesignedCircuit, lengthM: number, earthing: Earth
 /** Attach each circuit's drawn run length and its OSG check, where runs are drawn. */
 function withLengths(circuits: DesignedCircuit[], objects: CanvasObject[]): DesignedCircuit[] {
   const runs = objects.filter((o) => o.generated && o.circuitRef);
-  if (!runs.length) return circuits;
   const boards = objects.filter(
     (o) =>
       o.type === 'symbol' && (o.symbolId === 'consumer-unit' || o.symbolId === 'distribution-board')
   ).length;
+  // The board a circuit is fed from: its drawn run, else the stamp its items
+  // kept from the last time runs were drawn — so hiding the runs doesn't
+  // renumber the whole board back onto the CU.
+  const itemBoard = new Map<string, Map<string, number>>();
+  objects.forEach((o) => {
+    if (o.type !== 'symbol' || !o.circuitRef || !o.fedFrom || o.generated) return;
+    const m = itemBoard.get(o.circuitRef) ?? new Map<string, number>();
+    m.set(o.fedFrom, (m.get(o.fedFrom) ?? 0) + 1);
+    itemBoard.set(o.circuitRef, m);
+  });
+  const boardOf = (ref: string) => {
+    if (boards < 2) return undefined;
+    const run = runs.find((r) => r.circuitRef === ref)?.fedFrom;
+    if (run) return run;
+    const m = itemBoard.get(ref);
+    return m ? [...m.entries()].sort((a, b) => b[1] - a[1])[0][0] : undefined;
+  };
   const counts = new Map<Earthing, number>();
   objects.forEach((o) => o.earthing && counts.set(o.earthing, (counts.get(o.earthing) ?? 0) + 1));
   const earthing = [...counts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? 'TN-C-S';
   return circuits.map((c) => {
+    const board = boardOf(c.ref);
+    const withBoard = board ? { ...c, board } : c;
     // A run may be drawn in pieces, one per floor it reaches.
-    const mine = runs.filter((r) => r.circuitRef === c.ref);
-    const total = mine.reduce((a, r) => a + (r.lengthM ?? 0), 0);
-    const board = boards > 1 ? mine[0]?.fedFrom : undefined;
+    const total = runs
+      .filter((r) => r.circuitRef === c.ref)
+      .reduce((a, r) => a + (r.lengthM ?? 0), 0);
     return total
-      ? {
-          ...c,
-          ...(board ? { board } : {}),
-          length: lengthCheck(c, Math.round(total * 10) / 10, earthing),
-        }
-      : c;
+      ? { ...withBoard, length: lengthCheck(c, Math.round(total * 10) / 10, earthing) }
+      : withBoard;
   });
 }

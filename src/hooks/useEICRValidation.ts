@@ -68,6 +68,13 @@ export const useEICRValidation = (formData: any): EICRValidationResult => {
     ) {
       errors.push({ field: 'mainProtectiveDevice', message: 'Main protective device', severity: 'error', tab: 'details' });
     }
+    // Premises type is starred on the Details tab but was never in this gate —
+    // 19 of the last 368 issued EICRs print it blank while the ring said 100%
+    // (30 Sep 2026 audit). It also drives the interval guidance and the
+    // rented-homes cap, so a blank here quietly disables both.
+    if (!String(formData.description || '').trim()) {
+      errors.push({ field: 'description', message: 'Premises type', severity: 'error', tab: 'details' });
+    }
     // Bonding compliance — warn if missing, not block
     if (!formData.bondingCompliance) {
       warnings.push({
@@ -393,7 +400,7 @@ export const useEICRValidation = (formData: any): EICRValidationResult => {
 
     // Completion percentage
     const REQUIRED = [
-      'clientName', 'installationAddress', 'inspectionDate', 'supplyVoltage', 'phases',
+      'clientName', 'installationAddress', 'inspectionDate', 'description', 'supplyVoltage', 'phases',
       'earthingArrangement', 'mainProtectiveDevice',
       'inspectorName', 'inspectorQualifications', 'inspectorSignature',
       'overallAssessment',

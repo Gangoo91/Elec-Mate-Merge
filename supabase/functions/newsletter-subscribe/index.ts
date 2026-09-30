@@ -57,6 +57,19 @@ interface Payload {
   mock_result?: unknown;
   /** Only for source === 'calculator_result'. Untrusted — sanitised below. */
   calculator_result?: unknown;
+  /** Path of the page the capture happened on. Untrusted — see pagePath(). */
+  page_url?: unknown;
+}
+
+/**
+ * The page a lead was captured on, as a bare path ("/guides/ze-values-uk").
+ * Arrives from a public endpoint, so anything that is not a plain site path —
+ * a full URL, a query string, a script — is dropped rather than stored.
+ */
+function pagePath(v: unknown): string | null {
+  if (typeof v !== 'string') return null;
+  const path = v.trim().split(/[?#]/)[0].slice(0, 300);
+  return /^\/[A-Za-z0-9\-._~/%]*$/.test(path) ? path : null;
 }
 
 function isValidEmail(email: string): boolean {
@@ -322,6 +335,9 @@ serve(withSentry('newsletter-subscribe', async (req) => {
             brevo_ok: brevo.ok,
             brevo_status: brevo.status,
             event_id: body.event_id ?? null,
+            // Latest page this address was captured on for this source — tells
+            // us which guide or calculator actually produces leads.
+            page_url: pagePath(body.page_url),
             last_seen_at: new Date().toISOString(),
           },
           { onConflict: 'email,source', ignoreDuplicates: false }

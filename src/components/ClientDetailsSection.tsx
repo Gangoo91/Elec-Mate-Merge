@@ -326,7 +326,10 @@ const ClientDetailsSectionInner = ({ formData, onUpdate, certType }: ClientDetai
         )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          {/* data-field so the pre-issue list's "Go" lands here — it is a
+              required field in the EICR gate (30 Sep 2026). */}
           <FormField label="Premises type" required>
+            <div data-field="description">
             <FormSelectSheet
               value={localValues.description || ''}
               onValueChange={(value) => {
@@ -344,6 +347,7 @@ const ClientDetailsSectionInner = ({ formData, onUpdate, certType }: ClientDetai
               customLabel="Other (include brief description)"
               className={pickerTriggerCn}
             />
+            </div>
           </FormField>
 
           {/* EICR is always an existing installation, so the Installation Type

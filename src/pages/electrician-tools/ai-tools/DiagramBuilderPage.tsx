@@ -35,6 +35,9 @@ import {
   Download,
   Copy,
   Crosshair,
+  SlidersHorizontal,
+  Eye,
+  EyeOff,
   Image as ImageIcon,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -60,6 +63,28 @@ import { ExportReviewSheet } from '@/components/electrician-tools/diagram-builde
 import { BoardScheduleSheet } from '@/components/electrician-tools/diagram-builder/BoardScheduleSheet';
 import { singleLinePngs } from '@/components/electrician-tools/diagram-builder/singleLine';
 import { runsAreStale, withRuns } from '@/components/electrician-tools/diagram-builder/wiring';
+import { planToCertificate } from '@/components/electrician-tools/diagram-builder/planToCertificate';
+import { stashPlanCertificate } from '@/utils/planCertificateHandoff';
+import { certificateNewHref } from '@/utils/certificate-href';
+import {
+  jobNumbering,
+  labelKey,
+} from '@/components/electrician-tools/diagram-builder/jobNumbering';
+import {
+  planResults,
+  resultCounts,
+  STATUS_COLOUR,
+  STATUS_DOT,
+  STATUS_TEXT,
+  type CircuitResult,
+} from '@/components/electrician-tools/diagram-builder/planResults';
+import { usePlanCertificate } from '@/hooks/usePlanCertificate';
+import {
+  spareEntries,
+  wayOrder,
+  withSpares,
+  type Way,
+} from '@/components/electrician-tools/diagram-builder/boardWays';
 import { MyPlansSheet } from '@/components/electrician-tools/diagram-builder/MyPlansSheet';
 import { symbolRegistry } from '@/components/electrician-tools/diagram-builder/symbols/symbolRegistry';
 import { STANDARD_NOTES } from '@/utils/standard-electrical-notes';
@@ -151,6 +176,8 @@ export interface CanvasObject {
   buildingType?: 'house' | 'flat' | 'hrrb' | 'hmo' | 'student' | 'care-home' | 'non-domestic';
   /** Designed plans: the supply's earthing, for the cable-length check. */
   earthing?: 'TN-C-S' | 'TN-S' | 'TT';
+  /** The supply to the main board: single-phase, or three-phase and neutral. */
+  supply?: 'single' | 'three';
   /** Cables drawn by "Draw cable runs" — replaced whenever the runs are redrawn. */
   generated?: boolean;
   /** A drawn run's estimated cable length in metres, drops included. */
@@ -159,6 +186,18 @@ export interface CanvasObject {
   runsFor?: string;
   /** On a drawn run: the board it is fed from ("CU", "DB2"). */
   fedFrom?: string;
+  /** Board schedule: this circuit's place on its board, set by hand. */
+  wayPin?: number;
+  /** Board schedule: the circuit's details as the electrician amended them. */
+  circuitEdit?: {
+    description?: string;
+    /** "MCB" | "RCBO" | "AFDD/RCBO" */
+    device?: string;
+    /** "B32", "C16" */
+    rating?: string;
+    /** Live/cpc, "2.5/1.5" */
+    cable?: string;
+  };
 }
 
 // Circuit colour map for visual identification
@@ -500,13 +539,204 @@ const DiagramBuilderPage = () => {
   // Circuit summary for the circuit panel. A plan read by the AI carries a
   // designed circuit per ref (Sockets — Ground floor, Lighting — First floor);
   // anything else falls back to a name read from the ref itself.
+  // The circuit numbers as the board is marked (1, 2, 3… or 1L1…): what the
+  // plan tags, the circuit panel and the properties sheet show.
+  // Numbered across the whole job — every saved sheet, with this one as it
+  // stands now — exactly as the export numbers it, so the tags printed on the
+  // plan pages agree with the schedule beside them.
+  const savedSheets = useMemo(
+    () =>
+      rooms.map((r) => {
+        let objects: CanvasObject[] = [];
+        try {
+          const parsed = JSON.parse(r.canvasState);
+          if (Array.isArray(parsed)) objects = parsed;
+        } catch {
+          /* unreadable: its symbol list still counts */
+        }
+        return { id: r.id, name: r.name, objects, symbolIds: r.symbolIds };
+      }),
+    [rooms]
+  );
+  const job = useMemo(() => {
+    const at = savedSheets.findIndex((r) => r.id === activeRoomId);
+    const sheets = savedSheets.map((r, i) =>
+      i === at ? { ...r, objects: canvasObjects, symbolIds: undefined } : r
+    );
+    if (at < 0)
+      sheets.push({
+        id: 'current',
+        name: 'Current sheet',
+        objects: canvasObjects,
+        symbolIds: undefined,
+      });
+    const numbering = jobNumbering(sheets);
+    return { numbering, sheet: at < 0 ? sheets.length - 1 : at };
+  }, [savedSheets, activeRoomId, canvasObjects]);
+  const wayLabels = useMemo(() => {
+    const out = new Map<string, Way>();
+    // The fire alarm panel's supply is a way no fitting carries: add it
+    // wherever the sheet has detection zones.
+    const refs = new Set(canvasObjects.map((o) => o.circuitRef).filter((r): r is string => !!r));
+    if ([...refs].some((r) => /^FZ\d/.test(r))) refs.add('FA1');
+    refs.forEach((ref) => {
+      const w = job.numbering.ways.get(job.numbering.refOf(job.sheet, ref));
+      if (w) out.set(ref, w);
+    });
+    return out;
+  }, [job, canvasObjects]);
+  // Test results on the drawing: the EIC started from this plan, found by
+  // its sheets, judged circuit by circuit (planResults).
+  const planSheetIds = useMemo(() => rooms.map((r) => r.id), [rooms]);
+  const {
+    cert: planCert,
+    loading: planCertLoading,
+    refresh: refreshPlanCert,
+  } = usePlanCertificate(planSheetIds);
+  const [showResults, setShowResults] = useState(true);
+  const jobResults = useMemo(
+    () => (planCert ? planResults(planCert, job.numbering.ways, job.numbering.originOf) : null),
+    [planCert, job]
+  );
+  /** This sheet's circuits (its own refs) → their result. */
+  const sheetResults = useMemo(() => {
+    const out = new Map<string, CircuitResult>();
+    if (!jobResults) return out;
+    canvasObjects.forEach((o) => {
+      if (!o.circuitRef || out.has(o.circuitRef)) return;
+      const r = jobResults.get(job.numbering.refOf(job.sheet, o.circuitRef));
+      if (r) out.set(o.circuitRef, r);
+    });
+    return out;
+  }, [jobResults, canvasObjects, job]);
+  const resultMarks = useMemo(() => {
+    if (!showResults || !sheetResults.size) return undefined;
+    const out = new Map<string, string>();
+    sheetResults.forEach((r, ref) => {
+      if (r.status !== 'untested') out.set(ref, STATUS_COLOUR[r.status]);
+    });
+    return out;
+  }, [showResults, sheetResults]);
+  const resultSummary = useMemo(() => {
+    if (!planCert || !jobResults) return null;
+    const ways = [...job.numbering.ways.values()].filter((w) => !/^Zone/.test(w.label)).length;
+    return resultCounts(jobResults, ways);
+  }, [planCert, jobResults, job]);
+
+  // A way can be moved only by pinning the fittings on this sheet, so only
+  // when this sheet holds every circuit in the job — else one tap re-sorts
+  // the other sheets' ways around the pinned ones.
+  const sheetHoldsJob = useMemo(() => {
+    const here = new Set(
+      canvasObjects
+        .map((o) => o.circuitRef)
+        .filter((r): r is string => !!r)
+        .map((r) => job.numbering.refOf(job.sheet, r))
+    );
+    return [...job.numbering.ways.keys()].every((r) => here.has(r) || /^FA\d/.test(r));
+  }, [job, canvasObjects]);
+  const circuitLabels = useMemo(
+    () => new Map([...wayLabels].map(([ref, w]) => [ref, w.full])),
+    [wayLabels]
+  );
+
+  /**
+   * The plan into a certificate: the whole job's boards and circuits, numbered
+   * as the plan is, into a new EIC — or one board's circuit chart for its
+   * door. Only readings are left to add.
+   */
+  // Declared further down; read through a ref so this callback needn't list
+  // them (a dependency array evaluates them before they exist).
+  const saveSheetNowRef = useRef<(() => string | null) | null>(null);
+  const startFromPlan = useCallback(
+    (target: 'eic' | 'door', boardRef?: string) => {
+      const { numbering } = job;
+      // Before anything is saved: nothing to certify is not a reason to save.
+      if (!numbering.designed.length && !numbering.handCircuits.length) {
+        toast({ title: 'No circuits yet', description: 'Add sockets, lights or a plan first.' });
+        return;
+      }
+      // The certificate is linked back to the plan by its saved sheets, so
+      // the plan can show the readings later. A sheet never saved has no id
+      // to link by — save it now, under the name the save sheet would offer.
+      let link: { sheetIds: string[]; originOf: (jobRef: string) => string } | undefined;
+      if (target === 'eic') {
+        const onSaved = activeRoomId && rooms.some((r) => r.id === activeRoomId);
+        const currentId = onSaved
+          ? activeRoomId!
+          : canvasObjects.length
+            ? (saveSheetNowRef.current?.() ?? null)
+            : null;
+        // The device refused the save ("Room not saved" is showing): stay
+        // here rather than start a certificate that can't find its plan.
+        if (!onSaved && canvasObjects.length && !currentId) return;
+        const sheetIds = [
+          ...new Set([...rooms.map((r) => r.id), ...(currentId ? [currentId] : [])]),
+        ];
+        link = {
+          sheetIds,
+          // jobNumbering names an unsaved sheet "current" — it has an id now.
+          originOf: (ref) => {
+            const o = numbering.originOf(ref);
+            return currentId ? o.replace(/^current:/, `${currentId}:`) : o;
+          },
+        };
+      }
+      const boardRooms = new Map<string, string>();
+      canvasObjects.forEach((o) => {
+        if (/^DB\d/.test(o.circuitRef ?? '') && o.roomName)
+          boardRooms.set(o.circuitRef!, o.roomName);
+      });
+      const cert = planToCertificate(
+        [...numbering.designed, ...numbering.handCircuits],
+        numbering.ways,
+        {
+          supply: numbering.supply,
+          earthing: numbering.earthing,
+          planName: projectName ?? rooms.find((r) => r.id === activeRoomId)?.name ?? 'Floor plan',
+          installationAddress: projectLocation ?? undefined,
+          clientName: projectClientName ?? undefined,
+          boardRooms,
+          link,
+        }
+      );
+      if (!cert.scheduleOfTests.length) {
+        toast({ title: 'No circuits yet', description: 'Add sockets, lights or a plan first.' });
+        return;
+      }
+      const key = stashPlanCertificate(cert);
+      const project = projectId ? `&projectId=${encodeURIComponent(projectId)}` : '';
+      if (target === 'eic') {
+        navigate(`${certificateNewHref('eic')}&fromPlan=${key}${project}`);
+      } else {
+        const board = cert.distributionBoards.find((b) => b.reference === (boardRef ?? 'CU'));
+        navigate(
+          `${certificateNewHref('board-schedule')}?fromPlan=${key}&board=${encodeURIComponent(board?.id ?? '')}`
+        );
+      }
+    },
+    [
+      job,
+      canvasObjects,
+      projectName,
+      rooms,
+      activeRoomId,
+      projectLocation,
+      projectClientName,
+      projectId,
+      navigate,
+    ]
+  );
   const circuitSummary = useMemo(() => {
-    const designed = isDesigned(canvasObjects)
-      ? new Map(scheduleFromObjects(canvasObjects).circuits.map((c) => [c.ref, c.description]))
-      : new Map<string, string>();
+    // The board schedule's names, drawn or designed, amendments included —
+    // this list said "Fire alarm supply" where the schedule for the same way
+    // said "Smoke and heat alarms (interlinked)".
+    const designed = new Map(
+      scheduleFromObjects(canvasObjects).circuits.map((c) => [c.ref, c.description])
+    );
     const circuits = new Map<
       string,
-      { ref: string; name: string; count: number; colour: string }
+      { ref: string; label: string; name: string; count: number; colour: string }
     >();
     for (const obj of canvasObjects) {
       // Fittings only — a drawn cable run carries its circuit's ref too.
@@ -516,13 +746,18 @@ const DiagramBuilderPage = () => {
       else
         circuits.set(obj.circuitRef, {
           ref: obj.circuitRef,
+          label: circuitLabels.get(obj.circuitRef) ?? obj.circuitRef,
           name: designed.get(obj.circuitRef) ?? circuitName(obj.circuitRef),
           count: 1,
           colour: circuitColour(obj.circuitRef),
         });
     }
-    return Array.from(circuits.values()).sort((a, b) => circuitRank(a.ref) - circuitRank(b.ref));
-  }, [canvasObjects]);
+    return Array.from(circuits.values()).sort(
+      (a, b) =>
+        wayOrder(wayLabels.get(a.ref)) - wayOrder(wayLabels.get(b.ref)) ||
+        circuitRank(a.ref) - circuitRank(b.ref)
+    );
+  }, [canvasObjects, circuitLabels, wayLabels]);
 
   /** Zoom to a circuit and ring each of its items for a moment. */
   const showCircuit = useCallback(
@@ -800,12 +1035,16 @@ const DiagramBuilderPage = () => {
     clearAllRooms();
     plan.rooms.forEach((r) =>
       saveRoom({
+        // Same sheet, same id: its certificate and results stay linked.
+        id: r.id,
+        createdAt: r.createdAt,
         name: r.name,
         thumbnail: r.thumbnail,
         fullImage: r.fullImage,
         canvasState: r.canvasState,
         symbolIds: r.symbolIds,
         photoBase64: r.photoBase64,
+        labelKey: r.labelKey,
       })
     );
     toast({
@@ -1263,7 +1502,8 @@ const DiagramBuilderPage = () => {
   // mirror Save Room into the cloud `floor_plans` table.
   const isCloudLinked = !!(projectId || reportId);
 
-  const handleSaveRoom = (name: string) => {
+  /** Saves the sheet; returns its id, or null when the device refused it. */
+  const handleSaveRoom = (name: string): string | null => {
     // Prefer the thumbnail captured when the user tapped "Save Room" (canvas
     // was clean then). Fall back to re-rendering now only if it's missing.
     let thumbnail = pendingSave?.thumbnail ?? '';
@@ -1294,18 +1534,23 @@ const DiagramBuilderPage = () => {
       fullImage,
       canvasState: JSON.stringify(canvasObjects),
       symbolIds,
+      // The numbers its image carries: the export warns if they go stale.
+      labelKey: labelKey(circuitLabels),
     };
 
     let nextRooms: SavedRoom[];
+    let savedId: string;
     // Only update in place if that room still exists. `updateRoom` maps over
     // the list, so a stale id (room deleted in another tab, or storage cleared
     // under us) matches nothing and the save vanishes without a word — falling
     // through to a fresh save keeps the user's work.
     if (activeRoomId && rooms.some((r) => r.id === activeRoomId)) {
       updateRoom(activeRoomId, roomPayload);
+      savedId = activeRoomId;
       nextRooms = rooms.map((r) => (r.id === activeRoomId ? { ...r, ...roomPayload } : r));
     } else {
       const newRoom = saveRoom(roomPayload);
+      savedId = newRoom.id;
       setActiveRoomId(newRoom.id);
       nextRooms = [...rooms, newRoom];
     }
@@ -1324,7 +1569,7 @@ const DiagramBuilderPage = () => {
           'This device is out of storage. Export or delete a saved plan to free space, then try again.',
         variant: 'destructive',
       });
-      return;
+      return null;
     }
     setRoomDirty(false);
     haptic.success();
@@ -1362,7 +1607,11 @@ const DiagramBuilderPage = () => {
           // The next user save will retry through the same chain.
         });
     }
+    return savedId;
   };
+
+  saveSheetNowRef.current = () =>
+    handleSaveRoom(rooms.find((r) => r.id === activeRoomId)?.name || suggestedSaveName);
 
   const handleRoomSelect = (roomId: string) => {
     const room = rooms.find((r) => r.id === roomId);
@@ -1397,12 +1646,16 @@ const DiagramBuilderPage = () => {
     clearAllRooms();
     plan.rooms.forEach((room) =>
       saveRoom({
+        // Same sheet, same id: its certificate and results stay linked.
+        id: room.id,
+        createdAt: room.createdAt,
         name: room.name,
         thumbnail: room.thumbnail,
         fullImage: room.fullImage,
         canvasState: room.canvasState,
         symbolIds: room.symbolIds,
         photoBase64: room.photoBase64,
+        labelKey: room.labelKey,
       })
     );
     suppressRoomDirtyRef.current = true;
@@ -1702,8 +1955,14 @@ const DiagramBuilderPage = () => {
                 title={label}
               >
                 <span className={`h-1.5 w-1.5 rounded-full ${dotColour}`} />
-                {/* Wording is dropped below sm: on a 390px phone the header
-                    has to fit Back, this pill and three actions. */}
+                {/* A phone gets the one word — a dot alone said nothing — and
+                    the header still fits Back, this pill and three actions.
+                    Not beside a linked job's pill: the two don't fit a phone. */}
+                <span
+                  className={cn('whitespace-nowrap sm:hidden', (projectId || reportId) && 'hidden')}
+                >
+                  {isDirty ? 'Saving…' : 'Saved'}
+                </span>
                 <span className="hidden sm:inline whitespace-nowrap">{label}</span>
               </span>
             );
@@ -1795,10 +2054,16 @@ const DiagramBuilderPage = () => {
               // The PDF is built from each room's SAVED image. Editing a room
               // and exporting without re-saving used to silently produce a
               // document missing every change made since the last save.
-              if (roomDirty && activeRoomId && canvasObjects.length > 0) {
+              // Also when its circuit numbers have moved since its image was
+              // taken (another sheet saved, the supply changed): the printed
+              // plan page would disagree with the schedule.
+              const onScreen = rooms.find((r) => r.id === activeRoomId);
+              const renumbered =
+                !!onScreen?.labelKey && onScreen.labelKey !== labelKey(circuitLabels);
+              if ((roomDirty || renumbered) && activeRoomId && canvasObjects.length > 0) {
                 // Save what is on screen, then export it — sending the user off
                 // to press another button first was a dead end on a phone.
-                const current = rooms.find((r) => r.id === activeRoomId);
+                const current = onScreen;
                 if (current) handleSaveRoom(current.name);
                 // Out of storage: the save said so; don't export the old image.
                 if (didLastWriteFail()) return;
@@ -1971,6 +2236,8 @@ const DiagramBuilderPage = () => {
         )}
         <DiagramCanvas
           ref={canvasRef}
+          circuitLabels={circuitLabels}
+          resultMarks={resultMarks}
           activeTool={activeTool}
           selectedSymbolId={selectedSymbolId}
           objects={canvasObjects}
@@ -2020,6 +2287,61 @@ const DiagramBuilderPage = () => {
           }}
           showMinimap={!isMobileViewport && canvasObjects.length > 0}
         />
+        {/* The linked EIC's results, at a glance. Tap for the ways; the eye
+            puts the drawing back to plain. */}
+        {planCert && resultSummary && canvasObjects.length > 0 && (
+          <div className="absolute left-1/2 top-3 z-20 flex max-w-[calc(100%-7rem)] -translate-x-1/2 items-center overflow-hidden rounded-full border border-white/[0.14] bg-[#141414]/90 shadow-md backdrop-blur-md">
+            <button
+              type="button"
+              onClick={() => {
+                haptic.light();
+                setBoardOpen(true);
+              }}
+              className="flex h-11 min-w-0 items-center gap-2 pl-4 pr-3 text-[12px] font-medium text-white touch-manipulation active:bg-white/10"
+              aria-label={`Test results from ${planCert.certificateNumber}`}
+            >
+              {(
+                [
+                  ['fail', 'fail'],
+                  ['check', 'to check'],
+                  ['pass', 'pass'],
+                  ['partial', 'in progress'],
+                  ['untested', 'to test'],
+                ] as const
+              )
+                .filter(([k]) => resultSummary[k] > 0)
+                .map(([k, text]) => (
+                  <span
+                    key={k}
+                    className={cn(
+                      'shrink-0 items-center gap-1 whitespace-nowrap',
+                      // A phone has room for the findings; the rest is a tap away.
+                      k === 'partial' || k === 'untested' ? 'hidden sm:flex' : 'flex'
+                    )}
+                  >
+                    <span className="h-2 w-2 rounded-full" style={{ background: STATUS_DOT[k] }} />
+                    {resultSummary[k]} {text}
+                  </span>
+                ))}
+              {resultSummary.fail + resultSummary.check + resultSummary.pass === 0 && (
+                <span className="whitespace-nowrap sm:hidden">
+                  {resultSummary.partial} in progress · {resultSummary.untested} to test
+                </span>
+              )}
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowResults((v) => !v)}
+              aria-pressed={showResults}
+              aria-label={
+                showResults ? 'Hide results on the drawing' : 'Show results on the drawing'
+              }
+              className="flex h-11 w-11 shrink-0 items-center justify-center border-l border-white/10 text-white touch-manipulation active:bg-white/10"
+            >
+              {showResults ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
+            </button>
+          </div>
+        )}
         {/* Desktop tool rail — DESKTOP ONLY (lg+).
             A centred pill of icon-only buttons at the bottom of a 1900px screen
             is a phone layout stranded on a monitor: the tools sit miles from
@@ -2073,14 +2395,20 @@ const DiagramBuilderPage = () => {
             one solid volt card for the route most people want (a plan they
             already have, or a description), no per-row icons in their own
             colours. */}
-        {canvasObjects.length === 0 && rooms.length === 0 && (
+        {/* Also on a new, empty sheet of a plan already under way — it
+            used to open a bare canvas with no way in but the toolbar. */}
+        {/* Stands aside once a drawing tool is picked, so it never sits over
+            the spot someone is trying to draw on. */}
+        {canvasObjects.length === 0 && activeTool === 'select' && (
           <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
             <div className="pointer-events-auto w-[min(30rem,calc(100vw-2rem))] rounded-3xl border border-white/[0.12] bg-[#141414]/95 p-5 shadow-[0_24px_70px_-12px_rgba(0,0,0,0.9)] backdrop-blur-xl sm:p-6">
               <h2 className="text-[22px] font-bold leading-tight tracking-tight text-white">
-                Start a plan
+                {rooms.length ? 'A blank sheet' : 'Start a plan'}
               </h2>
               <p className="mt-1 text-[13px] text-white">
-                Bring in the drawings, describe the job, or open one you&apos;ve saved.
+                {rooms.length
+                  ? 'The next floor or area — read it from the drawings, describe it, or lay out a room.'
+                  : 'Bring in the drawings, describe the job, or open one you’ve saved.'}
               </p>
 
               <div className="mt-5 grid grid-cols-2 gap-2.5">
@@ -2100,28 +2428,35 @@ const DiagramBuilderPage = () => {
                     room laid out with the electrics.
                   </span>
                 </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    haptic.light();
-                    setMyPlansOpen(true);
-                  }}
-                  className={cn(CARD_BASE, CARD_NEUTRAL, 'min-h-[92px] p-4')}
-                >
-                  <span className="text-[15px] font-bold leading-tight tracking-tight text-white transition-colors group-hover:text-elec-yellow">
-                    Saved plans
-                  </span>
-                  <span className="mt-1 text-[11.5px] leading-snug text-white">
-                    Pick up where you left off
-                  </span>
-                </button>
+                {rooms.length === 0 && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      haptic.light();
+                      setMyPlansOpen(true);
+                    }}
+                    className={cn(CARD_BASE, CARD_NEUTRAL, 'min-h-[92px] p-4')}
+                  >
+                    <span className="text-[15px] font-bold leading-tight tracking-tight text-white transition-colors group-hover:text-elec-yellow">
+                      Saved plans
+                    </span>
+                    <span className="mt-1 text-[11.5px] leading-snug text-white">
+                      Pick up where you left off
+                    </span>
+                  </button>
+                )}
                 <button
                   type="button"
                   onClick={() => {
                     haptic.light();
                     setShapesSheetOpen(true);
                   }}
-                  className={cn(CARD_BASE, CARD_NEUTRAL, 'min-h-[92px] p-4')}
+                  className={cn(
+                    CARD_BASE,
+                    CARD_NEUTRAL,
+                    'min-h-[92px] p-4',
+                    rooms.length > 0 && 'col-span-2'
+                  )}
                 >
                   <span className="text-[15px] font-bold leading-tight tracking-tight text-white transition-colors group-hover:text-elec-yellow">
                     Room shape
@@ -2231,6 +2566,20 @@ const DiagramBuilderPage = () => {
           style={{ bottom: `calc(${floatingUiBottom}px + env(safe-area-inset-bottom, 0px))` }}
         >
           <div className="flex items-center gap-1.5 min-w-max">
+            {/* The fitting's circuit, height and notes. The sheet otherwise
+                opened only on a long-press or double-tap — nothing said so. */}
+            {selectedObject.type === 'symbol' && (
+              <button
+                onClick={() => {
+                  haptic.light();
+                  setPropertiesTarget(selectedObject);
+                }}
+                className="flex min-h-11 items-center gap-1 rounded-xl px-3 py-2.5 text-xs font-semibold text-elec-yellow hover:bg-white/10 touch-manipulation active:scale-95"
+              >
+                <SlidersHorizontal className="h-3.5 w-3.5" />
+                Details
+              </button>
+            )}
             <button
               onClick={handleDuplicateSelected}
               className="flex min-h-11 items-center gap-1 rounded-xl px-3 py-2.5 text-xs font-medium text-white hover:bg-white/10 touch-manipulation active:scale-95"
@@ -2238,9 +2587,11 @@ const DiagramBuilderPage = () => {
               <Copy className="h-3.5 w-3.5" />
               Duplicate
             </button>
+            {/* A tapped fitting already comes into view on a phone, so Focus
+                gives way to Details there. */}
             <button
               onClick={() => canvasRef.current?.focusOnObject?.(selectedObject.id)}
-              className="flex min-h-11 items-center gap-1 rounded-xl px-3 py-2.5 text-xs font-medium text-white hover:bg-white/10 touch-manipulation active:scale-95"
+              className="hidden sm:flex min-h-11 items-center gap-1 rounded-xl px-3 py-2.5 text-xs font-medium text-white hover:bg-white/10 touch-manipulation active:scale-95"
             >
               <Crosshair className="h-3.5 w-3.5" />
               Focus
@@ -2266,7 +2617,19 @@ const DiagramBuilderPage = () => {
       {/* Symbol count panel — floats above scale bar */}
       <SymbolCountPanel
         counts={symbolCounts}
-        circuits={circuitSummary}
+        circuits={
+          planCert
+            ? circuitSummary.map((c) => {
+                const r = sheetResults.get(c.ref);
+                return r
+                  ? {
+                      ...c,
+                      result: { colour: STATUS_DOT[r.status], text: STATUS_TEXT[r.status] },
+                    }
+                  : c;
+              })
+            : circuitSummary
+        }
         onOpenSchedule={() => setBoardOpen(true)}
         onShowCircuit={showCircuit}
         mobile={isMobileViewport}
@@ -2276,6 +2639,7 @@ const DiagramBuilderPage = () => {
         hidden={
           isMobileViewport &&
           (!!propertiesTarget ||
+            !!selectedObject ||
             !!wallEditState ||
             saveSheetOpen ||
             symbolSheetOpen ||
@@ -2531,6 +2895,21 @@ const DiagramBuilderPage = () => {
         open={boardOpen}
         onOpenChange={setBoardOpen}
         objects={canvasObjects}
+        wayOf={wayLabels}
+        canReorder={sheetHoldsJob}
+        results={planCert ? sheetResults : undefined}
+        certificate={
+          planCert
+            ? {
+                number: planCert.certificateNumber,
+                updatedAt: planCert.updatedAt,
+                onOpen: () => navigate(planCert.href),
+                onRefresh: () => void refreshPlanCert(),
+              }
+            : undefined
+        }
+        onStartEic={() => startFromPlan('eic')}
+        onDoorChart={(board) => startFromPlan('door', board)}
         onChange={(next) => commitObjects(next)}
         onShowCircuit={(ref) => {
           setBoardOpen(false);
@@ -2578,7 +2957,10 @@ const DiagramBuilderPage = () => {
               try {
                 const asCircuits = data.circuitSchedule.map((c): DesignedCircuit => ({
                   ref: c.circuitRef,
-                  kind: kindOfRef(c.circuitRef) ?? 'radial',
+                  kind:
+                    (c.circuitKind as DesignedCircuit['kind'] | undefined) ??
+                    kindOfRef(c.circuitRef) ??
+                    'radial',
                   description: c.circuitName,
                   device: c.protection,
                   cable: c.cableSize,
@@ -2601,6 +2983,27 @@ const DiagramBuilderPage = () => {
                       }
                     : {}),
                 }));
+                // The numbers printed on the schedule, as reviewed.
+                const wayOf = new Map<string, Way>(
+                  data.circuitSchedule.map((c) => {
+                    const full = c.wayLabel ?? c.circuitRef;
+                    const label = full.split('/').pop() ?? full;
+                    const m = /^(\d+)\s?(L[123]|TPN)?$/.exec(label);
+                    return [
+                      c.circuitRef,
+                      {
+                        ref: c.circuitRef,
+                        board: c.fedFrom ?? 'CU',
+                        way: m ? Number(m[1]) : 0,
+                        ...(m?.[2] ? { phase: m[2] as Way['phase'] } : {}),
+                        label,
+                        full,
+                      },
+                    ];
+                  })
+                );
+                // The job's supply and earthing, not just the sheet on screen.
+                const { supply, earthing } = job.numbering;
                 // One diagram per board: the main board, then each sub-board.
                 const boardNames = [
                   'CU',
@@ -2609,17 +3012,31 @@ const DiagramBuilderPage = () => {
                   ),
                 ];
                 for (const name of boardNames) {
-                  const onBoard = asCircuits.filter((c) => (c.board ?? 'CU') === name);
+                  const own = asCircuits.filter((c) => (c.board ?? 'CU') === name);
+                  // Empty positions on a three-phase board print as spares.
+                  const spared = withSpares(
+                    own.filter((c) => c.kind !== 'fire-zone'),
+                    wayOf
+                  );
+                  spared.wayOf.forEach((w, k) => wayOf.set(k, w));
+                  const onBoard = [...spared.list, ...own.filter((c) => c.kind === 'fire-zone')];
                   singleLineImages.push(
                     ...(await singleLinePngs(
                       onBoard.filter((c) => c.kind !== 'fire-zone'),
                       name === 'CU' ? onBoard.filter((c) => c.kind === 'fire-zone') : [],
-                      name === 'CU'
-                        ? boardNames.length > 1
-                          ? 'Main board — single-line diagram'
-                          : 'Distribution board — single-line diagram'
-                        : `${name} sub-board — single-line diagram`,
-                      name === 'CU' ? undefined : 'CU'
+                      {
+                        title:
+                          name === 'CU'
+                            ? boardNames.length > 1
+                              ? 'Main board — single-line diagram'
+                              : 'Distribution board — single-line diagram'
+                            : `${name} sub-board — single-line diagram`,
+                        board: name,
+                        fedFrom: name === 'CU' ? undefined : 'CU',
+                        wayOf,
+                        supply,
+                        earthing,
+                      }
                     ))
                   );
                 }
@@ -2681,8 +3098,10 @@ const DiagramBuilderPage = () => {
             // The main board's ways: its own circuits and a way per sub-board.
             // A sub-board's circuits are on its own single-line page.
             const cu = buildConsumerUnitSchedule(
-              circuitSchedule.filter(
-                (c) => !/^FZ\d+/.test(c.circuitRef) && (c.fedFrom ?? 'CU') === 'CU'
+              spareEntries(
+                circuitSchedule.filter(
+                  (c) => !/^FZ\d+/.test(c.circuitRef) && (c.fedFrom ?? 'CU') === 'CU'
+                )
               )
             );
 
@@ -2715,7 +3134,13 @@ const DiagramBuilderPage = () => {
                   circuit_schedule: circuitSchedule,
                   consumer_unit: {
                     ways: cu.ways,
-                    way_count: cu.wayCount,
+                    // A three-phase board's ways are its way numbers (1L1-1L3 is
+                    // one way), not every phase position.
+                    way_count: cu.ways.some((w) => /(L[123]|TPN)$/.test(w.wayLabel ?? ''))
+                      ? new Set(
+                          cu.ways.map((w) => /(\d+)\s?(L[123]|TPN)$/.exec(w.wayLabel ?? '')?.[1])
+                        ).size
+                      : cu.wayCount,
                     total_connected_load_kw: cu.totalConnectedLoadKw,
                   },
                   standard_notes: STANDARD_NOTES,
@@ -2737,6 +3162,20 @@ const DiagramBuilderPage = () => {
 
             if (error) throw error;
 
+            // A big drawing set can outlast the function's wait: collect it
+            // rather than telling the user to "check back" and losing it.
+            let final = result;
+            for (let i = 0; final?.status === 'processing' && final?.documentId && i < 20; i++) {
+              await new Promise((r) => setTimeout(r, 5000));
+              const { data: again, error: againErr } = await supabase.functions.invoke(
+                'generate-floor-plan-pdf',
+                { body: { resume_document_id: final.documentId } }
+              );
+              if (againErr) throw againErr;
+              final = again;
+            }
+            if (final !== result) Object.assign(result, final);
+
             if (result?.success && result?.pdf_url) {
               haptic.success();
               toast({ title: 'PDF ready', description: 'Opening...', variant: 'success' });
@@ -2747,8 +3186,9 @@ const DiagramBuilderPage = () => {
               setExportReviewOpen(false);
             } else if (result?.status === 'processing') {
               toast({
-                title: 'PDF generating',
-                description: 'Check back in a moment — the PDF is still being created.',
+                title: 'PDF still generating',
+                description:
+                  'It is taking longer than usual. Try Export again in a minute — nothing has been lost.',
               });
             } else {
               throw new Error(result?.error || 'PDF generation failed');

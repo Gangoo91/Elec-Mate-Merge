@@ -353,10 +353,12 @@ const sections = [
         <p>
           Most modern UK domestic properties are supplied with a PME (Protective Multiple Earthing)
           system, technically known as{' '}
-          <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">TN-C-S earthing</SEOInternalLink>. In this
-          system, the DNO combines the neutral and earth conductors into a single PEN (Protective
-          Earth Neutral) conductor in the supply cable. At the property, the DNO provides an earth
-          terminal by connecting it to the neutral.
+          <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">
+            TN-C-S earthing
+          </SEOInternalLink>
+          . In this system, the DNO combines the neutral and earth conductors into a single PEN
+          (Protective Earth Neutral) conductor in the supply cable. At the property, the DNO
+          provides an earth terminal by connecting it to the neutral.
         </p>
         <p>
           This works well under normal conditions. But if the PEN conductor develops a
@@ -559,7 +561,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Ensure the circuits BS 7671 requires to be RCD-protected actually are.</strong>{' '}
+                <strong>
+                  Ensure the circuits BS 7671 requires to be RCD-protected actually are.
+                </strong>{' '}
                 30mA additional protection is required for socket-outlets rated up to 32A (Reg
                 411.3.3), AC final circuits supplying luminaires in domestic premises (Reg 411.3.4),
                 cables concealed in walls and partitions (Reg 522.6.202 and Table 52.1), and all low
@@ -585,10 +589,10 @@ const sections = [
                 Regulation 411.3.4 requires that, within domestic (household) premises, AC final
                 circuits supplying luminaires shall have additional protection by an RCD with a
                 rated residual operating current not exceeding 30mA. This has applied since the 18th
-                Edition (BS 7671:2018) and is unchanged in A4:2026, so older installations
-                predating it are commonly found without it. It directly reduces the risk of fault
-                currents from luminaire wiring reaching metalwork and causing a shock — the same
-                mechanism described on this page.
+                Edition (BS 7671:2018) and is unchanged in A4:2026, so older installations predating
+                it are commonly found without it. It directly reduces the risk of fault currents
+                from luminaire wiring reaching metalwork and causing a shock — the same mechanism
+                described on this page.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -668,6 +672,7 @@ export default function ElectricShockFromTapPage() {
       faqs={faqs}
       faqHeading="Frequently Asked Questions About Electric Shock from Taps"
       relatedPages={relatedPages}
+      heroCtaLabel="Find the fault faster with AI"
       ctaHeading="Diagnose Electrical Faults Faster with AI"
       ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI fault diagnosis, BS 7671 calculators, and digital certificates. 7-day free trial, cancel anytime."
     />

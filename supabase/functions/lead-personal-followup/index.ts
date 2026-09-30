@@ -14,7 +14,7 @@
 //
 // Cron: hourly, 25 per run.
 // Dry run: POST { "dry_run": true }            → who would be sent, nothing sent
-// Test:    POST { "test": true, "email": "you@x", "source": "mock_exam_result" }
+// Test:    POST { "test": true, "email": "you@x", "source": "mock_exam_result", "page": "/mock-exams/2391-inspection-testing" }
 
 import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
@@ -34,18 +34,92 @@ const UTM = 'utm_source=email&utm_medium=andrew_personal&utm_campaign=lead_follo
 const LINK_ELEC = `https://www.elec-mate.com/auth/signup?offer=FIRSTGO25&${UTM}`;
 const LINK_APP = `https://www.elec-mate.com/auth/signup?offer=FIRSTGO25APP&${UTM}`;
 
-function openingLine(source: string | null): string {
+// Mock exam names, keyed by the slug after /mock-exams/. Only exams whose name
+// we can state exactly — anything else falls back to "one of our mock exams".
+const MOCK_EXAM_NAMES: Record<string, string> = {
+  '2391-inspection-testing': '2391 inspection and testing',
+  '2391-50-initial-verification': '2391-50 initial verification',
+  '2391-51-periodic-inspection': '2391-51 periodic inspection',
+  '2392-fundamental-inspection-testing': '2392 inspection and testing',
+  '18th-edition-bs-7671': '18th Edition',
+  'am2-online-knowledge-test': 'AM2',
+  'ev-charging': 'EV charging',
+  'pat-testing': 'PAT testing',
+  'fire-alarm': 'fire alarm',
+  'emergency-lighting': 'emergency lighting',
+  'level-2-installation-practice': 'Level 2 installation',
+  'level-2-installation-theory': 'Level 2 installation theory',
+  'level-2-electrical-principles': 'Level 2 electrical principles',
+  'level-2-electrical-health-safety': 'Level 2 health and safety',
+  'level-3-inspection-testing': 'Level 3 inspection and testing',
+  'level-3-fault-diagnosis': 'Level 3 fault diagnosis',
+  'level-3-electrical-science': 'Level 3 electrical science',
+  'level-3-systems-design': 'Level 3 systems design',
+  ipaf: 'IPAF',
+  pasma: 'PASMA',
+  'cscs-card': 'CSCS',
+  'asbestos-awareness': 'asbestos awareness',
+  'first-aid': 'first aid',
+};
+
+// Exams sat by people who are already qualified — they see the electrician
+// plan first. Everything else on /mock-exams/ is apprentice or site-card level.
+const QUALIFIED_EXAMS = new Set([
+  '2391-inspection-testing',
+  '2391-50-initial-verification',
+  '2391-51-periodic-inspection',
+  '2392-fundamental-inspection-testing',
+  '18th-edition-bs-7671',
+  'ev-charging',
+  'pat-testing',
+  'fire-alarm',
+  'emergency-lighting',
+  'industrial-electrical',
+  'instrumentation',
+  'bms',
+  'data-cabling',
+  'fibre-optics',
+  'smart-home',
+  'renewable-energy',
+]);
+
+/** The slug after /mock-exams/, e.g. "2391-inspection-testing". */
+const mockSlug = (page: string | null): string | null =>
+  page?.match(/^\/mock-exams\/([a-z0-9-]+)/)?.[1] ?? null;
+
+/** "trunking-fill-calculator" → "trunking fill calculator". */
+const toolName = (page: string | null): string | null => {
+  const slug = page?.match(/^\/tools\/([a-z0-9-]+)$/)?.[1];
+  if (!slug || !slug.endsWith('-calculator')) return null;
+  return slug.replace(/-/g, ' ');
+};
+
+const LINE_END = ", so I thought I'd drop you a line.";
+
+function openingLine(source: string | null, page: string | null): string {
+  const exam = mockSlug(page);
+  if (exam && MOCK_EXAM_NAMES[exam]) {
+    return `You had a go at our ${MOCK_EXAM_NAMES[exam]} mock exam recently${LINE_END}`;
+  }
+  const tool = toolName(page);
+  if (tool) return `You used our ${tool} recently${LINE_END}`;
+  if (page && /^\/guides\/(maximum-zs|ze-values)/.test(page)) {
+    return `You looked up our Zs and Ze tables recently${LINE_END}`;
+  }
+
   switch (source) {
     case 'mock_exam_result':
-      return "You had a go at one of our mock exams recently, so I thought I'd drop you a line.";
+      return `You had a go at one of our mock exams recently${LINE_END}`;
     case 'lead_magnet_cheatsheet':
-      return "You grabbed our cheatsheet recently, so I thought I'd drop you a line.";
+      return `You grabbed our cheatsheet recently${LINE_END}`;
     case 'lead_magnet_symbols_chart':
-      return "You downloaded our electrical symbols chart recently, so I thought I'd drop you a line.";
+      return `You downloaded our electrical symbols chart recently${LINE_END}`;
+    case 'calculator_result':
+      return `You used one of our calculators recently${LINE_END}`;
     default:
       return (source ?? '').startsWith('lead_magnet')
-        ? "You downloaded one of our guides recently, so I thought I'd drop you a line."
-        : "You left your email with us recently, so I thought I'd drop you a line.";
+        ? `You downloaded one of our guides recently${LINE_END}`
+        : `You left your email with us recently${LINE_END}`;
   }
 }
 
@@ -88,8 +162,13 @@ const ELECTRICIAN: Plan = {
 };
 
 // Mock exam takers are mostly apprentices, so they see their plan first.
-const plansFor = (source: string | null): Plan[] =>
-  source === 'mock_exam_result' ? [APPRENTICE, ELECTRICIAN] : [ELECTRICIAN, APPRENTICE];
+// Apprentice plan first for apprentice-level mock exams; electrician first for
+// everyone else, including qualified-level exams like 2391 and the 18th Edition.
+const plansFor = (source: string | null, page: string | null): Plan[] => {
+  const exam = mockSlug(page);
+  const apprenticeFirst = exam ? !QUALIFIED_EXAMS.has(exam) : source === 'mock_exam_result';
+  return apprenticeFirst ? [APPRENTICE, ELECTRICIAN] : [ELECTRICIAN, APPRENTICE];
+};
 
 const INTRO =
   "Would you like to try the full app for 7 days, free? It costs £0 today, and if it's not for you, cancel in a couple of clicks before the week's up and you won't pay a penny. If you stay, I'll take 25% off your first 6 months.";
@@ -99,8 +178,8 @@ const AFTER =
   'After the 6 months it goes back to the normal price (£6.99 or £19.99 a month), and you can still cancel any time.';
 const REPLY = "If anything's in the way, just reply. I read every one.";
 
-function bodyText(source: string | null, unsubscribeUrl: string): string {
-  const blocks = plansFor(source)
+function bodyText(source: string | null, page: string | null, unsubscribeUrl: string): string {
+  const blocks = plansFor(source, page)
     .map(
       (p) =>
         `${p.heading.toUpperCase()}\n${p.price}\n${p.items.map((i) => `• ${i}`).join('\n')}\n${p.cta}: ${p.link}`
@@ -109,7 +188,7 @@ function bodyText(source: string | null, unsubscribeUrl: string): string {
 
   return `Hi there,
 
-Andrew here, the electrician who built Elec-Mate. ${openingLine(source)}
+Andrew here, the electrician who built Elec-Mate. ${openingLine(source, page)}
 
 ${INTRO}
 
@@ -133,8 +212,8 @@ Rather not hear from me? ${unsubscribeUrl}`;
 // Deliberately looks like a normal email from a person: no logo, no colour
 // blocks, no images. Just enough structure to read well on a phone.
 const P = 'margin:0 0 16px;';
-function bodyHtml(source: string | null, unsubscribeUrl: string): string {
-  const plans = plansFor(source)
+function bodyHtml(source: string | null, page: string | null, unsubscribeUrl: string): string {
+  const plans = plansFor(source, page)
     .map(
       (p) => `
 <p style="margin:24px 0 2px;font-weight:700;">${p.heading}</p>
@@ -150,7 +229,7 @@ ${p.items.map((i) => `<li style="margin:0 0 6px;">${i}</li>`).join('\n')}
 <body style="margin:0;padding:0;">
 <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#222;max-width:560px;padding:8px 4px;">
 <p style="${P}">Hi there,</p>
-<p style="${P}">Andrew here, the electrician who built Elec-Mate. ${openingLine(source)}</p>
+<p style="${P}">Andrew here, the electrician who built Elec-Mate. ${openingLine(source, page)}</p>
 <p style="${P}">${INTRO}</p>
 <p style="margin:0;">Here's what you're missing:</p>
 ${plans}
@@ -166,7 +245,8 @@ ${plans}
 async function sendOne(
   resend: Resend,
   email: string,
-  source: string | null
+  source: string | null,
+  page: string | null
 ): Promise<{ ok: boolean; error?: string }> {
   try {
     const unsub = await buildUnsubscribeUrl(email);
@@ -175,8 +255,8 @@ async function sendOne(
       to: email,
       replyTo: REPLY_TO,
       subject: SUBJECT,
-      html: bodyHtml(source, unsub),
-      text: bodyText(source, unsub),
+      html: bodyHtml(source, page, unsub),
+      text: bodyText(source, page, unsub),
       headers: buildUnsubscribeHeaders(unsub),
       tags: ['lead-personal-followup'],
     });
@@ -207,7 +287,12 @@ serve(async (req: Request) => {
 
     if (body?.test === true) {
       if (!body.email) return json({ error: 'test mode needs an "email"' }, 400);
-      const r = await sendOne(resend, String(body.email), body.source ?? 'mock_exam_result');
+      const r = await sendOne(
+        resend,
+        String(body.email),
+        body.source ?? 'mock_exam_result',
+        typeof body.page === 'string' ? body.page : null
+      );
       return json({ tested: true, to: body.email, ...r }, r.ok ? 200 : 500);
     }
 
@@ -217,7 +302,12 @@ serve(async (req: Request) => {
     });
     if (error) throw error;
 
-    const rows = (candidates ?? []) as { email: string; source: string | null; first_at: string }[];
+    const rows = (candidates ?? []) as {
+      email: string;
+      source: string | null;
+      first_at: string;
+      page_url: string | null;
+    }[];
     if (body?.dry_run === true) return json({ dry_run: true, count: rows.length, rows });
 
     let sent = 0;
@@ -229,13 +319,14 @@ serve(async (req: Request) => {
         email: row.email,
         source: row.source,
         first_captured_at: row.first_at,
+        page_url: row.page_url,
       });
       if (claimErr) {
         skipped++;
         continue;
       }
 
-      const r = await sendOne(resend, row.email, row.source);
+      const r = await sendOne(resend, row.email, row.source, row.page_url);
       await supabase
         .from('lead_followup_sends')
         .update(

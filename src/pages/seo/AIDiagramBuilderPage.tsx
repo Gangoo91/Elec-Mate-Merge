@@ -222,8 +222,8 @@ const sections = [
         </p>
         <p>
           The tool integrates with other Elec-Mate agents. Circuit designs from the{' '}
-          <SEOInternalLink href="/ai-circuit-designer">AI Circuit Designer</SEOInternalLink>{' '}
-          can be imported directly to generate diagrams that match the design specification. The{' '}
+          <SEOInternalLink href="/ai-circuit-designer">AI Circuit Designer</SEOInternalLink> can be
+          imported directly to generate diagrams that match the design specification. The{' '}
           <SEOInternalLink href="/tools/ai-wiring-instructions">
             Wiring Instructions tool
           </SEOInternalLink>{' '}
@@ -232,8 +232,8 @@ const sections = [
           include the diagrams in client-facing documentation.
         </p>
         <p>
-          All diagrams use the standard electrical symbols specified in IEC 60617, ensuring they
-          are universally understood by other electricians, inspectors, and building professionals.
+          All diagrams use the standard electrical symbols specified in IEC 60617, ensuring they are
+          universally understood by other electricians, inspectors, and building professionals.
           Diagrams can be exported as PDF, PNG, or SVG for inclusion in any documentation format.
         </p>
       </>
@@ -451,6 +451,7 @@ export default function AIDiagramBuilderPage() {
       faqs={faqs}
       faqHeading="Frequently Asked Questions About AI Diagram Building"
       relatedPages={relatedPages}
+      heroCtaLabel="Build your first plan free"
       ctaHeading="Create Professional Diagrams in Seconds"
       ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's AI Diagram Builder. Circuit schematics, board layouts, and as-built drawings from plain English descriptions. 7-day free trial, cancel anytime."
       toolPath="/tools/ai-diagram-builder"

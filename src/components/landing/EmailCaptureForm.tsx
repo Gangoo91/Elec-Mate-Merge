@@ -80,6 +80,7 @@ export function EmailCaptureForm({
           first_name: firstName || undefined,
           source,
           event_id: eventId,
+          page_url: window.location.pathname,
           utm: {
             utm_source: attribution.utm_source,
             utm_medium: attribution.utm_medium,

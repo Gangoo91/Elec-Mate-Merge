@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
 import { cn } from '@/lib/utils';
+import { Mail } from 'lucide-react';
 import { CopyResultButton } from './CopyResultButton';
+import { useCalculatorEmailOffer } from './calculatorEmailOffer';
 import { MissingFieldsHint } from './MissingFieldsHint';
 
 interface CalculatorPanesProps {
@@ -46,23 +48,27 @@ export const CalculatorPanes = ({
   placeholder = 'Your result will appear here.',
   copyTitle,
   className,
-}: CalculatorPanesProps) => (
-  <div className={cn('space-y-5', className)}>
-    {/* Not a grid below `lg:`. `CalculatorInput` renders `h-full`, and a
+}: CalculatorPanesProps) => {
+  // Present only on public tool pages that offer to email the result.
+  const emailOffer = useCalculatorEmailOffer();
+
+  return (
+    <div className={cn('space-y-5', className)}>
+      {/* Not a grid below `lg:`. `CalculatorInput` renders `h-full`, and a
         percentage height inside a stretched grid item resolves against the grid
         area rather than the content — the form pane came out 632px tall around
         1166px of inputs, and the overflow drew straight over the result beneath
         it. Stacked phone layout needs no grid, so there is nothing to resolve
         against; from `lg:` the two panes are explicit columns. */}
-    <div className="space-y-5 lg:grid lg:grid-cols-2 lg:items-start lg:gap-6 lg:space-y-0">
-      <div className="min-w-0 space-y-4" data-calc-form>
-        {form}
-        {/* Says why Calculate is greyed out. Lives here rather than in
+      <div className="space-y-5 lg:grid lg:grid-cols-2 lg:items-start lg:gap-6 lg:space-y-0">
+        <div className="min-w-0 space-y-4" data-calc-form>
+          {form}
+          {/* Says why Calculate is greyed out. Lives here rather than in
             CalculatorActions because four calculators render their own button. */}
-        <MissingFieldsHint />
-      </div>
+          <MissingFieldsHint />
+        </div>
 
-      {/* `self-start` + `sticky` keeps the answer in view; without `min-w-0` a
+        {/* `self-start` + `sticky` keeps the answer in view; without `min-w-0` a
           long unbroken figure would push the grid track wider than its half.
 
           The placeholder is driven by `:empty` rather than by a `hasResult`
@@ -71,36 +77,48 @@ export const CalculatorPanes = ({
           mean hand-extracting 60 different expressions; when the condition is
           false React renders no child at all and `:empty` matches. Desktop
           only — on a phone an empty box below the button is just noise. */}
-      <div className="min-w-0 lg:sticky lg:top-4 lg:self-start">
-        <div
-          className={cn(
-            'peer min-w-0',
-            'lg:empty:rounded-xl lg:empty:border lg:empty:border-dashed lg:empty:border-white/[0.14] lg:empty:p-6',
-            'lg:empty:before:content-[attr(data-result-placeholder)]',
-            'lg:empty:before:text-[13px] lg:empty:before:leading-relaxed lg:empty:before:text-white'
-          )}
-          // Not `data-placeholder`: Radix already sets that on Select triggers, so the
-          // name collides with library markup and made the panes uncountable.
-          data-result-placeholder={placeholder}
-        >
-          {result}
-        </div>
+        <div className="min-w-0 lg:sticky lg:top-4 lg:self-start">
+          <div
+            className={cn(
+              'peer min-w-0',
+              'lg:empty:rounded-xl lg:empty:border lg:empty:border-dashed lg:empty:border-white/[0.14] lg:empty:p-6',
+              'lg:empty:before:content-[attr(data-result-placeholder)]',
+              'lg:empty:before:text-[13px] lg:empty:before:leading-relaxed lg:empty:before:text-white'
+            )}
+            // Not `data-placeholder`: Radix already sets that on Select triggers, so the
+            // name collides with library markup and made the panes uncountable.
+            data-result-placeholder={placeholder}
+          >
+            {result}
+          </div>
 
-        {/* Copy sits OUTSIDE the result div on purpose. Putting it inside would
+          {/* Copy sits OUTSIDE the result div on purpose. Putting it inside would
             make that div permanently non-empty and kill the `:empty` placeholder
             above. As a following sibling it can use `peer-empty:hidden`, so it
             appears exactly when there is a result to copy — no per-calculator
             condition to thread through. */}
-        {copyTitle && (
-          <div className="mt-1 flex justify-end peer-empty:hidden">
-            <CopyResultButton title={copyTitle} />
-          </div>
-        )}
+          {(copyTitle || emailOffer) && (
+            <div className="mt-1 flex flex-wrap justify-end gap-1 peer-empty:hidden">
+              {emailOffer && (
+                <button
+                  type="button"
+                  onClick={emailOffer.openEmailOffer}
+                  title="Send the result and your figures to your inbox"
+                  className="inline-flex h-11 items-center gap-1.5 rounded-xl px-3 text-[12.5px] font-semibold text-elec-yellow transition-colors touch-manipulation hover:bg-white/[0.08] focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60"
+                >
+                  <Mail className="h-4 w-4" aria-hidden />
+                  Email it to me
+                </button>
+              )}
+              {copyTitle && <CopyResultButton title={copyTitle} />}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
 
-    {footer}
-  </div>
-);
+      {footer}
+    </div>
+  );
+};
 
 export default CalculatorPanes;

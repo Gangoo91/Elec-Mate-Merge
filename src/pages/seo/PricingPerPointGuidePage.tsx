@@ -509,11 +509,11 @@ const sections = [
             single-phase AC final circuits supplying socket-outlets rated not exceeding 32 A in high
             rise residential buildings (HRRBs), houses in multiple occupation (HMOs), purpose-built
             student accommodation, and care homes. For all other premises, the use of AFDDs is
-            recommended rather than required. When pricing CU-inclusive
-            rewires on any of those property types, AFDD-equipped RCBOs are not optional — price the
-            uplift as a separate line item. AFDD-RCBOs typically cost £40 to £80 more per way than a
-            standard RCBO. Make the cost transparent on your quote so the customer understands both
-            the regulatory obligation and the protection they are receiving.
+            recommended rather than required. When pricing CU-inclusive rewires on any of those
+            property types, AFDD-equipped RCBOs are not optional — price the uplift as a separate
+            line item. AFDD-RCBOs typically cost £40 to £80 more per way than a standard RCBO. Make
+            the cost transparent on your quote so the customer understands both the regulatory
+            obligation and the protection they are receiving.
           </p>
         </div>
       </>
@@ -614,6 +614,7 @@ export default function PricingPerPointGuidePage() {
       faqs={faqs}
       faqHeading="Frequently Asked Questions About Per-Point Pricing"
       relatedPages={relatedPages}
+      heroCtaLabel="Build per-point quotes on your phone"
       ctaHeading="Quote Faster with Per-Point Pricing Built In"
       ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional PDF quotes in minutes. 7-day free trial, cancel anytime."
     />

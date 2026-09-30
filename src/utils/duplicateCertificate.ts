@@ -37,11 +37,24 @@ export type DuplicableReportType =
   | 'routine-inspection';
 
 const DUPLICABLE_TYPES: readonly string[] = [
-  'eicr', 'eic', 'minor-works',
-  'fire-alarm', 'fire-alarm-design', 'fire-alarm-commissioning',
-  'fire-alarm-inspection', 'fire-alarm-modification',
-  'ev-charging', 'emergency-lighting', 'testing-only', 'solar-pv', 'bess', 'plug-in-solar',
-  'smoke-co-alarm', 'lightning-protection', 'g98-commissioning', 'g99-commissioning',
+  'eicr',
+  'eic',
+  'minor-works',
+  'fire-alarm',
+  'fire-alarm-design',
+  'fire-alarm-commissioning',
+  'fire-alarm-inspection',
+  'fire-alarm-modification',
+  'ev-charging',
+  'emergency-lighting',
+  'testing-only',
+  'solar-pv',
+  'bess',
+  'plug-in-solar',
+  'smoke-co-alarm',
+  'lightning-protection',
+  'g98-commissioning',
+  'g99-commissioning',
   'routine-inspection',
 ];
 
@@ -95,6 +108,10 @@ const IDENTITY_FIELDS_TO_STRIP = [
   // so it must not inherit this: if it did, the copy's first save would be
   // recognised as the original's and silently bound to that row.
   '_clientCertId',
+  // The floor plan this certificate was started from (formData.sourcePlan).
+  // The plan shows the readings of the newest certificate linked to it, so a
+  // copy made for the next job would take over the original plan's results.
+  'sourcePlan',
   // Cert metadata
   'certificateNumber',
   'reportNumber',
@@ -244,8 +261,18 @@ const TYPE_SPECIFIC_FIELDS_TO_STRIP: Partial<Record<DuplicableReportType, readon
   'lightning-protection': [],
   // src/types/g99-commissioning.ts. CARRY: typeTestCertRef — the equipment
   // TYPE-test certificate, a property of the product model.
-  'g98-commissioning': ['equipmentSerial', 'exportMeterSerial', 'associatedCertRef', 'prevIndexRef'],
-  'g99-commissioning': ['equipmentSerial', 'exportMeterSerial', 'associatedCertRef', 'prevIndexRef'],
+  'g98-commissioning': [
+    'equipmentSerial',
+    'exportMeterSerial',
+    'associatedCertRef',
+    'prevIndexRef',
+  ],
+  'g99-commissioning': [
+    'equipmentSerial',
+    'exportMeterSerial',
+    'associatedCertRef',
+    'prevIndexRef',
+  ],
   /*
    * The yearly re-visit is the PRIMARY use of duplicate for this type, not a
    * block-of-flats edge case: same property, same boards, same engineer, twelve
@@ -474,9 +501,7 @@ export const duplicateCertificate = async (
     data?: { certificateNumber?: string };
   };
   cloned.duplicatedFrom =
-    sourceRow.certificate_number ||
-    sourceRow.data?.certificateNumber ||
-    reportId;
+    sourceRow.certificate_number || sourceRow.data?.certificateNumber || reportId;
   cloned.status = 'draft';
 
   return {

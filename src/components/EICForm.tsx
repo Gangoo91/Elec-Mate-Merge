@@ -3,6 +3,13 @@ import { EICFormProvider, useEICForm } from './eic/EICFormProvider';
 import { useEICTabs, EICTabValue } from '@/hooks/useEICTabs';
 import { useEICValidation } from '@/hooks/useEICValidation';
 import { useCertPrefill } from '@/hooks/useCertPrefill';
+
+/** New-EIC seeds (EICFormProvider) — still-seeded fields count as blank for the last-cert prompt. */
+const EIC_NEW_CERT_SEEDS: Record<string, unknown> = {
+  supplyVoltage: '230',
+  phases: 'single',
+  earthingArrangement: 'tncs',
+};
 import { SectionSkeleton } from '@/components/ui/page-skeleton';
 import CertShellHeader, { type CertShellStep } from './inspection/shared/CertShellHeader';
 import CertShellFooter, { certFooterNeutralButton } from './inspection/shared/CertShellFooter';
@@ -17,6 +24,8 @@ import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { scrollToTopForStepChange } from '@/utils/scroll';
+import { focusValidationField } from '@/utils/focusValidationField';
+import { CertLockedProvider } from '@/components/inspection/shared/CertLocked';
 
 // v3 cert shell — five steps across the top, matching the MW/EV pattern.
 const EIC_STEPS: CertShellStep[] = [
@@ -99,6 +108,23 @@ const EICFormInner = ({ onBack }: { onBack: () => void }) => {
     invoice: () => void;
   } | null>(null);
 
+  // "Go" on the still-to-complete sheet: change step, then scroll to, focus
+  // and flash the field (EICR pattern, ELE-1487). Switching tab is not
+  // arriving — the EIC's Details step is four screens tall, and Go used to
+  // land at the top of it (EIC walkthrough, 30 Sep 2026). The step remounts,
+  // so the helper polls for the target rather than guessing a delay.
+  const [pendingFocusField, setPendingFocusField] = React.useState<string | null>(null);
+  const jumpingToFieldRef = React.useRef(false);
+  React.useEffect(() => {
+    if (!pendingFocusField) return;
+    // Same 280ms as the EICR: past the sheet's close animation and focus trap,
+    // and past React remounting the step, so we focus a node that is staying put.
+    const timer = window.setTimeout(() => {
+      void focusValidationField(pendingFocusField).finally(() => setPendingFocusField(null));
+    }, 280);
+    return () => window.clearTimeout(timer);
+  }, [pendingFocusField, currentTab]);
+
   // Slide direction for the step transition — back navigation slides the other way.
   const prevTabIndexRef = React.useRef(currentTabIndex);
   const isNavigatingBack = currentTabIndex < prevTabIndexRef.current;
@@ -151,7 +177,12 @@ const EICFormInner = ({ onBack }: { onBack: () => void }) => {
     suggestion: lastCertSuggestion,
     dismiss: dismissLastCert,
     buildPatch,
-  } = useCertPrefill(prefillAddress, 'eic');
+  } = useCertPrefill(prefillAddress, 'eic', {
+    excludeReportId: currentReportId || undefined,
+    reportId: currentReportId || undefined,
+    currentData: formData as Record<string, unknown>,
+    untouchedValues: EIC_NEW_CERT_SEEDS,
+  });
 
   const handleApplyLastCert = () => {
     const patch = buildPatch();
@@ -212,6 +243,7 @@ const EICFormInner = ({ onBack }: { onBack: () => void }) => {
   const certNumber = formData.certificateNumber as string | undefined;
 
   return (
+    <CertLockedProvider locked={isLocked}>
     <div className="bg-background min-h-screen prevent-shortcuts">
       {/* v3 shell header — back · title/cert no · save word · progress ring · step tabs */}
       <CertShellHeader
@@ -253,8 +285,9 @@ const EICFormInner = ({ onBack }: { onBack: () => void }) => {
         />
       )}
 
-      {/* Last cert at this address — soft suggestion to copy supply/earthing data forward */}
-      {!isLocked && lastCertSuggestion && (
+      {/* Last cert at this address — soft suggestion to copy supply/earthing data
+          forward. Details only: that is where the fields it fills live. */}
+      {!isLocked && currentTab === 'details' && lastCertSuggestion && (
         <div className="px-4 pt-3 lg:px-8">
           <LastCertSuggestionCard
             suggestion={lastCertSuggestion}
@@ -405,11 +438,21 @@ const EICFormInner = ({ onBack }: { onBack: () => void }) => {
         <SheetContent
           side="bottom"
           className="h-[85vh] rounded-t-2xl border-white/[0.1] p-0 overflow-hidden"
+          // When Go has sent us to a field, Radix must not pull focus back to
+          // the trigger as the sheet closes. Any other close keeps the default.
+          onCloseAutoFocus={(e) => {
+            if (jumpingToFieldRef.current) {
+              e.preventDefault();
+              jumpingToFieldRef.current = false;
+            }
+          }}
         >
           <div className="flex h-full flex-col bg-background">
             <div className="border-b border-white/[0.08] px-4 pb-3 pt-4">
               <h2 className="text-base font-bold text-white">
-                {eicValidation.errors.length === 0 ? 'Ready to issue' : 'Still to complete'}
+                {eicValidation.errors.length === 0 && eicValidation.warnings.length === 0
+                  ? 'Ready to issue'
+                  : 'Still to complete'}
               </h2>
               <p className="text-[12px] text-white/60 tabular-nums">
                 {eicValidation.completionPercentage}% complete
@@ -417,10 +460,15 @@ const EICFormInner = ({ onBack }: { onBack: () => void }) => {
                   ` · ${eicValidation.errors.length} required ${
                     eicValidation.errors.length === 1 ? 'field' : 'fields'
                   } remaining`}
+                {eicValidation.errors.length === 0 &&
+                  eicValidation.warnings.length > 0 &&
+                  ` · ${eicValidation.warnings.length} thing${
+                    eicValidation.warnings.length === 1 ? '' : 's'
+                  } worth checking — nothing stops you issuing`}
               </p>
             </div>
             <div className="flex-1 space-y-5 overflow-y-auto px-4 py-4">
-              {eicValidation.errors.length === 0 ? (
+              {eicValidation.errors.length === 0 && eicValidation.warnings.length === 0 ? (
                 <p className="text-sm text-white/85">
                   Everything required is filled in. Head to Issue to generate the certificate.
                 </p>
@@ -439,8 +487,10 @@ const EICFormInner = ({ onBack }: { onBack: () => void }) => {
                             key={item.field}
                             type="button"
                             onClick={() => {
+                              jumpingToFieldRef.current = true;
                               setShowMissingSheet(false);
                               handleTabChange(step.id);
+                              setPendingFocusField(item.field);
                             }}
                             className="flex h-11 w-full items-center justify-between rounded-xl border border-white/[0.1] bg-white/[0.04] px-3.5 text-left text-sm font-medium text-white touch-manipulation transition-transform active:scale-[0.99]"
                           >
@@ -455,11 +505,51 @@ const EICFormInner = ({ onBack }: { onBack: () => void }) => {
                   );
                 })
               )}
+              {/* Advisory — listed and counted, never blocking. Same Go as above. */}
+              {eicValidation.warnings.length > 0 && (
+                <div className="space-y-4 border-t border-white/[0.1] pt-4">
+                  <p className="text-[12px] font-semibold text-white">
+                    Worth checking — these do not stop you issuing
+                  </p>
+                  {EIC_STEPS.map((step) => {
+                    const items = eicValidation.warnings.filter(
+                      (w) => (w.tab || 'certificate') === step.id
+                    );
+                    if (items.length === 0) return null;
+                    return (
+                      <div key={`adv-${step.id}`}>
+                        <h3 className="mb-2 text-[13px] font-semibold text-white">{step.label}</h3>
+                        <div className="space-y-1.5">
+                          {items.map((item) => (
+                            <button
+                              key={item.field}
+                              type="button"
+                              onClick={() => {
+                                jumpingToFieldRef.current = true;
+                                setShowMissingSheet(false);
+                                handleTabChange(step.id);
+                                setPendingFocusField(item.field);
+                              }}
+                              className="flex h-11 w-full items-center justify-between rounded-xl border border-amber-400/25 bg-amber-400/[0.07] px-3.5 text-left text-sm text-white touch-manipulation active:scale-[0.99]"
+                            >
+                              <span className="truncate">{item.message}</span>
+                              <span className="ml-3 shrink-0 text-[11.5px] font-semibold text-amber-300">
+                                Go
+                              </span>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           </div>
         </SheetContent>
       </Sheet>
     </div>
+    </CertLockedProvider>
   );
 };
 

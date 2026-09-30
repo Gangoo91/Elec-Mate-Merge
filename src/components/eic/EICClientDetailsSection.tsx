@@ -59,6 +59,7 @@ const EICClientDetailsSection = ({ formData, onUpdate }: EICClientDetailsSection
   const [clientType, setClientType] = useState<'new' | 'existing'>(() =>
     formData.selectedCustomerId ? 'existing' : 'new'
   );
+  const [showClientSearch, setShowClientSearch] = useState(false);
 
   const initialFieldValues = useMemo(() => {
     const values: ClientSectionFields = {};
@@ -185,13 +186,36 @@ const EICClientDetailsSection = ({ formData, onUpdate }: EICClientDetailsSection
           ))}
         </div>
 
-        {/* Existing Client Selector */}
-        {clientType === 'existing' && (
-          <ClientSelector
-            onSelectCustomer={handleSelectCustomer}
-            selectedCustomerId={localValues.selectedCustomerId || undefined}
-          />
-        )}
+        {/* Existing Client Selector — once a client is on the cert the search
+            box collapses to a line with Change, instead of an empty
+            "Search clients…" sitting above a filled-in name (30 Sep 2026). */}
+        {clientType === 'existing' &&
+          (localValues.clientName && !showClientSearch ? (
+            <div className="flex min-h-11 items-center justify-between gap-3 rounded-xl border border-white/[0.1] bg-white/[0.04] px-3.5">
+              <span className="min-w-0 truncate text-sm text-white">
+                {localValues.selectedCustomerId ? 'Linked to ' : 'Client: '}
+                <span className="font-semibold">{localValues.clientName}</span>
+              </span>
+              <button
+                type="button"
+                onClick={() => {
+                  haptic.light();
+                  setShowClientSearch(true);
+                }}
+                className="shrink-0 text-[12px] font-semibold text-elec-yellow touch-manipulation"
+              >
+                Change
+              </button>
+            </div>
+          ) : (
+            <ClientSelector
+              onSelectCustomer={(customer) => {
+                setShowClientSearch(false);
+                handleSelectCustomer(customer);
+              }}
+              selectedCustomerId={localValues.selectedCustomerId || undefined}
+            />
+          ))}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <FormField label="Client name" required>
             <Input
@@ -231,6 +255,7 @@ const EICClientDetailsSection = ({ formData, onUpdate }: EICClientDetailsSection
 
         <FormField label="Client address" required>
           <Textarea
+            data-field="clientAddress"
             value={localValues.clientAddress || ''}
             onChange={(e) => handleFieldChange('clientAddress', e.target.value)}
             placeholder="Full postal address"
@@ -333,6 +358,7 @@ const EICClientDetailsSection = ({ formData, onUpdate }: EICClientDetailsSection
           */}
           <FormField label="Description of installation" required>
             <Input
+              data-field="description"
               value={localValues.description || ''}
               onChange={(e) => handleFieldChange('description', e.target.value)}
               placeholder="e.g., Full rewire of 3-bed semi-detached — all circuits from new consumer unit"

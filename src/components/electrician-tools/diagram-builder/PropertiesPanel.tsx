@@ -11,7 +11,7 @@ interface PropertiesPanelProps {
   onDelete: () => void;
   onClose: () => void;
   /** The drawing's circuits, so an item can be moved to another one. */
-  circuits?: { ref: string; name: string; colour: string }[];
+  circuits?: { ref: string; label?: string; name: string; colour: string }[];
 }
 
 const chipOn = 'bg-elec-yellow border-elec-yellow text-black font-semibold';
@@ -56,7 +56,9 @@ export const PropertiesPanel = ({
         : o.type === 'cable'
           ? 'Cable'
           : 'Item');
-  const where = [o.roomName, o.floor].filter(Boolean).join(' · ');
+  // "GF Bedroom 4" already says its floor; don't add "· Ground Floor".
+  const floorInName = /^(GF|FF|1F|2F|3F|LG|B)\b|floor/i.test(o.roomName ?? '');
+  const where = [o.roomName, floorInName ? undefined : o.floor].filter(Boolean).join(' · ');
 
   // Circuits of the same kind (sockets with sockets, lights with lights).
   const sameKind = circuits.filter((c) => family(c.ref) === family(o.circuitRef));
@@ -113,14 +115,16 @@ export const PropertiesPanel = ({
                           className="h-4 w-[3px] rounded-full"
                           style={{ backgroundColor: c.colour }}
                         />
-                        <span className="font-bold">{c.ref}</span>
+                        <span className="font-bold">Way {c.label ?? c.ref}</span>
                         <span className="max-w-[12rem] truncate">{c.name}</span>
                       </button>
                     ))}
                   </div>
                 ) : (
                   <p className="text-[14px] text-white">
-                    <span className="font-bold">{o.circuitRef}</span>
+                    <span className="font-bold">
+                      Way {circuits.find((c) => c.ref === o.circuitRef)?.label ?? o.circuitRef}
+                    </span>
                     {sameKind[0] && ` — ${sameKind[0].name}`}
                   </p>
                 )}
@@ -283,7 +287,7 @@ export const PropertiesPanel = ({
               }}
               className="h-11 w-full rounded-xl border border-red-500/30 text-sm font-semibold text-red-300 touch-manipulation active:bg-red-500/10"
             >
-              Delete {symbolMeta ? `this ${title}` : title.toLowerCase()}
+              Delete {symbolMeta ? 'this item' : title.toLowerCase()}
             </button>
           </div>
         </div>

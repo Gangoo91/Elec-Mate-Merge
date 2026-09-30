@@ -352,6 +352,10 @@ jobs:
       # An AI observation may cite only the regulations it was grounded in.
       - name: AI citation guard (enhance-eicr-observation)
         run: npm run check:citation-guard
+      # Building Regs RAG sources must be cited by document name — never "Reg 2.5"
+      # (a BS 7671 regulation that does not exist) — and Part P questions must route to them.
+      - name: Building Regs RAG citations and routing
+        run: npm run check:building-regs-rag
       # A newer local draft must never hide cloud test results (Rovell, 28 Sep 2026).
       - name: Local-draft guard
         run: npm run check:local-draft-guard
@@ -359,3 +363,6 @@ jobs:
       # this rule is mirrored in SQL (part_p_certificate_verdict) and must not drift.
       - name: Part P verdict guard
         run: npm run check:part-p-verdict
+      # The Minor Works validator's RCD check read a key the form never writes (30 Sep 2026).
+      - name: Minor Works validation guard
+        run: npm run check:minor-works-validation

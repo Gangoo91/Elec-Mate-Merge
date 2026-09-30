@@ -2,7 +2,6 @@ import React from 'react';
 import { useHaptic } from '@/hooks/useHaptic';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
-import { isKnownNonDwelling, PART_P_NOT_APPLICABLE } from '@/utils/partP';
 
 const cardCn =
   '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
@@ -66,34 +65,10 @@ const StandardsComplianceSection: React.FC<StandardsComplianceSectionProps> = ({
           </div>
         </div>
 
-        {/* ELE-1662 — Part P is for dwellings; a known commercial/industrial
-            installation gets the sentence instead of the chips. See utils/partP. */}
-        {isKnownNonDwelling(formData.installationType) ? (
-          <p className="text-[12px] leading-snug text-white">{PART_P_NOT_APPLICABLE}</p>
-        ) : (
-        <div>
-          <Label className={labelCn}>Part P compliance</Label>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-            {[
-              { value: 'compliant', label: 'Compliant' },
-              { value: 'notApplicable', label: 'N/A' },
-              { value: 'nonNotifiable', label: 'Non-notifiable' },
-            ].map((opt) => (
-              <button
-                key={opt.value}
-                type="button"
-                onClick={() => onUpdate('partPCompliance', (formData.partPCompliance as string) === opt.value ? '' : opt.value)}
-                className={cn(
-                  'h-11 rounded-xl text-sm transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center',
-                  (formData.partPCompliance as string) === opt.value ? chipOn : chipOff
-                )}
-              >
-                {opt.label}
-              </button>
-            ))}
-          </div>
-        </div>
-        )}
+        {/* Part P is answered ONCE, on Sign off (BuildingRegsNotification writes
+            partPCompliance as well as the buildingRegs* keys). The chips that
+            used to sit here asked the same question a second time — removed
+            30 Sep 2026. ELE-1662's non-dwelling rule lives in the formatter. */}
       </div>
     </div>
   );

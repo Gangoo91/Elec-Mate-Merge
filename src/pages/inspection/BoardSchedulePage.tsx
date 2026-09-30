@@ -1,3 +1,5 @@
+import { buildScheduleFromCert } from '@/utils/board-schedule-import';
+import { forgetPlanCertificate, readPlanCertificate } from '@/utils/planCertificateHandoff';
 import { useState, useCallback, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -18,9 +20,18 @@ import ImportFromCertSheet from '@/components/inspection/board-schedule/ImportFr
  */
 import { PageHeader } from '@/components/forms/PageHeader';
 import {
-  pageShellCn, pageContainerCn, pageMainCn, pageCardCn, pageWideCardCn,
-  pageInputCn as inputCn, pageLabelCn as labelCn, pageTextareaCn,
-  pageSectionHeadingCn, pagePrimaryBtnCn, pageSecondaryBtnCn, pageAccentBtnCn,
+  pageShellCn,
+  pageContainerCn,
+  pageMainCn,
+  pageCardCn,
+  pageWideCardCn,
+  pageInputCn as inputCn,
+  pageLabelCn as labelCn,
+  pageTextareaCn,
+  pageSectionHeadingCn,
+  pagePrimaryBtnCn,
+  pageSecondaryBtnCn,
+  pageAccentBtnCn,
 } from '@/components/forms/pageStyles';
 import { reportCloud, type ReportType } from '@/utils/reportCloud';
 import { useCertificateEmail } from '@/hooks/useCertificateEmail';
@@ -33,11 +44,16 @@ const PHASES = ['L1', 'L2', 'L3'] as const;
 const REPORT_TYPE: ReportType = 'board-schedule';
 const DRAFT_KEY = 'board-schedule-draft';
 
-const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.04 } } };
-const itemVariants = { hidden: { opacity: 0, y: 8 }, visible: { opacity: 1, y: 0, transition: { duration: 0.25 } } };
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
+};
+const itemVariants = {
+  hidden: { opacity: 0, y: 8 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.25 } },
+};
 
 export default function BoardSchedulePage() {
-
   /*
    * ELE-1615 — the company profile is what brands the document. This page
    * previously hardcoded `companyName: ''` and never loaded a profile at all,
@@ -66,10 +82,18 @@ export default function BoardSchedulePage() {
 
   const [board, setBoard] = useState<BoardScheduleData>(() => {
     const blank: BoardScheduleData = {
-      boardRef: '', location: '', mainSwitchRating: '', rcdDetails: '',
-      circuits: [{ id: crypto.randomUUID(), circuitNumber: '1', description: '', rating: '', type: 'MCB' }],
-      companyName: '', notes: '',
-      clientName: '', clientEmail: '', installationAddress: '',
+      boardRef: '',
+      location: '',
+      mainSwitchRating: '',
+      rcdDetails: '',
+      circuits: [
+        { id: crypto.randomUUID(), circuitNumber: '1', description: '', rating: '', type: 'MCB' },
+      ],
+      companyName: '',
+      notes: '',
+      clientName: '',
+      clientEmail: '',
+      installationAddress: '',
       scheduleDate: new Date().toISOString().slice(0, 10),
     };
     // A local draft only ever restores into a NEW schedule. Restoring it over
@@ -80,12 +104,42 @@ export default function BoardSchedulePage() {
     return saved ? { ...blank, ...saved } : blank;
   });
 
+  /*
+   * Opened from the floor planner (?fromPlan=…&board=…): the chart is built
+   * from the same certificate rows the plan hands the EIC, through the same
+   * import as "from a certificate" — so the door, the certificate and the
+   * drawing all carry the same circuit numbers.
+   */
+  useEffect(() => {
+    if (editId) return;
+    const plan = readPlanCertificate();
+    if (!plan) return;
+    // Once: the chart autosaves as a draft from here, so a reload restores
+    // the user's edits instead of rebuilding it from the plan over them.
+    forgetPlanCertificate();
+    const boardId = new URLSearchParams(window.location.search).get('board') ?? '';
+    const source =
+      plan.distributionBoards.find((b) => b.id === boardId) ?? plan.distributionBoards[0];
+    const { board: imported, threePhase } = buildScheduleFromCert(
+      plan as unknown as Parameters<typeof buildScheduleFromCert>[0],
+      source?.id ?? ''
+    );
+    setBoard((prev) => ({
+      ...imported,
+      fedFrom: source?.suppliedFrom ?? imported.fedFrom,
+      scheduleDate: prev.scheduleDate || new Date().toISOString().slice(0, 10),
+    }));
+    setIsThreePhase(threePhase);
+  }, [editId]);
+
   /* Load a saved schedule when opened with an id. */
   useEffect(() => {
     if (!editId) return;
     let cancelled = false;
     (async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
       const stored = await reportCloud.getReportData(editId, user.id, 'board-schedule');
       if (!stored || cancelled) return;
@@ -96,14 +150,22 @@ export default function BoardSchedulePage() {
        * builder and the PDF contract expect instead of accumulating stray keys
        * that get written back on every save.
        */
-      const { isThreePhase: storedThreePhase, certificateNumber: storedCertNo, ...rest } =
-        stored as Partial<BoardScheduleData> & { isThreePhase?: boolean; certificateNumber?: string };
+      const {
+        isThreePhase: storedThreePhase,
+        certificateNumber: storedCertNo,
+        ...rest
+      } = stored as Partial<BoardScheduleData> & {
+        isThreePhase?: boolean;
+        certificateNumber?: string;
+      };
       setBoard((prev) => ({ ...prev, ...rest }));
       setIsThreePhase(!!storedThreePhase);
       setCertificateNumber(storedCertNo ?? '');
       setReportId(editId);
     })();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [editId]);
 
   /* Debounced local draft — new schedules only, per the note above. */
@@ -151,13 +213,19 @@ export default function BoardSchedulePage() {
   };
 
   const updateCircuit = (id: string, field: keyof BoardCircuit, value: string) => {
-    setBoard((prev) => ({ ...prev, circuits: prev.circuits.map((c) => c.id === id ? { ...c, [field]: value } : c) }));
+    setBoard((prev) => ({
+      ...prev,
+      circuits: prev.circuits.map((c) => (c.id === id ? { ...c, [field]: value } : c)),
+    }));
   };
 
   /** Removing works on the WAY, so a three-phase way goes as a set of three. */
   const removeWay = (wayNumber: string) => {
     if (wayNumbers.length <= 1) return;
-    setBoard((prev) => ({ ...prev, circuits: prev.circuits.filter((c) => c.circuitNumber !== wayNumber) }));
+    setBoard((prev) => ({
+      ...prev,
+      circuits: prev.circuits.filter((c) => c.circuitNumber !== wayNumber),
+    }));
   };
 
   /*
@@ -243,20 +311,48 @@ export default function BoardSchedulePage() {
    * session would send a link to a stale PDF, or fail outright.
    */
   const persist = useCallback(async (): Promise<string | null> => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) { toast.error('Please sign in to save this schedule'); return null; }
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) {
+      toast.error('Please sign in to save this schedule');
+      return null;
+    }
 
-    const stored = { ...board, isThreePhase, certificateNumber } as unknown as Record<string, unknown>;
+    const stored = { ...board, isThreePhase, certificateNumber } as unknown as Record<
+      string,
+      unknown
+    >;
 
     if (reportId) {
-      const updated = await reportCloud.updateReport(reportId, user.id, stored, undefined, false, REPORT_TYPE);
-      if (!updated.success) { toast.error('Could not save the schedule'); return null; }
+      const updated = await reportCloud.updateReport(
+        reportId,
+        user.id,
+        stored,
+        undefined,
+        false,
+        REPORT_TYPE
+      );
+      if (!updated.success) {
+        toast.error('Could not save the schedule');
+        return null;
+      }
       await supabase.from('reports').update({ pdf_payload: payload }).eq('report_id', reportId);
       return reportId;
     }
 
-    const result = await reportCloud.createReport(user.id, REPORT_TYPE, stored, undefined, false, createKey.take());
-    if (!result.success || !result.reportId) { toast.error('Could not save the schedule'); return null; }
+    const result = await reportCloud.createReport(
+      user.id,
+      REPORT_TYPE,
+      stored,
+      undefined,
+      false,
+      createKey.take()
+    );
+    if (!result.success || !result.reportId) {
+      toast.error('Could not save the schedule');
+      return null;
+    }
 
     setReportId(result.reportId);
 
@@ -273,7 +369,10 @@ export default function BoardSchedulePage() {
       .maybeSingle();
     if (row?.certificate_number) setCertificateNumber(row.certificate_number);
 
-    await supabase.from('reports').update({ pdf_payload: payload }).eq('report_id', result.reportId);
+    await supabase
+      .from('reports')
+      .update({ pdf_payload: payload })
+      .eq('report_id', result.reportId);
     // The local draft has served its purpose once the row exists; leaving it
     // would restore this board over the NEXT new schedule the user starts.
     storageRemoveSync(DRAFT_KEY);
@@ -281,7 +380,10 @@ export default function BoardSchedulePage() {
   }, [board, isThreePhase, certificateNumber, reportId, payload]);
 
   const handleSave = async () => {
-    if (!isUsable) { toast.error('Add a board reference and at least one circuit'); return; }
+    if (!isUsable) {
+      toast.error('Add a board reference and at least one circuit');
+      return;
+    }
     setSaving(true);
     try {
       const id = await persist();
@@ -313,7 +415,10 @@ export default function BoardSchedulePage() {
   });
 
   const openEmail = async () => {
-    if (!isUsable) { toast.error('Add a board reference and at least one circuit'); return; }
+    if (!isUsable) {
+      toast.error('Add a board reference and at least one circuit');
+      return;
+    }
     setSaving(true);
     try {
       // Save first — there is nothing to email until the row exists.
@@ -329,7 +434,10 @@ export default function BoardSchedulePage() {
   };
 
   const handleGenerate = async (type: 'door' | 'full') => {
-    if (!isUsable) { toast.error('Add a board reference and at least one circuit'); return; }
+    if (!isUsable) {
+      toast.error('Add a board reference and at least one circuit');
+      return;
+    }
 
     setGenerating(type);
     try {
@@ -431,24 +539,93 @@ export default function BoardSchedulePage() {
         <motion.section variants={itemVariants} className={pageCardCn}>
           <h2 className={pageSectionHeadingCn}>Client &amp; site</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-3">
-            <div><Label className={labelCn}>Client name</Label><Input value={board.clientName || ''} onChange={(e) => updateBoard('clientName', e.target.value)} className={inputCn} placeholder="e.g. Mrs J Hartley" /></div>
-            <div><Label className={labelCn}>Client email</Label><Input type="email" inputMode="email" autoCapitalize="none" autoCorrect="off" value={board.clientEmail || ''} onChange={(e) => updateBoard('clientEmail', e.target.value)} className={inputCn} placeholder="Used to send the schedule" /></div>
+            <div>
+              <Label className={labelCn}>Client name</Label>
+              <Input
+                value={board.clientName || ''}
+                onChange={(e) => updateBoard('clientName', e.target.value)}
+                className={inputCn}
+                placeholder="e.g. Mrs J Hartley"
+              />
+            </div>
+            <div>
+              <Label className={labelCn}>Client email</Label>
+              <Input
+                type="email"
+                inputMode="email"
+                autoCapitalize="none"
+                autoCorrect="off"
+                value={board.clientEmail || ''}
+                onChange={(e) => updateBoard('clientEmail', e.target.value)}
+                className={inputCn}
+                placeholder="Used to send the schedule"
+              />
+            </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-3">
-            <div><Label className={labelCn}>Site address</Label><Input value={board.installationAddress || ''} onChange={(e) => updateBoard('installationAddress', e.target.value)} className={inputCn} placeholder="Where the board is installed" /></div>
-            <div><Label className={labelCn}>Date</Label><Input type="date" value={board.scheduleDate || ''} onChange={(e) => updateBoard('scheduleDate', e.target.value)} className={inputCn} /></div>
+            <div>
+              <Label className={labelCn}>Site address</Label>
+              <Input
+                value={board.installationAddress || ''}
+                onChange={(e) => updateBoard('installationAddress', e.target.value)}
+                className={inputCn}
+                placeholder="Where the board is installed"
+              />
+            </div>
+            <div>
+              <Label className={labelCn}>Date</Label>
+              <Input
+                type="date"
+                value={board.scheduleDate || ''}
+                onChange={(e) => updateBoard('scheduleDate', e.target.value)}
+                className={inputCn}
+              />
+            </div>
           </div>
         </motion.section>
 
         <motion.section variants={itemVariants} className={pageCardCn}>
           <h2 className={pageSectionHeadingCn}>Board details</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div><Label className={labelCn}>Board Reference *</Label><Input value={board.boardRef} onChange={(e) => updateBoard('boardRef', e.target.value)} className={inputCn} placeholder="e.g. DB1" /></div>
-            <div><Label className={labelCn}>Location</Label><Input value={board.location} onChange={(e) => updateBoard('location', e.target.value)} className={inputCn} placeholder="e.g. Plant room" /></div>
+            <div>
+              <Label className={labelCn}>Board Reference *</Label>
+              <Input
+                value={board.boardRef}
+                onChange={(e) => updateBoard('boardRef', e.target.value)}
+                className={inputCn}
+                placeholder="e.g. DB1"
+              />
+            </div>
+            <div>
+              <Label className={labelCn}>Location</Label>
+              <Input
+                value={board.location}
+                onChange={(e) => updateBoard('location', e.target.value)}
+                className={inputCn}
+                placeholder="e.g. Plant room"
+              />
+            </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div><Label className={labelCn}>Board make / model</Label><Input value={board.boardMake || ''} onChange={(e) => updateBoard('boardMake', e.target.value)} className={inputCn} placeholder="e.g. Hager VML" /></div>
-            <div><Label className={labelCn}>Total ways</Label><Input value={board.totalWays || ''} onChange={(e) => updateBoard('totalWays', e.target.value)} className={inputCn} placeholder="e.g. 12" inputMode="numeric" /></div>
+            <div>
+              <Label className={labelCn}>Board make / model</Label>
+              <Input
+                value={board.boardMake || ''}
+                onChange={(e) => updateBoard('boardMake', e.target.value)}
+                className={inputCn}
+                placeholder="e.g. Hager VML"
+              />
+            </div>
+            <div>
+              <Label className={labelCn}>Total ways</Label>
+              <Input
+                value={board.totalWays || ''}
+                onChange={(e) => updateBoard('totalWays', e.target.value)}
+                className={inputCn}
+                placeholder="e.g. 12"
+                inputMode="numeric"
+              />
+            </div>
           </div>
         </motion.section>
 
@@ -460,7 +637,12 @@ export default function BoardSchedulePage() {
           <div>
             <Label className={labelCn}>Supply</Label>
             <div className="flex gap-2">
-              {([['Single phase', false], ['Three phase', true]] as const).map(([text, three]) => (
+              {(
+                [
+                  ['Single phase', false],
+                  ['Three phase', true],
+                ] as const
+              ).map(([text, three]) => (
                 <button
                   key={text}
                   type="button"
@@ -484,14 +666,46 @@ export default function BoardSchedulePage() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div><Label className={labelCn}>Main Switch</Label><Input value={board.mainSwitchRating} onChange={(e) => updateBoard('mainSwitchRating', e.target.value)} className={inputCn} placeholder="e.g. 100A DP" /></div>
-            <div><Label className={labelCn}>RCD Details</Label><Input value={board.rcdDetails} onChange={(e) => updateBoard('rcdDetails', e.target.value)} className={inputCn} placeholder="e.g. 63A 30mA" /></div>
+            <div>
+              <Label className={labelCn}>Main Switch</Label>
+              <Input
+                value={board.mainSwitchRating}
+                onChange={(e) => updateBoard('mainSwitchRating', e.target.value)}
+                className={inputCn}
+                placeholder="e.g. 100A DP"
+              />
+            </div>
+            <div>
+              <Label className={labelCn}>RCD Details</Label>
+              <Input
+                value={board.rcdDetails}
+                onChange={(e) => updateBoard('rcdDetails', e.target.value)}
+                className={inputCn}
+                placeholder="e.g. 63A 30mA"
+              />
+            </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {/* Both are recorded per board on EICRs, so they import cleanly. */}
-            <div><Label className={labelCn}>SPD</Label><Input value={board.spd || ''} onChange={(e) => updateBoard('spd', e.target.value)} className={inputCn} placeholder="e.g. Type 2 fitted" /></div>
-            <div><Label className={labelCn}>Fed from</Label><Input value={board.fedFrom || ''} onChange={(e) => updateBoard('fedFrom', e.target.value)} className={inputCn} placeholder="e.g. Main DB, way 6" /></div>
+            <div>
+              <Label className={labelCn}>SPD</Label>
+              <Input
+                value={board.spd || ''}
+                onChange={(e) => updateBoard('spd', e.target.value)}
+                className={inputCn}
+                placeholder="e.g. Type 2 fitted"
+              />
+            </div>
+            <div>
+              <Label className={labelCn}>Fed from</Label>
+              <Input
+                value={board.fedFrom || ''}
+                onChange={(e) => updateBoard('fedFrom', e.target.value)}
+                className={inputCn}
+                placeholder="e.g. Main DB, way 6"
+              />
+            </div>
           </div>
         </motion.section>
 
@@ -508,7 +722,10 @@ export default function BoardSchedulePage() {
           {wayNumbers.map((wayNumber) => {
             const rows = board.circuits.filter((c) => c.circuitNumber === wayNumber);
             return (
-              <div key={wayNumber} className="rounded-xl border border-white/[0.14] bg-white/[0.03] p-3 space-y-3">
+              <div
+                key={wayNumber}
+                className="rounded-xl border border-white/[0.14] bg-white/[0.03] p-3 space-y-3"
+              >
                 <div className="flex items-center justify-between">
                   <span className="text-[13px] font-semibold text-white">Way {wayNumber}</span>
                   {wayNumbers.length > 1 && (
@@ -547,16 +764,32 @@ export default function BoardSchedulePage() {
                     <div className="flex-1 min-w-0 space-y-2 sm:space-y-0 sm:flex sm:items-end sm:gap-3">
                       <div className="sm:flex-1 sm:min-w-0">
                         <Label className={labelCn}>Description</Label>
-                        <Input value={circuit.description} onChange={(e) => updateCircuit(circuit.id, 'description', e.target.value)} className={inputCn} placeholder="e.g. Sockets — kitchen ring" />
+                        <Input
+                          value={circuit.description}
+                          onChange={(e) => updateCircuit(circuit.id, 'description', e.target.value)}
+                          className={inputCn}
+                          placeholder="e.g. Sockets — kitchen ring"
+                        />
                       </div>
                       <div className="grid grid-cols-2 gap-3 sm:flex sm:gap-3">
                         <div className="sm:w-20">
                           <Label className={labelCn}>Rating</Label>
-                          <Input value={circuit.rating} onChange={(e) => updateCircuit(circuit.id, 'rating', e.target.value)} className={cn(inputCn, 'text-center')} placeholder="A" inputMode="numeric" />
+                          <Input
+                            value={circuit.rating}
+                            onChange={(e) => updateCircuit(circuit.id, 'rating', e.target.value)}
+                            className={cn(inputCn, 'text-center')}
+                            placeholder="A"
+                            inputMode="numeric"
+                          />
                         </div>
                         <div className="sm:w-32">
                           <Label className={labelCn}>Device</Label>
-                          <Input value={circuit.type} onChange={(e) => updateCircuit(circuit.id, 'type', e.target.value)} className={inputCn} placeholder="MCB" />
+                          <Input
+                            value={circuit.type}
+                            onChange={(e) => updateCircuit(circuit.id, 'type', e.target.value)}
+                            className={inputCn}
+                            placeholder="MCB"
+                          />
                         </div>
                       </div>
                     </div>
@@ -566,7 +799,10 @@ export default function BoardSchedulePage() {
             );
           })}
 
-          <button onClick={addWay} className="h-11 w-full rounded-xl border border-dashed border-white/[0.3] text-[13px] font-semibold text-white hover:border-elec-yellow/60 hover:text-elec-yellow transition-colors touch-manipulation active:scale-[0.98]">
+          <button
+            onClick={addWay}
+            className="h-11 w-full rounded-xl border border-dashed border-white/[0.3] text-[13px] font-semibold text-white hover:border-elec-yellow/60 hover:text-elec-yellow transition-colors touch-manipulation active:scale-[0.98]"
+          >
             Add Way
           </button>
         </motion.section>
@@ -574,7 +810,12 @@ export default function BoardSchedulePage() {
         {/* Notes */}
         <motion.section variants={itemVariants} className={cn(pageCardCn, 'space-y-3')}>
           <h2 className={pageSectionHeadingCn}>Notes</h2>
-          <Textarea value={board.notes || ''} onChange={(e) => updateBoard('notes', e.target.value)} className={pageTextareaCn} placeholder="Additional notes..." />
+          <Textarea
+            value={board.notes || ''}
+            onChange={(e) => updateBoard('notes', e.target.value)}
+            className={pageTextareaCn}
+            placeholder="Additional notes..."
+          />
         </motion.section>
 
         {/*
@@ -669,7 +910,10 @@ export default function BoardSchedulePage() {
           // persist() runs before the dialog opens, so this should never fire —
           // but sending with an empty reportId would have the edge function
           // look up a report that cannot exist and fail with a confusing error.
-          if (!reportId) { toast.error('Save the schedule before sending it'); return; }
+          if (!reportId) {
+            toast.error('Save the schedule before sending it');
+            return;
+          }
           await sendCertificateEmail({ recipientEmail: email, cc, customMessage: message });
         }}
       />

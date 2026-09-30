@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
 import SignatureInput from '@/components/signature/SignatureInput';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import BuildingRegsNotification from '@/components/inspection/shared/BuildingRegsNotification';
 import { QUALIFICATION_LEVELS, SCHEME_PROVIDERS } from '@/constants/minorWorksOptions';
 import { useMinorWorksSmartForm } from '@/hooks/useMinorWorksSmartForm';
 import { useToast } from '@/hooks/use-toast';
@@ -178,7 +179,7 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
             <MobileSelectPicker
               value={formData.schemeProvider || ''}
               onValueChange={(v) => onUpdate('schemeProvider', v)}
-              options={SCHEME_PROVIDERS.map((o) => ({ value: o.value, label: o.label }))}
+              options={SCHEME_PROVIDERS.filter((o) => ['niceic', 'napit', 'stroma', 'none', 'other'].includes(o.value) || o.value === formData.schemeProvider).map((o) => ({ value: o.value, label: o.value === 'none' ? 'Not registered' : o.label }))}
               placeholder="Provider"
               title="Scheme Provider"
               triggerClassName={pickerTriggerCn}
@@ -238,13 +239,27 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
         <div className="grid grid-cols-3 gap-2">
           {[
             { field: 'ietDeclaration', label: 'BS 7671 *' },
-            { field: 'partPNotification', label: 'Part P' },
-            { field: 'copyProvided', label: 'Copy Given' },
+            { field: 'partPNotification', label: 'Part P notifiable' },
+            { field: 'copyProvided', label: 'Copy given' },
           ].map(({ field, label }) => (
             <button
               key={field}
               type="button"
-              onClick={() => { haptic.light(); onUpdate(field, !formData[field]); }}
+              onClick={() => {
+                haptic.light();
+                const next = !formData[field];
+                onUpdate(field, next);
+                // The Part P tick IS the "notifiable?" answer — keep the shared
+                // Building Regs keys in step so the tracker and the certificate agree.
+                if (field === 'partPNotification') {
+                  onUpdate('buildingRegsAnswered', true);
+                  onUpdate('buildingRegsRequired', next);
+                  if (!next) {
+                    onUpdate('buildingRegsViaScheme', false);
+                    onUpdate('buildingRegsSubmitted', false);
+                  }
+                }
+              }}
               className={cn(
                 'min-h-11 rounded-xl px-2 py-1.5 text-xs transition-all touch-manipulation active:scale-[0.98]',
                 formData[field]
@@ -256,6 +271,13 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
             </button>
           ))}
         </div>
+
+        {formData.partPNotification && (
+          <div className="border-t border-white/[0.1] pt-4">
+            <h3 className="mb-3 text-sm font-semibold text-white">Building Control</h3>
+            <BuildingRegsNotification formData={formData} onUpdate={onUpdate} mode="routeOnly" />
+          </div>
+        )}
 
         <FormField label="Additional notes">
           <Textarea

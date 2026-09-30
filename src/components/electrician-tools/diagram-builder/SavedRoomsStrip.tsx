@@ -69,7 +69,7 @@ export const SavedRoomsStrip = ({
                 )}
               >
                 {/* Thumbnail — bumped from 60x45 to 80x60 for legibility */}
-                <div className="w-[80px] h-[60px] rounded-t-lg overflow-hidden bg-white/5">
+                <div className="w-[72px] h-[44px] sm:w-[80px] sm:h-[60px] rounded-t-lg overflow-hidden bg-white/5">
                   {room.thumbnail ? (
                     <img
                       src={room.thumbnail}
@@ -87,7 +87,7 @@ export const SavedRoomsStrip = ({
                 {/* Name */}
                 <span
                   className={cn(
-                    'text-[11px] truncate w-[80px] text-center px-1 py-1',
+                    'text-[11px] truncate w-[72px] sm:w-[80px] text-center px-1 py-1',
                     isActive ? 'text-elec-yellow font-semibold' : 'text-white'
                   )}
                 >
@@ -96,27 +96,47 @@ export const SavedRoomsStrip = ({
 
                 {/* Delete button — bumped from 20px to 28px with proper
                     touch affordance. Confirms before deleting because a
-                    saved room can hold 50+ placed symbols. */}
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    haptic.warning();
-                    setPendingDelete(room);
-                  }}
-                  aria-label={`Delete room ${room.name}`}
-                  /* The red dot stays small so it does not cover the thumbnail,
+                    saved room can hold 50+ placed symbols. Only on the open
+                    sheet: a red cross on every tile read as an alarm and put
+                    a delete beside every tap meant to switch sheets. */}
+                {isActive && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      haptic.warning();
+                      setPendingDelete(room);
+                    }}
+                    aria-label={`Delete room ${room.name}`}
+                    /* The red dot stays small so it does not cover the thumbnail,
                      but the tappable area is padded out to 44px. A 28px target
                      is below the minimum anywhere in this app, and this one
                      DELETES a saved room — the worst place to make someone aim. */
-                  className="absolute -top-3 -right-3 h-11 w-11 flex items-center justify-center touch-manipulation active:scale-90 transition-transform"
-                >
-                  <span className="h-7 w-7 rounded-full bg-red-500 flex items-center justify-center shadow-md ring-2 ring-background">
-                    <X className="h-3.5 w-3.5 text-white" strokeWidth={2.5} />
-                  </span>
-                </button>
+                    className="absolute -top-3 -right-3 h-11 w-11 flex items-center justify-center touch-manipulation active:scale-90 transition-transform"
+                  >
+                    <span className="h-7 w-7 rounded-full bg-red-500 flex items-center justify-center shadow-md ring-2 ring-background">
+                      <X className="h-3.5 w-3.5 text-white" strokeWidth={2.5} />
+                    </span>
+                  </button>
+                )}
               </div>
             );
           })}
+
+          {/* The sheet being drawn, before it is saved. With no tile of its
+              own, the strip looked as if nothing was open. */}
+          {activeRoomId === null && (
+            <div
+              aria-current="true"
+              className="relative flex-shrink-0 flex flex-col items-center rounded-lg ring-2 ring-elec-yellow bg-white/[0.06]"
+            >
+              <div className="w-[72px] h-[44px] sm:w-[80px] sm:h-[60px] rounded-t-lg border-b border-dashed border-white/20 flex items-center justify-center">
+                <span className="text-[10px] font-medium text-white">Save to add</span>
+              </div>
+              <span className="text-[11px] truncate w-[72px] sm:w-[80px] text-center px-1 py-1 text-elec-yellow font-semibold">
+                New sheet
+              </span>
+            </div>
+          )}
 
           {/* New room button */}
           <button
@@ -124,8 +144,8 @@ export const SavedRoomsStrip = ({
               haptic.light();
               onNewRoom();
             }}
-            aria-label="Create new room"
-            className="flex-shrink-0 w-[80px] h-[83px] rounded-lg border border-dashed border-white/30 flex items-center justify-center touch-manipulation hover:border-elec-yellow/50 active:scale-95 transition-all"
+            aria-label="Add a sheet"
+            className="flex-shrink-0 w-[72px] h-[67px] sm:w-[80px] sm:h-[83px] rounded-lg border border-dashed border-white/30 flex items-center justify-center touch-manipulation hover:border-elec-yellow/50 active:scale-95 transition-all"
           >
             <Plus className="h-5 w-5 text-white" />
           </button>

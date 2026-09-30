@@ -817,6 +817,10 @@ export default function MaximumZsValuesPage() {
       howToDescription="Step-by-step guide to looking up maximum Zs values from BS 7671 tables, applying the 0.8 temperature correction factor, and comparing measured Zs values."
       faqs={faqs}
       relatedPages={relatedPages}
+      // This page offers its own download in section 1 — the default
+      // cheatsheet box would sit beside it and split the click.
+      leadMagnet={false}
+      heroCtaLabel="Check every Zs reading automatically"
       ctaHeading="Look up maximum Zs values instantly on site"
       ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site testing and certification. Instant Zs lookup, auto-validation, voice test entry, 70+ calculators. 7-day free trial, cancel anytime."
     />

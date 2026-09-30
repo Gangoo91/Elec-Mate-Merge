@@ -25737,7 +25737,7 @@
   // scripts/stripe-render/lifecycle-harness.tsx
   init_define_import_meta_env();
   var import_react13 = __toESM(require_react(), 1);
-  var import_client8 = __toESM(require_client(), 1);
+  var import_client9 = __toESM(require_client(), 1);
 
   // node_modules/@tanstack/react-query/build/modern/index.js
   init_define_import_meta_env();
@@ -44987,6 +44987,22 @@
   var isQuoteOpen = (q2) => !isQuoteWon(q2) && !isQuoteLost(q2) && !isQuoteInvoiced(q2);
   var isQuoteDraft = (q2) => q2.status === "draft" && isQuoteOpen(q2);
 
+  // src/utils/invoice-number-generator.ts
+  init_define_import_meta_env();
+  var generateSequentialInvoiceNumber = async () => {
+    try {
+      const { data, error: error2 } = await supabase.rpc("generate_invoice_number");
+      if (error2) {
+        console.warn("Error calling generate_invoice_number function:", error2);
+        return `Invoice/T${Date.now().toString().slice(-6)}`;
+      }
+      return data;
+    } catch (error2) {
+      console.warn("Error generating invoice number, using fallback:", error2);
+      return `Invoice/T${Date.now().toString().slice(-6)}`;
+    }
+  };
+
   // src/hooks/useQuoteStorage.ts
   var parseNumber = (value) => {
     if (typeof value === "number") {
@@ -45446,15 +45462,6 @@
         totalQuotes: savedQuotes.length
       };
     }, [savedQuotes]);
-    const generateInvoiceNumber = (quoteNumber) => {
-      if (quoteNumber.startsWith("Q")) {
-        return "INV" + quoteNumber.slice(1);
-      }
-      if (quoteNumber.startsWith("QTE")) {
-        return quoteNumber.replace("QTE", "INV");
-      }
-      return `INV-${Date.now().toString(36).toUpperCase()}`;
-    };
     const updateQuoteStatus = async (quoteId, status, tags, acceptanceStatus) => {
       try {
         let raiseToDecrement = null;
@@ -45468,7 +45475,7 @@
             updateData.work_completion_date = (/* @__PURE__ */ new Date()).toISOString();
             const quote = savedQuotes.find((q2) => q2.id === quoteId);
             if (quote && !quote.invoice_raised) {
-              const invoiceNumber = generateInvoiceNumber(quote.quoteNumber);
+              const invoiceNumber = await generateSequentialInvoiceNumber();
               const invoiceDate = /* @__PURE__ */ new Date();
               const invoiceDueDate = /* @__PURE__ */ new Date();
               invoiceDueDate.setDate(invoiceDueDate.getDate() + 30);
@@ -51679,7 +51686,7 @@
     ] });
   };
   var qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
-  (0, import_client8.createRoot)(document.getElementById("root")).render(
+  (0, import_client9.createRoot)(document.getElementById("root")).render(
     /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(QueryClientProvider, { client: qc, children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Driver, {}) })
   );
 })();

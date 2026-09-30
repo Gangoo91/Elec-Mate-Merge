@@ -222,33 +222,31 @@ export function validateMinorWorksFormData(formData: any): ValidationResult {
     }
   }
 
-  // RCD/RCBO test validation (Reg 643.10) - Operating time requirements
+  // RCD/RCBO verification — Reg 643.7.3.201: an AC test at rated residual
+  // operating current (1× IΔn); a general (non-delay) device must disconnect
+  // within 300 ms, an S-type between 130 and 500 ms. The 5× reading is
+  // optional and the ½× "no trip" test is not part of the regulation.
+  //
+  // Until 30 Sep 2026 this read `rcdOperatingTime`, a key the form never
+  // writes (the form stores `rcdOneX`), so the 300 ms check never ran and the
+  // "not recorded" warning fired on every certificate with an RCD.
   if (formData.protectionRcd || formData.protectionRcbo) {
-    if (formData.rcdOperatingTime) {
-      const operatingTime = parseFloat(formData.rcdOperatingTime);
-      const rcdRating = parseFloat(formData.rcdRating || '30');
-
-      // Standard: 30mA RCD should trip within 40ms at 5× test current
-      // General purpose RCDs: ≤300ms at 1× rated current, ≤40ms at 5× rated current
-      if (!isNaN(operatingTime)) {
-        if (operatingTime > 300) {
-          allErrors.push({
-            field: 'rcdOperatingTime',
-            message: `RCD operating time (${operatingTime}ms) exceeds 300ms maximum at rated current`,
-            severity: 'error',
-          });
-        } else if (operatingTime > 40 && rcdRating <= 30) {
-          allWarnings.push({
-            field: 'rcdOperatingTime',
-            message: `30mA RCD operating time (${operatingTime}ms) exceeds recommended 40ms at 5× test current`,
-            severity: 'warning',
-          });
-        }
+    const oneX = parseFloat(String(formData.rcdOneX ?? ''));
+    const isSType = /s|delay/i.test(String(formData.rcdType ?? ''));
+    if (!isNaN(oneX)) {
+      if (isSType ? oneX < 130 || oneX > 500 : oneX > 300) {
+        allErrors.push({
+          field: 'rcdOneX',
+          message: isSType
+            ? `S-type RCD disconnected in ${oneX} ms at 1× IΔn — must be between 130 and 500 ms (Reg 643.7.3.201)`
+            : `RCD disconnected in ${oneX} ms at 1× IΔn — must be within 300 ms (Reg 643.7.3.201)`,
+          severity: 'error',
+        });
       }
     } else {
       allWarnings.push({
-        field: 'rcdOperatingTime',
-        message: 'RCD/RCBO installed but operating time not recorded. Test required per Reg 643.10',
+        field: 'rcdOneX',
+        message: 'RCD/RCBO fitted but the 1× IΔn disconnection time is not recorded (Reg 643.7.3.201)',
         severity: 'warning',
       });
     }
@@ -328,6 +326,7 @@ export function validateMinorWorksFormData(formData: any): ValidationResult {
 
   // Insulation resistance validation (Reg 643.3) — A4:2026 model form has L-N + L-E columns.
   const insulationFields = [
+    'insulationLiveLive',
     'insulationLiveNeutral',
     'insulationLiveEarth',
   ];
@@ -338,10 +337,17 @@ export function validateMinorWorksFormData(formData: any): ValidationResult {
       if (/^>\s*\d+/.test(strVal) || strVal === '∞' || strVal.toLowerCase() === 'infinity') return;
       const value = parseFloat(strVal);
       if (!isNaN(value) && value < 1.0) {
-        allErrors.push({
+        // Below the Table 64 minimum. Four certificates went out like this in
+        // the six months to 30 Sep 2026 — the reading blocks issue unless the
+        // electrician has recorded why under "comments on the existing
+        // installation" (Reg 644.1.2), in which case it prints and is warned.
+        const explained = String(formData.commentsOnExistingInstallation ?? '').trim().length >= 10;
+        (explained ? allWarnings : allErrors).push({
           field,
-          message: `${field.replace(/([A-Z])/g, ' $1').toLowerCase()} (${value}MΩ) is below 1.0MΩ minimum requirement — Reg 643.3`,
-          severity: 'error',
+          message: explained
+            ? `${field.replace(/([A-Z])/g, ' $1').toLowerCase()} (${value} MΩ) is below the 1 MΩ minimum (Reg 643.3) — issuing on the strength of your comment on the existing installation`
+            : `${field.replace(/([A-Z])/g, ' $1').toLowerCase()} (${value} MΩ) is below the 1 MΩ minimum (Reg 643.3). Record why under comments on the existing installation to issue.`,
+          severity: explained ? 'warning' : 'error',
         });
       }
     }

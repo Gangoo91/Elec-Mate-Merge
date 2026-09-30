@@ -1,3 +1,5 @@
+import { formatBoardsForFormData } from '@/utils/boardMigration';
+import { forgetPlanCertificate, readPlanCertificate } from '@/utils/planCertificateHandoff';
 import { readCertificatePrefill } from '@/utils/certificatePrefill';
 import React, {
   createContext,
@@ -436,8 +438,17 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
     enabled: uiPrefs.autosave_drafts,
   });
 
+  // A certificate started from the floor plan (?fromPlan=…) is new work the
+  // user asked for with those circuits. Read on the first render, before the
+  // plan effect uses the hand-off up. Neither local restore below may merge
+  // an old draft over it: the IndexedDB one resolves AFTER the plan is
+  // applied and replaced its circuits with a stale draft's — seen 30 Sep, a
+  // plan's five circuits came out as eleven from an old board scan.
+  const startedFromPlanRef = useRef(!initialReportId && !!readPlanCertificate());
+
   // Load saved data from IndexedDB on mount
   useEffect(() => {
+    if (startedFromPlanRef.current) return;
     const loadData = async () => {
       const savedData = await loadFromLocalStorage();
       if (savedData?.formData) {
@@ -463,7 +474,7 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
   // Auto-recover drafts for NEW reports
   const draftRecoveryAttempted = useRef(false);
   useEffect(() => {
-    if (initialReportId || draftRecoveryAttempted.current) return;
+    if (initialReportId || draftRecoveryAttempted.current || startedFromPlanRef.current) return;
     draftRecoveryAttempted.current = true;
 
     const draft = draftStorage.loadDraft('eic', null);
@@ -722,6 +733,34 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
     }
   }, [designData, hasLoadedDesign, designId, initialReportId, toast, updateDesignStatus]);
 
+  // Pre-populate from the floor planner (?fromPlan=…): its boards and board
+  // schedule become the certificate's boards and schedule of circuits —
+  // numbered as the plan and its PDF are — so only the readings are left.
+  const [hasLoadedPlan, setHasLoadedPlan] = useState(false);
+  useEffect(() => {
+    if (hasLoadedPlan || initialReportId) return;
+    const plan = readPlanCertificate();
+    setHasLoadedPlan(true);
+    if (!plan) return;
+    forgetPlanCertificate();
+    setFormData((prev) => ({
+      ...prev,
+      ...formatBoardsForFormData(plan.distributionBoards, plan.scheduleOfTests),
+      installationAddress: plan.installationAddress || prev.installationAddress,
+      clientName: plan.clientName || prev.clientName,
+      phases: plan.phases,
+      supplyVoltage: plan.supplyVoltage,
+      earthingArrangement: plan.earthingArrangement,
+      // How the plan finds this certificate's readings to show on the drawing.
+      ...(plan.sourcePlan ? { sourcePlan: plan.sourcePlan } : {}),
+    }));
+    const circuits = plan.scheduleOfTests.filter((c) => !c.isSpare).length;
+    toast({
+      title: 'Circuits added from the floor plan',
+      description: `${circuits} circuit${circuits === 1 ? '' : 's'} on ${plan.distributionBoards.length} board${plan.distributionBoards.length === 1 ? '' : 's'}, numbered as on the plan. Add the test readings on site.`,
+    });
+  }, [hasLoadedPlan, initialReportId, toast]);
+
   // Load from cloud if initialReportId is provided
   useEffect(() => {
     if (initialReportId && authCheckComplete) {
@@ -775,154 +814,162 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
         return;
       }
 
-      loadFromCloudRef.current(initialReportId).then((cloudResult) => {
-        if (cloudResult && cloudResult.data && typeof cloudResult.data === 'object') {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const data = cloudResult.data as any;
-          // Use the database timestamp from cloudResult (not data.updated_at which is the form JSON and won't have this field)
-          const cloudTime = new Date(
-            cloudResult.updatedAt || cloudResult.lastSyncedAt || data.updated_at || 0
-          ).getTime();
-          const localTime = localDraft?.lastModified
-            ? new Date(localDraft.lastModified).getTime()
-            : 0;
+      loadFromCloudRef
+        .current(initialReportId)
+        .then((cloudResult) => {
+          if (cloudResult && cloudResult.data && typeof cloudResult.data === 'object') {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const data = cloudResult.data as any;
+            // Use the database timestamp from cloudResult (not data.updated_at which is the form JSON and won't have this field)
+            const cloudTime = new Date(
+              cloudResult.updatedAt || cloudResult.lastSyncedAt || data.updated_at || 0
+            ).getTime();
+            const localTime = localDraft?.lastModified
+              ? new Date(localDraft.lastModified).getTime()
+              : 0;
 
-          console.log('[EIC] Comparing timestamps - Cloud:', cloudTime, 'Local:', localTime);
+            console.log('[EIC] Comparing timestamps - Cloud:', cloudTime, 'Local:', localTime);
 
-          const integrity = validateLoadedData(data, 'eic');
+            const integrity = validateLoadedData(data, 'eic');
 
-          if (!integrity.hasData) {
-            logIntegrityEvent('load_empty', {
-              reportType: 'eic',
-              reportId: initialReportId,
-              fieldCount: integrity.fieldCount,
-              error: integrity.warnings.join('; '),
-            });
+            if (!integrity.hasData) {
+              logIntegrityEvent('load_empty', {
+                reportType: 'eic',
+                reportId: initialReportId,
+                fieldCount: integrity.fieldCount,
+                error: integrity.warnings.join('; '),
+              });
 
-            if (localDraft?.data) {
-              const localIntegrity = validateLoadedData(localDraft.data, 'eic');
-              if (localIntegrity.hasData) {
-                console.log('[EIC] Cloud data empty, using local backup');
-                const certificateNumber =
-                  localDraft.data.certificateNumber || formData.certificateNumber;
-                setFormData({ ...localDraft.data, certificateNumber });
-                seedObservations(localDraft.data);
-                setCurrentReportId(initialReportId);
-                toast({
-                  title: 'Data recovered from local backup',
-                  description: 'Cloud data appeared empty. Your local version was restored.',
-                });
-                return;
+              if (localDraft?.data) {
+                const localIntegrity = validateLoadedData(localDraft.data, 'eic');
+                if (localIntegrity.hasData) {
+                  console.log('[EIC] Cloud data empty, using local backup');
+                  const certificateNumber =
+                    localDraft.data.certificateNumber || formData.certificateNumber;
+                  setFormData({ ...localDraft.data, certificateNumber });
+                  seedObservations(localDraft.data);
+                  setCurrentReportId(initialReportId);
+                  toast({
+                    title: 'Data recovered from local backup',
+                    description: 'Cloud data appeared empty. Your local version was restored.',
+                  });
+                  return;
+                }
               }
             }
-          }
 
-          // A newer local draft that shows FEWER circuits or readings than the cloud
-          // is a stale snapshot, not a newer version — see utils/localDraftGuard.ts.
-          const staleLocal =
-            localDraft?.data && localTime > cloudTime
-              ? localDraftHidesCloudResults(localDraft.data, data)
-              : null;
-          if (staleLocal?.hides) {
-            console.warn('[EIC] Local draft is newer but holds fewer readings than the cloud — merging, cloud rows kept', staleLocal);
-            logIntegrityEvent('load_empty', {
-              reportType: 'eic',
-              reportId: initialReportId,
-              fieldCount: staleLocal.cloudReadings,
-              error: `newer-local-draft-hides-${staleLocal.array}; merged (local ${staleLocal.localRows} rows/${staleLocal.localReadings} readings vs cloud ${staleLocal.cloudRows}/${staleLocal.cloudReadings})`,
-            });
-          }
-          if (localDraft?.data && localTime > cloudTime) {
-            console.log('[EIC] Using LOCAL draft (newer than cloud)');
-            // Guard (mirrors EICR): a newer local draft with ZERO observations while
-            // the cloud has some is almost always a stale-session artifact — e.g. a
-            // draft autosaved before observations hydrated — not a deliberate
-            // "delete every observation". Keep the cloud observations in that case.
-            const localObs = Array.isArray(localDraft.data.observations)
-              ? localDraft.data.observations
-              : [];
-            const cloudObs = Array.isArray(data.observations) ? data.observations : [];
-            const rescueObs = localObs.length === 0 && cloudObs.length > 0;
-            if (rescueObs) {
+            // A newer local draft that shows FEWER circuits or readings than the cloud
+            // is a stale snapshot, not a newer version — see utils/localDraftGuard.ts.
+            const staleLocal =
+              localDraft?.data && localTime > cloudTime
+                ? localDraftHidesCloudResults(localDraft.data, data)
+                : null;
+            if (staleLocal?.hides) {
               console.warn(
-                '[EIC] Local draft is newer but has no observations while cloud has',
-                cloudObs.length,
-                '— keeping cloud observations to avoid loss'
+                '[EIC] Local draft is newer but holds fewer readings than the cloud — merging, cloud rows kept',
+                staleLocal
               );
               logIntegrityEvent('load_empty', {
                 reportType: 'eic',
                 reportId: initialReportId,
-                fieldCount: cloudObs.length,
-                error: 'newer-local-draft-missing-observations; kept cloud observations',
+                fieldCount: staleLocal.cloudReadings,
+                error: `newer-local-draft-hides-${staleLocal.array}; merged (local ${staleLocal.localRows} rows/${staleLocal.localReadings} readings vs cloud ${staleLocal.cloudRows}/${staleLocal.cloudReadings})`,
               });
             }
+            if (localDraft?.data && localTime > cloudTime) {
+              console.log('[EIC] Using LOCAL draft (newer than cloud)');
+              // Guard (mirrors EICR): a newer local draft with ZERO observations while
+              // the cloud has some is almost always a stale-session artifact — e.g. a
+              // draft autosaved before observations hydrated — not a deliberate
+              // "delete every observation". Keep the cloud observations in that case.
+              const localObs = Array.isArray(localDraft.data.observations)
+                ? localDraft.data.observations
+                : [];
+              const cloudObs = Array.isArray(data.observations) ? data.observations : [];
+              const rescueObs = localObs.length === 0 && cloudObs.length > 0;
+              if (rescueObs) {
+                console.warn(
+                  '[EIC] Local draft is newer but has no observations while cloud has',
+                  cloudObs.length,
+                  '— keeping cloud observations to avoid loss'
+                );
+                logIntegrityEvent('load_empty', {
+                  reportType: 'eic',
+                  reportId: initialReportId,
+                  fieldCount: cloudObs.length,
+                  error: 'newer-local-draft-missing-observations; kept cloud observations',
+                });
+              }
+              const certificateNumber =
+                localDraft.data.certificateNumber || formData.certificateNumber;
+              // Local wins where it holds a value, the cloud fills every blank, rows
+              // are matched by id — neither side's readings can be lost (Rovell, 28 Sep).
+              const mergedData = {
+                ...mergeLocalOntoCloud(localDraft.data, data),
+                certificateNumber,
+              };
+              setFormData(mergedData);
+              seedObservations(mergedData);
+              logIntegrityEvent('load_success', {
+                reportType: 'eic',
+                reportId: initialReportId,
+                fieldCount: Object.keys(localDraft.data).length,
+                source: 'local',
+              });
+              toast({
+                title: 'Recovered unsaved changes',
+                description: 'Your recent edits have been restored.',
+              });
+            } else {
+              console.log('[EIC] Using CLOUD data');
+              const certificateNumber = data.certificateNumber || formData.certificateNumber;
+              setFormData({ ...data, certificateNumber });
+              seedObservations(data);
+              logIntegrityEvent('load_success', {
+                reportType: 'eic',
+                reportId: initialReportId,
+                fieldCount: integrity.fieldCount,
+                source: 'cloud',
+              });
+            }
+            setCurrentReportId(initialReportId);
+          } else if (localDraft?.data) {
+            console.log('[EIC] Cloud load failed, using local draft');
             const certificateNumber =
               localDraft.data.certificateNumber || formData.certificateNumber;
-            // Local wins where it holds a value, the cloud fills every blank, rows
-            // are matched by id — neither side's readings can be lost (Rovell, 28 Sep).
-            const mergedData = {
-              ...mergeLocalOntoCloud(localDraft.data, data),
-              certificateNumber,
-            };
-            setFormData(mergedData);
-            seedObservations(mergedData);
-            logIntegrityEvent('load_success', {
+            setFormData({ ...localDraft.data, certificateNumber });
+            seedObservations(localDraft.data);
+            setCurrentReportId(initialReportId);
+            logIntegrityEvent('recovery_success', {
               reportType: 'eic',
               reportId: initialReportId,
-              fieldCount: Object.keys(localDraft.data).length,
               source: 'local',
             });
             toast({
-              title: 'Recovered unsaved changes',
-              description: 'Your recent edits have been restored.',
+              title: 'Loaded from local storage',
+              description: 'Cloud sync will retry automatically.',
             });
           } else {
-            console.log('[EIC] Using CLOUD data');
-            const certificateNumber = data.certificateNumber || formData.certificateNumber;
-            setFormData({ ...data, certificateNumber });
-            seedObservations(data);
-            logIntegrityEvent('load_success', {
+            loadFailedRef.current = true;
+            logIntegrityEvent('recovery_failed', {
               reportType: 'eic',
               reportId: initialReportId,
-              fieldCount: integrity.fieldCount,
-              source: 'cloud',
+              error: 'No data found in cloud or local',
             });
+            toast({
+              title: 'Certificate not found',
+              description:
+                'It may have been deleted, or it belongs to another account. Nothing has been changed.',
+              variant: 'destructive',
+            });
+            // Back to the list rather than a form that can neither load nor save.
+            navigate('/electrician/inspection-testing', { replace: true });
           }
-          setCurrentReportId(initialReportId);
-        } else if (localDraft?.data) {
-          console.log('[EIC] Cloud load failed, using local draft');
-          const certificateNumber = localDraft.data.certificateNumber || formData.certificateNumber;
-          setFormData({ ...localDraft.data, certificateNumber });
-          seedObservations(localDraft.data);
-          setCurrentReportId(initialReportId);
-          logIntegrityEvent('recovery_success', {
-            reportType: 'eic',
-            reportId: initialReportId,
-            source: 'local',
-          });
-          toast({
-            title: 'Loaded from local storage',
-            description: 'Cloud sync will retry automatically.',
-          });
-        } else {
-          loadFailedRef.current = true;
-          logIntegrityEvent('recovery_failed', {
-            reportType: 'eic',
-            reportId: initialReportId,
-            error: 'No data found in cloud or local',
-          });
-          toast({
-            title: 'Certificate not found',
-            description: 'It may have been deleted, or it belongs to another account. Nothing has been changed.',
-            variant: 'destructive',
-          });
-          // Back to the list rather than a form that can neither load nor save.
-          navigate('/electrician/inspection-testing', { replace: true });
-        }
-      }).finally(() => {
-        // Hydration complete — release the autosave gate (not after a failed load).
-        if (!loadFailedRef.current) setIsLoadingReport(false);
-      });
+        })
+        .finally(() => {
+          // Hydration complete — release the autosave gate (not after a failed load).
+          if (!loadFailedRef.current) setIsLoadingReport(false);
+        });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialReportId, authCheckComplete, isAuthenticated, isOnline]);
@@ -943,22 +990,19 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
     []
   );
 
-  const updateFormData = useCallback(
-    (field: string, value: any) => {
-      if (field === 'certificateNumber') {
-        console.warn('Certificate number cannot be modified');
-        return;
-      }
+  const updateFormData = useCallback((field: string, value: any) => {
+    if (field === 'certificateNumber') {
+      console.warn('Certificate number cannot be modified');
+      return;
+    }
 
-      setFormData((prev) => {
-        const resolvedValue = typeof value === 'function' ? value(prev[field]) : value;
-        const sanitizedValue =
-          typeof resolvedValue === 'string' ? sanitizeTextInput(resolvedValue) : resolvedValue;
-        return { ...prev, [field]: sanitizedValue };
-      });
-    },
-    []
-  );
+    setFormData((prev) => {
+      const resolvedValue = typeof value === 'function' ? value(prev[field]) : value;
+      const sanitizedValue =
+        typeof resolvedValue === 'string' ? sanitizeTextInput(resolvedValue) : resolvedValue;
+      return { ...prev, [field]: sanitizedValue };
+    });
+  }, []);
 
   const handleStartNew = () => {
     setShowStartNewDialog(true);
@@ -973,8 +1017,7 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
         const deviceCategory = circuit.device || 'MCB';
         const deviceCurve = circuit.curve || 'B';
 
-        const liveSize =
-          pickCableSize(ratingAmps, { description: circuit.label || '' }) || '2.5mm';
+        const liveSize = pickCableSize(ratingAmps, { description: circuit.label || '' }) || '2.5mm';
         const cpcSize = getCpcForLive(liveSize) || '1.5mm';
         const bsStandard = BS_STANDARD_MAP[deviceCategory] || 'MCB (BS EN 60898)';
         const maxZs = getMaxZsFromDeviceDetails(
@@ -1279,7 +1322,9 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
                   <Button
                     size="sm"
                     variant="outline"
-                    onClick={() => navigate('/electrician/inspection-testing?section=notifications')}
+                    onClick={() =>
+                      navigate('/electrician/inspection-testing?section=notifications')
+                    }
                   >
                     <Bell className="h-3 w-3 mr-1" />
                     View Notifications

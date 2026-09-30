@@ -555,13 +555,21 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
         return (
           <div className="border-t border-white/[0.1] pt-4 space-y-4">
             <h3 className="text-sm font-semibold text-white">Main switch</h3>
+            {/* EIC: the main board's switch is prefilled from the supply card
+                (EICElectricalInstallationSection) so it is asked once. Any edit
+                here clears the marker and the values are then the board's own. */}
+            {(board as any).mainSwitchSource === 'supply' && (
+              <p className="text-[11px] text-white">
+                From the supply main switch above — edit here only if this board's switch differs.
+              </p>
+            )}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-4 items-end">
               <div>
                 <label className={labelCn}>BS EN</label>
                 <MobileSelectPicker
                   value={board.mainSwitchBsEn || ''}
                   onValueChange={(value) => {
-                    onUpdate({ mainSwitchBsEn: value, mainSwitchType: '', mainSwitchRating: '' });
+                    onUpdate({ mainSwitchBsEn: value, mainSwitchType: '', mainSwitchRating: '', mainSwitchSource: '' });
                   }}
                   options={BS_EN_OPTIONS}
                   placeholder="Select"
@@ -573,7 +581,7 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
                 <label className={labelCn}>Type</label>
                 <MobileSelectPicker
                   value={board.mainSwitchType || ''}
-                  onValueChange={(value) => onUpdate('mainSwitchType', value)}
+                  onValueChange={(value) => onUpdate({ mainSwitchType: value, mainSwitchSource: '' })}
                   options={typeOptions}
                   placeholder="Select"
                   title="Type"
@@ -584,7 +592,7 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
                 <label className={labelCn}>Rating ({ratingUnit})</label>
                 <MobileSelectPicker
                   value={board.mainSwitchRating || ''}
-                  onValueChange={(value) => onUpdate('mainSwitchRating', value)}
+                  onValueChange={(value) => onUpdate({ mainSwitchRating: value, mainSwitchSource: '' })}
                   options={ratingOptions}
                   placeholder="Select"
                   title={`Rating (${ratingUnit})`}
@@ -627,7 +635,9 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
                   <button
                     key={p}
                     type="button"
-                    onClick={() => onUpdate('mainSwitchPoles', board.mainSwitchPoles === p ? '' : p)}
+                    onClick={() =>
+                      onUpdate({ mainSwitchPoles: board.mainSwitchPoles === p ? '' : p, mainSwitchSource: '' })
+                    }
                     className={cn(chipBase, 'sm:h-9 sm:w-16', board.mainSwitchPoles === p ? chipOn : chipOff)}
                   >
                     {p}

@@ -4,7 +4,15 @@ import { useHaptic } from '@/hooks/useHaptic';
 
 interface SymbolCountPanelProps {
   counts: { id: string; name: string; category: string; count: number }[];
-  circuits?: { ref: string; name: string; count: number; colour: string }[];
+  circuits?: {
+    ref: string;
+    label?: string;
+    name: string;
+    count: number;
+    colour: string;
+    /** From the linked EIC (planResults): a dot in the status colour, and its word. */
+    result?: { colour: string; text: string };
+  }[];
   hidden?: boolean;
   mobile?: boolean;
   bottomOffset?: number;
@@ -99,7 +107,7 @@ export const SymbolCountPanel = ({
                     haptic.selection();
                     setTab(id);
                   }}
-                  className={`h-9 flex-1 rounded-lg text-[13px] transition-colors touch-manipulation ${tab === id ? segOn : segOff}`}
+                  className={`h-11 flex-1 rounded-lg text-[13px] transition-colors touch-manipulation ${tab === id ? segOn : segOff}`}
                 >
                   {label}
                 </button>
@@ -149,8 +157,20 @@ export const SymbolCountPanel = ({
                       className="h-5 w-[3px] shrink-0 rounded-full"
                       style={{ backgroundColor: c.colour }}
                     />
-                    <span className="w-9 shrink-0 text-[13px] font-bold text-white">{c.ref}</span>
+                    <span className="min-w-9 shrink-0 text-[13px] font-bold tabular-nums text-white">
+                      {c.label ?? c.ref}
+                    </span>
                     <span className="min-w-0 flex-1 truncate text-[13px] text-white">{c.name}</span>
+                    {c.result && (
+                      <span className="flex shrink-0 items-center gap-1 text-[12px] text-white">
+                        <span
+                          aria-hidden
+                          className="h-2 w-2 rounded-full"
+                          style={{ backgroundColor: c.result.colour }}
+                        />
+                        {c.result.text}
+                      </span>
+                    )}
                     <span className="text-[13px] font-semibold tabular-nums text-white">
                       {c.count}
                     </span>

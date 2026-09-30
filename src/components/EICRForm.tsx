@@ -4,6 +4,19 @@ import { useEICRTabs, EICRTabValue } from '@/hooks/useEICRTabs';
 import { useEICRValidation } from '@/hooks/useEICRValidation';
 import { useQsReviewStatus } from '@/hooks/useQsReview';
 import { useCertPrefill } from '@/hooks/useCertPrefill';
+
+/**
+ * What a brand-new EICR is seeded with (EICRFormProvider). A field still at
+ * its seed has not been recorded by the inspector, so the last-cert prompt
+ * treats it as blank — otherwise a previous TT supply would never be offered
+ * over the seeded TN-C-S.
+ */
+const EICR_NEW_CERT_SEEDS: Record<string, unknown> = {
+  supplyVoltage: '230',
+  supplyFrequency: '50',
+  phases: '1',
+  earthingArrangement: 'TN-C-S',
+};
 import { SectionSkeleton } from '@/components/ui/page-skeleton';
 import { draftStorage } from '@/utils/draftStorage';
 import CertShellHeader, { type CertShellStep } from './inspection/shared/CertShellHeader';
@@ -22,6 +35,7 @@ import { pickCableSize, getCpcForLive, BS_STANDARD_MAP } from '@/utils/circuitDe
 import { getMaxZsWithRcd } from '@/utils/zsCalculations';
 import { scrollToTopForStepChange } from '@/utils/scroll';
 import { focusValidationField } from '@/utils/focusValidationField';
+import { CertLockedProvider } from '@/components/inspection/shared/CertLocked';
 
 // v3 cert shell — five steps across the top, matching the MW/EIC pattern.
 const EICR_STEPS: CertShellStep[] = [
@@ -172,6 +186,12 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
     buildPatch,
   } = useCertPrefill(prefillAddress, 'eicr', {
     excludeReportId: currentReportId || undefined,
+    reportId: currentReportId || undefined,
+    // Only fields still blank on THIS cert are offered, and "No thanks" is
+    // remembered — the banner used to sit on every tab of every cert at the
+    // address, including issued ones with the supply already recorded.
+    currentData: formData as Record<string, unknown>,
+    untouchedValues: EICR_NEW_CERT_SEEDS,
   });
 
   const handleApplyLastCert = () => {
@@ -399,6 +419,7 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
   const certNumber = formData.certificateNumber as string | undefined;
 
   return (
+    <CertLockedProvider locked={isLocked}>
     <div className="bg-background min-h-screen prevent-shortcuts">
       {/* ELE-1532 — floating back-to-top for the long inspection step */}
       <BackToTopButton />
@@ -442,8 +463,9 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
         />
       )}
 
-      {/* Last cert at this address — soft suggestion to copy supply/earthing data forward */}
-      {!isLocked && lastCertSuggestion && (
+      {/* Last cert at this address — soft suggestion to copy supply/earthing data
+          forward. Details only: that is where the fields it fills live. */}
+      {!isLocked && currentTab === 'details' && lastCertSuggestion && (
         <div className="px-4 pt-3 lg:px-8">
           <LastCertSuggestionCard
             suggestion={lastCertSuggestion}
@@ -670,6 +692,7 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
         </SheetContent>
       </Sheet>
     </div>
+    </CertLockedProvider>
   );
 };
 

@@ -183,6 +183,13 @@ const isWallFeature = (symbolId?: string | null): boolean =>
   !!symbolId && symbolId in FEATURE_WIDTH_PX;
 
 interface DiagramCanvasProps {
+  /** Way number per circuit ref, shown on the tags instead of the ref. */
+  circuitLabels?: Map<string, string>;
+  /**
+   * Test results on the drawing: each circuit's way-number tag shown as a
+   * badge in this colour (planResults). On screen only — never in the PDF.
+   */
+  resultMarks?: Map<string, string>;
   activeTool: string;
   selectedSymbolId: string | null;
   objects: CanvasObject[];
@@ -235,6 +242,14 @@ const WALL_POINT_MATCH_TOLERANCE = 6;
  */
 const symbolScaleOf = (obj: { width?: number }) => 1.2 * ((obj.width ?? 40) / 40);
 
+/**
+ * The circuit numbers the page worked out (way 3, 2L1…), keyed by the design's
+ * ref. Module-level so the render hash below sees them: when a split or a
+ * phase change renumbers the board, every tag redraws with its new number.
+ */
+let circuitLabels: Map<string, string> = new Map();
+const labelOf = (ref: string) => circuitLabels.get(ref) ?? ref;
+
 const serialiseCanvasObject = (obj: CanvasObject): string => {
   // Points array is the hot path for walls/lines — stringify only if present
   const points = obj.points ? obj.points.map((p) => `${p.x},${p.y}`).join(';') : '';
@@ -244,7 +259,8 @@ const serialiseCanvasObject = (obj: CanvasObject): string => {
     `${(obj as { text?: string }).text ?? ''}|${(obj as { color?: string }).color ?? ''}|${points}|` +
     // circuitRef and fontSize too: a symbol whose circuit was assigned after
     // it was drawn never redrew, so its tag was missing.
-    `${obj.src ?? ''}|${obj.ghost ? 'g' : ''}|${obj.circuitRef ?? ''}|${obj.fontSize ?? ''}`
+    `${obj.src ?? ''}|${obj.ghost ? 'g' : ''}|${obj.circuitRef ?? ''}|` +
+    `${obj.circuitRef ? labelOf(obj.circuitRef) : ''}|${obj.fontSize ?? ''}`
   );
 };
 
@@ -432,6 +448,14 @@ const drawGrid = (canvas: FabricCanvas, enabled: boolean) => {
   for (let y = top; y <= bottom; y += step) addLine([left, y, right, y], isMajorAt(y));
 };
 
+/** The flags this canvas sets on Fabric objects it draws for itself. */
+type Flagged = FabricObject & {
+  isCircuitTag?: boolean;
+  isHighlight?: boolean;
+  isResultMark?: boolean;
+  customData?: { parentId?: string };
+};
+
 export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
   (
     {
@@ -449,9 +473,12 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       onRotate,
       onToolChange,
       showMinimap = true,
+      circuitLabels: labels,
+      resultMarks,
     },
     ref
   ) => {
+    if (labels) circuitLabels = labels;
     const canvasRef = useRef<HTMLCanvasElement>(null);
     // Flex-driven wrapper around the fabric canvas. We size the canvas from
     // this element's measured box rather than `window.innerHeight − constants`
@@ -484,7 +511,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       const show = zoomLevel >= CIRCUIT_TAG_MIN_ZOOM;
       let changed = false;
       canvas.getObjects().forEach((o) => {
-        if ((o as any).isCircuitTag && o.visible !== show) {
+        if (((o as Flagged).isCircuitTag || (o as Flagged).isResultMark) && o.visible !== show) {
           o.visible = show;
           changed = true;
         }
@@ -1423,16 +1450,24 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         });
       };
 
-      // Wheel zooms to the cursor; a trackpad two-finger scroll (which arrives
-      // as a wheel event with a dominant deltaX) pans instead.
+      // A plan moves like a map. On a trackpad two fingers pan in every
+      // direction and a pinch zooms (the browser sends a pinch as a wheel
+      // event with ctrlKey). A mouse wheel zooms to the cursor, as in CAD.
+      // Only a sideways scroll used to pan — up and down zoomed — so there was
+      // no way to scroll down a drawing on a laptop.
       const handleWheel = (opt: TPointerEventInfo<WheelEvent>) => {
         const e = opt.e;
         e.preventDefault();
         e.stopPropagation();
 
         const vpt = canvas.viewportTransform;
-        const isPanGesture = !e.ctrlKey && !e.metaKey && Math.abs(e.deltaX) > Math.abs(e.deltaY);
-        if (isPanGesture && vpt) {
+        const zoomKey = e.ctrlKey || e.metaKey;
+        // A wheel moves in whole notches (line mode, or big round pixel steps
+        // on one axis); a trackpad sends small, fractional deltas.
+        const mouseWheel =
+          e.deltaMode === 1 ||
+          (e.deltaX === 0 && Math.abs(e.deltaY) >= 40 && Number.isInteger(e.deltaY));
+        if (!zoomKey && !mouseWheel && vpt) {
           vpt[4] -= e.deltaX;
           vpt[5] -= e.deltaY;
           canvas.setViewportTransform(vpt);
@@ -1440,15 +1475,19 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           return;
         }
 
-        // Exponential, so a notch feels the same at any zoom level.
-        const next = Math.min(Math.max(canvas.getZoom() * 0.999 ** e.deltaY, 0.1), 5);
+        // Exponential, so a notch feels the same at any zoom level. A pinch
+        // sends small deltas, so it gets a steeper curve.
+        const k = e.ctrlKey && !mouseWheel ? 0.99 : 0.999;
+        const next = Math.min(Math.max(canvas.getZoom() * k ** e.deltaY, 0.1), 5);
         canvas.zoomToPoint(new Point(e.offsetX, e.offsetY), next);
         setZoomLevel(next);
         scheduleGridRedraw();
       };
 
-      // Drag to pan: middle mouse, or space/alt held with the left button.
-      // Plain left-drag stays as marquee selection / drawing.
+      // Drag to pan: on empty space with the select tool (a finger on a
+      // phone, the left button on a computer), or anywhere with the middle
+      // button or space/alt held. Shift+drag on empty space is the selection
+      // box; drawing tools keep their drags.
       let panLastX = 0;
       let panLastY = 0;
       let spaceHeld = false;
@@ -1464,28 +1503,46 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
 
       const wantsPan = (e: MouseEvent) => e.button === 1 || spaceHeld || e.altKey;
 
+      /** The one finger of a single-finger touch, else null. */
+      const oneTouch = (e: TPointerEvent): Touch | null =>
+        'touches' in e && (e as TouchEvent).touches.length === 1
+          ? (e as TouchEvent).touches[0]
+          : null;
+
       const handlePanDown = (opt: TPointerEventInfo<TPointerEvent>) => {
-        const e = asMouse(opt.e);
-        if (!e || !wantsPan(e)) return;
+        const mouse = asMouse(opt.e);
+        const touch = mouse ? null : oneTouch(opt.e);
+        const onEmpty =
+          !opt.target && activeToolRef.current === 'select' && !(mouse?.shiftKey ?? false);
+        const pan = mouse ? wantsPan(mouse) || (onEmpty && mouse.button === 0) : !!touch && onEmpty;
+        if (!pan) return;
         // Middle-click otherwise triggers browser autoscroll.
-        e.preventDefault();
+        if (mouse) mouse.preventDefault();
+        // Fabric has already started a selection box for this press.
+        (canvas as unknown as { _groupSelector: unknown })._groupSelector = null;
         isPanningRef.current = true;
         canvas.selection = false;
         canvas.setCursor('grabbing');
-        panLastX = e.clientX;
-        panLastY = e.clientY;
+        const at = mouse ?? touch!;
+        panLastX = at.clientX;
+        panLastY = at.clientY;
       };
 
       const handlePanMove = (opt: TPointerEventInfo<TPointerEvent>) => {
         if (!isPanningRef.current) return;
-        const e = asMouse(opt.e);
-        if (!e) return;
+        const mouse = asMouse(opt.e);
+        // A second finger turns it into a pinch — that path takes over.
+        const at = mouse ?? oneTouch(opt.e);
+        if (!at) {
+          if (!mouse) handlePanUp();
+          return;
+        }
         const vpt = canvas.viewportTransform;
         if (!vpt) return;
-        vpt[4] += e.clientX - panLastX;
-        vpt[5] += e.clientY - panLastY;
-        panLastX = e.clientX;
-        panLastY = e.clientY;
+        vpt[4] += at.clientX - panLastX;
+        vpt[5] += at.clientY - panLastY;
+        panLastX = at.clientX;
+        panLastY = at.clientY;
         canvas.setViewportTransform(vpt);
         canvas.renderAll();
         scheduleGridRedraw();
@@ -1696,6 +1753,89 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       };
       addNewObjects();
     }, [objects]);
+
+    // Test results on the drawing: the way number becomes a solid badge in
+    // the result's colour (planResults). The fitting itself is left exactly
+    // as drawn — rings round the symbols swallowed them and clashed with the
+    // circuit colours. Drawn over the tags after they sync, flagged
+    // isHighlight so fit-to-view and the PDF capture (roomImage) leave them
+    // out, and shown only at the zoom the tags are.
+    // Tags are created only once a symbol's SVG has loaded, which is after
+    // this effect has run, and a finished load raises every tag to the top.
+    // So the badges are redrawn whenever a tag lands, once per frame, as
+    // well as when the results change.
+    const resultMarksRef = useRef(resultMarks);
+    resultMarksRef.current = resultMarks;
+    const drawBadgesRef = useRef<() => void>(() => {});
+    drawBadgesRef.current = () => {
+      const canvas = fabricCanvasRef.current;
+      if (!canvas) return;
+      canvas
+        .getObjects()
+        .filter((o) => (o as Flagged).isResultMark)
+        .forEach((o) => canvas.remove(o));
+      const marks = resultMarksRef.current;
+      if (marks?.size) {
+        const byId = new Map(objectsRef.current.map((o) => [o.id, o]));
+        const show = (canvas.getZoom() || 1) >= CIRCUIT_TAG_MIN_ZOOM;
+        canvas.getObjects().forEach((tag) => {
+          if (!(tag as Flagged).isCircuitTag) return;
+          const parent = byId.get((tag as Flagged).customData?.parentId);
+          const colour = parent?.circuitRef ? marks.get(parent.circuitRef) : undefined;
+          if (!colour) return;
+          const label = new FabricText((tag as FabricText).text ?? '', {
+            fontSize: 7.5,
+            fontWeight: '700',
+            fontFamily: 'Helvetica, Arial, sans-serif',
+            fill: '#ffffff',
+            originX: 'center',
+            originY: 'center',
+          });
+          const plate = new Rect({
+            width: Math.max(label.width ?? 0, 5) + 5,
+            height: 10,
+            rx: 2.5,
+            ry: 2.5,
+            fill: colour,
+            originX: 'center',
+            originY: 'center',
+          });
+          const badge = new Group([plate, label], {
+            left: tag.left,
+            top: tag.top,
+            originX: 'center',
+            originY: 'center',
+            selectable: false,
+            evented: false,
+            excludeFromExport: true,
+          });
+          badge.visible = show;
+          (badge as Flagged).isHighlight = true;
+          (badge as Flagged).isResultMark = true;
+          canvas.add(badge);
+        });
+      }
+      canvas.requestRenderAll();
+    };
+    useEffect(() => {
+      drawBadgesRef.current();
+    }, [resultMarks, objects, canvasReady]);
+    useEffect(() => {
+      const canvas = canvasReady;
+      if (!canvas) return;
+      let frame = 0;
+      const onAdded = (e: { target?: FabricObject }) => {
+        if (!(e.target as Flagged | undefined)?.isCircuitTag || !resultMarksRef.current?.size)
+          return;
+        cancelAnimationFrame(frame);
+        frame = requestAnimationFrame(() => drawBadgesRef.current());
+      };
+      canvas.on('object:added', onAdded);
+      return () => {
+        cancelAnimationFrame(frame);
+        canvas.off('object:added', onAdded);
+      };
+    }, [canvasReady]);
 
     const snapToGrid = (value: number) => (snapEnabledRef.current ? snapToStep(value) : value);
 
@@ -2086,15 +2226,19 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         // This used to be a coloured dot floating beside each symbol. On screen
         // that reads as a UI affordance; printed on a drawing handed to a
         // client it reads as a stray blob and says nothing. Drawings label
-        // circuits with their reference — L1, S1, C1 — so that is what we
-        // draw. The colour is kept as the TEXT colour, so the at-a-glance
+        // circuits with their number on the board — way 3, or 2L1 on a
+        // three-phase board — so that is what we draw. The colour is kept as the TEXT colour, so the at-a-glance
         // scanning still works without the blob.
         // Switches follow their light's circuit; drawings don't tag them, and
         // tagging every one was a large share of the clutter.
         if (obj.circuitRef && fabricObj && !/^switch-/.test(obj.symbolId ?? '')) {
           const tagColour = circuitColour(obj.circuitRef);
           const spot = findTagSpot(obj, objectsRef.current);
-          const tag = new FabricText(obj.circuitRef, {
+          // A sub-board is named by what it is (DB2), not by the way on the
+          // main board that feeds it.
+          const isBoardSymbol =
+            obj.symbolId === 'consumer-unit' || obj.symbolId === 'distribution-board';
+          const tag = new FabricText(isBoardSymbol ? obj.circuitRef : labelOf(obj.circuitRef), {
             left: spot.x,
             top: spot.y,
             fontSize: 7.5,
@@ -2433,7 +2577,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         }
         // A drawn run carries its estimate (drops and tails included).
         const cableLabel = obj.lengthM ? `≈ ${obj.lengthM} m` : pxToMetres(totalLen);
-        const circuitTag = obj.circuitRef ? `${obj.circuitRef} · ` : '';
+        const circuitTag = obj.circuitRef ? `${labelOf(obj.circuitRef)} · ` : '';
         const labelText = `${circuitTag}${cableLabel}`;
 
         // Background pill behind label so it reads against any background
@@ -3572,15 +3716,17 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         {/* Zoom / view controls — only once there is something to look at.
             Four 44px buttons run 176px down the right edge, which on a phone
             collided with the empty-state card and cluttered the very first
-            thing a user sees, on a canvas with nothing to zoom or rotate. */}
+            thing a user sees, on a canvas with nothing to zoom or rotate.
+            On a phone pinch zooms, so only fit and rotate show there. */}
         {objects.length > 0 && (
           <div className="absolute top-3 right-3 flex flex-col overflow-hidden rounded-xl border border-white/10 bg-black/70 backdrop-blur-xl shadow-2xl divide-y divide-white/10">
             <Button
               size="icon"
               variant="outline"
               onClick={handleZoomIn}
-              className="h-11 w-11 sm:h-10 sm:w-10 rounded-none border-0 bg-transparent text-white hover:bg-white/10 touch-manipulation"
-              title="Zoom In"
+              className="hidden h-11 w-11 sm:inline-flex sm:h-10 sm:w-10 rounded-none border-0 bg-transparent text-white hover:bg-white/10 touch-manipulation"
+              title="Zoom in"
+              aria-label="Zoom in"
             >
               <ZoomIn className="h-4 w-4" />
             </Button>
@@ -3588,8 +3734,9 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
               size="icon"
               variant="outline"
               onClick={handleZoomOut}
-              className="h-11 w-11 sm:h-10 sm:w-10 rounded-none border-0 bg-transparent text-white hover:bg-white/10 touch-manipulation"
-              title="Zoom Out"
+              className="hidden h-11 w-11 sm:inline-flex sm:h-10 sm:w-10 rounded-none border-0 bg-transparent text-white hover:bg-white/10 touch-manipulation"
+              title="Zoom out"
+              aria-label="Zoom out"
             >
               <ZoomOut className="h-4 w-4" />
             </Button>
@@ -3598,7 +3745,8 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
               variant="outline"
               onClick={handleResetView}
               className="h-11 w-11 sm:h-10 sm:w-10 rounded-none border-0 bg-transparent text-white hover:bg-white/10 touch-manipulation"
-              title="Reset View"
+              title="Fit the drawing to the screen"
+              aria-label="Fit the drawing to the screen"
             >
               <Maximize2 className="h-4 w-4" />
             </Button>
@@ -3608,6 +3756,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
               onClick={handleRotate}
               className="h-11 w-11 sm:h-10 sm:w-10 rounded-none border-0 bg-transparent text-white hover:bg-white/10 touch-manipulation"
               title="Rotate 90°"
+              aria-label="Rotate 90°"
             >
               <RotateCw className="h-4 w-4" />
             </Button>

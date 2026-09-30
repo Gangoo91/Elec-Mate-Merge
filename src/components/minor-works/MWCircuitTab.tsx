@@ -525,6 +525,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
               <FormField label="Rating (A)">
                 <Input
                   type="number"
+                  inputMode="decimal"
                   value={(formData.rcdRatingAmps as string) || ''}
                   onChange={(e) => onUpdate('rcdRatingAmps', e.target.value)}
                   placeholder="63"

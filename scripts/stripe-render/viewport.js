@@ -61480,6 +61480,7 @@ ${companyName}`;
 
   // src/utils/regulationChecker/zsValidator.ts
   init_define_import_meta_env();
+  var isTT = (arrangement) => (arrangement ?? "").toLowerCase().replace(/[^a-z]/g, "") === "tt";
   var shouldHaveRCD = (result) => {
     const description = result.circuitDescription?.toLowerCase() || "";
     const type = result.type?.toLowerCase() || "";
@@ -61505,7 +61506,7 @@ ${companyName}`;
   };
   var checkZsCompliance = (result, earthingArrangement, zsBasis = 100) => {
     const warnings = [];
-    const isTTSystem = earthingArrangement === "TT";
+    const isTTSystem = isTT(earthingArrangement);
     if (isTTSystem && !hasReading(result.rcdRating)) {
       warnings.push({
         severity: "critical",
@@ -61557,11 +61558,13 @@ ${companyName}`;
         result.bsStandard,
         result.protectiveDeviceCurve ? `Type ${result.protectiveDeviceCurve}` : ""
       ].filter(Boolean);
-      return parts.filter((part, i4) => !parts.some((other, j2) => j2 !== i4 && other.includes(part) && other !== part)).join(" ").trim();
+      return parts.filter(
+        (part, i4) => !parts.some((other, j2) => j2 !== i4 && other.includes(part) && other !== part)
+      ).join(" ").trim();
     })();
     const circuitDescription = result.circuitDescription || "";
-    const isTT = earthingArrangement === "TT";
-    if (isTT) {
+    const isTTEarthing = isTT(earthingArrangement);
+    if (isTTEarthing) {
       const rcdRatingMa = parseInt(result.rcdRating?.replace("mA", "") || "");
       if (!isNaN(rcdRatingMa) && [30, 100, 300, 500].includes(rcdRatingMa)) {
         const rcdZs = getRcdZsLimit(rcdRatingMa);

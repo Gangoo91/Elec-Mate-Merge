@@ -50,6 +50,9 @@ export interface ConsumerUnitWay {
   cableSize: string;
   points: number;
   connectedLoad: string;
+  /** The circuit number as marked on the board ("3", "2L1"). */
+  wayLabel?: string;
+  circuitKind?: string;
 }
 
 export interface CircuitScheduleEntry {
@@ -73,6 +76,10 @@ export interface CircuitScheduleEntry {
   lengthOk?: boolean;
   /** The board it is fed from when the plan has sub-boards: "CU", "DB2"… */
   fedFrom?: string;
+  /** The circuit number as marked on the board: "3", "2L1", "DB2/1", "Zone 1". */
+  wayLabel?: string;
+  /** What the circuit is — "ring", "lighting"… — for its colour and diagram. */
+  circuitKind?: string;
 }
 
 // Symbol IDs that are lighting points
@@ -181,6 +188,8 @@ export function buildConsumerUnitSchedule(circuitSchedule: CircuitScheduleEntry[
 } {
   const ways = circuitSchedule.map((c, i) => ({
     way: i + 1,
+    wayLabel: c.wayLabel,
+    circuitKind: c.circuitKind,
     circuitRef: c.circuitRef,
     circuitName: c.circuitName,
     protection: c.protection,

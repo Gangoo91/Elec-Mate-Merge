@@ -84,6 +84,13 @@ export interface TestResult {
   // Track auto-filled circuits
   autoFilled?: boolean;
 
+  /**
+   * The floor-plan circuit this row was started from ("<sheet id>:<ref>",
+   * diagram-builder/jobNumbering originOf) — how the plan finds this row's
+   * readings to show them on the drawing. Survives renumbering either side.
+   */
+  planOrigin?: string;
+
   // Board association (for multi-board installations)
   boardId?: string; // References DistributionBoard.id, defaults to MAIN_BOARD_ID
 

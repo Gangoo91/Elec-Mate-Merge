@@ -750,7 +750,30 @@ const InspectionDetailsSectionInner = ({
   // industrial guidance is already 5 years or less, so the PRS cap cannot bite.
   const isDomesticPremises =
     formData.description === 'domestic' || formData.description === 'domestic-dwelling';
-  const intervalExceedsRentedLimit = parseInt(formData.inspectionInterval || '0', 10) > 5;
+  /**
+   * Whole years between the inspection date and a next-inspection date that
+   * was typed by hand, or '' when it is not a clean number of years (within a
+   * week, to forgive month-end arithmetic). 28 of the last 368 issued EICRs
+   * have a next date but no interval, and the chips sat blank on every one.
+   */
+  const wholeYearsBetween = (from?: string, to?: string): string => {
+    if (!from || !to) return '';
+    const a = new Date(`${from}T00:00:00`);
+    const b = new Date(`${to}T00:00:00`);
+    if (Number.isNaN(a.getTime()) || Number.isNaN(b.getTime())) return '';
+    const years = b.getFullYear() - a.getFullYear();
+    if (years <= 0) return '';
+    const back = new Date(a);
+    back.setFullYear(a.getFullYear() + years);
+    const driftDays = Math.abs(b.getTime() - back.getTime()) / 86_400_000;
+    return driftDays <= 7 ? String(years) : '';
+  };
+  const derivedInterval = formData.inspectionInterval
+    ? ''
+    : wholeYearsBetween(formData.inspectionDate, formData.nextInspectionDate);
+  // What the chips show: the recorded interval, else the one the dates imply.
+  const effectiveInterval = formData.inspectionInterval || derivedInterval;
+  const intervalExceedsRentedLimit = parseInt(effectiveInterval || '0', 10) > 5;
   // Answered per session rather than stored — it is a prompt, not a form field,
   // and adding one would mean a schema and PDF change for a question the model
   // form does not ask.
@@ -797,6 +820,7 @@ const InspectionDetailsSectionInner = ({
     { value: '5', label: '5 years' },
     { value: '10', label: '10 years' },
   ];
+
 
   return (
     <div className="space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
@@ -900,6 +924,14 @@ const InspectionDetailsSectionInner = ({
                 // overwriting it on every parent re-render.
                 setManualNextDate(true);
                 onUpdate('nextInspectionDate', e.target.value);
+                // A hand-typed date a clean number of years out records that
+                // interval — it is the user's own entry, not a silent default.
+                if (!formData.inspectionInterval) {
+                  const years = wholeYearsBetween(formData.inspectionDate, e.target.value);
+                  if (years && intervalOptions.some((o) => o.value === years)) {
+                    onUpdate('inspectionInterval', years);
+                  }
+                }
               }}
               className={inputCn}
             />
@@ -975,6 +1007,8 @@ const InspectionDetailsSectionInner = ({
                 type="button"
                 onClick={() => {
                   haptic.light();
+                  // Tapping the chip the dates imply confirms it; tapping a
+                  // recorded interval clears it.
                   onUpdate(
                     'inspectionInterval',
                     formData.inspectionInterval === option.value ? '' : option.value
@@ -982,18 +1016,23 @@ const InspectionDetailsSectionInner = ({
                 }}
                 className={cn(
                   'h-11 rounded-xl text-sm transition-all touch-manipulation active:scale-[0.98]',
-                  formData.inspectionInterval === option.value ? chipOn : chipOff
+                  effectiveInterval === option.value ? chipOn : chipOff
                 )}
               >
                 {option.label}
               </button>
             ))}
           </div>
+          {derivedInterval && (
+            <span className="mt-1.5 block text-[11px] text-white">
+              Worked out from the next inspection date — tap the chip to confirm it.
+            </span>
+          )}
           {/* ELE-882 — explicit suggestion + Apply button instead of silent
               auto-set. User must tap to apply the suggested interval — no
               silent writes. Attributed as guidance, NOT "BS 7671 recommends":
               BS 7671 prescribes no fixed intervals (Reg 652.1/653.4). */}
-          {formData.description && formData.inspectionInterval !== suggestedInterval && (
+          {formData.description && effectiveInterval !== suggestedInterval && (
             <div className="flex items-center justify-between gap-3 mt-3 rounded-xl border border-elec-yellow/30 bg-white/[0.05] px-3.5 py-2.5">
               <span className="text-xs text-white">
                 Guidance for this property type:{' '}

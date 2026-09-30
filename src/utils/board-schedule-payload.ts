@@ -74,6 +74,17 @@ interface CompanyProfileLike {
 /** Blank-safe: the template treats absent fields as absent, not as empty text. */
 const s = (v: unknown): string => (typeof v === 'string' ? v.trim() : '');
 
+/**
+ * The schedule prints these columns exactly as sent. Certificates store
+ * cable as "2.5mm" and a 30 mA RCD as "30", which printed as "2.5mm" and a
+ * bare "30" — the template's own sample reads "2.5" and "30 mA".
+ */
+const cableSize = (v: string) => v.replace(/\s*mm²?\s*$/i, '').trim();
+const rcdRating = (v: string) => {
+  const m = /^(\d+(?:\.\d+)?)\s*(?:ma)?$/i.exec(v);
+  return m ? `${m[1]} mA` : v;
+};
+
 export function buildBoardSchedulePayload(
   board: BoardScheduleData,
   company: CompanyProfileLike | null,
@@ -111,11 +122,11 @@ export function buildBoardSchedulePayload(
     description: s(c.description),
     // True only when the whole way is unused — see describedWays above.
     spare: !describedWays.has(s(c.circuitNumber)),
-    cable_size: s(c.cableSize),
+    cable_size: cableSize(s(c.cableSize)),
     device_type: s(c.type),
     rating: s(c.rating),
     zs: s(c.zs),
-    rcd_rating: s(c.rcdRating),
+    rcd_rating: rcdRating(s(c.rcdRating)),
   }));
 
   /*

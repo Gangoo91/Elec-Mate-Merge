@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useHaptic } from '@/hooks/useHaptic';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -12,6 +12,36 @@ import {
 } from '@/types/distributionBoard';
 import { cn } from '@/lib/utils';
 import useReadingKeypad from '@/hooks/useReadingKeypad';
+
+/**
+ * The supply card and the board card describe the same switch in different
+ * tokens (supply: 'BS EN 60947-3' / 'main-switch' / '100' / '2'; board:
+ * '60947-3' / 'Switch-Disconnector' / '100' / 'DP'). Map supply → board.
+ */
+const SUPPLY_BS_TO_BOARD: Record<string, string> = {
+  'BS EN 60898-1': '60898',
+  'BS EN 60898-2': '60898',
+  'BS EN 60947-2': '60947',
+  'BS EN 60947-3': '60947-3',
+  'BS EN 61008-1': '61008',
+  'BS EN 61009-1': '61009',
+  'BS 88-2': '88-2',
+  'BS 88-3': '88-3',
+  'BS 1361': '1361',
+  'BS 3036': '3036',
+};
+const SUPPLY_POLES_TO_BOARD: Record<string, string> = { '1': 'SP', '2': 'DP', '3': 'TP', '4': 'TPN' };
+const supplyToBoardMainSwitch = (s: { bsEn: string; device: string; rating: string; poles: string }) => {
+  const mainSwitchBsEn = SUPPLY_BS_TO_BOARD[s.bsEn] || '';
+  let mainSwitchType = '';
+  if (s.device === 'main-switch') mainSwitchType = 'Switch-Disconnector';
+  else if (s.device === 'rcd') mainSwitchType = mainSwitchBsEn === '61009' ? 'RCBO' : 'RCD';
+  else if (s.device === 'fuse') mainSwitchType = 'Switch-Fuse';
+  else if (s.device === 'circuit-breaker') mainSwitchType = mainSwitchBsEn === '60947' ? 'MCCB' : 'MCB';
+  const mainSwitchRating = /^\d+(\.\d+)?$/.test(s.rating) ? s.rating : '';
+  const mainSwitchPoles = SUPPLY_POLES_TO_BOARD[s.poles] || '';
+  return { mainSwitchBsEn, mainSwitchType, mainSwitchRating, mainSwitchPoles };
+};
 
 const cardCn =
   '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
@@ -174,6 +204,71 @@ const EICElectricalInstallationSection = ({
       if (mainBoard.totalWays) onUpdate('boardSize', String(mainBoard.totalWays));
     }
   };
+
+  /*
+   * Main switch, asked ONCE (30 Sep 2026). The supply card above records the
+   * main switch; the main board's own "Main switch" block on the schedule
+   * used to ask for the same device again in a different vocabulary. When the
+   * main board's switch fields are all blank, they are filled from the supply
+   * values (mapped to the board picker's tokens) and marked
+   * `mainSwitchSource: 'supply'`; the board card shows that, and any edit
+   * there clears the marker so the board's own values win from then on.
+   * Drafts only, and only while the marker stands or the fields are blank —
+   * a board somebody has typed into is never overwritten.
+   */
+  const supplySwitch = useMemo(
+    () =>
+      supplyToBoardMainSwitch({
+        bsEn: String(formData.mainSwitchBsEn || ''),
+        device: String(formData.mainProtectiveDevice || ''),
+        rating: String(formData.mainSwitchRating || ''),
+        poles: String(formData.mainSwitchPoles || ''),
+      }),
+    [formData.mainSwitchBsEn, formData.mainProtectiveDevice, formData.mainSwitchRating, formData.mainSwitchPoles]
+  );
+  const supplySwitchKey = JSON.stringify(supplySwitch);
+  useEffect(() => {
+    if (formData.status === 'completed') return;
+    // `boards`, not formData.distributionBoards — a fresh cert has no stored
+    // boards yet and the card renders a synthesised main board from the
+    // legacy boardLocation/boardType/boardSize keys (see the memo above).
+    const current = boards;
+    if (current.length === 0) return;
+    const main = getMainBoard(current) || current.find((b) => b.id === MAIN_BOARD_ID) || current[0];
+    if (!main) return;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const m = main as any;
+    const blank = !m.mainSwitchBsEn && !m.mainSwitchType && !m.mainSwitchRating && !m.mainSwitchPoles;
+    const fromSupply = m.mainSwitchSource === 'supply';
+    const supplyEmpty = !supplySwitch.mainSwitchBsEn && !supplySwitch.mainSwitchRating;
+    if (supplyEmpty) {
+      // Supply cleared: a board that only ever mirrored it goes blank too,
+      // rather than keeping a switch nobody recorded. Typed values stay.
+      if (fromSupply && !blank) {
+        const cleared = current.map((b) =>
+          b.id === main.id
+            ? { ...b, mainSwitchBsEn: '', mainSwitchType: '', mainSwitchRating: '', mainSwitchPoles: '', mainSwitchSource: '' }
+            : b
+        );
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        onUpdate('distributionBoards', cleared as any);
+      }
+      return;
+    }
+    if (!blank && !fromSupply) return;
+    const same =
+      m.mainSwitchBsEn === supplySwitch.mainSwitchBsEn &&
+      m.mainSwitchType === supplySwitch.mainSwitchType &&
+      m.mainSwitchRating === supplySwitch.mainSwitchRating &&
+      m.mainSwitchPoles === supplySwitch.mainSwitchPoles;
+    if (same && fromSupply) return;
+    const next = current.map((b) =>
+      b.id === main.id ? { ...b, ...supplySwitch, mainSwitchSource: 'supply' } : b
+    );
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onUpdate('distributionBoards', next as any);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [supplySwitchKey, boards, formData.status]);
 
   // --- Option arrays ---
 
@@ -433,6 +528,7 @@ const EICElectricalInstallationSection = ({
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <FormField label="Rating (A)" required>
+            <div data-field="mainSwitchRating">
             <MobileSelectPicker
               value={(formData.mainSwitchRating as string) || ''}
               onValueChange={(value) =>
@@ -444,6 +540,7 @@ const EICElectricalInstallationSection = ({
               disabled={mainSwitchNA}
               triggerClassName={cn(pickerTriggerCn, mainSwitchNA && 'opacity-40')}
             />
+            </div>
           </FormField>
           <FormField label="Fuse setting (A)">
             <MobileSelectPicker

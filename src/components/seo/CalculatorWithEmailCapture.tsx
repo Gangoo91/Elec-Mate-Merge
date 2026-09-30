@@ -1,9 +1,10 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import {
   CalculatorResultEmail,
   type CalculatorResultSummary,
 } from '@/components/seo/CalculatorResultEmail';
 import type { CalculatorOutcome } from '@/lib/calculator-outcome';
+import { CalculatorEmailOfferContext } from '@/components/calculators/shared/calculatorEmailOffer';
 
 /**
  * A calculator on a public page, plus the offer to email the answer.
@@ -64,11 +65,27 @@ export function CalculatorWithEmailCapture({ calculatorName, calculatorPath, chi
     [outcome, calculatorName, calculatorPath]
   );
 
+  // The form sits below the calculator card; the result row offers a jump to it.
+  const offerRef = useRef<HTMLDivElement | null>(null);
+  const offer = useMemo(
+    () => ({
+      openEmailOffer: () => {
+        const host = offerRef.current;
+        if (!host) return;
+        host.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        host.querySelector<HTMLInputElement>('input[type="email"]')?.focus({ preventScroll: true });
+      },
+    }),
+    []
+  );
+
   return (
-    <>
+    <CalculatorEmailOfferContext.Provider value={offer}>
       {children(handleResult)}
-      <CalculatorResultEmail result={summary} />
-    </>
+      <div ref={offerRef} className="scroll-mt-24">
+        <CalculatorResultEmail result={summary} />
+      </div>
+    </CalculatorEmailOfferContext.Provider>
   );
 }
 

@@ -18,6 +18,7 @@ import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { SPD_MAKES, SPD_LOCATIONS } from '@/constants/spdData';
 import { FieldLimitationBadge, isFieldMarker } from '@/components/field-limitations';
 import useReadingKeypad from '@/hooks/useReadingKeypad';
+import { normaliseEarthingArrangement } from '@/utils/earthingArrangement';
 
 /* Paper-form field recipe — underline inputs on a transparent background,
    matching MWTestingTab + the EV charging reference implementation. */
@@ -437,7 +438,9 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                 <div className="flex items-center gap-2 text-[12px] text-white tabular-nums flex-wrap">
                   {earthingArrangement && (
                     <>
-                      <span className="text-white">{earthingArrangement}</span>
+                      <span className="text-white">
+                        {normaliseEarthingArrangement(earthingArrangement)}
+                      </span>
                       <span className="text-white/30">·</span>
                     </>
                   )}

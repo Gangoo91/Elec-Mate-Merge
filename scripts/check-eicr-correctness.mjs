@@ -165,6 +165,9 @@ const {
 const COMPLETE_CERT = {
   clientName: 'A Client',
   installationAddress: '1 Test Street',
+  // Premises type — required to issue since the 30 Sep 2026 audit (it drives
+  // the interval guidance and the rented-homes cap).
+  description: 'domestic',
   inspectionDate: '2026-08-07',
   supplyVoltage: '230',
   phases: '1',

@@ -24,6 +24,7 @@ import {
 } from './circuitDesign';
 
 export type { Earthing } from './circuitDesign';
+import { wayMap, type Supply, type Way } from './boardWays';
 export { lengthCheck, type LengthCheck } from './circuitDesign';
 export const EARTHING: { id: Earthing; label: string }[] = [
   { id: 'TN-C-S', label: 'TN-C-S (PME)' },
@@ -39,6 +40,7 @@ const isBoard = (o: CanvasObject) =>
 export function planSettings(objects: CanvasObject[]): {
   buildingType?: BuildingType;
   earthing: Earthing;
+  supply: Supply;
 } {
   const pick = <T extends string>(values: (T | undefined)[]): T | undefined => {
     const counts = new Map<T, number>();
@@ -49,6 +51,7 @@ export function planSettings(objects: CanvasObject[]): {
   return {
     buildingType: pick(designed.map((o) => o.buildingType)),
     earthing: pick(designed.map((o) => o.earthing)) ?? 'TN-C-S',
+    supply: pick(objects.map((o) => o.supply)) ?? 'single',
   };
 }
 
@@ -92,6 +95,9 @@ export function redesignCircuits(
             ...o,
             // A sub-board keeps its way; the main board has none.
             circuitRef: isBoard(o) ? o.circuitRef : refs.get(o.id),
+            // New circuits: amendments made to the old ones no longer apply.
+            wayPin: undefined,
+            circuitEdit: undefined,
             buildingType: settings.buildingType ?? o.buildingType,
             earthing: settings.earthing ?? o.earthing,
           }
@@ -401,10 +407,25 @@ export function circuitRuns(objects: CanvasObject[]): CanvasObject[] {
 }
 
 export const hasRuns = (objects: CanvasObject[]) => objects.some((o) => o.generated);
-export const withRuns = (objects: CanvasObject[]) => [
-  ...objects.filter((o) => !o.generated),
-  ...circuitRuns(objects),
-];
+export const withRuns = (objects: CanvasObject[]) => {
+  const runs = circuitRuns(objects);
+  // Each item keeps the board that feeds it, so the numbering holds when the
+  // runs are hidden.
+  const fed = new Map(runs.map((r) => [r.circuitRef!, r.fedFrom]));
+  return [
+    ...objects
+      .filter((o) => !o.generated)
+      .map((o) =>
+        o.type === 'symbol' &&
+        o.circuitRef &&
+        fed.has(o.circuitRef) &&
+        o.fedFrom !== fed.get(o.circuitRef)
+          ? { ...o, fedFrom: fed.get(o.circuitRef) }
+          : o
+      ),
+    ...runs,
+  ];
+};
 export const withoutRuns = (objects: CanvasObject[]) => objects.filter((o) => !o.generated);
 
 /** Each circuit's drawn run length, when the runs are drawn. */
@@ -429,8 +450,8 @@ const CABLE_OF: Partial<Record<DesignedCircuit['kind'], string>> = {
   ring: '2.5/1.5 mm² T&E',
   radial: '2.5/1.5 mm² T&E',
   lighting: '1.5/1.0 mm² T&E',
-  cooker: '6.0/2.5 mm² T&E (typical — size to demand)',
-  ev: '6.0/2.5 mm² T&E (typical — size to length and method)',
+  cooker: '6/2.5 mm² T&E (typical — size to demand)',
+  ev: '6/2.5 mm² T&E (typical — size to length and method)',
   'water-heater': '2.5/1.5 mm² T&E',
   heating: '2.5/1.5 mm² T&E (typical — size to load)',
   // Air conditioning is sized from the maker's data, and fire zones are wired
@@ -538,7 +559,10 @@ export function splitCircuit(objects: CanvasObject[], ref: string): CanvasObject
     .map(Number);
   const nextRef = `${family}${Math.max(0, ...used) + 1}`;
   // Switches go with the light they control: the nearest light's new circuit.
-  const next = objects.map((o) => (far.has(o.id) ? { ...o, circuitRef: nextRef } : o));
+  // The new circuit starts from the design, not the old one's amendments.
+  const next = objects.map((o) =>
+    far.has(o.id) ? { ...o, circuitRef: nextRef, wayPin: undefined, circuitEdit: undefined } : o
+  );
   const lights = next.filter(
     (o) =>
       o.type === 'symbol' &&
@@ -696,3 +720,42 @@ export function fixLongRuns(objects: CanvasObject[]): {
 
 const SUB_BOARD_ROOMS =
   /\b(store|cupboard|riser|plant|corridor|landing|hall|lobby|utility|cleaner|comms|server)\b/i;
+
+// ── Board numbering for a drawing ────────────────────────────────────────────
+
+/** Every circuit's board way on this drawing — what tags and schedules show. */
+export function waysOf(objects: CanvasObject[]): Map<string, Way> {
+  return wayMap(scheduleFromObjects(objects).circuits, planSettings(objects).supply);
+}
+
+// ── Amending the board by hand ───────────────────────────────────────────────
+
+/**
+ * Move a way up or down its board. `order` is the board's circuits as they
+ * stand (way order); every circuit on the board is then pinned to its new
+ * place, on its fittings, so the numbering holds everywhere.
+ */
+export function moveWay(objects: CanvasObject[], order: string[], ref: string, by: -1 | 1) {
+  const at = order.indexOf(ref);
+  const to = at + by;
+  if (at < 0 || to < 0 || to >= order.length) return objects;
+  const next = [...order];
+  [next[at], next[to]] = [next[to], next[at]];
+  const pin = new Map(next.map((r, i) => [r, i + 1]));
+  return objects.map((o) =>
+    o.type === 'symbol' && o.circuitRef && pin.has(o.circuitRef)
+      ? { ...o, wayPin: pin.get(o.circuitRef) }
+      : o
+  );
+}
+
+/** Amend a circuit's description, device, rating or cable — or, with null, undo it. */
+export function editCircuit(
+  objects: CanvasObject[],
+  ref: string,
+  edit: CanvasObject['circuitEdit'] | null
+): CanvasObject[] {
+  return objects.map((o) =>
+    o.type === 'symbol' && o.circuitRef === ref ? { ...o, circuitEdit: edit ?? undefined } : o
+  );
+}

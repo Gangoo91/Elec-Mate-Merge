@@ -48,7 +48,7 @@ export const SaveRoomSheet = ({
         <div className="flex flex-col h-full bg-background">
           {/* Header */}
           <SheetHeader className="flex flex-row items-center justify-between w-full max-w-lg mx-auto px-4 py-3 border-b border-white/10">
-            <SheetTitle className="text-white text-base font-semibold">Save Room</SheetTitle>
+            <SheetTitle className="text-white text-base font-semibold">Save sheet</SheetTitle>
             <button
               onClick={() => onOpenChange(false)}
               className="h-11 w-11 flex items-center justify-center text-white touch-manipulation"
@@ -82,9 +82,9 @@ export const SaveRoomSheet = ({
             <Button
               onClick={handleSave}
               disabled={!name.trim()}
-              className="w-full h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-base touch-manipulation"
+              className="w-full h-11 md:h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-base touch-manipulation"
             >
-              Save Room
+              Save
             </Button>
           </div>
         </div>

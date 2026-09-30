@@ -9,6 +9,7 @@
  * Template is TypeScript code — compile-time field safety.
  */
 
+import { mwLabel, mwSchemeLabel } from '../_shared/minor-works-labels.ts';
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { validateMinorWorksPayload, type MinorWorksPayload } from '../_shared/minor-works-schema.ts';
@@ -382,14 +383,15 @@ function transformFormDataForTemplate(formData: MinorWorksFormData): MinorWorksP
       email: formData.clientEmail || '',
     },
 
-    person_ordering_work: formData.personOrderingWork || '',
+    // Blank on 83% of certificates — the person ordering the work is the client unless said otherwise.
+    person_ordering_work: formData.personOrderingWork || formData.clientName || '',
 
     installation: {
       address: formData.propertyAddress || '',
       postcode: formData.postcode || '',
     },
 
-    work_type: formData.workType || '',
+    work_type: mwLabel('WORK_TYPE', formData.workType),
     work_location: formData.workLocation || '',
     work_description: formData.workDescription || '',
     departures: formData.departuresFromBS7671 || 'None',
@@ -424,16 +426,16 @@ function transformFormDataForTemplate(formData: MinorWorksFormData): MinorWorksP
       db_location_type: formData.dbLocationType || '',
       number: formData.circuitDesignation || '',
       description: formData.circuitDescription || '',
-      type: formData.circuitType || '',
+      type: mwLabel('CIRCUIT_TYPE', formData.circuitType),
       reference_method: formData.referenceMethod || '',
       number_of_conductors: formData.numberOfConductors || '',
       live_size: formData.liveConductorSize || '',
       cpc_size: formData.cpcSize || '',
-      cable_type: formData.cableType || '',
-      installation_method: formData.installationMethod || '',
+      cable_type: mwLabel('CABLE_TYPE', formData.cableType),
+      installation_method: mwLabel('INSTALLATION_METHOD', formData.installationMethod),
       ocpd: {
         bs_en: formData.overcurrentDeviceBsEn || '',
-        type: formData.protectiveDeviceType || '',
+        type: mwLabel('PROTECTIVE_DEVICE_TYPE', formData.protectiveDeviceType),
         rating: formData.protectiveDeviceRating || '',
         breaking_capacity: formData.protectiveDeviceKaRating || '',
       },
@@ -463,7 +465,7 @@ function transformFormDataForTemplate(formData: MinorWorksFormData): MinorWorksP
 
     tests: {
       r1_r2: formData.continuityR1R2 || 'N/A',
-      r2: formData.r2Continuity || 'N/A',
+      r2: formData.r2Continuity || '',
       ring_ll: formData.ringR1 || 'N/A',
       ring_nn: formData.ringRn || 'N/A',
       ring_cpc: formData.ringR2 || 'N/A',
@@ -484,18 +486,18 @@ function transformFormDataForTemplate(formData: MinorWorksFormData): MinorWorksP
       max_zs: formData.maxPermittedZs || 'N/A',
       pfc: formData.prospectiveFaultCurrent || 'N/A',
       rcd_time: formData.rcdOneX || 'N/A',
-      rcd_5x_time: formData.rcdFiveX || 'N/A',
-      rcd_half_x: formData.rcdHalfX || 'N/A',
+      // Optional since A2: BS 7671 verifies at 1× IΔn (643.7.3.201). Blank hides the row.
+      rcd_5x_time: formData.rcdFiveX || '',
       rcd_test_button: formData.rcdTestButton || 'N/A',
       rcd_rating: formData.rcdRating || 'N/A',
       functional_test: formData.functionalTesting || 'N/A',
-      afdd_test_button: formData.afddTestButton || 'N/A',
-      afdd_trip_time: formData.afddTripTime || 'N/A',
-      rcbo_trip_time: formData.rcboTripTime || 'N/A',
-      earth_electrode: formData.earthElectrodeResistance || 'N/A',
-      phase_rotation: formData.phaseRotation || 'N/A',
-      spd_visual: formData.spdVisualInspection || 'N/A',
-      spd_indicator: formData.spdIndicatorStatus || 'N/A',
+      afdd_test_button: formData.afddTestButton || '',
+      afdd_trip_time: formData.afddTripTime || '',
+      rcbo_trip_time: formData.rcboTripTime || '',
+      earth_electrode: formData.earthElectrodeResistance || '',
+      phase_rotation: formData.phaseRotation || '',
+      spd_visual: formData.spdVisualInspection || '',
+      spd_indicator: formData.spdIndicatorStatus || '',
       spd_test_button: formData.spdTestButton ?? false,
       // A4:2026 Section D — "SPD functionality confirmed" checkbox boolean
       spd_ok:
@@ -521,8 +523,8 @@ function transformFormDataForTemplate(formData: MinorWorksFormData): MinorWorksP
       email: formData.electricianEmail || '',
       position: formData.position || '',
       date: formatDate(formData.signatureDate),
-      qualification: formData.qualificationLevel || '',
-      scheme_provider: formData.schemeProvider || '',
+      qualification: mwLabel('QUALIFICATION', formData.qualificationLevel),
+      scheme_provider: mwSchemeLabel(formData.schemeProvider),
       registration_number: formData.registrationNumber || '',
       signature: formData.signature || '',
       iet_declaration: ietDeclared,

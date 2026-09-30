@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment, isValidElement } from 'react';
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
 import { scrollToTopForStepChange } from '@/utils/scroll';
 import { CertPreviewSheet } from './CertPreviewSheet';
 import { ReportPdfViewer } from '@/components/reports/ReportPdfViewer';
+import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
 
 interface CertShellFooterProps {
   currentIndex: number;
@@ -110,6 +111,15 @@ const useTypingFocus = () => {
   return typing;
 };
 
+/** How many elements a node renders — fragments unwrapped, null/false skipped. */
+const countRenderable = (node: React.ReactNode): number =>
+  React.Children.toArray(node).reduce<number>((n, child) => {
+    if (isValidElement(child) && child.type === Fragment) {
+      return n + countRenderable((child.props as { children?: React.ReactNode }).children);
+    }
+    return n + 1;
+  }, 0);
+
 /**
  * Shared certificate shell footer — fixed bottom bar with Back + solid volt
  * Continue (labelled with the next step), swapping to Generate + cert-specific
@@ -139,6 +149,22 @@ const CertShellFooter: React.FC<CertShellFooterProps> = ({
   const canPreview = !!previewReportType && !!previewData;
   const [showPdf, setShowPdf] = useState(false);
   const canViewPdf = !!previewReportId;
+  /*
+   * Phone layout of the last step. Back + Preview + View PDF + the cert's own
+   * actions (Email, Invoice on the EICR) made five buttons in one 390px row,
+   * with "View PDF" wrapping onto two lines. Below lg the row is Back ·
+   * Preview · More, and More opens a sheet listing View PDF and the cert
+   * actions in full-width rows. When a cert brings no actions of its own,
+   * View PDF stays inline — three buttons fit. Desktop is unchanged.
+   */
+  const [showMore, setShowMore] = useState(false);
+  // Three neutral buttons fit a phone row. Count what this cert would put
+  // there — Back, Preview, View PDF and however many actions it passes (a
+  // fragment with one conditional child is one, not "some") — and only
+  // collapse when a fourth would be needed.
+  const actionCount = countRenderable(lastStepActions);
+  const phoneRow = 1 + (canPreview ? 1 : 0) + (canViewPdf ? 1 : 0) + actionCount;
+  const phoneOverflow = phoneRow > 3 && (canViewPdf || actionCount > 0);
   const typing = useTypingFocus();
   // ELE-1464 — shared utility. Instant, not smooth: a ~300ms smooth scroll
   // races the 260ms step-in animation and produces the jolt reported on the
@@ -192,12 +218,29 @@ const CertShellFooter: React.FC<CertShellFooterProps> = ({
                     haptic.light();
                     setShowPdf(true);
                   }}
-                  className={certFooterNeutralButton}
+                  className={cn(certFooterNeutralButton, phoneOverflow && 'hidden lg:block')}
                 >
                   View PDF
                 </button>
               )}
-              {lastStepActions}
+              {phoneOverflow && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    haptic.light();
+                    setShowMore(true);
+                  }}
+                  aria-haspopup="dialog"
+                  className={cn(certFooterNeutralButton, 'lg:hidden')}
+                >
+                  More
+                </button>
+              )}
+              {actionCount > 0 && (
+                <div className={phoneOverflow ? 'hidden lg:contents' : 'contents'}>
+                  {lastStepActions}
+                </div>
+              )}
             </div>
             {!canGenerate && generateBlockedLabel && onGenerateBlocked ? (
               <button
@@ -253,6 +296,38 @@ const CertShellFooter: React.FC<CertShellFooterProps> = ({
         )}
       </div>
 
+      {phoneOverflow && (
+        <Sheet open={showMore} onOpenChange={setShowMore}>
+          <SheetContent
+            side="bottom"
+            className="rounded-t-2xl border-white/[0.14] bg-background p-0"
+          >
+            <div className="px-4 pt-4 pb-2">
+              <SheetTitle className="text-left text-white">More actions</SheetTitle>
+            </div>
+            {/* Any action tapped closes the sheet; the action itself opens
+                its own viewer or dialog on top. */}
+            <div
+              className="flex flex-col gap-2 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] [&>button]:h-12 [&>button]:w-full"
+              onClickCapture={() => setTimeout(() => setShowMore(false), 0)}
+            >
+              {canViewPdf && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    haptic.light();
+                    setShowPdf(true);
+                  }}
+                  className={certFooterNeutralButton}
+                >
+                  View PDF
+                </button>
+              )}
+              {actionCount > 0 && lastStepActions}
+            </div>
+          </SheetContent>
+        </Sheet>
+      )}
       {canViewPdf && (
         <ReportPdfViewer
           reportId={previewReportId as string}

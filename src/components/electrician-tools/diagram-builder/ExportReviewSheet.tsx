@@ -7,9 +7,11 @@ import { Textarea } from '@/components/ui/textarea';
 import { FileText, Loader2, Check, ChevronUp, ChevronDown } from 'lucide-react';
 import { SavedRoom } from '@/hooks/useFloorPlanRooms';
 import { symbolRegistry } from '@/components/electrician-tools/diagram-builder/symbols/symbolRegistry';
-import { assignCircuits, type CircuitScheduleEntry } from '@/utils/circuit-assignment';
+import { type CircuitScheduleEntry } from '@/utils/circuit-assignment';
 import type { CanvasObject } from '@/pages/electrician-tools/ai-tools/DiagramBuilderPage';
-import { isDesigned, scheduleForRooms, toScheduleEntries } from './circuitDesign';
+import { isDesigned, toScheduleEntries } from './circuitDesign';
+import { wayOrder } from './boardWays';
+import { handDrawnCircuits, jobNumbering, labelKey } from './jobNumbering';
 
 /**
  * Underline field, per the house form language (see CLAUDE.md → Design System).
@@ -120,7 +122,7 @@ export const ExportReviewSheet = ({
   });
   const [drawingNumber, setDrawingNumber] = useState('EL-001');
   const [revision, setRevision] = useState('A');
-  const [revisionNote, setRevisionNote] = useState('Initial Issue');
+  const [revisionNote, setRevisionNote] = useState('Initial issue');
   const [showErrors, setShowErrors] = useState(false);
   const [circuits, setCircuits] = useState<CircuitScheduleEntry[]>([]);
   // Which rooms go in the PDF, and in what order. The sheet used to list rooms
@@ -128,6 +130,8 @@ export const ExportReviewSheet = ({
   // and the drawing order was whatever order they happened to be saved in.
   const [roomOrder, setRoomOrder] = useState<string[]>([]);
   const [excluded, setExcluded] = useState<Set<string>>(new Set());
+  const [stalePages, setStalePages] = useState<string[]>([]);
+  const originRef = useRef(new Map<string, string>());
   const [circuitsOpen, setCircuitsOpen] = useState(false);
   // Tracks whether the user has edited the schedule, so re-opening the sheet
   // after adding symbols refreshes the defaults without discarding their work.
@@ -164,41 +168,78 @@ export const ExportReviewSheet = ({
     // held under 100 m², lighting under 11 points. Issue that, as each drawing
     // shows it now, sheet by sheet (each is numbered from S1, so pooling them
     // merged different circuits); hand-drawn sheets keep the per-type defaults.
-    const sheets = includedRooms.map((r) => {
-      let objects: CanvasObject[] = [];
+    const parse = (r: SavedRoom): CanvasObject[] => {
       try {
         const parsed = JSON.parse(r.canvasState);
-        if (Array.isArray(parsed)) objects = parsed as CanvasObject[];
+        return Array.isArray(parsed) ? (parsed as CanvasObject[]) : [];
       } catch {
-        /* an unreadable sheet contributes its symbol list only */
+        return []; // an unreadable sheet contributes its symbol list only
       }
-      return { room: r, objects, designed: isDesigned(objects) };
+    };
+    // Numbered across EVERY sheet of the job, exactly as the plan tags are
+    // (jobNumbering), then trimmed to the sheets included — so leaving a
+    // sheet out doesn't renumber the others, and the schedule always agrees
+    // with the plan pages printed beside it.
+    // In SAVED order — the order the plan tags were numbered in — not the
+    // page order chosen here: reordering pages must not renumber circuits.
+    const all = rooms.map((r) => ({
+      id: r.id,
+      name: r.name,
+      objects: parse(r),
+      symbolIds: r.symbolIds,
+    }));
+    const job = jobNumbering(all);
+    const included = new Set(
+      rooms.map((r, i) => (excluded.has(r.id) ? -1 : i)).filter((i) => i >= 0)
+    );
+    // Plan pages whose image carries older numbers than the job has now.
+    setStalePages(
+      rooms
+        .filter(
+          (r, i) => included.has(i) && r.labelKey && r.labelKey !== labelKey(job.labelsFor(i))
+        )
+        .map((r) => r.name)
+    );
+    const present = new Set<string>();
+    all.forEach((sh, i) => {
+      if (!included.has(i)) return;
+      sh.objects.forEach(
+        (o) => o.circuitRef && !o.generated && present.add(job.refOf(i, o.circuitRef))
+      );
     });
-    const designed = sheets.filter((sh) => sh.designed);
-    const plain = sheets.filter((sh) => !sh.designed);
-    const designedEntries = designed.length
+    const zonesIn = job.designed.some((c) => c.kind === 'fire-zone' && present.has(c.ref));
+    const designedEntries = toScheduleEntries(
+      job.designed
+        .filter((c) => present.has(c.ref) || (c.kind === 'fire-supply' && zonesIn))
+        .sort((a, b) => wayOrder(job.ways.get(a.ref)) - wayOrder(job.ways.get(b.ref))),
+      job.ways
+    );
+    // Hand-drawn sheets as drawn (see handDrawnCircuits), counted over the
+    // included sheets and numbered as the whole job is.
+    const plainIncluded = all.filter((sh, i) => included.has(i) && !isDesigned(sh.objects));
+    const plainEntries = plainIncluded.length
       ? toScheduleEntries(
-          scheduleForRooms(designed.map((sh) => ({ name: sh.room.name, objects: sh.objects })))
-            .circuits
+          handDrawnCircuits(
+            plainIncluded.flatMap((sh) => sh.objects),
+            plainIncluded.flatMap((sh) => sh.symbolIds ?? []),
+            job.designed.length > 0
+          ),
+          job.ways
         )
       : [];
-    const plainEntries = plain.length
-      ? assignCircuits(plain.flatMap((sh) => sh.room.symbolIds)).circuitSchedule.map((c) =>
-          designed.length
-            ? {
-                ...c,
-                circuitRef: `${c.circuitRef} · hand-drawn`,
-                circuitName: `${c.circuitName} (hand-drawn sheets)`,
-              }
-            : c
-        )
-      : [];
-    const fresh = [...designedEntries, ...plainEntries];
+    const fresh = [...designedEntries, ...plainEntries].sort(
+      (a, b) => wayOrder(job.ways.get(a.circuitRef)) - wayOrder(job.ways.get(b.circuitRef))
+    );
+    // Edits follow the circuit (sheet + its own ref), not the job ref, which
+    // changes when a sheet is added: they used to be dropped, or — after the
+    // pages were reordered — land on a different sheet's circuit.
+    const prevOrigin = originRef.current;
+    originRef.current = new Map(fresh.map((f) => [f.circuitRef, job.originOf(f.circuitRef)]));
     setCircuits((prev) => {
       if (!circuitsTouchedRef.current) return fresh;
-      const edited = new Map(prev.map((c) => [c.circuitRef, c]));
+      const edited = new Map(prev.map((c) => [prevOrigin.get(c.circuitRef) ?? c.circuitRef, c]));
       return fresh.map((f) => {
-        const was = edited.get(f.circuitRef);
+        const was = edited.get(job.originOf(f.circuitRef));
         return was
           ? // Point count and review flags come from the drawing; the three
             // fields the user can type keep their edits.
@@ -307,7 +348,7 @@ export const ExportReviewSheet = ({
         date,
         drawingNumber: drawingNumber.trim(),
         revision: revision.trim() || 'A',
-        revisionNote: revisionNote.trim() || 'Initial Issue',
+        revisionNote: revisionNote.trim() || 'Initial issue',
         notes,
         circuitSchedule: circuits,
         // Ordered and filtered as the user left them, not the raw saved list.
@@ -326,7 +367,7 @@ export const ExportReviewSheet = ({
         <div className="flex flex-col h-full bg-background">
           {/* Header */}
           <div className="w-full max-w-3xl mx-auto px-4 pt-4 pb-3 border-b border-white/10">
-            <h2 className="text-lg font-semibold text-white">Export Floor Plans</h2>
+            <h2 className="text-lg font-semibold text-white">Export floor plans</h2>
             <p className="text-xs text-white mt-0.5">
               {includedRooms.length} room{includedRooms.length !== 1 ? 's' : ''} &middot;{' '}
               {totalItems} item{totalItems !== 1 ? 's' : ''}
@@ -351,14 +392,14 @@ export const ExportReviewSheet = ({
                   invalid={showErrors && missing.property}
                   value={property}
                   onChange={setProperty}
-                  placeholder="12 High Street, Cwmbran"
+                  placeholder="e.g. 12 High Street, Cwmbran"
                 />
                 <Field
                   id="export-client"
                   label="Client name"
                   value={client}
                   onChange={setClient}
-                  placeholder="Mrs J Davies"
+                  placeholder="e.g. Mrs J Davies"
                 />
                 <Field
                   id="export-drawn-by"
@@ -402,7 +443,7 @@ export const ExportReviewSheet = ({
                   invalid={showErrors && missing.drawingNumber}
                   value={drawingNumber}
                   onChange={setDrawingNumber}
-                  placeholder="EL-001"
+                  placeholder="e.g. EL-001"
                 />
                 <Field
                   id="export-rev"
@@ -417,7 +458,7 @@ export const ExportReviewSheet = ({
                 label="Revision description"
                 value={revisionNote}
                 onChange={setRevisionNote}
-                placeholder="Initial Issue"
+                placeholder="Initial issue"
               />
             </section>
 
@@ -440,7 +481,7 @@ export const ExportReviewSheet = ({
                         'flex items-center gap-3 rounded-xl border p-2 transition-colors',
                         isIn
                           ? 'border-white/[0.14] bg-white/[0.05]'
-                          : 'border-white/[0.08] bg-transparent opacity-55'
+                          : 'border-dashed border-white/[0.2] bg-transparent'
                       )}
                     >
                       <button
@@ -483,13 +524,13 @@ export const ExportReviewSheet = ({
                         </span>
                       </button>
 
-                      <div className="flex shrink-0 flex-col">
+                      <div className="flex shrink-0 gap-1">
                         <button
                           type="button"
                           onClick={() => moveRoom(room.id, -1)}
                           disabled={idx === 0}
                           aria-label={`Move ${room.name} earlier`}
-                          className="flex h-6 w-9 items-center justify-center rounded text-white touch-manipulation hover:bg-white/10 disabled:opacity-25"
+                          className="flex h-11 w-11 items-center justify-center rounded-lg text-white touch-manipulation hover:bg-white/10 disabled:opacity-25"
                         >
                           <ChevronUp className="h-4 w-4" />
                         </button>
@@ -498,7 +539,7 @@ export const ExportReviewSheet = ({
                           onClick={() => moveRoom(room.id, 1)}
                           disabled={idx === orderedRooms.length - 1}
                           aria-label={`Move ${room.name} later`}
-                          className="flex h-6 w-9 items-center justify-center rounded text-white touch-manipulation hover:bg-white/10 disabled:opacity-25"
+                          className="flex h-11 w-11 items-center justify-center rounded-lg text-white touch-manipulation hover:bg-white/10 disabled:opacity-25"
                         >
                           <ChevronDown className="h-4 w-4" />
                         </button>
@@ -560,7 +601,7 @@ export const ExportReviewSheet = ({
                     type="button"
                     onClick={() => setCircuitsOpen((v) => !v)}
                     aria-expanded={circuitsOpen}
-                    className="h-11 sm:h-9 px-3 rounded-lg border border-white/15 text-white text-xs font-medium touch-manipulation active:scale-95"
+                    className="h-11 px-3 rounded-lg border border-white/15 text-white text-xs font-medium touch-manipulation active:scale-95"
                   >
                     {circuitsOpen ? 'Done' : `Review ${circuits.length}`}
                   </button>
@@ -571,8 +612,8 @@ export const ExportReviewSheet = ({
                     Indicative — check before issuing
                   </p>
                   <p className="text-[11px] text-white mt-1">
-                    Suggested defaults for a typical domestic installation. Cable sizing, volt drop
-                    and Zs must be verified for the actual installation.
+                    Suggested defaults from the drawing. Cable sizing, volt drop and Zs must be
+                    verified for the actual installation.
                   </p>
                 </div>
 
@@ -584,7 +625,9 @@ export const ExportReviewSheet = ({
                         className="rounded-xl border border-white/[0.12] bg-white/[0.04] p-3 space-y-3"
                       >
                         <div className="flex items-baseline justify-between gap-2">
-                          <span className="text-sm font-bold text-elec-yellow">{c.circuitRef}</span>
+                          <span className="shrink-0 whitespace-nowrap text-sm font-bold text-elec-yellow">
+                            {c.wayLabel ? `Way ${c.wayLabel}` : c.circuitRef}
+                          </span>
                           <span className="text-xs text-white">
                             {c.circuitName} · {c.points} point{c.points !== 1 ? 's' : ''}
                           </span>
@@ -625,20 +668,30 @@ export const ExportReviewSheet = ({
             <section className="space-y-3">
               <h3 className="text-[15px] font-semibold tracking-tight text-white">Notes</h3>
               <Textarea
-                placeholder="Additional notes for the export..."
+                placeholder="Anything the drawing should say"
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 text-white"
+                className="input-underline textarea-soft min-h-[80px] w-full resize-y rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white placeholder:text-white/25 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none touch-manipulation"
               />
             </section>
           </div>
 
           {/* Footer */}
           <div className="w-full max-w-3xl mx-auto px-4 py-3 border-t border-white/10 shrink-0 pb-safe">
+            {stalePages.length > 0 && (
+              <p
+                role="status"
+                className="mb-3 rounded-xl border border-orange-500/30 bg-orange-500/10 p-3 text-[13px] text-orange-300"
+              >
+                The plan page for {stalePages.map((n) => `“${n}”`).join(', ')} shows older circuit
+                numbers than the schedule — open {stalePages.length > 1 ? 'each' : 'it'} and tap
+                Save Room so the PDF agrees with itself.
+              </p>
+            )}
             <Button
               onClick={handleGenerate}
               disabled={isGenerating || includedRooms.length === 0}
-              className="w-full h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white"
+              className="w-full h-11 md:h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white"
             >
               {isGenerating ? (
                 <>

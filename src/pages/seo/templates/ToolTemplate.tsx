@@ -80,6 +80,8 @@ export interface ToolTemplateProps {
   /** CTA */
   ctaHeading?: string;
   ctaSubheading?: string;
+  /** Hero sign-up button label — see GuideTemplate. Defaults unchanged. */
+  heroCtaLabel?: string;
   /** Extra schemas */
   extraSchemas?: Array<Record<string, unknown>>;
   /** URL path for SoftwareApplication schema */
@@ -126,6 +128,7 @@ export default function ToolTemplate({
   relatedPages,
   ctaHeading,
   ctaSubheading,
+  heroCtaLabel,
   extraSchemas = [],
   toolPath,
   calculator,
@@ -206,7 +209,7 @@ export default function ToolTemplate({
                 : 'bg-yellow-500 hover:bg-yellow-400 text-black'
             } font-semibold rounded-xl touch-manipulation transition-colors`}
           >
-            {calculator ? 'Get All 70 Calculators' : 'Start 7-Day Free Trial'}{' '}
+            {heroCtaLabel ?? (calculator ? 'Get All 70 Calculators' : 'Start 7-Day Free Trial')}{' '}
             {!calculator && <ArrowRight className="w-4 h-4" />}
           </a>
           {!calculator && (
@@ -233,7 +236,11 @@ export default function ToolTemplate({
       {/* Live calculator — free, no signup, BS 7671:2018+A4:2026 compliant.
           Top-of-class SEO pattern: ship the actual tool, not a screenshot. */}
       {calculator && (
-        <section id="calculator" className="pb-10 scroll-mt-24" aria-labelledby="calculator-heading">
+        <section
+          id="calculator"
+          className="pb-10 scroll-mt-24"
+          aria-labelledby="calculator-heading"
+        >
           {/* The tool is why they clicked. Give it a heading it can be linked to,
               and say the free/no-signup part HERE rather than only in the hero —
               on mobile the hero is long gone by the time they reach the inputs. */}
@@ -244,9 +251,7 @@ export default function ToolTemplate({
             >
               {calculatorLabel}
             </h2>
-            <p className="text-[13px] text-white">
-              Free · no sign-up · BS 7671:2018+A4:2026
-            </p>
+            <p className="text-[13px] text-white">Free · no sign-up · BS 7671:2018+A4:2026</p>
           </div>
           {/* Edge-to-edge on mobile — the calculator is the reason they clicked,
               so it gets the full screen width rather than sitting inset. */}

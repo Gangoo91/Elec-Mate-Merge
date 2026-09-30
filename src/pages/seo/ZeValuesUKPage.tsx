@@ -809,6 +809,10 @@ export default function ZeValuesUKPage() {
       faqs={faqs}
       faqHeading="Frequently Asked Questions About Ze Values"
       relatedPages={relatedPages}
+      // This page offers its own download in section 1 — the default
+      // cheatsheet box would sit beside it and split the click.
+      leadMagnet={false}
+      heroCtaLabel="Record Ze and Zs straight onto your EICR"
       ctaHeading="Validate Ze and Every Test Result Automatically"
       ctaSubheading="Elec-Mate validates Ze against expected values, cross-checks Zs with Ze + R1+R2, and flags any discrepancies. Voice test entry records readings hands-free. 70+ calculators built in. Join 1,600+ UK electricians. 7-day free trial."
     />

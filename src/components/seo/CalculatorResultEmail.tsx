@@ -22,6 +22,7 @@
  */
 import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { getStoredAttribution } from '@/lib/attribution';
 import { PANEL, LABEL } from '@/components/seo/seoSurface';
 import { trackEmailCaptured } from '@/lib/analytics-events';
 
@@ -78,6 +79,8 @@ export function CalculatorResultEmail({ result }: Props) {
             email: address,
             source: 'calculator_result',
             calculator_result: result,
+            page_url: window.location.pathname,
+            utm: getStoredAttribution(),
           },
         });
         if (error) throw error;
@@ -101,8 +104,8 @@ export function CalculatorResultEmail({ result }: Props) {
       <section className={`${PANEL} mt-6 px-4 py-5 sm:px-5`}>
         <h2 className={`${LABEL} mb-2 text-white`}>Sent</h2>
         <p className="text-[14.5px] leading-relaxed text-white">
-          Your {result.calculatorName.toLowerCase()} result is on its way to {email}. It
-          includes what you entered, so it stands up as a record against the job.
+          Your {result.calculatorName.toLowerCase()} result is on its way to {email}. It includes
+          what you entered, so it stands up as a record against the job.
         </p>
       </section>
     );
@@ -114,8 +117,8 @@ export function CalculatorResultEmail({ result }: Props) {
         Email me this calculation
       </h2>
       <p className="mb-4 text-[14.5px] leading-relaxed text-white">
-        We&rsquo;ll send the result and the figures you entered, so you have a record for the
-        job file.
+        We&rsquo;ll send the result and the figures you entered, so you have a record for the job
+        file.
       </p>
 
       <form onSubmit={submit} className="flex flex-col gap-3 sm:flex-row">

@@ -23,6 +23,40 @@ serve(async (req) => {
     if (!user) throw new Error('Not authenticated');
 
     const body = await req.json();
+
+    const pdfMonkeyKey = Deno.env.get('PDFMONKEY_API_KEY');
+    if (!pdfMonkeyKey) throw new Error('PDFMONKEY_API_KEY not configured');
+
+    // Picking up a PDF that was still generating when the first call gave up
+    // (30 Sep 2026): the client kept being told "check back in a moment" and
+    // then threw the document id away, so a big drawing set was lost. Only
+    // the user who started it can collect it — its meta carries their id.
+    if (typeof body.resume_document_id === 'string') {
+      const res = await fetch(
+        `https://api.pdfmonkey.io/api/v1/documents/${encodeURIComponent(body.resume_document_id)}`,
+        { headers: { Authorization: `Bearer ${pdfMonkeyKey}` } }
+      );
+      if (!res.ok) throw new Error('That PDF could not be found');
+      const doc = (await res.json()).document;
+      let owner = '';
+      try {
+        owner = JSON.parse(doc?.meta || '{}').user_id ?? '';
+      } catch {
+        owner = '';
+      }
+      if (owner !== user.id) throw new Error('That PDF could not be found');
+      if (doc.status === 'failure')
+        throw new Error('PDF generation failed: ' + (doc.failure_cause || 'Unknown'));
+      return new Response(
+        JSON.stringify(
+          doc.status === 'success' && doc.download_url
+            ? { success: true, status: 'completed', pdf_url: doc.download_url, documentId: doc.id }
+            : { success: true, status: 'processing', documentId: doc.id }
+        ),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
     const {
       floor_plan_id,
       property_address,
@@ -48,9 +82,6 @@ serve(async (req) => {
       scale_note,
     } = body;
 
-    const pdfMonkeyKey = Deno.env.get('PDFMONKEY_API_KEY');
-    if (!pdfMonkeyKey) throw new Error('PDFMONKEY_API_KEY not configured');
-
     const templateId = Deno.env.get('FLOOR_PLAN_TEMPLATE_ID');
     if (!templateId) throw new Error('FLOOR_PLAN_TEMPLATE_ID not configured');
 
@@ -65,6 +96,8 @@ serve(async (req) => {
         document: {
           document_template_id: templateId,
           status: 'pending',
+          // Who may collect it later (see resume_document_id above).
+          meta: JSON.stringify({ user_id: user.id, _filename: 'floor-plan.pdf' }),
           payload: {
             property_address,
             client_name,
@@ -112,9 +145,10 @@ serve(async (req) => {
       throw new Error('No document ID returned from PDFMonkey');
     }
 
-    // Poll for completion (max 30 seconds)
+    // Poll for completion (about 50 seconds). A long drawing set can take
+    // longer; the client then collects it with resume_document_id.
     let pdfUrl = null;
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 25; i++) {
       await new Promise((r) => setTimeout(r, 2000));
 
       const statusResponse = await fetch(

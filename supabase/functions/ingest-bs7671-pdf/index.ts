@@ -1,3 +1,4 @@
+import { legislationProvision } from '../_shared/building-regs-citation.ts';
 import 'https://deno.land/x/xhr@0.1.0/mod.ts';
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
@@ -373,11 +374,72 @@ const BS5839_CONFIG: DocTypeConfig = {
   },
 };
 
+// Building Regulations sources (30 Sep 2026). The source text is PREPARED
+// before ingest (scratchpad prep.py / leg.py): running headers stripped,
+// paragraph numbers joined onto their text, out-of-sequence numeric line
+// starts (table values like 0.95, wrapped cross-refs) and other documents'
+// requirement IDs (TM40, NF67) neutralised with a leading NBSP. So these
+// patterns can be strict and line-anchored — the BS 5839 lesson.
+//
+// Approved Documents: paragraphs "2.5", "11.20", "4.5.1" (Scottish-style),
+// plus the Part's own requirement boxes "P1", "B5", "M4", appendix
+// paragraphs "B24", and whole unnumbered appendices "AppA" (the prep step
+// turns each real "Appendix A: …" heading into "AppA …").
+const APPROVED_DOC_CONFIG: DocTypeConfig = {
+  doc_type: 'approved_doc',
+  regPattern: () =>
+    /^((?:\d{1,2}\.\d{1,3}(?:\.\d{1,2})?)|(?:[A-Z]{1,2}\d{1,2}[A-Z]?)|(?:App[A-Z]))(?=\s+[A-Z(‘“"])/gm,
+  minFirstDigit: 0,
+  maxFirstDigit: 99,
+  minSegments: 1,
+  maxSegments: 3,
+  derive: (r) => {
+    const segs = r.split('.');
+    const sec = parseInt(segs[0], 10);
+    const isNumeric = !Number.isNaN(sec);
+    return {
+      part_number: null,
+      part: null,
+      chapter_number: isNumeric ? sec : null,
+      chapter: isNumeric
+        ? sec === 0
+          ? 'Introduction'
+          : `Section ${sec}`
+        : r.startsWith('App')
+          ? `Appendix ${r.slice(3)}`
+          : 'Requirement / appendix',
+      section_number: r,
+    };
+  },
+};
+
+// Legislation: one unit per provision, keyed by the prep step —
+//   reg12 (England) · reg12-W (Wales) · Sch1-P · Sch3 · Sch3A · Sch4
+// Never numeric, so the first-digit check is not meaningful (NaN passes).
+const LEGISLATION_CONFIG: DocTypeConfig = {
+  doc_type: 'legislation',
+  regPattern: () =>
+    /^((?:reg\d{1,3}[A-Z]{0,3}\d{0,2}(?:-W)?)|(?:Sch\d{1,2}[A-Z]?(?:-[A-Z]{1,2})?(?:-W)?))(?=\s)/gm,
+  minFirstDigit: 0,
+  maxFirstDigit: 999,
+  minSegments: 1,
+  maxSegments: 1,
+  derive: (r) => ({
+    part_number: null,
+    part: null,
+    chapter_number: null,
+    chapter: r.startsWith('Sch') ? 'Schedules' : 'Regulations',
+    section_number: r,
+  }),
+};
+
 const DOC_CONFIGS: Record<string, DocTypeConfig> = {
   bs7671: BS7671_CONFIG,
   gn3: GN3_CONFIG,
   osg: OSG_CONFIG,
   bs5839: BS5839_CONFIG,
+  approved_doc: APPROVED_DOC_CONFIG,
+  legislation: LEGISLATION_CONFIG,
 };
 
 // True if `content` reads like real regulation prose, NOT an index entry or
@@ -947,14 +1009,34 @@ function buildFacetPrompt(params: {
           ? 'IET On-Site Guide — the practical installer handbook aligned with BS 7671'
           : params.docType === 'bs5839'
             ? 'BS 5839-1:2025 — Fire detection and fire alarm systems for buildings (code of practice for non-domestic premises)'
-            : params.docType.toUpperCase();
+            : params.docType === 'approved_doc'
+              ? // Its guidance-not-law status is applied at answer time (Elec-AI's
+                // prompt). Stating it HERE made the extractor write ~500 facets
+                // saying only "this is statutory guidance, not law" — noise that
+                // competed with the paragraph's real content.
+                `${params.editionCode} (Approved Document, England/Wales Building Regulations). Do not create facets about the document itself or its legal status — only about what the paragraph says.`
+              : params.docType === 'legislation'
+                ? `${params.editionCode} (UK legislation). Do not create facets about the document itself — only about what the provision says.`
+                : params.docType.toUpperCase();
 
   const loc = [
     params.editionCode,
     params.part,
     params.chapter,
     params.section,
-    params.regNumber ? `Regulation ${params.regNumber}` : null,
+    params.regNumber
+      ? params.docType === 'approved_doc'
+        ? params.regNumber.startsWith('App')
+          ? `Appendix ${params.regNumber.slice(3)}`
+          : /^[A-Z]{1,2}\d$/.test(params.regNumber)
+            ? `Requirement ${params.regNumber}`
+            : `Paragraph ${params.regNumber}`
+        : params.docType === 'legislation'
+          ? // Human form, never the internal key — "reg16-W" leaked into facets
+            // as "regulation 16-W" before this.
+            legislationProvision(params.regNumber)
+          : `Regulation ${params.regNumber}`
+      : null,
     params.regTitle,
   ]
     .filter(Boolean)
@@ -1987,7 +2069,9 @@ serve(async (req) => {
                 ? 'OSG'
                 : edition.document_type === 'bs5839'
                   ? 'BS 5839-1'
-                  : edition.document_type.toUpperCase();
+                  : edition.document_type === 'approved_doc' || edition.document_type === 'legislation'
+                    ? edition.edition_code
+                    : edition.document_type.toUpperCase();
 
         // Pull next batch via RPC (server-side NOT EXISTS). The previous
         // client-side filter broke past 1000 facets because PostgREST caps
@@ -2291,7 +2375,9 @@ serve(async (req) => {
                 ? 'OSG'
                 : edition.document_type === 'bs5839'
                   ? 'BS 5839-1'
-                  : edition.document_type.toUpperCase();
+                  : edition.document_type === 'approved_doc' || edition.document_type === 'legislation'
+                    ? edition.edition_code
+                    : edition.document_type.toUpperCase();
 
         const { data: pendingTables, error: pendingErr } = await supabaseAdmin.rpc(
           'get_pending_facet_tables',

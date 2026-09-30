@@ -245,7 +245,7 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
       <section className={cardCn}>
         <SectionTitle title="Means of earthing" />
         <FormField label="Means of earthing" required>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 gap-2" data-field="meansOfEarthing">
             <button
               type="button"
               className={cn(

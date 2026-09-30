@@ -9,6 +9,14 @@ import {
   type RcdRating,
 } from '@/data/zsLimits';
 
+/**
+ * The EIC stores the arrangement as 'tt', the EICR as 'TT'. Compared exactly,
+ * every TT circuit on an EIC was judged against the fuse/MCB tables and a
+ * sound electrode reading flagged critical (30 Sep 2026).
+ */
+const isTT = (arrangement?: string): boolean =>
+  (arrangement ?? '').toLowerCase().replace(/[^a-z]/g, '') === 'tt';
+
 // RCD requirement checker
 const shouldHaveRCD = (result: TestResult): boolean => {
   const description = result.circuitDescription?.toLowerCase() || '';
@@ -95,7 +103,7 @@ export const checkZsCompliance = (
    * writing down what is installed, and "no RCD on the sockets" is a finding
    * whether or not anyone has put a meter on it yet. Hoisted above the guard.
    */
-  const isTTSystem = earthingArrangement === 'TT';
+  const isTTSystem = isTT(earthingArrangement);
   if (isTTSystem && !hasReading(result.rcdRating)) {
     warnings.push({
       severity: 'critical',
@@ -124,7 +132,6 @@ export const checkZsCompliance = (
     });
   }
 
-
   // Check RCD requirements
   if (shouldHaveRCD(result) && !result.rcdRating) {
     warnings.push({
@@ -136,7 +143,6 @@ export const checkZsCompliance = (
       suggestion: 'Install 30mA RCD protection for this circuit type.',
     });
   }
-
 
   if (!result.zs) return warnings;
 
@@ -180,17 +186,19 @@ export const checkZsCompliance = (
     // `protectiveDeviceType: "MCB"` alongside `bsStandard: "MCB (BS EN 60898)"`,
     // which read back to the user as "MCB MCB (BS EN 60898)".
     return parts
-      .filter((part, i) => !parts.some((other, j) => j !== i && other.includes(part) && other !== part))
+      .filter(
+        (part, i) => !parts.some((other, j) => j !== i && other.includes(part) && other !== part)
+      )
       .join(' ')
       .trim();
   })();
   const circuitDescription = result.circuitDescription || '';
-  const isTT = earthingArrangement === 'TT';
+  const isTTEarthing = isTT(earthingArrangement);
 
   // For TT systems the RCD provides fault protection, so the Zs limit comes from
   // Table 41.5 (Reg 411.5.3: Ra × I∆n ≤ 50 V), not the fuse/MCB tables —
   // 50 / I∆n, e.g. 1667Ω for a 30mA RCD.
-  if (isTT) {
+  if (isTTEarthing) {
     const rcdRatingMa = parseInt(result.rcdRating?.replace('mA', '') || '');
     if (!isNaN(rcdRatingMa) && [30, 100, 300, 500].includes(rcdRatingMa)) {
       const rcdZs = getRcdZsLimit(rcdRatingMa as RcdRating);

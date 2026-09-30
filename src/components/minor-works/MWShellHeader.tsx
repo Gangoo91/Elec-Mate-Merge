@@ -44,10 +44,10 @@ const saveWord = (
   isOnline: boolean
 ): { word: string; tone: string } => {
   if (!isOnline) return { word: 'Offline', tone: 'text-orange-300' };
-  if (isSaving || status === 'syncing') return { word: 'Saving', tone: 'text-white/90' };
+  if (isSaving || status === 'syncing') return { word: 'Saving', tone: 'text-white' };
   if (status === 'error') return { word: 'Retry save', tone: 'text-red-400' };
   if (status === 'synced') return { word: 'Saved', tone: 'text-green-400' };
-  return { word: 'Save', tone: 'text-white/90' };
+  return { word: 'Save', tone: 'text-white' };
 };
 
 const RING_R = 14.5;

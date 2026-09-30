@@ -86,26 +86,17 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
   // counts can never disagree and Generate can't fire while errors remain.
   const validation = useEICValidation(formData);
   const canGenerateCertificate = validation.isValid;
-  const missingByTab = validation.errors.reduce((acc, rule) => {
+  // No gates on the EIC (Andrew, 30 Sep 2026): every rule is advisory, so the
+  // hint and the sheet list what is worth checking rather than what blocks.
+  // Errors are kept first should any ever be reintroduced.
+  const openItems = validation.errors.length > 0 ? validation.errors : validation.warnings;
+  const openIsBlocking = validation.errors.length > 0;
+  const missingByTab = openItems.reduce((acc, rule) => {
     const tab = rule.tab || 'certificate';
     (acc.get(tab) || acc.set(tab, []).get(tab)!).push(rule);
     return acc;
   }, new Map<EICTabId, ValidationRule[]>());
 
-  // Section completion — inspections/testing aren't hard generation gates
-  // (they surface as validation warnings), so derive their ticks directly.
-  const hasCompletedInspections =
-    (formData.inspections && Object.keys(formData.inspections).length > 0) ||
-    (formData.inspectionItems &&
-      Array.isArray(formData.inspectionItems) &&
-      formData.inspectionItems.some(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (item: any) =>
-          item.outcome === 'satisfactory' ||
-          item.outcome === 'not-applicable' ||
-          item.outcome === 'limitation'
-      ));
-  const hasTestResults = formData.scheduleOfTests && formData.scheduleOfTests.length > 0;
 
   const handleGeneratePDF = async () => {
     if (!canGenerateCertificate) {
@@ -421,36 +412,15 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
     }
   };
 
-  // Distinct short labels — two chips both reading "Schedule" were
-  // indistinguishable. These match the shell's step names.
-  const completionSections = [
-    { label: 'Details', done: !missingByTab.has('details') },
-    { label: 'Inspections', done: hasCompletedInspections },
-    { label: 'Testing', done: hasTestResults },
-    { label: 'Sign off', done: !missingByTab.has('declarations') },
-  ];
+  // The four-chip section strip that used to open this card repeated the tab
+  // bar one screen above it — removed 30 Sep 2026. The card now appears only
+  // when it has something to say: a handout to offer, or things worth checking.
+  const hasCardContent = !!generatedPdfUrl || openItems.length > 0;
 
   return (
     <>
+      {hasCardContent && (
       <div className={cardCn}>
-        <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">
-          Certificate actions
-        </h2>
-
-        {/* Section Completion — compact row */}
-        <div className="grid grid-cols-4 gap-2">
-          {completionSections.map((section) => (
-            <div
-              key={section.label}
-              className={cn(
-                'h-11 rounded-xl border border-white/[0.12] bg-white/[0.06] flex items-center justify-center px-1 text-center text-[11px] font-semibold',
-                section.done ? 'text-green-400' : 'text-white'
-              )}
-            >
-              {section.label}
-            </div>
-          ))}
-        </div>
 
         {/* ELE-1556 — once the PDF exists, offer the client the matching handout.
             The EIC generates from the shell footer (actionsRef), so this card is
@@ -459,13 +429,15 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
 
         {/* Validation hint — inline, tappable to open full sheet. Count comes
             from the same validation the panel above renders, so they agree. */}
-        {!canGenerateCertificate && (
+        {openItems.length > 0 && (
           <button
             type="button"
             onClick={() => setShowMissingFieldsSheet(true)}
             className="w-full min-h-11 flex items-center text-left text-[12px] font-medium text-elec-yellow touch-manipulation"
           >
-            {validation.errors.length} item{validation.errors.length === 1 ? '' : 's'} to complete before generating — tap to see
+            {openIsBlocking
+              ? `${openItems.length} item${openItems.length === 1 ? '' : 's'} to complete before generating — tap to see`
+              : `${openItems.length} thing${openItems.length === 1 ? '' : 's'} worth checking before you issue — tap to see`}
           </button>
         )}
 
@@ -474,6 +446,7 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
             carries Save. The validation hint above stays — it explains the
             footer gate. */}
       </div>
+      )}
 
       <PDFExportProgress
         isOpen={isExporting}
@@ -497,12 +470,16 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
           <div className="flex h-full flex-col">
             <SheetHeader className="shrink-0 border-b border-white/[0.08] px-4 pb-3 pt-4">
               <SheetTitle className="text-white text-left">
-                {validation.errors.length} item{validation.errors.length === 1 ? '' : 's'} to complete
+                {openIsBlocking
+                  ? `${openItems.length} item${openItems.length === 1 ? '' : 's'} to complete`
+                  : `${openItems.length} thing${openItems.length === 1 ? '' : 's'} worth checking`}
               </SheetTitle>
             </SheetHeader>
             <div className="flex-1 space-y-4 overflow-y-auto overscroll-contain px-4 py-4">
               <p className="text-[12px] text-white">
-                Finish these fields then tap Generate again.
+                {openIsBlocking
+                  ? 'Finish these fields then tap Generate again.'
+                  : 'None of these stop you issuing — the certificate prints them blank.'}
               </p>
               {Array.from(missingByTab.entries()).map(([tab, rules]) => (
                 <div key={tab} className="space-y-2">

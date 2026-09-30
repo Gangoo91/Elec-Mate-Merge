@@ -11,6 +11,9 @@ import {
   FieldNotesInput,
   isFieldMarker,
 } from '@/components/field-limitations';
+import { useCertLocked } from '@/components/inspection/shared/CertLocked';
+import { normaliseEarthingArrangement } from '@/utils/earthingArrangement';
+
 
 // Fields managed by this section (for memoization comparison)
 const SUPPLY_SECTION_FIELDS = [
@@ -175,14 +178,38 @@ const SupplyCharacteristicsSectionInner = ({
     }
   };
 
-  const isTNCSSsystem = formData.earthingArrangement === 'TN-C-S' || formData.earthingArrangement === 'TN-C-S-PNB';
+  // What is stored is not always what the chips are keyed on. Issued EICRs
+  // carry "TN-C-S (PME)" (the chip's label), "tncs" (the EIC form's value —
+  // a cert that passed through the EIC/EICR routing bug) and "N/A". Every
+  // comparison below goes through the canonical form so the chip lights and
+  // the PME / electrode / RCD follow-ons still fire.
+  const earthing = normaliseEarthingArrangement(formData.earthingArrangement);
+  const isTNCSSsystem = earthing === 'TN-C-S' || earthing === 'TN-C-S-PNB';
+
+  // Self-heal a non-canonical spelling so the PDF prints "TN-C-S", not "tncs".
+  // Same fact, canonical form — never changes what the inspector recorded.
+  // Not on a locked cert: the chip still lights from `earthing`, the stored
+  // value is simply left as it was issued.
+  const locked = useCertLocked();
+  const issued = formData.status === 'completed';
+  React.useEffect(() => {
+    // Drafts only — an issued cert must not acquire an edit just by being
+    // opened; the chip still lights from `earthing` and the EICR formatter
+    // normalises the stored spelling for the PDF.
+    if (locked || issued) return;
+    if (formData.earthingArrangement && earthing !== formData.earthingArrangement) {
+      onUpdate('earthingArrangement', earthing);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formData.earthingArrangement, earthing, locked, issued]);
 
   // Auto-set PME based on earthing arrangement
   React.useEffect(() => {
     if (isTNCSSsystem && formData.supplyPME !== 'yes') {
       onUpdate('supplyPME', 'yes');
     } else if (
-      formData.earthingArrangement &&
+      earthing &&
+      !isFieldMarker(earthing) &&
       !isTNCSSsystem &&
       formData.supplyPME === 'yes'
     ) {
@@ -191,18 +218,19 @@ const SupplyCharacteristicsSectionInner = ({
 
     // Auto-set earth electrode type to N/A for TN systems
     if (
-      (formData.earthingArrangement === 'TN-S' || isTNCSSsystem) &&
+      (earthing === 'TN-S' || isTNCSSsystem) &&
       formData.earthElectrodeType !== 'n/a'
     ) {
       onUpdate('earthElectrodeType', 'n/a');
     }
 
     // Smart: TT earthing → auto-enable RCD with 30mA
-    if (formData.earthingArrangement === 'TT' && formData.rcdMainSwitch !== 'yes') {
+    if (earthing === 'TT' && formData.rcdMainSwitch !== 'yes') {
       onUpdate('rcdMainSwitch', 'yes');
       onUpdate('rcdRating', '30mA');
     }
-  }, [formData.earthingArrangement]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [earthing]);
 
   // Show RCD fields only when RCD main switch is yes
   const showRCDFields = formData.rcdMainSwitch === 'yes';
@@ -855,12 +883,12 @@ const SupplyCharacteristicsSectionInner = ({
                   type="button"
                   onClick={() => {
                     haptic.light();
-                    onUpdate('earthingArrangement', formData.earthingArrangement === option.value ? '' : option.value);
+                    onUpdate('earthingArrangement', earthing === option.value ? '' : option.value);
                   }}
                   className={cn(
                     chipBase,
                     'px-1 text-[11px]',
-                    formData.earthingArrangement === option.value ? chipOn : chipOff
+                    earthing === option.value ? chipOn : chipOff
                   )}
                 >
                   {option.label}
@@ -1082,6 +1110,7 @@ const SupplyCharacteristicsSectionInner = ({
 };
 
 // Memoized component - only re-renders when SUPPLY_SECTION_FIELDS change
+
 const SupplyCharacteristicsSection = React.memo(
   SupplyCharacteristicsSectionInner,
   (prevProps, nextProps) => {

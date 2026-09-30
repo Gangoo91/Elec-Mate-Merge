@@ -850,8 +850,15 @@ export const reportCloud = {
         .eq('user_id', userId)
         .eq('report_type', certType)
         .is('deleted_at', null)
-        .neq('status', 'auto-draft')
+        // Completed only. This used to take anything but an auto-draft, ordered
+        // by last edit — so an unfinished in-progress cert touched in August
+        // outranked two issued certs from the same visit and offered "TN-C-S
+        // (PME)" with a blank premises type over their "domestic" (30 Sep 2026).
+        // An issued certificate is what the electrician signed for.
+        .eq('status', 'completed')
         .ilike('installation_address', `%${trimmed}%`)
+        // "Your last EICR" is the latest inspection, not the latest edit.
+        .order('inspection_date', { ascending: false, nullsFirst: false })
         .order('updated_at', { ascending: false })
         .limit(1);
 

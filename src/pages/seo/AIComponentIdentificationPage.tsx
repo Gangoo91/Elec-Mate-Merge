@@ -94,12 +94,9 @@ export default function AIComponentIdentificationPage() {
                 The tool is part of Elec-Mate's broader AI toolkit, which includes the{' '}
                 <SEOInternalLink href="/ai-electrician-tools">AI Board Scanner</SEOInternalLink>,
                 the{' '}
-                <SEOInternalLink href="/ai-circuit-designer">
-                  AI Circuit Designer
-                </SEOInternalLink>
-                , and the{' '}
-                <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>.
-                Together, these tools handle identification, design, and costing of electrical
+                <SEOInternalLink href="/ai-circuit-designer">AI Circuit Designer</SEOInternalLink>,
+                and the <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>
+                . Together, these tools handle identification, design, and costing of electrical
                 components and circuits from a single platform.
               </p>
             </>
@@ -180,9 +177,9 @@ export default function AIComponentIdentificationPage() {
                   <span className="font-semibold text-white">
                     Arc Fault Detection Devices (AFDDs)
                   </span>{' '}
-                  — A device category introduced by Amendment 2:2022, Reg 421.1.7, which
-                  recommends AFDD installation on AC final circuits to mitigate fire risk from arc
-                  fault currents. AFDDs are now appearing in upgraded and new consumer units from
+                  — A device category introduced by Amendment 2:2022, Reg 421.1.7, which recommends
+                  AFDD installation on AC final circuits to mitigate fire risk from arc fault
+                  currents. AFDDs are now appearing in upgraded and new consumer units from
                   manufacturers including Hager, Schneider, and Eaton. The AI identifies them by
                   manufacturer and model and confirms whether the circuit context is consistent with
                   the Reg 421.1.7 recommendation.
@@ -244,8 +241,8 @@ export default function AIComponentIdentificationPage() {
                 wholesalers. This means you can provide the customer with a remedial cost on the
                 spot — "this MCB needs replacing, a suitable replacement costs approximately X, and
                 the labour to fit it would be Y." Combined with Elec-Mate's{' '}
-                <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>,
-                you can generate a formal quotation for component replacements directly from the
+                <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>, you
+                can generate a formal quotation for component replacements directly from the
                 identification results.
               </p>
               <p>
@@ -477,6 +474,7 @@ export default function AIComponentIdentificationPage() {
           category: 'Guides',
         },
       ]}
+      heroCtaLabel="Identify a component free"
       ctaHeading="Identify any component in seconds"
       ctaSubheading="Join 1,600+ UK electricians using AI for instant component identification, replacement sourcing, and remedial quoting. 7-day free trial, cancel anytime."
     />

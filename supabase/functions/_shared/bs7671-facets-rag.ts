@@ -14,7 +14,9 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { buildingRegsCitation, isBuildingRegsDocType } from './building-regs-citation.ts';
 import { generateLargeEmbedding } from './ai-providers.ts';
+import { understandBS7671Query } from './bs7671-query-understanding.ts';
 
 export interface BS7671Facet {
   facetId: string;
@@ -24,6 +26,8 @@ export interface BS7671Facet {
   chapter: string | null;
   section: string | null;
   documentType: string;
+  /** e.g. "Approved Document P (England) 2013" — needed to cite Building Regs sources. */
+  editionCode?: string | null;
   pageNumber: number | null;
   facetType: string | null;
   primaryTopic: string | null;
@@ -63,10 +67,7 @@ interface SearchArgs {
  * we return an empty array and log — Cost Engineer continues without
  * compliance grounding rather than crashing the whole estimate.
  */
-export async function searchFacets(
-  supabase: any,
-  args: SearchArgs
-): Promise<BS7671Facet[]> {
+export async function searchFacets(supabase: any, args: SearchArgs): Promise<BS7671Facet[]> {
   const {
     query,
     matchCount = 5,
@@ -91,6 +92,19 @@ export async function searchFacets(
     }
   }
 
+  /*
+   * Building Regulations sources (approved_doc, legislation) are in the corpus
+   * from 30 Sep 2026. search_bs7671_v3 applies NO book weighting, so without
+   * this the ~19 agents on this module (cost engineer, RAMS, portfolio…) would
+   * start receiving fire-safety, energy and access guidance on lexical overlap.
+   * Keep them only when the query is about the Building Regulations, or the
+   * caller asked for them by type. Over-fetch so the cut does not shrink the
+   * result set.
+   */
+  const askedForBuildingRegs = !!documentTypes?.some((t) => isBuildingRegsDocType(t));
+  const wantsBuildingRegs =
+    askedForBuildingRegs || understandBS7671Query(query).topic_tags.includes('building-regs');
+
   const { data, error } = await supabase.rpc('search_bs7671_v3', {
     query_embedding: embedding,
     query_text: query,
@@ -98,7 +112,7 @@ export async function searchFacets(
     system_types_filter: systemTypes,
     equipment_filter: equipmentCategory,
     protection_filter: protectionMethod,
-    match_count: matchCount,
+    match_count: wantsBuildingRegs || documentTypes ? matchCount : matchCount + 5,
   });
 
   if (error) {
@@ -106,7 +120,11 @@ export async function searchFacets(
     return [];
   }
 
-  return (data ?? []).map(rowToFacet);
+  const rows = (data ?? []) as any[];
+  const kept = wantsBuildingRegs
+    ? rows
+    : rows.filter((row) => !isBuildingRegsDocType(row.document_type));
+  return kept.slice(0, matchCount).map(rowToFacet);
 }
 
 /**
@@ -125,13 +143,16 @@ export function formatFacetsForPrompt(facets: BS7671Facet[]): string {
        * does not exist, and it would cite it to the user as one. Name the book
        * explicitly for it; everything else keeps the existing behaviour.
        */
-      const ref = f.regNumber
-        ? f.documentType === 'bs5839'
-          ? `BS 5839-1 cl ${f.regNumber}`
-          : `Reg ${f.regNumber}`
-        : f.documentType === 'bs5839'
-          ? 'BS 5839-1'
-          : f.documentType.toUpperCase();
+      // Building Regs sources name the document — never "Reg 2.5".
+      const ref = isBuildingRegsDocType(f.documentType)
+        ? buildingRegsCitation(f.documentType, f.editionCode, f.regNumber)
+        : f.regNumber
+          ? f.documentType === 'bs5839'
+            ? `BS 5839-1 cl ${f.regNumber}`
+            : `Reg ${f.regNumber}`
+          : f.documentType === 'bs5839'
+            ? 'BS 5839-1'
+            : f.documentType.toUpperCase();
       const topic = f.primaryTopic ? ` — ${f.primaryTopic}` : '';
       const content = (f.content ?? '').replace(/\s+/g, ' ').slice(0, 400);
       return `${i + 1}. [${ref}${topic}] ${content}`;
@@ -150,6 +171,7 @@ function rowToFacet(row: any): BS7671Facet {
     chapter: row.chapter,
     section: row.section,
     documentType: row.document_type,
+    editionCode: row.edition_code ?? null,
     pageNumber: row.page_number,
     facetType: row.facet_type,
     primaryTopic: row.primary_topic,

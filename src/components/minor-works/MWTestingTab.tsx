@@ -1012,7 +1012,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                       <span className="text-xs text-red-400 block">Exceeds 300ms</span>
                     )}
                   </FormField>
-                  <FormField label="5x IΔn (ms)" hint="<40ms">
+                  <FormField label="5x IΔn (ms)" hint="optional">
                     <div className="relative">
                       <Input
                         value={formData.rcdFiveX || ''}
@@ -1035,16 +1035,6 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                     {formData.rcdFiveX && parseFloat(formData.rcdFiveX) <= 40 && (
                       <span className="text-xs text-green-400 block">Pass</span>
                     )}
-                  </FormField>
-                  <FormField label="½x IΔn">
-                    <ToggleButtons
-                      options={[
-                        { value: 'pass', label: 'Pass', color: 'green' },
-                        { value: 'fail', label: 'Fail', color: 'red' },
-                      ]}
-                      value={formData.rcdHalfX || ''}
-                      onChange={(v) => onUpdate('rcdHalfX', v)}
-                    />
                   </FormField>
                 </div>
 

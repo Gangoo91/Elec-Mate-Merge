@@ -75,6 +75,13 @@ export interface GuideTemplateProps {
   /** CTA */
   ctaHeading?: string;
   ctaSubheading?: string;
+  /**
+   * The hero button. Defaults to "Start 7-day free trial", which is a cold ask
+   * to someone who came to look up a value. Say what the app does with the
+   * thing this page is about instead ("Check every Zs reading automatically") —
+   * the free-trial terms still sit directly underneath.
+   */
+  heroCtaLabel?: string;
   /** Extra schemas beyond Article + FAQ + Breadcrumb */
   extraSchemas?: Array<Record<string, unknown>>;
   /**
@@ -163,6 +170,82 @@ function getMidCta(badge: string) {
   };
 }
 
+/**
+ * Hero button wording by the page's badge, for pages that don't set
+ * `heroCtaLabel` themselves. Only electrician- and apprentice-facing topics:
+ * homeowner guides keep the plain free-trial wording, because telling a
+ * homeowner to "do your EICRs on your phone" is wrong. Deliberately absent:
+ * 'EICR Guide' and 'Solar Guide' (every one is a city page for people hiring),
+ * 'Troubleshooting' ("doorbell not working") and 'Safety Guide' ("extension
+ * lead safety") — mostly homeowner symptoms. Every line names something the
+ * app really does.
+ */
+const HERO_CTA_BY_BADGE: Record<string, string> = {
+  'Testing Guide': 'Record test results straight onto your certificate',
+  'Installation Guide': 'Issue the certificate on your phone',
+  'Wiring Guide': 'Issue the certificate on your phone',
+  'Specialist Installation': 'Issue the certificate on your phone',
+  'Symbol Reference': 'Draw plans with these symbols',
+  'Business Guide': 'Quote and invoice from your phone',
+  'Pricing Guide': 'Quote and invoice from your phone',
+  'Finance Guide': 'Quote and invoice from your phone',
+  'Apprentice Guide': 'Revise for your exams on your phone',
+  'Training Guide': 'Revise for your exams on your phone',
+  'Troubleshooting Guide': 'Find the fault faster with AI',
+  'Fault Finding Guide': 'Find the fault faster with AI',
+  'Regulations Guide': 'Get BS 7671 answers on site',
+  Regulations: 'Get BS 7671 answers on site',
+  'BS 7671 Guide': 'Get BS 7671 answers on site',
+  'Regulation Deep-Dive': 'Get BS 7671 answers on site',
+  'Technical Guide': 'Get BS 7671 answers on site',
+  'EV Charging Guide': 'Issue EV charger certificates on your phone',
+};
+
+/**
+ * "Test yourself" link to the matching free mock exam, shown before the FAQ.
+ *
+ * The mock exams are the site's best lead source, but the guides people read
+ * while revising barely linked to them — the first aid and PAT mocks had no
+ * in-article links at all. A contextual link from a relevant guide is the
+ * internal link that actually moves a page, unlike the sitewide nav.
+ * Page path is checked first (a PAT guide wears the generic "Testing Guide"
+ * badge), then the badge. No match → nothing rendered.
+ */
+const PRACTICE_BY_PATH: Array<[RegExp, { href: string; name: string }]> = [
+  [/pat-test/, { href: '/mock-exams/pat-testing', name: 'PAT testing mock exam' }],
+  [
+    /ev-charg|electric-car|ev-charger/,
+    { href: '/mock-exams/ev-charging', name: 'EV charging mock exam' },
+  ],
+  [/fire-alarm/, { href: '/mock-exams/fire-alarm', name: 'fire alarm mock exam' }],
+  [
+    /emergency-lighting/,
+    { href: '/mock-exams/emergency-lighting', name: 'emergency lighting mock exam' },
+  ],
+  [/first-aid/, { href: '/mock-exams/first-aid', name: 'first aid mock test' }],
+  [/am2/, { href: '/mock-exams/am2-online-knowledge-test', name: 'AM2 mock exam' }],
+];
+const PRACTICE_BY_BADGE: Record<string, { href: string; name: string }> = {
+  'Regulations Guide': { href: '/mock-exams/18th-edition-bs-7671', name: '18th Edition mock exam' },
+  Regulations: { href: '/mock-exams/18th-edition-bs-7671', name: '18th Edition mock exam' },
+  'BS 7671 Guide': { href: '/mock-exams/18th-edition-bs-7671', name: '18th Edition mock exam' },
+  'Regulation Deep-Dive': {
+    href: '/mock-exams/18th-edition-bs-7671',
+    name: '18th Edition mock exam',
+  },
+  'Testing Guide': {
+    href: '/mock-exams/2391-inspection-testing',
+    name: '2391 inspection and testing mock exam',
+  },
+  'EV Charging Guide': { href: '/mock-exams/ev-charging', name: 'EV charging mock exam' },
+  'Apprentice Guide': { href: '/mock-exams', name: 'Level 2, Level 3 and AM2 mock exams' },
+  'Training Guide': { href: '/mock-exams', name: 'Level 2, Level 3 and AM2 mock exams' },
+};
+function getPractice(path: string, badge: string) {
+  const hit = PRACTICE_BY_PATH.find(([re]) => re.test(path));
+  return hit ? hit[1] : (PRACTICE_BY_BADGE[badge] ?? null);
+}
+
 export default function GuideTemplate({
   title,
   description,
@@ -185,6 +268,7 @@ export default function GuideTemplate({
   relatedPages,
   ctaHeading,
   ctaSubheading,
+  heroCtaLabel,
   extraSchemas = [],
   embeddedTool,
   noindex = false,
@@ -192,6 +276,7 @@ export default function GuideTemplate({
   leadMagnet,
 }: GuideTemplateProps) {
   const pageUrl = breadcrumbs.length > 0 ? breadcrumbs[breadcrumbs.length - 1].href : '/';
+  const practice = getPractice(pageUrl, badge);
 
   const articleSchema = SEOSchemas.article(title, description, datePublished, dateModified);
 
@@ -294,7 +379,8 @@ export default function GuideTemplate({
               href="/auth/signup"
               className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold text-[13px] touch-manipulation transition-colors"
             >
-              Start 7-day free trial <ArrowRight className="w-3.5 h-3.5" />
+              {heroCtaLabel ?? HERO_CTA_BY_BADGE[badge] ?? 'Start 7-day free trial'}{' '}
+              <ArrowRight className="w-3.5 h-3.5" />
             </a>
           }
         />
@@ -373,6 +459,29 @@ export default function GuideTemplate({
         </section>
       )}
 
+      {/* Test yourself — contextual link to the matching free mock exam */}
+      {practice && practice.href !== pageUrl && (
+        <section className="pb-10">
+          <a
+            href={practice.href}
+            className="group flex items-center justify-between gap-4 rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] px-4 py-4 sm:px-5 touch-manipulation transition-colors hover:border-elec-yellow/50"
+          >
+            <span>
+              <span className="block text-[11px] font-semibold uppercase tracking-[0.12em] text-elec-yellow">
+                Test yourself
+              </span>
+              <span className="mt-1 block text-[15px] font-semibold text-white">
+                Try the free {practice.name}
+              </span>
+              <span className="mt-0.5 block text-[13px] text-white">
+                Timed, marked instantly, with an explanation on every question. No sign-up.
+              </span>
+            </span>
+            <ArrowRight className="h-5 w-5 shrink-0 text-elec-yellow transition-transform group-hover:translate-x-0.5" />
+          </a>
+        </section>
+      )}
+
       {/* FAQ */}
       {faqs.length > 0 && (
         <section id="faq" className="pb-10 scroll-mt-24">
@@ -409,9 +518,7 @@ export default function GuideTemplate({
                       {page.description}
                     </p>
                     <div className="flex-grow" />
-                    <span className="mt-6 text-[13.5px] font-semibold text-elec-yellow">
-                      Read
-                    </span>
+                    <span className="mt-6 text-[13.5px] font-semibold text-elec-yellow">Read</span>
                   </Link>
                 );
               })}

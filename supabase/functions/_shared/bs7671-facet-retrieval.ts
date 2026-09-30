@@ -17,6 +17,7 @@
  * does NOT kill the whole request.
  */
 
+import { buildingRegsCitation, isBuildingRegsDocType } from './building-regs-citation.ts';
 import type { BS7671QueryUnderstanding } from './bs7671-query-understanding.ts';
 
 // A4:2026 edition id — default for exact-reg + cross-ref branches (BS 7671 only;
@@ -48,6 +49,15 @@ export const A4_ALIGNED_EDITION_CODES = new Set<string>([
   OSG_A4_EDITION_CODE,
   BS5839_EDITION_CODE,
 ]);
+
+/*
+ * Building Regulations sources (Approved Documents, the 2010 Regulations, the
+ * 2020 private-rented Regs) are kept by DOCUMENT TYPE rather than listed by
+ * edition code: there are 16 of them and every new edition would otherwise
+ * have to be added here, and forgetting one drops it silently.
+ */
+const isRetainedRow = (r: { edition_code?: string; document_type?: string }): boolean =>
+  A4_ALIGNED_EDITION_CODES.has(r.edition_code ?? '') || isBuildingRegsDocType(r.document_type);
 
 // Hard cap on retrieval wall-clock time before we start streaming.
 // Per spec: first-token target <1s, so keep retrieval <400ms.
@@ -223,9 +233,7 @@ function toUnit(
  * Branch 1: Exact regulation lookup. If the user wrote "411.3.3" we pull the
  * matching bs7671_regulations row plus its child facets directly.
  */
-async function fetchExactRegulations(
-  opts: FacetRetrievalOptions
-): Promise<FacetContextUnit[]> {
+async function fetchExactRegulations(opts: FacetRetrievalOptions): Promise<FacetContextUnit[]> {
   const { supabase, understanding, editionId = A4_2026_EDITION_ID } = opts;
   if (understanding.regulation_numbers.length === 0) return [];
 
@@ -307,9 +315,59 @@ async function fetchExactRegulations(
  * Branch 2: Vector similarity against bs7671_facets.embedding (halfvec 3072).
  * Uses the existing search_bs7671_v3 RPC if available (has RRF internally).
  */
-async function fetchVectorMatches(
-  opts: FacetRetrievalOptions
-): Promise<FacetContextUnit[]> {
+/**
+ * Building Regulations branch — only when the query routes to 'building-regs'.
+ *
+ * The main vector branch searches every book at once and keeps the top 40;
+ * BS 7671's ~33k facets fill that for almost any electrical wording, so an
+ * Approved Document paragraph can sit at rank 60 and never be seen. bookBoost
+ * only re-orders what was retrieved — it cannot rescue what was not. So when
+ * the question is about the Building Regulations, search those documents on
+ * their own as well. (BM25 is no help here: it ANDs every word of a
+ * full-sentence question and returns nothing.)
+ */
+async function fetchBuildingRegsMatches(opts: FacetRetrievalOptions): Promise<FacetContextUnit[]> {
+  const { supabase, understanding, queryEmbedding } = opts;
+  if (!understanding.topic_tags?.includes('building-regs')) return [];
+  if (!queryEmbedding || queryEmbedding.length === 0) return [];
+  const { data, error } = await supabase.rpc('search_bs7671_v3', {
+    query_embedding: queryEmbedding,
+    query_text: null,
+    document_types: ['approved_doc', 'legislation'],
+    reg_number_filter: null,
+    zones_filter: null,
+    system_types_filter: null,
+    equipment_filter: null,
+    protection_filter: null,
+    facet_type_filter: null,
+    match_count: 60,
+    vector_weight: 1.0,
+    bm25_weight: 0.0,
+    rrf_k: 60,
+    expand_graph: false,
+    graph_expand_limit: 0,
+  });
+  if (error || !data) return [];
+  /*
+   * Each paragraph carries ~14 facets, so the top 12 facets can come from just
+   * two or three paragraphs — asked about notification routes, all of them
+   * came from para 2.5 and the third-party-certifier route (paras 3.5–3.7)
+   * never reached the model. Keep the best facet per paragraph instead.
+   */
+  const out: FacetContextUnit[] = [];
+  const seen = new Set<string>();
+  let rank = 0;
+  for (const row of data as any[]) {
+    const key = `${row.edition_code}::${row.reg_number ?? row.facet_id}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(toUnit(row, 'vector', ++rank, Number(row.vector_score ?? row.rrf_score ?? 0)));
+    if (out.length >= 12) break;
+  }
+  return out;
+}
+
+async function fetchVectorMatches(opts: FacetRetrievalOptions): Promise<FacetContextUnit[]> {
   const { supabase, understanding, queryEmbedding, editionId = A4_2026_EDITION_ID } = opts;
   if (!queryEmbedding || queryEmbedding.length === 0) return [];
   void editionId;
@@ -340,7 +398,7 @@ async function fetchVectorMatches(
   // so testing/install questions get the right book. Other editions (older
   // amendments) only surface when no A4 rows at all come back.
   const rows = data as any[];
-  const a4Rows = rows.filter((r) => A4_ALIGNED_EDITION_CODES.has(r.edition_code));
+  const a4Rows = rows.filter(isRetainedRow);
   const selected = a4Rows.length > 0 ? a4Rows : rows;
 
   const out: FacetContextUnit[] = [];
@@ -355,9 +413,7 @@ async function fetchVectorMatches(
 /**
  * Branch 3: Full-text (BM25) against bs7671_facets.tsv.
  */
-async function fetchFullTextMatches(
-  opts: FacetRetrievalOptions
-): Promise<FacetContextUnit[]> {
+async function fetchFullTextMatches(opts: FacetRetrievalOptions): Promise<FacetContextUnit[]> {
   const { supabase, understanding, editionId = A4_2026_EDITION_ID } = opts;
   const queryText = understanding.original;
   if (!queryText || queryText.length < 2) return [];
@@ -384,7 +440,7 @@ async function fetchFullTextMatches(
   if (error || !data) return [];
 
   const rows = data as any[];
-  const a4Rows = rows.filter((r) => A4_ALIGNED_EDITION_CODES.has(r.edition_code));
+  const a4Rows = rows.filter(isRetainedRow);
   const selected = a4Rows.length > 0 ? a4Rows : rows;
 
   const out: FacetContextUnit[] = [];
@@ -399,9 +455,7 @@ async function fetchFullTextMatches(
 /**
  * Branch 4: Direct table / figure lookup if the user named them.
  */
-async function fetchTablesAndFigures(
-  opts: FacetRetrievalOptions
-): Promise<FacetContextUnit[]> {
+async function fetchTablesAndFigures(opts: FacetRetrievalOptions): Promise<FacetContextUnit[]> {
   const { supabase, understanding, editionId = A4_2026_EDITION_ID } = opts;
   if (understanding.table_refs.length === 0 && understanding.figure_refs.length === 0) {
     return [];
@@ -539,10 +593,7 @@ async function fetchPracticalIntelligence(
   const { supabase, understanding, queryEmbedding } = opts;
   const queryText = understanding.original;
 
-  if (
-    (!queryEmbedding || queryEmbedding.length === 0) &&
-    (!queryText || queryText.length < 3)
-  ) {
+  if ((!queryEmbedding || queryEmbedding.length === 0) && (!queryText || queryText.length < 3)) {
     return [];
   }
 
@@ -660,6 +711,16 @@ function fuseUnits(
     if (!docType) return 1.0;
     const intent = understanding?.intent;
     const topics = understanding?.topic_tags ?? [];
+    // A question about notification, Part P scope or the other Parts is
+    // answered by the Building Regulations; BS 7671 still helps (what the CU
+    // must meet), so only a mild step down — enough that irrelevant wiring
+    // regs stop taking primary slots from the paragraph that answers it.
+    const buildingRegsOnly =
+      topics.includes('building-regs') &&
+      !topics.some((t) => t !== 'building-regs' && t !== 'certification' && t !== 'inspection');
+    if (buildingRegsOnly && (docType === 'bs7671' || docType === 'gn3' || docType === 'osg')) {
+      return 0.85;
+    }
     const hasTestingTopic =
       topics.includes('testing') ||
       topics.includes('inspection') ||
@@ -686,6 +747,16 @@ function fuseUnits(
      */
     if (docType === 'bs5839') {
       return topics.includes('fire') ? 1.6 : 0.6;
+    }
+    /*
+     * Building Regulations: authoritative for notification, Part P scope,
+     * competent person schemes, landlord inspections and the other Parts
+     * (B, F, L, M, S, R). Everywhere else, push well down — ~6k facets of
+     * fire-safety, energy and access guidance must not bleed into a Zs or
+     * cable-sizing answer on lexical overlap.
+     */
+    if (isBuildingRegsDocType(docType)) {
+      return topics.includes('building-regs') ? 1.6 : 0.5;
     }
     return 1.0;
   };
@@ -716,9 +787,7 @@ async function expandCrossRefs(
   units: FacetContextUnit[],
   editionId: string
 ): Promise<FacetContextUnit[]> {
-  const sourceRegNumbers = uniqStr(
-    units.map((u) => u.reg_number).filter((r): r is string => !!r)
-  );
+  const sourceRegNumbers = uniqStr(units.map((u) => u.reg_number).filter((r): r is string => !!r));
   if (sourceRegNumbers.length === 0) return [];
 
   const { data: refs } = await supabase
@@ -804,6 +873,7 @@ export async function retrieveBS7671Facets(
     practicalResults,
     safetyResults,
     employerResults,
+    buildingRegsResults,
   ] = await Promise.all([
     deadlinePromise(fetchExactRegulations(opts), 'exact').then((v) => {
       t.exact = Date.now() - t.exact;
@@ -829,7 +899,8 @@ export async function retrieveBS7671Facets(
       t.specialist = Date.now() - t.specialist;
       return v as FacetContextUnit[];
     }),
-    deadlinePromise(fetchEmployerKnowledge(opts), 'employer').then(
+    deadlinePromise(fetchEmployerKnowledge(opts), 'employer').then((v) => v as FacetContextUnit[]),
+    deadlinePromise(fetchBuildingRegsMatches(opts), 'building-regs').then(
       (v) => v as FacetContextUnit[]
     ),
   ]);
@@ -842,7 +913,8 @@ export async function retrieveBS7671Facets(
     bm25Results.length +
     tableResults.length +
     practicalResults.length +
-    specialistResults.length;
+    specialistResults.length +
+    buildingRegsResults.length;
 
   // Practical results are kept as a SEPARATE bucket (returned in `practical`)
   // AND fused into the primary list at a lower weight, so the regulatory
@@ -850,7 +922,7 @@ export async function retrieveBS7671Facets(
   //   - regulatory primary (which wins on compliance claims)
   //   - practical context (cited as practitioner guidance)
   const primary = fuseUnits(
-    [exactResults, tableResults, vectorResults, bm25Results, practicalResults],
+    [exactResults, tableResults, vectorResults, buildingRegsResults, bm25Results, practicalResults],
     topK,
     opts.understanding
   );
@@ -924,16 +996,29 @@ export function formatFacetsForPrompt(
   const refLabel = (docType: string | undefined, num: string): string =>
     docType === 'bs5839' ? `clause ${num}` : `Reg ${num}`;
 
+  // Building Regs units cite the document by name ("Approved Document P
+  // (England) 2013 para 2.5") — never "Reg 2.5", which would be a fake BS 7671
+  // regulation. See _shared/building-regs-citation.ts.
+  const unitHeader = (u: FacetContextUnit, i: number): string => {
+    if (isBuildingRegsDocType(u.document_type)) {
+      const cite = buildingRegsCitation(u.document_type, u.edition_code, u.reg_number);
+      return `[${cite}]${u.reg_title ? ' — ' + u.reg_title : ''}`;
+    }
+    const book = bookLabel(u.document_type);
+    return u.reg_number
+      ? `[${book}] ${refLabel(u.document_type, u.reg_number)}${u.reg_title ? ' — ' + u.reg_title : ''}`
+      : `[${book}] ${u.primary_topic || `Context ${i + 1}`}`;
+  };
+
   // Filter regulatory primary down to non-practical units.
   const regulatoryPrimary = primary.filter((u) => u.source !== 'practical');
 
   if (regulatoryPrimary.length > 0) {
-    lines.push('[RELEVANT BS 7671 A4:2026 / GN3 / OSG / BS 5839-1:2025 CONTEXT]');
+    lines.push(
+      '[RELEVANT BS 7671 A4:2026 / GN3 / OSG / BS 5839-1:2025 / BUILDING REGULATIONS CONTEXT]'
+    );
     regulatoryPrimary.forEach((u, i) => {
-      const book = bookLabel(u.document_type);
-      const header = u.reg_number
-        ? `[${book}] ${refLabel(u.document_type, u.reg_number)}${u.reg_title ? ' — ' + u.reg_title : ''}`
-        : `[${book}] ${u.primary_topic || `Context ${i + 1}`}`;
+      const header = unitHeader(u, i);
       const tag = u.facet_type ? `(${u.facet_type})` : '';
       const content = (u.content || '').trim().slice(0, 900);
       lines.push(`${i + 1}. ${header} ${tag}\n   ${content}`);
@@ -943,11 +1028,11 @@ export function formatFacetsForPrompt(
   if (related.length > 0) {
     lines.push('');
     lines.push('[RELATED REGULATIONS (cross-referenced, secondary)]');
-    related.forEach((u) => {
-      const book = bookLabel(u.document_type);
-      const header = u.reg_number
-        ? `[${book}] ${refLabel(u.document_type, u.reg_number)}${u.reg_title ? ' — ' + u.reg_title : ''}`
-        : `[${book}] ${u.primary_topic || 'Related'}`;
+    related.forEach((u, i) => {
+      const header =
+        u.reg_number || isBuildingRegsDocType(u.document_type)
+          ? unitHeader(u, i)
+          : `[${bookLabel(u.document_type)}] ${u.primary_topic || 'Related'}`;
       const snippet = (u.content || '').trim().slice(0, 300);
       lines.push(`- ${header}: ${snippet}`);
     });
@@ -958,16 +1043,12 @@ export function formatFacetsForPrompt(
   // Compact format: equipment / type / topic / 1-line procedures / defects.
   if (practical.length > 0) {
     lines.push('');
-    lines.push(
-      '[PRACTICAL WORK INTELLIGENCE — PRACTITIONER GUIDANCE, NOT REGULATION]'
-    );
+    lines.push('[PRACTICAL WORK INTELLIGENCE — PRACTITIONER GUIDANCE, NOT REGULATION]');
     lines.push(
       'Cite as "common practice" or "practical guidance"; never quote as a BS 7671 requirement. If this conflicts with a BS 7671 reg above, the regulation wins.'
     );
     practical.forEach((u, i) => {
-      const eq = [u.equipment_category, u.equipment_subcategory]
-        .filter(Boolean)
-        .join(' / ');
+      const eq = [u.equipment_category, u.equipment_subcategory].filter(Boolean).join(' / ');
       const eqLine = eq ? `[${eq}] ` : '';
       const typeTag = u.facet_type ? `(${u.facet_type})` : '';
       const topic = (u.primary_topic || '').trim().slice(0, 400);

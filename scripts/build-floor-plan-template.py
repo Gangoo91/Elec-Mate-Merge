@@ -51,18 +51,20 @@ PANEL = '''
                     <li>Circuits, cables and devices are indicative and subject to design verification.</li>
                     <li>Install, inspect and test to BS 7671:2018+A4:2026.</li>
                 </ol>
-                <span class="tp-k" style="margin-top:2.5mm">Circuit key</span>
+                <span class="tp-k" style="margin-top:2.5mm">Circuit colours</span>
                 <div class="key">
-                    <span><i style="background:#dc2626"></i>S — sockets</span>
-                    <span><i style="background:#2563eb"></i>L — lighting</span>
-                    <span><i style="background:#d97706"></i>C — cooker</span>
-                    <span><i style="background:#ea580c"></i>H — heating</span>
-                    <span><i style="background:#0891b2"></i>IH — water heater</span>
-                    <span><i style="background:#7c3aed"></i>EV — charge point</span>
-                    <span><i style="background:#0d9488"></i>AC — air con</span>
-                    <span><i style="background:#db2777"></i>SA / FA / FZ — fire</span>
-                    <span><i style="background:#0f172a"></i>DB — submain</span>
+                    <span><i style="background:#dc2626"></i>Sockets</span>
+                    <span><i style="background:#2563eb"></i>Lighting</span>
+                    <span><i style="background:#d97706"></i>Cooker</span>
+                    <span><i style="background:#ea580c"></i>Heating</span>
+                    <span><i style="background:#0891b2"></i>Water heater</span>
+                    <span><i style="background:#7c3aed"></i>EV charge point</span>
+                    <span><i style="background:#0d9488"></i>Air conditioning</span>
+                    <span><i style="background:#db2777"></i>Fire alarm</span>
+                    <span><i style="background:#0f172a"></i>Submain</span>
                 </div>
+                <span class="tp-k" style="margin-top:2.5mm">Circuit numbers</span>
+                <div class="note" style="font-size:6.2px">Numbered by way as marked on the board — 1, 2, 3… single-phase; way and phase (1L1, 1L2…) three-phase; CU/3, DB2/1 where there are sub-boards.</div>
                 <span class="tp-k" style="margin-top:2.5mm">Line types</span>
                 <div class="key">
                     <span><i class="ln"></i>Wall</span>
@@ -218,6 +220,7 @@ CSS = r'''
     table.t tr.warn td { background: #fffbeb; color: #92400e; font-size: 6.6px; padding: 0.9mm 1.8mm 1.2mm; border-bottom: 0.2mm solid #fde68a; }
     .chip { display: inline-block; width: 0.9mm; height: 2.8mm; margin-right: 1.5mm; vertical-align: -0.5mm; }
     .over { color: #b45309; font-weight: 800; }
+    tr.spare td { color: var(--mute); font-style: italic; }
     .sub { color: var(--mute); font-size: 6.4px; }
     .total { display: flex; justify-content: space-between; align-items: baseline; border: 0.35mm solid var(--ink); padding: 1.8mm 3mm; font-weight: 800; font-size: 8px; text-transform: uppercase; letter-spacing: 0.6px; }
     .total span:last-child { font-size: 11px; letter-spacing: 0; text-transform: none; }
@@ -274,12 +277,19 @@ CSS = r'''
     .pnotes { border: 0.25mm solid var(--ink); border-left: 1.6mm solid var(--accent); padding: 2.5mm 3.5mm; font-size: 8px; white-space: pre-line; }
 '''
 
-CHIP = ('{% assign f2 = c.circuitRef | slice: 0, 2 %}{% assign f1 = c.circuitRef | slice: 0 %}'
+CHIP = ('{% assign cc = "" %}{% case c.circuitKind %}'
+        '{% when "ring" or "radial" %}{% assign cc = "#dc2626" %}{% when "lighting" %}{% assign cc = "#2563eb" %}'
+        '{% when "cooker" %}{% assign cc = "#d97706" %}{% when "heating" %}{% assign cc = "#ea580c" %}'
+        '{% when "water-heater" %}{% assign cc = "#0891b2" %}{% when "ev" %}{% assign cc = "#7c3aed" %}'
+        '{% when "ac" %}{% assign cc = "#0d9488" %}{% when "fire-zone" or "fire-supply" or "smoke-alarms" %}{% assign cc = "#db2777" %}'
+        '{% when "submain" %}{% assign cc = "#0f172a" %}{% when "spare" %}{% assign cc = "transparent" %}{% endcase %}'
+        # Older payloads carry no kind: fall back to the ref's letters.
+        '{% if cc == "" %}{% assign f2 = c.circuitRef | slice: 0, 2 %}{% assign f1 = c.circuitRef | slice: 0 %}'
         '{% case f2 %}{% when "EV" %}{% assign cc = "#7c3aed" %}{% when "IH" %}{% assign cc = "#0891b2" %}'
         '{% when "FZ" or "FA" or "SA" %}{% assign cc = "#db2777" %}{% when "DB" %}{% assign cc = "#0f172a" %}'
         '{% when "AC" %}{% assign cc = "#0d9488" %}{% else %}{% case f1 %}{% when "S" %}{% assign cc = "#dc2626" %}'
         '{% when "L" %}{% assign cc = "#2563eb" %}{% when "C" %}{% assign cc = "#d97706" %}{% when "H" %}{% assign cc = "#ea580c" %}'
-        '{% else %}{% assign cc = "#475569" %}{% endcase %}{% endcase %}')
+        '{% else %}{% assign cc = "#475569" %}{% endcase %}{% endcase %}{% endif %}')
 
 COVER_BODY = '''
             <div class="cv">
@@ -344,11 +354,11 @@ ROOMS = '{% for room in rooms %}' + sheet(
 CS_BODY = '''
             {% if p == 1 %}<div class="flag"><strong>Indicative</strong><span>Circuits, cables and devices are defaults derived from the items on this drawing, not a substitute for design. Cable sizing, voltage drop, earth fault loop impedance and diversity must be verified before work is carried out.</span></div>{% endif %}
             <table class="t">
-                <thead><tr><th>Ref</th>{% if has_boards %}<th>From</th>{% endif %}<th>Circuit</th><th>Protection</th><th>Cable</th><th>RCD</th><th class="num">Pts</th>{% if has_runs %}<th class="num">Run</th>{% endif %}<th class="num">Load</th></tr></thead>
+                <thead><tr><th>Way</th>{% if has_boards %}<th>Board</th>{% endif %}<th>Circuit</th><th>Protection</th><th>Cable</th><th>RCD</th><th class="num">Pts</th>{% if has_runs %}<th class="num">Run</th>{% endif %}<th class="num">Load</th></tr></thead>
                 <tbody>
-                {% for c in circuit_schedule limit: 12 offset: off %}''' + CHIP + '''
+                {% for c in circuit_schedule %}{% assign on_page = cs_pagelist[forloop.index0] | plus: 0 %}{% if on_page == p %}''' + CHIP + '''
                     <tr>
-                        <td class="ref"><span class="chip" style="background:{{ cc }}"></span>{{ c.circuitRef }}</td>
+                        <td class="ref"><span class="chip" style="background:{{ cc }}"></span>{{ c.wayLabel | default: c.circuitRef }}</td>
                         {% if has_boards %}<td>{{ c.fedFrom | default: "CU" }}</td>{% endif %}
                         <td>{{ c.circuitName }}</td>
                         <td>{{ c.protection }}</td>
@@ -358,31 +368,31 @@ CS_BODY = '''
                         {% if has_runs %}<td class="num{% if c.lengthOk == false %} over{% endif %}" style="white-space:nowrap">{% if c.runLengthM %}≈ {{ c.runLengthM }} m{% if c.maxLengthM %}<div class="sub">max {{ c.maxLengthM }} m</div>{% endif %}{% else %}—{% endif %}</td>{% endif %}
                         <td class="num" style="white-space:nowrap">{{ c.typicalLoad }}</td>
                     </tr>
-                    {% if c.needsReview and c.needsReview != "" %}<tr class="warn"><td colspan="{{ cols }}">⚠ {{ c.circuitRef }} — {{ c.needsReview }}</td></tr>{% endif %}
-                {% endfor %}
+                    {% if c.needsReview and c.needsReview != "" %}<tr class="warn"><td colspan="{{ cols }}">⚠ Way {{ c.wayLabel | default: c.circuitRef }} — {{ c.needsReview }}</td></tr>{% endif %}
+                {% endif %}{% endfor %}
                 </tbody>
             </table>
             {% if p == cs_pages %}<div class="note" style="margin-top:auto">RCD references are to BS 7671:2018+A4:2026 — 411.3.3 socket-outlets up to 32 A, 411.3.4 luminaires in domestic premises, 522.6.202 cables concealed less than 50 mm in a wall, Section 701 bath and shower locations, Section 722 EV charging.{% if has_runs %} Run lengths are estimated from the cable routes drawn on the plan, with allowances for drops and terminations, and checked against OSG Table 7.1(i) where a row applies.{% endif %}</div>{% endif %}'''
-CS = ('{% if circuit_schedule.size > 0 %}{% for p in (1..cs_pages) %}{% assign off = p | minus: 1 | times: 12 %}'
+CS = ('{% if circuit_schedule.size > 0 %}{% for p in (1..cs_pages) %}'
       + sheet('Circuit schedule', 'E{{ p | plus: 200 }}', CS_BODY,
               sub='{{ circuit_schedule.size }} circuits · sheet {{ p }} of {{ cs_pages }}',
               right='<strong>{{ circuit_schedule.size }}</strong> circuits · sheet {{ p }} of {{ cs_pages }}', n='{{ p }}')
       + '{% endfor %}{% endif %}')
 
 CU_BODY = '''
-            {% if p == 1 %}<div class="flag"><strong>Indicative</strong><span>Way numbering is sequential and does not imply a physical board layout. Loads are connected load — apply diversity to establish maximum demand.</span></div>{% endif %}
+            {% if p == 1 %}<div class="flag"><strong>Indicative</strong><span>Ways are numbered as the board is marked{% if has_phases %} — way and phase (1L1, 1L2, 1L3…), with single-phase circuits spread across the phases{% endif %}. Loads are connected load — apply diversity to establish maximum demand.</span></div>{% endif %}
             <table class="t">
-                <thead><tr><th class="num">Way</th><th>Ref</th><th>Circuit</th><th>Protective device</th><th>RCD</th><th>Cable</th><th class="num">Pts</th><th class="num">Connected load</th></tr></thead>
+                <thead><tr><th>Way</th>{% unless has_labels %}<th>Ref</th>{% endunless %}<th>Circuit</th><th>Protective device</th><th>RCD</th><th>Cable</th><th class="num">Pts</th><th class="num">Connected load</th></tr></thead>
                 <tbody>
-                {% for w in consumer_unit.ways limit: 20 offset: off %}{% assign c = w %}''' + CHIP + '''
-                    <tr>
-                        <td class="num" style="font-weight:800">{{ w.way }}</td>
-                        <td class="ref"><span class="chip" style="background:{{ cc }}"></span>{{ w.circuitRef }}</td>
+                {% for w in consumer_unit.ways limit: 16 offset: off %}{% assign c = w %}''' + CHIP + '''
+                    <tr{% if w.circuitKind == "spare" %} class="spare"{% endif %}>
+                        {% if has_labels %}<td class="ref"><span class="chip" style="background:{{ cc }}"></span>{{ w.wayLabel | default: w.way }}</td>
+                        {% else %}<td class="num" style="font-weight:800">{{ w.way }}</td><td class="ref"><span class="chip" style="background:{{ cc }}"></span>{{ w.circuitRef }}</td>{% endif %}
                         <td>{{ w.circuitName }}</td>
                         <td>{{ w.protection }}</td>
                         <td>{{ w.rcd }}</td>
                         <td>{{ w.cableSize }}</td>
-                        <td class="num">{{ w.points }}</td>
+                        <td class="num">{% if w.circuitKind == "spare" %}—{% else %}{{ w.points }}{% endif %}</td>
                         <td class="num" style="white-space:nowrap">{{ w.connectedLoad }}</td>
                     </tr>
                 {% endfor %}
@@ -392,10 +402,10 @@ CU_BODY = '''
             <div class="total"><span>Total connected load, before diversity</span><span>{{ consumer_unit.total_connected_load_kw }} kW</span></div>
             <div class="note" style="margin-top:auto">Voltage drop has not been calculated on this drawing. It must be verified per circuit, from the origin, against the limits in BS 7671 Appendix 4 section 6.4 (Regulation 525.202) before the installation is energised.</div>
             {% endif %}'''
-CU = ('{% if consumer_unit and consumer_unit.ways.size > 0 %}{% for p in (1..cu_pages) %}{% assign off = p | minus: 1 | times: 20 %}'
+CU = ('{% if consumer_unit and consumer_unit.ways.size > 0 %}{% for p in (1..cu_pages) %}{% assign off = p | minus: 1 | times: 16 %}'
       + sheet('Main board schedule', 'E{{ p | plus: 300 }}', CU_BODY,
               sub='{{ consumer_unit.way_count }} ways · sheet {{ p }} of {{ cu_pages }}',
-              right='<strong>{{ consumer_unit.way_count }}</strong> way{% if consumer_unit.way_count != 1 %}s{% endif %} · <strong>{{ consumer_unit.total_connected_load_kw }} kW</strong> connected · sheet {{ p }} of {{ cu_pages }}',
+              right='{% if has_phases %}<strong>Three-phase</strong> · {% endif %}<strong>{{ consumer_unit.total_connected_load_kw }} kW</strong> connected · sheet {{ p }} of {{ cu_pages }}',
               n='{{ p }}')
       + '{% endfor %}{% endif %}')
 
@@ -473,11 +483,21 @@ SIGN = sheet('Notes and sign-off', 'E801', SIGN_BODY, sub='Declaration and ackno
 
 # Sheet counts before anything prints (the register needs them). `floor`
 # keeps the division whole in every Liquid engine.
-COUNTS = '''{% assign cs_pages = circuit_schedule.size | plus: 11 | divided_by: 12 | floor %}{% if cs_pages < 1 %}{% assign cs_pages = 1 %}{% endif %}
-{% assign cu_pages = 1 %}{% if consumer_unit and consumer_unit.ways.size > 0 %}{% assign cu_pages = consumer_unit.ways.size | plus: 19 | divided_by: 20 | floor %}{% endif %}
+COUNTS = '''{%- comment -%}
+  Circuit schedule pages by what the rows take up, not a fixed count: a row
+  is 2, its warning 1 more (2 if long, it wraps). Page 1 holds less — it has
+  the "Indicative" box. A fixed 12 rows a page clipped the last rows once
+  their warnings stacked up.
+{%- endcomment -%}
+{% assign cs_map = "" %}{% assign cs_page = 1 %}{% assign cs_used = 0 %}{% assign cs_cap = 22 %}
+{% for c in circuit_schedule %}{% assign w = 2 %}{% if c.needsReview and c.needsReview != "" %}{% if c.needsReview.size > 110 %}{% assign w = 4 %}{% else %}{% assign w = 3 %}{% endif %}{% endif %}{% assign next = cs_used | plus: w %}{% if next > cs_cap and cs_used > 0 %}{% assign cs_page = cs_page | plus: 1 %}{% assign cs_used = w %}{% assign cs_cap = 26 %}{% else %}{% assign cs_used = next %}{% endif %}{% assign cs_map = cs_map | append: cs_page | append: "," %}{% endfor %}
+{% assign cs_pages = cs_page %}{% assign cs_pagelist = cs_map | split: "," %}
+{% assign cu_pages = 1 %}{% if consumer_unit and consumer_unit.ways.size > 0 %}{% assign cu_pages = consumer_unit.ways.size | plus: 15 | divided_by: 16 | floor %}{% endif %}
 {% assign mat_pages = materials_by_category.size | plus: 3 | divided_by: 4 | floor %}{% if mat_pages < 1 %}{% assign mat_pages = 1 %}{% endif %}
 {% assign has_runs = false %}{% assign has_boards = false %}
 {% for c in circuit_schedule %}{% if c.runLengthM %}{% assign has_runs = true %}{% endif %}{% if c.fedFrom and c.fedFrom != "CU" %}{% assign has_boards = true %}{% endif %}{% endfor %}
+{% assign has_labels = false %}{% assign has_phases = false %}
+{% for c in circuit_schedule %}{% if c.wayLabel %}{% assign has_labels = true %}{% endif %}{% if c.wayLabel contains "L1" or c.wayLabel contains "L2" or c.wayLabel contains "TPN" %}{% assign has_phases = true %}{% endif %}{% endfor %}
 {% assign cols = 7 %}{% if has_runs %}{% assign cols = cols | plus: 1 %}{% endif %}{% if has_boards %}{% assign cols = cols | plus: 1 %}{% endif %}'''
 
 HTML = f'''<!DOCTYPE html>
@@ -489,7 +509,7 @@ HTML = f'''<!DOCTYPE html>
   Floor plan drawing set, redesigned 29 Sep 2026 as CAD drawing sheets: zoned
   border, right-hand title panel, view labels. Generated (the title panel is
   stamped into every sheet) — every .sheet is exactly one A4 landscape page, so
-  long tables are split into sheets here (12 circuits, 20 ways, 4 material
+  long tables are split into sheets here (10 circuits, 16 ways (rows wrap — leave room), 4 material
   groups a sheet). Template settings: A4 landscape, margins 0.
 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">

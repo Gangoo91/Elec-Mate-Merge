@@ -94,7 +94,31 @@ const TOPIC_VOCAB: Record<string, string[]> = {
   // Users routinely type "POE" upper-case; the stored text uses "PoE".
   // Keep this tag so retrieval fans into the Section 716 facets.
   poe: ['poe', 'pse', 'power over ethernet', 'power-over-ethernet', 'section 716', '110.1.1'],
+  // Building Regulations sources (Approved Documents, Building Regs 2010, the
+  // 2020 private-rented Regs) are in the corpus from 30 Sep 2026; this tag lifts
+  // them in bookBoost. Only phrases that cannot mean anything else here — the
+  // "Part P / Part M" style references are matched separately with word
+  // boundaries (BUILDING_REGS_PATTERNS), because plain substring 'part p' also
+  // matches "part protection".
+  'building-regs': [
+    'building regulations', 'building regs', 'building control', 'approved document',
+    'notifiable', 'notify building control', 'building notice',
+    'competent person scheme', 'registered competent person', 'self-certif', 'self certif',
+    'third party certifier', 'third-party certifier', 'building regulations compliance certificate',
+    'electrical safety standards', 'private rented sector', 'landlord', 'rented property', 'tenant',
+    'material change of use', 'building safety act', 'dutyholder',
+    'gigabit-ready', 'gigabit ready',
+  ],
 };
+
+// "Part P", "part-p", "ADP", "Approved Doc M" … need word boundaries.
+const BUILDING_REGS_PATTERNS: RegExp[] = [
+  /\bpart[\s-]?[pbflmsr]\b/,
+  /\bapproved doc\b/,
+  /\bad ?[pbflmsr]\b(?![-\d])/,
+  /\bregulation 12\b/,
+  /\bschedule 4\b/,
+];
 
 const TOPIC_CANONICAL = new Set(Object.keys(TOPIC_VOCAB));
 
@@ -201,6 +225,9 @@ function extractTopicTags(lower: string): string[] {
     if (phrases.some((p) => lower.includes(p))) {
       tags.push(tag);
     }
+  }
+  if (!tags.includes('building-regs') && BUILDING_REGS_PATTERNS.some((re) => re.test(lower))) {
+    tags.push('building-regs');
   }
   return tags;
 }

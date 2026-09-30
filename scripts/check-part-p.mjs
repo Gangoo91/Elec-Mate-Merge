@@ -71,9 +71,20 @@ for (const [file, keys, gate] of FORMATTERS) {
 const SECTIONS = [
   // ELE-1663 — the EV's two Part P areas became ONE shared section; the gate lives there.
   ['src/components/inspection/shared/BuildingRegsNotification.tsx', 'isKnownNonDwelling(f.installationType ?? f.propertyType)', 1],
-  ['src/components/eic/StandardsComplianceSection.tsx', 'isKnownNonDwelling(formData.installationType)', 1],
   ['src/components/EICRSummary.tsx', 'isKnownNonDwelling(formData.propertyType)', 1],
 ];
+// 30 Sep 2026 — the EIC asked Part P twice: chips on Standards, and the
+// shared notification on Sign off. The chips went; the answer must still be
+// written from the notification, and the second question must not return.
+{
+  const standards = read('src/components/eic/StandardsComplianceSection.tsx');
+  if (/Part P compliance|onUpdate\('partPCompliance'/.test(standards))
+    problems.push('src/components/eic/StandardsComplianceSection.tsx asks Part P again — it is answered once, on Sign off');
+  const decl = read('src/components/eic/EICDeclarations.tsx');
+  if (!/onUpdate\('partPCompliance'/.test(decl))
+    problems.push('src/components/eic/EICDeclarations.tsx no longer writes partPCompliance from the notification answer — the EIC would print a blank Part P');
+}
+
 for (const [file, gate, atLeast] of SECTIONS) {
   const n = read(file).split(gate).length - 1;
   if (n < atLeast)
@@ -89,4 +100,4 @@ if (problems.length) {
   console.error('✗ part p:\n' + problems.map((p) => `  - ${p}`).join('\n'));
   process.exit(1);
 }
-console.log('✓ part p: gated on the premises type in 3 formatters and 3 form sections; blank premises keep Part P available');
+console.log('✓ part p: gated on the premises type in 3 formatters and 2 form sections, EIC asks once; blank premises keep Part P available');

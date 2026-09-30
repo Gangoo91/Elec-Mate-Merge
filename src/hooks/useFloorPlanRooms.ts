@@ -13,12 +13,18 @@ const STORAGE_KEY = FLOOR_PLAN_ROOMS_KEY;
 export interface SavedRoom {
   id: string;
   name: string;
-  thumbnail: string;       // small 120x90 for room strip
-  fullImage?: string;      // high-res 2x for PDF export
+  thumbnail: string; // small 120x90 for room strip
+  fullImage?: string; // high-res 2x for PDF export
   canvasState: string;
   photoBase64?: string;
   symbolIds: string[];
   createdAt: string;
+  /**
+   * The circuit numbers its image was drawn with (jobNumbering.labelKey), so
+   * the export can tell when the job has renumbered since and the printed
+   * plan page would disagree with the schedule.
+   */
+  labelKey?: string;
 }
 
 export interface UseFloorPlanRoomsReturn {
@@ -27,7 +33,10 @@ export interface UseFloorPlanRoomsReturn {
    * Adds a room and returns it. Check `didLastWriteFail()` straight afterwards
    * to find out whether it actually reached storage.
    */
-  saveRoom: (room: Omit<SavedRoom, 'id' | 'createdAt'>) => SavedRoom;
+  /** A restored room may pass its own id/createdAt; it keeps the id unless taken. */
+  saveRoom: (
+    room: Omit<SavedRoom, 'id' | 'createdAt'> & { id?: string; createdAt?: string }
+  ) => SavedRoom;
   deleteRoom: (id: string) => void;
   updateRoom: (id: string, updates: Partial<SavedRoom>) => void;
   clearAllRooms: () => void;
@@ -71,23 +80,39 @@ export function useFloorPlanRooms(): UseFloorPlanRoomsReturn {
     setRooms(next);
   }, []);
 
-  const saveRoom = useCallback((room: Omit<SavedRoom, 'id' | 'createdAt'>) => {
-    const newRoom: SavedRoom = {
-      ...room,
-      id: crypto.randomUUID(),
-      createdAt: new Date().toISOString(),
-    };
-    commit([...roomsRef.current, newRoom]);
-    return newRoom;
-  }, [commit]);
+  const saveRoom = useCallback(
+    /*
+     * A room restored from a saved or cloud plan keeps its id. A certificate
+     * started from the plan is found by its sheets' ids (formData.sourcePlan),
+     * and each of its rows names its circuit by one (planOrigin) — minting new
+     * ids on every load cut the plan off from its test results.
+     */
+    (room: Omit<SavedRoom, 'id' | 'createdAt'> & { id?: string; createdAt?: string }) => {
+      const keep = room.id && !roomsRef.current.some((r) => r.id === room.id);
+      const newRoom: SavedRoom = {
+        ...room,
+        id: keep ? room.id! : crypto.randomUUID(),
+        createdAt: room.createdAt ?? new Date().toISOString(),
+      };
+      commit([...roomsRef.current, newRoom]);
+      return newRoom;
+    },
+    [commit]
+  );
 
-  const deleteRoom = useCallback((id: string) => {
-    commit(roomsRef.current.filter((r) => r.id !== id));
-  }, [commit]);
+  const deleteRoom = useCallback(
+    (id: string) => {
+      commit(roomsRef.current.filter((r) => r.id !== id));
+    },
+    [commit]
+  );
 
-  const updateRoom = useCallback((id: string, updates: Partial<SavedRoom>) => {
-    commit(roomsRef.current.map((r) => (r.id === id ? { ...r, ...updates } : r)));
-  }, [commit]);
+  const updateRoom = useCallback(
+    (id: string, updates: Partial<SavedRoom>) => {
+      commit(roomsRef.current.map((r) => (r.id === id ? { ...r, ...updates } : r)));
+    },
+    [commit]
+  );
 
   const clearAllRooms = useCallback(() => {
     commit([]);

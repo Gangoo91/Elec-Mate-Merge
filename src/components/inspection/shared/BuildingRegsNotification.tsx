@@ -70,9 +70,15 @@ interface Props {
   onUpdate: (field: string, value: unknown) => void;
   /** Rendered as a card by the caller — this is the body only. */
   className?: string;
+  /**
+   * `routeOnly` — the caller has already asked "notifiable?" (the Minor Works
+   * declaration tick) and only wants the route and reference. The section
+   * treats the work as required and does not repeat the question.
+   */
+  mode?: 'full' | 'routeOnly';
 }
 
-const BuildingRegsNotification: React.FC<Props> = ({ formData, onUpdate, className }) => {
+const BuildingRegsNotification: React.FC<Props> = ({ formData, onUpdate, className, mode = 'full' }) => {
   const f = formData as BuildingRegsFields & { installationType?: unknown; propertyType?: unknown };
 
   // EIC/EV hold the premises under installationType, the solar form under propertyType.
@@ -84,8 +90,8 @@ const BuildingRegsNotification: React.FC<Props> = ({ formData, onUpdate, classNa
     );
   }
 
-  const answered = buildingRegsAnswered(f);
-  const notifiable = answered ? !!f.buildingRegsRequired : null;
+  const answered = mode === 'routeOnly' || buildingRegsAnswered(f);
+  const notifiable = mode === 'routeOnly' ? true : answered ? !!f.buildingRegsRequired : null;
   const route = f.buildingRegsViaScheme ? 'scheme' : f.buildingRegsSubmitted ? 'control' : '';
 
   const setNotifiable = (yes: boolean) => {
@@ -104,6 +110,7 @@ const BuildingRegsNotification: React.FC<Props> = ({ formData, onUpdate, classNa
 
   return (
     <div className={cn('space-y-4', className)}>
+      {mode === 'full' && (
       <div data-field="buildingRegsRequired">
         <Label className={labelCn}>Notifiable work under Part P?</Label>
         <div className="grid grid-cols-2 gap-2">
@@ -130,6 +137,7 @@ const BuildingRegsNotification: React.FC<Props> = ({ formData, onUpdate, classNa
           </p>
         )}
       </div>
+      )}
 
       {notifiable && (
         <>

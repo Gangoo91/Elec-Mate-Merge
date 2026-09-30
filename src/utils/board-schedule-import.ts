@@ -153,11 +153,29 @@ export function buildScheduleFromCert(
 
   const threePhase = isThreePhaseCert(data);
 
-  const circuits: BoardCircuit[] = circuitRows.map((c) => ({
+  /*
+   * The schedule groups rows into ways by `circuitNumber`, and on three phase
+   * a way owns three rows. A certificate numbers those rows "4.1", "4.2",
+   * "4.3" (utils/circuitNumbering), so each came in as a way of its own: the
+   * way is the whole number. A TPN circuit ("L1,L2,L3") occupies all three
+   * phases of its way, so it takes all three rows.
+   */
+  const wayOf = (c: Json) => {
+    const n = str(c?.circuitNumber) || str(c?.wayNumber);
+    return threePhase ? n.replace(/^(\d+)\.[123]$/, '$1') : n;
+  };
+  const isTpn = (c: Json) =>
+    threePhase &&
+    (/^L1,\s?L2,\s?L3$/i.test(str(c?.phaseAssignment)) || str(c?.phaseType) === '3P');
+  const rows: { c: Json; phase?: string }[] = circuitRows.flatMap((c) =>
+    isTpn(c) ? (['L1', 'L2', 'L3'] as const).map((phase) => ({ c, phase })) : [{ c }]
+  );
+
+  const circuits: BoardCircuit[] = rows.map(({ c, phase: tpnPhase }) => ({
     id: crypto.randomUUID(),
     // `wayNumber` is stored as a NUMBER, `circuitNumber` as a string — str()
     // handles both, and the string is authoritative where present.
-    circuitNumber: str(c?.circuitNumber) || str(c?.wayNumber),
+    circuitNumber: wayOf(c),
     description: str(c?.circuitDescription) || str(c?.circuitDesignation),
     rating: str(c?.protectiveDeviceRating),
     type: describeDevice(c),
@@ -172,7 +190,7 @@ export function buildScheduleFromCert(
      * document someone works from. Single-phase boards drop it entirely —
      * every conductor is brown, so labelling each row is noise.
      */
-    phase: threePhase ? (readPhase(c) || undefined) : undefined,
+    phase: threePhase ? (tpnPhase ?? (readPhase(c) || undefined)) : undefined,
   }));
 
   return {

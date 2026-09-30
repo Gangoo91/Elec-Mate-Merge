@@ -150,11 +150,11 @@ export function MyPlansSheet({
                 <div className="flex gap-2">
                   <input
                     type="text"
-                    placeholder="Plan name (e.g. 14 High Street)"
+                    placeholder="Plan name, e.g. 14 High Street"
                     value={saveName}
                     onChange={(e) => setSaveName(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSaveCurrent()}
-                    className="flex-1 h-11 bg-white/10 border border-white/20 rounded-lg text-white text-base px-3 touch-manipulation focus:border-elec-yellow focus:outline-none"
+                    className="input-underline h-11 min-w-0 flex-1 rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
                     autoFocus
                   />
                   <Button

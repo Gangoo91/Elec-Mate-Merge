@@ -152,7 +152,7 @@ export function PlanProgressPanel({ progress, elapsed, source, previewUrl, fileN
   }
 
   return (
-    <div className="grid gap-5 lg:grid-cols-[minmax(0,1.5fr)_minmax(320px,1fr)] lg:gap-7">
+    <div className="grid grid-cols-[minmax(0,1fr)] gap-5 lg:grid-cols-[minmax(0,1.5fr)_minmax(320px,1fr)] lg:gap-7">
       <div className="relative overflow-hidden rounded-2xl border border-white/[0.14] bg-white">
         <img
           src={previewUrl}

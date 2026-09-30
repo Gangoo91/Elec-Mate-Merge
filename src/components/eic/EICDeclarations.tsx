@@ -63,6 +63,58 @@ const INTERVAL_PRESETS = [
   { label: '10 yr', months: 120 },
 ];
 
+/** What the declaration certifies to, from the Details design-standard chip. */
+const AMENDMENT_BY_STANDARD: Record<string, string> = {
+  'BS7671-A4': 'A4:2026',
+  'BS7671-A3': 'A3:2024',
+  'BS7671-A2': 'A2:2022',
+};
+const DERIVED_AMENDMENT_TOKENS = new Set(Object.values(AMENDMENT_BY_STANDARD));
+const AMENDMENT_KEYS = [
+  'designerBs7671Date',
+  'designer2Bs7671Date',
+  'constructorBs7671Date',
+  'inspectorBs7671Date',
+] as const;
+
+/** "5 years (60 months)" for a whole number of years, "18 months" otherwise, '' when blank. */
+const describeIntervalMonths = (months: string): string => {
+  const n = Number(months);
+  if (!Number.isFinite(n) || n <= 0) return '';
+  if (n % 12 === 0) {
+    const y = n / 12;
+    return `${y} year${y === 1 ? '' : 's'} (${n} months)`;
+  }
+  return `${n} months`;
+};
+
+const toLocalIsoDate = (d: Date): string =>
+  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+
+const parseIsoDate = (value?: string): Date | null => {
+  if (!value) return null;
+  const d = new Date(`${value}T00:00:00`);
+  return Number.isNaN(d.getTime()) ? null : d;
+};
+
+/**
+ * Whole months between two dates as a string, or '' when the gap is not a
+ * clean number of months (a week's slack forgives month-end arithmetic).
+ * 25 of the last 229 issued EICs had a next date and no interval, so the
+ * chips sat blank on every one.
+ */
+const wholeMonthsBetween = (from?: string, to?: string): string => {
+  const a = parseIsoDate(from);
+  const b = parseIsoDate(to);
+  if (!a || !b) return '';
+  const months = (b.getFullYear() - a.getFullYear()) * 12 + (b.getMonth() - a.getMonth());
+  if (months <= 0) return '';
+  const back = new Date(a);
+  back.setMonth(a.getMonth() + months);
+  const driftDays = Math.abs(b.getTime() - back.getTime()) / 86_400_000;
+  return driftDays <= 7 ? String(months) : '';
+};
+
 const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate }) => {
   const haptic = useHaptic();
   const { companyProfile } = useCompanyProfile();
@@ -213,12 +265,47 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
     });
   };
 
+  /*
+   * "BS 7671:2018 amended to (date)" — one fact, and it is the design standard
+   * already chosen on Details, not something to type into four boxes (one per
+   * signatory). The PDF prints these keys and falls back to A4:2026 when
+   * blank, so the keys are kept and written from the standard. A value typed
+   * on an older cert (a real date) is left alone; only blank or previously
+   * derived values follow the standard. Drafts only — an issued cert must not
+   * acquire an edit by being opened.
+   */
+  const amendmentToken = AMENDMENT_BY_STANDARD[String(formData.designStandard || 'BS7671-A4')] || '';
+  const isIssued = formData.status === 'completed';
+  useEffect(() => {
+    if (isIssued || !amendmentToken) return;
+    for (const key of AMENDMENT_KEYS) {
+      const current = String(formData[key] || '');
+      if (current === amendmentToken) continue;
+      if (current === '' || DERIVED_AMENDMENT_TOKENS.has(current)) onUpdate(key, amendmentToken);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [amendmentToken, isIssued]);
+
+  // Next-inspection chips: the recorded interval, else the one the dates imply.
+  const nextInspectionBaseDate =
+    (formData.testDate as string) || (formData.installationDate as string) || '';
+  const derivedIntervalMonths = formData.nextInspectionInterval
+    ? ''
+    : wholeMonthsBetween(nextInspectionBaseDate, formData.nextInspectionDate as string);
+  const effectiveIntervalMonths = String(formData.nextInspectionInterval || derivedIntervalMonths);
+  // A recorded interval that is not one of the chips opens the months box.
+  const [showCustomInterval, setShowCustomInterval] = useState(
+    () =>
+      !!formData.nextInspectionInterval &&
+      !INTERVAL_PRESETS.some((p) => String(p.months) === String(formData.nextInspectionInterval))
+  );
+
   return (
     <div className="space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
       {/* Legal notice + load from Business Settings */}
       <div className="space-y-3 lg:col-span-2">
         <p className="text-[11px] text-white">
-          BS 7671 declarations — all sections must be signed by competent persons
+          BS 7671 declarations — all sections must be signed by competent persons{amendmentToken ? ` · certifying to BS 7671:2018 amended to ${amendmentToken} (from the design standard on Details)` : ''}
         </p>
 
         {companyProfile && (
@@ -334,14 +421,6 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
               className={inputCn}
             />
           </FormField>
-          <FormField label="BS 7671:2018 amended to (date)">
-            <Input
-              type="date"
-              value={formData.designerBs7671Date || ''}
-              onChange={(e) => onUpdate('designerBs7671Date', e.target.value)}
-              className={inputCn}
-            />
-          </FormField>
         </div>
 
         <div data-field="designerSignature">
@@ -399,14 +478,6 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                 type="date"
                 value={formData.designer2Date || ''}
                 onChange={(e) => onUpdate('designer2Date', e.target.value)}
-                className={inputCn}
-              />
-            </FormField>
-            <FormField label="BS 7671:2018 amended to (date)">
-              <Input
-                type="date"
-                value={formData.designer2Bs7671Date || ''}
-                onChange={(e) => onUpdate('designer2Bs7671Date', e.target.value)}
                 className={inputCn}
               />
             </FormField>
@@ -529,15 +600,6 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                 type="date"
                 value={formData.constructorDate || ''}
                 onChange={(e) => onUpdate('constructorDate', e.target.value)}
-                disabled={formData.sameAsDesigner}
-                className={inputCn}
-              />
-            </FormField>
-            <FormField label="BS 7671:2018 amended to (date)">
-              <Input
-                type="date"
-                value={formData.constructorBs7671Date || ''}
-                onChange={(e) => onUpdate('constructorBs7671Date', e.target.value)}
                 disabled={formData.sameAsDesigner}
                 className={inputCn}
               />
@@ -666,15 +728,6 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                 className={inputCn}
               />
             </FormField>
-            <FormField label="BS 7671:2018 amended to (date)">
-              <Input
-                type="date"
-                value={formData.inspectorBs7671Date || ''}
-                onChange={(e) => onUpdate('inspectorBs7671Date', e.target.value)}
-                disabled={formData.sameAsConstructor}
-                className={inputCn}
-              />
-            </FormField>
           </div>
 
           <div data-field="inspectorSignature">
@@ -781,35 +834,71 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
               onClick={() => {
                 haptic.light();
                 onUpdate('nextInspectionInterval', String(preset.months));
-                const now = new Date();
-                now.setMonth(now.getMonth() + preset.months);
-                onUpdate('nextInspectionDate', now.toISOString().split('T')[0]);
+                // Counted from the date of test (or installation), not from
+                // whenever the button happened to be tapped — a cert written
+                // up a fortnight after the job would otherwise carry a next
+                // date a fortnight late.
+                const from = parseIsoDate(nextInspectionBaseDate) ?? new Date();
+                from.setMonth(from.getMonth() + preset.months);
+                // Local calendar date — toISOString() would shift a BST
+                // midnight back to the previous day (caught 30 Sep 2026:
+                // 5 yr from 30/09/2026 came out as 29/09/2031).
+                onUpdate('nextInspectionDate', toLocalIsoDate(from));
               }}
               className={cn(
                 'min-h-11 rounded-xl text-xs touch-manipulation active:scale-[0.98] transition-all',
-                String(formData.nextInspectionInterval) === String(preset.months) ? chipOn : chipOff
+                effectiveIntervalMonths === String(preset.months) ? chipOn : chipOff
               )}
             >
               {preset.label}
             </button>
           ))}
         </div>
+        {derivedIntervalMonths && (
+          <span className="block text-[11px] text-white">
+            Worked out from the next date — tap the chip to confirm it.
+          </span>
+        )}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
-          <FormField label="Interval (months)">
-            <Input
-              type="text"
-              inputMode="numeric"
-              value={formData.nextInspectionInterval || ''}
-              onChange={(e) => onUpdate('nextInspectionInterval', e.target.value)}
-              placeholder="e.g., 60"
-              className={inputCn}
-            />
-          </FormField>
+          {/* Electricians think in years; the chips are the interval. The
+              months box (what the PDF prints) only appears for an interval
+              the chips do not cover. */}
+          {showCustomInterval ? (
+            <FormField label="Interval (months)">
+              <Input
+                type="text"
+                inputMode="numeric"
+                value={formData.nextInspectionInterval || ''}
+                onChange={(e) => onUpdate('nextInspectionInterval', e.target.value)}
+                placeholder="e.g., 24"
+                className={inputCn}
+              />
+            </FormField>
+          ) : (
+            <FormField label="Interval">
+              <button
+                type="button"
+                onClick={() => setShowCustomInterval(true)}
+                className="h-11 w-full rounded-xl border border-white/[0.12] bg-white/[0.04] px-3 text-left text-sm text-white touch-manipulation"
+              >
+                {describeIntervalMonths(effectiveIntervalMonths) || 'Other interval…'}
+              </button>
+            </FormField>
+          )}
           <FormField label="Next date">
             <Input
               type="date"
+              data-field="nextInspectionDate"
               value={formData.nextInspectionDate || ''}
-              onChange={(e) => onUpdate('nextInspectionDate', e.target.value)}
+              onChange={(e) => {
+                onUpdate('nextInspectionDate', e.target.value);
+                // A hand-typed date a clean number of months out records the
+                // interval too — the user's own entry, not a silent default.
+                if (!formData.nextInspectionInterval) {
+                  const months = wholeMonthsBetween(nextInspectionBaseDate, e.target.value);
+                  if (months) onUpdate('nextInspectionInterval', months);
+                }
+              }}
               className={inputCn}
             />
           </FormField>

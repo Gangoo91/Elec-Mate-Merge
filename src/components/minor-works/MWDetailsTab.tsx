@@ -15,7 +15,20 @@ import { Customer } from '@/hooks/inspection/useCustomers';
 interface MWDetailsTabProps {
   formData: Record<string, unknown>;
   onUpdate: (field: string, value: unknown) => void;
+  /** The electrician's previous Minor Works certificate, offered as a one-tap prefill. */
+  reuseFrom?: { certificateNumber: string; data: Record<string, unknown> } | null;
 }
+
+/** Keys that are the same job after job: supply, earthing, bonding, board, instruments. */
+const REUSE_KEYS = [
+  'supplyVoltage', 'frequency', 'supplyPhases',
+  'earthingArrangement', 'zdb', 'earthingConductorPresent',
+  'mainEarthingConductorSize', 'mainEarthingConductorSizeCustom', 'mainEarthingConductorMaterial',
+  'mainBondingConductorSize', 'mainBondingConductorSizeCustom',
+  'bondingWater', 'bondingGas', 'bondingOil', 'bondingStructural', 'bondingOther', 'bondingOtherSpecify',
+  'distributionBoard', 'dbLocationType',
+  'testEquipmentModel', 'testEquipmentSerial', 'testEquipmentCalDate', 'insulationTestVoltage',
+] as const;
 
 const cardCn =
   '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
@@ -45,7 +58,25 @@ const FormField = ({ label, required, children }: { label: string; required?: bo
   </div>
 );
 
-const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
+const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, reuseFrom }) => {
+  const [reuseDismissed, setReuseDismissed] = useState(false);
+  const reuseHaptic = useHaptic();
+  // Offer only while the supply block is still blank — once they've typed, it's noise.
+  const reuseOffer =
+    reuseFrom && !reuseDismissed && !formData.earthingArrangement && !formData.zdb && !formData.testEquipmentModel
+      ? reuseFrom
+      : null;
+  const applyReuse = () => {
+    if (!reuseFrom) return;
+    reuseHaptic.success();
+    for (const k of REUSE_KEYS) {
+      const v = reuseFrom.data[k];
+      const cur = formData[k];
+      const blank = cur === undefined || cur === null || cur === '' || cur === false;
+      if (blank && v !== undefined && v !== null && v !== '') onUpdate(k, v);
+    }
+    setReuseDismissed(true);
+  };
   const [clientType, setClientType] = useState<'new' | 'existing'>(() =>
     formData.selectedCustomerId ? 'existing' : 'new'
   );
@@ -380,14 +411,6 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
           />
         </FormField>
 
-        <FormField label="Contractor name">
-          <Input
-            value={(formData.contractorName as string) || ''}
-            onChange={(e) => onUpdate('contractorName', e.target.value)}
-            placeholder="Company name"
-            className={inputCn}
-          />
-        </FormField>
       </div>
 
       {/* Description of work */}
@@ -518,6 +541,34 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
           </div>
         </FormField>
       </div>
+
+      {reuseOffer && (
+        <div className={cn(cardCn, 'lg:col-span-2 border-elec-yellow/40')}>
+          <p className="text-[13.5px] font-semibold tracking-tight text-white">
+            Same supply, earthing and instruments as {reuseOffer.certificateNumber}?
+          </p>
+          <p className="mt-0.5 text-[12.5px] leading-snug text-white">
+            Fills the supply, earthing and bonding, distribution board and test instrument from your
+            last Minor Works. Anything you've already typed is kept.
+          </p>
+          <div className="mt-3 grid grid-cols-2 gap-2">
+            <button
+              type="button"
+              onClick={applyReuse}
+              className="flex h-11 items-center justify-center rounded-xl bg-elec-yellow text-[13px] font-semibold text-black transition-transform active:scale-[0.98] touch-manipulation"
+            >
+              Use them
+            </button>
+            <button
+              type="button"
+              onClick={() => setReuseDismissed(true)}
+              className="flex h-11 items-center justify-center rounded-xl border border-white/[0.14] bg-white/[0.05] text-[13px] font-semibold text-white transition-colors active:scale-[0.98] touch-manipulation"
+            >
+              Start blank
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Supply */}
       <div className={cardCn}>

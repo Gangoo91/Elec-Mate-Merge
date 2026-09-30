@@ -43,6 +43,7 @@ import { SitePhotosSection } from '@/components/inspection/site-photos/SitePhoto
 import { useMinorWorksValidation } from '@/hooks/useMinorWorksValidation';
 import { useMinorWorksSmartForm } from '@/hooks/useMinorWorksSmartForm';
 import { scrollToTopForStepChange } from '@/utils/scroll';
+import { CertLockedProvider } from '@/components/inspection/shared/CertLocked';
 
 const MinorWorksForm = ({
   onBack,
@@ -481,6 +482,32 @@ const MinorWorksForm = ({
       }
     }
   }, [initialReportId, smartFormLoading, hasAppliedSmartDefaults]);
+
+  // "Same as last time" — a new certificate offers the previous Minor Works'
+  // supply, earthing and instrument details (they are the same job after job).
+  const [reuseFrom, setReuseFrom] = useState<{ certificateNumber: string; data: Record<string, unknown> } | null>(null);
+  useEffect(() => {
+    if (initialReportId || !userId) return;
+    let cancelled = false;
+    (async () => {
+      const { data } = await supabase
+        .from('reports')
+        .select('certificate_number, data')
+        .eq('user_id', userId)
+        .eq('report_type', 'minor-works')
+        .eq('status', 'completed')
+        .is('deleted_at', null)
+        .order('updated_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      if (!cancelled && data?.data && typeof data.data === 'object') {
+        setReuseFrom({ certificateNumber: data.certificate_number || 'your last certificate', data: data.data as Record<string, unknown> });
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [initialReportId, userId]);
 
   // Fetch user ID on mount
   useEffect(() => {
@@ -1306,7 +1333,7 @@ const MinorWorksForm = ({
   // Tab content map — same tab components, rendered inside the v3 shell.
   // The shell (header tabs + sticky footer) replaces the per-tab inline nav.
   const tabContent: Record<string, React.ReactNode> = {
-    details: <MWDetailsTab formData={formData} onUpdate={handleUpdate} />,
+    details: <MWDetailsTab formData={formData} onUpdate={handleUpdate} reuseFrom={reuseFrom} />,
     circuit: <MWCircuitTab formData={formData} onUpdate={handleUpdate} />,
     testing: (
       <div className="space-y-4">
@@ -1337,6 +1364,7 @@ const MinorWorksForm = ({
             onSaveDraft={handleSaveDraft}
             onDuplicateForNextCircuit={handleDuplicateForNextCircuit}
             actionsRef={pdfActionsRef}
+            onFieldUpdate={handleUpdate}
           />
         </div>
       </>
@@ -1364,6 +1392,8 @@ const MinorWorksForm = ({
     buildPatch,
   } = useCertPrefill(prefillAddress, 'minor-works', {
     excludeReportId: currentReportId || undefined,
+    reportId: currentReportId || undefined,
+    currentData: formData as Record<string, unknown>,
   });
 
   const handleApplyLastCert = () => {
@@ -1373,6 +1403,7 @@ const MinorWorksForm = ({
   };
 
   return (
+    <CertLockedProvider locked={isLocked}>
     <CertificatePhotoProvider
       certificateNumber={formData.certificateNumber || ''}
       certificateType="minor-works"
@@ -1427,8 +1458,9 @@ const MinorWorksForm = ({
           />
         )}
 
-        {/* Last cert at this address — soft suggestion to copy supply/earthing data forward */}
-        {!isLocked && lastCertSuggestion && (
+        {/* Last cert at this address — soft suggestion to copy supply/earthing data
+            forward. Details only: that is where the fields it fills live. */}
+        {!isLocked && currentTab === 'details' && lastCertSuggestion && (
           <div className="-mx-3 px-4 pt-3 sm:mx-0">
             <LastCertSuggestionCard
               suggestion={lastCertSuggestion}
@@ -1614,6 +1646,7 @@ const MinorWorksForm = ({
         </Sheet>
       </div>
     </CertificatePhotoProvider>
+    </CertLockedProvider>
   );
 };
 

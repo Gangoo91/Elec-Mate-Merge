@@ -53,6 +53,8 @@ interface MinorWorksPdfGeneratorProps {
   } | null>;
   reportId?: string;
   userId?: string;
+  /** Lets the generator record facts about the certificate it just acted on (e.g. copy given). */
+  onFieldUpdate?: (field: string, value: unknown) => void;
 }
 
 const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
@@ -64,6 +66,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
   actionsRef,
   reportId,
   userId,
+  onFieldUpdate,
 }) => {
   const [isExporting, setIsExporting] = useState(false);
   // ELE-1603 — Generate and Email both create when the form was never saved; one key covers both.
@@ -538,6 +541,10 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
       if (!result?.success) {
         throw new Error(result?.error || 'Failed to send certificate email');
       }
+
+      // Emailing the certificate IS giving the person ordering the work their
+      // copy — the declaration tick was left blank on 77% of issued certificates.
+      onFieldUpdate?.('copyProvided', true);
 
       toast({
         title: 'Certificate Sent',

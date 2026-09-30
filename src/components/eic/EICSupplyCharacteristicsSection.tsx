@@ -376,7 +376,7 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
             </div>
           </FormField>
           <FormField label="Phases" required>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-2" data-field="phases">
               {[
                 { value: 'single', label: 'Single' },
                 { value: 'three', label: 'Three' },
@@ -463,6 +463,7 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
       <div className={cardCn}>
         <SectionHeading title="Number and type of live conductors" />
         <FormField label="Live conductor configuration" required>
+          <div data-field="liveCondutorType">
           <MobileSelectPicker
             value={(formData.liveCondutorType as string) || ''}
             onValueChange={(value) => onUpdate('liveCondutorType', value)}
@@ -479,6 +480,7 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
             title="Live Conductor Configuration"
             triggerClassName={pickerTriggerCn}
           />
+          </div>
         </FormField>
       </div>
 
@@ -489,6 +491,7 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
           <FormField label="Ipf (kA)" required>
             <Input
               id="prospectiveFaultCurrent"
+              data-field="prospectiveFaultCurrent"
               type="text"
               inputMode="decimal"
               value={formData.prospectiveFaultCurrent || ''}
@@ -501,6 +504,7 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
           <FormField label="Ze (Ω)" required>
             <Input
               id="externalZe"
+              data-field="externalZe"
               type="text"
               inputMode="decimal"
               value={formData.externalZe || ''}

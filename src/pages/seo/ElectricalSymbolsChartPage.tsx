@@ -712,6 +712,10 @@ export default function ElectricalSymbolsChartPage() {
       faqs={faqs}
       faqHeading="Frequently Asked Questions About Electrical Symbols"
       relatedPages={relatedPages}
+      // This page offers its own download in section 1 — the default
+      // cheatsheet box would sit beside it and split the click.
+      leadMagnet={false}
+      heroCtaLabel="Draw plans with these symbols"
       ctaHeading="Every Symbol at Your Fingertips"
       ctaSubheading="Built-in IEC 60617 symbol library, correct symbols on every certificate, and AI-powered diagram interpretation. Elec-Mate is the complete reference tool for UK electricians. 7-day free trial."
     />

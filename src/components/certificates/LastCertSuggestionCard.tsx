@@ -2,7 +2,7 @@ import React from 'react';
 import { Clock, Check, X, ListPlus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
-import type { LastCertSuggestion } from '@/hooks/useCertPrefill';
+import { describeLastCertFields, type LastCertSuggestion } from '@/hooks/useCertPrefill';
 
 interface LastCertSuggestionCardProps {
   suggestion: LastCertSuggestion;
@@ -45,6 +45,17 @@ const LastCertSuggestionCard: React.FC<LastCertSuggestionCardProps> = ({
   const haptic = useHaptic();
   const fieldCount = Object.keys(suggestion.fields).length;
   const certTypeLabel = CERT_LABEL[suggestion.certType] || suggestion.certType;
+  // Name what will be filled — only blank fields are ever offered, so this is
+  // usually two or three things, not "6 fields".
+  const labels = describeLastCertFields(suggestion.fields);
+  const shown = labels.slice(0, 4);
+  const extra = labels.length - shown.length;
+  const fillsText =
+    shown.length === 0
+      ? ''
+      : shown.length === 1
+        ? shown[0]
+        : `${shown.slice(0, -1).join(', ')} and ${shown[shown.length - 1]}`;
 
   const circuitCount = suggestion.scheduleOfTests?.length ?? 0;
   const showCircuitCopy =
@@ -65,8 +76,8 @@ const LastCertSuggestionCard: React.FC<LastCertSuggestionCardProps> = ({
             {fieldCount > 0 && (
               <>
                 {' '}
-                — copies {fieldCount} field{fieldCount === 1 ? '' : 's'} (supply, earthing and
-                property details)
+                — fills {fillsText}
+                {extra > 0 ? ` and ${extra} more` : ''}
               </>
             )}
             {showCircuitCopy && (

@@ -33,72 +33,138 @@ export interface ValidationResult {
 /** Every field the header progress ring tracks. completionPercentage divides by
  * this list's length (mirrors useMinorWorksValidation's REQUIRED_FIELDS), so a
  * fully complete EIC genuinely reads 100% — the ring, the missing-items sheet
- * and the tab ticks all derive from this one list. */
+ * and the tab ticks all derive from this one list.
+ *
+ * 🔴 ALL ADVISORY — Andrew, 30 Sep 2026: "we shouldn't have gates in the EIC".
+ * Nothing in this list blocks Generate. Every rule is severity 'warning': it
+ * counts in the ring, appears in the still-to-complete sheet with a Go, and
+ * the electrician decides. The gate had existed since the certificate
+ * redesign (13 blocking fields) and was widened to 21 earlier the same day
+ * before the decision was taken. Do not reintroduce 'error' here. */
 const REQUIRED_FIELDS: {
   field: string;
   message: string;
   severity: 'error' | 'warning';
   regulation?: string;
   tab: EICTabId;
+  /** Older keys the PDF formatter also accepts for this field — filled is filled. */
+  aliases?: string[];
 }[] = [
-  { field: 'clientName', message: 'Client name', severity: 'error', tab: 'details' },
-  { field: 'installationAddress', message: 'Installation address', severity: 'error', tab: 'details' },
-  { field: 'installationDate', message: 'Installation date', severity: 'error', tab: 'details' },
+  { field: 'clientName', message: 'Client name', severity: 'warning', tab: 'details' },
+  { field: 'clientAddress', message: 'Client address', severity: 'warning', tab: 'details' },
+  { field: 'installationAddress', message: 'Installation address', severity: 'warning', tab: 'details' },
+  { field: 'installationDate', message: 'Installation date', severity: 'warning', tab: 'details' },
   { field: 'installationType', message: 'Installation type', severity: 'warning', tab: 'details' },
+  /*
+   * The eight starred Details fields that were never tracked here (EIC
+   * walkthrough, 30 Sep 2026): a cert read 93% with description, Ze, Ipf,
+   * main switch rating and means of earthing all blank, and the only item
+   * listed was the next inspection date. On the last 229 issued EICs Ze was
+   * blank on 44, Ipf on 26, description on 19, means of earthing on 17.
+   *
+   * ADVISORY, not blocking (Andrew, 30 Sep 2026: "we shouldn't have gates in
+   * the EIC"). They count in the ring and appear in the still-to-complete
+   * sheet under "worth checking", and Generate stays live.
+   */
+  {
+    field: 'description',
+    message: 'Description of installation',
+    severity: 'warning',
+    tab: 'details',
+  },
   {
     field: 'supplyVoltage',
     message: 'Supply voltage',
-    severity: 'error',
+    severity: 'warning',
+    regulation: 'Chapter 31',
+    tab: 'details',
+  },
+  { field: 'phases', message: 'Number of phases', severity: 'warning', regulation: 'Chapter 31', tab: 'details' },
+  {
+    field: 'liveCondutorType',
+    message: 'Live conductor configuration',
+    severity: 'warning',
     regulation: 'Chapter 31',
     tab: 'details',
   },
   {
+    field: 'prospectiveFaultCurrent',
+    message: 'Prospective fault current (Ipf)',
+    severity: 'warning',
+    regulation: '643.7.3.201',
+    tab: 'details',
+  },
+  {
+    field: 'externalZe',
+    message: 'External loop impedance (Ze)',
+    severity: 'warning',
+    regulation: '643.7.3.201',
+    tab: 'details',
+    // eicJsonFormatter prints externalEarthFaultLoopImpedance || externalZe.
+    aliases: ['externalEarthFaultLoopImpedance'],
+  },
+  {
     field: 'earthingArrangement',
     message: 'Earthing arrangement',
-    severity: 'error',
+    severity: 'warning',
+    regulation: 'Chapter 54',
+    tab: 'details',
+  },
+  {
+    field: 'meansOfEarthing',
+    message: 'Means of earthing',
+    severity: 'warning',
     regulation: 'Chapter 54',
     tab: 'details',
   },
   {
     field: 'mainProtectiveDevice',
     message: 'Main protective device',
-    severity: 'error',
+    severity: 'warning',
     regulation: 'Chapter 43',
     tab: 'details',
   },
-  { field: 'designerName', message: 'Designer name', severity: 'error', regulation: 'Part 6', tab: 'declarations' },
+  // The panel's N/A chip stamps 'N/A' into this field, which counts as answered.
+  {
+    field: 'mainSwitchRating',
+    message: 'Main switch rating',
+    severity: 'warning',
+    regulation: 'Chapter 43',
+    tab: 'details',
+  },
+  { field: 'designerName', message: 'Designer name', severity: 'warning', regulation: 'Part 6', tab: 'declarations' },
   {
     field: 'designerSignature',
     message: 'Designer signature',
-    severity: 'error',
+    severity: 'warning',
     regulation: 'Part 6',
     tab: 'declarations',
   },
   {
     field: 'constructorName',
     message: 'Constructor name',
-    severity: 'error',
+    severity: 'warning',
     regulation: 'Part 6',
     tab: 'declarations',
   },
   {
     field: 'constructorSignature',
     message: 'Constructor signature',
-    severity: 'error',
+    severity: 'warning',
     regulation: 'Part 6',
     tab: 'declarations',
   },
   {
     field: 'inspectorName',
     message: 'Inspector name',
-    severity: 'error',
+    severity: 'warning',
     regulation: 'Part 6',
     tab: 'declarations',
   },
   {
     field: 'inspectorSignature',
     message: 'Inspector signature',
-    severity: 'error',
+    severity: 'warning',
     regulation: 'Part 6',
     tab: 'declarations',
   },
@@ -107,7 +173,7 @@ const REQUIRED_FIELDS: {
   {
     field: 'nextInspectionDate',
     message: 'Next inspection date',
-    severity: 'error',
+    severity: 'warning',
     regulation: '653.4',
     tab: 'declarations',
   },
@@ -121,7 +187,12 @@ export const useEICValidation = (formData: any): ValidationResult => {
     let completedFields = 0;
 
     for (const rule of REQUIRED_FIELDS) {
-      const value = formData[rule.field];
+      // Seeds are '' not undefined, so fall through on blank, not just on null.
+      const primary = formData[rule.field];
+      const value =
+        primary && String(primary).trim() !== ''
+          ? primary
+          : rule.aliases?.map((alias) => formData[alias]).find((v) => v && String(v).trim() !== '');
       if (value && String(value).trim() !== '') {
         completedFields++;
       } else {
@@ -138,26 +209,12 @@ export const useEICValidation = (formData: any): ValidationResult => {
     }
 
     /*
-     * Uncorrected defects block issue outright — this is not a warning.
-     *
-     * BS 7671 644.1.1 (new installation): "any defect or omission revealed
-     * during the inspection and testing shall be corrected before the
-     * Certificate is issued."
-     * 644.1.2 (addition or alteration): the same for any defect or omission
-     * "that will affect the safety of the addition or alteration".
-     *
-     * This is the mirror image of the EICR's C1/C2 gate, and it resolves the
-     * opposite way. An EICR reports condition, so a C2 forces the outcome to
-     * Unsatisfactory. An EIC *declares compliance*, so there is no unsatisfactory
-     * EIC to fall back on — the certificate simply must not be issued yet. That
-     * is why this is an error and why the EIC has no satisfactory/unsatisfactory
-     * toggle: adding one would let somebody sign a declaration that their own
-     * work does not comply.
-     *
-     * `rectified` is the release valve, and it is the regulation's own wording:
-     * put right before issue, and the certificate may be issued. Defects in the
-     * *existing* installation are a separate matter — they belong in Section I,
-     * "Comments on existing installation", and never block.
+     * Uncorrected defects. Reg 644.1.1 expects an initial verification's
+     * defects put right before the certificate is issued; the observation
+     * card's "Rectified" tick clears them. Advisory since 30 Sep 2026 (no
+     * gates on the EIC) — listed with the regulation, never blocking. Defects
+     * in the *existing* installation are a separate matter — they belong in
+     * Section I, "Comments on existing installation".
      */
     const uncorrectedDefects = Array.isArray(formData.observations)
       ? formData.observations.filter(
@@ -166,11 +223,13 @@ export const useEICValidation = (formData: any): ValidationResult => {
         ).length
       : 0;
 
+    // Advisory since 30 Sep 2026 (no gates on the EIC) — still listed first
+    // in the sheet with the regulation, so nobody issues without seeing it.
     if (uncorrectedDefects > 0) {
-      errors.push({
+      warnings.push({
         field: 'observations',
-        message: `${uncorrectedDefects} unsatisfactory item${uncorrectedDefects === 1 ? '' : 's'} must be corrected before issue`,
-        severity: 'error',
+        message: `${uncorrectedDefects} unsatisfactory item${uncorrectedDefects === 1 ? '' : 's'} not yet corrected — Reg 644.1.1 expects these put right before issue`,
+        severity: 'warning',
         regulation: '644.1.1 / 644.1.2',
         tab: 'inspection',
       });
