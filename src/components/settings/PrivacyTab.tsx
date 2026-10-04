@@ -13,6 +13,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { clearCredentials, setBiometricEnabled } from '@/utils/biometricAuth';
 import { openExternalUrl } from '@/utils/open-external-url';
 import { Capacitor } from '@capacitor/core';
+import { saveAdTrackingConsent } from '@/lib/consentSync';
 import {
   AlertDialog,
   AlertDialogContent,
@@ -126,6 +127,52 @@ const PrivacyTab = () => {
       });
   }, [userId]);
 
+  // In the apps the cookie switches are hidden, so this is where the answer
+  // to "Can we measure our adverts?" (NativeTrackingPrompt) can be changed —
+  // the prompt promises it. On iPhone, switching it on goes through Apple's
+  // App Tracking Transparency: if Apple says no, it stays off (guideline
+  // 5.1.2 — never track without ATT authorisation). ELE-1812.
+  const handleNativeTracking = useCallback(
+    async (next: boolean) => {
+      let consent = next;
+      if (next && Capacitor.getPlatform() === 'ios') {
+        try {
+          const { AppTrackingTransparency } =
+            await import('@capgo/capacitor-app-tracking-transparency');
+          const { status } = await AppTrackingTransparency.requestPermission();
+          consent = status === 'authorized';
+        } catch {
+          consent = false;
+        }
+        if (!consent) {
+          addNotification({
+            title: 'Tracking is off for Elec-Mate',
+            message:
+              'To allow it, open iPhone Settings → Elec-Mate and turn on Allow Tracking, then try again.',
+            type: 'info',
+          });
+        }
+      }
+      const newPrefs = { ...cookiePrefs, marketing: consent };
+      setCookiePrefs(newPrefs);
+      storageSetJSONSync(COOKIE_PREFERENCES_KEY, newPrefs);
+      await saveAdTrackingConsent(
+        consent,
+        Capacitor.getPlatform() === 'ios' ? 'ios_settings' : 'android_settings'
+      );
+      if (consent === next) {
+        addNotification({
+          title: 'Privacy choice saved',
+          message: consent
+            ? 'Thanks — this helps us spend less on adverts that don’t work.'
+            : 'We won’t share anything with Meta to measure adverts.',
+          type: 'success',
+        });
+      }
+    },
+    [cookiePrefs, addNotification]
+  );
+
   const handleCookieToggle = useCallback(
     async (key: keyof CookiePreferences) => {
       if (key === 'essential') return;
@@ -186,7 +233,8 @@ const PrivacyTab = () => {
       // of record, JSON, links to photos), stores it for 7 days and emails
       // the link — ELE-1812. Here we just hand over the same file.
       const { zipUrl, zipName } = (response.data ?? {}) as { zipUrl?: string; zipName?: string };
-      if (!zipUrl) throw new Error('We couldn’t build your export. Please try again in a few minutes.');
+      if (!zipUrl)
+        throw new Error('We couldn’t build your export. Please try again in a few minutes.');
 
       if (isNative) {
         // Sharing a URL only shares the link; opening it lets Safari/Chrome
@@ -500,9 +548,30 @@ const PrivacyTab = () => {
         </motion.section>
       )}
 
+      {/* ── ADVERT MEASUREMENT (apps only — the web uses the cookie switches) ── */}
+      {isNative && (
+        <motion.section variants={itemVariants} className="h-full">
+          <SettingsCard eyebrow="02" title="Adverts">
+            <div className="flex items-center gap-4 px-5 sm:px-6 py-4">
+              <div className="flex-1 min-w-0">
+                <div className="text-[15px] font-medium text-white">Measure our adverts</div>
+                <div className="mt-0.5 text-[11.5px] leading-snug text-white">
+                  Tell Meta when someone who saw our advert subscribes, using a scrambled copy of
+                  your email. Nothing in the app changes either way.
+                </div>
+              </div>
+              <Switch
+                checked={cookiePrefs.marketing}
+                onCheckedChange={(v) => void handleNativeTracking(v)}
+              />
+            </div>
+          </SettingsCard>
+        </motion.section>
+      )}
+
       {/* ── LEGAL ── */}
       <motion.section variants={itemVariants} className="h-full">
-        <SettingsCard eyebrow={isNative ? '02' : '03'} title="Legal">
+        <SettingsCard eyebrow="03" title="Legal">
           {legalLinks.map((link) => (
             <Link
               key={link.to}
@@ -527,7 +596,7 @@ const PrivacyTab = () => {
       {/* ── ACTIVITY ── */}
       {auditLog.length > 0 && (
         <motion.section variants={itemVariants} className="h-full">
-          <SettingsCard eyebrow={isNative ? '03' : '04'} title="Activity">
+          <SettingsCard eyebrow="04" title="Activity">
             {auditLog.map((entry, i) => (
               <div key={i} className="flex items-center justify-between gap-4 px-5 sm:px-6 py-4">
                 <div className="flex items-center gap-3 min-w-0">
